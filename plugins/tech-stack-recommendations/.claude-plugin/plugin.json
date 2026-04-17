@@ -1,0 +1,9 @@
+{
+  "name": "tech-stack-recommendations",
+  "description": "Opinionated tech-stack guidance for new projects — runtime, frontend, API, DB, auth, hosting, mobile, i18n.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Kiang (Sorawit Wanitwarodom)",
+    "url": "https://github.com/sorawit-w"
+  }
+}

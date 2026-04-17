@@ -18,6 +18,7 @@ That's equivalent to installing each shelf plugin individually:
 /plugin install skill-evaluator@sorawit-w
 /plugin install sub-agent-coordinator@sorawit-w
 /plugin install team-composer@sorawit-w
+/plugin install tech-stack-recommendations@sorawit-w
 ```
 
 ## What's bundled
@@ -26,6 +27,7 @@ That's equivalent to installing each shelf plugin individually:
 - [`skill-evaluator`](../skill-evaluator) — audit whether a skill's rules actually land in practice.
 - [`sub-agent-coordinator`](../sub-agent-coordinator) — orchestrate multi-agent work through fan-out, pipeline, and specialist patterns.
 - [`team-composer`](../team-composer) — assemble a virtual team and run a 3-round discussion that produces real disagreement.
+- [`tech-stack-recommendations`](../tech-stack-recommendations) — opinionated default tech stack for new TypeScript/JavaScript projects, with override factors named up front.
 
 New plugins added to the marketplace get rolled into this bundle on the next version bump. Pin a specific version of `agent-skills` if you want a frozen set.
 

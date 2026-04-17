@@ -10,6 +10,7 @@
     "brand-workshop",
     "skill-evaluator",
     "sub-agent-coordinator",
-    "team-composer"
+    "team-composer",
+    "tech-stack-recommendations"
   ]
 }

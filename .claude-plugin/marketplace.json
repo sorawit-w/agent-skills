@@ -29,6 +29,11 @@
       "name": "team-composer",
       "source": "./plugins/team-composer",
       "description": "Assemble the right virtual team — every role earns its seat."
+    },
+    {
+      "name": "tech-stack-recommendations",
+      "source": "./plugins/tech-stack-recommendations",
+      "description": "Opinionated tech-stack guidance for new projects — runtime, frontend, API, DB, auth, hosting."
     }
   ]
 }

@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="tech-stack-recommendations — opinionated defaults, judgment-aware" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>tech-stack-recommendations — opinionated defaults, judgment-aware</title>
+  <desc>Pixel-art banner for the tech-stack-recommendations Claude Code plugin: title at top, three vertical stacks of layered bricks side by side. Each stack shows five layers — Auth, DB, API, Web, Runtime — labeled with the recommended technology. The Bun stack on the left is highlighted as the default. The Deno stack in the middle is tagged edge-first. The Node stack on the right is tagged ecosystem-friendly. Footer reminds readers that defaults are not dogma.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-li)"/>
+
+  <!-- =========== TITLE BLOCK (top, centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="72" font-size="40" font-weight="700" fill="#1f2937" letter-spacing="2">tech-stack-recommendations</text>
+    <text x="600" y="106" font-size="20" fill="#6b7280">opinionated defaults. judgment-aware.</text>
+    <text x="600" y="134" font-size="12" fill="#9ca3af" letter-spacing="4">RUNTIME · WEB · API · DB · AUTH</text>
+  </g>
+
+  <!-- ============================================== -->
+  <!-- STACK 1: BUN (default, orange) — centered x=240 -->
+  <!-- ============================================== -->
+  <!-- DEFAULT badge -->
+  <g transform="translate(150, 178)">
+    <rect x="0" y="0" width="180" height="32" fill="#c2410c"/>
+    <rect x="0" y="0" width="180" height="4"  fill="#ea580c"/>
+    <rect x="0" y="28" width="180" height="4" fill="#7c2d12"/>
+    <!-- pixel star -->
+    <g transform="translate(20, 12)" fill="#fde68a">
+      <rect x="4" y="0" width="2" height="2"/>
+      <rect x="2" y="2" width="6" height="2"/>
+      <rect x="0" y="4" width="10" height="2"/>
+      <rect x="2" y="6" width="2" height="2"/>
+      <rect x="6" y="6" width="2" height="2"/>
+    </g>
+    <text x="100" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#fdf7ea" text-anchor="middle" letter-spacing="3">DEFAULT</text>
+  </g>
+
+  <!-- BRICK STACK (5 layers, 56h each, 4h gap, brick width 220) -->
+  <!-- Layer template: width 220, height 56, top stripe 6h, bottom shadow 6h, right shadow 4w -->
+
+  <!-- Bun — Layer 1: AUTH · Clerk -->
+  <g transform="translate(130, 220)">
+    <rect x="0" y="0" width="220" height="56" fill="#c2410c"/>
+    <rect x="0" y="0" width="220" height="6" fill="#ea580c"/>
+    <rect x="0" y="50" width="220" height="6" fill="#7c2d12"/>
+    <rect x="216" y="0" width="4" height="56" fill="#7c2d12"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#fed7aa" letter-spacing="2">AUTH</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#fdf7ea">Clerk</text>
+  </g>
+
+  <!-- Bun — Layer 2: DB · Neon + Drizzle -->
+  <g transform="translate(130, 280)">
+    <rect x="0" y="0" width="220" height="56" fill="#c2410c"/>
+    <rect x="0" y="0" width="220" height="6" fill="#ea580c"/>
+    <rect x="0" y="50" width="220" height="6" fill="#7c2d12"/>
+    <rect x="216" y="0" width="4" height="56" fill="#7c2d12"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#fed7aa" letter-spacing="2">DB</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#fdf7ea">Neon + Drizzle</text>
+  </g>
+
+  <!-- Bun — Layer 3: API · Elysia -->
+  <g transform="translate(130, 340)">
+    <rect x="0" y="0" width="220" height="56" fill="#c2410c"/>
+    <rect x="0" y="0" width="220" height="6" fill="#ea580c"/>
+    <rect x="0" y="50" width="220" height="6" fill="#7c2d12"/>
+    <rect x="216" y="0" width="4" height="56" fill="#7c2d12"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#fed7aa" letter-spacing="2">API</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#fdf7ea">Elysia</text>
+  </g>
+
+  <!-- Bun — Layer 4: WEB · SvelteKit -->
+  <g transform="translate(130, 400)">
+    <rect x="0" y="0" width="220" height="56" fill="#c2410c"/>
+    <rect x="0" y="0" width="220" height="6" fill="#ea580c"/>
+    <rect x="0" y="50" width="220" height="6" fill="#7c2d12"/>
+    <rect x="216" y="0" width="4" height="56" fill="#7c2d12"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#fed7aa" letter-spacing="2">WEB</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#fdf7ea">SvelteKit</text>
+  </g>
+
+  <!-- Bun — Layer 5 (base): RUNTIME · Bun -->
+  <g transform="translate(130, 460)">
+    <rect x="0" y="0" width="220" height="62" fill="#7c2d12"/>
+    <rect x="0" y="0" width="220" height="6" fill="#9a3412"/>
+    <rect x="0" y="56" width="220" height="6" fill="#1c0701"/>
+    <rect x="216" y="0" width="4" height="62" fill="#1c0701"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#fdba74" letter-spacing="2">RUNTIME</text>
+    <text x="14" y="46" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="700" fill="#fdf7ea">Bun</text>
+  </g>
+
+  <!-- ============================================== -->
+  <!-- STACK 2: DENO (edge, teal) — centered x=600    -->
+  <!-- ============================================== -->
+  <!-- EDGE-FIRST badge -->
+  <g transform="translate(490, 178)">
+    <rect x="0" y="0" width="220" height="32" fill="#0e7490"/>
+    <rect x="0" y="0" width="220" height="4"  fill="#0891b2"/>
+    <rect x="0" y="28" width="220" height="4" fill="#134e4a"/>
+    <!-- bolt icon -->
+    <g transform="translate(20, 8)" fill="#cffafe">
+      <rect x="6" y="0" width="6" height="6"/>
+      <rect x="2" y="6" width="8" height="2"/>
+      <rect x="4" y="8" width="8" height="2"/>
+      <rect x="0" y="10" width="6" height="6"/>
+    </g>
+    <text x="120" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#cffafe" text-anchor="middle" letter-spacing="3">EDGE-FIRST</text>
+  </g>
+
+  <!-- Deno — Layer 1: AUTH · Clerk -->
+  <g transform="translate(490, 220)">
+    <rect x="0" y="0" width="220" height="56" fill="#0e7490"/>
+    <rect x="0" y="0" width="220" height="6" fill="#0891b2"/>
+    <rect x="0" y="50" width="220" height="6" fill="#134e4a"/>
+    <rect x="216" y="0" width="4" height="56" fill="#134e4a"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#a5f3fc" letter-spacing="2">AUTH</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#ecfeff">Clerk</text>
+  </g>
+
+  <!-- Deno — Layer 2: DB · Deno KV -->
+  <g transform="translate(490, 280)">
+    <rect x="0" y="0" width="220" height="56" fill="#0e7490"/>
+    <rect x="0" y="0" width="220" height="6" fill="#0891b2"/>
+    <rect x="0" y="50" width="220" height="6" fill="#134e4a"/>
+    <rect x="216" y="0" width="4" height="56" fill="#134e4a"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#a5f3fc" letter-spacing="2">DB</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#ecfeff">Deno KV</text>
+  </g>
+
+  <!-- Deno — Layer 3: API · Hono -->
+  <g transform="translate(490, 340)">
+    <rect x="0" y="0" width="220" height="56" fill="#0e7490"/>
+    <rect x="0" y="0" width="220" height="6" fill="#0891b2"/>
+    <rect x="0" y="50" width="220" height="6" fill="#134e4a"/>
+    <rect x="216" y="0" width="4" height="56" fill="#134e4a"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#a5f3fc" letter-spacing="2">API</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#ecfeff">Hono</text>
+  </g>
+
+  <!-- Deno — Layer 4: WEB · Fresh -->
+  <g transform="translate(490, 400)">
+    <rect x="0" y="0" width="220" height="56" fill="#0e7490"/>
+    <rect x="0" y="0" width="220" height="6" fill="#0891b2"/>
+    <rect x="0" y="50" width="220" height="6" fill="#134e4a"/>
+    <rect x="216" y="0" width="4" height="56" fill="#134e4a"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#a5f3fc" letter-spacing="2">WEB</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#ecfeff">Fresh</text>
+  </g>
+
+  <!-- Deno — Layer 5 (base): RUNTIME · Deno -->
+  <g transform="translate(490, 460)">
+    <rect x="0" y="0" width="220" height="62" fill="#134e4a"/>
+    <rect x="0" y="0" width="220" height="6" fill="#155e75"/>
+    <rect x="0" y="56" width="220" height="6" fill="#042f2e"/>
+    <rect x="216" y="0" width="4" height="62" fill="#042f2e"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#67e8f9" letter-spacing="2">RUNTIME</text>
+    <text x="14" y="46" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="700" fill="#ecfeff">Deno</text>
+  </g>
+
+  <!-- ============================================== -->
+  <!-- STACK 3: NODE (ecosystem, green) — centered x=960 -->
+  <!-- ============================================== -->
+  <!-- ECOSYSTEM badge -->
+  <g transform="translate(850, 178)">
+    <rect x="0" y="0" width="220" height="32" fill="#15803d"/>
+    <rect x="0" y="0" width="220" height="4"  fill="#16a34a"/>
+    <rect x="0" y="28" width="220" height="4" fill="#14532d"/>
+    <!-- branching nodes icon -->
+    <g transform="translate(20, 8)" fill="#bbf7d0">
+      <rect x="0" y="2" width="4" height="4"/>
+      <rect x="6" y="6" width="2" height="2"/>
+      <rect x="8" y="0" width="4" height="4"/>
+      <rect x="8" y="10" width="4" height="4"/>
+      <rect x="6" y="8" width="2" height="2"/>
+    </g>
+    <text x="125" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#dcfce7" text-anchor="middle" letter-spacing="3">ECOSYSTEM</text>
+  </g>
+
+  <!-- Node — Layer 1: AUTH · Clerk -->
+  <g transform="translate(850, 220)">
+    <rect x="0" y="0" width="220" height="56" fill="#15803d"/>
+    <rect x="0" y="0" width="220" height="6" fill="#16a34a"/>
+    <rect x="0" y="50" width="220" height="6" fill="#14532d"/>
+    <rect x="216" y="0" width="4" height="56" fill="#14532d"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#bbf7d0" letter-spacing="2">AUTH</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#f0fdf4">Clerk</text>
+  </g>
+
+  <!-- Node — Layer 2: DB · Neon + Drizzle -->
+  <g transform="translate(850, 280)">
+    <rect x="0" y="0" width="220" height="56" fill="#15803d"/>
+    <rect x="0" y="0" width="220" height="6" fill="#16a34a"/>
+    <rect x="0" y="50" width="220" height="6" fill="#14532d"/>
+    <rect x="216" y="0" width="4" height="56" fill="#14532d"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#bbf7d0" letter-spacing="2">DB</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#f0fdf4">Neon + Drizzle</text>
+  </g>
+
+  <!-- Node — Layer 3: API · NestJS -->
+  <g transform="translate(850, 340)">
+    <rect x="0" y="0" width="220" height="56" fill="#15803d"/>
+    <rect x="0" y="0" width="220" height="6" fill="#16a34a"/>
+    <rect x="0" y="50" width="220" height="6" fill="#14532d"/>
+    <rect x="216" y="0" width="4" height="56" fill="#14532d"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#bbf7d0" letter-spacing="2">API</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#f0fdf4">NestJS</text>
+  </g>
+
+  <!-- Node — Layer 4: WEB · Next.js -->
+  <g transform="translate(850, 400)">
+    <rect x="0" y="0" width="220" height="56" fill="#15803d"/>
+    <rect x="0" y="0" width="220" height="6" fill="#16a34a"/>
+    <rect x="0" y="50" width="220" height="6" fill="#14532d"/>
+    <rect x="216" y="0" width="4" height="56" fill="#14532d"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#bbf7d0" letter-spacing="2">WEB</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#f0fdf4">Next.js</text>
+  </g>
+
+  <!-- Node — Layer 5 (base): RUNTIME · Node 22 -->
+  <g transform="translate(850, 460)">
+    <rect x="0" y="0" width="220" height="62" fill="#14532d"/>
+    <rect x="0" y="0" width="220" height="6" fill="#166534"/>
+    <rect x="0" y="56" width="220" height="6" fill="#052e16"/>
+    <rect x="216" y="0" width="4" height="62" fill="#052e16"/>
+    <text x="14" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#86efac" letter-spacing="2">RUNTIME</text>
+    <text x="14" y="46" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="22" font-weight="700" fill="#f0fdf4">Node 22</text>
+  </g>
+
+  <!-- =========== GROUND LINE under stacks =========== -->
+  <rect x="100" y="528" width="1000" height="2" fill="#eadfcf"/>
+
+  <!-- =========== FOOTER tagline =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="584" font-size="13" fill="#1f2937" letter-spacing="3">DEFAULT IS NOT DOGMA</text>
+    <text x="600" y="606" font-size="11" fill="#9ca3af" letter-spacing="3">override for team expertise · compliance · ecosystem · cost</text>
+  </g>
+</svg>
