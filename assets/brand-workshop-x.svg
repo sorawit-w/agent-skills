@@ -1,0 +1,377 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="brand-workshop — logo, tagline, brief" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>brand-workshop — logo, tagline, brief</title>
+  <desc>Pixel-art banner for the brand-workshop Claude Code plugin: three color-coded workshop roles (strategist, copywriter, visual designer) with themed speech bubbles, creative sparkles between them, and a prominent brand-identity deliverable card on the right showing a minimalist logo, a tagline line, and a 3-swatch color palette. Below, a three-phase process ribbon: Discovery, Concept, Creation.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan)"/>
+
+  <!-- =========== TITLE BLOCK (top-left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="64" y="72" font-size="38" font-weight="700" fill="#1f2937" letter-spacing="1">brand-workshop</text>
+    <text x="64" y="104" font-size="18" fill="#6b7280">logo + tagline + brief, built by a team.</text>
+    <text x="64" y="130" font-size="11" fill="#9ca3af" letter-spacing="3">DISCOVERY · CONCEPT · CREATION</text>
+  </g>
+
+  <!-- =========== CHARACTER DEFINITIONS =========== -->
+  <!-- Three workshop roles, y_base=184, 80w x 128h, spaced 220 apart -->
+
+  <!-- ==== Character 1: Brand Strategist (emerald) ==== -->
+  <g transform="translate(460, 184)">
+    <!-- speech bubble above: archetype / positioning card -->
+    <g>
+      <rect x="4" y="-56" width="72" height="36" fill="#ffffff"/>
+      <rect x="4" y="-56" width="72" height="4" fill="#047857"/>
+      <rect x="4" y="-24" width="72" height="4" fill="#047857"/>
+      <rect x="4" y="-56" width="4" height="36" fill="#047857"/>
+      <rect x="72" y="-56" width="4" height="36" fill="#047857"/>
+      <!-- tail -->
+      <rect x="36" y="-20" width="4" height="4" fill="#047857"/>
+      <rect x="40" y="-16" width="4" height="4" fill="#047857"/>
+      <!-- compass / archetype mark inside -->
+      <rect x="34" y="-50" width="12" height="2" fill="#047857"/>
+      <rect x="30" y="-48" width="4" height="14" fill="#047857"/>
+      <rect x="46" y="-48" width="4" height="14" fill="#047857"/>
+      <rect x="34" y="-34" width="12" height="2" fill="#047857"/>
+      <rect x="38" y="-44" width="4" height="6" fill="#047857"/>
+      <!-- underlines -->
+      <rect x="14" y="-28" width="52" height="2" fill="#9ca3af"/>
+    </g>
+    <!-- head -->
+    <rect x="20" y="8" width="40" height="32" fill="#fde68a"/>
+    <rect x="20" y="8" width="40" height="6" fill="#fcd34d"/>
+    <!-- hair: short curly -->
+    <rect x="20" y="8" width="40" height="6" fill="#1f2937"/>
+    <rect x="18" y="10" width="4" height="8" fill="#1f2937"/>
+    <rect x="58" y="10" width="4" height="8" fill="#1f2937"/>
+    <rect x="26" y="10" width="4" height="4" fill="#1f2937"/>
+    <rect x="50" y="10" width="4" height="4" fill="#1f2937"/>
+    <!-- eyes -->
+    <rect x="28" y="22" width="4" height="4" fill="#1f2937"/>
+    <rect x="48" y="22" width="4" height="4" fill="#1f2937"/>
+    <!-- mouth -->
+    <rect x="34" y="32" width="12" height="2" fill="#1f2937"/>
+    <!-- body/shirt in EMERALD -->
+    <rect x="6" y="40" width="68" height="64" fill="#047857"/>
+    <rect x="6" y="40" width="68" height="6" fill="#10b981"/>
+    <!-- target icon on chest (positioning) -->
+    <g transform="translate(24, 56)">
+      <rect x="10" y="0" width="12" height="2" fill="#fde68a"/>
+      <rect x="6"  y="2" width="20" height="2" fill="#fde68a"/>
+      <rect x="4"  y="4" width="4" height="16" fill="#fde68a"/>
+      <rect x="24" y="4" width="4" height="16" fill="#fde68a"/>
+      <rect x="6"  y="20" width="20" height="2" fill="#fde68a"/>
+      <rect x="10" y="22" width="12" height="2" fill="#fde68a"/>
+      <rect x="12" y="8" width="8" height="8" fill="#fde68a"/>
+      <rect x="14" y="10" width="4" height="4" fill="#047857"/>
+    </g>
+    <!-- legs -->
+    <rect x="14" y="104" width="16" height="24" fill="#1f2937"/>
+    <rect x="50" y="104" width="16" height="24" fill="#1f2937"/>
+  </g>
+
+  <!-- =========== COLLAB SPARKLE between char 1 and 2 =========== -->
+  <g transform="translate(570, 156)" fill="#eab308">
+    <!-- 4-point sparkle -->
+    <rect x="12" y="0"  width="4" height="4"/>
+    <rect x="12" y="24" width="4" height="4"/>
+    <rect x="0"  y="12" width="4" height="4"/>
+    <rect x="24" y="12" width="4" height="4"/>
+    <rect x="10" y="10" width="8" height="8"/>
+    <!-- small sparkle -->
+    <g transform="translate(-6, 30)" fill="#eab308">
+      <rect x="4" y="0" width="2" height="2"/>
+      <rect x="4" y="8" width="2" height="2"/>
+      <rect x="0" y="4" width="2" height="2"/>
+      <rect x="8" y="4" width="2" height="2"/>
+      <rect x="2" y="2" width="6" height="6"/>
+    </g>
+  </g>
+
+  <!-- ==== Character 2: Copywriter (rose) — holds the tagline ==== -->
+  <g transform="translate(680, 184)">
+    <!-- speech bubble: big quoted tagline -->
+    <g>
+      <rect x="4" y="-56" width="72" height="36" fill="#ffffff"/>
+      <rect x="4" y="-56" width="72" height="4" fill="#be185d"/>
+      <rect x="4" y="-24" width="72" height="4" fill="#be185d"/>
+      <rect x="4" y="-56" width="4" height="36" fill="#be185d"/>
+      <rect x="72" y="-56" width="4" height="36" fill="#be185d"/>
+      <rect x="36" y="-20" width="4" height="4" fill="#be185d"/>
+      <rect x="40" y="-16" width="4" height="4" fill="#be185d"/>
+      <!-- opening quote glyph -->
+      <rect x="12" y="-50" width="4" height="8" fill="#be185d"/>
+      <rect x="16" y="-50" width="4" height="4" fill="#be185d"/>
+      <rect x="20" y="-50" width="4" height="8" fill="#be185d"/>
+      <rect x="24" y="-50" width="4" height="4" fill="#be185d"/>
+      <!-- tagline bars -->
+      <rect x="12" y="-38" width="56" height="3" fill="#1f2937"/>
+      <rect x="12" y="-32" width="44" height="3" fill="#1f2937"/>
+      <!-- closing quote glyph at end -->
+      <rect x="60" y="-32" width="4" height="4" fill="#be185d"/>
+      <rect x="64" y="-32" width="4" height="4" fill="#be185d"/>
+    </g>
+    <!-- head -->
+    <rect x="20" y="8" width="40" height="32" fill="#fde68a"/>
+    <rect x="20" y="8" width="40" height="6" fill="#fcd34d"/>
+    <!-- hair: bob cut, rose tint -->
+    <rect x="18" y="8" width="44" height="10" fill="#7c2d12"/>
+    <rect x="16" y="12" width="6" height="16" fill="#7c2d12"/>
+    <rect x="58" y="12" width="6" height="16" fill="#7c2d12"/>
+    <!-- eyes -->
+    <rect x="28" y="24" width="4" height="4" fill="#1f2937"/>
+    <rect x="48" y="24" width="4" height="4" fill="#1f2937"/>
+    <!-- mouth (smirk) -->
+    <rect x="34" y="32" width="10" height="2" fill="#1f2937"/>
+    <rect x="44" y="30" width="2" height="2" fill="#1f2937"/>
+    <!-- body in ROSE -->
+    <rect x="6" y="40" width="68" height="64" fill="#be185d"/>
+    <rect x="6" y="40" width="68" height="6" fill="#e11d48"/>
+    <!-- typewriter/page icon on chest -->
+    <g transform="translate(22, 58)">
+      <rect x="2"  y="2"  width="32" height="20" fill="#fdf7ea"/>
+      <rect x="2"  y="2"  width="32" height="2"  fill="#7c2d12"/>
+      <rect x="6"  y="8"  width="24" height="2" fill="#9ca3af"/>
+      <rect x="6"  y="12" width="20" height="2" fill="#9ca3af"/>
+      <rect x="6"  y="16" width="16" height="2" fill="#9ca3af"/>
+      <!-- blinking cursor -->
+      <rect x="24" y="16" width="2" height="2" fill="#be185d"/>
+    </g>
+    <!-- legs -->
+    <rect x="14" y="104" width="16" height="24" fill="#1f2937"/>
+    <rect x="50" y="104" width="16" height="24" fill="#1f2937"/>
+  </g>
+
+  <!-- =========== COLLAB SPARKLE between char 2 and 3 =========== -->
+  <g transform="translate(790, 156)" fill="#eab308">
+    <rect x="12" y="0"  width="4" height="4"/>
+    <rect x="12" y="24" width="4" height="4"/>
+    <rect x="0"  y="12" width="4" height="4"/>
+    <rect x="24" y="12" width="4" height="4"/>
+    <rect x="10" y="10" width="8" height="8"/>
+    <g transform="translate(22, 30)" fill="#eab308">
+      <rect x="4" y="0" width="2" height="2"/>
+      <rect x="4" y="8" width="2" height="2"/>
+      <rect x="0" y="4" width="2" height="2"/>
+      <rect x="8" y="4" width="2" height="2"/>
+      <rect x="2" y="2" width="6" height="6"/>
+    </g>
+  </g>
+
+  <!-- ==== Character 3: Visual Designer (purple) — holds palette + logo ==== -->
+  <g transform="translate(900, 184)">
+    <!-- speech bubble: palette swatches + shape sketch -->
+    <g>
+      <rect x="4" y="-56" width="72" height="36" fill="#ffffff"/>
+      <rect x="4" y="-56" width="72" height="4" fill="#6d28d9"/>
+      <rect x="4" y="-24" width="72" height="4" fill="#6d28d9"/>
+      <rect x="4" y="-56" width="4" height="36" fill="#6d28d9"/>
+      <rect x="72" y="-56" width="4" height="36" fill="#6d28d9"/>
+      <rect x="36" y="-20" width="4" height="4" fill="#6d28d9"/>
+      <rect x="40" y="-16" width="4" height="4" fill="#6d28d9"/>
+      <!-- swatches row -->
+      <rect x="12" y="-48" width="12" height="12" fill="#047857"/>
+      <rect x="28" y="-48" width="12" height="12" fill="#be185d"/>
+      <rect x="44" y="-48" width="12" height="12" fill="#6d28d9"/>
+      <rect x="60" y="-48" width="8"  height="12" fill="#eab308"/>
+      <!-- tiny logo sketch (circle w/ cut) -->
+      <rect x="14" y="-32" width="8" height="8" fill="#1f2937"/>
+      <rect x="16" y="-30" width="4" height="4" fill="#ffffff"/>
+      <!-- caption line -->
+      <rect x="26" y="-30" width="40" height="2" fill="#9ca3af"/>
+      <rect x="26" y="-26" width="30" height="2" fill="#9ca3af"/>
+    </g>
+    <!-- head -->
+    <rect x="20" y="8" width="40" height="32" fill="#fde68a"/>
+    <rect x="20" y="8" width="40" height="6" fill="#fcd34d"/>
+    <!-- hair: swept bangs, purple tint -->
+    <rect x="20" y="8" width="40" height="8" fill="#6d28d9"/>
+    <rect x="16" y="14" width="6" height="14" fill="#6d28d9"/>
+    <rect x="58" y="14" width="6" height="14" fill="#6d28d9"/>
+    <rect x="28" y="14" width="4" height="4" fill="#6d28d9"/>
+    <!-- eyes -->
+    <rect x="28" y="24" width="4" height="4" fill="#1f2937"/>
+    <rect x="48" y="24" width="4" height="4" fill="#1f2937"/>
+    <!-- mouth -->
+    <rect x="34" y="32" width="12" height="2" fill="#1f2937"/>
+    <!-- body in PURPLE -->
+    <rect x="6" y="40" width="68" height="64" fill="#6d28d9"/>
+    <rect x="6" y="40" width="68" height="6" fill="#8b5cf6"/>
+    <!-- pencil + ruler icon on chest -->
+    <rect x="22" y="56" width="32" height="6" fill="#fde68a"/>
+    <rect x="22" y="56" width="4"  height="6" fill="#a16207"/>
+    <rect x="50" y="56" width="4"  height="6" fill="#1f2937"/>
+    <rect x="22" y="70" width="32" height="20" fill="#fdf7ea"/>
+    <!-- ruler ticks -->
+    <rect x="26" y="70" width="2" height="4" fill="#1f2937"/>
+    <rect x="34" y="70" width="2" height="4" fill="#1f2937"/>
+    <rect x="42" y="70" width="2" height="4" fill="#1f2937"/>
+    <rect x="50" y="70" width="2" height="4" fill="#1f2937"/>
+    <!-- svg shape being drawn -->
+    <rect x="34" y="78" width="8" height="8" fill="#6d28d9"/>
+    <rect x="36" y="80" width="4" height="4" fill="#fdf7ea"/>
+    <!-- legs -->
+    <rect x="14" y="104" width="16" height="24" fill="#1f2937"/>
+    <rect x="50" y="104" width="16" height="24" fill="#1f2937"/>
+  </g>
+
+  <!-- =========== DELIVERABLE CARD (right) =========== -->
+  <g transform="translate(1160, 140)">
+    <!-- card frame -->
+    <rect x="0"  y="0"  width="380" height="200" fill="#ffffff"/>
+    <rect x="0"  y="0"  width="380" height="4"   fill="#c9b58a"/>
+    <rect x="0"  y="196" width="380" height="4"   fill="#c9b58a"/>
+    <rect x="0"  y="0"  width="4"   height="200" fill="#c9b58a"/>
+    <rect x="376" y="0" width="4"   height="200" fill="#c9b58a"/>
+    <!-- card title strip -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#9ca3af">
+      <text x="16" y="24" font-size="11" letter-spacing="3">BRAND IDENTITY · v1</text>
+    </g>
+
+    <!-- LOGO (minimalist, negative-space circle with notch — favicon/small proof) -->
+    <g transform="translate(24, 44)">
+      <!-- outer circle (pixel approx) -->
+      <rect x="8"  y="0"  width="40" height="4"  fill="#047857"/>
+      <rect x="4"  y="4"  width="48" height="4"  fill="#047857"/>
+      <rect x="0"  y="8"  width="56" height="40" fill="#047857"/>
+      <rect x="4"  y="48" width="48" height="4"  fill="#047857"/>
+      <rect x="8"  y="52" width="40" height="4"  fill="#047857"/>
+      <!-- inner negative-space arrow/cut -->
+      <rect x="20" y="18" width="20" height="4" fill="#ffffff"/>
+      <rect x="20" y="22" width="12" height="4" fill="#ffffff"/>
+      <rect x="20" y="26" width="20" height="4" fill="#ffffff"/>
+      <rect x="32" y="30" width="8"  height="4" fill="#ffffff"/>
+      <rect x="20" y="34" width="20" height="4" fill="#ffffff"/>
+      <!-- favicon-size proof (32px badge) -->
+      <g transform="translate(72, 16)">
+        <rect x="0" y="0" width="24" height="24" fill="#047857"/>
+        <rect x="6" y="10" width="12" height="4" fill="#ffffff"/>
+        <rect x="6" y="14" width="6"  height="2" fill="#ffffff"/>
+        <!-- label -->
+        <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#9ca3af">
+          <text x="0" y="40" font-size="9" letter-spacing="2">32PX</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- TAGLINE line (prominent, on card, under logo) -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="24" y="130" font-size="11" fill="#9ca3af" letter-spacing="2">TAGLINE</text>
+      <text x="24" y="152" font-size="16" font-weight="700" fill="#1f2937">"every shape earns its ink."</text>
+    </g>
+
+    <!-- PALETTE SWATCHES (bottom of card) -->
+    <g transform="translate(24, 166)">
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="0" y="-4" font-size="9" fill="#9ca3af" letter-spacing="2">PALETTE</text>
+      </g>
+      <rect x="0"   y="0" width="28" height="16" fill="#047857"/>
+      <rect x="32"  y="0" width="28" height="16" fill="#be185d"/>
+      <rect x="64"  y="0" width="28" height="16" fill="#6d28d9"/>
+      <rect x="96"  y="0" width="28" height="16" fill="#eab308"/>
+      <rect x="128" y="0" width="28" height="16" fill="#1f2937"/>
+      <!-- typography hint -->
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="170" y="12" font-size="11" fill="#6b7280">Aa · sans</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- =========== GROUND LINE under characters =========== -->
+  <rect x="440" y="316" width="560" height="2" fill="#eadfcf"/>
+
+  <!-- =========== PROCESS RIBBON (bottom) — 3 phases =========== -->
+  <g transform="translate(480, 380)">
+    <!-- Phase 1: Discovery -->
+    <g transform="translate(0, 0)">
+      <rect x="0"  y="0"  width="32" height="32" fill="#1f2937"/>
+      <rect x="4"  y="-4" width="24" height="4"  fill="#1f2937"/>
+      <rect x="4"  y="32" width="24" height="4"  fill="#1f2937"/>
+      <rect x="-4" y="4"  width="4"  height="24" fill="#1f2937"/>
+      <rect x="32" y="4"  width="4"  height="24" fill="#1f2937"/>
+      <!-- number 1 -->
+      <rect x="14" y="8"  width="4" height="16" fill="#f5efe6"/>
+      <rect x="10" y="10" width="4" height="4"  fill="#f5efe6"/>
+      <rect x="10" y="24" width="12" height="4" fill="#f5efe6"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="-16" y="54" font-size="11" letter-spacing="2">DISCOVERY</text>
+    </g>
+    <!-- arrow 1 -->
+    <g transform="translate(52, 10)" fill="#6b7280">
+      <rect x="0"  y="6" width="72" height="4"/>
+      <rect x="64" y="2" width="4"  height="4"/>
+      <rect x="68" y="6" width="4"  height="4"/>
+      <rect x="64" y="10" width="4" height="4"/>
+    </g>
+
+    <!-- Phase 2: Concept (highlighted in workshop rose) -->
+    <g transform="translate(180, 0)">
+      <rect x="0"  y="0"  width="32" height="32" fill="#be185d"/>
+      <rect x="4"  y="-4" width="24" height="4"  fill="#be185d"/>
+      <rect x="4"  y="32" width="24" height="4"  fill="#be185d"/>
+      <rect x="-4" y="4"  width="4"  height="24" fill="#be185d"/>
+      <rect x="32" y="4"  width="4"  height="24" fill="#be185d"/>
+      <!-- number 2 -->
+      <rect x="8"  y="8"  width="16" height="4" fill="#f5efe6"/>
+      <rect x="20" y="8"  width="4"  height="8" fill="#f5efe6"/>
+      <rect x="8"  y="16" width="16" height="4" fill="#f5efe6"/>
+      <rect x="8"  y="20" width="4"  height="4" fill="#f5efe6"/>
+      <rect x="8"  y="24" width="16" height="4" fill="#f5efe6"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#be185d" font-weight="700">
+      <text x="164" y="54" font-size="11" letter-spacing="2">CONCEPT</text>
+    </g>
+    <!-- arrow 2 -->
+    <g transform="translate(232, 10)" fill="#6b7280">
+      <rect x="0"  y="6" width="72" height="4"/>
+      <rect x="64" y="2" width="4"  height="4"/>
+      <rect x="68" y="6" width="4"  height="4"/>
+      <rect x="64" y="10" width="4" height="4"/>
+    </g>
+
+    <!-- Phase 3: Creation -->
+    <g transform="translate(360, 0)">
+      <rect x="0"  y="0"  width="32" height="32" fill="#1f2937"/>
+      <rect x="4"  y="-4" width="24" height="4"  fill="#1f2937"/>
+      <rect x="4"  y="32" width="24" height="4"  fill="#1f2937"/>
+      <rect x="-4" y="4"  width="4"  height="24" fill="#1f2937"/>
+      <rect x="32" y="4"  width="4"  height="24" fill="#1f2937"/>
+      <!-- number 3 -->
+      <rect x="8"  y="8"  width="16" height="4" fill="#f5efe6"/>
+      <rect x="20" y="8"  width="4"  height="8" fill="#f5efe6"/>
+      <rect x="12" y="16" width="12" height="4" fill="#f5efe6"/>
+      <rect x="20" y="20" width="4"  height="4" fill="#f5efe6"/>
+      <rect x="8"  y="24" width="16" height="4" fill="#f5efe6"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="344" y="54" font-size="11" letter-spacing="2">CREATION</text>
+    </g>
+
+    <!-- Deliverable checkbox card after phase 3 -->
+    <g transform="translate(480, -10)">
+      <rect x="0"  y="0"  width="140" height="52" fill="#ffffff"/>
+      <rect x="0"  y="0"  width="140" height="4"  fill="#c9b58a"/>
+      <rect x="0"  y="48" width="140" height="4"  fill="#c9b58a"/>
+      <rect x="0"  y="0"  width="4"   height="52" fill="#c9b58a"/>
+      <rect x="136" y="0" width="4"   height="52" fill="#c9b58a"/>
+      <!-- 3 checklist rows: logo / tagline / brief -->
+      <rect x="10" y="10" width="6" height="6" fill="#15803d"/>
+      <rect x="22" y="11" width="28" height="3" fill="#1f2937"/>
+      <rect x="54" y="11" width="74" height="3" fill="#9ca3af"/>
+
+      <rect x="10" y="22" width="6" height="6" fill="#15803d"/>
+      <rect x="22" y="23" width="40" height="3" fill="#1f2937"/>
+      <rect x="66" y="23" width="62" height="3" fill="#9ca3af"/>
+
+      <rect x="10" y="34" width="6" height="6" fill="#15803d"/>
+      <rect x="22" y="35" width="32" height="3" fill="#1f2937"/>
+      <rect x="58" y="35" width="70" height="3" fill="#9ca3af"/>
+    </g>
+  </g>
+</svg>

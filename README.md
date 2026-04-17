@@ -58,6 +58,7 @@ Claude Code caches the marketplace index locally and doesn't re-fetch on every c
 
 | Plugin | What it does | Reach for it when |
 |---|---|---|
+| [`brand-workshop`](plugins/brand-workshop) | Assemble a virtual creative team, run a Discovery → Concept → Creation workshop, and ship a brand strategy brief, tagline, and code-generated logo. | You need a real identity package for a product, app, or startup — not just a logo doodle — with the positioning, tagline, and mark all sharing the same rationale. |
 | [`team-composer`](plugins/team-composer) | Assemble the right virtual team and run a 3-round discussion that produces real disagreement — not restated agreement. | You want multi-perspective planning/review across tech, health, fintech, climate, games, biotech, and beyond, with a conclusion you can act on. |
 | [`skill-evaluator`](plugins/skill-evaluator) | Audit a skill to see whether its rules actually land when Claude runs it, and propose targeted rule-text fixes when they don't. | You just wrote a skill and want to stress-test it, or a skill has been "mostly working" but you suspect a rule is being silently skipped. |
 

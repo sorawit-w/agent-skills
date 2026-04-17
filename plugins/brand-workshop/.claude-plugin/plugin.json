@@ -1,0 +1,9 @@
+{
+  "name": "brand-workshop",
+  "description": "Assemble a virtual creative team and produce a brand strategy brief, tagline, and code-generated logo.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Kiang (Sorawit Wanitwarodom)",
+    "url": "https://github.com/sorawit-w"
+  }
+}

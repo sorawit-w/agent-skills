@@ -14,12 +14,14 @@ This plugin ships no skill of its own — it only declares every other plugin in
 That's equivalent to installing each shelf plugin individually:
 
 ```
+/plugin install brand-workshop@sorawit-w
 /plugin install skill-evaluator@sorawit-w
 /plugin install team-composer@sorawit-w
 ```
 
 ## What's bundled
 
+- [`brand-workshop`](../brand-workshop) — assemble a creative team and ship a brand strategy brief, tagline, and code-generated logo.
 - [`skill-evaluator`](../skill-evaluator) — audit whether a skill's rules actually land in practice.
 - [`team-composer`](../team-composer) — assemble a virtual team and run a 3-round discussion that produces real disagreement.
 

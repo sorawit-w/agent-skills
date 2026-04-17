@@ -11,6 +11,11 @@
       "description": "Meta-plugin: installs the whole agent-skills shelf in one command."
     },
     {
+      "name": "brand-workshop",
+      "source": "./plugins/brand-workshop",
+      "description": "Assemble a virtual creative team and produce a brand strategy brief, tagline, and code-generated logo."
+    },
+    {
       "name": "skill-evaluator",
       "source": "./plugins/skill-evaluator",
       "description": "Audit a skill to see whether its rules actually land in practice."

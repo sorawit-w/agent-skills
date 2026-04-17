@@ -1,0 +1,47 @@
+{
+  "skill_name": "brand-workshop",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a logo and tagline for Napolleon — a decision-making platform that uses pairwise comparison and distributed voting to help groups make better collective decisions. Vision: Make every group decision fair and clear. Mission: Replace chaotic debates with structured, transparent decision-making. Key features: pairwise comparison voting, real-time results via SSE, demographic breakdowns, confidence scores.",
+      "expected_output": "Brand brief (.md) with full team brainstorm, SVG and PNG logo, and tagline under 8 words",
+      "files": [],
+      "assertions": [
+        "Output includes a brand-brief.md file",
+        "Output includes a logo.svg file",
+        "Output includes a logo.png file",
+        "Brand brief contains sections from at least 5 team roles",
+        "Brand brief includes a tagline recommendation",
+        "Brand brief includes a color palette with hex values",
+        "Logo uses minimalist/negative space style by default",
+        "The tagline is under 8 words"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Make me a logo for my Thai restaurant called 'Soi 9'. We serve street food style Thai cuisine in a modern fast-casual setting in Los Angeles. I want something that feels authentic but not cheesy.",
+      "expected_output": "Brand brief with cultural considerations from the regional advisor, SVG/PNG logo, and tagline",
+      "files": [],
+      "assertions": [
+        "Output includes a brand-brief.md file",
+        "Output includes logo files (svg and png)",
+        "The @regional-cultural-advisor role provides input on Thai cultural elements",
+        "The logo avoids stereotypical Thai imagery clichés",
+        "Brand brief includes a tagline",
+        "The visual direction balances authenticity with modern appeal"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I need a logo for my company. It's called TrueNorth Analytics. We do B2B data analytics consulting for mid-market companies. Can you show me what logo styles you can do first?",
+      "expected_output": "First presents available logo styles from the reference, then proceeds with the workshop after user picks a style (or uses default)",
+      "files": [],
+      "assertions": [
+        "Claude presents logo style options from references/logo-styles.md",
+        "Each style includes a brief description",
+        "Claude recommends a style based on the B2B analytics context",
+        "Claude waits for user input or proceeds with the recommended default"
+      ]
+    }
+  ]
+}
