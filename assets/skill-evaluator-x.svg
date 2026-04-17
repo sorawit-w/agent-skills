@@ -1,0 +1,298 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="skill-evaluator — do the rules actually land?" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>skill-evaluator — do the rules actually land?</title>
+  <desc>Pixel-art banner for the skill-evaluator Claude Code plugin: a SKILL.md source card on the left with a list of rules, a FINDINGS audit card in the center with pass/fail badges and a magnifier zoomed on a failing rule, and a RULE-TEXT FIX card on the right showing a before/after diff.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan)"/>
+
+  <!-- =========== TITLE BLOCK (top-left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="64" y="72" font-size="38" font-weight="700" fill="#1f2937" letter-spacing="1">skill-evaluator</text>
+    <text x="64" y="104" font-size="18" fill="#6b7280">do the rules actually land?</text>
+    <text x="64" y="130" font-size="11" fill="#9ca3af" letter-spacing="3">AUDIT · GAP FINDING · RULE-TEXT FIX</text>
+  </g>
+
+  <!-- =========== SECTION LABELS (chapter markers under each card) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="620" y="436" font-size="11" fill="#1f2937" letter-spacing="3">SOURCE</text>
+    <text x="1000" y="436" font-size="11" fill="#c2410c" font-weight="700" letter-spacing="3">EVALUATE</text>
+    <text x="1400" y="436" font-size="11" fill="#1f2937" letter-spacing="3">FIX</text>
+  </g>
+
+  <!-- =========== CARD 1: SKILL.md source (clipboard style) =========== -->
+  <g>
+    <!-- card paper -->
+    <rect x="520" y="168" width="200" height="240" fill="#f3e7c9"/>
+    <rect x="520" y="168" width="200" height="4"  fill="#b79a5c"/>
+    <rect x="520" y="404" width="200" height="4"  fill="#b79a5c"/>
+    <rect x="520" y="168" width="4"   height="240" fill="#b79a5c"/>
+    <rect x="716" y="168" width="4"   height="240" fill="#b79a5c"/>
+    <!-- clip at top -->
+    <rect x="596" y="160" width="48" height="12" fill="#6b7280"/>
+    <rect x="604" y="156" width="32" height="4"  fill="#6b7280"/>
+
+    <!-- title bar "SKILL.md" -->
+    <rect x="524" y="180" width="192" height="26" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="540" y="198" font-size="14" font-weight="700">SKILL.md</text>
+    </g>
+    <rect x="524" y="206" width="192" height="2" fill="#b79a5c"/>
+
+    <!-- rule 1 -->
+    <rect x="540" y="224" width="6" height="6" fill="#1f2937"/>
+    <rect x="552" y="226" width="140" height="3" fill="#6b7280"/>
+    <rect x="552" y="232" width="110" height="3" fill="#9ca3af"/>
+    <!-- rule 2 -->
+    <rect x="540" y="248" width="6" height="6" fill="#1f2937"/>
+    <rect x="552" y="250" width="128" height="3" fill="#6b7280"/>
+    <rect x="552" y="256" width="140" height="3" fill="#9ca3af"/>
+    <!-- rule 3 (the failing one, highlighted) -->
+    <rect x="534" y="268" width="160" height="20" fill="#fdf7ea"/>
+    <rect x="534" y="268" width="2"   height="20" fill="#b91c1c"/>
+    <rect x="540" y="272" width="6" height="6" fill="#b91c1c"/>
+    <rect x="552" y="274" width="132" height="3" fill="#6b7280"/>
+    <rect x="552" y="280" width="96"  height="3" fill="#9ca3af"/>
+    <!-- rule 4 -->
+    <rect x="540" y="296" width="6" height="6" fill="#1f2937"/>
+    <rect x="552" y="298" width="138" height="3" fill="#6b7280"/>
+    <rect x="552" y="304" width="116" height="3" fill="#9ca3af"/>
+    <!-- rule 5 -->
+    <rect x="540" y="320" width="6" height="6" fill="#1f2937"/>
+    <rect x="552" y="322" width="122" height="3" fill="#6b7280"/>
+    <rect x="552" y="328" width="132" height="3" fill="#9ca3af"/>
+    <!-- rule 6 -->
+    <rect x="540" y="344" width="6" height="6" fill="#1f2937"/>
+    <rect x="552" y="346" width="136" height="3" fill="#6b7280"/>
+    <rect x="552" y="352" width="102" height="3" fill="#9ca3af"/>
+
+    <!-- footer meta -->
+    <rect x="540" y="378" width="48" height="3" fill="#c9b58a"/>
+    <rect x="592" y="378" width="28" height="3" fill="#c9b58a"/>
+  </g>
+
+  <!-- =========== ARROW 1 (SKILL.md -> FINDINGS) =========== -->
+  <g transform="translate(740, 280)" fill="#6b7280">
+    <rect x="0"  y="6" width="88" height="4"/>
+    <rect x="80" y="2" width="4"  height="4"/>
+    <rect x="84" y="6" width="4"  height="4"/>
+    <rect x="80" y="10" width="4" height="4"/>
+  </g>
+
+  <!-- =========== CARD 2: FINDINGS (audit report) =========== -->
+  <g>
+    <!-- outer tile -->
+    <rect x="852" y="168" width="296" height="240" fill="#ffffff"/>
+    <rect x="852" y="168" width="296" height="4"   fill="#c9b58a"/>
+    <rect x="852" y="404" width="296" height="4"   fill="#c9b58a"/>
+    <rect x="852" y="168" width="4"   height="240" fill="#c9b58a"/>
+    <rect x="1144" y="168" width="4"  height="240" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="860" y="176" width="280" height="224" fill="#fdf7ea"/>
+
+    <!-- title bar "FINDINGS" -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="874" y="200" font-size="14" font-weight="700" fill="#1f2937" letter-spacing="1">FINDINGS</text>
+      <text x="1112" y="200" font-size="10" fill="#9ca3af" text-anchor="end" letter-spacing="2">5/6 PASS</text>
+    </g>
+    <rect x="870" y="210" width="260" height="2" fill="#c9b58a"/>
+
+    <!-- row 1: PASS -->
+    <rect x="874" y="222" width="18" height="14" fill="#15803d"/>
+    <rect x="878" y="229" width="2" height="2" fill="#f5efe6"/>
+    <rect x="880" y="231" width="2" height="2" fill="#f5efe6"/>
+    <rect x="882" y="229" width="2" height="2" fill="#f5efe6"/>
+    <rect x="884" y="227" width="2" height="2" fill="#f5efe6"/>
+    <rect x="886" y="225" width="2" height="2" fill="#f5efe6"/>
+    <rect x="900" y="224" width="160" height="3" fill="#6b7280"/>
+    <rect x="900" y="230" width="120" height="3" fill="#9ca3af"/>
+
+    <!-- row 2: PASS -->
+    <rect x="874" y="244" width="18" height="14" fill="#15803d"/>
+    <rect x="878" y="251" width="2" height="2" fill="#f5efe6"/>
+    <rect x="880" y="253" width="2" height="2" fill="#f5efe6"/>
+    <rect x="882" y="251" width="2" height="2" fill="#f5efe6"/>
+    <rect x="884" y="249" width="2" height="2" fill="#f5efe6"/>
+    <rect x="886" y="247" width="2" height="2" fill="#f5efe6"/>
+    <rect x="900" y="246" width="148" height="3" fill="#6b7280"/>
+    <rect x="900" y="252" width="136" height="3" fill="#9ca3af"/>
+
+    <!-- row 3: FAIL (magnifier hovers here) -->
+    <rect x="868" y="264" width="266" height="20" fill="#fee2e2"/>
+    <rect x="868" y="264" width="2"   height="20" fill="#b91c1c"/>
+    <rect x="874" y="268" width="18" height="14" fill="#b91c1c"/>
+    <!-- X mark -->
+    <rect x="878" y="272" width="2" height="2" fill="#f5efe6"/>
+    <rect x="880" y="274" width="2" height="2" fill="#f5efe6"/>
+    <rect x="882" y="276" width="2" height="2" fill="#f5efe6"/>
+    <rect x="884" y="274" width="2" height="2" fill="#f5efe6"/>
+    <rect x="886" y="272" width="2" height="2" fill="#f5efe6"/>
+    <rect x="882" y="272" width="2" height="2" fill="#f5efe6"/>
+    <rect x="878" y="276" width="2" height="2" fill="#f5efe6"/>
+    <rect x="886" y="276" width="2" height="2" fill="#f5efe6"/>
+    <rect x="900" y="268" width="140" height="3" fill="#6b7280"/>
+    <rect x="900" y="274" width="108" height="3" fill="#9ca3af"/>
+
+    <!-- row 4: PASS -->
+    <rect x="874" y="294" width="18" height="14" fill="#15803d"/>
+    <rect x="878" y="301" width="2" height="2" fill="#f5efe6"/>
+    <rect x="880" y="303" width="2" height="2" fill="#f5efe6"/>
+    <rect x="882" y="301" width="2" height="2" fill="#f5efe6"/>
+    <rect x="884" y="299" width="2" height="2" fill="#f5efe6"/>
+    <rect x="886" y="297" width="2" height="2" fill="#f5efe6"/>
+    <rect x="900" y="296" width="158" height="3" fill="#6b7280"/>
+    <rect x="900" y="302" width="128" height="3" fill="#9ca3af"/>
+
+    <!-- row 5: PASS -->
+    <rect x="874" y="316" width="18" height="14" fill="#15803d"/>
+    <rect x="878" y="323" width="2" height="2" fill="#f5efe6"/>
+    <rect x="880" y="325" width="2" height="2" fill="#f5efe6"/>
+    <rect x="882" y="323" width="2" height="2" fill="#f5efe6"/>
+    <rect x="884" y="321" width="2" height="2" fill="#f5efe6"/>
+    <rect x="886" y="319" width="2" height="2" fill="#f5efe6"/>
+    <rect x="900" y="318" width="138" height="3" fill="#6b7280"/>
+    <rect x="900" y="324" width="112" height="3" fill="#9ca3af"/>
+
+    <!-- row 6: PASS -->
+    <rect x="874" y="338" width="18" height="14" fill="#15803d"/>
+    <rect x="878" y="345" width="2" height="2" fill="#f5efe6"/>
+    <rect x="880" y="347" width="2" height="2" fill="#f5efe6"/>
+    <rect x="882" y="345" width="2" height="2" fill="#f5efe6"/>
+    <rect x="884" y="343" width="2" height="2" fill="#f5efe6"/>
+    <rect x="886" y="341" width="2" height="2" fill="#f5efe6"/>
+    <rect x="900" y="340" width="152" height="3" fill="#6b7280"/>
+    <rect x="900" y="346" width="120" height="3" fill="#9ca3af"/>
+
+    <!-- footer classification chips -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1f2937" letter-spacing="1">
+      <rect x="874" y="366" width="48" height="16" fill="#fde68a"/>
+      <text x="882" y="377">SKILL</text>
+      <rect x="930" y="366" width="52" height="16" fill="#bae6fd"/>
+      <text x="938" y="377">RUBRIC</text>
+      <rect x="990" y="366" width="48" height="16" fill="#fecaca"/>
+      <text x="998" y="377">BRIEF</text>
+      <rect x="1046" y="366" width="56" height="16" fill="#bbf7d0"/>
+      <text x="1054" y="377">FIXTURE</text>
+    </g>
+
+    <!-- ===== MAGNIFIER overlay on row 3 (the failing rule) ===== -->
+    <g transform="translate(1040, 246)">
+      <!-- frame (thick pixel ring) -->
+      <rect x="8"  y="0"  width="32" height="4" fill="#1f2937"/>
+      <rect x="8"  y="32" width="32" height="4" fill="#1f2937"/>
+      <rect x="0"  y="8"  width="4"  height="20" fill="#1f2937"/>
+      <rect x="44" y="8"  width="4"  height="20" fill="#1f2937"/>
+      <rect x="4"  y="4"  width="4"  height="4" fill="#1f2937"/>
+      <rect x="40" y="4"  width="4"  height="4" fill="#1f2937"/>
+      <rect x="4"  y="28" width="4"  height="4" fill="#1f2937"/>
+      <rect x="40" y="28" width="4"  height="4" fill="#1f2937"/>
+      <!-- glass -->
+      <rect x="8"  y="4"  width="32" height="28" fill="#bae6fd"/>
+      <!-- highlight streak -->
+      <rect x="12" y="8"  width="10" height="2" fill="#ffffff"/>
+      <rect x="12" y="10" width="4"  height="2" fill="#ffffff"/>
+      <!-- handle -->
+      <rect x="44" y="32" width="4" height="4" fill="#1f2937"/>
+      <rect x="48" y="36" width="4" height="4" fill="#1f2937"/>
+      <rect x="52" y="40" width="4" height="4" fill="#1f2937"/>
+      <rect x="56" y="44" width="4" height="4" fill="#1f2937"/>
+      <rect x="60" y="48" width="6" height="4" fill="#1f2937"/>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 2 (FINDINGS -> FIX) =========== -->
+  <g transform="translate(1170, 280)" fill="#c2410c">
+    <rect x="0"  y="6" width="76" height="4"/>
+    <rect x="68" y="2" width="4"  height="4"/>
+    <rect x="72" y="6" width="4"  height="4"/>
+    <rect x="68" y="10" width="4" height="4"/>
+  </g>
+
+  <!-- =========== CARD 3: RULE-TEXT FIX (diff) =========== -->
+  <g>
+    <!-- outer tile -->
+    <rect x="1260" y="168" width="280" height="240" fill="#ffffff"/>
+    <rect x="1260" y="168" width="280" height="4"   fill="#c9b58a"/>
+    <rect x="1260" y="404" width="280" height="4"   fill="#c9b58a"/>
+    <rect x="1260" y="168" width="4"   height="240" fill="#c9b58a"/>
+    <rect x="1536" y="168" width="4"   height="240" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="1268" y="176" width="264" height="224" fill="#fdf7ea"/>
+
+    <!-- title bar -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="1282" y="200" font-size="14" font-weight="700" fill="#1f2937" letter-spacing="1">RULE-TEXT FIX</text>
+      <text x="1520" y="200" font-size="10" fill="#9ca3af" text-anchor="end" letter-spacing="2">R3</text>
+    </g>
+    <rect x="1278" y="210" width="244" height="2" fill="#c9b58a"/>
+
+    <!-- diff gutter: line numbers -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9ca3af">
+      <text x="1286" y="236">12</text>
+      <text x="1286" y="256">13</text>
+      <text x="1286" y="286">12</text>
+      <text x="1286" y="306">13</text>
+      <text x="1286" y="326">14</text>
+    </g>
+
+    <!-- BEFORE block (red/minus) -->
+    <rect x="1308" y="224" width="212" height="20" fill="#fee2e2"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#b91c1c">
+      <text x="1314" y="238">-</text>
+    </g>
+    <rect x="1328" y="229" width="176" height="3" fill="#b91c1c"/>
+    <rect x="1328" y="236" width="120" height="3" fill="#b91c1c" opacity="0.55"/>
+
+    <rect x="1308" y="246" width="212" height="16" fill="#fee2e2"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#b91c1c">
+      <text x="1314" y="258">-</text>
+    </g>
+    <rect x="1328" y="252" width="140" height="3" fill="#b91c1c" opacity="0.55"/>
+
+    <!-- divider between before/after -->
+    <rect x="1284" y="270" width="236" height="2" fill="#eadfcf"/>
+
+    <!-- AFTER block (green/plus) -->
+    <rect x="1308" y="276" width="212" height="20" fill="#dcfce7"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#15803d">
+      <text x="1314" y="290">+</text>
+    </g>
+    <rect x="1328" y="281" width="188" height="3" fill="#15803d"/>
+    <rect x="1328" y="288" width="148" height="3" fill="#15803d" opacity="0.55"/>
+
+    <rect x="1308" y="298" width="212" height="16" fill="#dcfce7"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#15803d">
+      <text x="1314" y="310">+</text>
+    </g>
+    <rect x="1328" y="304" width="164" height="3" fill="#15803d" opacity="0.55"/>
+
+    <rect x="1308" y="316" width="212" height="16" fill="#dcfce7"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#15803d">
+      <text x="1314" y="328">+</text>
+    </g>
+    <rect x="1328" y="322" width="152" height="3" fill="#15803d" opacity="0.55"/>
+
+    <!-- footer: classification + why -->
+    <rect x="1284" y="344" width="40" height="16" fill="#fde68a"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1f2937" letter-spacing="1">
+      <text x="1290" y="355">SKILL</text>
+    </g>
+    <rect x="1332" y="350" width="128" height="3" fill="#6b7280"/>
+    <rect x="1332" y="356" width="84"  height="3" fill="#9ca3af"/>
+
+    <!-- accent: small tag "WHY" under footer -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#c2410c" letter-spacing="2" font-weight="700">
+      <text x="1284" y="380">WHY:</text>
+    </g>
+    <rect x="1318" y="374" width="140" height="3" fill="#9ca3af"/>
+    <rect x="1318" y="380" width="108" height="3" fill="#9ca3af"/>
+  </g>
+
+  <!-- =========== GROUND LINE under the three cards =========== -->
+  <rect x="500" y="414" width="1060" height="2" fill="#eadfcf"/>
+</svg>
