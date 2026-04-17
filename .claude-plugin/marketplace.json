@@ -21,6 +21,11 @@
       "description": "Audit a skill to see whether its rules actually land in practice."
     },
     {
+      "name": "sub-agent-coordinator",
+      "source": "./plugins/sub-agent-coordinator",
+      "description": "Orchestrate multi-agent work through fan-out, pipeline, and specialist patterns."
+    },
+    {
       "name": "team-composer",
       "source": "./plugins/team-composer",
       "description": "Assemble the right virtual team — every role earns its seat."

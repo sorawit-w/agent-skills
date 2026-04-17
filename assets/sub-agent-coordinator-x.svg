@@ -1,0 +1,365 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="sub-agent-coordinator — many hands, one source of truth" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>sub-agent-coordinator — many hands, one source of truth</title>
+  <desc>Pixel-art banner for the sub-agent-coordinator Claude Code plugin: a TASK BRIEF card on the left listing scope/budget/done-when, a FAN-OUT card in the center showing one coordinator tile dispatching three parallel sub-agent tiles with status badges, and an INTEGRATE card on the right showing build/lint/test gates passing and a DONE seal.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan)"/>
+
+  <!-- =========== TITLE BLOCK (top-left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="64" y="72" font-size="38" font-weight="700" fill="#1f2937" letter-spacing="1">sub-agent-coordinator</text>
+    <text x="64" y="104" font-size="18" fill="#6b7280">many hands, one source of truth</text>
+    <text x="64" y="130" font-size="11" fill="#9ca3af" letter-spacing="3">BRIEF · FAN-OUT · INTEGRATE</text>
+  </g>
+
+  <!-- =========== SECTION LABELS (chapter markers under each card) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="620" y="436" font-size="11" fill="#1f2937" letter-spacing="3">BRIEF</text>
+    <text x="1000" y="436" font-size="11" fill="#c2410c" font-weight="700" letter-spacing="3">FAN-OUT</text>
+    <text x="1400" y="436" font-size="11" fill="#1f2937" letter-spacing="3">INTEGRATE</text>
+  </g>
+
+  <!-- =========== CARD 1: TASK BRIEF (clipboard) =========== -->
+  <g>
+    <!-- card paper -->
+    <rect x="520" y="168" width="200" height="240" fill="#f3e7c9"/>
+    <rect x="520" y="168" width="200" height="4"  fill="#b79a5c"/>
+    <rect x="520" y="404" width="200" height="4"  fill="#b79a5c"/>
+    <rect x="520" y="168" width="4"   height="240" fill="#b79a5c"/>
+    <rect x="716" y="168" width="4"   height="240" fill="#b79a5c"/>
+    <!-- clip at top -->
+    <rect x="596" y="160" width="48" height="12" fill="#6b7280"/>
+    <rect x="604" y="156" width="32" height="4"  fill="#6b7280"/>
+
+    <!-- title bar "TASK BRIEF" -->
+    <rect x="524" y="180" width="192" height="26" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="540" y="198" font-size="14" font-weight="700">TASK BRIEF</text>
+    </g>
+    <rect x="524" y="206" width="192" height="2" fill="#b79a5c"/>
+
+    <!-- field: TASK -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#c2410c" letter-spacing="2">
+      <text x="540" y="228">TASK</text>
+    </g>
+    <rect x="576" y="222" width="128" height="3" fill="#6b7280"/>
+    <rect x="576" y="228" width="100" height="3" fill="#9ca3af"/>
+
+    <!-- field: SCOPE -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#c2410c" letter-spacing="2">
+      <text x="540" y="250">SCOPE</text>
+    </g>
+    <rect x="584" y="244" width="6" height="6" fill="#1f2937"/>
+    <rect x="594" y="246" width="108" height="3" fill="#6b7280"/>
+    <rect x="584" y="256" width="6" height="6" fill="#1f2937"/>
+    <rect x="594" y="258" width="96"  height="3" fill="#6b7280"/>
+    <rect x="584" y="268" width="6" height="6" fill="#1f2937"/>
+    <rect x="594" y="270" width="112" height="3" fill="#6b7280"/>
+
+    <!-- field: OUT OF SCOPE -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#b91c1c" letter-spacing="2">
+      <text x="540" y="296">OUT</text>
+    </g>
+    <!-- X mark -->
+    <rect x="586" y="289" width="2" height="2" fill="#b91c1c"/>
+    <rect x="588" y="291" width="2" height="2" fill="#b91c1c"/>
+    <rect x="590" y="293" width="2" height="2" fill="#b91c1c"/>
+    <rect x="592" y="291" width="2" height="2" fill="#b91c1c"/>
+    <rect x="594" y="289" width="2" height="2" fill="#b91c1c"/>
+    <rect x="594" y="293" width="2" height="2" fill="#b91c1c"/>
+    <rect x="586" y="293" width="2" height="2" fill="#b91c1c"/>
+    <rect x="602" y="290" width="100" height="3" fill="#9ca3af"/>
+    <rect x="602" y="296" width="80"  height="3" fill="#9ca3af"/>
+
+    <!-- field: BUDGET -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#c2410c" letter-spacing="2">
+      <text x="540" y="322">BUDGET</text>
+    </g>
+    <rect x="594" y="314" width="68" height="14" fill="#fde68a"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1f2937" letter-spacing="1">
+      <text x="600" y="324">~30 calls</text>
+    </g>
+
+    <!-- field: DONE WHEN -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#15803d" letter-spacing="2">
+      <text x="540" y="346">DONE</text>
+    </g>
+    <!-- check 1 -->
+    <rect x="586" y="340" width="2" height="2" fill="#15803d"/>
+    <rect x="588" y="342" width="2" height="2" fill="#15803d"/>
+    <rect x="590" y="344" width="2" height="2" fill="#15803d"/>
+    <rect x="592" y="342" width="2" height="2" fill="#15803d"/>
+    <rect x="594" y="340" width="2" height="2" fill="#15803d"/>
+    <rect x="596" y="338" width="2" height="2" fill="#15803d"/>
+    <rect x="602" y="342" width="96" height="3" fill="#6b7280"/>
+    <!-- check 2 -->
+    <rect x="586" y="356" width="2" height="2" fill="#15803d"/>
+    <rect x="588" y="358" width="2" height="2" fill="#15803d"/>
+    <rect x="590" y="360" width="2" height="2" fill="#15803d"/>
+    <rect x="592" y="358" width="2" height="2" fill="#15803d"/>
+    <rect x="594" y="356" width="2" height="2" fill="#15803d"/>
+    <rect x="596" y="354" width="2" height="2" fill="#15803d"/>
+    <rect x="602" y="358" width="84" height="3" fill="#6b7280"/>
+    <!-- check 3 -->
+    <rect x="586" y="372" width="2" height="2" fill="#15803d"/>
+    <rect x="588" y="374" width="2" height="2" fill="#15803d"/>
+    <rect x="590" y="376" width="2" height="2" fill="#15803d"/>
+    <rect x="592" y="374" width="2" height="2" fill="#15803d"/>
+    <rect x="594" y="372" width="2" height="2" fill="#15803d"/>
+    <rect x="596" y="370" width="2" height="2" fill="#15803d"/>
+    <rect x="602" y="374" width="104" height="3" fill="#6b7280"/>
+  </g>
+
+  <!-- =========== ARROW 1 (BRIEF -> FAN-OUT) =========== -->
+  <g transform="translate(740, 280)" fill="#6b7280">
+    <rect x="0"  y="6" width="88" height="4"/>
+    <rect x="80" y="2" width="4"  height="4"/>
+    <rect x="84" y="6" width="4"  height="4"/>
+    <rect x="80" y="10" width="4" height="4"/>
+  </g>
+
+  <!-- =========== CARD 2: FAN-OUT (coordinator dispatching agents) =========== -->
+  <g>
+    <!-- outer tile -->
+    <rect x="852" y="168" width="296" height="240" fill="#ffffff"/>
+    <rect x="852" y="168" width="296" height="4"   fill="#c9b58a"/>
+    <rect x="852" y="404" width="296" height="4"   fill="#c9b58a"/>
+    <rect x="852" y="168" width="4"   height="240" fill="#c9b58a"/>
+    <rect x="1144" y="168" width="4"  height="240" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="860" y="176" width="280" height="224" fill="#fdf7ea"/>
+
+    <!-- title bar "FAN-OUT" -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="874" y="200" font-size="14" font-weight="700" fill="#1f2937" letter-spacing="1">FAN-OUT</text>
+      <text x="1112" y="200" font-size="10" fill="#9ca3af" text-anchor="end" letter-spacing="2">3 PARALLEL</text>
+    </g>
+    <rect x="870" y="210" width="260" height="2" fill="#c9b58a"/>
+
+    <!-- =========== COORDINATOR TILE (top center) =========== -->
+    <!-- Position: x=940, y=226, w=120, h=46 -->
+    <g>
+      <!-- tile border -->
+      <rect x="940" y="226" width="120" height="46" fill="#1f2937"/>
+      <!-- inner -->
+      <rect x="944" y="230" width="112" height="38" fill="#fde68a"/>
+      <!-- crown pixels (coordinator hat) -->
+      <rect x="992" y="220" width="3" height="3" fill="#c2410c"/>
+      <rect x="995" y="217" width="3" height="6" fill="#c2410c"/>
+      <rect x="998" y="220" width="3" height="3" fill="#c2410c"/>
+      <rect x="1001" y="217" width="3" height="6" fill="#c2410c"/>
+      <rect x="1004" y="220" width="3" height="3" fill="#c2410c"/>
+      <!-- text "COORDINATOR" -->
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+        <text x="1000" y="248" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="1">COORDINATOR</text>
+        <text x="1000" y="262" font-size="8" fill="#6b7280" letter-spacing="1">briefs &amp; verifies</text>
+      </g>
+    </g>
+
+    <!-- =========== DISPATCH LINES (pixel arrows from coordinator to each agent) =========== -->
+    <!-- vertical trunk down from coordinator center -->
+    <rect x="998" y="272" width="4" height="16" fill="#c2410c"/>
+    <!-- horizontal bar -->
+    <rect x="898" y="286" width="204" height="4" fill="#c2410c"/>
+    <!-- left drop to agent A -->
+    <rect x="898" y="286" width="4" height="38" fill="#c2410c"/>
+    <!-- middle drop to agent B -->
+    <rect x="998" y="286" width="4" height="38" fill="#c2410c"/>
+    <!-- right drop to agent C -->
+    <rect x="1098" y="286" width="4" height="38" fill="#c2410c"/>
+    <!-- arrowhead A -->
+    <rect x="896" y="324" width="8" height="3" fill="#c2410c"/>
+    <rect x="898" y="327" width="4" height="3" fill="#c2410c"/>
+    <!-- arrowhead B -->
+    <rect x="996" y="324" width="8" height="3" fill="#c2410c"/>
+    <rect x="998" y="327" width="4" height="3" fill="#c2410c"/>
+    <!-- arrowhead C -->
+    <rect x="1096" y="324" width="8" height="3" fill="#c2410c"/>
+    <rect x="1098" y="327" width="4" height="3" fill="#c2410c"/>
+
+    <!-- =========== SUB-AGENT A (left) =========== -->
+    <g>
+      <rect x="870" y="332" width="64" height="60" fill="#1f2937"/>
+      <rect x="873" y="335" width="58" height="54" fill="#bae6fd"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+        <text x="902" y="348" font-size="9" font-weight="700" fill="#1f2937" letter-spacing="1">AGENT A</text>
+      </g>
+      <rect x="879" y="354" width="46" height="2" fill="#6b7280"/>
+      <rect x="879" y="360" width="36" height="2" fill="#9ca3af"/>
+      <rect x="879" y="366" width="42" height="2" fill="#9ca3af"/>
+      <!-- status badge: DONE -->
+      <rect x="879" y="374" width="46" height="12" fill="#15803d"/>
+      <rect x="884" y="380" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="886" y="382" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="888" y="384" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="890" y="382" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="892" y="380" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="894" y="378" width="2" height="2" fill="#fdf7ea"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#fdf7ea" letter-spacing="1">
+        <text x="902" y="384">DONE</text>
+      </g>
+    </g>
+
+    <!-- =========== SUB-AGENT B (center) =========== -->
+    <g>
+      <rect x="968" y="332" width="64" height="60" fill="#1f2937"/>
+      <rect x="971" y="335" width="58" height="54" fill="#bae6fd"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+        <text x="1000" y="348" font-size="9" font-weight="700" fill="#1f2937" letter-spacing="1">AGENT B</text>
+      </g>
+      <rect x="977" y="354" width="46" height="2" fill="#6b7280"/>
+      <rect x="977" y="360" width="40" height="2" fill="#9ca3af"/>
+      <rect x="977" y="366" width="34" height="2" fill="#9ca3af"/>
+      <!-- status badge: WIP -->
+      <rect x="977" y="374" width="46" height="12" fill="#fde68a"/>
+      <rect x="982" y="379" width="2" height="2" fill="#c2410c"/>
+      <rect x="986" y="379" width="2" height="2" fill="#c2410c"/>
+      <rect x="990" y="379" width="2" height="2" fill="#c2410c"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#1f2937" letter-spacing="1">
+        <text x="1002" y="384">WIP</text>
+      </g>
+    </g>
+
+    <!-- =========== SUB-AGENT C (right) =========== -->
+    <g>
+      <rect x="1066" y="332" width="64" height="60" fill="#1f2937"/>
+      <rect x="1069" y="335" width="58" height="54" fill="#bae6fd"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+        <text x="1098" y="348" font-size="9" font-weight="700" fill="#1f2937" letter-spacing="1">AGENT C</text>
+      </g>
+      <rect x="1075" y="354" width="46" height="2" fill="#6b7280"/>
+      <rect x="1075" y="360" width="36" height="2" fill="#9ca3af"/>
+      <rect x="1075" y="366" width="44" height="2" fill="#9ca3af"/>
+      <!-- status badge: DONE -->
+      <rect x="1075" y="374" width="46" height="12" fill="#15803d"/>
+      <rect x="1080" y="380" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="1082" y="382" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="1084" y="384" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="1086" y="382" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="1088" y="380" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="1090" y="378" width="2" height="2" fill="#fdf7ea"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#fdf7ea" letter-spacing="1">
+        <text x="1098" y="384">DONE</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 2 (FAN-OUT -> INTEGRATE) =========== -->
+  <g transform="translate(1170, 280)" fill="#c2410c">
+    <rect x="0"  y="6" width="76" height="4"/>
+    <rect x="68" y="2" width="4"  height="4"/>
+    <rect x="72" y="6" width="4"  height="4"/>
+    <rect x="68" y="10" width="4" height="4"/>
+  </g>
+
+  <!-- =========== CARD 3: INTEGRATE =========== -->
+  <g>
+    <!-- outer tile -->
+    <rect x="1260" y="168" width="280" height="240" fill="#ffffff"/>
+    <rect x="1260" y="168" width="280" height="4"   fill="#c9b58a"/>
+    <rect x="1260" y="404" width="280" height="4"   fill="#c9b58a"/>
+    <rect x="1260" y="168" width="4"   height="240" fill="#c9b58a"/>
+    <rect x="1536" y="168" width="4"   height="240" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="1268" y="176" width="264" height="224" fill="#fdf7ea"/>
+
+    <!-- title bar -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="1282" y="200" font-size="14" font-weight="700" fill="#1f2937" letter-spacing="1">INTEGRATE</text>
+      <text x="1520" y="200" font-size="10" fill="#9ca3af" text-anchor="end" letter-spacing="2">3/3</text>
+    </g>
+    <rect x="1278" y="210" width="244" height="2" fill="#c9b58a"/>
+
+    <!-- gate row 1: BUILD pass -->
+    <rect x="1282" y="226" width="18" height="14" fill="#15803d"/>
+    <rect x="1286" y="233" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1288" y="235" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1290" y="233" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1292" y="231" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1294" y="229" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1296" y="227" width="2" height="2" fill="#f5efe6"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#1f2937" letter-spacing="1">
+      <text x="1308" y="238">BUILD</text>
+    </g>
+    <rect x="1362" y="232" width="120" height="3" fill="#9ca3af"/>
+
+    <!-- gate row 2: LINT pass -->
+    <rect x="1282" y="250" width="18" height="14" fill="#15803d"/>
+    <rect x="1286" y="257" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1288" y="259" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1290" y="257" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1292" y="255" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1294" y="253" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1296" y="251" width="2" height="2" fill="#f5efe6"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#1f2937" letter-spacing="1">
+      <text x="1308" y="262">LINT</text>
+    </g>
+    <rect x="1362" y="256" width="120" height="3" fill="#9ca3af"/>
+
+    <!-- gate row 3: TEST pass -->
+    <rect x="1282" y="274" width="18" height="14" fill="#15803d"/>
+    <rect x="1286" y="281" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1288" y="283" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1290" y="281" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1292" y="279" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1294" y="277" width="2" height="2" fill="#f5efe6"/>
+    <rect x="1296" y="275" width="2" height="2" fill="#f5efe6"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#1f2937" letter-spacing="1">
+      <text x="1308" y="286">TEST</text>
+    </g>
+    <rect x="1362" y="280" width="120" height="3" fill="#9ca3af"/>
+
+    <!-- divider -->
+    <rect x="1278" y="300" width="244" height="2" fill="#eadfcf"/>
+
+    <!-- MERGED / UNBLOCK rows -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#c2410c" letter-spacing="2">
+      <text x="1282" y="320">MERGED</text>
+    </g>
+    <rect x="1332" y="314" width="142" height="3" fill="#6b7280"/>
+    <rect x="1332" y="322" width="108" height="3" fill="#9ca3af"/>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#c2410c" letter-spacing="2">
+      <text x="1282" y="346">UNBLOCK</text>
+    </g>
+    <rect x="1338" y="340" width="132" height="3" fill="#6b7280"/>
+    <rect x="1338" y="348" width="96" height="3" fill="#9ca3af"/>
+
+    <!-- =========== DONE SEAL (bottom-right pixel stamp) =========== -->
+    <g transform="translate(1452, 344)">
+      <!-- outer ring (octagonal stamp) -->
+      <rect x="10" y="0"  width="28" height="4"  fill="#15803d"/>
+      <rect x="10" y="44" width="28" height="4"  fill="#15803d"/>
+      <rect x="0"  y="10" width="4"  height="28" fill="#15803d"/>
+      <rect x="44" y="10" width="4"  height="28" fill="#15803d"/>
+      <rect x="4"  y="4"  width="6"  height="6"  fill="#15803d"/>
+      <rect x="38" y="4"  width="6"  height="6"  fill="#15803d"/>
+      <rect x="4"  y="38" width="6"  height="6"  fill="#15803d"/>
+      <rect x="38" y="38" width="6"  height="6"  fill="#15803d"/>
+      <!-- interior fill -->
+      <rect x="10" y="4"  width="28" height="40" fill="#dcfce7"/>
+      <rect x="4"  y="10" width="6"  height="28" fill="#dcfce7"/>
+      <rect x="38" y="10" width="6"  height="28" fill="#dcfce7"/>
+      <!-- DONE text -->
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+        <text x="24" y="29" font-size="11" font-weight="700" fill="#15803d" letter-spacing="1">DONE</text>
+      </g>
+    </g>
+
+    <!-- WHY -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#c2410c" letter-spacing="2" font-weight="700">
+      <text x="1282" y="378">WHY:</text>
+    </g>
+    <rect x="1318" y="372" width="110" height="3" fill="#9ca3af"/>
+    <rect x="1282" y="384" width="146" height="3" fill="#9ca3af"/>
+  </g>
+
+  <!-- =========== GROUND LINE under the three cards =========== -->
+  <rect x="500" y="414" width="1060" height="2" fill="#eadfcf"/>
+</svg>

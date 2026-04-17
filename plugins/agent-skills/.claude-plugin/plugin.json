@@ -9,6 +9,7 @@
   "dependencies": [
     "brand-workshop",
     "skill-evaluator",
+    "sub-agent-coordinator",
     "team-composer"
   ]
 }

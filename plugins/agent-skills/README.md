@@ -16,6 +16,7 @@ That's equivalent to installing each shelf plugin individually:
 ```
 /plugin install brand-workshop@sorawit-w
 /plugin install skill-evaluator@sorawit-w
+/plugin install sub-agent-coordinator@sorawit-w
 /plugin install team-composer@sorawit-w
 ```
 
@@ -23,6 +24,7 @@ That's equivalent to installing each shelf plugin individually:
 
 - [`brand-workshop`](../brand-workshop) — assemble a creative team and ship a brand strategy brief, tagline, and code-generated logo.
 - [`skill-evaluator`](../skill-evaluator) — audit whether a skill's rules actually land in practice.
+- [`sub-agent-coordinator`](../sub-agent-coordinator) — orchestrate multi-agent work through fan-out, pipeline, and specialist patterns.
 - [`team-composer`](../team-composer) — assemble a virtual team and run a 3-round discussion that produces real disagreement.
 
 New plugins added to the marketplace get rolled into this bundle on the next version bump. Pin a specific version of `agent-skills` if you want a frozen set.
