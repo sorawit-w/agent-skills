@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/team-composer-li.svg" alt="team-composer — assemble the right virtual team, every role earns its seat" width="100%"/>
+</p>
+
 # team-composer
 
 A Claude Code skill that assembles a virtual team of domain personas, runs a structured 3-round discussion, and hands you back a synthesized conclusion — across tech, healthcare, finance, climate, biotech, and beyond.

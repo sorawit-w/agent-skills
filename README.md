@@ -30,11 +30,19 @@ Add the marketplace once:
 /plugin marketplace add sorawit-w/agent-skills
 ```
 
-Then install any plugin by name:
+Then either install a single plugin by name:
 
 ```bash
 /plugin install <plugin-name>@sorawit-w
 ```
+
+…or grab the whole shelf in one command:
+
+```bash
+/plugin install agent-skills@sorawit-w
+```
+
+The `agent-skills` plugin is a meta-plugin — it ships no skill of its own, just lists every other plugin in this marketplace as a dependency. Installing it pulls them all in. Pin a specific version of `agent-skills` if you want a frozen set.
 
 Works from both [Claude Code](https://docs.claude.com/en/docs/claude-code) and Cowork.
 

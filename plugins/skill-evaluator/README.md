@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/skill-evaluator-li.svg" alt="skill-evaluator — audit whether a skill's rules actually land in practice" width="100%"/>
+</p>
+
 # skill-evaluator
 
 A Claude Code skill for auditing other skills — checks whether a skill's rules actually land when Claude runs it, and proposes targeted fixes when they don't.
