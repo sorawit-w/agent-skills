@@ -15,6 +15,7 @@ That's equivalent to installing each shelf plugin individually:
 
 ```
 /plugin install brand-workshop@sorawit-w
+/plugin install i18n-contextual-rewriting@sorawit-w
 /plugin install skill-evaluator@sorawit-w
 /plugin install sub-agent-coordinator@sorawit-w
 /plugin install team-composer@sorawit-w
@@ -24,6 +25,7 @@ That's equivalent to installing each shelf plugin individually:
 ## What's bundled
 
 - [`brand-workshop`](../brand-workshop) — assemble a creative team and ship a brand strategy brief, tagline, and code-generated logo.
+- [`i18n-contextual-rewriting`](../i18n-contextual-rewriting) — safe surgical edits for large i18n files plus culturally authentic translations via a multi-role review.
 - [`skill-evaluator`](../skill-evaluator) — audit whether a skill's rules actually land in practice.
 - [`sub-agent-coordinator`](../sub-agent-coordinator) — orchestrate multi-agent work through fan-out, pipeline, and specialist patterns.
 - [`team-composer`](../team-composer) — assemble a virtual team and run a 3-round discussion that produces real disagreement.

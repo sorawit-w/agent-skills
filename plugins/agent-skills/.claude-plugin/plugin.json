@@ -8,6 +8,7 @@
   },
   "dependencies": [
     "brand-workshop",
+    "i18n-contextual-rewriting",
     "skill-evaluator",
     "sub-agent-coordinator",
     "team-composer",

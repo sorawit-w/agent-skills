@@ -16,6 +16,11 @@
       "description": "Assemble a virtual creative team and produce a brand strategy brief, tagline, and code-generated logo."
     },
     {
+      "name": "i18n-contextual-rewriting",
+      "source": "./plugins/i18n-contextual-rewriting",
+      "description": "Safe surgical edits for large i18n files plus culturally authentic translations via a multi-role review."
+    },
+    {
       "name": "skill-evaluator",
       "source": "./plugins/skill-evaluator",
       "description": "Audit a skill to see whether its rules actually land in practice."

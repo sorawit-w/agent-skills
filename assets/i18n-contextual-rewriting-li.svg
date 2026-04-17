@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="i18n-contextual-rewriting — surgical edits, cultural rewrites" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>i18n-contextual-rewriting — surgical edits, cultural rewrites</title>
+  <desc>Pixel-art banner for the i18n-contextual-rewriting Claude Code plugin. Centered title at the top with a diff motif underneath showing a surgical edit on a translation file. Below that, a 4-by-3 grid of pixel string cards — en-genz, de, es, fr, it, ja, ko, th, th-bupphe, zh-CN, zh-TW, zh-HK — each with the locale code, a native greeting, and a cultural-rule tag. Orange cards are Western, teal cards are Asian, purple cards are classical or CJK variants. Footer lists the per-locale team composition.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-li)"/>
+
+  <!-- =========== TITLE BLOCK (top, centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" text-anchor="middle">
+    <text x="600" y="70" font-size="40" font-weight="700" fill="#1f2937" letter-spacing="2">i18n-contextual-rewriting</text>
+    <text x="600" y="104" font-size="20" fill="#6b7280">surgical edits. cultural rewrites.</text>
+    <text x="600" y="130" font-size="12" fill="#9ca3af" letter-spacing="4">JSON · YAML · TS · JS</text>
+  </g>
+
+  <!-- diff motif centered -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="14" letter-spacing="1">
+    <rect x="340" y="160" width="520" height="26" fill="#e5e7eb"/>
+    <text x="354" y="178" fill="#6b7280">&#160;&#160;"home.title": "Home",</text>
+    <rect x="340" y="186" width="520" height="26" fill="#dcfce7"/>
+    <text x="354" y="204" fill="#166534">+ "home.subtitle": "Welcome",</text>
+    <rect x="340" y="212" width="520" height="26" fill="#fee2e2"/>
+    <text x="354" y="230" fill="#991b1b">- "home.tagline": "Old copy",</text>
+  </g>
+
+  <!-- ============================================== -->
+  <!-- GRID OF LOCALE CARDS (4 cols x 3 rows)         -->
+  <!-- Card dims: 200x110, gap 14, origin (179, 268)  -->
+  <!-- grid width: 4*200 + 3*14 = 842                 -->
+  <!-- ============================================== -->
+
+  <!-- ============ ROW 1 — Western (orange) ============ -->
+
+  <!-- en-genz -->
+  <g transform="translate(179, 268)">
+    <rect x="0" y="0" width="200" height="110" fill="#c2410c"/>
+    <rect x="0" y="0" width="200" height="4" fill="#ea580c"/>
+    <rect x="0" y="106" width="200" height="4" fill="#7c2d12"/>
+    <rect x="196" y="0" width="4" height="110" fill="#7c2d12"/>
+    <rect x="0" y="26" width="200" height="2" fill="#7c2d12"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#fed7aa" letter-spacing="2">en-genz</text>
+    <text x="100" y="70" font-family="DejaVu Sans Mono, ui-monospace, monospace" font-size="24" font-weight="700" fill="#fdf7ea" text-anchor="middle">hey bestie</text>
+    <text x="100" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#fed7aa" text-anchor="middle" letter-spacing="1">[shelf-life: short]</text>
+  </g>
+
+  <!-- de -->
+  <g transform="translate(393, 268)">
+    <rect x="0" y="0" width="200" height="110" fill="#c2410c"/>
+    <rect x="0" y="0" width="200" height="4" fill="#ea580c"/>
+    <rect x="0" y="106" width="200" height="4" fill="#7c2d12"/>
+    <rect x="196" y="0" width="4" height="110" fill="#7c2d12"/>
+    <rect x="0" y="26" width="200" height="2" fill="#7c2d12"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#fed7aa" letter-spacing="2">de</text>
+    <text x="100" y="72" font-family="DejaVu Sans Mono, ui-monospace, monospace" font-size="28" font-weight="700" fill="#fdf7ea" text-anchor="middle">Hallo!</text>
+    <text x="100" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#fed7aa" text-anchor="middle" letter-spacing="1">+30% length · du / Sie</text>
+  </g>
+
+  <!-- es -->
+  <g transform="translate(607, 268)">
+    <rect x="0" y="0" width="200" height="110" fill="#c2410c"/>
+    <rect x="0" y="0" width="200" height="4" fill="#ea580c"/>
+    <rect x="0" y="106" width="200" height="4" fill="#7c2d12"/>
+    <rect x="196" y="0" width="4" height="110" fill="#7c2d12"/>
+    <rect x="0" y="26" width="200" height="2" fill="#7c2d12"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#fed7aa" letter-spacing="2">es</text>
+    <text x="100" y="72" font-family="DejaVu Sans Mono, ui-monospace, monospace" font-size="28" font-weight="700" fill="#fdf7ea" text-anchor="middle">¡Hola!</text>
+    <text x="100" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#fed7aa" text-anchor="middle" letter-spacing="1">es-ES · es-419 · es-MX</text>
+  </g>
+
+  <!-- fr -->
+  <g transform="translate(821, 268)">
+    <rect x="0" y="0" width="200" height="110" fill="#c2410c"/>
+    <rect x="0" y="0" width="200" height="4" fill="#ea580c"/>
+    <rect x="0" y="106" width="200" height="4" fill="#7c2d12"/>
+    <rect x="196" y="0" width="4" height="110" fill="#7c2d12"/>
+    <rect x="0" y="26" width="200" height="2" fill="#7c2d12"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#fed7aa" letter-spacing="2">fr</text>
+    <text x="100" y="72" font-family="DejaVu Sans Mono, ui-monospace, monospace" font-size="28" font-weight="700" fill="#fdf7ea" text-anchor="middle">Salut !</text>
+    <text x="100" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#fed7aa" text-anchor="middle" letter-spacing="1">nbsp before : ; ! ?</text>
+  </g>
+
+  <!-- ============ ROW 2 — Italy + Asia (teal) ============ -->
+
+  <!-- it -->
+  <g transform="translate(179, 392)">
+    <rect x="0" y="0" width="200" height="110" fill="#0e7490"/>
+    <rect x="0" y="0" width="200" height="4" fill="#0891b2"/>
+    <rect x="0" y="106" width="200" height="4" fill="#134e4a"/>
+    <rect x="196" y="0" width="4" height="110" fill="#134e4a"/>
+    <rect x="0" y="26" width="200" height="2" fill="#134e4a"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#a5f3fc" letter-spacing="2">it</text>
+    <text x="100" y="72" font-family="DejaVu Sans Mono, ui-monospace, monospace" font-size="28" font-weight="700" fill="#ecfeff" text-anchor="middle">Ciao!</text>
+    <text x="100" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#a5f3fc" text-anchor="middle" letter-spacing="1">tu / Lei · accents matter</text>
+  </g>
+
+  <!-- ja -->
+  <g transform="translate(393, 392)">
+    <rect x="0" y="0" width="200" height="110" fill="#0e7490"/>
+    <rect x="0" y="0" width="200" height="4" fill="#0891b2"/>
+    <rect x="0" y="106" width="200" height="4" fill="#134e4a"/>
+    <rect x="196" y="0" width="4" height="110" fill="#134e4a"/>
+    <rect x="0" y="26" width="200" height="2" fill="#134e4a"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#a5f3fc" letter-spacing="2">ja</text>
+    <text x="100" y="74" font-family="Noto Sans JP, DejaVu Sans Mono, monospace" font-size="26" font-weight="700" fill="#ecfeff" text-anchor="middle">こんにちは</text>
+    <text x="100" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#a5f3fc" text-anchor="middle" letter-spacing="1">keigo · counters</text>
+  </g>
+
+  <!-- ko -->
+  <g transform="translate(607, 392)">
+    <rect x="0" y="0" width="200" height="110" fill="#0e7490"/>
+    <rect x="0" y="0" width="200" height="4" fill="#0891b2"/>
+    <rect x="0" y="106" width="200" height="4" fill="#134e4a"/>
+    <rect x="196" y="0" width="4" height="110" fill="#134e4a"/>
+    <rect x="0" y="26" width="200" height="2" fill="#134e4a"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#a5f3fc" letter-spacing="2">ko</text>
+    <text x="100" y="74" font-family="Noto Sans KR, DejaVu Sans Mono, monospace" font-size="26" font-weight="700" fill="#ecfeff" text-anchor="middle">안녕하세요</text>
+    <text x="100" y="94" font-family="Noto Sans KR, DejaVu Sans Mono, monospace" font-size="10" fill="#a5f3fc" text-anchor="middle" letter-spacing="1">합니다 / 해요 · SOV</text>
+  </g>
+
+  <!-- th -->
+  <g transform="translate(821, 392)">
+    <rect x="0" y="0" width="200" height="110" fill="#0e7490"/>
+    <rect x="0" y="0" width="200" height="4" fill="#0891b2"/>
+    <rect x="0" y="106" width="200" height="4" fill="#134e4a"/>
+    <rect x="196" y="0" width="4" height="110" fill="#134e4a"/>
+    <rect x="0" y="26" width="200" height="2" fill="#134e4a"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#a5f3fc" letter-spacing="2">th</text>
+    <text x="100" y="74" font-family="Noto Sans Thai, DejaVu Sans Mono, monospace" font-size="28" font-weight="700" fill="#ecfeff" text-anchor="middle">สวัสดี</text>
+    <text x="100" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#a5f3fc" text-anchor="middle" letter-spacing="1">no plurals · classifiers</text>
+  </g>
+
+  <!-- ============ ROW 3 — Classical / CJK variants (purple) ============ -->
+
+  <!-- th-bupphe -->
+  <g transform="translate(179, 516)">
+    <rect x="0" y="0" width="200" height="95" fill="#7e22ce"/>
+    <rect x="0" y="0" width="200" height="4" fill="#a855f7"/>
+    <rect x="0" y="91" width="200" height="4" fill="#4a044e"/>
+    <rect x="196" y="0" width="4" height="95" fill="#4a044e"/>
+    <rect x="0" y="26" width="200" height="2" fill="#4a044e"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#f3e8ff" letter-spacing="2">th-bupphe</text>
+    <text x="100" y="64" font-family="Noto Sans Thai, DejaVu Sans Mono, monospace" font-size="24" font-weight="700" fill="#faf5ff" text-anchor="middle">ออเจ้า</text>
+    <text x="100" y="84" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#e9d5ff" text-anchor="middle" letter-spacing="1">Ayutthaya · casual court</text>
+  </g>
+
+  <!-- zh-CN -->
+  <g transform="translate(393, 516)">
+    <rect x="0" y="0" width="200" height="95" fill="#7e22ce"/>
+    <rect x="0" y="0" width="200" height="4" fill="#a855f7"/>
+    <rect x="0" y="91" width="200" height="4" fill="#4a044e"/>
+    <rect x="196" y="0" width="4" height="95" fill="#4a044e"/>
+    <rect x="0" y="26" width="200" height="2" fill="#4a044e"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#f3e8ff" letter-spacing="2">zh-CN</text>
+    <text x="100" y="64" font-family="Noto Sans SC, DejaVu Sans Mono, monospace" font-size="26" font-weight="700" fill="#faf5ff" text-anchor="middle">你好</text>
+    <text x="100" y="84" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#e9d5ff" text-anchor="middle" letter-spacing="1">mainland · counters</text>
+  </g>
+
+  <!-- zh-TW -->
+  <g transform="translate(607, 516)">
+    <rect x="0" y="0" width="200" height="95" fill="#7e22ce"/>
+    <rect x="0" y="0" width="200" height="4" fill="#a855f7"/>
+    <rect x="0" y="91" width="200" height="4" fill="#4a044e"/>
+    <rect x="196" y="0" width="4" height="95" fill="#4a044e"/>
+    <rect x="0" y="26" width="200" height="2" fill="#4a044e"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#f3e8ff" letter-spacing="2">zh-TW</text>
+    <text x="100" y="64" font-family="Noto Sans TC, DejaVu Sans Mono, monospace" font-size="26" font-weight="700" fill="#faf5ff" text-anchor="middle">你好</text>
+    <text x="100" y="84" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="10" fill="#e9d5ff" text-anchor="middle" letter-spacing="1">no OpenCC from zh-CN</text>
+  </g>
+
+  <!-- zh-HK -->
+  <g transform="translate(821, 516)">
+    <rect x="0" y="0" width="200" height="95" fill="#7e22ce"/>
+    <rect x="0" y="0" width="200" height="4" fill="#a855f7"/>
+    <rect x="0" y="91" width="200" height="4" fill="#4a044e"/>
+    <rect x="196" y="0" width="4" height="95" fill="#4a044e"/>
+    <rect x="0" y="26" width="200" height="2" fill="#4a044e"/>
+    <text x="16" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#f3e8ff" letter-spacing="2">zh-HK</text>
+    <text x="100" y="64" font-family="Noto Sans HK, DejaVu Sans Mono, monospace" font-size="26" font-weight="700" fill="#faf5ff" text-anchor="middle">喂！</text>
+    <text x="100" y="84" font-family="Noto Sans HK, DejaVu Sans Mono, monospace" font-size="10" fill="#e9d5ff" text-anchor="middle" letter-spacing="1">書面語 / 粵語白話文</text>
+  </g>
+
+  <!-- ground line under grid -->
+  <rect x="160" y="622" width="880" height="2" fill="#eadfcf"/>
+</svg>
