@@ -38,6 +38,14 @@ Then install any plugin by name:
 
 Works from both [Claude Code](https://docs.claude.com/en/docs/claude-code) and Cowork.
 
+If a newly-added plugin isn't showing up, refresh the marketplace:
+
+```bash
+/plugin marketplace update sorawit-w
+```
+
+Claude Code caches the marketplace index locally and doesn't re-fetch on every command — new plugins appear only after an explicit refresh.
+
 ## On the shelf
 
 | Plugin | What it does | Reach for it when |
@@ -45,7 +53,7 @@ Works from both [Claude Code](https://docs.claude.com/en/docs/claude-code) and C
 | [`team-composer`](plugins/team-composer) | Assemble the right virtual team and run a 3-round discussion that produces real disagreement — not restated agreement. | You want multi-perspective planning/review across tech, health, fintech, climate, games, biotech, and beyond, with a conclusion you can act on. |
 | [`skill-evaluator`](plugins/skill-evaluator) | Audit a skill to see whether its rules actually land when Claude runs it, and propose targeted rule-text fixes when they don't. | You just wrote a skill and want to stress-test it, or a skill has been "mostly working" but you suspect a rule is being silently skipped. |
 
-Each plugin lives under [`plugins/`](plugins/) with its own `SKILL.md`, reference docs, evals, and a skill-level README that explains what it does (and what it doesn't).
+Each plugin lives under [`plugins/`](plugins/) with its own `README.md` at the root, plus a `SKILL.md`, reference docs, and evals inside `skills/<name>/`.
 
 ## Design principles
 
