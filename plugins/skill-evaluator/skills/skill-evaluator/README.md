@@ -76,9 +76,14 @@ The two chain naturally: evaluator finds a gap → creator's conventions guide t
 
 ## Install
 
-This is a [Claude Code](https://docs.claude.com/en/docs/claude-code) skill, distributed as part of the [`agent-skills`](../..) collection. Drop the `skill-evaluator/` folder into a location Claude Code recognizes as a skills directory — typically `~/.claude/skills/` or a project-local `.claude/skills/`. See Anthropic's skills documentation for the current install paths for your setup.
+This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/claude-code) plugin inside the [`sorawit-w/agent-skills`](https://github.com/sorawit-w/agent-skills) marketplace. From Claude Code or Cowork:
 
-The skill exposes itself via the description field in `SKILL.md` frontmatter. Invocation triggers on phrases like "evaluate this skill," "audit a skill," "stress-test my skill," or "does this skill actually work."
+```
+/plugin marketplace add sorawit-w/agent-skills
+/plugin install skill-evaluator@sorawit-w
+```
+
+Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "evaluate this skill," "audit a skill," "stress-test my skill," or "does this skill actually work."
 
 ## Status and scope
 
@@ -95,4 +100,4 @@ Not accepting external contributions right now. Feel free to fork.
 
 ## License
 
-MIT — see the [LICENSE](../../LICENSE) file at the repo root.
+MIT — see the [LICENSE](https://github.com/sorawit-w/agent-skills/blob/main/LICENSE) file at the repo root.
