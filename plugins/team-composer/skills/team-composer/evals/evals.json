@@ -1,0 +1,258 @@
+{
+  "skill_name": "team-composer",
+  "evals": [
+    {
+      "id": 1,
+      "name": "full-featured-planning",
+      "prompt": "Let's brainstorm a new feature for our decision-making platform — adding real-time collaborative decision rooms where multiple participants can join via a link, vote using pairwise comparison, and see live results with demographic breakdowns. The platform uses SvelteKit, Elysia, and Neon Postgres. It targets international users across 15 locales.",
+      "expected_output": "Team assembly with core roles + behavioral scientist, i18n specialist, and possibly security specialist. Discussion should feature productive disagreements.",
+      "files": [],
+      "assertions": [
+        "All 7 core roles are present in the team assembly",
+        "@lead_behavioral_scientist is included (decision-making + voting mechanics)",
+        "@i18n_specialist is included (15 locales, international users)",
+        "Team assembly includes a 'Why Included' rationale for each non-core role",
+        "Project signals are explicitly listed (involves_behavior_design, is_international, has_ui, etc.)",
+        "Discussion follows the discussion/planning flow (PM frames first)",
+        "At least 2 opposing perspectives or trade-offs are surfaced",
+        "Discussion ends with a Conclusion section containing recommendation, decisions, and prioritized next steps",
+        "Team size does not exceed 12 roles",
+        "Output length is approximately 800-1200 words"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "engineering-only-fintech",
+      "prompt": "I'm building a B2B SaaS invoicing tool for small accounting firms. It handles payment processing, stores financial data, and needs SOC 2 compliance. We're at MVP stage, building it now. Just the engineering team please.",
+      "expected_output": "Engineering-only team (architect, lead, frontend, backend) plus security specialist and possibly legal/compliance given the financial domain. Should respect 'just engineering' request but flag important omissions.",
+      "files": [],
+      "assertions": [
+        "@senior_software_architect is included",
+        "@lead_software_engineer is included",
+        "@senior_frontend_engineer is included",
+        "@senior_backend_engineer is included",
+        "@security_specialist is included or strongly recommended (payment processing + SOC 2)",
+        "@senior_product_manager is NOT included (user said 'just engineering')",
+        "The response flags that legal/compliance roles are important for this domain even though not requested",
+        "Detects signals: is_regulated=true, domain=fintech, scope=building"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "health-app-review",
+      "prompt": "We need to review our health tracking mobile app before launch. It collects heart rate data, sleep patterns, and medication reminders. Available in the US and EU. We want to make sure we haven't missed anything.",
+      "expected_output": "Full review team with core roles + domain expert (health), legal/compliance (HIPAA/GDPR), security (health data), accessibility (health product), i18n (US + EU), and QA (pre-launch review).",
+      "files": [],
+      "assertions": [
+        "All core roles are present",
+        "@legal_compliance_advisor is included (health data + HIPAA + GDPR)",
+        "@security_specialist is included (PII + health data)",
+        "@accessibility_specialist is included (health product, public-facing)",
+        "@i18n_specialist is included (US + EU = international)",
+        "@qa_engineer is included (scope=review, pre-launch)",
+        "Discussion follows the review flow (PM restates goals, each role evaluates)",
+        "Signals correctly detect: is_regulated=true, domain=health, is_international=true, scope=review",
+        "Discussion ends with a Conclusion section including assessment and prioritized remediation"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "cli-tool-no-ui",
+      "prompt": "Help me plan a CLI tool for developers to manage their local Kubernetes clusters. No UI, no user-facing frontend. Just a Go binary distributed via Homebrew.",
+      "expected_output": "Reduced core team without frontend engineer and product designer. Should include technical writer (developer audience) and DevOps engineer.",
+      "files": [],
+      "assertions": [
+        "@senior_frontend_engineer is NOT included (has_ui=false)",
+        "@senior_product_designer is NOT included or reduced role (has_ui=false)",
+        "@technical_writer is included (developer audience, CLI tool)",
+        "@devops_engineer is included (Kubernetes, infrastructure domain)",
+        "Detects signals: has_ui=false, audience=developer",
+        "Team size is appropriately small (5-8 roles)",
+        "@brand_strategist is NOT included (developer CLI tool)"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "trivial-feature-scale-down",
+      "prompt": "Add a tooltip to the settings page that explains what 'auto-save' does.",
+      "expected_output": "Minimal team (3-4 roles max). Should not over-staff for a trivial feature. Brief discussion, no elaborate workshop.",
+      "files": [],
+      "assertions": [
+        "Team size is 4 or fewer roles",
+        "Response acknowledges this is a trivial change and scales down accordingly",
+        "No Tier 2 or Tier 3 roles are included",
+        "Discussion is brief (under 400 words total)",
+        "The copywriter contributes the tooltip text",
+        "Discussion still ends with a brief conclusion and the recommended copy"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "large-marketplace-new-product",
+      "prompt": "I want to brainstorm a new social marketplace for handmade goods, similar to Etsy but focused on Southeast Asian artisans. It's a completely new product — we're starting from scratch. We want to launch in Thailand, Vietnam, and Indonesia first, then expand globally.",
+      "expected_output": "Large team (10-12 roles) with core + brand strategist (new product), behavioral scientist (marketplace), legal/compliance (marketplace regulations), i18n specialist (SEA + global), community manager (marketplace), and possibly finance manager (marketplace economics).",
+      "files": [],
+      "assertions": [
+        "All 7 core roles are present",
+        "@brand_strategist is included (new product, new brand)",
+        "@lead_behavioral_scientist is included (marketplace dynamics, two-sided incentives)",
+        "@legal_compliance_advisor is included (marketplace regulations, cross-border commerce)",
+        "@i18n_specialist is included (Thailand, Vietnam, Indonesia + global expansion)",
+        "@community_manager is included (marketplace, artisan community)",
+        "Detects signals: project_type=new_product, domain=marketplace, is_international=true, has_brand_impact=true, involves_behavior_design=true",
+        "Team size is between 10-12 roles",
+        "Discussion surfaces marketplace-specific tensions (seller vs buyer experience, local vs global)",
+        "Discussion ends with a Conclusion containing recommendation and prioritized next steps"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "user-specifies-exact-roles",
+      "prompt": "I want @senior_product_manager, @senior_backend_engineer, and @data_scientist to discuss adding a recommendation engine to our e-commerce platform.",
+      "expected_output": "Uses exactly the roles specified by the user. Does not add or remove roles. Skips detection/scoring and goes straight to discussion.",
+      "files": [],
+      "assertions": [
+        "Only the 3 specified roles are present (@senior_product_manager, @senior_backend_engineer, @data_scientist)",
+        "No additional roles are added without asking",
+        "Detection/scoring phase is skipped",
+        "Discussion proceeds directly with the specified roles",
+        "Each role contributes in first person with their role tag",
+        "Discussion ends with a Conclusion section"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "mid-discussion-role-addition",
+      "prompt": "Let's brainstorm adding dark mode to our SaaS dashboard. [After initial discussion:] Actually, can you add @accessibility_specialist to this discussion?",
+      "expected_output": "Initial team for a simple UI feature (5-7 roles). When user requests adding accessibility specialist, the role is introduced naturally and contributes immediately without restarting the discussion.",
+      "files": [],
+      "assertions": [
+        "Initial team does NOT include @accessibility_specialist (not triggered by default for a simple UI feature)",
+        "When user requests the addition, @accessibility_specialist is added immediately",
+        "The new role is briefly introduced with their perspective",
+        "The discussion continues naturally — it does not restart from the beginning",
+        "@accessibility_specialist contributes at least one substantive insight about dark mode accessibility",
+        "Conclusion reflects the added role's contributions"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "conflicting-signals",
+      "prompt": "We're in the very early idea stage for a children's educational game that handles in-app purchases. Just want a quick discussion about whether this is worth pursuing.",
+      "expected_output": "Despite scope=discussion and stage=idea (suggesting a light team), is_regulated=true (children + payments) should still trigger legal/compliance. The legal role should contribute at appropriate depth for an idea-stage discussion — flagging high-level risks, not drafting compliance docs.",
+      "files": [],
+      "assertions": [
+        "@legal_compliance_advisor is included despite early stage (COPPA + children + payments is a strong signal)",
+        "Scope is correctly detected as 'discussion'",
+        "Stage is correctly detected as 'idea'",
+        "Legal role contributes at appropriate depth — flags risks without over-specifying compliance steps",
+        "Team size is appropriate for a discussion (5-7, not 10+)",
+        "Discussion acknowledges the tension between 'just exploring' and 'this domain has serious regulatory requirements'"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "non-tech-project",
+      "prompt": "We need to plan our company's annual offsite retreat. 50 people, 3 days, budget of $75k. Help us brainstorm the agenda and logistics.",
+      "expected_output": "Acknowledges this is non-tech, adapts the role set. Drops most engineering roles. Includes PM (planning), possibly finance manager (budget), and adapts remaining roles to the context.",
+      "files": [],
+      "assertions": [
+        "Response notes this is a non-tech project and adapts accordingly",
+        "Engineering roles (architect, frontend, backend) are NOT included or are minimized",
+        "Adapted roles are relevant to event planning (logistics, budget, content/agenda)",
+        "Team size is small (4-6) — don't over-staff a non-tech discussion",
+        "Discussion is practical and focused on the actual task (agenda, logistics, budget)",
+        "Conclusion includes actionable next steps for planning the retreat"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "over-trigger-role-cap",
+      "prompt": "We're building a new international fintech marketplace for health insurance products targeting both consumers and enterprise brokers. It involves AI-driven recommendations, gamified comparison tools, needs SOC 2 and HIPAA compliance, and we're launching in 8 countries simultaneously. We're at growth stage and need to plan the next phase.",
+      "expected_output": "Many signals fire simultaneously (regulated, international, data-intensive, marketplace, behavioral design, brand impact, b2b2c). The skill should apply the 12-role cap and note dropped roles as available on request.",
+      "files": [],
+      "assertions": [
+        "Team size does not exceed 12 active roles",
+        "Roles that were dropped due to the cap are noted as 'available on request'",
+        "The highest-priority specialist roles are kept (legal, security, i18n, behavioral scientist)",
+        "Lower-priority roles are the ones dropped (community manager, content strategist, etc.)",
+        "Signals are all correctly detected (is_regulated, is_international, is_data_intensive, involves_behavior_design, has_brand_impact)",
+        "Discussion still features productive disagreements despite the large team"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "domain-expert-healthcare",
+      "prompt": "Plan a clinical trial data management platform for a mid-size pharma company. It needs to handle EDC (electronic data capture), integrate with existing CTMS, support FDA 21 CFR Part 11 compliance, and generate submission-ready datasets in CDISC format.",
+      "expected_output": "Team includes @domain_expert instantiated as a clinical/life sciences specialist who brings substantive knowledge about FDA pathways, CDISC standards, EDC workflows, and GxP compliance. The domain expert should contribute differently from @legal_compliance_advisor — industry knowledge vs. legal risk.",
+      "files": [],
+      "assertions": [
+        "@domain_expert is included and instantiated for healthcare/pharma/clinical trials",
+        "Domain expert references specific standards (CDISC, 21 CFR Part 11, GxP, ICH guidelines)",
+        "Domain expert contributes differently from @legal_compliance_advisor (industry workflows vs. legal risk)",
+        "@legal_compliance_advisor is also included (FDA regulatory compliance)",
+        "@security_specialist is included (patient data, PII)",
+        "Signals detect: domain=health/biotech/pharma, is_regulated=true",
+        "Discussion surfaces domain-specific trade-offs (e.g., build vs. buy EDC, CDISC conversion timing)",
+        "Domain expert's contributions would not be possible from the core tech team alone"
+      ]
+    },
+    {
+      "id": 13,
+      "name": "domain-expert-climate-tech",
+      "prompt": "Brainstorm a carbon footprint tracking platform for manufacturing companies. It should calculate Scope 1, 2, and 3 emissions, integrate with ERP systems, and generate reports for CDP and SEC climate disclosure requirements.",
+      "expected_output": "Team includes @domain_expert instantiated as a sustainability/climate specialist who knows GHG Protocol, emissions factor databases, Scope 3 complexities, and ESG reporting frameworks. Should surface industry-specific challenges the tech team wouldn't know.",
+      "files": [],
+      "assertions": [
+        "@domain_expert is included and instantiated for climate/sustainability",
+        "Domain expert references specific frameworks (GHG Protocol, CDP, TCFD, SEC climate rules)",
+        "Domain expert explains Scope 1/2/3 distinctions and why Scope 3 is hard",
+        "Discussion surfaces domain-specific challenges (emissions factor accuracy, supply chain data gaps)",
+        "Signals detect: domain=climate/manufacturing, is_regulated=true (SEC disclosure)",
+        "Core tech team and domain expert have productive tension (data precision vs. practical estimation)"
+      ]
+    },
+    {
+      "id": 14,
+      "name": "domain-expert-skip-for-saas",
+      "prompt": "Plan a new project management SaaS tool for small teams. It should have Kanban boards, time tracking, and Slack integration.",
+      "expected_output": "No @domain_expert is included — this is a generic SaaS product where the core team's knowledge is sufficient. The domain signal should be detected as 'saas' which is in the skip list.",
+      "files": [],
+      "assertions": [
+        "@domain_expert is NOT included",
+        "Domain is detected as 'saas' or similar generic tech domain",
+        "Core roles handle all aspects without needing specialized domain knowledge",
+        "No mention of domain expertise gaps"
+      ]
+    },
+    {
+      "id": 15,
+      "name": "domain-expert-niche-self-assessment",
+      "prompt": "We're building a platform for rare earth mineral supply chain traceability, tracking materials from mine to manufacturer with blockchain-verified provenance. It needs to comply with EU Critical Raw Materials Act and US CHIPS Act sourcing requirements.",
+      "expected_output": "Team includes @domain_expert but the persona should self-assess its depth. This is a niche domain — the AI should flag that its expertise is limited and recommend validation with a real domain practitioner.",
+      "files": [],
+      "assertions": [
+        "@domain_expert is included and instantiated for mining/supply chain/materials",
+        "Domain expert triggers the self-assessment gate — acknowledges limited depth in this niche",
+        "Domain expert still contributes what it can (general supply chain traceability, blockchain provenance patterns)",
+        "Domain expert explicitly recommends consulting a real industry specialist for domain-specific validation",
+        "The transparency about limitations does not prevent the expert from contributing useful perspectives"
+      ]
+    },
+    {
+      "id": 16,
+      "name": "messy-brief-ambiguous-input",
+      "prompt": "So we've got this thing where users upload photos and other users can like rate them and we want to maybe add some AI to suggest improvements? idk if it's social media or more like a portfolio tool. thoughts?",
+      "expected_output": "Handles ambiguous input gracefully. States assumptions explicitly. Assembles a reasonable team despite unclear signals. Doesn't ask too many clarifying questions — makes reasonable assumptions and proceeds.",
+      "files": [],
+      "assertions": [
+        "Assumptions are stated explicitly (e.g., 'Assuming this is a social/creative platform')",
+        "Signals are detected with reasonable defaults for ambiguous values",
+        "Team is assembled and discussion proceeds — does not stall asking for clarification",
+        "@lead_behavioral_scientist is likely included (rating system = behavior design)",
+        "Discussion helps clarify the product direction as a natural outcome of the team's perspectives",
+        "Conclusion addresses the ambiguity — suggests which direction to pursue and why"
+      ]
+    }
+  ]
+}

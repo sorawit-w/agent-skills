@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 280" role="img" aria-label="agent-skills — a personal shelf of Claude Code plugins" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>agent-skills — a personal shelf of Claude Code plugins</title>
+  <desc>Pixel-art banner: a wooden shelf holding two hand-crafted skill tiles — a circle of figures (team-composer) and a clipboard with a magnifying glass (skill-evaluator) — plus empty slots for plugins still to come.</desc>
+
+  <!-- background: soft warm paper, with subtle scanlines -->
+  <defs>
+    <pattern id="scan" x="0" y="0" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="4" fill="#f5efe6"/>
+      <rect y="3" width="4" height="1" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="960" height="280" fill="url(#scan)"/>
+
+  <!-- title block (left) -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+    <text x="56" y="86" font-size="36" font-weight="700" letter-spacing="1">agent-skills</text>
+    <text x="56" y="118" font-size="16" fill="#6b7280">a personal shelf of Claude Code plugins</text>
+    <text x="56" y="158" font-size="12" fill="#9ca3af" letter-spacing="2">PIXELS · CRAFT · ONE SKILL AT A TIME</text>
+  </g>
+
+  <!-- the shelf (pixel art) -->
+  <!-- Shelf board: broad plank with two support brackets -->
+  <g>
+    <!-- shelf top surface (shadow underline on top) -->
+    <rect x="448" y="168" width="472" height="6" fill="#7c4b2a"/>
+    <rect x="448" y="174" width="472" height="22" fill="#8a5a34"/>
+    <rect x="448" y="196" width="472" height="4" fill="#5e3618"/>
+
+    <!-- wood grain highlights on plank -->
+    <rect x="468" y="178" width="60" height="2" fill="#a2703f"/>
+    <rect x="610" y="182" width="90" height="2" fill="#a2703f"/>
+    <rect x="760" y="186" width="120" height="2" fill="#a2703f"/>
+
+    <!-- left bracket -->
+    <rect x="456" y="200" width="12" height="40" fill="#5e3618"/>
+    <rect x="460" y="200" width="4"  height="40" fill="#7c4b2a"/>
+    <!-- right bracket -->
+    <rect x="892" y="200" width="12" height="40" fill="#5e3618"/>
+    <rect x="896" y="200" width="4"  height="40" fill="#7c4b2a"/>
+  </g>
+
+  <!-- Skill tile 1: team-composer (circle of figures) -->
+  <!-- tile base (card) -->
+  <g>
+    <rect x="474" y="92" width="92" height="76" fill="#ffffff"/>
+    <rect x="474" y="92" width="92" height="4"  fill="#c9b58a"/>
+    <rect x="474" y="164" width="92" height="4" fill="#c9b58a"/>
+    <rect x="474" y="92" width="4"  height="76" fill="#c9b58a"/>
+    <rect x="562" y="92" width="4"  height="76" fill="#c9b58a"/>
+    <!-- inner frame -->
+    <rect x="482" y="100" width="76" height="60" fill="#fdf7ea"/>
+
+    <!-- circle-of-figures icon: 6 pixel "heads" around a center -->
+    <!-- center dot -->
+    <rect x="516" y="126" width="8" height="8" fill="#c2410c"/>
+    <!-- top figure -->
+    <rect x="516" y="108" width="8" height="8" fill="#1f2937"/>
+    <rect x="514" y="116" width="12" height="4" fill="#1f2937"/>
+    <!-- upper-right -->
+    <rect x="534" y="114" width="8" height="8" fill="#1f2937"/>
+    <rect x="532" y="122" width="12" height="4" fill="#1f2937"/>
+    <!-- lower-right -->
+    <rect x="534" y="134" width="8" height="8" fill="#1f2937"/>
+    <rect x="532" y="142" width="12" height="4" fill="#1f2937"/>
+    <!-- bottom -->
+    <rect x="516" y="140" width="8" height="8" fill="#1f2937"/>
+    <rect x="514" y="148" width="12" height="4" fill="#1f2937"/>
+    <!-- lower-left -->
+    <rect x="498" y="134" width="8" height="8" fill="#1f2937"/>
+    <rect x="496" y="142" width="12" height="4" fill="#1f2937"/>
+    <!-- upper-left -->
+    <rect x="498" y="114" width="8" height="8" fill="#1f2937"/>
+    <rect x="496" y="122" width="12" height="4" fill="#1f2937"/>
+
+  </g>
+
+  <!-- Skill tile 2: skill-evaluator (clipboard + magnifier) -->
+  <g>
+    <rect x="594" y="92" width="92" height="76" fill="#ffffff"/>
+    <rect x="594" y="92" width="92" height="4"  fill="#c9b58a"/>
+    <rect x="594" y="164" width="92" height="4" fill="#c9b58a"/>
+    <rect x="594" y="92" width="4"  height="76" fill="#c9b58a"/>
+    <rect x="682" y="92" width="4"  height="76" fill="#c9b58a"/>
+    <rect x="602" y="100" width="76" height="60" fill="#fdf7ea"/>
+
+    <!-- clipboard body -->
+    <rect x="616" y="110" width="40" height="44" fill="#f3e7c9"/>
+    <rect x="616" y="110" width="40" height="2"  fill="#b79a5c"/>
+    <rect x="616" y="152" width="40" height="2"  fill="#b79a5c"/>
+    <rect x="616" y="110" width="2"  height="44" fill="#b79a5c"/>
+    <rect x="654" y="110" width="2"  height="44" fill="#b79a5c"/>
+    <!-- clip -->
+    <rect x="628" y="106" width="16" height="6"  fill="#6b7280"/>
+    <!-- lines -->
+    <rect x="622" y="118" width="28" height="2" fill="#9ca3af"/>
+    <rect x="622" y="124" width="20" height="2" fill="#9ca3af"/>
+    <rect x="622" y="130" width="24" height="2" fill="#9ca3af"/>
+    <!-- check mark (green) -->
+    <rect x="623" y="140" width="3" height="3" fill="#15803d"/>
+    <rect x="626" y="143" width="3" height="3" fill="#15803d"/>
+    <rect x="629" y="140" width="3" height="3" fill="#15803d"/>
+    <rect x="632" y="137" width="3" height="3" fill="#15803d"/>
+    <rect x="635" y="134" width="3" height="3" fill="#15803d"/>
+
+    <!-- magnifier overlay -->
+    <rect x="650" y="128" width="4" height="4" fill="#1f2937"/>
+    <rect x="654" y="124" width="12" height="4" fill="#1f2937"/>
+    <rect x="654" y="136" width="12" height="4" fill="#1f2937"/>
+    <rect x="666" y="124" width="4" height="16" fill="#1f2937"/>
+    <rect x="658" y="128" width="8" height="8" fill="#bae6fd"/>
+    <!-- handle -->
+    <rect x="670" y="140" width="4" height="4" fill="#1f2937"/>
+    <rect x="674" y="144" width="4" height="4" fill="#1f2937"/>
+    <rect x="678" y="148" width="4" height="4" fill="#1f2937"/>
+
+  </g>
+
+  <!-- Empty slot 3: plus marker, "more coming" -->
+  <g opacity="0.55">
+    <rect x="714" y="92" width="92" height="76" fill="#fdf7ea"/>
+    <!-- dashed border effect using segments -->
+    <g fill="#c9b58a">
+      <rect x="714" y="92"  width="12" height="3"/>
+      <rect x="732" y="92"  width="12" height="3"/>
+      <rect x="750" y="92"  width="12" height="3"/>
+      <rect x="768" y="92"  width="12" height="3"/>
+      <rect x="786" y="92"  width="12" height="3"/>
+      <rect x="714" y="165" width="12" height="3"/>
+      <rect x="732" y="165" width="12" height="3"/>
+      <rect x="750" y="165" width="12" height="3"/>
+      <rect x="768" y="165" width="12" height="3"/>
+      <rect x="786" y="165" width="12" height="3"/>
+      <rect x="714" y="92"  width="3" height="12"/>
+      <rect x="714" y="110" width="3" height="12"/>
+      <rect x="714" y="128" width="3" height="12"/>
+      <rect x="714" y="146" width="3" height="12"/>
+      <rect x="803" y="92"  width="3" height="12"/>
+      <rect x="803" y="110" width="3" height="12"/>
+      <rect x="803" y="128" width="3" height="12"/>
+      <rect x="803" y="146" width="3" height="12"/>
+    </g>
+    <!-- plus sign -->
+    <rect x="754" y="120" width="12" height="4" fill="#c9b58a"/>
+    <rect x="758" y="116" width="4" height="12" fill="#c9b58a"/>
+  </g>
+
+  <!-- Empty slot 4 -->
+  <g opacity="0.35">
+    <rect x="822" y="92" width="74" height="76" fill="#fdf7ea"/>
+    <g fill="#c9b58a">
+      <rect x="822" y="92"  width="12" height="2"/>
+      <rect x="840" y="92"  width="12" height="2"/>
+      <rect x="858" y="92"  width="12" height="2"/>
+      <rect x="876" y="92"  width="12" height="2"/>
+      <rect x="822" y="166" width="12" height="2"/>
+      <rect x="840" y="166" width="12" height="2"/>
+      <rect x="858" y="166" width="12" height="2"/>
+      <rect x="876" y="166" width="12" height="2"/>
+      <rect x="822" y="92"  width="2" height="12"/>
+      <rect x="822" y="110" width="2" height="12"/>
+      <rect x="822" y="128" width="2" height="12"/>
+      <rect x="822" y="146" width="2" height="12"/>
+      <rect x="894" y="92"  width="2" height="12"/>
+      <rect x="894" y="110" width="2" height="12"/>
+      <rect x="894" y="128" width="2" height="12"/>
+      <rect x="894" y="146" width="2" height="12"/>
+    </g>
+  </g>
+
+  <!-- tiny character: a little agent placing a tile on the shelf -->
+  <g transform="translate(380, 128)">
+    <!-- body -->
+    <rect x="6"  y="20" width="20" height="24" fill="#1f2937"/>
+    <rect x="6"  y="20" width="20" height="4"  fill="#374151"/>
+    <!-- head -->
+    <rect x="8"  y="4"  width="16" height="16" fill="#fde68a"/>
+    <rect x="8"  y="4"  width="16" height="4"  fill="#fcd34d"/>
+    <!-- eye -->
+    <rect x="12" y="12" width="3" height="3" fill="#1f2937"/>
+    <rect x="18" y="12" width="3" height="3" fill="#1f2937"/>
+    <!-- antenna -->
+    <rect x="14" y="0"  width="4" height="4" fill="#c2410c"/>
+    <!-- arm reaching toward shelf -->
+    <rect x="26" y="26" width="14" height="4" fill="#1f2937"/>
+    <rect x="40" y="24" width="6"  height="6" fill="#fde68a"/>
+    <!-- legs -->
+    <rect x="8"  y="44" width="6"  height="8" fill="#1f2937"/>
+    <rect x="18" y="44" width="6"  height="8" fill="#1f2937"/>
+  </g>
+
+  <!-- ground line (subtle shadow under bracket) -->
+  <rect x="56" y="244" width="848" height="2" fill="#eadfcf"/>
+</svg>
