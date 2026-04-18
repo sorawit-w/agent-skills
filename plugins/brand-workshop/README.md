@@ -120,14 +120,14 @@ Once installed, Claude picks the skill up automatically from the description in 
 
 The principle: this skill owns the launch-ready identity kit. Hand off to specialized skills for everything downstream rather than attempting them inline.
 
-## Planned companion plugins
+## Companion plugins
 
-This skill is intentionally scoped to brand identity. Two companion plugins are planned in this repo to handle startup deliverables that overlap brand but require different inputs from the founder. Each will ship as its own plugin (matching the one-plugin-per-skill pattern used across the repo) rather than being folded into `brand-workshop`:
+This skill is intentionally scoped to brand identity. Two companion plugins ship in this repo to handle startup deliverables that overlap brand but require different inputs from the founder. Each is its own plugin (matching the one-plugin-per-skill pattern used across the repo) rather than folded into `brand-workshop`:
 
-- **`pitch-deck`** — fills in the template this skill ships. Content (problem, solution, market, traction, team, ask) comes from founder inputs; the skill orchestrates `@startup_strategist` + `@vc_partner` through pitch construction and applies the brand assets produced here.
-- **`business-model-canvas`** — produces a BMC from founder inputs (revenue model, cost structure, key partners, channels, customer segments). `@startup_strategist` territory.
+- **[`business-model-canvas`](../business-model-canvas/README.md)** — produces a 9-block BMC from founder inputs (customer segments, value propositions, channels, revenue model, cost structure, key partners, activities, resources). `@startup_strategist` territory with `@vc_partner` read-tests. Outputs `business-model.md` (editable source of truth) + `business-model.html` (self-contained visual canvas).
+- **[`pitch-deck`](../pitch-deck/README.md)** — fills in a real investor deck from founder inputs (problem, solution, market, traction, team, ask). Reads the `brand-kit/` produced here for visual tokens and `business-model.md` if present to seed content. Enforces required-slot gating and refuses to ship a deck missing any of the four cardinal slots (TAM-only, traction without time axis, team without faces, vague ask). Outputs a single self-contained `pitch/deck.html`.
 
-An umbrella `startup-launch-kit` plugin may later orchestrate `brand-workshop` → `business-model-canvas` → `pitch-deck` as a single founder-facing flow. Not scheduled yet; this README will link to the companion plugins once they ship.
+An umbrella `startup-launch-kit` plugin may later orchestrate `brand-workshop` → `business-model-canvas` → `pitch-deck` as a single founder-facing flow. Not scheduled yet; until it ships, run the three plugins in order in the same working directory — they compose via shared folder conventions (`brand-kit/`, `business-model.md`, `pitch/`) rather than a manifest.
 
 ## Status and scope
 
