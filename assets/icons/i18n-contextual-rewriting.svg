@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="i18n-contextual-rewriting icon: pixel-art globe with meridian and equator" style="image-rendering: pixelated;">
+  <title>i18n-contextual-rewriting</title>
+  <!-- Globe fill (teal) -->
+  <g fill="#0d9488">
+    <rect x="12" y="6" width="8" height="2"/>
+    <rect x="10" y="8" width="12" height="2"/>
+    <rect x="8" y="10" width="16" height="12"/>
+    <rect x="10" y="22" width="12" height="2"/>
+    <rect x="12" y="24" width="8" height="2"/>
+  </g>
+  <!-- Meridian (vertical) in ink -->
+  <g fill="#1f2937">
+    <rect x="14" y="6" width="4" height="20"/>
+  </g>
+  <!-- Equator (horizontal) in ink -->
+  <g fill="#1f2937">
+    <rect x="8" y="14" width="16" height="4"/>
+  </g>
+  <!-- Small highlight (top-left) -->
+  <g fill="#f5efe6">
+    <rect x="12" y="10" width="2" height="2"/>
+  </g>
+</svg>

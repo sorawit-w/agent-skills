@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="tech-stack-recommendations icon: a stack of four layered blocks" style="image-rendering: pixelated;">
+  <title>tech-stack-recommendations</title>
+  <!-- Bottom layer (widest, wood-dark) -->
+  <g fill="#5e3618">
+    <rect x="4" y="22" width="24" height="6"/>
+  </g>
+  <!-- 3rd layer (wood-mid) -->
+  <g fill="#7c4b2a">
+    <rect x="6" y="16" width="20" height="6"/>
+  </g>
+  <!-- 2nd layer (beige) -->
+  <g fill="#c9b58a">
+    <rect x="8" y="10" width="16" height="6"/>
+  </g>
+  <!-- Top layer (orange accent) -->
+  <g fill="#c2410c">
+    <rect x="10" y="4" width="12" height="6"/>
+  </g>
+  <!-- Subtle highlights (top edge on each) -->
+  <g fill="#1f2937" opacity="0.18">
+    <rect x="10" y="10" width="12" height="1"/>
+    <rect x="8" y="16" width="16" height="1"/>
+    <rect x="6" y="22" width="20" height="1"/>
+  </g>
+</svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="business-model-canvas icon: nine-block grid with three filled cells" style="image-rendering: pixelated;">
+  <title>business-model-canvas</title>
+  <!-- Filled cells first (under the grid lines) -->
+  <!-- TL cell: beige -->
+  <g fill="#c9b58a">
+    <rect x="4" y="4" width="6" height="6"/>
+  </g>
+  <!-- Center cell: orange accent (value prop) -->
+  <g fill="#c2410c">
+    <rect x="13" y="13" width="6" height="6"/>
+  </g>
+  <!-- BR cell: teal -->
+  <g fill="#0d9488">
+    <rect x="22" y="22" width="6" height="6"/>
+  </g>
+  <!-- Grid lines (ink) -->
+  <g fill="#1f2937">
+    <!-- Outer border -->
+    <rect x="2" y="2" width="28" height="2"/>
+    <rect x="2" y="28" width="28" height="2"/>
+    <rect x="2" y="2" width="2" height="28"/>
+    <rect x="28" y="2" width="2" height="28"/>
+    <!-- Vertical dividers -->
+    <rect x="11" y="2" width="2" height="28"/>
+    <rect x="20" y="2" width="2" height="28"/>
+    <!-- Horizontal dividers -->
+    <rect x="2" y="11" width="28" height="2"/>
+    <rect x="2" y="20" width="28" height="2"/>
+  </g>
+</svg>
