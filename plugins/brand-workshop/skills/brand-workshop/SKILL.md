@@ -65,6 +65,14 @@ and run structured discussion. The difference is what they produce.
 | "Review our product positioning" | `team-composer` with `@brand_strategist` |
 | "Does our copy sound right?" | `team-composer` with `@humorist` + `@senior_copywriter` |
 
+**Stop-rule — existing brands:**
+
+If the user's request is to audit, refresh, document, or extend an **existing**
+brand (logo already in use, style guide already drafted, "make our current brand
+more X", "update our brand voice"), stop and invoke `team-composer` instead.
+This skill generates brand identity from a business overview — it is not a
+remix/audit tool for a live brand.
+
 > **Future refactor note (Option D):** Today this skill has its own internal team
 > (see Phase 2). Long-term, this skill could invoke `team-composer` as the
 > discussion engine and focus only on the Creation phase (logo SVG, brief
@@ -412,12 +420,41 @@ investor-ready pitch construction belongs to the `pitch-deck` companion plugin.
 
 **Contract (from `team-composer` cross-skill rules):**
 
-- Single file — Reveal.js, inline CSS/JS, base64-embedded images/fonts, zero network dependencies
+- Single file — inline CSS/JS, base64-embedded images/fonts, zero network dependencies
 - Responsive: projector + laptop + mobile preview all legible
 - First-class print-as-PDF via CSS paged media
 - Keyboard navigation (← → Space Esc)
 - Semantic HTML with aria landmarks
 - AAA contrast for projection
+
+**Hard rule — no network dependencies.** The deck MUST run offline. That means:
+
+- NO `<script src="https://…">` — inline the JS
+- NO `<link rel="stylesheet" href="https://…">` — inline the CSS
+- NO `<link rel="preconnect"/"dns-prefetch"/"preload" href="https://…">`
+- NO Google Fonts / fonts.googleapis.com — use `@font-face` with base64 `woff2`,
+  or fall back to a system font stack
+- NO `<img src="https://…">` — base64-inline or reference a local path this skill produced
+- NO CDN imports of any framework (reveal.js, Swiper, Bootstrap, Tailwind, etc.).
+  If slide-deck behavior is needed, write ~50 lines of vanilla JS for keyboard
+  navigation and section transitions. Do not pull reveal.js from a CDN.
+
+**Anti-pattern (DO NOT do this):**
+
+```html
+<!-- WRONG — network dependency -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+```
+
+**Verification gate — run before shipping:**
+
+```bash
+grep -nE '(https?:|//(cdn|fonts)\.)' deck/pitch-template.html
+```
+
+This must return zero matches outside HTML comments. If it returns anything,
+remove the network dependency before handing the deck to the user.
 
 **Slide structure (all content slots empty):**
 
@@ -544,8 +581,9 @@ Before presenting final output, verify:
 - [ ] Descriptions pack: each variant stands alone — no truncation chains
 - [ ] Design system stays within tokens — no button/form/grid specs
 - [ ] Empty design-system sections are dropped rather than filled with placeholder text
+- [ ] `design-system.md` includes a **Token Mapping Convention** note under Color Tokens that states verbatim: `Primary` → `--primary-accent`, `Secondary` → `--secondary-accent`, `Accent` is a secondary highlight (not the hero), and names must not be swapped. This makes the downstream-plugin contract explicit.
 - [ ] Deck template is labelled as a template; every content slot is a literal `[fill in: …]` prompt
-- [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests)
+- [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests) — verified by running `grep -nE '(https?:|//(cdn|fonts)\.)' deck/pitch-template.html` and seeing zero matches outside comments
 - [ ] Deck title slide includes the "forthcoming `pitch-deck` plugin" disclaimer
 - [ ] `pitch-styles.css` is shipped alongside `pitch-template.html` and is byte-for-byte identical to the `<style>` block inlined in the HTML (verify with `diff -q`; no leading file-level comment in the CSS)
 
