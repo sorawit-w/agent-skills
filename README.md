@@ -102,6 +102,11 @@ team-composer ──▶ sub-agent-coordinator
 - [`tech-stack-recommendations`](#tech-stack-recommendations) — when the architect role needs an opinionated stack to anchor the debate.
 - [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) — when the `@i18n_specialist` is on the team and the output needs to ship in multiple locales.
 
+**Try it.**
+- "Bring a team together to review this mobile auth architecture before we ship."
+- "Brainstorm a habit-tracker for teens — multi-perspective, no single viewpoint wins."
+- "After team-composer concludes, hand Phase 6 deliverables to `sub-agent-coordinator` and fan out the architect / backend / frontend work in parallel."
+
 ---
 
 <a id="sub-agent-coordinator"></a>
@@ -115,6 +120,11 @@ team-composer ──▶ sub-agent-coordinator
 **Pairs well with.**
 - [`team-composer`](#team-composer) — natural upstream: discussion finishes, deliverables fan out via coordinator patterns.
 - [`skill-evaluator`](#skill-evaluator) — spawn evaluator sub-agents to stress-test other skills in parallel.
+
+**Try it.**
+- "Refactor all 14 React components from class to function — coordinate in parallel."
+- "Debug our flaky CI suite: spawn a researcher, a fixer, and a reviewer with clear briefs."
+- "After `team-composer` concludes, brief sub-agents to produce the per-role deliverables the conclusion assigned."
 
 ---
 
@@ -130,6 +140,11 @@ team-composer ──▶ sub-agent-coordinator
 - **Every other skill on this shelf** — use it to audit any of them. The shelf is only as sharp as its weakest rule.
 - [`sub-agent-coordinator`](#sub-agent-coordinator) — run evaluation variants in parallel (different prompt sets, different grader instances) and converge findings.
 
+**Try it.**
+- "Stress-test `team-composer` — does Round 2 actually produce rebuttals, or is it ceremonial?"
+- "My onboarding skill has been 'mostly working.' Audit it and tell me which rules are getting skipped."
+- "Use `sub-agent-coordinator` to fan out evaluator runs against three of our skills in parallel and converge the findings."
+
 ---
 
 <a id="tech-stack-recommendations"></a>
@@ -144,6 +159,11 @@ team-composer ──▶ sub-agent-coordinator
 - [`team-composer`](#team-composer) — when the architect role needs an anchor position to debate from.
 - [`skill-evaluator`](#skill-evaluator) — audit the stack rules against your real constraints before committing.
 
+**Try it.**
+- "I'm starting a SaaS side-project. Give me one opinionated stack I don't have to second-guess."
+- "We're migrating off Next.js on Vercel — recommend the path and name the trade-offs honestly."
+- "Kick off a `team-composer` architecture review and load `tech-stack-recommendations` as the architect's anchor position."
+
 ---
 
 <a id="i18n-contextual-rewriting"></a>
@@ -157,6 +177,11 @@ team-composer ──▶ sub-agent-coordinator
 **Pairs well with.**
 - [`team-composer`](#team-composer) — when `@i18n_specialist` is on the team, this skill executes the translation work the team's output needs.
 - [`brand-workshop`](#brand-workshop) — localize the descriptions pack (taglines, bios, boilerplate) without losing voice.
+
+**Try it.**
+- "Translate this onboarding flow into Thai, Japanese, and Korean — cultural rewriting, not machine translation."
+- "Edit three keys in a 4,000-line `zh-CN.json` without rewriting the whole file or blowing the token budget."
+- "`brand-workshop` just shipped the descriptions pack — localize it into `th` and `ja` and keep the voice."
 
 ---
 
@@ -173,6 +198,11 @@ team-composer ──▶ sub-agent-coordinator
 - [`pitch-deck`](#pitch-deck) — reads `brand-kit/design-system.md` and the starter deck template for consistent branding.
 - [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) — localize the descriptions pack while preserving tone.
 
+**Try it.**
+- "Run the full workshop for my meditation startup — identity, mark, voice, and deck template."
+- "I have a one-paragraph startup idea. Take me through Discovery → Concept → Creation and ship a launch-ready kit."
+- "Brand-workshop first, then hand the kit to `business-model-canvas` and `pitch-deck` so the whole startup artifact chain shares tokens."
+
 ---
 
 <a id="business-model-canvas"></a>
@@ -188,6 +218,11 @@ team-composer ──▶ sub-agent-coordinator
 - [`pitch-deck`](#pitch-deck) — downstream: `business-model.md` seeds slides 2, 3, 6, 7 and the Ask gets cross-checked against the Stress Tests.
 - [`team-composer`](#team-composer) — when a block is contested, kick it to a full multi-role team for a focused session.
 
+**Try it.**
+- "Interview me block-by-block and produce a BMC for my AI code-review tool."
+- "`brand-workshop` is done — use `brand-kit/` as input and generate the canvas with auto-styled tokens."
+- "Build the canvas; when we're done, hand it to `pitch-deck` to seed slides 2/3/6/7 and cross-check the Ask."
+
 ---
 
 <a id="pitch-deck"></a>
@@ -202,6 +237,11 @@ team-composer ──▶ sub-agent-coordinator
 - [`business-model-canvas`](#business-model-canvas) — reads `business-model.md` to seed slides and cross-check the Ask.
 - [`brand-workshop`](#brand-workshop) — reads `brand-kit/design-system.md` and `brand-kit/deck/pitch-template.html` for visuals.
 - [`team-composer`](#team-composer) — when a slide claim is weak, spin up `@startup_strategist + @vc_partner + @senior_copywriter` to pressure-test it before shipping.
+
+**Try it.**
+- "Investor wants my seed deck by Friday — start the structured interview."
+- "Use `business-model.md` and `brand-kit/` to build the deck; refuse to ship with any cardinal sin."
+- "After v1 ships, kick it to `team-composer` (`@startup_strategist` + `@vc_partner` + `@senior_copywriter`) to pressure-test the Market slide."
 
 ---
 
