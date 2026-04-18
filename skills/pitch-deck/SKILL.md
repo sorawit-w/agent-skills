@@ -27,9 +27,8 @@ All three files go into `pitch/` inside the founder's working directory.
 ## What this skill is NOT
 
 - **Not a template you fill in later.** Slides ship with real content or with explicit
-  `[fill in: …]` slots that block rendering until answered. A "pitch deck template"
-  with no founder content belongs to `brand-workshop` (which ships a brand-skinned
-  blank template).
+  `[fill in: …]` slots that block rendering until answered. This skill owns deck
+  construction end-to-end — `brand-workshop` does not ship a deck template.
 - **Not a financial model.** The Ask and Use of Funds slides reference numbers the
   founder provides; this skill does not produce projections, cohort curves, or unit
   economics beyond what the founder inputs.
@@ -53,8 +52,9 @@ This skill intentionally overlaps with `team-composer` (`@startup_strategist` an
 
 > **Companion plugins:**
 > - `brand-workshop` — upstream. Produces `brand-kit/` which this skill reads for
->   visual tokens and (if present) `brand-kit/deck/pitch-template.html` as a
->   structural reference.
+>   visual tokens (`design-system.md`), positioning/voice (`brand-brief.md`), and
+>   taglines (`descriptions.md`). Brand-workshop does not pre-emit a deck template;
+>   this skill generates its own Reveal CSS from the design-system tokens.
 > - `business-model-canvas` — upstream. If `business-model.md` exists, this skill
 >   reads it directly to seed the Business Model slide and to stress-test the
 >   Ask slide against the Stress Tests section.
@@ -114,13 +114,12 @@ Check for these files, in order:
 4. **`brand-kit/descriptions.md`** (from `brand-workshop`) — if present, read the
    tagline row and short/medium bios. Slide 1 (Title) uses the tagline from here
    first, falling back to `brand-brief.md → Final Concept → Tagline`.
-5. **`brand-kit/deck/pitch-styles.css`** (from `brand-workshop`) — if present, use
-   its rules as the starting CSS for the Reveal theme. This is the parseable
-   stylesheet companion to `pitch-template.html`.
-6. **`brand-kit/deck/pitch-template.html`** (from `brand-workshop`) — if present,
-   use its slide-layout conventions (section structure, class names) as a
-   structural reference. **Do not** copy its `[fill in: …]` prompt strings into
-   the generated deck.
+
+**Note on deck CSS:** `brand-workshop` does **not** emit a deck template or CSS file.
+This skill owns deck construction end-to-end. Generate the Reveal CSS directly from
+the tokens in `design-system.md` (color, typography, spacing) using the same strict
+mapping convention. Do not look for `brand-kit/deck/pitch-styles.css` or
+`brand-kit/deck/pitch-template.html` — those artifacts no longer exist.
 
 **If none of the above exist:** ask the founder whether to run `brand-workshop` and/or
 `business-model-canvas` first, or to proceed with neutral defaults. Proceeding without
@@ -348,7 +347,7 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` (our own) | Before this skill, when a brand kit and deck template are needed. This skill reads `brand-kit/design-system.md` (tokens), `brand-kit/brand-brief.md` (`## Positioning` + `## Voice & Tone`), `brand-kit/descriptions.md` (tagline), `brand-kit/deck/pitch-styles.css` (CSS), and `brand-kit/deck/pitch-template.html` (layout reference) if present. |
+| `brand-workshop` (our own) | Before this skill, when a brand kit is needed. This skill reads `brand-kit/design-system.md` (tokens), `brand-kit/brand-brief.md` (`## Positioning` + `## Voice & Tone`), and `brand-kit/descriptions.md` (tagline) if present. Brand-workshop does not emit a deck template or CSS — this skill generates its own Reveal CSS from the design-system tokens. |
 | `business-model-canvas` (our own) | Before this skill. This skill reads `business-model.md` to seed slides 2, 3, 6, 7 and to stress-test the Ask against the Stress Tests section. |
 | `team-composer` (our own) | Instead of this skill when the founder wants discussion on narrative without committing to a full deck. Also for deep dives on single slides (e.g., Competition slide with `@competitive_intel` mental model). |
 | `tech-stack-recommendations` (our own) | When the Product slide depends on tech choices the founder hasn't made yet. |

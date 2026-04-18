@@ -9,10 +9,10 @@ description: >
   work. This skill runs a structured multi-role brainstorming workshop and produces: a brand
   strategy brief (.md), tagline, code-generated logo (.svg), favicon pack with HTML install
   snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (tagline +
-  bios + elevator pitch + boilerplate), a starter design-system.md (tokens only), and a
-  self-contained branded pitch-deck template (empty placeholder slides the founder fills in).
+  bios + elevator pitch + boilerplate), and a starter design-system.md (tokens only).
   Even if the user only asks for a logo or only a tagline, use this skill — the full workshop
-  produces better results.
+  produces better results. For pitch decks, hand off to the `pitch-deck` skill, which
+  consumes `design-system.md` directly.
   Do NOT trigger on "refresh our existing brand", "update our current style guide",
   "evolve our identity", "our current brand", "our existing voice", "audit our logo",
   or any phrasing that implies a live brand being revised. Those belong to
@@ -74,9 +74,8 @@ moves through three phases: **Discovery → Concept → Creation**. The output i
 5. **Social Banner Set** — Open Graph (1200×630), X header (1500×500), LinkedIn banner (1584×396), Instagram square (1080×1080), profile avatar (400×400)
 6. **Descriptions Pack** (`descriptions.md`) — tagline + short/medium/long bios + elevator pitch + press boilerplate, all matched to brand voice
 7. **Starter Design System** (`design-system.md`) — tokens only: color, typography, spacing, radius, and voice principles (no component specs)
-8. **Branded Pitch-Deck Template** (`pitch-template.html` + `pitch-styles.css`) — a self-contained Reveal.js deck with empty placeholder slides, brand-skinned, that the founder fills in, plus a parseable CSS companion the `pitch-deck` plugin consumes for styling
 
-Scope boundary: pitch-deck *content* (filled slides) and the Business Model Canvas are intentionally out of scope — see Skill Boundaries below.
+Scope boundary: pitch decks (both the deck template *and* filled slide content) and the Business Model Canvas are intentionally out of scope. The `pitch-deck` skill reads `design-system.md` directly and generates a brand-skinned deck on its own — brand-workshop does not pre-emit a deck template. See Skill Boundaries below.
 
 ---
 
@@ -474,93 +473,16 @@ write placeholder text. An honest "tokens only" system beats a bloated fake one.
 
 ---
 
-### Branded Pitch-Deck Template
+### Pitch Deck — Out of Scope
 
-Output a self-contained HTML deck the founder fills with their own content. **This is a
-template, not a pitch** — content slides contain `[fill in: …]` prompts in muted type. Actual
-investor-ready pitch construction belongs to the `pitch-deck` companion plugin.
+Brand-workshop does **not** emit a pitch-deck template. The `pitch-deck` skill reads
+`design-system.md` directly and generates its own brand-skinned Reveal.js deck — there
+is no intermediate template artifact for it to consume. Pre-emitting a deck here would
+duplicate work and fork the styling source of truth.
 
-**Files:**
-
-- `deck/pitch-template.html` — founder-facing, self-contained deck (inline CSS/JS,
-  base64 assets, zero network dependencies).
-- `deck/pitch-styles.css` — the deck's stylesheet as a standalone file. Must be a
-  byte-for-byte copy of the `<style>` block inlined in `pitch-template.html` (minus
-  the surrounding tags). This is the parseable companion the `pitch-deck` plugin
-  reads when skinning its own Reveal.js deck. Do not embed `[fill in: …]` prompts
-  in this file — styles only. Do not add a file-level header comment identifying
-  the file; the HTML comment above `<style>` in `pitch-template.html` is where the
-  role attribution lives. Verify with `diff -q` against the extracted inline block
-  before shipping.
-
-**Contract (from `team-composer` cross-skill rules):**
-
-- Single file — inline CSS/JS, base64-embedded images/fonts, zero network dependencies
-- Responsive: projector + laptop + mobile preview all legible
-- First-class print-as-PDF via CSS paged media
-- Keyboard navigation (← → Space Esc)
-- Semantic HTML with aria landmarks
-- AAA contrast for projection
-
-**Hard rule — no network dependencies.** The deck MUST run offline. That means:
-
-- NO `<script src="https://…">` — inline the JS
-- NO `<link rel="stylesheet" href="https://…">` — inline the CSS
-- NO `<link rel="preconnect"/"dns-prefetch"/"preload" href="https://…">`
-- NO Google Fonts / fonts.googleapis.com — use `@font-face` with base64 `woff2`,
-  or fall back to a system font stack
-- NO `<img src="https://…">` — base64-inline or reference a local path this skill produced
-- NO CDN imports of any framework (reveal.js, Swiper, Bootstrap, Tailwind, etc.).
-  If slide-deck behavior is needed, write ~50 lines of vanilla JS for keyboard
-  navigation and section transitions. Do not pull reveal.js from a CDN.
-
-**Anti-pattern (DO NOT do this):**
-
-```html
-<!-- WRONG — network dependency -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
-```
-
-**Verification gate — run before shipping:**
-
-```bash
-grep -nE '(https?:|//(cdn|fonts)\.)' deck/pitch-template.html
-```
-
-This must return zero matches outside HTML comments. If it returns anything,
-remove the network dependency before handing the deck to the user.
-
-**Slide structure (all content slots empty):**
-
-1. Title — logo + company name + tagline + `[presenter · date]`
-2. Problem — `[fill in: the problem you solve]`
-3. Solution — `[fill in: how you solve it]`
-4. Why Now — `[fill in: the timing case]`
-5. Market — `[fill in: TAM / SAM / SOM]`
-6. Product — `[fill in: demo screenshots or key feature call-outs]`
-7. Business Model — `[fill in: how you make money]`
-8. Traction — `[fill in: key metrics and growth]`
-9. Team — `[fill in: founders and key hires]`
-10. Ask — `[fill in: round size and use of funds]`
-11. Thank You — logo + contact
-
-**Applied brand tokens:**
-
-- Slide backgrounds use brand neutral or primary
-- Headings use the display typeface from the design system
-- Body copy uses the body typeface from the design system
-- Accent dividers / callouts use the accent color from the palette
-
-**Required disclaimer on the title slide (muted footnote):**
-
-> "Template — content to be filled by the founder. For investor-ready pitch
-> construction, use the `pitch-deck` companion skill (which consumes this
-> brand-kit) or `team-composer` with `@startup_strategist` + `@vc_partner`."
-
-**Quality rule:** Never fabricate traction, team names, or market numbers. Every content slot
-ships as a literal `[fill in: …]` prompt. The only "real" content is brand identity
-(logo, colors, typography, tagline).
+If the founder wants a deck, recommend they invoke `pitch-deck` (or
+`team-composer` with `@startup_strategist` + `@vc_partner`) after this workshop
+completes. `pitch-deck` will read the `design-system.md` this skill produced.
 
 ---
 
@@ -592,14 +514,10 @@ like a launch-day kit:
   linkedin-banner.png
   instagram-square.png
   profile-avatar.png
-/deck/
-  pitch-template.html
-  pitch-styles.css
 ```
 
 **Minimum viable set:** If time or tooling is constrained, ship in this order of priority:
-brand-brief + logo → descriptions → favicons → design-system → social banners → deck template.
-Never ship the deck template without the logo and design-system — it has nothing to render from.
+brand-brief + logo → descriptions → favicons → design-system → social banners.
 
 Present all files to the user using `present_files`.
 
@@ -658,10 +576,7 @@ Before presenting final output, verify:
 - [ ] Design system stays within tokens — no button/form/grid specs
 - [ ] Empty design-system sections are dropped rather than filled with placeholder text
 - [ ] `design-system.md` contains the Token Mapping Convention block **verbatim**, labelled `(cross-plugin contract — do not remove)`. Verify with: `grep -c "Token Mapping Convention (cross-plugin contract" design-system.md` — must return `1`. If the count is 0, paste the block from SKILL.md's Design System section and re-run the grep.
-- [ ] Deck template is labelled as a template; every content slot is a literal `[fill in: …]` prompt
-- [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests) — verified by running `grep -nE '(https?:|//(cdn|fonts)\.)' deck/pitch-template.html` and seeing zero matches outside comments
-- [ ] Deck title slide includes the `pitch-deck` companion-skill disclaimer (template → live deck hand-off)
-- [ ] `pitch-styles.css` is shipped alongside `pitch-template.html` and is byte-for-byte identical to the `<style>` block inlined in the HTML (verify with `diff -q`; no leading file-level comment in the CSS)
+- [ ] No `deck/` folder is emitted. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `design-system.md` directly. Verify with: `[ ! -d deck ] && echo OK`.
 
 **Shipping**
 - [ ] Files are saved into the folder structure shown in Output Files
@@ -673,7 +588,7 @@ Before presenting final output, verify:
 
 | Skill | When to Use |
 |-------|-------------|
-| `pitch-deck` (our own) | After this skill, when the founder wants a real investor deck. `pitch-deck` consumes the `brand-kit/` emitted by this skill (`design-system.md`, `brand-brief.md`, `descriptions.md`, and `deck/pitch-styles.css` + `deck/pitch-template.html`). This skill produces a **scaffold**; `pitch-deck` produces the **live narrative deck**. Do not duplicate deck-construction logic. |
+| `pitch-deck` (our own) | After this skill, when the founder wants a real investor deck. `pitch-deck` consumes `design-system.md` (and optionally `brand-brief.md` + `descriptions.md`) emitted by this skill. Brand-workshop does not pre-emit a deck template — `pitch-deck` owns deck construction end-to-end. Do not duplicate deck-construction logic here. |
 | `business-model-canvas` (our own) | Either before or after. Brand-workshop assumes the founder knows their positioning; if they don't, run `business-model-canvas` first. |
 | `theme-factory` (Anthropic) | When the founder wants the design tokens applied to another artifact (landing page, one-pager). Brand-workshop's `design-system.md` is intentionally shaped to feed theme-factory. |
 | `canvas-design` (Anthropic) | When the founder wants high-fidelity static brand art (posters, campaign keyart) beyond a logo. Brand-workshop's SVG logo is the minimum viable mark, not a full art direction. |
