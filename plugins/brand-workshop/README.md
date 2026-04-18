@@ -39,8 +39,8 @@ That's what this does.
 - **Brand voice reviews / style audits.** Those belong to `team-composer` with `@humorist` + `@senior_copywriter`, or to a dedicated review skill.
 - **AI-generated imagery by default.** Raster image generation is opt-in only (via Hugging Face `dynamic_space`), never the default path. The skill exists to ship *vector* identity you can actually ship.
 - **Replace human review on regulated or trademarked marks.** The cultural advisor flags obvious pitfalls, but the skill explicitly recommends human trademark and legal review before use.
-- **Fill in your pitch deck.** The deck template ships brand-skinned and empty — the content is the founder's to write. Traction numbers, team names, ask size, and use of funds belong to the planned `pitch-deck` sibling skill or to `team-composer` with `@startup_strategist` + `@vc_partner`.
-- **Produce a Business Model Canvas.** Deliberately out of scope. A BMC needs revenue model, cost structure, and key-partner inputs this skill doesn't ask for. Use the planned `business-model-canvas` sibling skill or `team-composer` instead.
+- **Fill in your pitch deck.** The deck template ships brand-skinned and empty — the content is the founder's to write. Traction numbers, team names, ask size, and use of funds belong to the planned `pitch-deck` companion plugin or to `team-composer` with `@startup_strategist` + `@vc_partner`.
+- **Produce a Business Model Canvas.** Deliberately out of scope. A BMC needs revenue model, cost structure, and key-partner inputs this skill doesn't ask for. Use the planned `business-model-canvas` companion plugin or `team-composer` instead.
 
 ## When to use it
 
@@ -93,7 +93,7 @@ The tagline is called out prominently in the brief. Symbolism, color rationale, 
 - **Vector-first, raster on request.** AI image generation is opt-in because the default deliverable needs to be usable: an SVG scales, survives color conversions, and edits without regeneration. Raster marks are a liability masquerading as polish.
 - **Cultural & market check is a gate, not a footnote.** It sits between visual direction and convergence deliberately. A beautiful mark that lands badly in one of the target markets is a failed brief, and that catch happens before the vote, not after.
 - **Narrow cross-skill boundaries.** `brand-workshop` does identity deliverables; `team-composer` handles multi-dimensional product thinking; naming / voice / copy audits belong to more specialized skills. The skill's boundary table spells out which request belongs where so neither side over-reaches.
-- **Templates ship empty on purpose.** The branded pitch-deck template leaves every content slot as a literal `[fill in: …]` prompt. Brand is real content; traction numbers, team names, market sizing, and ask size are the founder's to write. Fabricating those turns a deliverable into a liability — and a "filled" deck is the wrong skill's output anyway (that's the planned `pitch-deck` sibling).
+- **Templates ship empty on purpose.** The branded pitch-deck template leaves every content slot as a literal `[fill in: …]` prompt. Brand is real content; traction numbers, team names, market sizing, and ask size are the founder's to write. Fabricating those turns a deliverable into a liability — and a "filled" deck is the wrong skill's output anyway (that's the planned `pitch-deck` companion plugin).
 - **Tokens, not components.** `design-system.md` stops at color, type, spacing, radius, and voice. Button variants, form styles, grids, and motion depend on a framework choice this skill deliberately doesn't make — they belong to the implementing team, not to a brand workshop.
 
 ## Install
@@ -120,14 +120,14 @@ Once installed, Claude picks the skill up automatically from the description in 
 
 The principle: this skill owns the launch-ready identity kit. Hand off to specialized skills for everything downstream rather than attempting them inline.
 
-## Planned sibling skills
+## Planned companion plugins
 
-This skill is intentionally scoped to brand identity. Two companion skills are planned in the same plugin to handle startup deliverables that overlap brand but require different inputs from the founder:
+This skill is intentionally scoped to brand identity. Two companion plugins are planned in this repo to handle startup deliverables that overlap brand but require different inputs from the founder. Each will ship as its own plugin (matching the one-plugin-per-skill pattern used across the repo) rather than being folded into `brand-workshop`:
 
 - **`pitch-deck`** — fills in the template this skill ships. Content (problem, solution, market, traction, team, ask) comes from founder inputs; the skill orchestrates `@startup_strategist` + `@vc_partner` through pitch construction and applies the brand assets produced here.
 - **`business-model-canvas`** — produces a BMC from founder inputs (revenue model, cost structure, key partners, channels, customer segments). `@startup_strategist` territory.
 
-An umbrella `startup-launch-kit` meta-skill may later orchestrate `brand-workshop` → `pitch-deck` → `business-model-canvas` as a single founder-facing flow. Not scheduled yet; this README will link to the sibling skills once they ship.
+An umbrella `startup-launch-kit` plugin may later orchestrate `brand-workshop` → `business-model-canvas` → `pitch-deck` as a single founder-facing flow. Not scheduled yet; this README will link to the companion plugins once they ship.
 
 ## Status and scope
 

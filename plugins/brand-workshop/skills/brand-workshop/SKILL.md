@@ -72,13 +72,14 @@ and run structured discussion. The difference is what they produce.
 > drift between the two skills causes real maintenance pain. When revisited,
 > unify role tag format (`@hyphen-case` here vs. `@snake_case` in team-composer).
 
-> **Planned sibling skills (same plugin):** `pitch-deck` (founder-filled content
-> that consumes the brand assets produced here) and `business-model-canvas`
-> (@startup_strategist territory). They are intentionally not folded into this
-> skill: both require founder inputs — traction, revenue model, cost structure,
-> ask size — that are out of scope for a brand workshop. When those skills ship,
-> add them to the "Use instead" table above. An umbrella `startup-launch-kit`
-> meta-skill may later orchestrate all three.
+> **Planned companion plugins:** `pitch-deck` (founder-filled content that
+> consumes the brand assets produced here) and `business-model-canvas`
+> (@startup_strategist territory). Each will live in its own plugin directory,
+> matching the pattern used across this repo. They are intentionally not folded
+> into this skill: both require founder inputs — traction, revenue model, cost
+> structure, ask size — that are out of scope for a brand workshop. When those
+> plugins ship, add them to the "Use instead" table above. An umbrella
+> `startup-launch-kit` plugin may later orchestrate all three.
 
 ---
 
@@ -374,7 +375,7 @@ write placeholder text. An honest "tokens only" system beats a bloated fake one.
 
 Output a self-contained HTML deck the founder fills with their own content. **This is a
 template, not a pitch** — content slides contain `[fill in: …]` prompts in muted type. Actual
-investor-ready pitch construction belongs to the forthcoming `pitch-deck` sibling skill.
+investor-ready pitch construction belongs to the forthcoming `pitch-deck` companion plugin.
 
 **File:** `deck/pitch-template.html`
 
@@ -411,7 +412,7 @@ investor-ready pitch construction belongs to the forthcoming `pitch-deck` siblin
 **Required disclaimer on the title slide (muted footnote):**
 
 > "Template — content to be filled by the founder. For investor-ready pitch
-> construction, use the `pitch-deck` skill (forthcoming) or `team-composer`
+> construction, use the `pitch-deck` plugin (forthcoming) or `team-composer`
 > with `@startup_strategist` + `@vc_partner`."
 
 **Quality rule:** Never fabricate traction, team names, or market numbers. Every content slot
@@ -513,7 +514,7 @@ Before presenting final output, verify:
 - [ ] Empty design-system sections are dropped rather than filled with placeholder text
 - [ ] Deck template is labelled as a template; every content slot is a literal `[fill in: …]` prompt
 - [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests)
-- [ ] Deck title slide includes the "forthcoming `pitch-deck` skill" disclaimer
+- [ ] Deck title slide includes the "forthcoming `pitch-deck` plugin" disclaimer
 
 **Shipping**
 - [ ] Files are saved into the folder structure shown in Output Files
