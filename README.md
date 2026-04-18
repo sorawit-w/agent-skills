@@ -49,14 +49,14 @@ Click a skill to jump to its details.
 
 |  | Skill | What it's for | Reach for it when |
 |:---:|:---|:---|:---|
-| <img src="assets/icons/team-composer.svg" alt="" width="28"/> | [`team-composer`](#team-composer) | Assemble the right virtual team and run a 3-round discussion that forces real disagreement. | You want multi-perspective planning or review with a conclusion you can act on. |
-| <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="28"/> | [`sub-agent-coordinator`](#sub-agent-coordinator) | Orchestrate multi-agent work — briefing, coordination, and verification that don't drift. | You're kicking off a task bigger than fifteen minutes that's at least partially parallelizable. |
-| <img src="assets/icons/skill-evaluator.svg" alt="" width="28"/> | [`skill-evaluator`](#skill-evaluator) | Audit a skill to see whether its rules actually land when Claude runs it. | You just wrote a skill, or one has been "mostly working" and you suspect a rule is being skipped. |
-| <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="28"/> | [`tech-stack-recommendations`](#tech-stack-recommendations) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. | You're starting a new project, or picking one layer, and want a default instead of a neutral grid. |
-| <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="28"/> | [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. | You're editing a big i18n file without blowing token limits, or producing translations that shouldn't read as machine-converted English. |
-| <img src="assets/icons/brand-workshop.svg" alt="" width="28"/> | [`brand-workshop`](#brand-workshop) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. | You need a real identity package for a product, app, or startup — not just a logo doodle. |
-| <img src="assets/icons/business-model-canvas.svg" alt="" width="28"/> | [`business-model-canvas`](#business-model-canvas) | Interview a founder block-by-block and produce a rigorous Osterwalder canvas with explicit Stress Tests. | You need a business model that holds up to scrutiny before building the deck, the product, or the hire plan. |
-| <img src="assets/icons/pitch-deck.svg" alt="" width="28"/> | [`pitch-deck`](#pitch-deck) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. | An investor said "send me your deck" and you need a shippable v1 this week — content filled, not a template. |
+| <img src="assets/icons/team-composer.svg" alt="" width="64"/> | [`team-composer`](#team-composer) | Assemble the right virtual team and run a 3-round discussion that forces real disagreement. | You want multi-perspective planning or review with a conclusion you can act on. |
+| <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="64"/> | [`sub-agent-coordinator`](#sub-agent-coordinator) | Orchestrate multi-agent work — briefing, coordination, and verification that don't drift. | You're kicking off a task bigger than fifteen minutes that's at least partially parallelizable. |
+| <img src="assets/icons/skill-evaluator.svg" alt="" width="64"/> | [`skill-evaluator`](#skill-evaluator) | Audit a skill to see whether its rules actually land when Claude runs it. | You just wrote a skill, or one has been "mostly working" and you suspect a rule is being skipped. |
+| <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="64"/> | [`tech-stack-recommendations`](#tech-stack-recommendations) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. | You're starting a new project, or picking one layer, and want a default instead of a neutral grid. |
+| <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="64"/> | [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. | You're editing a big i18n file without blowing token limits, or producing translations that shouldn't read as machine-converted English. |
+| <img src="assets/icons/brand-workshop.svg" alt="" width="64"/> | [`brand-workshop`](#brand-workshop) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. | You need a real identity package for a product, app, or startup — not just a logo doodle. |
+| <img src="assets/icons/business-model-canvas.svg" alt="" width="64"/> | [`business-model-canvas`](#business-model-canvas) | Interview a founder block-by-block and produce a rigorous Osterwalder canvas with explicit Stress Tests. | You need a business model that holds up to scrutiny before building the deck, the product, or the hire plan. |
+| <img src="assets/icons/pitch-deck.svg" alt="" width="64"/> | [`pitch-deck`](#pitch-deck) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. | An investor said "send me your deck" and you need a shippable v1 this week — content filled, not a template. |
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
@@ -90,7 +90,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="team-composer"></a>
 
-### <img src="assets/icons/team-composer.svg" alt="" width="32"/> &nbsp;`team-composer`
+### <img src="assets/icons/team-composer.svg" alt="" width="48"/> &nbsp;`team-composer`
 
 **What it does.** Assembles a virtual team of domain personas — across tech, health, fintech, climate, biotech, games, and beyond — runs a structured 3-round discussion (opening positions → rebuttals → synthesis), and returns a conclusion with recommendation, trade-offs, and prioritized next steps. Every role earns its seat via signal-based scoring; the discussion is designed to produce real disagreement rather than restated agreement.
 
@@ -106,7 +106,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="sub-agent-coordinator"></a>
 
-### <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="32"/> &nbsp;`sub-agent-coordinator`
+### <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="48"/> &nbsp;`sub-agent-coordinator`
 
 **What it does.** Turns the primary agent into a coordinator: breaks work into parallelizable chunks, writes quick briefs, dispatches sub-agents through fan-out / pipeline / specialist patterns, and verifies results instead of blindly merging them. Strict about what *not* to do — no nested delegation, no overlapping file edits, no trust without verification.
 
@@ -120,7 +120,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="skill-evaluator"></a>
 
-### <img src="assets/icons/skill-evaluator.svg" alt="" width="32"/> &nbsp;`skill-evaluator`
+### <img src="assets/icons/skill-evaluator.svg" alt="" width="48"/> &nbsp;`skill-evaluator`
 
 **What it does.** Reads a target skill end-to-end (`SKILL.md` plus every referenced file), generates test prompts spanning happy paths, trigger edges, and rule-specific stress tests, then grades outputs against the rules — without letting the grader peek at the skill text. Classifies failures by fix layer (skill text / rubric / brief / fixture) and proposes targeted rule-text diffs.
 
@@ -134,7 +134,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="tech-stack-recommendations"></a>
 
-### <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="32"/> &nbsp;`tech-stack-recommendations`
+### <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="48"/> &nbsp;`tech-stack-recommendations`
 
 **What it does.** Names a single opinionated default stack — Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk, with Tailwind + shadcn on top — and two alternates with clear triggers (Deno for edge-first / sandboxed, Node 22 LTS for ecosystem-heavy / Angular / NestJS). Covers the full vertical: runtime, monorepo layout, framework, hosting, database, auth, styling, mobile, i18n, icon system, AI assistant config. Topic guides load on demand with override factors named up front.
 
@@ -148,7 +148,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="i18n-contextual-rewriting"></a>
 
-### <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="32"/> &nbsp;`i18n-contextual-rewriting`
+### <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="48"/> &nbsp;`i18n-contextual-rewriting`
 
 **What it does.** Two halves. (1) File-handling discipline that refuses to rewrite a whole translation file — target affected lines only, reach for a script when the edit is genuinely bulk, never silently truncate. (2) A multi-role review pass that treats translation as contextual rewriting inside cultural reality, across 15+ locales and regional variants (including `zh-CN / zh-TW / zh-HK`, `ja`, `ko`, `th` with a Thai dialect variant `th-bupphe`, plus major European languages).
 
@@ -162,7 +162,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="brand-workshop"></a>
 
-### <img src="assets/icons/brand-workshop.svg" alt="" width="32"/> &nbsp;`brand-workshop`
+### <img src="assets/icons/brand-workshop.svg" alt="" width="48"/> &nbsp;`brand-workshop`
 
 **What it does.** Assembles a virtual creative team, runs a Discovery → Concept → Creation workshop, and ships a launch-ready identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), a starter `design-system.md` (tokens only), and a self-contained branded pitch-deck template.
 
@@ -177,7 +177,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="business-model-canvas"></a>
 
-### <img src="assets/icons/business-model-canvas.svg" alt="" width="32"/> &nbsp;`business-model-canvas`
+### <img src="assets/icons/business-model-canvas.svg" alt="" width="48"/> &nbsp;`business-model-canvas`
 
 **What it does.** Interviews a founder block-by-block (customer-first reasoning order, at most three questions per block, total ~45–75 minutes for a first pass) and produces two files: `business-model.md` (canonical, editable, deck-parseable) and `business-model.html` (self-contained Osterwalder-grid canvas that prints cleanly to PDF). Runs a mandatory cross-block consistency pass, and ends with an explicit Stress Tests section naming the 3–5 assumptions most likely to kill the business.
 
@@ -192,7 +192,7 @@ team-composer ──▶ sub-agent-coordinator
 
 <a id="pitch-deck"></a>
 
-### <img src="assets/icons/pitch-deck.svg" alt="" width="32"/> &nbsp;`pitch-deck`
+### <img src="assets/icons/pitch-deck.svg" alt="" width="48"/> &nbsp;`pitch-deck`
 
 **What it does.** Runs a structured narrative interview across the 10-slide investor arc (Title → Problem → Solution → Market → Product → Business Model → Traction → Team → Competition → Ask) and ships three files: a single self-contained HTML deck (Reveal.js inlined, keyboard nav, AAA contrast, `?print-pdf` produces a clean slide-per-page PDF), speaker notes per slide, and a pre-send checklist. Refuses to ship with any of the four cardinal sins unfilled: TAM-only sizing, traction without a time axis, teamless team, vague ask.
 
