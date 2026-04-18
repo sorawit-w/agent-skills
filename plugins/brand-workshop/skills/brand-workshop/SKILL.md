@@ -20,6 +20,30 @@ description: >
 A collaborative branding skill that assembles a virtual creative team, runs a structured
 brainstorming session, and delivers a brand strategy brief, tagline, and logo.
 
+## STOP — When NOT to use this skill
+
+This skill generates brand identity from a business overview. It is NOT a remix tool
+for a brand that already exists. **Hand off to `team-composer` — do not run the workshop —
+if any of these are true:**
+
+- The user already has a logo in use and is asking to refresh / update / audit it
+- The user already has a style guide and is asking to modernize or refresh it
+- The user says "our current brand", "our existing voice", "our logo", "our palette"
+- The request is "update our brand voice" / "refresh our style guide" / "our brand has evolved"
+- The deliverable is a style-guide update, voice audit, or brand refresh — not a net-new identity
+
+How to hand off:
+
+```
+[Skill] team-composer:team-composer
+```
+
+Invoke `team-composer` with `@brand_strategist` + `@senior_copywriter` for voice work,
+or `@naming_specialist` for naming. Do not proceed with the Discovery → Concept → Creation
+workshop described below.
+
+---
+
 ## Overview
 
 This skill simulates a brand workshop with specialized roles working together. The process
@@ -355,9 +379,16 @@ shipping. If any variant is over its hard limit, rewrite — do not truncate.
 
 ### Design System (Starter Tokens)
 
-Output `design-system.md` capturing the tokens established in the workshop. Scope is
-deliberately narrow: **tokens, not components**. Button styles, form fields, grids, and motion
-depend on the engineering stack this skill does not choose — the implementing team adds those.
+Output `design-system.md` **as its own standalone file at the root of the output folder**.
+Do NOT fold the design system into `brand-brief.md` as a section — downstream plugins
+(`business-model-canvas`, `pitch-deck`) parse `design-system.md` directly and will not
+find tokens buried in another file. Scope is deliberately narrow: **tokens, not components**.
+Button styles, form fields, grids, and motion depend on the engineering stack this skill
+does not choose — the implementing team adds those.
+
+**Mandatory:** the Color Tokens section MUST contain a Token Mapping Convention block
+stated verbatim (see below). This is a cross-plugin contract, not a stylistic choice.
+Without it, downstream plugins cannot resolve which hex maps to `--primary-accent`.
 
 **File structure:**
 
@@ -579,6 +610,7 @@ Before presenting final output, verify:
 - [ ] All PNG banner files match their declared dimensions exactly
 - [ ] Descriptions pack: every variant is under its hard character limit (verified, not estimated)
 - [ ] Descriptions pack: each variant stands alone — no truncation chains
+- [ ] `design-system.md` exists as a **standalone file** — NOT folded into `brand-brief.md` as a section. If the design system lives only inside the brief, this gate fails and the design system must be extracted into its own file before shipping.
 - [ ] Design system stays within tokens — no button/form/grid specs
 - [ ] Empty design-system sections are dropped rather than filled with placeholder text
 - [ ] `design-system.md` includes a **Token Mapping Convention** note under Color Tokens that states verbatim: `Primary` → `--primary-accent`, `Secondary` → `--secondary-accent`, `Accent` is a secondary highlight (not the hero), and names must not be swapped. This makes the downstream-plugin contract explicit.
