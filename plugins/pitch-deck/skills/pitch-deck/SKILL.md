@@ -185,7 +185,12 @@ in `deck-checklist.md` so they own the decision.
 When the user asks to rework ONE slide without rebuilding the full deck
 (e.g., "just help me with my Competition slide", "rework my Market slide"):
 
-1. Apply that slide's contract from `references/slide-contracts.md` as usual.
+1. Apply that slide's contract from `references/slide-contracts.md` as usual
+   — **including its required visual format** (e.g., Competition needs a 2×2
+   or comparison matrix, not a bullet list; Traction needs a chart with a
+   time axis, not a number-in-prose). Name the format requirement in your
+   first response so the founder knows what they're ultimately producing,
+   even while you're still gathering intake content.
 2. **Cross-check against the named adjacent slides before finalizing.** An
    isolated rework is how a single-slide edit quietly breaks the rest of the
    deck. Standard adjacencies:
