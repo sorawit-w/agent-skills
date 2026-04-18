@@ -13,6 +13,11 @@ description: >
   self-contained branded pitch-deck template (empty placeholder slides the founder fills in).
   Even if the user only asks for a logo or only a tagline, use this skill — the full workshop
   produces better results.
+  Do NOT trigger on "refresh our existing brand", "update our current style guide",
+  "evolve our identity", "our current brand", "our existing voice", "audit our logo",
+  or any phrasing that implies a live brand being revised. Those belong to
+  `team-composer:team-composer` (with @brand_strategist / @senior_copywriter) and the
+  `brand-voice:*` family. This skill only generates net-new identity from a business overview.
 ---
 
 # Brand Workshop
@@ -34,13 +39,26 @@ if any of these are true:**
 
 How to hand off:
 
-```
-[Skill] team-composer:team-composer
-```
+Invoke **`team-composer:team-composer`** as the next skill. Use the literal skill
+identifier — do NOT pick a plausibly-adjacent skill by name match alone.
 
-Invoke `team-composer` with `@brand_strategist` + `@senior_copywriter` for voice work,
-or `@naming_specialist` for naming. Do not proceed with the Discovery → Concept → Creation
-workshop described below.
+**Anti-patterns — do NOT invoke any of these in place of `team-composer`:**
+
+- `brand-voice:guideline-generation` — this is for extracting voice from existing
+  sales calls / uploaded brand documents. It's a voice-discovery workflow, not a
+  refresh workshop. Using it here will pull the user into a discovery loop they
+  didn't ask for.
+- `brand-voice:discover-brand` — this searches Notion / Slack / Drive for scattered
+  brand materials. The user already knows where their brand lives — they want to
+  evolve it, not find it.
+- `brand-voice:brand-voice-enforcement` — this applies an already-written voice
+  guide to new content. It does not produce a refresh.
+- `brand-workshop:brand-workshop` (this skill) — do not recursively re-enter after
+  the STOP check.
+
+Once inside `team-composer:team-composer`, use `@brand_strategist` + `@senior_copywriter`
+for voice work, or `@naming_specialist` for naming. Do not proceed with the Discovery →
+Concept → Creation workshop described below.
 
 ---
 
@@ -386,9 +404,38 @@ find tokens buried in another file. Scope is deliberately narrow: **tokens, not 
 Button styles, form fields, grids, and motion depend on the engineering stack this skill
 does not choose — the implementing team adds those.
 
-**Mandatory:** the Color Tokens section MUST contain a Token Mapping Convention block
-stated verbatim (see below). This is a cross-plugin contract, not a stylistic choice.
-Without it, downstream plugins cannot resolve which hex maps to `--primary-accent`.
+**Mandatory — cross-plugin contract.** The `## Color Tokens` section MUST label
+hex values as `Primary`, `Secondary`, `Accent` (these are contract keys —
+downstream plugins grep them) AND include the Token Mapping Convention block
+below verbatim. Without the block, maintainers reading `design-system.md` have
+no way to know that `--bmc-accent` and `--deck-accent` bind to `Primary`, not
+to `Accent`.
+
+**Copy this block verbatim into `design-system.md`, immediately after the
+Color Tokens hex list:**
+
+```markdown
+> **Token Mapping Convention** (cross-plugin contract — do not remove)
+>
+> - `Primary` → the brand hero color. Downstream plugins
+>   (`business-model-canvas`, `pitch-deck`) bind it to their `--bmc-accent`
+>   / `--deck-accent` token.
+> - `Secondary` → a supporting brand color, not the hero.
+> - `Accent` → a secondary highlight color, NOT the hero. Do not let
+>   downstream plugins bind this to `--bmc-accent` / `--deck-accent`.
+>
+> The labels `Primary`, `Secondary`, `Accent` are contract keys — do not
+> rename them even if the palette is re-themed.
+```
+
+Verify before shipping:
+
+```bash
+grep -c "Token Mapping Convention (cross-plugin contract" design-system.md
+# must return 1
+```
+
+If the count is 0, paste the block in and re-run the grep.
 
 **File structure:**
 
@@ -397,10 +444,7 @@ Without it, downstream plugins cannot resolve which hex maps to `--primary-accen
 
 ## Color Tokens
 - Primary / Secondary / Accent (hex + usage guidance)
-  - **Convention:** `Primary` is the brand hero color. Downstream plugins
-    (`business-model-canvas`, `pitch-deck`) consume it as their `--*-accent`
-    token. `Accent` here is a *secondary* highlight color, not the hero.
-    Do not swap these names.
+- [Token Mapping Convention block — see above, copy verbatim]
 - Neutrals (background, surface, text-primary, text-secondary, border)
 - Semantic (success, warning, danger, info) harmonized with palette
 
@@ -613,7 +657,7 @@ Before presenting final output, verify:
 - [ ] `design-system.md` exists as a **standalone file** — NOT folded into `brand-brief.md` as a section. If the design system lives only inside the brief, this gate fails and the design system must be extracted into its own file before shipping.
 - [ ] Design system stays within tokens — no button/form/grid specs
 - [ ] Empty design-system sections are dropped rather than filled with placeholder text
-- [ ] `design-system.md` includes a **Token Mapping Convention** note under Color Tokens that states verbatim: `Primary` → `--primary-accent`, `Secondary` → `--secondary-accent`, `Accent` is a secondary highlight (not the hero), and names must not be swapped. This makes the downstream-plugin contract explicit.
+- [ ] `design-system.md` contains the Token Mapping Convention block **verbatim**, labelled `(cross-plugin contract — do not remove)`. Verify with: `grep -c "Token Mapping Convention (cross-plugin contract" design-system.md` — must return `1`. If the count is 0, paste the block from SKILL.md's Design System section and re-run the grep.
 - [ ] Deck template is labelled as a template; every content slot is a literal `[fill in: …]` prompt
 - [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests) — verified by running `grep -nE '(https?:|//(cdn|fonts)\.)' deck/pitch-template.html` and seeing zero matches outside comments
 - [ ] Deck title slide includes the "forthcoming `pitch-deck` plugin" disclaimer
