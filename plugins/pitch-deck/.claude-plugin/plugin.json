@@ -1,9 +1,0 @@
-{
-  "name": "pitch-deck",
-  "description": "Construct an investor-ready pitch deck as a self-contained HTML file (Reveal.js). Interviews the founder for real content, reads brand-kit and business-model-canvas outputs when present, and enforces one-claim-per-slide plus required-slot gating.",
-  "version": "0.1.0",
-  "author": {
-    "name": "sorawit-w",
-    "url": "https://github.com/sorawit-w"
-  }
-}

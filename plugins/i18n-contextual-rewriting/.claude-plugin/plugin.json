@@ -1,9 +1,0 @@
-{
-  "name": "i18n-contextual-rewriting",
-  "description": "Safe surgical edits for large i18n files plus culturally authentic translations via a multi-role review process.",
-  "version": "0.1.0",
-  "author": {
-    "name": "sorawit-w",
-    "url": "https://github.com/sorawit-w"
-  }
-}
