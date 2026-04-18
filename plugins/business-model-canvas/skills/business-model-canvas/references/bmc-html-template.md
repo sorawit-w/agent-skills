@@ -194,21 +194,31 @@ The canonical self-contained HTML Business Model Canvas. Read this before produc
 
 ---
 
-## Brand token substitution
+## Brand token substitution (strict mapping)
 
-If `brand-kit/design-system.md` exists, extract these values and replace the
-`:root` defaults:
+If `brand-kit/design-system.md` exists, map sections → CSS variables
+**literally by the names below**. Do not infer or rename on the fly — the
+mapping is a contract with `brand-workshop`'s `design-system.md` schema.
 
-| CSS variable | Brand-kit source (typical) |
-|--------------|----------------------------|
-| `--bmc-bg` | Surface / background color |
-| `--bmc-surface` | Card / paper color (often white) |
-| `--bmc-text` | Primary text color |
-| `--bmc-muted` | Secondary / caption text color |
-| `--bmc-border` | Divider / border color |
-| `--bmc-accent` | Primary brand color |
-| `--bmc-font-body` | Body font stack |
-| `--bmc-font-heading` | Heading font stack (fall back to body) |
+| CSS variable         | `design-system.md` section.key                         |
+|----------------------|--------------------------------------------------------|
+| `--bmc-bg`           | `Color Tokens → Neutrals.background`                   |
+| `--bmc-surface`      | `Color Tokens → Neutrals.surface`                      |
+| `--bmc-text`         | `Color Tokens → Neutrals.text-primary`                 |
+| `--bmc-muted`        | `Color Tokens → Neutrals.text-secondary`               |
+| `--bmc-border`       | `Color Tokens → Neutrals.border`                       |
+| `--bmc-accent`       | `Color Tokens → Primary` (the brand hero color)        |
+| `--bmc-font-body`    | `Typography → body` (family stack)                     |
+| `--bmc-font-heading` | `Typography → display` (fall back to `Typography → body`) |
+
+Note: `brand-workshop` exposes both `Color Tokens → Primary` *and* a separate
+`Color Tokens → Accent`. **Map `--bmc-accent` to `Primary`, not to `Accent`** —
+`Accent` is a secondary highlight color in brand-workshop's vocabulary, while
+`Primary` is the brand hero that downstream plugins treat as their accent.
+
+If a section is missing from `design-system.md`, keep the neutral default from
+the template's `:root` block and leave an HTML comment noting the fallback
+(e.g., `<!-- fallback: --bmc-accent not found in design-system.md -->`).
 
 If the brand uses non-websafe fonts and you don't have a base64 webfont available,
 keep the system-font fallback — don't pull a webfont from a CDN. Zero network

@@ -32,7 +32,7 @@ moves through three phases: **Discovery → Concept → Creation**. The output i
 5. **Social Banner Set** — Open Graph (1200×630), X header (1500×500), LinkedIn banner (1584×396), Instagram square (1080×1080), profile avatar (400×400)
 6. **Descriptions Pack** (`descriptions.md`) — tagline + short/medium/long bios + elevator pitch + press boilerplate, all matched to brand voice
 7. **Starter Design System** (`design-system.md`) — tokens only: color, typography, spacing, radius, and voice principles (no component specs)
-8. **Branded Pitch-Deck Template** (`pitch-template.html`) — a self-contained Reveal.js deck with empty placeholder slides, brand-skinned, that the founder fills in
+8. **Branded Pitch-Deck Template** (`pitch-template.html` + `pitch-styles.css`) — a self-contained Reveal.js deck with empty placeholder slides, brand-skinned, that the founder fills in, plus a parseable CSS companion the `pitch-deck` plugin consumes for styling
 
 Scope boundary: pitch-deck *content* (filled slides) and the Business Model Canvas are intentionally out of scope — see Skill Boundaries below.
 
@@ -189,6 +189,18 @@ One paragraph: what was created and why.
 ## Inputs
 - Business overview, vision, mission (as provided)
 
+## Positioning
+2–4 sentences naming the target segment, the category the brand plays in, and
+the one axis of differentiation. This is the section downstream plugins
+(`pitch-deck`) parse for the problem/solution narrative — keep it short and
+literal, not aspirational.
+
+## Voice & Tone
+3–5 bullets from the copywriter describing how the brand speaks (e.g.,
+"confident but not arrogant", "plain language over jargon", "contractions OK").
+Must match the principles written into `design-system.md → Voice & Tone
+Principles` — these are the same ruleset, surfaced in two places.
+
 ## Workshop Transcript
 The full brainstorming from Phase 2, role by role.
 
@@ -215,6 +227,10 @@ Recommended font families and usage.
 ## Rejected Alternatives
 Brief note on other tagline/logo concepts explored and why they were passed over.
 ```
+
+**Section-contract note:** `## Positioning` and `## Voice & Tone` are named
+anchor headings — `pitch-deck` greps by them. If you rename, update
+`pitch-deck/SKILL.md` Phase 1 Step 1 in lockstep.
 
 ### Logo Creation
 
@@ -342,6 +358,10 @@ depend on the engineering stack this skill does not choose — the implementing 
 
 ## Color Tokens
 - Primary / Secondary / Accent (hex + usage guidance)
+  - **Convention:** `Primary` is the brand hero color. Downstream plugins
+    (`business-model-canvas`, `pitch-deck`) consume it as their `--*-accent`
+    token. `Accent` here is a *secondary* highlight color, not the hero.
+    Do not swap these names.
 - Neutrals (background, surface, text-primary, text-secondary, border)
 - Semantic (success, warning, danger, info) harmonized with palette
 
@@ -375,9 +395,17 @@ write placeholder text. An honest "tokens only" system beats a bloated fake one.
 
 Output a self-contained HTML deck the founder fills with their own content. **This is a
 template, not a pitch** — content slides contain `[fill in: …]` prompts in muted type. Actual
-investor-ready pitch construction belongs to the forthcoming `pitch-deck` companion plugin.
+investor-ready pitch construction belongs to the `pitch-deck` companion plugin.
 
-**File:** `deck/pitch-template.html`
+**Files:**
+
+- `deck/pitch-template.html` — founder-facing, self-contained deck (inline CSS/JS,
+  base64 assets, zero network dependencies).
+- `deck/pitch-styles.css` — the deck's stylesheet as a standalone file. Must be a
+  byte-for-byte copy of the `<style>` block inlined in `pitch-template.html` (minus
+  the surrounding tags). This is the parseable companion the `pitch-deck` plugin
+  reads when skinning its own Reveal.js deck. Do not embed `[fill in: …]` prompts
+  in this file — styles only.
 
 **Contract (from `team-composer` cross-skill rules):**
 
@@ -451,6 +479,7 @@ like a launch-day kit:
   profile-avatar.png
 /deck/
   pitch-template.html
+  pitch-styles.css
 ```
 
 **Minimum viable set:** If time or tooling is constrained, ship in this order of priority:
@@ -515,6 +544,7 @@ Before presenting final output, verify:
 - [ ] Deck template is labelled as a template; every content slot is a literal `[fill in: …]` prompt
 - [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests)
 - [ ] Deck title slide includes the "forthcoming `pitch-deck` plugin" disclaimer
+- [ ] `pitch-styles.css` is shipped alongside `pitch-template.html` and its rules match the `<style>` block inlined in the HTML (so `pitch-deck` can parse it)
 
 **Shipping**
 - [ ] Files are saved into the folder structure shown in Output Files

@@ -1,7 +1,7 @@
 # Folder Contract — Reference
 
 Shared folder conventions across the startup plugins (`brand-workshop`,
-`business-model-canvas`, and the forthcoming `pitch-deck`). Each plugin works
+`business-model-canvas`, and `pitch-deck`). Each plugin works
 independently, but when run in the same working directory they compose via these
 paths.
 
@@ -10,20 +10,23 @@ paths.
 ```
 <founder-working-directory>/
 ├── brand-kit/                       # produced by brand-workshop
-│   ├── brand-brief.md
-│   ├── descriptions.md
-│   ├── design-system.md
+│   ├── brand-brief.md               # contains `## Positioning` + `## Voice & Tone`
+│   ├── descriptions.md              # tagline + bios (pitch-deck reads tagline)
+│   ├── design-system.md             # tokens (bmc + pitch-deck read)
 │   ├── logos/
 │   ├── favicons/
 │   ├── social/
 │   └── deck/
-│       └── pitch-template.html
+│       ├── pitch-template.html      # founder-facing self-contained stub
+│       └── pitch-styles.css         # parseable companion (pitch-deck reads this)
 │
 ├── business-model.md                # produced by business-model-canvas (this skill)
 ├── business-model.html              # produced by business-model-canvas (this skill)
 │
-└── pitch/                           # produced by the forthcoming pitch-deck plugin
-    └── deck.html
+└── pitch/                           # produced by pitch-deck
+    ├── deck.html
+    ├── speaker-notes.md
+    └── deck-checklist.md
 ```
 
 ## Read-before-write rule

@@ -102,11 +102,25 @@ Check for these files, in order:
    Customer Segments, Value Propositions, Revenue Streams, and Stress Tests sections.
    These seed slides 2, 3, 6, 7, and the anti-patterns check.
 2. **`brand-kit/design-system.md`** (from `brand-workshop`) — if present, extract
-   color tokens, typography, and logo path for deck styling.
+   color tokens, typography, and logo path for deck styling. Use the same strict
+   token mapping as `business-model-canvas` (see `business-model-canvas`'s
+   `references/bmc-html-template.md` — `Color Tokens → Primary` maps to the deck's
+   accent; `Typography → display` maps to headings, fall back to `Typography →
+   body`).
 3. **`brand-kit/brand-brief.md`** (from `brand-workshop`) — if present, read the
-   positioning and voice sections for tone matching.
-4. **`brand-kit/deck/pitch-template.html`** (from `brand-workshop`) — if present,
-   use its CSS and slide-layout conventions as a starting structure.
+   `## Positioning` and `## Voice & Tone` sections (named anchor headings) for
+   tone matching. If those sections are missing, fall back to the `## Executive
+   Summary` + `## Workshop Transcript` sections.
+4. **`brand-kit/descriptions.md`** (from `brand-workshop`) — if present, read the
+   tagline row and short/medium bios. Slide 1 (Title) uses the tagline from here
+   first, falling back to `brand-brief.md → Final Concept → Tagline`.
+5. **`brand-kit/deck/pitch-styles.css`** (from `brand-workshop`) — if present, use
+   its rules as the starting CSS for the Reveal theme. This is the parseable
+   stylesheet companion to `pitch-template.html`.
+6. **`brand-kit/deck/pitch-template.html`** (from `brand-workshop`) — if present,
+   use its slide-layout conventions (section structure, class names) as a
+   structural reference. **Do not** copy its `[fill in: …]` prompt strings into
+   the generated deck.
 
 **If none of the above exist:** ask the founder whether to run `brand-workshop` and/or
 `business-model-canvas` first, or to proceed with neutral defaults. Proceeding without
@@ -334,7 +348,7 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` | Before this skill, when a brand kit and deck template are needed. This skill reads `brand-kit/design-system.md` and `brand-kit/deck/pitch-template.html` if present. |
+| `brand-workshop` | Before this skill, when a brand kit and deck template are needed. This skill reads `brand-kit/design-system.md` (tokens), `brand-kit/brand-brief.md` (`## Positioning` + `## Voice & Tone`), `brand-kit/descriptions.md` (tagline), `brand-kit/deck/pitch-styles.css` (CSS), and `brand-kit/deck/pitch-template.html` (layout reference) if present. |
 | `business-model-canvas` | Before this skill. This skill reads `business-model.md` to seed slides 2, 3, 6, 7 and to stress-test the Ask against the Stress Tests section. |
 | `team-composer` | Instead of this skill when the founder wants discussion on narrative without committing to a full deck. Also for deep dives on single slides (e.g., Competition slide with `@competitive_intel` mental model). |
 | `theme-factory` | When the deck needs a visual theme and no `brand-kit/` is present. Apply after content is finalized. |
