@@ -26,8 +26,8 @@ the source of truth founders edit as the business evolves.
 ## What this skill is NOT
 
 - **Not a pitch deck builder.** Pitch construction (problem → solution → traction → ask
-  narrative) belongs to the forthcoming `pitch-deck` companion plugin or to
-  `team-composer` with `@startup_strategist` + `@vc_partner`.
+  narrative) belongs to the `pitch-deck` companion skill (which reads `business-model.md`
+  directly) or to `team-composer` with `@startup_strategist` + `@vc_partner`.
 - **Not a financial model.** No spreadsheet projections, no cohort curves, no TAM/SAM/SOM
   waterfall. Revenue Streams and Cost Structure blocks are *structural* (how money
   flows), not *quantitative* (how much and when).
@@ -242,8 +242,8 @@ Save both files to the founder's working directory, not a scratch folder:
 - `business-model.md`
 - `business-model.html`
 
-This matches the folder contract shared with `brand-workshop` and the forthcoming
-`pitch-deck` plugin. See `references/folder-contract.md`.
+This matches the folder contract shared with `brand-workshop` and `pitch-deck`.
+See `references/folder-contract.md`.
 
 ### Step 4 — Present to the user
 
@@ -297,11 +297,19 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` | Before this skill, when a brand identity is needed. This skill reads `brand-kit/design-system.md` if present to style the HTML canvas. |
-| `team-composer` | Instead of this skill, when the founder wants a *discussion* on one narrow block rather than a full canvas artifact. |
-| `pitch-deck` (forthcoming) | After this skill, to construct an investor-facing pitch using the canvas as input. |
-| `tech-stack-recommendations` | When Key Resources or Key Activities include technology choices the founder hasn't made yet. |
+| `brand-workshop` (our own) | Before this skill, when a brand identity is needed. This skill reads `brand-kit/design-system.md` if present to style the HTML canvas. |
+| `pitch-deck` (our own) | After this skill, to construct an investor-facing pitch using the canvas as input. The pitch-deck skill reads `business-model.md` directly to seed slides 2, 3, 6, 7 and to stress-test the Ask against the Stress Tests section. |
+| `team-composer` (our own) | Instead of this skill, when the founder wants a *discussion* on one narrow block rather than a full canvas artifact. |
+| `tech-stack-recommendations` (our own) | When Key Resources or Key Activities include technology choices the founder hasn't made yet. |
+| `theme-factory` (Anthropic) | When the HTML canvas needs branded styling and no `brand-kit/design-system.md` is present. Apply theme-factory's tokens after content is finalized. |
+| `docx` (Anthropic) | When the founder wants the canonical canvas as a `.docx` (board packet, grant application). Hand off the `business-model.md` as source. |
+| `web-artifacts-builder` (Anthropic) | For interactive canvas variants (filters, block toggling, nested details). Out of scope for v1 but natural upgrade path. |
+| `pdf` (Anthropic) | When merging the canvas into a larger packet (investor memo, pitch dossier). The HTML already prints cleanly to PDF via CSS paged media; `pdf` is for programmatic assembly across multiple artifacts. |
 
 **Principle:** this skill owns the nine-block artifact. It does not do discussion-only
 narrow questions, does not do financial projections, does not do validation research.
 Hand off rather than over-reach.
+
+**Graceful degradation:** if a referenced skill is not installed, this skill still
+ships `business-model.md` + `business-model.html` — downstream integrations are
+enhancements, not requirements.

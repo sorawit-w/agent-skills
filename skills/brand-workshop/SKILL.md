@@ -555,8 +555,8 @@ remove the network dependency before handing the deck to the user.
 **Required disclaimer on the title slide (muted footnote):**
 
 > "Template — content to be filled by the founder. For investor-ready pitch
-> construction, use the `pitch-deck` plugin (forthcoming) or `team-composer`
-> with `@startup_strategist` + `@vc_partner`."
+> construction, use the `pitch-deck` companion skill (which consumes this
+> brand-kit) or `team-composer` with `@startup_strategist` + `@vc_partner`."
 
 **Quality rule:** Never fabricate traction, team names, or market numbers. Every content slot
 ships as a literal `[fill in: …]` prompt. The only "real" content is brand identity
@@ -660,9 +660,34 @@ Before presenting final output, verify:
 - [ ] `design-system.md` contains the Token Mapping Convention block **verbatim**, labelled `(cross-plugin contract — do not remove)`. Verify with: `grep -c "Token Mapping Convention (cross-plugin contract" design-system.md` — must return `1`. If the count is 0, paste the block from SKILL.md's Design System section and re-run the grep.
 - [ ] Deck template is labelled as a template; every content slot is a literal `[fill in: …]` prompt
 - [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests) — verified by running `grep -nE '(https?:|//(cdn|fonts)\.)' deck/pitch-template.html` and seeing zero matches outside comments
-- [ ] Deck title slide includes the "forthcoming `pitch-deck` plugin" disclaimer
+- [ ] Deck title slide includes the `pitch-deck` companion-skill disclaimer (template → live deck hand-off)
 - [ ] `pitch-styles.css` is shipped alongside `pitch-template.html` and is byte-for-byte identical to the `<style>` block inlined in the HTML (verify with `diff -q`; no leading file-level comment in the CSS)
 
 **Shipping**
 - [ ] Files are saved into the folder structure shown in Output Files
 - [ ] Files are presented to the user using `present_files`
+
+---
+
+## Cross-Skill Integration
+
+| Skill | When to Use |
+|-------|-------------|
+| `pitch-deck` (our own) | After this skill, when the founder wants a real investor deck. `pitch-deck` consumes the `brand-kit/` emitted by this skill (`design-system.md`, `brand-brief.md`, `descriptions.md`, and `deck/pitch-styles.css` + `deck/pitch-template.html`). This skill produces a **scaffold**; `pitch-deck` produces the **live narrative deck**. Do not duplicate deck-construction logic. |
+| `business-model-canvas` (our own) | Either before or after. Brand-workshop assumes the founder knows their positioning; if they don't, run `business-model-canvas` first. |
+| `theme-factory` (Anthropic) | When the founder wants the design tokens applied to another artifact (landing page, one-pager). Brand-workshop's `design-system.md` is intentionally shaped to feed theme-factory. |
+| `canvas-design` (Anthropic) | When the founder wants high-fidelity static brand art (posters, campaign keyart) beyond a logo. Brand-workshop's SVG logo is the minimum viable mark, not a full art direction. |
+| `algorithmic-art` (Anthropic) | When the brand direction calls for generative / procedural visual motifs rather than a single mark. |
+| `docx` (Anthropic) | When the founder wants the brand brief as a polished Word document (e.g., for a board or investor packet). |
+| `brand-guidelines` (Anthropic) | **Do not use.** `brand-guidelines` applies Anthropic's own brand look-and-feel; it is not a generic brand-styling skill. |
+| `team-composer` (our own) | Instead of this skill when the user wants a *discussion* on brand strategy rather than a launch-ready identity package. Pure positioning / voice conversations live there, not here. |
+
+**Principle:** this skill owns **net-new visual identity** for a business. It
+does not refresh existing brands (use `brand-voice:*` skills), does not model
+financials, and does not do customer validation. Artifacts downstream of the
+`brand-kit/` — decks, canvases, landing pages — are owned by their respective
+skills, which consume our output as input.
+
+**Graceful degradation:** if a referenced skill is not installed, this skill
+still ships a complete `brand-kit/` — the downstream integrations are
+enhancements, not requirements.

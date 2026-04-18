@@ -348,13 +348,21 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` | Before this skill, when a brand kit and deck template are needed. This skill reads `brand-kit/design-system.md` (tokens), `brand-kit/brand-brief.md` (`## Positioning` + `## Voice & Tone`), `brand-kit/descriptions.md` (tagline), `brand-kit/deck/pitch-styles.css` (CSS), and `brand-kit/deck/pitch-template.html` (layout reference) if present. |
-| `business-model-canvas` | Before this skill. This skill reads `business-model.md` to seed slides 2, 3, 6, 7 and to stress-test the Ask against the Stress Tests section. |
-| `team-composer` | Instead of this skill when the founder wants discussion on narrative without committing to a full deck. Also for deep dives on single slides (e.g., Competition slide with `@competitive_intel` mental model). |
-| `theme-factory` | When the deck needs a visual theme and no `brand-kit/` is present. Apply after content is finalized. |
-| `tech-stack-recommendations` | When the Product slide depends on tech choices the founder hasn't made yet. |
+| `brand-workshop` (our own) | Before this skill, when a brand kit and deck template are needed. This skill reads `brand-kit/design-system.md` (tokens), `brand-kit/brand-brief.md` (`## Positioning` + `## Voice & Tone`), `brand-kit/descriptions.md` (tagline), `brand-kit/deck/pitch-styles.css` (CSS), and `brand-kit/deck/pitch-template.html` (layout reference) if present. |
+| `business-model-canvas` (our own) | Before this skill. This skill reads `business-model.md` to seed slides 2, 3, 6, 7 and to stress-test the Ask against the Stress Tests section. |
+| `team-composer` (our own) | Instead of this skill when the founder wants discussion on narrative without committing to a full deck. Also for deep dives on single slides (e.g., Competition slide with `@competitive_intel` mental model). |
+| `tech-stack-recommendations` (our own) | When the Product slide depends on tech choices the founder hasn't made yet. |
+| `theme-factory` (Anthropic) | When the deck needs a visual theme and no `brand-kit/` is present. Apply after content is finalized. |
+| `canvas-design` (Anthropic) | For hero / cover-slide static art when the brand-kit logo is too minimal to anchor the opening slide. Also for one-off slide graphics that justify the investment in real design over a chart. |
+| `web-artifacts-builder` (Anthropic) | When the "deck" is actually a product demo that needs shadcn/ui components, routing, or state — i.e., beyond what Reveal.js can reasonably do. |
+| `doc-coauthoring` (Anthropic) | For the long-form founder memo that precedes the deck (e.g., converting a 10-page memo into 12 slides). |
+| `pptx` (Anthropic — **fallback only**) | Use **only** when the user explicitly requests `.pptx` — corporate constraints, Keynote / PowerPoint / Google Slides collaboration, or an existing `.pptx` template must be preserved. State the trade-off: `.pptx` loses interactivity, custom animations, and programmable charts. HTML-first is the default. |
 
 **Principle:** this skill owns the investor-facing HTML deck. It does not do financial
 models, does not do customer validation, does not do brand identity. Upstream plugins
 feed it; downstream decisions (negotiation, term sheets) are `@vc_partner` territory
 in `team-composer`.
+
+**Graceful degradation:** if a referenced skill is not installed, this skill still
+ships a complete `pitch/` folder — downstream integrations are enhancements, not
+requirements.

@@ -254,6 +254,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 - **Boring and readable beats clever.** Skill text is read by humans and followed by models. Opaque indirection costs more than it saves.
 - **Risk-blocking roles and checks are non-droppable.** Where a skill has explicit safety or compliance triggers, they're vetoes — not tiebreakers, not suggestions.
 - **Narrow scope, named boundaries.** Every skill states what it *doesn't* do and when to reach for a different skill instead. Overlap is negotiated up front, not resolved mid-output.
+- **Delegate to Anthropic's official shelf.** Where an Anthropic-shipped skill (`theme-factory`, `docx`, `pptx`, `canvas-design`, `skill-creator`, `web-artifacts-builder`, `mcp-builder`, `pdf`, `doc-coauthoring`) owns a primitive better than we do, we reference it rather than rebuild. See [`docs/delegation-matrix.md`](docs/delegation-matrix.md) for the per-skill map.
 
 ## Status
 

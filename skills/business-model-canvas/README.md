@@ -21,7 +21,7 @@ This is not a template fill-in. The value is in the interview: customer-first re
 
 ## What it doesn't do
 
-- **Pitch deck construction.** Problem → solution → traction → ask storytelling belongs to the forthcoming `pitch-deck` companion plugin.
+- **Pitch deck construction.** Problem → solution → traction → ask storytelling belongs to the `pitch-deck` companion skill, which reads `business-model.md` directly.
 - **Financial projections.** The Revenue Streams and Cost Structure blocks are *structural* (how money flows), not *quantitative* (how much and when). No P&L, no cohort curves.
 - **Market validation.** The canvas captures current thinking — it doesn't go run customer interviews to validate it. Validation is a separate pass.
 - **Regulated-domain legal work.** The canvas surfaces the right questions but doesn't answer regulatory ones. Escalate to `team-composer` with `@legal_compliance_advisor`.
@@ -37,7 +37,7 @@ This is not a template fill-in. The value is in the interview: customer-first re
 
 - **Brand / logo / tagline** → `brand-workshop` (upstream of this skill).
 - **Narrow strategic question** (pricing model alone, channel strategy alone, partner selection alone) → `team-composer` with `@startup_strategist`. Faster, discussion-grade, no artifact.
-- **Pitch deck with real content** → forthcoming `pitch-deck` plugin, or `team-composer` with `@startup_strategist` + `@vc_partner`.
+- **Pitch deck with real content** → `pitch-deck` (downstream companion), or `team-composer` with `@startup_strategist` + `@vc_partner`.
 - **Financial model** → a spreadsheet tool + `xlsx` skill; this plugin deliberately stays structural.
 
 ## How it works
