@@ -405,7 +405,10 @@ investor-ready pitch construction belongs to the `pitch-deck` companion plugin.
   byte-for-byte copy of the `<style>` block inlined in `pitch-template.html` (minus
   the surrounding tags). This is the parseable companion the `pitch-deck` plugin
   reads when skinning its own Reveal.js deck. Do not embed `[fill in: …]` prompts
-  in this file — styles only.
+  in this file — styles only. Do not add a file-level header comment identifying
+  the file; the HTML comment above `<style>` in `pitch-template.html` is where the
+  role attribution lives. Verify with `diff -q` against the extracted inline block
+  before shipping.
 
 **Contract (from `team-composer` cross-skill rules):**
 
@@ -544,7 +547,7 @@ Before presenting final output, verify:
 - [ ] Deck template is labelled as a template; every content slot is a literal `[fill in: …]` prompt
 - [ ] Deck renders as one self-contained HTML file (no external CSS/JS/font requests)
 - [ ] Deck title slide includes the "forthcoming `pitch-deck` plugin" disclaimer
-- [ ] `pitch-styles.css` is shipped alongside `pitch-template.html` and its rules match the `<style>` block inlined in the HTML (so `pitch-deck` can parse it)
+- [ ] `pitch-styles.css` is shipped alongside `pitch-template.html` and is byte-for-byte identical to the `<style>` block inlined in the HTML (verify with `diff -q`; no leading file-level comment in the CSS)
 
 **Shipping**
 - [ ] Files are saved into the folder structure shown in Output Files
