@@ -222,10 +222,170 @@ rows above.
 
 ## Open questions
 
-- Does `skill-creator`'s benchmark tool support paired-prompt A/B trigger
-  tests out of the box, or do we need a thin harness? (Verify in Phase 1.)
-- Does the Claude Code plugin spec support declaring "recommended official
-  skills"? If yes, use it. If no, document expectations in README.
-- Should `brand-workshop`'s pitch-deck template output be fully removed
-  (redirect to `pitch-deck`) or kept as a minimal placeholder? Decide in
-  Phase 2 by reading the current `brand-kit/deck/` emission logic.
+### Q1 — Paired-prompt A/B trigger testing in `skill-creator` (resolved 2026-04-18)
+
+**Finding:** `skill-creator` does **not** natively support paired-skill
+trigger tests. Confidence 0.9 based on reading
+`~/.claude/skills/skill-creator/scripts/run_eval.py` and `run_loop.py`.
+
+**Why it can't:**
+
+- `run_eval` / `run_loop` each accept a single `skill_path`.
+- Each query is tested by writing one fake command file into
+  `.claude/commands/`, invoking `claude -p <query>`, and watching the stream
+  for whether Claude invoked `Skill`/`Read` on *that* file. No other
+  custom skills are loaded into the subprocess.
+- Triggering detection is hard-coded to a single `clean_name` match.
+- The blind comparator (`agents/comparator.md`) compares two *outputs* of a
+  run — not two competing skills.
+
+**What it *does* give us:**
+
+- One-skill triggerability against a labeled eval set
+  (`should_trigger: true|false`), with stratified 60/40 train/test split
+  and held-out scoring to avoid overfitting.
+- Automatic description rewriting via `improve_description.py` in a loop.
+
+**Recommendation — two paths:**
+
+| Path | Effort | Fidelity | Use when |
+|---|---|---|---|
+| **A. Run the loop twice** (once per skill) against the *same* cross-labeled eval set, then cross-reference | Low | Biased — each run sees only one skill; measures raw triggerability, not head-to-head selection | Quick Phase 3 pass to sanity-check `skill-evaluator` vs `skill-creator` collision rate |
+| **B. Thin wrapper around `run_eval`** that writes *both* skills' command files before spawning `claude -p`, then scores each query as `correct-winner / wrong-winner / both / neither` | ~40 lines Python | Correct — measures actual selection under collision | Before shipping any delegation-matrix change that claims a boundary works |
+
+**Follow-up action:** add Path B to `skill-evaluator`'s roadmap as a real
+capability gap it fills — "paired-skill collision harness that wraps
+`skill-creator`'s `run_eval` primitives and tracks which of N skills
+fires." This isn't duplicating Anthropic's shelf; it's extending it.
+
+### Q2 — Fate of `brand-workshop`'s `brand-kit/deck/` template (resolved 2026-04-18)
+
+**Finding:** Remove both `deck/pitch-template.html` and
+`deck/pitch-styles.css` from `brand-workshop`'s output entirely.
+`design-system.md` stays as the single source of truth; `pitch-deck`
+generates its own CSS from those tokens at render time (same pattern
+`business-model-canvas` already uses). Confidence 0.85.
+
+**Evidence:**
+
+- `brand-workshop` today emits two deck files:
+  - `pitch-template.html` — self-contained HTML deck where every content
+    slot is a literal `[fill in: …]` prompt.
+  - `pitch-styles.css` — *byte-for-byte copy* of the `<style>` block from
+    the HTML. A `diff -q` verification gate enforces the sync.
+- `pitch-deck`'s Phase 1 Step 1 treats them asymmetrically:
+  - `pitch-styles.css` — consumed as starting Reveal theme CSS (real reuse).
+  - `pitch-template.html` — "layout / class-name reference only. **Do not**
+    copy its `[fill in: …]` prompt strings into the generated deck."
+- `business-model-canvas` already demonstrates the right pattern:
+  read `design-system.md` → substitute tokens into its own HTML template
+  at render time → done. No cached CSS intermediate.
+
+**Why full removal beats keeping either file:**
+
+1. **Standalone value to a founder who skips `pitch-deck` is near-zero.**
+   A deck with `[fill in: …]` on every slide plus a footnote saying "run
+   `pitch-deck` to fill this in" is a notch above a blank Keynote file.
+   The founder still has to learn every slide's purpose and police the
+   four cardinal sins — which is `pitch-deck`'s job, not a brand-kit
+   artifact's job.
+2. **Drift hazard.** The `diff -q` gate between HTML `<style>` and
+   extracted CSS is maintenance overhead that catches nothing interesting
+   — it only exists because both files exist.
+3. **One source of truth.** Tokens live in `design-system.md`; rendered
+   CSS is a derived artifact that should live with the render-time owner,
+   not be cached upstream.
+4. **Alignment with our own pattern.** `business-model-canvas` already
+   renders its own CSS from tokens without an intermediate file.
+   `pitch-deck` should follow suit.
+
+**Concrete edits (Phase 2 follow-up, separate commit):**
+
+*`skills/brand-workshop/SKILL.md`:*
+- Remove the entire "Branded Pitch-Deck Template" section (~lines 477–564).
+- Remove `/deck/` from the Output Files tree (~lines 595–597).
+- Remove the 4 deck-related quality-checklist items (~lines 661–664).
+- Remove the "deck template" item from the Minimum viable set priority
+  list (~line 601).
+- Update the `pitch-deck` row in Cross-Skill Integration: "Produces
+  `brand-kit/` which `pitch-deck` consumes for visual tokens
+  (`design-system.md`), positioning (`brand-brief.md`), and tagline
+  (`descriptions.md`). `pitch-deck` owns all deck-construction logic."
+
+*`skills/pitch-deck/SKILL.md`:*
+- Drop items 5 and 6 from Phase 1 Step 1 (the `pitch-styles.css` and
+  `pitch-template.html` reads).
+- Update the `brand-workshop` row in Cross-Skill Integration to match.
+- Add an explicit note: CSS is generated from `design-system.md` tokens
+  at render time (same pattern as `business-model-canvas`).
+
+*`skills/brand-workshop/README.md`:*
+- Remove the "self-contained branded pitch-deck template" claim from the
+  outputs list.
+
+**Risk:** founders who wanted a "quick deck scaffold" lose that output.
+Mitigation: brand-workshop still emits `design-system.md` + tagline +
+logo + descriptions. For a deck, they run `pitch-deck` (or `team-composer`,
+or start from `theme-factory`). This is the correct boundary.
+
+### Q3 — Plugin spec "recommended official skills" declaration (resolved 2026-04-18)
+
+**Finding:** No, the plugin spec does not support declaring "recommended
+official skills." Confidence 0.9 based on
+[`/en/plugins-reference`](https://code.claude.com/docs/en/plugins-reference)
+and [`/en/plugin-dependencies`](https://code.claude.com/docs/en/plugin-dependencies).
+
+**What `plugin.json` does support:**
+
+- A top-level `dependencies` array — each entry is either a plugin name
+  string or `{ name, version, marketplace? }`. `version` accepts npm semver
+  ranges (`~2.1.0`, `^2.0`, `>=1.4`, `=2.1.0`).
+- Resolution against git tags `{plugin-name}--v{version}` on the marketplace
+  repo.
+- Cross-marketplace dependencies, if the target marketplace is allowlisted
+  in our `marketplace.json`.
+- Auto-install at install time; failure disables the dependent plugin with
+  one of: `dependency-version-unsatisfied`, `no-matching-tag`, or
+  `range-conflict`.
+
+**What it does *not* support:**
+
+| Capability | Supported? |
+|---|---|
+| Hard-require another marketplace plugin with semver range | Yes — `dependencies` |
+| Hard-require an Anthropic-bundled official skill (`skill-creator`, `theme-factory`, etc.) | **No** — those aren't marketplace plugins |
+| Recommend / suggest / soft-depend on another plugin | **No** — no `recommends`/`suggests`/`peer`/`optional` field |
+| Recommend specific *skills within* another plugin | **No** — dependency granularity is plugin-level |
+
+**Why we can't use `dependencies` for the delegation matrix:** the official
+shelf skills (`skill-creator`, `theme-factory`, `docx`, `pptx`, `pdf`,
+`canvas-design`, `algorithmic-art`, `web-artifacts-builder`, `mcp-builder`,
+`brand-guidelines`, `doc-coauthoring`, `ui-ux-pro-max`, `ai-safety-mindset`,
+`consolidate-memory`, `schedule`, `setup-cowork`) are part of the Claude
+Code default install. They show up in `<available_skills>` without a
+`plugin:` namespace prefix. There's no marketplace repo with `{name}--v{version}`
+git tags for the resolver to target.
+
+**Recommendation — keep doing what we're already doing:**
+
+1. **README expectations.** Document "this plugin works best when these
+   official skills are present" in `agent-skills/README.md` (already added
+   in Phase 2 — the "Delegate to Anthropic's official shelf" principle).
+2. **`Cross-Skill Integration` table in each SKILL.md.** Already added /
+   updated in Phase 2 for `brand-workshop`, `business-model-canvas`,
+   `pitch-deck`. Remaining custom skills get this in a future Phase 2.5.
+3. **Graceful-degradation paragraph in each SKILL.md.** Already added in
+   Phase 2 — this is the only real safety net if a referenced official
+   skill isn't installed.
+
+**Future-proofing:** if Anthropic ever publishes the official shelf as
+installable marketplace plugins (e.g., an `anthropic/skills` marketplace),
+revisit and add hard `dependencies`. Worth tracking, not betting on.
+
+**Side discovery worth filing for later:** the `dependencies` field is
+useful within our *own* marketplace if we ever split this repo into
+multiple plugins. For example, if `pitch-deck` were extracted into its
+own plugin, `brand-workshop` could declare
+`dependencies: [{ "name": "pitch-deck", "version": "^1.0" }]` and the
+install flow would auto-install `pitch-deck`. Defer to a future
+"split-the-repo" decision.
