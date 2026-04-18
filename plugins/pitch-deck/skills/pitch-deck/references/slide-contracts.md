@@ -312,3 +312,10 @@ Before rendering, verify:
   "10 sales hires" but the team has no GTM leader, flag it.
 - **If `business-model.md` Stress Tests identify a critical assumption, the deck
   either addresses it (ideally in Traction) or acknowledges it in the Ask.**
+
+**Single-slide rework:** when the user asks to rework only one slide, these
+same consistency checks apply against that slide's named adjacencies — see
+SKILL.md §Single-slide rework mode for the adjacency table. A Competition
+rework must still line up with Problem and Solution; a Market rework must
+still line up with Problem's segment and Business Model's ACV math. An
+isolated rework is how a single-slide edit quietly breaks the rest of the deck.

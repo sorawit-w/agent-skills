@@ -180,6 +180,34 @@ The skill must refuse to ship a deck that commits any of these:
 These are hard gates. If the founder wants to ship anyway, document the override
 in `deck-checklist.md` so they own the decision.
 
+### Single-slide rework mode
+
+When the user asks to rework ONE slide without rebuilding the full deck
+(e.g., "just help me with my Competition slide", "rework my Market slide"):
+
+1. Apply that slide's contract from `references/slide-contracts.md` as usual.
+2. **Cross-check against the named adjacent slides before finalizing.** An
+   isolated rework is how a single-slide edit quietly breaks the rest of the
+   deck. Standard adjacencies:
+
+   | Slide being reworked | Must stay consistent with |
+   |----------------------|---------------------------|
+   | Problem      | Market (SAM named segment), Solution (fits this pain) |
+   | Solution     | Problem (addresses stated pain), Product (matches demo) |
+   | Market       | Problem (same segment), Business Model (ACV × SOM math) |
+   | Product      | Solution (what the demo proves), Business Model (the action pricing hangs on) |
+   | Business Model | Traction (metric must match the model), Market (SOM matches ACV × customer count) |
+   | Traction     | Business Model (MRR vs GMV vs users — match the model), Ask (trajectory supports runway) |
+   | Team         | Ask (team has skills to execute the milestones) |
+   | Competition  | Problem (segment), Solution (differentiation axis), Product (claim is demonstrable) |
+   | Ask          | Traction (trajectory supports milestones), Team (can execute), `business-model.md` Stress Tests |
+
+3. Ask the founder briefly for the adjacent slides' current content, or read
+   them from prior drafts if provided. Do not rework in isolation.
+4. The four cardinal sins still apply to the single slide being reworked —
+   e.g., a standalone Market rework is still gated on SAM + SOM bottom-up;
+   a standalone Traction rework is still gated on a time axis.
+
 ---
 
 ## Phase 3: Build & Ship
