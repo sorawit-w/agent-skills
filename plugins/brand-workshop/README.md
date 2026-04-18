@@ -4,7 +4,7 @@
 
 # brand-workshop
 
-A Claude Code skill that assembles a virtual creative team, runs a structured brand workshop across Discovery → Concept → Creation, and ships a brand identity package: a brand strategy brief (`.md`), a tagline, and a code-generated logo (`.svg` rendered to `.png`).
+A Claude Code skill that assembles a virtual creative team, runs a structured brand workshop across Discovery → Concept → Creation, and ships a launch-ready brand identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), a starter design-system.md (tokens only), and a self-contained branded pitch-deck template (empty placeholder slides the founder fills in).
 
 ## Why this exists
 
@@ -23,8 +23,13 @@ That's what this does.
 - **Assembles a creative team with distinct roles** — @senior-brand-strategist, @senior-copywriter, @lead-visual-designer, @product-designer, @growth-strategist, @regional-cultural-advisor, @lead-ux-ui-designer. Roles scale to the project: minimum 3 for a simple mark, full team for app/product branding, plus add-ons (e.g., accessibility specialist) when context demands.
 - **Runs a five-step Concept workshop** — Strategic Foundation → Verbal Exploration → Visual Direction → Cultural & Market Check → Convergence (strategist-led vote). Each role speaks in first person with a role tag; the full transcript is preserved in the brand brief.
 - **Generates the logo as code** — minimalist geometry, 2–3 colors from the chosen palette, viewBox scaling, favicon-to-billboard viable. SVG first, PNG renders at 64 / 256 / 512 via Cairo/librsvg. No raster effects, no opaque image-gen by default.
+- **Generates a favicon pack with drop-in HTML snippet** — `favicon.svg`, raster sizes (16 / 32 / 180 / 512), `site.webmanifest`, and a copy-paste `<link>` block that uses the brand's actual `theme_color`. If fine detail disappears at 16×16, authors a favicon-optimized variant instead of scaling a mark that becomes illegible.
+- **Ships a social banner set** — Open Graph 1200×630, X header 1500×500, LinkedIn banner 1584×396, Instagram square 1080×1080, profile avatar 400×400. Generous edge padding, tagline only on hero banners, light/dark variants when the palette allows.
+- **Assembles a descriptions pack** — tagline, short/medium/long bios, elevator pitch, press boilerplate, all in the voice established in the brief. Each variant stands alone (no truncation chains) and is verified under its platform's hard character limit.
+- **Ships a starter design system — tokens only** — `design-system.md` with color tokens, typography scale, spacing scale, radius scale, and voice principles. Explicitly not a component library: buttons, forms, and grids depend on the implementing team's stack and aren't this skill's call.
+- **Outputs a branded pitch-deck template — a template, not a pitch** — self-contained Reveal.js HTML, zero network dependencies, print-as-PDF friendly, brand-skinned. Every content slot ships as a literal `[fill in: …]` prompt. Never fabricates traction, team names, or market numbers.
 - **Produces a brand strategy brief** — executive summary, inputs, workshop transcript, final concept (tagline + logo description + color palette table + typography), and **rejected alternatives with reasoning**. The brief records the thinking, not just the output.
-- **Files every deliverable** — `brand-brief.md`, `logo.svg`, `logo-64.png`, `logo-256.png`, `logo-512.png`, presented to the user together.
+- **Files every deliverable into a launch-ready kit** — `brand-brief.md`, `descriptions.md`, `design-system.md`, plus folders for logos, favicons, social banners, and the deck template — all presented to the user together. Minimum-viable order if time or tooling is constrained: brand-brief + logo → descriptions → favicons → design-system → social banners → deck template.
 - **Iterates surgically** — "more playful," "different palette," "tagline #3 instead" re-runs only the affected phase and updates the brief. Full workshop only re-runs when direction fundamentally changes.
 
 ## What it doesn't do
@@ -34,10 +39,12 @@ That's what this does.
 - **Brand voice reviews / style audits.** Those belong to `team-composer` with `@humorist` + `@senior_copywriter`, or to a dedicated review skill.
 - **AI-generated imagery by default.** Raster image generation is opt-in only (via Hugging Face `dynamic_space`), never the default path. The skill exists to ship *vector* identity you can actually ship.
 - **Replace human review on regulated or trademarked marks.** The cultural advisor flags obvious pitfalls, but the skill explicitly recommends human trademark and legal review before use.
+- **Fill in your pitch deck.** The deck template ships brand-skinned and empty — the content is the founder's to write. Traction numbers, team names, ask size, and use of funds belong to the planned `pitch-deck` sibling skill or to `team-composer` with `@startup_strategist` + `@vc_partner`.
+- **Produce a Business Model Canvas.** Deliberately out of scope. A BMC needs revenue model, cost structure, and key-partner inputs this skill doesn't ask for. Use the planned `business-model-canvas` sibling skill or `team-composer` instead.
 
 ## When to use it
 
-- You have a new product, app, or startup and the deliverable you actually need is a **logo + tagline + brief package** you can hand to a founder, designer, or investor.
+- You have a new product, app, or startup and the deliverable you actually need is a **launch-ready identity kit** — logo, tagline, brief, favicons, social banners, descriptions, a starter design-system, and a brand-skinned deck template the founder fills in — handed off as a single bundle.
 - You want the positioning work *done* — archetype, attributes, differentiation — not just a pretty mark.
 - You want the tagline and the logo to have been in the same conversation with each other. The convergence step is the point.
 - You want rejected alternatives documented, so refinement is a conversation, not a guessing game.
@@ -57,19 +64,26 @@ That's what this does.
    - **Visual Direction** (visual designer + UX/UI designer) — 2–3 logo concepts, palette with hex values, typography, favicon/dark-mode viability.
    - **Cultural & Market Check** (cultural advisor + growth strategist) — symbolism pitfalls, memorability, market fit.
    - **Convergence** (strategist-led) — vote, synthesize, declare final tagline + logo direction.
-3. **Creation.** Write the brand strategy brief (with full transcript and rejected alternatives). Generate the logo as SVG; render PNGs at 64 / 256 / 512. Present every file together.
+3. **Creation.** Write the brand strategy brief (with full transcript and rejected alternatives). Generate the logo as SVG and render PNGs at 64 / 256 / 512. Build the favicon pack and its HTML install snippet. Render the social banner set. Assemble the descriptions pack from the copywriter's draft. Emit the starter `design-system.md`. Generate the branded pitch-deck template with empty placeholder slides. Present every file together, organized into the launch-kit folder structure.
 
 Optional iteration loop: re-run only the affected phase when the user refines ("more serious," "swap the palette," "tagline #3 please"); update the brief to reflect the change.
 
 ## What the output looks like
 
-A single deliverable bundle, every file saved and presented:
+A single launch-ready bundle, every file saved and presented:
 
-- **`brand-brief.md`** — Executive Summary, Inputs, Workshop Transcript (role by role), Final Concept (tagline + logo description + palette table + typography), Rejected Alternatives.
-- **`logo.svg`** — clean vector, viewBox, 2–3 colors, no raster effects.
-- **`logo-64.png` / `logo-256.png` / `logo-512.png`** — rendered proofs that confirm the mark survives scaling.
+```
+/
+├── brand-brief.md      — Executive Summary, Inputs, Workshop Transcript, Final Concept, Rejected Alternatives
+├── descriptions.md     — Tagline + short/medium/long bios + elevator pitch + press boilerplate
+├── design-system.md    — Color, typography, spacing, radius, voice — tokens only
+├── logos/              — logo.svg, logo-64.png, logo-256.png, logo-512.png
+├── favicons/           — favicon.svg, 16/32/180/512 PNGs, site.webmanifest, favicon-install.html
+├── social/             — og-image, x-header, linkedin-banner, instagram-square, profile-avatar
+└── deck/               — pitch-template.html (branded, empty, self-contained Reveal.js)
+```
 
-The tagline is called out prominently in the brief. Symbolism, color rationale, and palette usage are explained inline — the brief records thinking, not just output.
+The tagline is called out prominently in the brief. Symbolism, color rationale, and palette usage are explained inline — the brief records thinking, not just output. Every asset downstream of the brief is derived from the same workshop decisions, so the bundle is consistent with itself by construction: the favicon is the logo simplified, the banners use the same palette and typography, the descriptions share the tagline's voice, and the deck is skinned with the design-system tokens.
 
 ## Design choices worth knowing
 
@@ -79,6 +93,8 @@ The tagline is called out prominently in the brief. Symbolism, color rationale, 
 - **Vector-first, raster on request.** AI image generation is opt-in because the default deliverable needs to be usable: an SVG scales, survives color conversions, and edits without regeneration. Raster marks are a liability masquerading as polish.
 - **Cultural & market check is a gate, not a footnote.** It sits between visual direction and convergence deliberately. A beautiful mark that lands badly in one of the target markets is a failed brief, and that catch happens before the vote, not after.
 - **Narrow cross-skill boundaries.** `brand-workshop` does identity deliverables; `team-composer` handles multi-dimensional product thinking; naming / voice / copy audits belong to more specialized skills. The skill's boundary table spells out which request belongs where so neither side over-reaches.
+- **Templates ship empty on purpose.** The branded pitch-deck template leaves every content slot as a literal `[fill in: …]` prompt. Brand is real content; traction numbers, team names, market sizing, and ask size are the founder's to write. Fabricating those turns a deliverable into a liability — and a "filled" deck is the wrong skill's output anyway (that's the planned `pitch-deck` sibling).
+- **Tokens, not components.** `design-system.md` stops at color, type, spacing, radius, and voice. Button variants, form styles, grids, and motion depend on a framework choice this skill deliberately doesn't make — they belong to the implementing team, not to a brand workshop.
 
 ## Install
 
@@ -102,15 +118,24 @@ Once installed, Claude picks the skill up automatically from the description in 
 | `theme-factory` | When downstream deliverables (decks, landing pages) need to apply the produced identity system consistently. |
 | `canvas-design` / `pptx` (fallback only) | Only when the user needs a static brand poster or a deck built on top of the produced identity. |
 
-The principle: this skill owns the identity package (logo + tagline + brief). Hand off to specialized skills for everything downstream rather than attempting them inline.
+The principle: this skill owns the launch-ready identity kit. Hand off to specialized skills for everything downstream rather than attempting them inline.
+
+## Planned sibling skills
+
+This skill is intentionally scoped to brand identity. Two companion skills are planned in the same plugin to handle startup deliverables that overlap brand but require different inputs from the founder:
+
+- **`pitch-deck`** — fills in the template this skill ships. Content (problem, solution, market, traction, team, ask) comes from founder inputs; the skill orchestrates `@startup_strategist` + `@vc_partner` through pitch construction and applies the brand assets produced here.
+- **`business-model-canvas`** — produces a BMC from founder inputs (revenue model, cost structure, key partners, channels, customer segments). `@startup_strategist` territory.
+
+An umbrella `startup-launch-kit` meta-skill may later orchestrate `brand-workshop` → `pitch-deck` → `business-model-canvas` as a single founder-facing flow. Not scheduled yet; this README will link to the sibling skills once they ship.
 
 ## Status and scope
 
-v0.1. The role catalog covers the core branding team plus a regional cultural advisor. Minimalist-with-negative-space is the default style; `references/logo-styles.md` documents the alternatives available on request.
+v0.2. The role catalog covers the core branding team plus a regional cultural advisor. The deliverable set is now a launch-ready kit — logo, tagline, brief, favicons, social banners, descriptions, starter design-system, and a brand-skinned deck template. Minimalist-with-negative-space is the default logo style; `references/logo-styles.md` documents the alternatives available on request.
 
-- **Supported:** product / app / startup identity packages, iteration on existing concepts, multi-language taglines (with a note about font embedding for CJK/Thai/Arabic logotypes).
-- **Adaptable:** existing brand assets are respected as constraints; visual designer works within provided palettes/typography.
-- **Not supported:** trademark clearance, registered-mark review, AI image generation as default, live iterative pairing across every round.
+- **Supported:** product / app / startup identity packages, iteration on existing concepts, multi-language taglines (with a note about font embedding for CJK/Thai/Arabic logotypes), HTML install snippet for favicons, self-contained Reveal.js deck template.
+- **Adaptable:** existing brand assets are respected as constraints; visual designer works within provided palettes/typography; the starter design-system can be extended by the implementing team with components in their framework of choice.
+- **Not supported:** trademark clearance, registered-mark review, AI image generation as default, live iterative pairing across every round, filled pitch-deck content, Business Model Canvas.
 
 ## Contributions
 
