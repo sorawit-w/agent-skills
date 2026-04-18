@@ -456,4 +456,17 @@ Before spawning a sub-agent, verify:
 
 ---
 
+## Cross-Skill Integration
+
+| Skill | When to Use |
+|-------|-------------|
+| `skill-creator` (Anthropic) | When the sub-agent needs a custom skill as part of its briefing — e.g., a fan-out where each worker follows a shared authoring convention. Use `skill-creator` to author the skill first, then reference it in the briefing template. Not a delegation — a pointer for the author. |
+| `skill-evaluator` (our own) | When you want to stress-test whether the coordination pattern itself is producing better outputs than a single-agent run. `skill-evaluator`'s audit harness uses these fan-out/pipeline patterns internally. |
+| `team-composer` (our own) | When the "sub-agents" are really role-based personas (strategist, copywriter, etc.) rather than parallel workers on independent tasks. `team-composer` owns virtual-team discussion; this skill owns parallel execution and coordination. Pick by deliverable: one synthesized output → `team-composer`, N independent outputs merged by the coordinator → this skill. |
+| Claude Agent SDK + `Task` tool (external) | This skill advises on coordination patterns; the runtime that actually spawns sub-agents is the [Claude Agent SDK](https://docs.claude.com/en/docs/claude-code/agent-sdk) and the built-in `Task` tool. Link to the SDK docs when an implementer needs primitive-level detail the patterns here don't cover. |
+
+**Graceful degradation:** if `skill-creator` or `skill-evaluator` aren't installed, the patterns in this skill stand on their own — they predate either plugin.
+
+---
+
 Originally part of the coding-rules project (MIT).

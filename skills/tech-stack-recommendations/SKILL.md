@@ -336,3 +336,17 @@ tech-stack-recommendations/
 - **Migrating:** Decide on new runtime, then load stack file
 - **Specific choice (frontend, DB, auth, mobile):** Load the matching topic guide
 - **Unsure?** Default to Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk
+
+---
+
+## Cross-Skill Integration
+
+| Skill | When to Use |
+|-------|-------------|
+| `mcp-builder` (Anthropic) | When the stack decision includes building an MCP server — whether to expose tools from the chosen backend, or to author a custom connector. This skill picks the runtime/framework; `mcp-builder` owns MCP authoring conventions (FastMCP for Python, MCP SDK for Node/TS) and tool-design best practices. |
+| `web-artifacts-builder` (Anthropic) | When the recommendation is "prototype first, commit later" — e.g., a claude.ai artifact with React + shadcn/ui before scaffolding a full Next.js repo. This skill advises the long-term stack; `web-artifacts-builder` ships a same-day prototype against which the stack decision can be tested. |
+| `doc-coauthoring` (Anthropic) | When the founder/team wants the recommendation written up as an ADR (architecture decision record) or decision doc rather than a raw chat summary. Hand off after the choice is made; don't attempt long-form co-authoring inline. |
+| `team-composer` (our own) | When the stack decision is entangled with product, org, or operational constraints and a single-role recommendation isn't enough — e.g., `@senior_software_architect` + `@platform_engineer` + `@security_engineer` should weigh in together. Prefer `team-composer` when the question is "what stack fits this org" vs. "what's the best stack for this workload". |
+| `engineering:architecture` (official) | When the downstream need is a formal ADR with trade-offs and consequences. This skill's recommendation is upstream — a sharp-ended opinion — and feeds into that ADR. |
+
+**Graceful degradation:** if `mcp-builder`, `web-artifacts-builder`, or `doc-coauthoring` aren't installed, the stack recommendations in this skill still stand. The referenced skills are handoff destinations, not hard dependencies.

@@ -1,6 +1,25 @@
 ---
 name: skill-evaluator
-description: Audit a production skill to see whether its rules actually land when Claude runs it. Use for rule-adherence diagnosis, failure classification by fix layer (skill text / rubric / brief / fixture), and targeted rule-text diffs. Boundary with `skill-creator` — if the user wants to **build** a new skill, **benchmark** skill-vs-baseline, **measure** variance across runs, or **optimize a description for triggering accuracy**, that is `skill-creator`'s job, not this skill's. This skill takes an existing SKILL.md and asks "does the text land?"; `skill-creator` takes a goal and asks "does this skill help?". Triggers on "audit a skill", "stress-test my skill", "does this skill actually work", "find gaps in this skill", "what's broken in this skill", "validate rule adherence", or uploading a SKILL.md for a behavior review. Do NOT trigger on "benchmark this skill", "evaluate skill quality", "compare skill versions", or "optimize trigger phrases" — those are `skill-creator`.
+description: >
+  Production-time rule-adherence audit for an *existing* SKILL.md. Use ONLY when the user has a
+  shipped skill and wants to know whether its rules actually land when Claude runs it. Outputs:
+  failure classification by fix layer (skill text / rubric / brief / fixture) and targeted
+  rule-text diffs.
+
+  Hard boundary with `skill-creator` (read this before triggering): `skill-creator` builds new
+  skills, benchmarks skill-vs-baseline, measures variance across runs, and optimizes
+  descriptions for triggering accuracy. This skill does NONE of those. This skill takes an
+  existing SKILL.md and asks "does the text land?"; `skill-creator` takes a goal and asks
+  "does this skill help?".
+
+  Trigger ON: "audit this skill", "stress-test my skill", "does this skill actually work",
+  "find gaps in this skill", "what's broken in this skill", "validate rule adherence",
+  uploading a SKILL.md for a behavior review.
+
+  Do NOT trigger on: "build a skill", "create a skill from scratch", "benchmark this skill",
+  "evaluate skill quality", "compare skill versions", "optimize trigger phrases", or
+  "measure variance" — those are all `skill-creator`. If the request mixes both
+  ("build *and* audit"), start with `skill-creator` and chain to this skill afterward.
 ---
 
 # Skill Evaluator
@@ -197,3 +216,18 @@ This skill produces findings, not grades. A 95% pass rate can hide a single crit
 - `references/terminal-ui.md` — lean-markdown output rules so reports read well in terminals and IDEs alike
 
 Read these when the phase calls for them. Do not front-load all references at once.
+
+## Roadmap — v2 paired-skill collision harness
+
+`skill-creator`'s `run_eval` primitive takes a single `skill_path` and measures triggerability for that skill alone against a labeled eval set. It does **not** measure which of N *competing* skills fires when their triggers overlap — a real gap when you ship more than one skill in a marketplace and need to know whether descriptions actually disambiguate at trigger time.
+
+v2 adds a thin wrapper (~40 lines) around `run_eval` that:
+
+1. Writes fake command files for **both** skills (not one) before spawning `claude -p <query>`.
+2. Runs the same labeled eval set Claude's stream is already instrumented for.
+3. Scores each query as `correct-winner` / `wrong-winner` / `both-fired` / `neither-fired`.
+4. Reports a collision matrix + per-phrase confusion detail.
+
+This is additive to `skill-creator`, not a replacement — it calls `run_eval`'s internals to do the heavy lifting and only adds the multi-skill framing. Target use case: gating delegation-matrix changes that claim a boundary phrase works.
+
+**Status:** design pinned in `docs/delegation-matrix.md` Q1 (2026-04-18). Implementation deferred to Phase 3 of the skill-shelf audit.
