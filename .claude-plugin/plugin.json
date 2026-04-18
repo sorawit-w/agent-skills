@@ -5,5 +5,17 @@
   "author": {
     "name": "sorawit-w",
     "url": "https://github.com/sorawit-w"
-  }
+  },
+  "license": "MIT",
+  "keywords": ["team", "brand", "business", "i18n", "pitch", "skill", "sub-agent", "tech-stack"],
+  "skills": [
+    "./skills/brand-workshop",
+    "./skills/business-model-canvas",
+    "./skills/i18n-contextual-rewriting",
+    "./skills/pitch-deck",
+    "./skills/skill-evaluator",
+    "./skills/sub-agent-coordinator",
+    "./skills/team-composer",
+    "./skills/tech-stack-recommendations"
+  ]
 }
