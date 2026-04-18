@@ -7,48 +7,8 @@
   "plugins": [
     {
       "name": "agent-skills",
-      "source": "./plugins/agent-skills",
-      "description": "Meta-plugin: installs the whole agent-skills shelf in one command."
-    },
-    {
-      "name": "brand-workshop",
-      "source": "./plugins/brand-workshop",
-      "description": "Assemble a virtual creative team and produce a brand strategy brief, tagline, and code-generated logo."
-    },
-    {
-      "name": "business-model-canvas",
-      "source": "./plugins/business-model-canvas",
-      "description": "Elicit founder inputs and produce a 9-block Business Model Canvas as both a canonical Markdown file and a self-contained HTML canvas."
-    },
-    {
-      "name": "i18n-contextual-rewriting",
-      "source": "./plugins/i18n-contextual-rewriting",
-      "description": "Safe surgical edits for large i18n files plus culturally authentic translations via a multi-role review."
-    },
-    {
-      "name": "pitch-deck",
-      "source": "./plugins/pitch-deck",
-      "description": "Construct an investor-ready pitch deck as a self-contained HTML file (Reveal.js), with one-claim-per-slide gating and brand-aware styling."
-    },
-    {
-      "name": "skill-evaluator",
-      "source": "./plugins/skill-evaluator",
-      "description": "Audit a skill to see whether its rules actually land in practice."
-    },
-    {
-      "name": "sub-agent-coordinator",
-      "source": "./plugins/sub-agent-coordinator",
-      "description": "Orchestrate multi-agent work through fan-out, pipeline, and specialist patterns."
-    },
-    {
-      "name": "team-composer",
-      "source": "./plugins/team-composer",
-      "description": "Assemble the right virtual team — every role earns its seat."
-    },
-    {
-      "name": "tech-stack-recommendations",
-      "source": "./plugins/tech-stack-recommendations",
-      "description": "Opinionated tech-stack guidance for new projects — runtime, frontend, API, DB, auth, hosting."
+      "source": ".",
+      "description": "A shelf of Claude Code skills: brand-workshop, business-model-canvas, i18n-contextual-rewriting, pitch-deck, skill-evaluator, sub-agent-coordinator, team-composer, and tech-stack-recommendations."
     }
   ]
 }

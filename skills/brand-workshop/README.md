@@ -34,7 +34,7 @@ That's what this does.
 
 ## What it doesn't do
 
-- **General project brainstorming.** If branding is one of many dimensions in a product decision (positioning + product + GTM + brand), reach for [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/plugins/team-composer) instead. This skill is a deliverable factory, not a thinking partner.
+- **General project brainstorming.** If branding is one of many dimensions in a product decision (positioning + product + GTM + brand), reach for [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) instead. This skill is a deliverable factory, not a thinking partner.
 - **Product or feature naming in isolation.** "Name this product" belongs to `team-composer` with `@naming_specialist`. This skill names when the tagline requires it, not as a standalone service.
 - **Brand voice reviews / style audits.** Those belong to `team-composer` with `@humorist` + `@senior_copywriter`, or to a dedicated review skill.
 - **AI-generated imagery by default.** Raster image generation is opt-in only (via Hugging Face `dynamic_space`), never the default path. The skill exists to ship *vector* identity you can actually ship.
@@ -111,7 +111,7 @@ Once installed, Claude picks the skill up automatically from the description in 
 
 | Skill | When it kicks in |
 |---|---|
-| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/plugins/team-composer) | Preferred when branding is one of several dimensions in a product decision. `team-composer` may in turn hand off to this skill if the scope narrows to pure identity. |
+| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | Preferred when branding is one of several dimensions in a product decision. `team-composer` may in turn hand off to this skill if the scope narrows to pure identity. |
 | `design:ux-copy` | When the copy work is microcopy / error states / CTAs rather than brand voice. |
 | `marketing:brand-review` | For reviewing existing content against an already-established brand. |
 | `i18n-contextual-rewriting` | When the tagline needs culturally adapted translations beyond English. |
