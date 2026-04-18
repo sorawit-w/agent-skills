@@ -1,7 +1,7 @@
 {
   "name": "agent-skills",
   "description": "Meta-plugin: installs the whole agent-skills shelf in one command.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": {
     "name": "sorawit-w",
     "url": "https://github.com/sorawit-w"

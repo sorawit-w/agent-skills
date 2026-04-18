@@ -151,6 +151,24 @@ Generate a single user-facing findings report using the template in `references/
 
 **Deliver inline by default.** Print the report to chat. Do not write files. If the user asks to save, follow the rules in "Artifact policy" above: one file, workspace root, `skill-evaluation-{skill-name}-{YYYY-MM-DD}.md`.
 
+### Phase 6.5 — After fixes are applied, offer a version bump
+
+This phase fires ONLY when the user has applied one or more rule-text diffs from the findings report. If no diffs were applied, skip it silently.
+
+1. **Detect whether the skill lives in a plugin.** Walk up from the `SKILL.md` path looking for a `.claude-plugin/plugin.json`. If none exists, skip this phase — the skill isn't versioned.
+2. **Ask the user — don't auto-edit.** Use roughly this phrasing:
+
+   > "Want to bump the plugin version? Changes applied: [list the applied diffs in one line each]. Convention is semver:
+   > - **patch** (0.x.y → 0.x.y+1) — adherence-only fixes, no behavior change for users
+   > - **minor** (0.x.y → 0.x+1.0) — triggering behavior narrowed or widened, or new opt-in behavior
+   > - **major** (x.y.z → x+1.0.0) — the skill's output contract changed in a breaking way
+   >
+   > You decide the tier."
+3. **Propagate to meta-plugins.** After the target plugin bumps, grep the repo for any `plugin.json` that declares the target as a `dependency`. Offer to bump those in lockstep so shelf installs pull the update. Do not bump them silently.
+4. **Never auto-edit `plugin.json`.** User approval gates every bump. If they decline, move on without further prompting.
+
+**Why this matters:** plugin managers use version numbers to decide whether to pull updates. A rule-text fix that lands in `main` without a version bump is invisible to everyone who already installed the plugin. This phase is the bridge between "the fix is committed" and "the fix actually reaches users."
+
 ### Phase 7 — Stop
 
 Do not auto-iterate. Do not run round 2 on your own.
