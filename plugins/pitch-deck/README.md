@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/pitch-deck-li.svg" alt="pitch-deck — investor-ready in one session" width="100%"/>
+</p>
+
 # pitch-deck
 
 Construct an investor-ready pitch deck as a single self-contained HTML file. Built on Reveal.js (inlined, zero network dependencies), prints to PDF cleanly, enforces one-claim-per-slide, and refuses to ship a deck with any of the four cardinal sins unfilled.

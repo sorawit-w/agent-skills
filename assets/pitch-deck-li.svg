@@ -1,0 +1,335 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="pitch-deck — investor-ready in one session" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>pitch-deck — investor-ready in one session</title>
+  <desc>Pixel-art banner for the pitch-deck Claude Code plugin: title at top, a horizontal filmstrip of the 10-slide investor arc (Title, Problem, Solution, Market, Product, Business Model, Traction, Team, Competition, Ask) with each slide represented as a small framed card with a slide number and icon. Below the filmstrip, a cardinal-gate card lists the four non-negotiable slots. Phase ribbon at the bottom: INTAKE · INTERVIEW · BUILD.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-pd-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-pd-li)"/>
+
+  <!-- =========== TITLE BLOCK =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="72" font-size="44" font-weight="700" fill="#1f2937" letter-spacing="2">pitch-deck</text>
+    <text x="600" y="108" font-size="20" fill="#6b7280">investor-ready in one session.</text>
+    <text x="600" y="134" font-size="11" fill="#9ca3af" letter-spacing="4">10 SLIDES · 4 CARDINAL GATES · ZERO NETWORK DEPS</text>
+  </g>
+
+  <!-- =========== FILMSTRIP (10 slides) =========== -->
+  <!-- Each slide box: 96 wide, 128 tall, gap 8 → 10*96 + 9*8 = 1032, margin=84 each side -->
+  <!-- x_start = 84, y_start = 176 -->
+
+  <!-- Slide 1: Title -->
+  <g transform="translate(84, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#ffffff"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#c9b58a"/>
+    <rect x="0" y="124" width="96" height="4" fill="#c9b58a"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#c9b58a"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#c9b58a"/>
+    <!-- slide number badge -->
+    <rect x="8" y="8" width="20" height="16" fill="#1f2937"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">01</text>
+    <!-- content: logo mark placeholder -->
+    <g transform="translate(32, 52)" fill="#1f2937">
+      <rect x="0"  y="0"  width="32" height="4"/>
+      <rect x="0"  y="8"  width="32" height="4"/>
+      <rect x="0"  y="16" width="20" height="4"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280" letter-spacing="1" text-anchor="middle">TITLE</text>
+  </g>
+
+  <!-- Slide 2: Problem -->
+  <g transform="translate(188, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#fff1f2"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#be185d"/>
+    <rect x="0" y="124" width="96" height="4" fill="#be185d"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#be185d"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#be185d"/>
+    <rect x="8" y="8" width="20" height="16" fill="#be185d"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">02</text>
+    <!-- pain icon (jagged) -->
+    <g transform="translate(40, 44)" fill="#be185d">
+      <rect x="6"  y="0"  width="4"  height="8"/>
+      <rect x="2"  y="8"  width="12" height="4"/>
+      <rect x="0"  y="12" width="16" height="4"/>
+      <rect x="10" y="16" width="4"  height="8"/>
+      <rect x="4"  y="24" width="8"  height="4"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#831843" letter-spacing="1" text-anchor="middle">PROBLEM</text>
+  </g>
+
+  <!-- Slide 3: Solution -->
+  <g transform="translate(292, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#ecfdf5"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#047857"/>
+    <rect x="0" y="124" width="96" height="4" fill="#047857"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#047857"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#047857"/>
+    <rect x="8" y="8" width="20" height="16" fill="#047857"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">03</text>
+    <!-- lightbulb icon -->
+    <g transform="translate(38, 44)" fill="#047857">
+      <rect x="8"  y="0"  width="8" height="4"/>
+      <rect x="4"  y="4"  width="16" height="12"/>
+      <rect x="6"  y="16" width="12" height="2"/>
+      <rect x="8"  y="20" width="8"  height="2"/>
+      <rect x="10" y="24" width="4"  height="2"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#064e3b" letter-spacing="1" text-anchor="middle">SOLUTION</text>
+  </g>
+
+  <!-- Slide 4: Market (CARDINAL) -->
+  <g transform="translate(396, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#eff6ff"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#1d4ed8"/>
+    <rect x="0" y="124" width="96" height="4" fill="#1d4ed8"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#1d4ed8"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#1d4ed8"/>
+    <rect x="8" y="8" width="20" height="16" fill="#1d4ed8"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">04</text>
+    <!-- gate flag -->
+    <g transform="translate(66, 6)" fill="#b91c1c">
+      <rect x="0"  y="0"  width="20" height="12"/>
+      <rect x="2"  y="12" width="2"  height="12"/>
+    </g>
+    <text x="76" y="16" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#ffffff" letter-spacing="1" text-anchor="middle">GATE</text>
+    <!-- TAM/SAM/SOM 3-bar chart -->
+    <g transform="translate(14, 40)" fill="#1d4ed8">
+      <rect x="0"  y="0"  width="14" height="40"/>
+      <rect x="18" y="12" width="14" height="28"/>
+      <rect x="36" y="24" width="14" height="16"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1e3a8a" letter-spacing="1" text-anchor="middle">MARKET</text>
+  </g>
+
+  <!-- Slide 5: Product -->
+  <g transform="translate(500, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#eef2ff"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#4338ca"/>
+    <rect x="0" y="124" width="96" height="4" fill="#4338ca"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#4338ca"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#4338ca"/>
+    <rect x="8" y="8" width="20" height="16" fill="#4338ca"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">05</text>
+    <!-- screen glyph with UI blocks -->
+    <g transform="translate(18, 40)">
+      <rect x="0" y="0"  width="60" height="44" fill="#4338ca"/>
+      <rect x="4" y="4"  width="52" height="6"  fill="#e0e7ff"/>
+      <rect x="4" y="14" width="24" height="12" fill="#c7d2fe"/>
+      <rect x="32" y="14" width="24" height="12" fill="#c7d2fe"/>
+      <rect x="4" y="30" width="52" height="10" fill="#a5b4fc"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#312e81" letter-spacing="1" text-anchor="middle">PRODUCT</text>
+  </g>
+
+  <!-- Slide 6: Business Model -->
+  <g transform="translate(604, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#fef3c7"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#d97706"/>
+    <rect x="0" y="124" width="96" height="4" fill="#d97706"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#d97706"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#d97706"/>
+    <rect x="8" y="8" width="20" height="16" fill="#d97706"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">06</text>
+    <!-- dollar sign -->
+    <g transform="translate(42, 44)" fill="#b45309">
+      <rect x="6" y="0"  width="4"  height="4"/>
+      <rect x="2" y="4"  width="12" height="4"/>
+      <rect x="0" y="8"  width="6"  height="4"/>
+      <rect x="2" y="12" width="12" height="4"/>
+      <rect x="10" y="16" width="6" height="4"/>
+      <rect x="2" y="20" width="12" height="4"/>
+      <rect x="6" y="24" width="4"  height="4"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#78350f" letter-spacing="1" text-anchor="middle">BIZ MODEL</text>
+  </g>
+
+  <!-- Slide 7: Traction (CARDINAL) -->
+  <g transform="translate(708, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#ecfdf5"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#047857"/>
+    <rect x="0" y="124" width="96" height="4" fill="#047857"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#047857"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#047857"/>
+    <rect x="8" y="8" width="20" height="16" fill="#047857"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">07</text>
+    <!-- gate flag -->
+    <g transform="translate(66, 6)" fill="#b91c1c">
+      <rect x="0"  y="0"  width="20" height="12"/>
+      <rect x="2"  y="12" width="2"  height="12"/>
+    </g>
+    <text x="76" y="16" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#ffffff" letter-spacing="1" text-anchor="middle">GATE</text>
+    <!-- up-and-to-right line chart with time axis -->
+    <g transform="translate(12, 38)">
+      <rect x="0"  y="46" width="72" height="2" fill="#6b7280"/>
+      <rect x="0"  y="0"  width="2"  height="48" fill="#6b7280"/>
+      <!-- line segments -->
+      <rect x="6"  y="36" width="8" height="4" fill="#047857"/>
+      <rect x="14" y="28" width="8" height="4" fill="#047857"/>
+      <rect x="22" y="22" width="8" height="4" fill="#047857"/>
+      <rect x="30" y="16" width="8" height="4" fill="#047857"/>
+      <rect x="38" y="10" width="8" height="4" fill="#047857"/>
+      <rect x="46" y="6"  width="8" height="4" fill="#047857"/>
+      <rect x="54" y="2"  width="8" height="4" fill="#047857"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#064e3b" letter-spacing="1" text-anchor="middle">TRACTION</text>
+  </g>
+
+  <!-- Slide 8: Team (CARDINAL) -->
+  <g transform="translate(812, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#f5f3ff"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#6d28d9"/>
+    <rect x="0" y="124" width="96" height="4" fill="#6d28d9"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#6d28d9"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#6d28d9"/>
+    <rect x="8" y="8" width="20" height="16" fill="#6d28d9"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">08</text>
+    <!-- gate flag -->
+    <g transform="translate(66, 6)" fill="#b91c1c">
+      <rect x="0"  y="0"  width="20" height="12"/>
+      <rect x="2"  y="12" width="2"  height="12"/>
+    </g>
+    <text x="76" y="16" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#ffffff" letter-spacing="1" text-anchor="middle">GATE</text>
+    <!-- 3 faces -->
+    <g transform="translate(16, 44)" fill="#6d28d9">
+      <rect x="0"  y="0"  width="18" height="18"/>
+      <rect x="22" y="0"  width="18" height="18"/>
+      <rect x="44" y="0"  width="18" height="18"/>
+      <rect x="4"  y="4"  width="2" height="2" fill="#f5efe6"/>
+      <rect x="12" y="4"  width="2" height="2" fill="#f5efe6"/>
+      <rect x="26" y="4"  width="2" height="2" fill="#f5efe6"/>
+      <rect x="34" y="4"  width="2" height="2" fill="#f5efe6"/>
+      <rect x="48" y="4"  width="2" height="2" fill="#f5efe6"/>
+      <rect x="56" y="4"  width="2" height="2" fill="#f5efe6"/>
+      <rect x="6"  y="12" width="8" height="2" fill="#f5efe6"/>
+      <rect x="28" y="12" width="8" height="2" fill="#f5efe6"/>
+      <rect x="50" y="12" width="8" height="2" fill="#f5efe6"/>
+      <rect x="0"  y="20" width="18" height="10"/>
+      <rect x="22" y="20" width="18" height="10"/>
+      <rect x="44" y="20" width="18" height="10"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#4c1d95" letter-spacing="1" text-anchor="middle">TEAM</text>
+  </g>
+
+  <!-- Slide 9: Competition -->
+  <g transform="translate(916, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#fef2f2"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#b91c1c"/>
+    <rect x="0" y="124" width="96" height="4" fill="#b91c1c"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#b91c1c"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#b91c1c"/>
+    <rect x="8" y="8" width="20" height="16" fill="#b91c1c"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">09</text>
+    <!-- 2x2 grid -->
+    <g transform="translate(18, 44)">
+      <rect x="0"  y="0"  width="24" height="24" fill="#fecaca"/>
+      <rect x="28" y="0"  width="24" height="24" fill="#fee2e2"/>
+      <rect x="0"  y="28" width="24" height="24" fill="#fee2e2"/>
+      <rect x="28" y="28" width="24" height="24" fill="#b91c1c"/>
+      <!-- "you" marker in top-right quadrant -->
+      <rect x="38" y="8"  width="4"  height="4" fill="#047857"/>
+      <!-- axes -->
+      <rect x="-2"  y="-2" width="2"  height="54" fill="#6b7280"/>
+      <rect x="-2" y="52" width="56" height="2"  fill="#6b7280"/>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#7f1d1d" letter-spacing="1" text-anchor="middle">COMPETITION</text>
+  </g>
+
+  <!-- Slide 10: Ask (CARDINAL) -->
+  <g transform="translate(1020, 176)">
+    <rect x="0" y="0" width="96" height="128" fill="#f5efe6"/>
+    <rect x="0" y="0" width="96" height="4"  fill="#1f2937"/>
+    <rect x="0" y="124" width="96" height="4" fill="#1f2937"/>
+    <rect x="0" y="0" width="4"   height="128" fill="#1f2937"/>
+    <rect x="92" y="0" width="4"  height="128" fill="#1f2937"/>
+    <rect x="8" y="8" width="20" height="16" fill="#1f2937"/>
+    <text x="18" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#f5efe6" text-anchor="middle">10</text>
+    <!-- gate flag -->
+    <g transform="translate(66, 6)" fill="#b91c1c">
+      <rect x="0"  y="0"  width="20" height="12"/>
+      <rect x="2"  y="12" width="2"  height="12"/>
+    </g>
+    <text x="76" y="16" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#ffffff" letter-spacing="1" text-anchor="middle">GATE</text>
+    <!-- dollar amount + bars -->
+    <g transform="translate(22, 42)">
+      <text x="0" y="14" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="700" fill="#1f2937">$2M</text>
+      <rect x="0"  y="24" width="48" height="6" fill="#fde68a"/>
+      <rect x="0"  y="24" width="16" height="6" fill="#d97706"/>
+      <text x="0" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#6b7280" letter-spacing="1">18mo runway</text>
+    </g>
+    <text x="48" y="110" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1f2937" letter-spacing="1" text-anchor="middle">ASK</text>
+  </g>
+
+  <!-- connector between slides (thin line under the strip) -->
+  <rect x="84" y="316" width="1032" height="2" fill="#eadfcf"/>
+
+  <!-- =========== CARDINAL GATE CARD =========== -->
+  <g transform="translate(84, 348)">
+    <rect x="0" y="0" width="1032" height="132" fill="#fffbeb"/>
+    <rect x="0" y="0" width="1032" height="6"   fill="#d97706"/>
+    <rect x="0" y="126" width="1032" height="6" fill="#d97706"/>
+    <rect x="0" y="0" width="6"   height="132" fill="#d97706"/>
+    <rect x="1026" y="0" width="6" height="132" fill="#d97706"/>
+
+    <!-- title -->
+    <g transform="translate(36, 20)">
+      <g fill="#d97706">
+        <rect x="12" y="0"  width="4" height="4"/>
+        <rect x="10" y="4"  width="8" height="4"/>
+        <rect x="8"  y="8"  width="12" height="4"/>
+        <rect x="6"  y="12" width="16" height="4"/>
+        <rect x="4"  y="16" width="20" height="4"/>
+      </g>
+      <text x="46" y="14" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="700" fill="#78350f" letter-spacing="2">FOUR CARDINAL SINS — any one blocks shipping</text>
+    </g>
+
+    <!-- 4 sin rows -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <!-- Sin 1 -->
+      <g transform="translate(36, 66)">
+        <rect x="0" y="0" width="8" height="8" fill="#b91c1c"/>
+        <text x="16" y="8" font-size="11" font-weight="700" fill="#1f2937">04 MARKET</text>
+        <text x="112" y="8" font-size="11" fill="#6b7280">TAM only — no SAM, no SOM</text>
+      </g>
+      <!-- Sin 2 -->
+      <g transform="translate(36, 86)">
+        <rect x="0" y="0" width="8" height="8" fill="#b91c1c"/>
+        <text x="16" y="8" font-size="11" font-weight="700" fill="#1f2937">07 TRACTION</text>
+        <text x="132" y="8" font-size="11" fill="#6b7280">numbers without a time axis</text>
+      </g>
+      <!-- Sin 3 -->
+      <g transform="translate(536, 66)">
+        <rect x="0" y="0" width="8" height="8" fill="#b91c1c"/>
+        <text x="16" y="8" font-size="11" font-weight="700" fill="#1f2937">08 TEAM</text>
+        <text x="96" y="8" font-size="11" fill="#6b7280">no faces, no relevant prior experience</text>
+      </g>
+      <!-- Sin 4 -->
+      <g transform="translate(536, 86)">
+        <rect x="0" y="0" width="8" height="8" fill="#b91c1c"/>
+        <text x="16" y="8" font-size="11" font-weight="700" fill="#1f2937">10 ASK</text>
+        <text x="86" y="8" font-size="11" fill="#6b7280">vague amount, missing milestones, no runway</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- =========== PHASE RIBBON (bottom) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect x="84"  y="512" width="340" height="42" fill="#dbeafe"/>
+    <rect x="84"  y="512" width="340" height="8"  fill="#1d4ed8"/>
+    <text x="254" y="542" font-size="14" font-weight="700" fill="#1e3a8a" letter-spacing="4" text-anchor="middle">1 · INTAKE</text>
+
+    <rect x="424" y="512" width="340" height="42" fill="#fce7f3"/>
+    <rect x="424" y="512" width="340" height="8"  fill="#be185d"/>
+    <text x="594" y="542" font-size="14" font-weight="700" fill="#831843" letter-spacing="4" text-anchor="middle">2 · INTERVIEW</text>
+
+    <rect x="764" y="512" width="352" height="42" fill="#d1fae5"/>
+    <rect x="764" y="512" width="352" height="8"  fill="#047857"/>
+    <text x="940" y="542" font-size="14" font-weight="700" fill="#064e3b" letter-spacing="4" text-anchor="middle">3 · BUILD &amp; SHIP</text>
+  </g>
+
+  <!-- footer note -->
+  <text x="600" y="594" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#9ca3af" text-anchor="middle">deck.html · speaker-notes.md · deck-checklist.md · one self-contained file, works offline</text>
+</svg>

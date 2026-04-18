@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/business-model-canvas-li.svg" alt="business-model-canvas — nine blocks, honestly filled" width="100%"/>
+</p>
+
 # business-model-canvas
 
 Interview a founder block-by-block and produce a rigorous 9-block Business Model Canvas — as both an editable Markdown file and a self-contained HTML visual canvas you can open, share, or print to PDF.
