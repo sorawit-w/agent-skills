@@ -1,0 +1,9 @@
+{
+  "name": "business-model-canvas",
+  "description": "Elicit founder inputs and produce a 9-block Business Model Canvas as both a canonical Markdown file and a self-contained HTML canvas.",
+  "version": "0.1.0",
+  "author": {
+    "name": "sorawit-w",
+    "url": "https://github.com/sorawit-w"
+  }
+}
