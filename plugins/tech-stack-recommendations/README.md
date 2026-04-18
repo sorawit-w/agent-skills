@@ -37,7 +37,7 @@ If you're reading this more than ~12 months after the last version bump and noth
 
 ## It's opinionated. That's the point — and the limit.
 
-The defaults here are one person's taste (Kiang's), not universal truth. The skill surfaces the factors that should shift the recommendation and asks you to state them:
+The defaults here are one person's taste, not universal truth. The skill surfaces the factors that should shift the recommendation and asks you to state them:
 
 - **Team expertise** — Angular/NestJS team? Use Node, not Bun.
 - **Compliance / data residency** — SOC 2, HIPAA, GDPR self-hosting? Clerk is out; prefer Ory/Supabase Auth/Lucia.
@@ -98,7 +98,7 @@ Every recommendation should be accompanied by the override factors that apply �
 |---|---|
 | [`team-composer`](../team-composer) | When a brief needs multi-perspective planning and a role on the team needs to pick/evaluate a stack. `team-composer` owns the discussion; this skill owns the stack recommendation the architect delivers. |
 | `brand-workshop` | Separate concern (identity / tagline / logo), not stack-related. |
-| `ui-ux-pro-max` | Pairs with this skill on the Web/Styling layer once the stack is picked. |
+| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Pairs with this skill on the Web/Styling layer once the stack is picked. |
 | `engineering:architecture` / `engineering:tech-debt` | Preferred over this skill when the project already has a stack and the question is "should we change it?" rather than "what do we pick?" |
 
 The principle: this skill owns greenfield + migration stack selection. Questions about *existing* architecture decisions go to the engineering skills.

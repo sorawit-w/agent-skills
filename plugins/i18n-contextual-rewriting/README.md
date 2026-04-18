@@ -94,7 +94,7 @@ Adding a new locale follows a documented template: minimum three roles (copywrit
 | Skill | When it kicks in |
 |---|---|
 | [`team-composer`](../team-composer) | When a localization decision needs multi-perspective strategic input (not per-string). `team-composer` owns the discussion; this skill owns the translation output. |
-| [`ui-ux-pro-max`](../../) | Pairs with this skill when UI overflow, line-break behavior, or RTL layout is at stake (German 20–35% longer, Thai no word spaces, Arabic RTL, etc.). |
+| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Pairs with this skill when UI overflow, line-break behavior, or RTL layout is at stake (German 20–35% longer, Thai no word spaces, Arabic RTL, etc.). |
 | `brand-workshop` / `tech-stack-recommendations` | Separate concerns — identity and platform selection don't overlap with translation work. |
 
 ## Install

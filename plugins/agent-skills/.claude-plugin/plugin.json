@@ -3,7 +3,7 @@
   "description": "Meta-plugin: installs the whole agent-skills shelf in one command.",
   "version": "0.1.0",
   "author": {
-    "name": "Kiang (Sorawit Wanitwarodom)",
+    "name": "sorawit-w",
     "url": "https://github.com/sorawit-w"
   },
   "dependencies": [

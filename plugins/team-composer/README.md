@@ -98,7 +98,7 @@ Once installed, Claude picks the skill up automatically from the description in 
 | Skill | When it kicks in |
 |---|---|
 | `brand-workshop` | Preferred for pure brand-identity deliverables (logo + tagline + strategy brief). |
-| `ui-ux-pro-max` | When the designer or frontend engineer needs to produce high-fidelity UI. |
+| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | When the designer or frontend engineer needs to produce high-fidelity UI. |
 | `tech-stack-recommendations` | When the architect/lead needs to pick or evaluate a stack. |
 | `i18n-contextual-rewriting` | When the i18n specialist is active and the team produces translatable content. |
 | `theme-factory` | When any team-composer deliverable needs consistent visual styling. |
