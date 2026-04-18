@@ -424,6 +424,14 @@ from parallel, focused work. **Discussion rounds (1-2-3) always run in single-ag
 to preserve cross-role interaction. Sub-agents are only for deliverable production after
 the discussion concludes.
 
+> **Coordination mechanics live in `sub-agent-coordinator`.** Team-composer owns the
+> *when* and *who* of delegation (the triggers below, role-level deliverable assignments).
+> The sibling `sub-agent-coordinator` skill owns the *how* — briefing templates
+> (Quick/Full), coordination patterns (fan-out, pipeline, specialist, review), spawning
+> checklists, and trust-but-verify rules. When any trigger below fires, load
+> `sub-agent-coordinator` alongside this skill. One invariant carries across both:
+> **no nested sub-agents** — all spawning happens at the team-composer/coordinator level.
+
 ### Trigger Table
 
 | Signal | Action |
@@ -437,8 +445,8 @@ the discussion concludes.
 
 1. **Discussion completes** — all 3 rounds finish, conclusion is written
 2. **Check triggers** — if any signal above matches, proceed to delegation
-3. **Brief sub-agents** — use the quick brief template from `references/sub-agent-delegation.md`
-   (if available in your coding-rules). Each sub-agent gets:
+3. **Brief sub-agents** — load the `sub-agent-coordinator` skill and use its Briefing
+   Templates section (Quick Brief for complexity 1–5, Full Brief for 6+). Each sub-agent gets:
    - The conclusion and decisions from the discussion
    - Their role's specific deliverable assignment
    - Constraints from other roles (e.g., "architect said no microservices")
@@ -599,12 +607,15 @@ and run structured discussion. The difference is what they produce.
 
 | Skill | When to Use |
 |-------|-------------|
-| `i18n-contextual-rewriting` | When `@i18n_specialist` is active and the team produces translatable content |
+| `sub-agent-coordinator` | When any Phase 6 or 6.5 trigger fires and the team is about to spawn deliverable sub-agents. Load it for briefing templates (Quick / Full), coordination patterns (fan-out, pipeline, specialist, review), spawning checklists, and the no-nested-sub-agents invariant. |
+| `i18n-contextual-rewriting` | When `@i18n_specialist` is active and the team produces translatable content. |
 | `brand-workshop` | When the deliverable is a brand identity package (logo + tagline + brief). See Skill Boundaries above — prefer `brand-workshop` directly for pure branding requests. |
-| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | When designer or frontend engineer needs to produce high-fidelity UI |
-| `tech-stack-recommendations` | When `@senior_software_architect` or `@lead_software_engineer` is active and the team needs to select or evaluate a technology stack (new projects, migrations, architecture decisions) |
-| Self-contained HTML deck (**default** for slide decks) | When team-composer produces any deck deliverable, **prefer a single self-contained HTML file over `.pptx`**. Required contract: responsive (projector + laptop + mobile preview); first-class print-as-slides mode (clean PDF export via CSS paged media); keyboard navigation (←/→/Space/Esc); AAA contrast for projection; semantic HTML with aria landmarks; zero network dependencies (inline CSS/JS, base64 images); supports animations and interactivity where they add real value. **Recommended starting point: Reveal.js** (battle-tested, good print CSS, built-in keyboard nav) — defer framework selection to `tech-stack-recommendations` when in doubt. For data-heavy decks, `@dataviz_engineer` owns the chart work inside the deck. |
-| `pptx` (**fallback only**) | Use only when the user explicitly requests `.pptx` — corporate constraints, collaborative editing in PowerPoint/Keynote/Google Slides, or the deck must live inside an existing `.pptx` file. State the trade-off clearly: `.pptx` loses interactivity, custom animations, and programmable charts. |
+| `business-model-canvas` | When `@startup_strategist` is active and the deliverable is a persistent 9-block Osterwalder canvas (editable Markdown + self-contained HTML). Prefer the skill directly for "build me a BMC" requests; use team-composer for discussion-grade work on one block. |
+| `pitch-deck` | When the team needs an investor-ready shippable deck — HTML, Reveal.js, print-to-PDF. Explicit companion to `brand-workshop` + `business-model-canvas` in the startup-artifact chain. Prefer the skill directly for "build me a pitch deck" requests. |
+| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | When `@senior_product_designer` or `@senior_frontend_engineer` needs to produce high-fidelity UI. |
+| `tech-stack-recommendations` | When `@senior_software_architect` or `@lead_software_engineer` is active and the team needs to select or evaluate a technology stack (new projects, migrations, architecture decisions). |
+| Self-contained HTML deck (**default** for slide decks) | When team-composer produces any deck deliverable, **prefer a single self-contained HTML file over `.pptx`**. Required contract: responsive (projector + laptop + mobile preview); first-class print-as-slides mode (clean PDF export via CSS paged media); keyboard navigation (←/→/Space/Esc); AAA contrast for projection; semantic HTML with aria landmarks; zero network dependencies (inline CSS/JS, base64 images); supports animations and interactivity where they add real value. **Recommended starting point: Reveal.js** (battle-tested, good print CSS, built-in keyboard nav) — defer framework selection to `tech-stack-recommendations` when in doubt. For data-heavy decks, `@dataviz_engineer` owns the chart work inside the deck. For investor/fundraising decks specifically, delegate to `pitch-deck`. |
+| `pptx` (**fallback only**) | When the user explicitly requests `.pptx` — corporate constraints, collaborative editing in PowerPoint/Keynote/Google Slides, or the deck must live inside an existing `.pptx` file. State the trade-off clearly: `.pptx` loses interactivity, custom animations, and programmable charts. |
 | `theme-factory` | When any team-composer deliverable (HTML deck, one-pager, strategy doc, landing page) needs consistent visual styling — apply after content is finalized. Pick a preset theme or generate a custom one. |
 
 **Principle:** This skill handles team assembly and discussion. When the discussion
