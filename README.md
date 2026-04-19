@@ -189,17 +189,17 @@ team-composer ──▶ sub-agent-coordinator
 
 ### <img src="assets/icons/brand-workshop.svg" alt="" width="48" align="middle"/> &nbsp;`brand-workshop`
 
-**What it does.** Assembles a virtual creative team, runs a Discovery → Concept → Creation workshop, and ships a launch-ready identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), a starter `design-system.md` (tokens only), and a self-contained branded pitch-deck template.
+**What it does.** Assembles a virtual creative team, runs a Discovery → Concept → Creation workshop, and ships a launch-ready identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), and a starter `design-system.md` (tokens only) that downstream skills like `pitch-deck` and `business-model-canvas` pick up automatically.
 
 **Reach for it when.** You need a real identity package — positioning, voice, archetype, tagline, and mark all sharing the same rationale — not just a logo doodle. Skip the positioning and the logo is just a doodle.
 
 **Pairs well with.**
 - [`business-model-canvas`](#business-model-canvas) — auto-applies brand tokens from the kit.
-- [`pitch-deck`](#pitch-deck) — reads `brand-kit/design-system.md` and the starter deck template for consistent branding.
+- [`pitch-deck`](#pitch-deck) — reads `brand-kit/design-system.md` for consistent branding and owns the deck construction itself.
 - [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) — localize the descriptions pack while preserving tone.
 
 **Try it.**
-- "Run the full workshop for my meditation startup — identity, mark, voice, and deck template."
+- "Run the full workshop for my meditation startup — identity, mark, voice, and design tokens."
 - "I have a one-paragraph startup idea. Take me through Discovery → Concept → Creation and ship a launch-ready kit."
 - "Brand-workshop first, then hand the kit to `business-model-canvas` and `pitch-deck` so the whole startup artifact chain shares tokens."
 
@@ -254,7 +254,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 - **Boring and readable beats clever.** Skill text is read by humans and followed by models. Opaque indirection costs more than it saves.
 - **Risk-blocking roles and checks are non-droppable.** Where a skill has explicit safety or compliance triggers, they're vetoes — not tiebreakers, not suggestions.
 - **Narrow scope, named boundaries.** Every skill states what it *doesn't* do and when to reach for a different skill instead. Overlap is negotiated up front, not resolved mid-output.
-- **Delegate to Anthropic's official shelf.** Where an Anthropic-shipped skill (`theme-factory`, `docx`, `pptx`, `canvas-design`, `skill-creator`, `web-artifacts-builder`, `mcp-builder`, `pdf`, `doc-coauthoring`) owns a primitive better than we do, we reference it rather than rebuild. See [`docs/delegation-matrix.md`](docs/delegation-matrix.md) for the per-skill map.
+- **Delegate to Anthropic's official shelf.** Where an Anthropic-shipped skill (`theme-factory`, `docx`, `pptx`, `canvas-design`, `skill-creator`, `web-artifacts-builder`, `mcp-builder`, `pdf`, `doc-coauthoring`) owns a primitive better than we do, we reference it rather than rebuild. Each SKILL.md spells out the hand-offs in its Cross-Skill Integration table.
 
 ## Status
 

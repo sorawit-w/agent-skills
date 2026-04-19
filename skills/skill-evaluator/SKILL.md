@@ -229,4 +229,4 @@ v2 adds a thin wrapper (~40 lines) around `run_eval` that:
 
 This is additive to `skill-creator`, not a replacement — it calls `run_eval`'s internals to do the heavy lifting and only adds the multi-skill framing. Target use case: gating delegation-matrix changes that claim a boundary phrase works.
 
-**Status:** design pinned in `docs/delegation-matrix.md` Q1 (2026-04-18). Implementation deferred to Phase 3 of the skill-shelf audit.
+**Status:** design pinned 2026-04-18. Implementation deferred — ship v1 (single-skill adherence audit) first, revisit v2 only if production use surfaces real cross-firing between shelf skills.
