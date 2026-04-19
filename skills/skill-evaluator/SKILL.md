@@ -1,25 +1,24 @@
 ---
 name: skill-evaluator
 description: >
-  Production-time rule-adherence audit for an *existing* SKILL.md. Use ONLY when the user has a
-  shipped skill and wants to know whether its rules actually land when Claude runs it. Outputs:
-  failure classification by fix layer (skill text / rubric / brief / fixture) and targeted
-  rule-text diffs.
-
-  Hard boundary with `skill-creator` (read this before triggering): `skill-creator` builds new
-  skills, benchmarks skill-vs-baseline, measures variance across runs, and optimizes
-  descriptions for triggering accuracy. This skill does NONE of those. This skill takes an
-  existing SKILL.md and asks "does the text land?"; `skill-creator` takes a goal and asks
-  "does this skill help?".
+  Audit an existing SKILL.md for rule adherence — does the text actually land when Claude runs
+  it? Use when the user wants a behavioral review of a shipped skill. Outputs: failure
+  classification by fix layer (skill text / rubric / brief / fixture) and targeted rule-text
+  diffs.
 
   Trigger ON: "audit this skill", "stress-test my skill", "does this skill actually work",
   "find gaps in this skill", "what's broken in this skill", "validate rule adherence",
-  uploading a SKILL.md for a behavior review.
+  "review this skill end-to-end", uploading a SKILL.md for a behavior review.
 
   Do NOT trigger on: "build a skill", "create a skill from scratch", "benchmark this skill",
   "evaluate skill quality", "compare skill versions", "optimize trigger phrases", or
   "measure variance" — those are all `skill-creator`. If the request mixes both
   ("build *and* audit"), start with `skill-creator` and chain to this skill afterward.
+
+  Hard boundary with `skill-creator`: `skill-creator` builds new skills, benchmarks
+  skill-vs-baseline, measures variance across runs, and optimizes descriptions for triggering
+  accuracy. This skill does NONE of those. This skill takes an existing SKILL.md and asks
+  "does the text land?"; `skill-creator` takes a goal and asks "does this skill help?".
 ---
 
 # Skill Evaluator

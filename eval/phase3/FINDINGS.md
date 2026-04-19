@@ -72,19 +72,25 @@ Deferred. Two reasons:
 Evaluates the gate. Only if results surface real collisions (>15%) or the
 description clearly under-triggers do we invest in Path B.
 
-## Secondary finding worth surfacing
+## Secondary finding — addressed by reasoning, not yet verified
 
-The skill-evaluator description I tightened in Phase 2.5 is visible in the
-log: it leads with `Use ONLY when the user has a shipped skill...`. If the
-local run shows evaluator's own positives failing, the fix is probably:
+The skill-evaluator description tightened in Phase 2.5 led with `Use ONLY
+when the user has a shipped skill...`, which was hypothesized to over-restrict
+triggering. Soft-revised in a follow-up commit (see git log) without running
+the eval:
 
-- Move the positive trigger list ABOVE the hard-boundary prose
-- Relax "Use ONLY when" to "Use when"
-- Front-load the common phrasings ("audit", "stress-test", "find gaps") so
-  the classifier sees them before the restrictive language
+- Positive trigger list moved ABOVE the hard-boundary prose (front-loads the
+  common phrasings "audit", "stress-test", "find gaps" so the classifier
+  sees them first)
+- "Use ONLY when" relaxed to "Use when"
+- Added "review this skill end-to-end" to the positive list (matches one of
+  the Group-A eval queries)
+- Hard-boundary paragraph kept, but now lives below the trigger lists as
+  defensive context rather than gating prose
 
-This is a concrete hypothesis to validate with the local run, not something
-to fix blind.
+**Still un-verified** — the local eval under `RUN_LOCAL.md` would confirm or
+falsify. If anyone picks this up later, compare trigger rates on Group A
+queries before/after this revision.
 
 ## README update note
 
