@@ -107,6 +107,22 @@ Use sub-agents to parallelize work and reduce total execution time.
 
 ---
 
+## Before you delegate — is this parallel work or a team discussion?
+
+If you're about to spawn role-based personas (strategist, copywriter, designer, PM, engineer) to weigh in on the **same decision** and produce **ONE synthesized output**, stop. That's `team-composer` territory, not this skill.
+
+| Signal                                       | Route to         |
+|----------------------------------------------|------------------|
+| Three roles critiquing the same feature      | `team-composer` |
+| Brainstorm / workshop / review with personas | `team-composer` |
+| "Should we build X?" with multi-disc input   | `team-composer` |
+| N independent deliverables merged later      | this skill       |
+| Parallel file edits, scaffolds, translations | this skill       |
+
+Pick by **deliverable shape**: one synthesized answer → `team-composer`, N independent outputs the coordinator merges → this skill. If unsure, read `team-composer`'s description first.
+
+---
+
 ## When NOT to Delegate
 
 Some work should stay with the primary agent.

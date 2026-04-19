@@ -11,7 +11,7 @@ slide template is the scaffold that keeps the narrative honest.
 
 ## What this skill produces
 
-Always produced:
+Every run produces exactly THREE files at these exact paths:
 
 1. **`pitch/deck.html`** — single self-contained HTML file. Reveal.js-based, keyboard
    nav (←/→/Space/Esc), AAA contrast for projection, prints cleanly to PDF via
@@ -22,7 +22,10 @@ Always produced:
 3. **`pitch/deck-checklist.md`** — before-you-send-this-deck checklist covering the
    required-slot gate, the 90-second read test, and legal/disclosure reminders.
 
-All three files go into `pitch/` inside the founder's working directory.
+All three paths are named explicitly in the response (see Phase 3 Step 5).
+Single-slide reworks still produce three files — the untouched files are
+regenerated from prior content so the pitch folder stays consistent. All
+three files go into `pitch/` inside the founder's working directory.
 
 ## What this skill is NOT
 
@@ -126,15 +129,28 @@ mapping convention. Do not look for `brand-kit/deck/pitch-styles.css` or
 them is fine for early-stage pre-seed; for Series A+ the brand-kit and business model
 should usually exist first.
 
-### Step 2 — Classify the deck
+### Step 2 — Classify the deck variant FIRST
 
-One question before the interview starts. Ask the founder:
+Before any slide drafting, ask exactly ONE question and wait for the answer:
 
-> "Is this deck for (a) a cold email send to investors, (b) a warm intro meeting,
-> (c) a demo day, or (d) a follow-up after a first meeting?"
+> "Which variant: (a) pre-seed, (b) seed, (c) Series A/B, or (d) demo-day /
+> cold-send / warm intro / follow-up? This changes how I treat traction and
+> the ask."
 
-Use this to tune slide depth and length. See `references/deck-variants.md` for the
-per-variant adjustments.
+**Do not skip. Do not infer from context. Do not proceed to Step 3 without
+an answer.** The variant gates, at minimum:
+
+- **Traction slide depth** — pre-seed = validation proxies (LOIs, waitlist,
+  pilots with end dates); Series A/B = revenue curve, retention cohorts
+- **Ask slide format** — pre-seed = SAFE/note, round size only;
+  Series A/B = priced round, use-of-funds table, runway in months
+- **Competition framing** — pre-seed = "why now + insight"; Series A/B =
+  "why us beats them, with evidence"
+- **Length tuning** — see `references/deck-variants.md`
+
+If the user refuses to pick, default to **seed** and state that assumption
+verbatim in the first line of the response: "Assuming seed variant — correct
+me if wrong."
 
 ### Step 3 — Identify what's missing
 
@@ -295,10 +311,26 @@ See `references/deck-checklist.md` for the template.
 
 Use `present_files` if available. Otherwise emit clickable `computer://` links.
 
-End with three lines:
-- The slide most likely to fail the investor read test (name it and why).
-- The strongest anti-pattern the deck still carries (if any).
-- The single highest-value improvement the founder could make before sending.
+**Always name all three output files explicitly in the response:**
+
+- `pitch/deck.html`
+- `pitch/speaker-notes.md`
+- `pitch/deck-checklist.md`
+
+Name them even on partial runs — a single-slide rework still names the file
+being edited. Do not substitute "the deck file", "your slides", or "the notes"
+for the path.
+
+End with EXACTLY these three lines, in this order, prefixed verbatim:
+
+1. `Weakest slide for investor read-test: <slide name> — <why>`
+2. `Strongest remaining anti-pattern: <pattern> on <slide name>`
+3. `Highest-value next edit: <one sentence>`
+
+This applies to first-pass decks, single-slide reworks, and regenerations.
+Do not replace the triad with presentation-prep tips, "next steps", or a
+summary block. If a line is genuinely N/A (e.g., deck passed every gate),
+write the prefix + `none` — never omit the line.
 
 ---
 

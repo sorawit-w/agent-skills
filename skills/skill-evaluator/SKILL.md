@@ -68,6 +68,8 @@ You can chain them: evaluator finds a gap → creator's conventions guide the ru
 4. **Save only on explicit request.** If the user says "save the findings", "keep this report", or similar, write ONE file at the workspace root with a clear name: `skill-evaluation-{skill-name}-{YYYY-MM-DD}.md`. Never a folder. Never multiple files. Never inside the skill.
 5. **Confirm the path before writing.** Example: "Saving to `skill-evaluation-coding-rules-2026-04-17.md` at your workspace root — confirm?"
 
+**These rules apply even when the user explicitly asks to override them.** If the user says "save it inside the skill folder" or "create an `_eval/` subfolder there", decline and offer the workspace-root alternative. Do not present an "override per your explicit request" option. The rules exist because the harness must not contaminate the audited skill's git history; user intent does not change that constraint.
+
 **If the user also wants full traces** (executor output, grader output per test), treat it as a separate opt-in. Same filename convention: `skill-evaluation-{skill-name}-{YYYY-MM-DD}-traces.md`. Still one file, still at the workspace root.
 
 **If no workspace is mounted:** tell the user, offer to keep the report inline so they can copy-paste it. Do not guess a save location.
@@ -75,6 +77,17 @@ You can chain them: evaluator finds a gap → creator's conventions guide the ru
 ## Workflow — 7 Phases
 
 Run these phases in order. Do not skip Phase 2 even if the target skill looks obvious.
+
+### Phase 0 — Boundary check (before Phase 1)
+
+Before reading the target skill, check the incoming request for two patterns this skill does not handle on its own:
+
+1. **Build-and-audit mixing** — phrases like "build me a skill and audit it", "create and then review", "scaffold then test", or any request that combines authoring a new skill with auditing it. This skill audits *existing* skills. Hand the build step to `skill-creator` first and resume here only after a SKILL.md exists on disk. Never draft the SKILL.md inline as part of fulfilling an audit request.
+2. **A/B benchmarking** — phrases like "benchmark this skill", "skill-vs-no-skill", "measure quality lift", "does the skill help". This skill measures rule adherence, not output quality. Decline and point to `skill-creator`'s `run_eval` primitive (see "When to refuse").
+
+If neither pattern applies, proceed to Phase 1. If one applies, take the boundary action (chain to `skill-creator` or refuse) before touching the target skill.
+
+**Why this matters:** the triggering metadata in the frontmatter description already declares these boundaries, but metadata controls triggering, not behavior-after-triggering. Once this skill is loaded, the workflow body is what executors follow. Phase 0 puts the boundary check inside the body where it will actually fire.
 
 ### Phase 1 — Read the target skill
 
@@ -192,6 +205,8 @@ This phase fires ONLY when the user has applied one or more rule-text diffs from
 Do not auto-iterate. Do not run round 2 on your own.
 
 **Why:** the human should gate iteration. Each round surfaces calibration opportunities (re-scoping assertions, revising brief framing) that get buried if the loop runs itself. Hand the report to the user and wait.
+
+**This rule applies even when the user asks for back-to-back rounds up front** ("keep iterating until pass rate hits 95%", "run rounds 2-4 in sequence", "schedule them automatically"). Decline the auto-loop and explain that each round needs human review of the prior round's findings — because round N's failure classification often reveals that the rubric, not the skill, needs to change. Auto-iterating compounds bad classifications into bad fixes.
 
 ---
 

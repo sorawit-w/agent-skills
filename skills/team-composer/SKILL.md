@@ -22,6 +22,29 @@ earn its seat.
 
 ---
 
+## Phase 0: Stop gate — brand-workshop or team-composer?
+
+**Read this gate FIRST. Before any signal detection.**
+
+If the user explicitly asks for a **brand identity package** (logo + tagline + brand strategy brief, or any subset described as "brand identity work"), STOP. Do not assemble a team here. Route to `brand-workshop` instead.
+
+**Exact phrases that mean STOP and redirect:**
+
+- "I need a logo for [thing]"
+- "Create a brand identity for [startup/product]"
+- "Help me brand my [thing]"
+- "Design a brand concept for [thing]"
+- "Give me a tagline and logo"
+- "Visual identity / favicons / social banners / brand kit"
+
+**Stay in this skill** when the user wants general brainstorming, planning, naming work (`@naming_specialist`), positioning review (`@brand_strategist`), or copy/voice review (`@humorist` + `@senior_copywriter`) — branding-adjacent but NOT a full identity package.
+
+**Bright-line default:** any prompt mentioning "logo", "brand identity", "visual identity", or "brand kit" → route to `brand-workshop`. Words like "workshop" or "team" in the same prompt do NOT override this — `brand-workshop` runs its own internal team.
+
+If genuinely ambiguous, ask exactly one question: "Do you want a brand identity package (logo + tagline + brief), or a broader strategy/positioning discussion?"
+
+---
+
 ## Phase 1: Detect Project Signals
 
 Extract these signals from the user's input. If ambiguous, make a reasonable

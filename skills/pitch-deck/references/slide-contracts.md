@@ -181,6 +181,22 @@ number without a time axis is cardinal sin #2 — refuse to ship.**
 - Cumulative charts presented as growth charts (always-up visual lies about velocity)
 - Cherry-picked window (3 good weeks after a marketing push, presented as "trend")
 - Vanity metrics (pageviews, signups) stacked in place of revenue or retention
+- **Future-dated pilots, planned launches, or projected revenue plotted on the
+  traction curve.** That's pipeline, not traction. Move it to the Ask slide as
+  use-of-funds milestones.
+
+### Pre-revenue traction (no historical revenue yet)
+
+The time axis is REQUIRED but the metric changes:
+
+- Use validation proxies with **past dates only**: signed LOIs, design-partner
+  agreements, completed pilots (with end date), waitlist growth curve,
+  referenceable users
+- A "planned pilot Q3 2026" is **not** traction — it's pipeline. Either move
+  it to the Ask slide as a milestone, or omit it.
+- If you have ZERO historical traction, **replace this slide with "Why Now"**
+  (timing thesis + insight) and disclose the absence on the Title slide
+  preamble. Do not fake a traction slide with future-dated bars.
 
 **Investor-read-test question:** *Is this growth real, and at what rate?*
 

@@ -124,6 +124,16 @@ and add a row to the Stress Tests section: "We don't yet know ${what}; to find o
 ${experiment}." A canvas with honest unknowns is more useful than a canvas with invented
 confidence.
 
+### When the user skips the interview
+
+If the founder gives you a paragraph dump or says "just fill it in from what I
+said," still apply the thin-input rule: any block where your fill comes from
+inference, not the founder's words, gets marked
+`[Unknown — founder did not specify: <what's missing>]`.
+
+Why: a BMC full of plausible-sounding AI guesses is worse than a BMC with 3
+explicit unknowns. The unknowns are where the next founder conversation goes.
+
 ---
 
 ## Phase 2: Draft & Consistency Check
@@ -137,6 +147,21 @@ Write each block 3–6 bullets long. Bullets are specific claims, not categories
 See `references/nine-blocks.md` for good/bad examples per block.
 
 ### Step 2 — Consistency pass (MANDATORY, do not skip)
+
+This rule applies even when the user explicitly asks to skip it
+("I don't have time," "I know my business cold," "just render it").
+
+Why: the canvas's value is the cross-block pressure test. Skipping it
+produces a 9-cell template that looks like a BMC but carries none of
+the stress-test signal. The founder loses the one thing they came for.
+
+How to apply: decline the skip, then offer a fast path —
+
+- Run the 6 relationship checks silently
+- Surface only contradictions that would block the canvas from shipping
+- Skip the prose write-up, keep the structured findings
+
+Never emit a canvas with the consistency check silently omitted.
 
 Read the full draft and answer each question in writing. If any answer is "no" or
 "unclear," revise before producing final files.
@@ -253,6 +278,11 @@ Present the HTML first (visual primary), Markdown second (source of truth).
 End with two lines:
 - The strongest stress test ("The assumption most likely to kill this business is: …")
 - The suggested next step ("The cheapest way to test that this week is: …")
+
+Every run ends this way — first-pass canvases AND updates to existing canvases
+AND regenerations. Do not replace these two lines with a summary block, a
+"final deliverable" header, or meta-commentary about what changed. The founder
+reads the bottom of the canvas for the action, not the top.
 
 ---
 
