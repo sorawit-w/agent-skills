@@ -1,0 +1,22 @@
+[
+  { "query": "Can you audit my pptx skill for rule adherence?", "should_trigger": true },
+  { "query": "Stress-test this SKILL.md and find gaps between what it says and how Claude actually behaves.", "should_trigger": true },
+  { "query": "Does this skill actually work the way its description claims? I want a behavioral audit.", "should_trigger": true },
+  { "query": "I need you to validate rule adherence in my docx skill — show me where the rules and behavior diverge.", "should_trigger": true },
+  { "query": "Find what's broken in this skill — it's not triggering reliably and I don't know why.", "should_trigger": true },
+  { "query": "Review my skill end-to-end and tell me what's wrong with how it actually behaves vs the rules I wrote.", "should_trigger": true },
+  { "query": "Help me create a new skill from scratch for PDF annotation.", "should_trigger": false },
+  { "query": "I want to optimize my skill's description for better triggering accuracy.", "should_trigger": false },
+  { "query": "Build me a skill that summarizes Slack threads.", "should_trigger": false },
+  { "query": "Can you benchmark my skill and report variance across multiple runs?", "should_trigger": false },
+  { "query": "Run an eval on my skill to measure trigger performance.", "should_trigger": false },
+  { "query": "Make a new skill for processing CSV files into reports.", "should_trigger": false },
+  { "query": "My skill isn't working right — can you help?", "should_trigger": false },
+  { "query": "I want to improve my skill.", "should_trigger": false },
+  { "query": "Check this SKILL.md.", "should_trigger": false },
+  { "query": "Make my skill better at triggering.", "should_trigger": false },
+  { "query": "Translate this UI string set to Thai.", "should_trigger": false },
+  { "query": "Write a blog post about AI alignment trends.", "should_trigger": false },
+  { "query": "Debug this Python traceback for me.", "should_trigger": false },
+  { "query": "What's on my calendar today?", "should_trigger": false }
+]
