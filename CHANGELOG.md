@@ -5,6 +5,31 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] — 2026-04-20
+
+Adds a new role to the `team-composer` roster. Additive and
+non-breaking — existing briefs route the same way; the new role only
+joins the team when the brief's signals warrant it.
+
+### Added
+
+- **team-composer** — `@design_engineer` as a new Tier 3 role in the
+  Emil Kowalski tradition (Sonner, Vaul). Full parity with peer Tier 3
+  roles:
+  - Trigger row in `SKILL.md`'s Tier 3 table (motion, micro-interactions,
+    component-library polish, "does this feel right?" reviews).
+  - Q11 added to the Phase 3.5 Gap Detection Pass.
+  - Full scoring section in `role-scoring.md` (include/skip criteria,
+    differentiation from adjacent roles, partner-with notes) plus four
+    new Signal-to-Role Quick Reference rows.
+  - Full persona in `role-personas.md` (perspective, bias, tension,
+    signature phrases with specific easings, blind spot, handoff,
+    grounding) plus four new Healthy Conflict Patterns rows covering
+    the three-way seam with Frontend Engineer, Product Designer, PM,
+    and Accessibility.
+- Grounds in the optional `emilkowalski/skill` plugin when installed;
+  works standalone otherwise.
+
 ## [1.1.0] — 2026-04-19
 
 A full-shelf adherence audit using `skill-evaluator`. Twelve rule-text

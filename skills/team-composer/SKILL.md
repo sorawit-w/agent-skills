@@ -137,6 +137,7 @@ most conservative (e.g., assume `is_regulated: true` if unsure).
 | `@dharma_teacher` | First-principles questions about product intent and human-tool relationship; "should we build this?"; AI products that shape attention; engagement-maximization features; honest framing/positioning; user explicitly invokes contemplative/wisdom lens (suchness / tathatā / chen-nan-eng) |
 | `@naming_specialist` | Explicit product/company/feature naming work; naming brainstorm or rename; domain-name ideation; name that needs cross-language phonetic vetting; user wants constructed naming techniques (embedded words, homophones, alphanumeric, portmanteau) |
 | `@humorist` | Brand voice / copy review for consumer/social products; product naming or taglines; cultural localization (cringe detection across languages); creative brainstorming when the team is stuck in earnest thinking; user explicitly wants a รั่ว / lateral-wit lens |
+| `@design_engineer` | `has_ui` = `true` AND any of: component-library / design-system work; motion or micro-interaction prominence; "does this feel right?" questions; review of an existing UI surface for polish; toasts, drawers, modals, popovers, dropdowns, tooltips, or command menus as subject |
 
 → Full scoring rules: `references/role-scoring.md`
 → Selection algorithm & team sizing: `references/selection-algorithm.md`
@@ -217,6 +218,7 @@ Answer each question. If the answer requires a role that isn't on the team, eith
 | 8 | Does this brief involve game mechanics, progression, or meaningful play? | `@game_designer` |
 | 9 | Does this product handle money, PII, or credentials? | `@security_specialist` |
 | 10 | Is this a new brand or new product in a competitive market? | `@brand_strategist` |
+| 11 | Does this brief involve UI motion, interaction polish, or "does this feel right?" as a first-class question? | `@design_engineer` |
 
 **How to document the result:**
 
