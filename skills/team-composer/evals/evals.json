@@ -8,7 +8,8 @@
       "expected_output": "Team assembly with core roles + behavioral scientist, i18n specialist, and possibly security specialist. Discussion should feature productive disagreements.",
       "files": [],
       "assertions": [
-        "All 7 core roles are present in the team assembly",
+        "All 8 core roles are present in the team assembly (including @staff_engineer, since scope=planning)",
+        "@staff_engineer is included and authors the structured plan in the conclusion",
         "@lead_behavioral_scientist is included (decision-making + voting mechanics)",
         "@i18n_specialist is included (15 locales, international users)",
         "Team assembly includes a 'Why Included' rationale for each non-core role",
@@ -29,6 +30,7 @@
       "assertions": [
         "@senior_software_architect is included",
         "@lead_software_engineer is included",
+        "@staff_engineer is included (scope=building; authors the implementation plan)",
         "@senior_frontend_engineer is included",
         "@senior_backend_engineer is included",
         "@security_specialist is included or strongly recommended (payment processing + SOC 2)",
@@ -66,6 +68,7 @@
         "@senior_product_designer is NOT included or reduced role (has_ui=false)",
         "@technical_writer is included (developer audience, CLI tool)",
         "@devops_engineer is included (Kubernetes, infrastructure domain)",
+        "@staff_engineer is included (scope=planning; authors the implementation plan)",
         "Detects signals: has_ui=false, audience=developer",
         "Team size is appropriately small (5-8 roles)",
         "@brand_strategist is NOT included (developer CLI tool)"
@@ -93,7 +96,8 @@
       "expected_output": "Large team (10-12 roles) with core + brand strategist (new product), behavioral scientist (marketplace), legal/compliance (marketplace regulations), i18n specialist (SEA + global), community manager (marketplace), and possibly finance manager (marketplace economics).",
       "files": [],
       "assertions": [
-        "All 7 core roles are present",
+        "All 8 core roles are present (including @staff_engineer, since scope=planning)",
+        "@staff_engineer is included and authors the structured plan in the conclusion",
         "@brand_strategist is included (new product, new brand)",
         "@lead_behavioral_scientist is included (marketplace dynamics, two-sided incentives)",
         "@legal_compliance_advisor is included (marketplace regulations, cross-border commerce)",

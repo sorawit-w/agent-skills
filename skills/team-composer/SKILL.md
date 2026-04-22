@@ -86,12 +86,26 @@ most conservative (e.g., assume `is_regulated: true` if unsure).
 | `@senior_product_designer` | UX/UI design, user research, interaction patterns |
 | `@senior_software_architect` | System design, scalability, technology selection, trade-off analysis |
 | `@lead_software_engineer` | Code quality, implementation standards, best practices, mentoring |
+| `@staff_engineer` | Plan authorship — decisions locked/deferred, phased execution, agent-executable specificity (core when `scope=planning` or `building`; see exception below) |
 | `@senior_frontend_engineer` | UI implementation, performance, accessibility, advanced CSS |
 | `@senior_backend_engineer` | APIs, data layer, business logic, integrations |
 | `@senior_copywriter` | Voice, messaging, microcopy, UX writing |
 
 **Exception:** If `has_ui` is `false`, drop `@senior_frontend_engineer` and
 `@senior_product_designer`. Add them back if scope later expands to include UI.
+
+**Scope exception for `@staff_engineer`:** Core when `scope` is `planning` or
+`building`. Optional when `scope` is `discussion` or `review` — include only
+when the user explicitly asks for a plan deliverable, or when the discussion
+naturally produces one the team wants to hand off to agents. When absent for
+`discussion` or `review`, synthesis of Next Steps falls back to
+`@senior_product_manager` + `@senior_software_architect` jointly.
+
+**Trivial-scope override:** The trivial / single-asset rule in
+`references/selection-algorithm.md` (3–4 roles max) overrides the core
+requirement — a tooltip or one-line copy change does not need a plan author.
+If the scope is genuinely trivial, drop `@staff_engineer` alongside the other
+non-essential core roles.
 
 ### Tier 2 — Frequently Included (Signal-Based)
 
@@ -172,19 +186,30 @@ most conservative (e.g., assume `is_regulated: true` if unsure).
 
 ### Tier 1 lock-in check (before Team Assembly)
 
-Before emitting the Team Assembly, confirm in writing:
+Before emitting the Team Assembly, **enumerate every Tier 1 role by name** and mark each as present or absent. Implicit claims ("7 Tier 1 roles after has_ui exception") do not satisfy this check — the executor must name-check each role so the reader can verify which specific one is present or omitted.
 
-- [ ] All 7 Tier 1 roles are present,
-  OR `has_ui=false` (drop frontend + designer),
-  OR another explicit stated exception applies.
+Required format (copy verbatim, then fill in):
 
-If any Tier 1 role is absent, name the role and the exception. Prompts that nudge
-toward a small team ("small team," "scrappy," "just a few people") are NOT
-exceptions — they are requests about operating style, not signals that the brief
-doesn't need frontend or backend perspective.
+```
+Tier 1 lock-in:
+- @senior_product_manager — present
+- @senior_product_designer — [present | absent: has_ui=false]
+- @senior_software_architect — present
+- @lead_software_engineer — present
+- @staff_engineer — [present | absent: scope=discussion|review AND no plan requested | absent: trivial scope]
+- @senior_frontend_engineer — [present | absent: has_ui=false]
+- @senior_backend_engineer — present
+- @senior_copywriter — present
+```
 
-**Why:** Small-team framing in user prompts compresses the Tier 1 list silently.
-The lock-in check forces the omission to be explicit (or corrected).
+For any `absent:` entry, cite the exact exception that permits omission:
+- `has_ui=false` → drops `@senior_frontend_engineer` + `@senior_product_designer`
+- `scope in [discussion, review] AND no plan requested` → `@staff_engineer` optional
+- Trivial scope → any non-essential Tier 1 role may be dropped (see `references/selection-algorithm.md`)
+
+If no exception applies, the team is incomplete — do not proceed to Team Assembly. Prompts that nudge toward a small team ("small team," "scrappy," "just a few people") are NOT exceptions — they are requests about operating style, not signals that the brief doesn't need frontend, backend, or plan-authorship perspective.
+
+**Why:** Small-team framing in user prompts compresses the Tier 1 list silently. Implicit counting ("7 roles after exception") also compresses silently — the reader can't tell which role was dropped. Enumerated name-checking forces each omission to be explicit and verifiable.
 
 ### Pre-Flight Checklist
 
@@ -332,8 +357,8 @@ Common rebuttal patterns:
 |-------|----------------|--------------|-----------|
 | Trivial feature | 300–500 | 600 | Tooltip / copy change / one-line fix |
 | Discussion | 700–1000 | 1300 | Includes rebuttal round |
-| Planning | 900–1300 | 1600 | Detail on approach and trade-offs |
-| Building | 1200–1600 | 2000 | Implementation specifics + rebuttals |
+| Planning | 1100–1600 | 1900 | Detail on approach + Structured Plan when `@staff_engineer` is present |
+| Building | 1400–1800 | 2300 | Implementation specifics + rebuttals + Structured Plan |
 | Review | 900–1200 | 1500 | Focused assessment with rebuttals |
 
 **Hard ceilings are enforceable, not aspirational.** If you're over the ceiling you are padding, not adding value. Before shipping, check: am I restating, or contributing new signal?
@@ -351,19 +376,22 @@ Common rebuttal patterns:
 
 Prose-only ceilings don't reliably bite — empirically, outputs overrun by 30–50% when only a ceiling is stated. Commit a budget *before* writing the discussion.
 
-| Section | Discussion (≤1300) | Planning (≤1600) | Building (≤2000) | Trivial (≤600) |
+| Section | Discussion (≤1300) | Planning (≤1900) | Building (≤2300) | Trivial (≤600) |
 |---------|-------------------:|-----------------:|-----------------:|---------------:|
-| Signals table + assumptions | 100 | 120 | 150 | 60 |
+| Signals table + assumptions | 100 | 120 | 150 | — (skip, see below) |
 | Team Assembly + Gap Check | 150 | 180 | 200 | 80 |
 | Round 1 (opening) | 350 | 450 | 650 | 180 |
 | Round 2 (rebuttals) | 180 | 220 | 280 | 60 |
 | Round 3 (synthesis) | 180 | 230 | 280 | 60 |
 | Conclusion | 220 | 280 | 320 | 120 |
-| **Planned total** | **1180** | **1480** | **1880** | **560** |
+| Structured Plan (if `@staff_engineer` present) | — | 400 | 400 | — |
+| **Planned total** | **1180** | **1880** | **2280** | **500** |
+
+**Trivial scope skips the Signals table and this Pre-Write Word Budget table itself** (they alone consume ~200 words). Replace both with a single-sentence signal summary and skip the budget statement — the 600-word ceiling is your budget.
 
 **Hard rules:**
 
-1. **State the budget at the top of your output**, one line, visible: `Budget: signals 100 / team 150 / R1 350 / R2 180 / R3 180 / conclusion 220 = 1180 target (ceiling 1300).`
+1. **State the budget at the top of your output**, one line, visible. Include the Structured Plan line when `@staff_engineer` is active: `Budget: signals 120 / team 180 / R1 450 / R2 220 / R3 230 / conclusion 280 / plan 400 = 1880 target (ceiling 1900).` For trivial scope, skip the budget statement entirely — the 600-word ceiling is the budget.
 2. **Per-contribution cap during Round 1.** No single role may exceed 80 words (discussion/planning), 120 words (building), or 50 words (trivial). If you're over, cut mid-write — don't "finish then revise."
 3. **Truncate as you go, not at the end.** Re-editing to shrink rarely happens — write short the first time.
 4. **Round 1 is where most overruns happen.** If Round 1 is over budget when you finish it, stop; remove the weakest full contribution rather than trim every role by a sentence.
@@ -400,6 +428,48 @@ recommends X. @architect dissents, preferring Y because Z."]
 ```
 
 **Priority ordering is required** for next steps. Don't just list — rank.
+
+### Structured Plan (when `@staff_engineer` is on the team)
+
+When `@staff_engineer` is present, they author the Next Steps as a structured,
+agent-executable plan — not just a ranked list. The flat 1/2/3 list above stays
+as an index/summary; the structured plan below is the artifact an agent (or
+human) actually executes. Use this shape:
+
+```markdown
+### Structured Plan
+
+**Decisions locked**
+- [Facts the team aligned on — scope, architecture, trade-offs resolved. An agent should treat these as givens.]
+
+**Decisions deferred**
+- [Items a human must decide before execution. Each item names the decider if known.]
+
+**Assumptions**
+- [What the plan assumes is true. Flag any that need verification before phase 1 begins.]
+
+**Phase 1 — [name]**
+- Goal: [one sentence]
+- Files/modules touched: [concrete paths, not abstract areas]
+- Acceptance criteria: [independently verifiable — e.g., "pnpm test passes", "endpoint returns 200 with shape X", "user can complete flow Y end-to-end"]
+- Depends on: [prior phases or external decisions]
+
+**Phase 2 — [name]**
+- [same shape]
+
+**Phase N — [name]**
+- [same shape]
+
+**Out-of-scope ring-fence**
+- [Explicitly NOT in this plan. Prevents agent drift into adjacent work.]
+
+**Risks flagged for human decision**
+- [Points where the plan should pause for review rather than continue autonomously.]
+```
+
+**Why the shape is fixed:** agents executing plans fail on ambiguity, not on
+difficulty. The shape removes the common failure modes: unclear decisions,
+fuzzy acceptance criteria, scope creep, silent assumption-making.
 
 ### Phased-Launch Variant (for regulated / high-uncertainty products)
 
@@ -461,10 +531,11 @@ the discussion concludes.
 
 | Signal | Action |
 |--------|--------|
-| `scope=building` AND `complexity=high` | Each engineering role produces deliverables via sub-agent (e.g., architect → system design doc, backend → API spec, frontend → component breakdown) |
+| `scope=building` AND `complexity=high` | Each engineering role produces deliverables via sub-agent (e.g., architect → system design doc, backend → API spec, frontend → component breakdown). `@staff_engineer` synthesizes the outputs into the unified plan. |
 | `scope=building` AND team includes `@domain_expert` | Domain expert researches independently via sub-agent, reports back with domain-specific constraints |
 | `scope=planning` AND `complexity=high` AND team size > 8 | Break into working groups (sub-agents) then reconvene for final synthesis |
 | User explicitly requests "deep dive" or "detailed plan per role" | Each role produces independent deliverable via sub-agent |
+| Deliverable is a plan an agent will execute (`scope=planning` or `building`) | `@staff_engineer` is the **primary author** of the unified plan. Other engineering roles feed specifics (architect → system boundaries, lead → implementation patterns, frontend/backend → component- and endpoint-level detail, QA → test strategy, security → threat surface). `@staff_engineer` merges these into a single document using the Structured Plan shape from Phase 5. Do NOT produce parallel per-role plans — the point is one executable artifact, not a forest of design docs. |
 
 ### How It Works
 

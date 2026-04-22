@@ -14,6 +14,9 @@ if NOT has_ui:
     remove @senior_frontend_engineer
     remove @senior_product_designer
 
+if scope in [discussion, review] AND NOT user_explicitly_requested_plan:
+    remove @staff_engineer  // optional for these scopes
+
 // Score Tier 2
 for each role in TIER_2:
     if ANY trigger signal matches:
@@ -157,15 +160,24 @@ Only compose a team if the boundary check returns "no better skill applies." In 
 case:
 
 - 3–4 roles max (hard cap for trivial scope)
-- Under 400 words (hard cap, includes all rounds)
+- Under 600 words (hard cap, includes all rounds) — matches the trivial row in SKILL.md's Output Length Targets
 - Skip the full Team Assembly table — name roles inline
 - Single-round discussion is acceptable; rebuttal optional
 - Conclusion still required (recommendation + 1–3 next steps)
+
+**Trivial scope scaffolding skips (mandatory):**
+
+- Skip the Phase 1 Signal extraction table — describe signals in ONE sentence
+- Skip the Phase 3 Pre-Write Word Budget table and budget statement — the 600-word ceiling IS the budget
+- Skip the Phase 3.5 Gap Detection pass — 3–4 role teams have no meaningful gaps to detect
+- Keep: single-sentence signal summary, inline role list, brief discussion, conclusion
 
 **Why:** In eval runs, "I need a logo for X" produced a 6-role, 1210-word output
 despite the executor explicitly naming `brand-workshop` as the better-fit skill.
 Acknowledging an escape hatch is not the same as taking it. This rule makes the
 boundary a required action, not a recommendation.
+
+**Why the scaffolding skips:** The Signal table, Pre-Write Budget table, and Gap Detection each consume ~150–250 words of scaffolding. At a 600-word ceiling, running all three leaves no budget for actual role contributions and conclusion. Trivial scope needs the trim workflow, not the full workflow at low volume.
 
 ### Non-Tech Projects
 
