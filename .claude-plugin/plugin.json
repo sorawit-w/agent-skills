@@ -1,7 +1,7 @@
 {
   "name": "agent-skills",
   "description": "A shelf of Claude Code skills: brand-workshop, business-model-canvas, i18n-contextual-rewriting, pitch-deck, skill-evaluator, sub-agent-coordinator, team-composer, and tech-stack-recommendations.",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "author": {
     "name": "sorawit-w",
     "url": "https://github.com/sorawit-w"

@@ -5,6 +5,71 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] — 2026-04-27
+
+Adds an optional structural plan-review phase to `team-composer`.
+Additive and non-breaking — existing briefs route the same way; the
+new phase only fires when the brief's signals warrant it AND the
+runtime exposes the `Plan` subagent.
+
+### Added
+
+- **team-composer** — Phase 6.6 Structural Plan Review. Hands the draft
+  Structured Plan authored by `@staff_engineer` in Phase 5 to the
+  built-in `Plan` subagent for a focused rigor pass against a fixed
+  checklist (decisions locked vs deferred, assumptions, phase
+  acceptance criteria, files/modules, dependencies, ring-fence,
+  agent-executability). Designed as siblings to Phase 6.5 (External
+  Audit) — both can fire on the same run; 6.5 catches blind spots,
+  6.6 catches structural weaknesses in the plan itself.
+  - **Asymmetric reviewer/author contract.** `Plan` returns ranked
+    findings with severity (blocker | major | minor) and per-finding
+    suggested edits. `@staff_engineer` keeps authorship and edits the
+    Structured Plan in place. No co-authorship.
+  - **Capability-gated, not vendor-gated.** Triggers check whether the
+    `Plan` subagent type is registered in the current runtime, not
+    whether the host is Claude / Cowork / Claude Code. When unavailable,
+    the phase is skipped with a logged fallback line in the user-facing
+    output; in-context self-review is explicitly forbidden.
+  - **Two-stage rollout.** Stage 1 (launch) auto-fires at
+    `complexity=high`. Stage 2 lowers the floor to `complexity >= medium`
+    once observed cost (median tokens <2k), latency (median <30s added),
+    and value-yield (≥60% of runs surface ≥1 actionable finding) hold
+    across enough Stage 1 runs.
+  - **Opt-in trigger phrases bypass the complexity floor:** "tighten
+    the plan", "Plan-review this", "stress-test the plan", "is this
+    plan rigorous?", "make this agent-executable".
+  - **Fold-back protocol.** Blockers must be addressed; majors should
+    be addressed unless rejected with a recorded reason; minors are
+    optional. Rejections are recorded as `**Plan-review notes:**`
+    bullets at the bottom of the Structured Plan so the audit trail
+    moves with the artifact, not in a separate log.
+  - **Fixed run order:** Phase 6 → 6.5 → 6.6 → final synthesis. The
+    reviewer always sees a stable plan. If the run-level token budget
+    hits, 6.6 is the first to drop.
+  - **User-facing output** appends one line:
+    `Structural review by Plan subagent: <verdict>. <N> findings folded
+    in, <M> rejected (see Plan-review notes).` The raw critique is not
+    shown by default — users can ask for it on demand.
+- **team-composer** — five new evals (ids 17–21) covering positive
+  trigger, low-complexity skip, no-`@staff_engineer` skip, opt-in
+  threshold bypass, and rejection-recorded-in-plan invariant. The sixth
+  case (no `Plan` subagent registered → fallback note) is documented in
+  the proposal as deferred — it requires runtime fixture support that
+  the current prompt+assertion eval format doesn't have.
+- **team-composer** — `proposals/plan-subagent-route.md` captures the
+  design rationale, resolved decisions, and deferred future enhancements
+  (Phased-Launch Variant support; Stage 2 threshold lowering).
+
+### Notes
+
+- No changes to Phases 1–5, `selection-algorithm.md`, or `role-personas.md`.
+  `@staff_engineer` remains the in-context plan author; persona, tensions,
+  and signature phrases are unchanged.
+- Phased-Launch Variant review path is deferred until observed in a real
+  regulated/phased-launch run. Premature support would add brief-template
+  branching without evidence it's needed.
+
 ## [1.2.0] — 2026-04-20
 
 Adds a new role to the `team-composer` roster. Additive and

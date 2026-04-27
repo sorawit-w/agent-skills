@@ -257,6 +257,77 @@
         "Discussion helps clarify the product direction as a natural outcome of the team's perspectives",
         "Conclusion addresses the ambiguity — suggests which direction to pursue and why"
       ]
+    },
+    {
+      "id": 17,
+      "name": "plan-review-fires-high-complexity-planning",
+      "prompt": "We're planning a major refactor of our multi-tenant analytics platform: migrating from a Django monolith to event-driven services on Kafka, introducing per-tenant data isolation at the storage layer, and rebuilding the dashboard layer in React Server Components. We're at scale stage with 40+ enterprise customers and a zero-downtime requirement. Plan this out — engineering needs a plan they can actually execute.",
+      "expected_output": "Phase 6.6 (Structural Plan Review) auto-fires after @staff_engineer authors the Structured Plan. The final output includes the user-facing one-liner about Plan-subagent review.",
+      "files": [],
+      "assertions": [
+        "Signals detected include scope=planning and complexity=high",
+        "@staff_engineer is included and authors a Structured Plan in the conclusion",
+        "After the Structured Plan is authored, Phase 6.6 fires (assuming the Plan subagent is registered in the runtime)",
+        "Final output includes a one-liner of the form 'Structural review by Plan subagent: <verdict>. <N> findings folded in, <M> rejected (see Plan-review notes).'",
+        "If any findings were rejected, the Structured Plan contains a 'Plan-review notes:' bullet with the rejection reason",
+        "The raw Plan-subagent critique is NOT shown in the user-facing output by default"
+      ]
+    },
+    {
+      "id": 18,
+      "name": "plan-review-skips-low-complexity",
+      "prompt": "Plan adding a 'Remember me' checkbox to our login form. We use NextAuth and Postgres. It's a straightforward 1-day change.",
+      "expected_output": "Complexity is detected as low or medium. Phase 6.6 does NOT auto-fire because the complexity floor is not met. No Plan-subagent one-liner appears in the output.",
+      "files": [],
+      "assertions": [
+        "Complexity is detected as low or medium (not high)",
+        "Phase 6.6 (Structural Plan Review) does NOT fire",
+        "No 'Structural review by Plan subagent' one-liner appears in the output",
+        "@staff_engineer may still be present and may still author a Structured Plan, but no review is performed"
+      ]
+    },
+    {
+      "id": 19,
+      "name": "plan-review-skips-no-staff-engineer",
+      "prompt": "Quick discussion: should we rename our 'Settings' page to 'Preferences'? Just want a few perspectives, no plan needed.",
+      "expected_output": "Trivial scope exception applies — @staff_engineer is not seated. No Structured Plan is authored. Phase 6.6 has no input and does not fire.",
+      "files": [],
+      "assertions": [
+        "Scope is detected as discussion (or trivial)",
+        "@staff_engineer is NOT included on the team",
+        "No Structured Plan section appears in the conclusion",
+        "Phase 6.6 does NOT fire (no plan to review)",
+        "No 'Structural review by Plan subagent' one-liner appears in the output"
+      ]
+    },
+    {
+      "id": 20,
+      "name": "plan-review-opt-in-bypasses-complexity-floor",
+      "prompt": "Plan adding two-factor authentication to our existing auth flow. We use NextAuth, Postgres, and have ~30k active users. Tighten the plan — I want this to be agent-executable end-to-end.",
+      "expected_output": "Complexity is detected as medium (auth is moderate scope). The user's 'tighten the plan' phrase is recognized as the Phase 6.6 opt-in trigger and bypasses the Stage-1 complexity=high floor. Phase 6.6 fires.",
+      "files": [],
+      "assertions": [
+        "Complexity is detected as medium (not high)",
+        "The phrase 'tighten the plan' is recognized as the Phase 6.6 opt-in trigger",
+        "Phase 6.6 fires despite complexity not meeting the Stage-1 auto-trigger floor",
+        "@staff_engineer authors a Structured Plan",
+        "Final output includes the 'Structural review by Plan subagent' one-liner"
+      ]
+    },
+    {
+      "id": 21,
+      "name": "plan-review-rejection-recorded-in-plan",
+      "prompt": "Plan a database migration: we're moving user accounts from MongoDB to Postgres. ~2M users, zero downtime required, must support rollback at any point in the cutover. Be aggressive — Plan-review this and surface every gap, but I want @staff_engineer to push back where the suggested edits would over-constrain real engineering judgment.",
+      "expected_output": "Phase 6.6 fires (high complexity + planning + opt-in). When @staff_engineer rejects any of Plan's findings, the rejection is recorded as a 'Plan-review notes:' bullet inside the Structured Plan itself, with the reason. The user-facing one-liner reports the folded-in vs. rejected counts.",
+      "files": [],
+      "assertions": [
+        "Phase 6.6 fires (complexity=high AND scope=planning AND opt-in phrase 'Plan-review this' is present)",
+        "@staff_engineer authors a Structured Plan",
+        "If @staff_engineer rejects ≥1 Plan-subagent finding, the rejection is recorded inside the Structured Plan as a bullet of the form '**Plan-review notes:** [finding summary] rejected because [reason].'",
+        "The rejection bullet lives at the bottom of the Structured Plan (with the artifact, not in a separate audit log)",
+        "Final output's one-liner reports both the folded-in count and the rejected count",
+        "The raw Plan-subagent critique is NOT shown in the user-facing output by default"
+      ]
     }
   ]
 }

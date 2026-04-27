@@ -536,6 +536,7 @@ the discussion concludes.
 | `scope=planning` AND `complexity=high` AND team size > 8 | Break into working groups (sub-agents) then reconvene for final synthesis |
 | User explicitly requests "deep dive" or "detailed plan per role" | Each role produces independent deliverable via sub-agent |
 | Deliverable is a plan an agent will execute (`scope=planning` or `building`) | `@staff_engineer` is the **primary author** of the unified plan. Other engineering roles feed specifics (architect → system boundaries, lead → implementation patterns, frontend/backend → component- and endpoint-level detail, QA → test strategy, security → threat surface). `@staff_engineer` merges these into a single document using the Structured Plan shape from Phase 5. Do NOT produce parallel per-role plans — the point is one executable artifact, not a forest of design docs. |
+| Plan-review needed (see Phase 6.6) | Optional structural critique pass on `@staff_engineer`'s draft Structured Plan via the `Plan` subagent. Not a content fan-out — the reviewer returns ranked findings, `@staff_engineer` keeps authorship. |
 
 ### How It Works
 
@@ -666,6 +667,144 @@ review instead.
 
 ---
 
+## Phase 6.6: Structural Plan Review (Plan Subagent)
+
+**Phase 6.5 catches blind spots; Phase 6.6 catches structural weaknesses in the plan
+itself.** The two are siblings, not substitutes — a high-stakes regulated build can
+trigger both. Phase 6.6 hands `@staff_engineer`'s draft Structured Plan to the
+built-in `Plan` subagent for a focused rigor pass: vague acceptance criteria,
+un-flagged assumptions, missing files/modules, dependency cycles, scope drift risk.
+
+`Plan` is a **reviewer**, not a co-author. It returns ranked findings;
+`@staff_engineer` keeps authorship and decides what to fold in. This asymmetry is
+deliberate — two co-authors produce two competing voices and no clear final.
+
+### When to Trigger
+
+Two-stage rollout. Ship conservatively at Stage 1, lower the threshold to Stage 2
+once cost/latency/yield are observed in practice.
+
+| Stage | Trigger | Action |
+|---|---|---|
+| Stage 1 (launch) | `scope` ∈ {planning, building} AND `complexity=high` AND `@staff_engineer` present AND `Plan` subagent registered in this runtime | Auto-trigger Phase 6.6 |
+| Stage 2 (after observation) | Same as Stage 1 but lower the floor to `complexity >= medium` | Auto-trigger Phase 6.6 |
+| Opt-in (any stage) | User says "tighten the plan", "Plan-review this", "stress-test the plan", "is this plan rigorous?", or "make this agent-executable" | Auto-trigger Phase 6.6 (bypasses complexity floor) |
+
+**Stage 2 promotion criteria** (all must hold across enough Stage 1 runs to be
+representative): median latency adds <30s to total run time, median tokens <2k per
+review, ≥60% of runs surface ≥1 actionable finding. Until those signals hold, stay
+at Stage 1.
+
+**Do NOT trigger when:** `complexity` ∈ {low, medium} at Stage 1; `scope` ∈
+{discussion, review} (no Structured Plan exists to review); `@staff_engineer` is
+absent (e.g., trivial-scope exception); or Phase 6 fan-out plus 6.5 audit have
+already exhausted the run's token budget — defer to user opt-in instead of auto-firing.
+
+### How It Works
+
+Run order is fixed: Phase 6 → Phase 6.5 → Phase 6.6 → final synthesis. Earlier
+phases may revise the plan; only after they stabilize is it worth sending to `Plan`.
+
+1. **Plan is stable** — Phases 6 and 6.5 (if triggered) have completed; the
+   Structured Plan in the conclusion is the version to review.
+2. **Brief the `Plan` subagent** using the template below. The subagent gets the
+   original brief, the team conclusion, the draft Structured Plan, and a fixed
+   review checklist. It is explicitly told it is *not* rewriting the plan.
+3. **`Plan` returns ranked findings** with severity (blocker | major | minor) and
+   suggested edits per finding, plus an overall verdict (`ready-to-execute` |
+   `needs-tightening` | `needs-rewrite`).
+4. **`@staff_engineer` triages and folds in.**
+   - Blockers must be addressed.
+   - Majors should be addressed unless rejected with a recorded reason.
+   - Minors are optional.
+   - Edits happen in place — no separate "v2", the Structured Plan in the final
+     output is the post-review version.
+5. **Rejections are recorded in the plan itself.** If `@staff_engineer` rejects
+   any finding, append a bullet at the bottom of the Structured Plan:
+   `**Plan-review notes:** [finding summary] rejected because [reason].` The
+   audit trail moves with the artifact.
+6. **Re-run Post-Discussion Verification.** If the critique exposed a Phase 5
+   structural gap (missing trade-off section, etc.), fix that too.
+7. **User-facing one-liner.** The raw critique is not shown by default. The final
+   output appends one line: `Structural review by Plan subagent: <verdict>. <N>
+   findings folded in, <M> rejected (see Plan-review notes).` Users can ask to
+   see the raw critique on demand.
+
+### `Plan` Subagent Brief Template
+
+```markdown
+You are reviewing a Structured Plan authored by @staff_engineer for an agent-executable
+implementation. Your job is to identify structural weaknesses that would cause an
+executing agent to guess, drift, or stall. You are NOT rewriting the plan.
+
+**Original user brief:** [paste verbatim]
+
+**Team conclusion (Phase 5):**
+- Recommendation: [paste]
+- Decisions Made: [paste]
+- Trade-offs Identified: [paste]
+
+**Draft Structured Plan to review:** [paste full Structured Plan]
+
+**Review against this checklist — return findings as a numbered list:**
+
+1. **Decisions locked vs. deferred** — Anything in "locked" actually still ambiguous?
+   Anything in "deferred" actually decidable from the discussion?
+2. **Assumptions** — Any load-bearing assumptions un-flagged? Any flagged assumption
+   without a verification step before phase 1?
+3. **Phase boundaries** — Does each phase have a single, observable acceptance criterion?
+   Flag vague ("works correctly") or untestable-without-human-judgment criteria.
+4. **Files/modules** — Concrete paths named, or only abstract areas?
+5. **Dependencies** — Any phase depending on a deferred decision without a checkpoint?
+   Any cycle?
+6. **Out-of-scope ring-fence** — Tight enough to prevent drift, or so tight an agent
+   will hit a wall and stop?
+7. **Risks flagged for human decision** — Any risk that should pause execution but is
+   currently inline? Any "risk" that is actually a deferred decision in disguise?
+8. **Agent-executability** — Could an agent execute Phase 1 end-to-end without a
+   clarifying question? If not, name the specific gap.
+
+**Output shape — for each finding:**
+- **Section:** [which Structured Plan section]
+- **Issue:** [one sentence]
+- **Why it matters:** [one sentence — what an executing agent would do wrong]
+- **Suggested edit:** [concrete proposed text — not a rewrite of the section]
+- **Severity:** blocker | major | minor
+
+End with overall verdict: `ready-to-execute` | `needs-tightening` | `needs-rewrite`.
+
+Tool budget: ~8 calls. Read-only — do not modify the plan.
+```
+
+### Failure Modes & Guardrails
+
+| Failure mode | Guardrail |
+|---|---|
+| `Plan` rewrites instead of critiquing | Brief explicitly forbids rewrite; output shape forces per-finding atomicity. If response looks like a rewrite, discard and re-prompt once with the constraint repeated. |
+| `Plan` returns trivial nits, hides real issues | Severity field forces ranking. All-`minor` → accept verdict and move on. All-`blocker` → flag for human review (`Plan` may have misread the brief). |
+| Token budget blowout from 6 + 6.5 + 6.6 stacking | Hard ordering ensures each phase runs against a stable input. If overall budget hits, 6.6 is first to drop — blind-spot audits matter more than structural rigor for high-stakes work. |
+| Runtime doesn't expose `Plan` subagent | Skip the phase. Append to output: `Structural review skipped: Plan subagent not available in this runtime.` Do NOT synthesize a fake review in-context — that defeats the asymmetric-reviewer design. |
+| User opted in but plan is too short to review meaningfully | Run anyway; the verdict will likely be `ready-to-execute` with zero findings. Cost is small, signal is real. |
+
+### Platform Fallback
+
+If your agent platform doesn't expose the `Plan` subagent type, skip the phase
+rather than running the review in-context — self-review has the same confirmation
+bias as self-audit. The skip is logged in the user-facing output so the user
+knows structural review didn't happen and can request a manual pass.
+
+### Future Enhancements (Deferred)
+
+- **Phased-Launch Variant support.** When the team produces the variant shape from
+  Phase 5 (`Phase 1 (MVP) / Gating criteria → Phase 2 / Deferred`), `Plan`'s
+  checklist needs a small tweak to review it correctly. Defer until a regulated
+  or phased-launch run is observed in practice — premature support adds branching
+  in the brief without evidence it's needed.
+- **Stage 2 threshold lowering.** Gated on Stage 1 cost/latency/yield observations
+  per the trigger table above.
+
+---
+
 ## Edge Cases & Customization
 
 → See `references/selection-algorithm.md` for: edge case handling, team size caps,
@@ -703,7 +842,8 @@ and run structured discussion. The difference is what they produce.
 
 | Skill | When to Use |
 |-------|-------------|
-| `sub-agent-coordinator` | When any Phase 6 or 6.5 trigger fires and the team is about to spawn deliverable sub-agents. Load it for briefing templates (Quick / Full), coordination patterns (fan-out, pipeline, specialist, review), spawning checklists, and the no-nested-sub-agents invariant. |
+| `sub-agent-coordinator` | When any Phase 6, 6.5, or 6.6 trigger fires and the team is about to spawn deliverable or reviewer sub-agents. Load it for briefing templates (Quick / Full), coordination patterns (fan-out, pipeline, specialist, review), spawning checklists, and the no-nested-sub-agents invariant. |
+| `Plan` subagent (built-in) | Phase 6.6 hands the draft Structured Plan to the `Plan` subagent for a structural rigor pass. Skipped with a logged fallback if the `Plan` subagent type is not registered in the current runtime. |
 | `i18n-contextual-rewriting` | When `@i18n_specialist` is active and the team produces translatable content. |
 | `brand-workshop` | When the deliverable is a brand identity package (logo + tagline + brief). See Skill Boundaries above — prefer `brand-workshop` directly for pure branding requests. |
 | `business-model-canvas` | When `@startup_strategist` is active and the deliverable is a persistent 9-block Osterwalder canvas (editable Markdown + self-contained HTML). Prefer the skill directly for "build me a BMC" requests; use team-composer for discussion-grade work on one block. |
