@@ -19,8 +19,8 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of eight specialized skills in one go.
-- **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of nine specialized skills in one go.
+- **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, and founders who want their startup adversarially probed.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
 ## Install
@@ -57,6 +57,7 @@ Click a skill to jump to its details.
 | <img src="assets/icons/brand-workshop.svg" alt="" width="64" align="middle"/> | [`brand-workshop`](#brand-workshop) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. | You need a real identity package for a product, app, or startup — not just a logo doodle. |
 | <img src="assets/icons/business-model-canvas.svg" alt="" width="64" align="middle"/> | [`business-model-canvas`](#business-model-canvas) | Interview a founder block-by-block and produce a rigorous Osterwalder canvas with explicit Stress Tests. | You need a business model that holds up to scrutiny before building the deck, the product, or the hire plan. |
 | <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](#pitch-deck) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. | An investor said "send me your deck" and you need a shippable v1 this week — content filled, not a template. |
+| <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](#startup-grill) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability with optional interactive defense. | You want your idea / deck / business model probed for what would actually kill it — not "thoughts to consider," a verdict you can act on. |
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
@@ -66,14 +67,14 @@ Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`
 
 Two pipelines the shelf is designed to support end-to-end.
 
-### 🧭 Startup pipeline — identity → model → deck
+### 🧭 Startup pipeline — identity → model → deck → grill
 
 ```
-brand-workshop ──▶ business-model-canvas ──▶ pitch-deck
- (identity kit)       (9-block model)          (HTML deck)
+brand-workshop ──▶ business-model-canvas ──▶ pitch-deck ──▶ startup-grill
+ (identity kit)       (9-block model)          (HTML deck)     (kill report)
 ```
 
-The artifacts compound. `brand-workshop` writes `brand-kit/design-system.md` — `business-model-canvas` and `pitch-deck` both pick it up automatically for consistent tokens. `business-model-canvas` writes `business-model.md` — `pitch-deck` seeds slides 2, 3, 6, and 7 from it and cross-checks the Ask against the Stress Tests. You don't have to wire anything up; running them in order is the wiring.
+The artifacts compound. `brand-workshop` writes `brand-kit/design-system.md` — `business-model-canvas` and `pitch-deck` both pick it up automatically for consistent tokens. `business-model-canvas` writes `business-model.md` — `pitch-deck` seeds slides 2, 3, 6, and 7 from it and cross-checks the Ask against the Stress Tests. `startup-grill` reads all three (Stress Tests, slide-contract anti-patterns, brand positioning) as direct grilling ammunition and ships a `grill/kill-report.md` with a verdict you can act on. You don't have to wire anything up; running them in order is the wiring.
 
 ### 🛰 Delegation pipeline — discuss → build
 
@@ -217,6 +218,7 @@ team-composer ──▶ sub-agent-coordinator
 - [`brand-workshop`](#brand-workshop) — upstream input; the canvas auto-applies brand tokens from the kit.
 - [`pitch-deck`](#pitch-deck) — downstream: `business-model.md` seeds slides 2, 3, 6, 7 and the Ask gets cross-checked against the Stress Tests.
 - [`team-composer`](#team-composer) — when a block is contested, kick it to a full multi-role team for a focused session.
+- [`startup-grill`](#startup-grill) — after the canvas is done, run the grill to attack the Stress Tests with an adversarial panel.
 
 **Try it.**
 - "Interview me block-by-block and produce a BMC for my AI code-review tool."
@@ -237,11 +239,34 @@ team-composer ──▶ sub-agent-coordinator
 - [`business-model-canvas`](#business-model-canvas) — reads `business-model.md` to seed slides and cross-check the Ask.
 - [`brand-workshop`](#brand-workshop) — reads `brand-kit/design-system.md` and `brand-kit/deck/pitch-template.html` for visuals.
 - [`team-composer`](#team-composer) — when a slide claim is weak, spin up `@startup_strategist + @vc_partner + @senior_copywriter` to pressure-test it before shipping.
+- [`startup-grill`](#startup-grill) — after this skill ships, run the grill to probe the deck adversarially before it lands in an investor's inbox.
 
 **Try it.**
 - "Investor wants my seed deck by Friday — start the structured interview."
 - "Use `business-model.md` and `brand-kit/` to build the deck; refuse to ship with any cardinal sin."
 - "After v1 ships, kick it to `team-composer` (`@startup_strategist` + `@vc_partner` + `@senior_copywriter`) to pressure-test the Market slide."
+
+---
+
+<a id="startup-grill"></a>
+
+### <img src="assets/icons/startup-grill.svg" alt="" width="48" align="middle"/> &nbsp;`startup-grill`
+
+**What it does.** Adversarially probes a startup idea with a panel of domain-aware grillers — `@vc_partner`, `@growth_marketer`, `@startup_strategist`, `@ux_researcher`, plus a flexible fifth seat (`@senior_software_architect` for technical-execution-dominant startups, `@brand_strategist` for consumer-brand-dominant ones), plus 0–3 specialists injected from signals (legal, security, clinical, AI safety, game design, etc.). Runs three rounds — probe → forced steelman defense → verdict — and ships a structured kill report ranked across two axes: severity (lethal vs material) and fixability (fixable vs unfixable). Verdict label is one of four canonical labels: `Investable as-is`, `Investable with conditions`, `Pivot signal`, `Pass`. Refuses to ship a soft report — Round 1 must surface at least one lethal read or re-run with sharpened posture. Optional interactive defense mode lets the founder pick a weakness, bring new evidence, and have the relevant 1–2 panelists re-probe that line item only.
+
+**Reach for it when.** You have a startup idea, deck, or business model and want it probed adversarially before you commit time, money, or a fundraise. You want a verdict you can act on, not "thoughts to consider." You want the lethal weakness named declaratively, with a falsifier attached, so you know exactly what evidence to bring.
+
+**Pairs well with.**
+- [`business-model-canvas`](#business-model-canvas) — upstream input. The Stress Tests section is direct grilling ammunition.
+- [`pitch-deck`](#pitch-deck) — upstream input. The deck's required-slot answers become starting probes.
+- [`brand-workshop`](#brand-workshop) — upstream input when slot 5 = `@brand_strategist`; the panel reads `brand-brief.md`'s Positioning section.
+- [`team-composer`](#team-composer) — instead of this skill when the user wants brainstorming or constructive review. After this skill when the kill report's `Suggested attack` lines need a multi-role workshop.
+- [`skill-evaluator`](#skill-evaluator) — audit the verdict-vs-body consistency rule, the no-lethal-skip rule, the interactive-invitation rule.
+
+**Try it.**
+- "Grill my startup idea: a B2B SaaS for accounting firms — pre-seed, $4k MRR, two co-founders. What would kill us?"
+- "I have `business-model.md` and `pitch/deck.html` ready — run the grill with the deck as primary input."
+- "Defending L1. We have a 6-month cohort retention curve at 87% logo retention. Re-probe."
 
 ---
 

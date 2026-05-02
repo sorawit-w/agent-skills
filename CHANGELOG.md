@@ -5,6 +5,160 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] — 2026-05-01
+
+Tightens `startup-grill` rule adherence and widens its trigger coverage
+based on a skill-evaluator + skill-creator audit pass run immediately
+after the 1.5.0 ship. The audit surfaced one critical Round 2 logic
+gap, one verdict-spec gap, one STOP-gate redirect discipline gap, and
+two trigger-coverage gaps. All five fixed in this version.
+
+### Changed
+
+- **startup-grill** — Round 2 downgrade rule
+  (`references/round-structure.md`) rewritten to explicitly forbid the
+  "defense gap + downgrade" pattern. Steelman defenses that name a
+  defense gap MUST keep the probe at its Round 1 severity. Anti-pattern
+  added. Surfaced by skill-evaluator T1 fixture (B2B SaaS happy path):
+  the original prose-form rule let probes get downgraded despite
+  explicit defense gaps in every steelman, producing empty Lethal
+  sections and over-optimistic verdicts on briefs that genuinely had
+  named gaps. Now reads as a hard rule keyed off specific phrases
+  ("defense gap:", "the brief does not", "no [evidence type]") so it
+  bites against Claude's natural pull toward synthesis and closure.
+- **startup-grill** — Verdict spec (`references/kill-report.md`) now
+  requires citing at least one specific weakness from sections 2–4 by
+  item number (e.g., "see L2") or unambiguous reference (e.g., "the
+  GTM channel weakness"). Generic aggregations like "five gaps remain"
+  or "some risks need addressing" are explicitly forbidden. Was a
+  checklist-only rule; promoted to body spec with PASS/FAIL examples.
+- **startup-grill** — STOP gate in `SKILL.md` gains a "redirect
+  discipline" note: when routing to `team-composer`, describe the
+  *kind of lens* needed rather than inventing role tags that aren't in
+  team-composer's canonical catalog (e.g., do NOT write
+  `@market_researcher` or `@sustainability_expert` — those aren't in
+  `team-composer/references/role-personas.md`). Surfaced by
+  skill-evaluator T3 fixture.
+- **startup-grill** — Description (frontmatter) widened with common
+  adversarial-review synonyms (`pressure-test`, `roast my pitch`,
+  `rip apart this`, `find the weaknesses in my idea`,
+  `give me brutal feedback`, `be ruthless`) plus an explicit
+  `team-composer` disambiguation paragraph for `review my X
+  adversarially` / `review with VC eyes` / `stress-test my business
+  model` framings — all route to `startup-grill`, not to
+  `team-composer`'s broader "review" trigger. Surfaced by
+  skill-creator description-collision check; addresses under-triggering
+  risk where users use synonyms not in the original trigger list.
+  Description grew from ~190 to ~290 words; still discriminating.
+
+### Notes
+
+- No changes to panel-resolution rules, grill-mode persona overlays,
+  the kill-report deliverable shape, or the round structure itself.
+  Only rule-text precision and trigger-coverage breadth.
+- No changes to other skills.
+- Audit pass-rate before fixes: 35/38 assertions (92%). Re-running the
+  evaluator after these fixes is a follow-up; expected to lift T1's
+  Round 2 + verdict assertions to PASS.
+
+## [1.5.0] — 2026-05-01
+
+Adds a new skill — `startup-grill` — to the shelf. Additive and non-breaking;
+existing skills route the same way.
+
+### Added
+
+- **`startup-grill`** — adversarially probe a startup idea with a panel of
+  domain-aware grillers and ship a structured kill report. New skill at
+  `skills/startup-grill/`. Triggers on phrases like "grill my startup",
+  "stress-test my pitch", "kill my idea", "pre-mortem my startup", "what
+  would a VC hate about this", "tear apart my deck", "is this fundable".
+  - **Fixed grill core (4 roles), flex slot 5.** Universal axes (capital,
+    distribution, narrative, user reality) probed by `@vc_partner`,
+    `@growth_marketer`, `@startup_strategist`, `@ux_researcher` always.
+    Slot 5 resolves to `@senior_software_architect` (technical due
+    diligence) by default and to `@brand_strategist` for consumer-brand-
+    dominant products that aren't regulated and don't make novel ML claims.
+    Two carve-outs (regulated, novel-ML) prevent the brand slot from
+    silently winning when technical risk dominates.
+  - **Specialist injection by signal** with a cap of 3 (panel ≤ 8). Risk-
+    blocking specialists (legal, developmental psych, clinical psych, AI
+    safety) are non-droppable when their trigger fires. Symmetric specialist
+    forcing — when slot 5 flips to one lens, the other becomes a forced
+    specialist if signals warrant.
+  - **Persona import + grill-mode overlay.** Imports
+    `team-composer/references/role-personas.md` as the canonical persona
+    base; applies grill overlays so each panelist probes for failure rather
+    than collaborates. Universal grill posture: probes for failure, demands
+    evidence, states severity declaratively, names failure modes
+    specifically, closes with a falsifier.
+  - **Three-round structure.** Round 1 (Probe) — each panelist contributes
+    one probe per startup-axis they own with a falsifier. Round 2 (Forced
+    steelman defense) — skill responds *as the founder would* using only
+    evidence in the brief; probes the brief credibly answers get
+    downgraded. Round 3 (Synthesis) — `@startup_strategist` assembles the
+    kill report; `@vc_partner` writes the verdict in 3–6 sentences with one
+    of four canonical labels (`Investable as-is`, `Investable with
+    conditions`, `Pivot signal`, `Pass`).
+  - **Two-axis kill report.** Output at `grill/kill-report.md` ranks
+    weaknesses on severity (lethal vs material) and fixability (fixable vs
+    unfixable), then names them in four sections that read in priority
+    order: *attack now / pivot signal / roadmap items / diligence asks*.
+  - **No-soft-report rule.** If Round 1 surfaces no lethal probes, Round 1
+    re-runs with sharpened posture; if still nothing surfaces, the response
+    explicitly notes the no-lethal outcome rather than silently shipping a
+    `material`-only kill report.
+  - **Interactive defense mode.** After the report ships, the response ends
+    with the interactive-mode invitation. If the founder picks a weakness
+    number and brings new evidence, the relevant 1–2 panelists re-probe
+    that line; the verdict on that item updates in place; other items stay
+    frozen. Defenses log to `grill/defense-log.md` (append-only). A single
+    weakness gets defended at most 3 times per session.
+  - **Composes with the startup-artifact chain.** Reads
+    `business-model.md` (Stress Tests), `pitch/deck.html` (slide-contract
+    anti-patterns), and `brand-kit/brand-brief.md` (Positioning) as direct
+    grilling ammunition when present. Sits at the end of the pipeline:
+    `brand-workshop` → `business-model-canvas` → `pitch-deck` →
+    `startup-grill`.
+  - **STOP gate.** Five wrong-skill scenarios (brainstorming, building,
+    plan review, brand voice review, diligence prep) route explicitly to
+    the right skill before grilling logic runs.
+- **References shipped:**
+  - `references/kill-report.md` — six-section deliverable contract with
+    forbidden patterns and verifier checklist
+  - `references/panel-resolution.md` — Phase A (signals), B (fixed core),
+    C (slot-5 detection rule with worked examples), D (specialist
+    injection table), E (symmetry rules), F (cap-and-trim priority order),
+    G (panel write-up format)
+  - `references/grill-overlay.md` — universal grill posture +
+    role-specific overlays for the fixed core, slot-5 alternates, and all
+    specialists; anti-overlay section listing what NOT to do
+  - `references/round-structure.md` — one-shot mode (R1/R2/R3) +
+    interactive defense mode with refusal conditions and per-defense quality
+    bar
+- **`evals/evals.json`** — 10 fixtures covering the slot-5 matrix (B2B SaaS
+  default, D2C consumer brand, AI consumer carve-out, regulated crypto
+  carve-out, indie game, kids' EdTech with forced developmental psych),
+  STOP-gate routing, minimum-brief refusal, soft-panel re-run, and
+  interactive defense with evidence.
+- **Root README** — new `startup-grill` row in the shelf table; new
+  detail section; pipeline diagram extended to four stages
+  (`brand-workshop` → `business-model-canvas` → `pitch-deck` →
+  `startup-grill`); cross-references added to `pitch-deck` and
+  `business-model-canvas` sections.
+- **Plugin manifest** — `startup-grill` registered alphabetically between
+  `skill-evaluator` and `sub-agent-coordinator`.
+- **Banner assets** — `assets/icons/startup-grill.svg`,
+  `assets/startup-grill-x.svg`, `assets/startup-grill-li.svg` matching the
+  repo's pixel-art visual language.
+
+### Notes
+
+- No changes to existing skills' triggers, panels, or output contracts.
+- Persona drift between `team-composer` and `startup-grill` is prevented by
+  importing the canonical role catalog rather than forking — the grill
+  ships posture overlays, not new persona definitions.
+
 ## [1.4.0] — 2026-05-01
 
 Adds opt-in coexistence with the `superpowers` plugin. All new behavior

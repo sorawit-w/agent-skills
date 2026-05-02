@@ -1,0 +1,161 @@
+{
+  "skill_name": "startup-grill",
+  "evals": [
+    {
+      "id": 1,
+      "name": "b2b-saas-default-slot-5",
+      "prompt": "Grill my startup idea: a B2B SaaS for accounting firms (5–25 employees) that automates monthly bookkeeping reconciliations. Pricing $499/mo. We have 8 paying customers from a 3-month pilot, $4k MRR. Two co-founders — one ex-PwC senior auditor, one ex-Stripe engineer. Raising a pre-seed of $1.5M to hire 3 engineers and reach $30k MRR in 12 months.",
+      "expected_output": "Default panel: 4 fixed core + slot 5 = @senior_software_architect (technical due diligence). No specialists fired. Kill report with at least one lethal probe; verdict consistent with body.",
+      "files": [],
+      "assertions": [
+        "@vc_partner, @growth_marketer (or @marketing_manager), @startup_strategist, @ux_researcher are all present in the panel",
+        "Slot 5 resolves to @senior_software_architect (default — not consumer-brand-dominant)",
+        "Slot 5 reasoning is stated explicitly in the panel summary",
+        "No specialist injected from is_regulated (false), involves_minors (false), domain (saas — generic)",
+        "Variant classified as pre-seed via the mandatory variant question",
+        "Round 1 surfaces at least one lethal-fixable or lethal-unfixable read",
+        "Round 2 forced steelman defense uses only evidence in the brief (no invented favorable facts)",
+        "Kill report has all 6 sections in order: Verdict, Lethal & Fixable, Lethal & Unfixable, Material & Fixable, Diligence Asks, Panel",
+        "Verdict label is one of: Investable as-is, Investable with conditions, Pivot signal, Pass",
+        "Verdict references at least one specific weakness from sections 2-4",
+        "Response ends with the interactive-mode invitation",
+        "File written to grill/kill-report.md"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "d2c-consumer-brand-slot-5-brand",
+      "prompt": "Grill my startup: a D2C skincare brand for adults with rosacea. Single founder (dermatologist). Three SKUs at $48–$72. We've sold $90k in 6 months via Instagram ads (CAC $54, AOV $61). Raising $750k seed to scale paid social and launch in Sephora.",
+      "expected_output": "Slot 5 = @brand_strategist (consumer + lifestyle/consumer domain, not regulated, not novel ML). No technical specialist forced because complexity is low. Panel surfaces brand-positioning weakness as lethal-or-material.",
+      "files": [],
+      "assertions": [
+        "Slot 5 resolves to @brand_strategist (audience=b2c, domain in consumer/lifestyle, not regulated, no novel ML)",
+        "@senior_software_architect is NOT in the panel (no high complexity to force technical specialist)",
+        "Variant classified as seed via the mandatory variant question",
+        "@brand_strategist's Round 1 probe references positioning specificity, category fit, or competitive differentiation",
+        "@growth_marketer's Round 1 probe addresses CAC < AOV (currently CAC > 88% of AOV — material at minimum)",
+        "Kill report includes Diligence Asks for cohort retention and channel saturation point",
+        "Panel size is 5 (4 core + slot 5; no specialist triggers fire)"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "ai-consumer-photo-app-carveout",
+      "prompt": "Grill my idea: a consumer photo app that uses a custom diffusion model to turn snapshots into editorial portraits. iOS first. Two founders — one ML researcher (ex-Adobe Sensei), one designer. We have a working prototype but no users. Seeking $2M seed.",
+      "expected_output": "Carve-out fires: novel ML claim forces slot 5 to @senior_software_architect even though it's consumer. @brand_strategist gets injected as a forced specialist via Phase E (slot_5=technical AND has_brand_impact=true AND audience=b2c). @ai_safety_specialist may inject if AI autonomy/fairness flagged.",
+      "files": [],
+      "assertions": [
+        "Slot 5 resolves to @senior_software_architect (novel ML carve-out fires — NOT brand)",
+        "Slot 5 reasoning explicitly cites the novel ML carve-out",
+        "@brand_strategist is injected as a forced symmetry specialist (consumer + b2c + has_brand_impact=true)",
+        "@ai_safety_specialist may be injected (AI product); if absent, panel summary explains why",
+        "Variant classified as idea or pre-seed (no users yet)",
+        "Round 1 probes both the technical feasibility (novel ML at consumer scale) and brand positioning (category fit)",
+        "Kill report explicitly addresses model-API cost, latency, and user-acquisition channel"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "crypto-wallet-regulated-carveout",
+      "prompt": "Grill my startup: a self-custody crypto wallet for people who currently use Coinbase. Mobile-only. Three engineers, one designer. No traction yet. We're raising $3M seed to launch in 9 months.",
+      "expected_output": "is_regulated=true (crypto) forces slot 5 = @senior_software_architect (carve-out). @legal_compliance_advisor and @security_specialist injected as specialists.",
+      "files": [],
+      "assertions": [
+        "Slot 5 resolves to @senior_software_architect (is_regulated=true carve-out fires)",
+        "@legal_compliance_advisor is injected (crypto = regulated)",
+        "@security_specialist is injected (handles credentials and value at scale)",
+        "Round 1 surfaces a regulatory or compliance weakness via @legal_compliance_advisor",
+        "Round 1 surfaces a custody/key-management security probe via @security_specialist",
+        "Verdict considers regulatory uncertainty as a lethal candidate (US/state-by-state crypto regulation)",
+        "Panel size ≤ 8 (4 fixed + slot 5 + 2 specialists = 7)"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "indie-game-brand-slot-plus-game-designer",
+      "prompt": "Grill my startup: a multiplayer indie game (cooperative, narrative-driven, 2–4 players) for PC and console. Solo developer with 8 years AAA experience. Demo on Steam wishlist (12k wishlists). Self-funded so far; raising $500k angel round to finish development and ship in 18 months.",
+      "expected_output": "Slot 5 = @brand_strategist (consumer + game domain, not regulated). @game_designer injected as a domain specialist. May also inject @narrative_designer or @sound_designer if signals warrant.",
+      "files": [],
+      "assertions": [
+        "Slot 5 resolves to @brand_strategist (consumer + game domain — brand-defined category)",
+        "@game_designer is injected as a specialist (domain=game)",
+        "Round 1 includes a probe on core game loop and retention curve (D7/D30) from @game_designer",
+        "Round 1 includes a probe on category/positioning from @brand_strategist (cooperative narrative niche)",
+        "Variant classified as pre-seed or seed via the mandatory variant question",
+        "Kill report distinguishes wishlist signal (vague) from converted-purchase signal (concrete) in Diligence Asks"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "kids-education-forced-dev-psych",
+      "prompt": "Grill my startup: a tablet app that teaches arithmetic to kids ages 6–10 through gamified mini-quests. Two founders, both former K-5 teachers. We've piloted with 200 students across 3 schools; 70% completion rate over 8 weeks. Raising $1M seed to scale to 50 schools.",
+      "expected_output": "involves_minors=true forces @developmental_psychologist as a non-droppable specialist. Default slot 5 = @senior_software_architect (kids EdTech is technical-execution-heavy and has potential regulatory carve-out via COPPA).",
+      "files": [],
+      "assertions": [
+        "@developmental_psychologist is injected (involves_minors=true) and is non-droppable per Phase F priority order",
+        "Slot 5 resolves to @senior_software_architect (regulated carve-out fires due to under-13 audience triggering COPPA-like considerations)",
+        "@legal_compliance_advisor is injected (regulated — children's data)",
+        "Round 1 includes a developmentally-appropriate probe via @developmental_psychologist (e.g., engagement loops vs healthy use, age-appropriate cognition)",
+        "Kill report's Diligence Asks include parental-oversight mechanism and data-handling plan",
+        "Panel size ≤ 8 with priority order applied if cap hits"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "stop-gate-brainstorming",
+      "prompt": "Help me brainstorm a startup idea — I'm thinking about something in the climate space, maybe carbon accounting for SMBs, but I'm not sure yet. What angles should I consider?",
+      "expected_output": "STOP gate fires: this is brainstorming, not grilling. Skill should hand off to team-composer (or superpowers:brainstorming if installed) without running the panel.",
+      "files": [],
+      "assertions": [
+        "Skill recognizes the request as brainstorming, not grilling, via the STOP gate",
+        "Skill explicitly recommends team-composer as the right skill for this request",
+        "No panel is assembled",
+        "No grill/kill-report.md file is written",
+        "Response is concise (≤ 200 words) and explains the routing"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "minimum-brief-refusal",
+      "prompt": "Grill this idea: an AI tool for sales teams.",
+      "expected_output": "Brief is below the minimum threshold (one paragraph each on Problem, Solution, ICP, GTM, Team). Skill should refuse to grill and ask for the minimum brief.",
+      "files": [],
+      "assertions": [
+        "Skill refuses to grill on a single sentence",
+        "Skill names the minimum brief threshold explicitly (Problem, Solution, ICP, GTM motion, Team)",
+        "Skill does not produce a kill report file",
+        "Skill does not invent missing brief content to fill in for the founder",
+        "Response is concise and offers a clear path forward (provide the brief, then re-invoke)"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "soft-panel-rerun",
+      "prompt": "Grill my startup: a marketplace connecting freelance translators with publishers. Single founder. 14 paying publishers, $11k MRR, 35% MoM growth for 4 months. Founder is ex-publishing-house operations head. Raising $1.5M seed to expand language pairs.",
+      "expected_output": "If Round 1 returns all 'material' or 'pass' reads (genuinely strong startup), the skill must explicitly note that Round 1 was re-run with sharpened posture, OR confirm no lethal weaknesses surfaced after re-run. Either is acceptable; silent skipping is not.",
+      "files": [],
+      "assertions": [
+        "If no lethal probe surfaces in initial Round 1, the response explicitly states that Round 1 was re-run with sharpened posture",
+        "If after re-run no lethal probe surfaces, the verdict is 'Investable as-is' and the response explicitly notes the no-lethal outcome",
+        "The kill report still ships with all 6 sections (Lethal sections may state 'None surfaced this run')",
+        "The response does NOT silently skip the no-lethal-rerun rule"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "interactive-defense-with-evidence",
+      "prompt": "Grill my startup [previous brief from B2B SaaS scenario]. After the kill report ships, the founder responds: \"Defending L1. We have a 6-month cohort retention curve from our pilot — 87% logo retention at month 6, $1.2k expansion ARR per logo. I can share the spreadsheet.\"",
+      "expected_output": "Skill enters interactive defense mode. Re-probes L1 with @vc_partner using the new evidence. Updates verdict on L1 only. Other items stay frozen. Appends to grill/defense-log.md.",
+      "files": [],
+      "assertions": [
+        "Skill enters interactive defense mode (does not refuse or restart the grill)",
+        "Re-probe is run with @vc_partner (the role most affected by retention evidence)",
+        "Re-probe acknowledges the evidence is concrete (cohort + spreadsheet) and updates the read",
+        "L1's line item in grill/kill-report.md is updated in place with a 'Defended on YYYY-MM-DD' pointer",
+        "Other items in the kill report stay frozen (not re-evaluated)",
+        "grill/defense-log.md is appended (not overwritten) with the dated defense round",
+        "If verdict shifts as a result, the verdict line is updated to reflect the L1 update"
+      ]
+    }
+  ]
+}

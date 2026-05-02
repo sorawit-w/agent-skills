@@ -1,0 +1,166 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="startup-grill — adversarial probing, structured kill report" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>startup-grill — adversarial probing, structured kill report</title>
+  <desc>Pixel-art banner for the startup-grill Claude Code plugin: title at top centered, kill report paper with red X marks for lethal weaknesses, three-round process ribbon at the bottom representing Probe, Forced Defense, and Verdict.</desc>
+
+  <defs>
+    <pattern id="scan-grill-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-grill-li)"/>
+
+  <!-- =========== TITLE BLOCK (top center) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="72" font-size="44" font-weight="700" fill="#1f2937" letter-spacing="2">startup-grill</text>
+    <text x="600" y="108" font-size="20" fill="#6b7280">probe for failure. ship the kill report.</text>
+  </g>
+
+  <!-- =========== KILL REPORT PAPER (centered, large) =========== -->
+  <g transform="translate(300, 170)">
+    <!-- Drop shadow -->
+    <rect x="12" y="12" width="600" height="280" fill="#d6c9b3"/>
+    <!-- Paper -->
+    <rect x="0" y="0" width="600" height="280" fill="#ffffff"/>
+    <!-- Border (ink) -->
+    <rect x="0" y="0" width="600" height="6" fill="#1f2937"/>
+    <rect x="0" y="274" width="600" height="6" fill="#1f2937"/>
+    <rect x="0" y="0" width="6" height="280" fill="#1f2937"/>
+    <rect x="594" y="0" width="6" height="280" fill="#1f2937"/>
+
+    <!-- Header -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="32" y="48" font-size="22" font-weight="700" fill="#1f2937" letter-spacing="2">KILL REPORT</text>
+      <text x="32" y="72" font-size="13" fill="#9ca3af" letter-spacing="1">verdict: investable with conditions · 5 panelists</text>
+    </g>
+    <rect x="32" y="84" width="536" height="2" fill="#eadfcf"/>
+
+    <!-- L1 row -->
+    <g transform="translate(32, 108)">
+      <g fill="#c2410c">
+        <rect x="0" y="0" width="6" height="6"/>
+        <rect x="18" y="0" width="6" height="6"/>
+        <rect x="6" y="6" width="6" height="6"/>
+        <rect x="12" y="6" width="6" height="6"/>
+        <rect x="6" y="12" width="6" height="6"/>
+        <rect x="12" y="12" width="6" height="6"/>
+        <rect x="0" y="18" width="6" height="6"/>
+        <rect x="18" y="18" width="6" height="6"/>
+      </g>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="40" y="14" font-size="14" font-weight="700" fill="#c2410c">L1.</text>
+        <text x="40" y="32" font-size="11" fill="#9ca3af">lethal &amp; fixable</text>
+      </g>
+      <rect x="160" y="6" width="380" height="4" fill="#9ca3af"/>
+      <rect x="160" y="18" width="280" height="4" fill="#9ca3af"/>
+    </g>
+
+    <!-- L2 row -->
+    <g transform="translate(32, 158)">
+      <g fill="#c2410c">
+        <rect x="0" y="0" width="6" height="6"/>
+        <rect x="18" y="0" width="6" height="6"/>
+        <rect x="6" y="6" width="6" height="6"/>
+        <rect x="12" y="6" width="6" height="6"/>
+        <rect x="6" y="12" width="6" height="6"/>
+        <rect x="12" y="12" width="6" height="6"/>
+        <rect x="0" y="18" width="6" height="6"/>
+        <rect x="18" y="18" width="6" height="6"/>
+      </g>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="40" y="14" font-size="14" font-weight="700" fill="#c2410c">L2.</text>
+        <text x="40" y="32" font-size="11" fill="#9ca3af">lethal &amp; fixable</text>
+      </g>
+      <rect x="160" y="6" width="340" height="4" fill="#9ca3af"/>
+      <rect x="160" y="18" width="240" height="4" fill="#9ca3af"/>
+    </g>
+
+    <!-- M1 row -->
+    <g transform="translate(32, 208)">
+      <g fill="#eab308">
+        <rect x="6" y="0" width="12" height="14"/>
+        <rect x="6" y="18" width="12" height="6"/>
+      </g>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="40" y="14" font-size="14" font-weight="700" fill="#a16207">M1.</text>
+        <text x="40" y="32" font-size="11" fill="#9ca3af">material &amp; fixable</text>
+      </g>
+      <rect x="160" y="6" width="320" height="4" fill="#9ca3af"/>
+      <rect x="160" y="18" width="220" height="4" fill="#9ca3af"/>
+    </g>
+  </g>
+
+  <!-- =========== PROCESS RIBBON (bottom, big) =========== -->
+  <g transform="translate(280, 500)">
+    <!-- Round 1 — PROBE (orange) -->
+    <g transform="translate(0, 0)">
+      <rect x="0" y="0" width="48" height="48" fill="#c2410c"/>
+      <rect x="6" y="-6" width="36" height="6" fill="#c2410c"/>
+      <rect x="6" y="48" width="36" height="6" fill="#c2410c"/>
+      <rect x="-6" y="6" width="6" height="36" fill="#c2410c"/>
+      <rect x="48" y="6" width="6" height="36" fill="#c2410c"/>
+      <rect x="20" y="12" width="6" height="24" fill="#f5efe6"/>
+      <rect x="14" y="16" width="6" height="6" fill="#f5efe6"/>
+      <rect x="14" y="36" width="20" height="6" fill="#f5efe6"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#c2410c" font-weight="700">
+      <text x="24" y="82" font-size="16" letter-spacing="2" text-anchor="middle">PROBE</text>
+      <text x="24" y="102" font-size="11" fill="#9ca3af" letter-spacing="1" text-anchor="middle">probes with falsifiers</text>
+    </g>
+    <!-- arrow 1 -->
+    <g transform="translate(72, 16)" fill="#6b7280">
+      <rect x="0" y="10" width="168" height="6"/>
+      <rect x="156" y="4" width="6" height="6"/>
+      <rect x="162" y="10" width="6" height="6"/>
+      <rect x="156" y="16" width="6" height="6"/>
+    </g>
+
+    <!-- Round 2 — DEFEND (slate) -->
+    <g transform="translate(260, 0)">
+      <rect x="0" y="0" width="48" height="48" fill="#475569"/>
+      <rect x="6" y="-6" width="36" height="6" fill="#475569"/>
+      <rect x="6" y="48" width="36" height="6" fill="#475569"/>
+      <rect x="-6" y="6" width="6" height="36" fill="#475569"/>
+      <rect x="48" y="6" width="6" height="36" fill="#475569"/>
+      <rect x="12" y="12" width="24" height="6" fill="#f5efe6"/>
+      <rect x="30" y="12" width="6" height="12" fill="#f5efe6"/>
+      <rect x="12" y="24" width="24" height="6" fill="#f5efe6"/>
+      <rect x="12" y="30" width="6" height="6" fill="#f5efe6"/>
+      <rect x="12" y="36" width="24" height="6" fill="#f5efe6"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#475569" font-weight="700">
+      <text x="284" y="82" font-size="16" letter-spacing="2" text-anchor="middle">DEFEND</text>
+      <text x="284" y="102" font-size="11" fill="#9ca3af" letter-spacing="1" text-anchor="middle">forced steelman</text>
+    </g>
+    <!-- arrow 2 -->
+    <g transform="translate(332, 16)" fill="#6b7280">
+      <rect x="0" y="10" width="168" height="6"/>
+      <rect x="156" y="4" width="6" height="6"/>
+      <rect x="162" y="10" width="6" height="6"/>
+      <rect x="156" y="16" width="6" height="6"/>
+    </g>
+
+    <!-- Round 3 — VERDICT (ink) -->
+    <g transform="translate(520, 0)">
+      <rect x="0" y="0" width="48" height="48" fill="#1f2937"/>
+      <rect x="6" y="-6" width="36" height="6" fill="#1f2937"/>
+      <rect x="6" y="48" width="36" height="6" fill="#1f2937"/>
+      <rect x="-6" y="6" width="6" height="36" fill="#1f2937"/>
+      <rect x="48" y="6" width="6" height="36" fill="#1f2937"/>
+      <rect x="12" y="12" width="24" height="6" fill="#f5efe6"/>
+      <rect x="30" y="12" width="6" height="12" fill="#f5efe6"/>
+      <rect x="18" y="24" width="18" height="6" fill="#f5efe6"/>
+      <rect x="30" y="30" width="6" height="6" fill="#f5efe6"/>
+      <rect x="12" y="36" width="24" height="6" fill="#f5efe6"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937" font-weight="700">
+      <text x="544" y="82" font-size="16" letter-spacing="2" text-anchor="middle">VERDICT</text>
+      <text x="544" y="102" font-size="11" fill="#9ca3af" letter-spacing="1" text-anchor="middle">label + dissent</text>
+    </g>
+  </g>
+
+  <!-- footer tagline -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="610" font-size="12" fill="#9ca3af" letter-spacing="4">5 PANELISTS · FORCED DEFENSE · LETHAL VS FIXABLE · OPT-IN DEFENSE ROUND</text>
+  </g>
+</svg>
