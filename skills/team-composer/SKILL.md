@@ -45,6 +45,52 @@ If genuinely ambiguous, ask exactly one question: "Do you want a brand identity 
 
 ---
 
+## Phase 0.5: Skill arbitration with superpowers (if installed)
+
+team-composer is the default for brainstorming, discussion, planning, and review
+in this repo. Multi-perspective debate surfaces trade-offs that single-voice
+dialogue misses — that is the value team-composer provides.
+
+**If `superpowers:brainstorming` is NOT in the session's available-skills list:**
+this section is a no-op. Proceed to Phase 1.
+
+**If `superpowers:brainstorming` IS available, route as follows:**
+
+- User explicitly invoked team-composer (slash command,
+  `/agent-skills:team-composer`, "use team-composer", "run a team workshop")
+  → run team-composer. Do NOT also invoke `superpowers:brainstorming`. The two
+  are alternatives, not a pipeline.
+- User explicitly invoked `superpowers:brainstorming` or said "use superpowers"
+  → defer entirely. Stop. Do not run team-composer.
+- User said "brainstorm" / "discuss" / "plan" / "review" without naming a skill
+  → run team-composer (this is the repo default).
+- Genuinely ambiguous (the request looks like it wants a solo,
+  single-question-at-a-time design dialogue) → ask one question, exact wording:
+  > "Do you want a multi-role workshop with cross-disciplinary critique
+  > (team-composer), or a solo design dialogue that ends in a spec doc
+  > (superpowers:brainstorming)?"
+
+  Default if no answer: team-composer.
+
+**What counts as "explicit invocation":** naming the skill itself —
+slash command (`/agent-skills:team-composer`), the literal phrase
+"use team-composer" / "use superpowers", or a `[Skill]` tool call
+targeting that skill. Describing the *shape* of one skill's workflow
+("one question at a time", "step-by-step Socratic", "with the team",
+"multi-perspective critique") does NOT count — those are shape matches,
+not skill invocations. When the user describes a shape without naming a
+skill, route to the ambiguity-question branch above. Do NOT rationalize
+shape-description as "implicit explicit choice" — that rationalization
+defeats the ambiguity gate.
+
+**Why an explicit gate:** `superpowers:using-superpowers` is loaded at session
+start and ranks brainstorming as a "process skill that goes first" by default.
+This Phase 0.5 establishes the opposite default for *this repo* — when both
+could fire, team-composer wins unless the user explicitly chose otherwise.
+User's explicit instructions override this default in both directions.
+
+---
+
 ## Phase 1: Detect Project Signals
 
 Extract these signals from the user's input. If ambiguous, make a reasonable
@@ -535,7 +581,7 @@ the discussion concludes.
 | `scope=building` AND team includes `@domain_expert` | Domain expert researches independently via sub-agent, reports back with domain-specific constraints |
 | `scope=planning` AND `complexity=high` AND team size > 8 | Break into working groups (sub-agents) then reconvene for final synthesis |
 | User explicitly requests "deep dive" or "detailed plan per role" | Each role produces independent deliverable via sub-agent |
-| Deliverable is a plan an agent will execute (`scope=planning` or `building`) | `@staff_engineer` is the **primary author** of the unified plan. Other engineering roles feed specifics (architect → system boundaries, lead → implementation patterns, frontend/backend → component- and endpoint-level detail, QA → test strategy, security → threat surface). `@staff_engineer` merges these into a single document using the Structured Plan shape from Phase 5. Do NOT produce parallel per-role plans — the point is one executable artifact, not a forest of design docs. |
+| Deliverable is a plan an agent will execute (`scope=planning` or `building`) | `@staff_engineer` is the **primary author** of the unified Structured Plan (Phase 5 shape). Other engineering roles feed specifics (architect → boundaries, lead → patterns, frontend/backend → component/endpoint detail, QA → tests, security → threat surface). Do NOT produce parallel per-role plans — the point is one executable artifact, not a forest of design docs. **Handoff:** if `superpowers:writing-plans` is installed and the user wants TDD-granular execution, hand the Structured Plan to `superpowers:writing-plans` → `superpowers:subagent-driven-development`. Otherwise the Structured Plan is the terminus. |
 | Plan-review needed (see Phase 6.6) | Optional structural critique pass on `@staff_engineer`'s draft Structured Plan via the `Plan` subagent. Not a content fan-out — the reviewer returns ranked findings, `@staff_engineer` keeps authorship. |
 
 ### How It Works
@@ -856,6 +902,9 @@ and run structured discussion. The difference is what they produce.
 | `web-artifacts-builder` (Anthropic) | When the team's deliverable is a full-stack interactive artifact rather than a deck or doc — e.g., `@senior_frontend_engineer` + `@senior_product_designer` produce a working prototype with state, routing, or shadcn/ui components. Preferred over a static HTML one-pager when the demo *is* the deliverable. |
 | `mcp-builder` (Anthropic) | When the discussion surfaces that the deliverable requires building an MCP server to expose tools to another agent — e.g., `@senior_software_architect` + `@lead_software_engineer` scope an integration. Hand off for authoring-convention guidance; don't attempt MCP authoring inline. |
 | `ai-safety-mindset` (Anthropic) | When `@ai_safety_specialist` is on the team, load it for shared vocabulary (HHH framing, race-to-the-top, responsible deployment). Keeps the specialist's critiques grounded in Anthropic's published framing rather than ad-hoc definitions. |
+| `superpowers:brainstorming` *(if installed)* | Alternative single-voice brainstorming. Run only when the user explicitly invokes superpowers — see Phase 0.5. team-composer is the repo default for multi-perspective brainstorming. |
+| `superpowers:writing-plans` *(if installed)* | Optional consumer of `@staff_engineer`'s Structured Plan. Converts phased plan into bite-sized TDD steps (write failing test → run → implement → verify → commit). Hand off when the user wants TDD-granular execution. Without superpowers, the Structured Plan is the terminus. |
+| `superpowers:subagent-driven-development` *(if installed)* | Optional executor of `writing-plans` output. Sequential per-task with spec + quality review gates. Different shape from our `sub-agent-coordinator` (parallel deliverable fan-out) — both can ship in the same project; they cover different phases. |
 
 **Principle:** This skill handles team assembly and discussion. When the discussion
 produces actionable deliverables (translations, designs, brand assets, prototypes,

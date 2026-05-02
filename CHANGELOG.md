@@ -5,6 +5,47 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] — 2026-05-01
+
+Adds opt-in coexistence with the `superpowers` plugin. All new behavior
+is capability-gated on `superpowers:brainstorming` appearing in the
+session's available-skills list — when absent, the new routing is a
+no-op and existing flows route the same way.
+
+### Added
+
+- **team-composer** — Phase 0.5 Skill arbitration with superpowers.
+  team-composer becomes the repo default for "brainstorm / discuss /
+  plan / review" requests when no skill is named. Defers to
+  `superpowers:brainstorming` only on explicit invocation. Asks one
+  disambiguation question when genuinely ambiguous. No-op when
+  superpowers is not installed.
+  - **"Explicit invocation" defined by exclusion.** Slash command,
+    `"use [skill-name]"`, or a `[Skill]` tool call counts. Describing a
+    workflow's *shape* ("one question at a time", "with the team")
+    does not count — those are shape matches, not skill invocations.
+    The rule explicitly forbids rationalizing shape-description as
+    "implicit explicit choice." Surfaced by skill-evaluator audit
+    against the original Phase 0.5 draft.
+- **team-composer** — Phase 6 trigger row updated with handoff chain:
+  `@staff_engineer`'s Structured Plan can hand off to
+  `superpowers:writing-plans` → `superpowers:subagent-driven-development`
+  for TDD-granular execution when superpowers is installed. Without
+  superpowers, the Structured Plan remains the terminus.
+- **team-composer** — three new Cross-Skill Integration rows for
+  `superpowers:brainstorming`, `superpowers:writing-plans`, and
+  `superpowers:subagent-driven-development`, all gated "if installed."
+- **sub-agent-coordinator** — new "What this skill is NOT — sequential
+  TDD execution" section with routing table. Disambiguates from
+  `superpowers:subagent-driven-development`: parallel deliverable
+  fan-out stays here; sequential TDD-task execution with reviewer
+  gates routes to subagent-driven-development. The two are
+  complementary, not competing — different deliverable shapes,
+  different phases of the pipeline. Falls back to this skill's
+  Pipeline pattern when superpowers is absent.
+- **sub-agent-coordinator** — one new Cross-Skill Integration row for
+  `superpowers:subagent-driven-development`, gated "if installed."
+
 ## [1.3.0] — 2026-04-27
 
 Adds an optional structural plan-review phase to `team-composer`.
