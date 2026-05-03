@@ -5,6 +5,160 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] — 2026-05-02
+
+Restructures the startup pipeline. The prior `business-model-canvas` skill is
+renamed to `validation-canvas` and refocused on the **Lean Canvas (Maurya) +
+Value Proposition Canvas (Osterwalder)** combined artifact (right altitude for
+an idea-stage founder; the 9-block Osterwalder BMC was a Series-A operating-plan
+tool — wrong altitude). A new `riskiest-assumption-test` skill is inserted
+between canvas and pitch-deck. **Inter-step gates** (light/medium/heavy/light)
+are now enforced inside each skill's Phase 0; **loop-back is first-class** —
+invalidated assumptions trigger canvas updates, not pipeline restarts. The
+pipeline becomes:
+
+```
+brand-workshop ─▶ validation-canvas ─▶ riskiest-assumption-test ─▶ pitch-deck ─▶ startup-grill
+```
+
+### Changed (BREAKING)
+
+- **`business-model-canvas` → `validation-canvas` (rename).** Skill folder
+  renamed via `git mv` (history preserved). Canonical artifact renamed:
+  `business-model.md` → `validation-canvas.md`; `business-model.html` →
+  `validation-canvas.html`. Reference files renamed:
+  `references/bmc-html-template.md` → `references/canvas-html-template.md`;
+  `references/nine-blocks.md` → `references/canvas-blocks.md`. Asset icons
+  + LinkedIn/X social banners renamed in lockstep
+  (`assets/icons/business-model-canvas.svg` →
+  `assets/icons/validation-canvas.svg`; same for `-li.svg`, `-x.svg`, and
+  the matching `.png` files). **No alias provided** — update any saved
+  invocations.
+- **Skill content rewritten.** The 9-block BMC is replaced by Lean Canvas
+  (Problem / Customer Segments / UVP / Solution / Channels / Revenue Streams
+  / Cost Structure / Key Metrics / Unfair Advantage) PLUS a Value
+  Proposition Canvas pass (Customer Jobs / Pains / Gains ↔ Products & Services
+  / Pain Relievers / Gain Creators) with a mandatory Fit Check. SWOT, Porter,
+  and Wardley are explicitly out of scope (wrong altitude / overlap with
+  `startup-grill`).
+- **Heading-anchor contracts updated** in `pitch-deck` and `startup-grill`.
+  Downstream skills now grep for `### Customer Segments`, `### Unique Value
+  Proposition`, `### Revenue Streams`, `### Customer Pains`, `### Pain
+  Relievers`, etc., under the new `## Lean Canvas` and `## Value Proposition
+  Canvas` parents. `## Stress Tests` heading is preserved (it's the seed for
+  `riskiest-assumption-test`'s assumption dump).
+- **CSS token rename.** `--bmc-accent` → `--canvas-accent` in
+  `validation-canvas.html`. Added a parallel `--rat-accent` for
+  `rat/test-matrix.html`. The Token Mapping Convention block in
+  `brand-workshop`'s `design-system.md` template was updated; the prior name
+  is documented in a migration note.
+- **`startup-grill` kill-report gains a 7th section** —
+  `## Iteration Evidence`. The verifier checklist now requires all seven
+  sections in order. The new section yellow-flags pristine pipelines (canvas
+  not updated after RAT testing) — pristine pipelines are a strong predictor
+  of weak iteration discipline.
+
+### Added
+
+- **NEW skill: `riskiest-assumption-test`.** Inserted between
+  `validation-canvas` and `pitch-deck`. Job: *"what have we proven?"*
+  (experimental, vs. canvas's declarative *"what do we believe?"*).
+  - Five phases: Phase 0 (read prior artifacts, medium gate STOPs without
+    canvas), Phase 1 (assumption dump categorized desirability / viability /
+    feasibility per Christensen), Phase 2 (3×3 risk × impact ranking, Top 3
+    from high-impact corner), Phase 3 (falsifiable hypothesis rewriting —
+    "We believe X. We'll know this is true if [measurable outcome] within
+    [time]"), Phase 4 (test method selection from 8-method catalog),
+    Phase 5 (render & ship + update mode for results).
+  - Outputs: `rat/assumption-test-plan.md` (canonical, with `## Top 3
+    Hypotheses`, `## Test Plan`, `## Kill Criteria`, `## Results` —
+    headings load-bearing for downstream) AND `rat/test-matrix.html`
+    (interactive risk × impact matrix; drag-to-rerank, click-to-expand,
+    color-coded by category, Top 3 highlighted, prints cleanly).
+  - Test method catalog: 5-interview rule, landing page + email capture,
+    fake-door, concierge MVP, Wizard of Oz, pre-sale, smoke test, expert
+    interview. With when-to-use, when-not-to-use, cost estimates,
+    success/kill patterns, and worked examples for each.
+  - References: `test-method-catalog.md`, `ranking-matrix.md`,
+    `hypothesis-rewriting.md`, `matrix-html-template.md`.
+- **Phase 0 experience-adaptive intake on `validation-canvas`.** Three
+  calibration questions at invocation:
+  1. *"Have you founded or co-founded a startup that reached paying
+     customers before?"*
+  2. *"Is this idea in a domain you've worked in professionally?"*
+  3. *"Do you have direct experience with this customer segment?"*
+  Maps to one of three modes — **Guided** (~60–90 min, definitions and
+  examples per block), **Focused** (~30–45 min, lighter scaffolding, weight
+  on commonly underweighted boxes by founder background), or
+  **Compressed-with-Challenge** (~15–20 min, push back on glib answers).
+  Smart intake: scans context for signals first, asks only the delta,
+  confirms inferred mode in one line. Hard rules: ask immediately at
+  invocation BEFORE canvas work, never mid-canvas; observed answer quality
+  overrides declared mode. Explicit rule against delegating to
+  `grill-with-docs` for intake (wrong job/tone/target).
+- **Inter-step gates** (light/medium/heavy/light), enforced in each skill's
+  Phase 0:
+  - `brand-workshop` → `validation-canvas`: **light** (informational
+    suggestion in brand-workshop's new Phase 7 Closing).
+  - `validation-canvas` → `riskiest-assumption-test`: **medium** (RAT's
+    Phase 0 STOPs without `validation-canvas.md`).
+  - `riskiest-assumption-test` → `pitch-deck`: **heavy** (pitch-deck's new
+    Phase 0 STOPs without populated `## Results` for top-3 hypotheses;
+    override available with `[PRE-VALIDATION DRAFT]` watermark).
+  - `pitch-deck` → `startup-grill`: **light** (grill works on minimum
+    input; just enriched by full pipeline).
+- **First-class loop-back protocol** documented in
+  `validation-canvas/references/folder-contract.md`. Invalidated
+  hypotheses route back to `validation-canvas` in update mode (read existing
+  file, revise affected blocks only, mark with HTML comment, do not
+  overwrite untouched blocks). Loop-back is normal pipeline behavior, not
+  failure — pristine pipelines are the actual yellow flag.
+- **Iteration-evidence check on `startup-grill`** (Phase 1 Step 1c). Compares
+  mtimes across `validation-canvas.md` and `rat/assumption-test-plan.md`.
+  Yellow-flags four pipeline states: full-with-iteration ✅, pristine 🟡,
+  no-RAT 🟠, no-canvas ⚪. Surfaces in the new `## Iteration Evidence`
+  kill-report section.
+- Cross-references in `brand-workshop`, `team-composer`, root `README.md`,
+  and `.claude-plugin/plugin.json` + `marketplace.json` updated to the new
+  pipeline shape and skill names.
+- New asset: `assets/icons/riskiest-assumption-test.svg` (3×3 risk×impact
+  matrix with top-right Top-3 cell highlighted in gold; pixel-art style
+  matching the rest of the shelf).
+
+### Migration
+
+- **Existing `business-model.md` files:** rename to `validation-canvas.md`
+  and restructure under the new `## Lean Canvas` + `## Value Proposition
+  Canvas` heading contract. The existing `## Stress Tests` section can
+  carry over verbatim — that's the one block the new skill preserves from
+  the old structure.
+- **Saved invocations of `business-model-canvas`:** update to
+  `validation-canvas`. No alias is provided.
+- **Custom HTML themes binding to `--bmc-accent`:** rename to
+  `--canvas-accent`. Brand-workshop's design-system template was updated
+  in lockstep; the prior name is documented in a migration note inside the
+  Token Mapping Convention block.
+- **Pipeline workflow:** insert `riskiest-assumption-test` between
+  `validation-canvas` and `pitch-deck`. The pitch-deck heavy gate WILL stop
+  workflows that previously chained canvas → deck directly. Override path
+  (`[PRE-VALIDATION DRAFT]`) preserves the old behavior with an explicit
+  watermark.
+
+### Notes
+
+- No changes to `brand-workshop`'s identity-package output structure (still
+  ships the same logos, favicons, social banners, descriptions pack, and
+  design-system tokens). Only added a closing-suggestion line for
+  `validation-canvas` and updated cross-references + the design-system
+  Token Mapping block for the renamed `--canvas-accent`.
+- No changes to `team-composer` Phase 1–6 logic, `sub-agent-coordinator`
+  patterns, `i18n-contextual-rewriting`, `skill-evaluator`,
+  `tech-stack-recommendations`, or `superpowers` integration. Only
+  cross-skill table references in those skills updated to name the new
+  pipeline shape.
+- Plugin version: `1.6.0` → `2.0.0` (BREAKING — skill rename,
+  artifact-name contract change, downstream heading-anchor contract change).
+
 ## [1.6.0] — 2026-05-01
 
 Tightens `startup-grill` rule adherence and widens its trigger coverage

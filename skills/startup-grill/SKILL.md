@@ -12,7 +12,8 @@ description: >
   weaknesses in my idea", "what would kill this startup", "what would a VC hate
   about this", "give me brutal feedback on my deck", "be ruthless about this idea",
   "where would this fail", "is this fundable", "investability check", or uploads a
-  one-pager / business-model.md / pitch deck and asks for adversarial review.
+  one-pager / validation-canvas.md / RAT plan / pitch deck and asks for adversarial
+  review.
   Use this skill — NOT `team-composer` — whenever the user wants an *adversarial*
   review with a *verdict* (Investable / Pivot / Pass), even if they use the word
   "review". `team-composer`'s "review" mode is collaborative and constructive;
@@ -23,11 +24,13 @@ description: >
   kill report). After the report ships, offer interactive defense mode where the
   founder can defend a specific weakness with new evidence and the relevant
   panelists re-probe that line item.
-  Composes downstream of `business-model-canvas` and `pitch-deck` — reads their
-  outputs as input artifacts when present. Do NOT use this skill for collaborative
-  brainstorming, positioning workshops, business-model construction, or pitch-deck
-  building — those route to `team-composer`, `business-model-canvas`, and
-  `pitch-deck` respectively.
+  Composes downstream of `validation-canvas`, `riskiest-assumption-test`, and
+  `pitch-deck` — reads their outputs as input artifacts when present. Includes
+  an iteration-evidence check that yellow-flags pristine pipelines (canvas not
+  updated after RAT). Do NOT use this skill for collaborative brainstorming,
+  positioning workshops, canvas construction, assumption test design, or
+  pitch-deck building — those route to `team-composer`, `validation-canvas`,
+  `riskiest-assumption-test`, and `pitch-deck` respectively.
 ---
 
 # Startup Grill
@@ -48,9 +51,12 @@ Hand off to a different skill — do not run the grill — if any of these apply
 
 - The user is **brainstorming** an idea or shaping a problem space → use
   `team-composer` (or `superpowers:brainstorming` if installed).
-- The user wants to **build** a business model, brand identity, or pitch deck
-  → use `business-model-canvas`, `brand-workshop`, or `pitch-deck`
-  respectively. Grilling can run *after* those exist.
+- The user wants to **build** a validation canvas, brand identity, or pitch deck
+  → use `validation-canvas`, `brand-workshop`, or `pitch-deck` respectively.
+  Grilling can run *after* those exist.
+- The user wants to **design assumption tests** → use
+  `riskiest-assumption-test`. Grilling exposes weaknesses; RAT designs
+  experiments to test them.
 - The user wants **positioning review** or **brand voice review** → use
   `team-composer` with `@brand_strategist` / `@humorist` / `@senior_copywriter`.
 - The user wants to **review their plan** with a multi-perspective team that
@@ -90,13 +96,14 @@ the round structure are different.
 | "Brainstorm my startup" | `team-composer` |
 | "Review my plan with a team" | `team-composer` with `scope=review` |
 | "Build my pitch deck" | `pitch-deck` |
-| "Build my business model canvas" | `business-model-canvas` |
+| "Build my validation canvas / lean canvas / VPC" | `validation-canvas` |
+| "Design tests for my assumptions" | `riskiest-assumption-test` |
 | "Workshop the brand for my startup" | `brand-workshop` |
 
 If the user request mixes grilling with building ("grill my startup *and*
 help me fix it"), run the grill first to ship the kill report, then route the
-fix work to the appropriate builder skill (`pitch-deck`,
-`business-model-canvas`, or `team-composer`). Don't try to do both at once —
+fix work to the appropriate builder skill (`pitch-deck`, `validation-canvas`,
+`riskiest-assumption-test`, or `team-composer`). Don't try to do both at once —
 that produces a soft kill report.
 
 ---
@@ -128,21 +135,59 @@ files from prior sessions are appended-to, never overwritten.
 Check for these files in order. When present, parse them as input — the
 founder doesn't need to re-state what's already written down:
 
-1. **`business-model.md`** (from `business-model-canvas`) — read the
-   Customer Segments, Value Propositions, Revenue Streams, and Stress Tests
+1. **`validation-canvas.md`** (from `validation-canvas`) — read the
+   `### Customer Segments`, `### Unique Value Proposition`, `### Revenue
+   Streams`, `### Customer Pains`, `### Pain Relievers`, and `## Stress Tests`
    sections. The Stress Tests section is **direct ammunition** for grilling —
    surface those weaknesses unless the founder has explicitly retired them.
-2. **`pitch/deck.html`** + **`pitch/speaker-notes.md`** (from `pitch-deck`) —
+   Un-relieved Pains and un-created Gains in the VPC are also direct
+   ammunition.
+2. **`rat/assumption-test-plan.md`** (from `riskiest-assumption-test`) — read
+   `## Top 3 Hypotheses`, `## Test Plan`, and `## Results`. Confirmed results
+   are evidence the founder can defend with; invalidated results that haven't
+   propagated to the canvas are red flags. Pristine plans (no Results yet)
+   indicate the founder skipped validation — see Step 1c below.
+3. **`pitch/deck.html`** + **`pitch/speaker-notes.md`** (from `pitch-deck`) —
    parse the slide content for Problem, Solution, Market, Product, Business
    Model, Traction, Team, Competition, Ask. Use `pitch-deck`'s
    `references/slide-contracts.md` anti-patterns as a starting probe list.
-3. **`brand-kit/brand-brief.md`** (from `brand-workshop`) — read the
+4. **`brand-kit/brand-brief.md`** (from `brand-workshop`) — read the
    Positioning section (used by Slot 5 brand-strategist if active).
 
 **If none exist:** ask the founder to provide a one-pager (or paste the
-deck/business model into the conversation). Refuse to grill on a single
-sentence — the kill report would be all guesses. Minimum input: one paragraph
-each on Problem, Solution, ICP, GTM motion, and Team.
+deck / canvas into the conversation). Refuse to grill on a single sentence —
+the kill report would be all guesses. Minimum input: one paragraph each on
+Problem, Solution, ICP, GTM motion, and Team.
+
+### Step 1c — Iteration evidence check
+
+Compare timestamps and content across the pipeline artifacts to detect a
+**pristine pipeline** (one that ran end-to-end without the canvas being
+revised after testing). This is a yellow flag, not a hard stop — but the
+panel should probe accordingly:
+
+1. If `validation-canvas.md` exists AND `rat/assumption-test-plan.md` exists
+   AND `## Results` in the RAT has populated rows: check whether
+   `validation-canvas.md`'s mtime is **earlier** than the latest Results
+   entry in `rat/assumption-test-plan.md`. Earlier mtime means the canvas
+   was NOT updated after testing.
+2. If the canvas wasn't updated after RAT, surface as a yellow flag in the
+   kill report's new `## Iteration Evidence` section: *"Canvas was not
+   revised after assumption testing. Either the tests confirmed every
+   belief (rare — be skeptical) or the founder is not closing the loop on
+   what they learned. Probe accordingly."*
+3. If `rat/assumption-test-plan.md` is **missing** entirely while
+   `pitch/deck.html` exists: large yellow flag. Pitch built without
+   assumption testing is sales theater. Surface in `## Iteration Evidence`:
+   *"This pipeline shipped a pitch without testing assumptions. Treat
+   every Traction claim as belief, not evidence."*
+4. If `validation-canvas.md` is **missing** while later artifacts exist:
+   the founder may have compiled the pipeline manually. Surface as a flag
+   that the kill-report can't cross-check beliefs against documented
+   stress tests.
+
+The Iteration Evidence findings appear in a dedicated section in the
+kill-report — see `references/kill-report.md` Section 7 (added in v2.0.0).
 
 ### Step 2 — Classify the variant
 
@@ -202,13 +247,13 @@ read."*
 
 ## Phase 3: Ship the kill report
 
-Write `grill/kill-report.md` per `references/kill-report.md`. All six
+Write `grill/kill-report.md` per `references/kill-report.md`. All seven
 sections required, in order: Verdict / Lethal & Fixable / Lethal & Unfixable
-/ Material & Fixable / Diligence Asks / Panel.
+/ Material & Fixable / Diligence Asks / Panel / Iteration Evidence.
 
 Run the file's verifier checklist before presenting:
 
-- [ ] All six sections present in order
+- [ ] All seven sections present in order
 - [ ] Verdict label is one of the four canonical labels
 - [ ] Lethal & Fixable has 2–3 items (no more, no fewer if verdict ≠ `Pass`)
 - [ ] Each lethal item has all five fields filled
@@ -216,6 +261,7 @@ Run the file's verifier checklist before presenting:
 - [ ] Diligence Asks are evidence requests, not change-the-business actions
 - [ ] No weakness appears in two severity sections
 - [ ] Panel table lists every role that contributed in Round 1
+- [ ] Iteration Evidence section reflects actual working-directory state (full / pristine / no-RAT / no-canvas)
 
 If any box fails, fix before shipping. Then present the file with
 `present_files`.
@@ -264,7 +310,8 @@ The skill must refuse to ship if any of these are true:
 | Skill | When to use |
 |---|---|
 | `team-composer` | Instead of this skill when the user wants brainstorming, planning, or constructive review. After this skill when the kill report's `Suggested attack` lines need a multi-role workshop to scope. |
-| `business-model-canvas` (our own) | Upstream input. If `business-model.md` exists, this skill reads its Stress Tests section as direct grilling ammunition. After this skill when a `Pivot signal` verdict makes the founder rebuild their model. |
+| `validation-canvas` (our own) | Upstream input. If `validation-canvas.md` exists, this skill reads its Stress Tests section + un-relieved Pains + un-created Gains as direct grilling ammunition. After this skill when a `Pivot signal` verdict makes the founder rebuild their canvas. |
+| `riskiest-assumption-test` (our own) | Upstream input. If `rat/assumption-test-plan.md` exists, this skill reads `## Top 3 Hypotheses` and `## Results`. The iteration-evidence check (Phase 1 Step 1c) yellow-flags pristine pipelines. After this skill when the kill report names assumptions the founder hasn't tested yet. |
 | `pitch-deck` (our own) | Upstream input. If `pitch/deck.html` exists, this skill probes the deck's required-slot answers. After this skill when the kill report demands a re-cut deck. |
 | `brand-workshop` (our own) | Upstream input when slot 5 = `@brand_strategist` and the panel needs the brand brief's Positioning section as a reference. |
 | `skill-evaluator` (our own) | When you want to audit this skill's rules end-to-end. Good targets: the verdict-vs-body consistency rule, the no-lethal-skip rule, the interactive-invitation rule. |

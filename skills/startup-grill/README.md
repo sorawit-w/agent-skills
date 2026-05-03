@@ -16,21 +16,21 @@ That's what this does. It's not a thinking partner. It's the panel after a deck 
 
 ## What it does
 
-- **Reads upstream artifacts** if present — `business-model.md` (especially the Stress Tests section, which is direct grilling ammunition), `pitch/deck.html` and speaker notes, `brand-kit/brand-brief.md`. Refuses to grill on a single sentence; minimum input is one paragraph each on Problem, Solution, ICP, GTM motion, and Team.
+- **Reads upstream artifacts** if present — `validation-canvas.md` (especially the Stress Tests section, which is direct grilling ammunition), `rat/assumption-test-plan.md` (top-3 hypotheses + results — invalidated results that haven't propagated to the canvas are red flags), `pitch/deck.html` and speaker notes, `brand-kit/brand-brief.md`. Refuses to grill on a single sentence; minimum input is one paragraph each on Problem, Solution, ICP, GTM motion, and Team.
 - **Classifies the variant** — idea / pre-seed / seed / Series A+ — with one mandatory question. Variant tunes evidence thresholds (LOIs vs cohort retention vs revenue curve), not panel composition.
 - **Resolves the panel deterministically** — 4 fixed core roles (`@vc_partner`, `@growth_marketer`, `@startup_strategist`, `@ux_researcher`), one flex slot 5 that resolves to `@senior_software_architect` (technical due diligence) by default and to `@brand_strategist` for consumer-brand-dominant products, plus 0–3 specialists injected from signals (legal, clinical, security, AI safety, game design, etc.). Cap is 8 total panelists.
 - **Imports persona definitions from `team-composer`'s `references/role-personas.md`** as the canonical base, then applies grill-mode overlays so each panelist probes for failure rather than collaborates. Universal grill posture: probes for failure, demands evidence, states severity declaratively, names failure modes specifically, closes with a falsifier.
 - **Runs three rounds** — Round 1 probes (60–100 words per panelist, falsifier required), Round 2 forced steelman defense using only evidence in the brief (probes that the brief credibly answers get downgraded; probes that survive stand), Round 3 synthesis with `@startup_strategist` assembling sections and `@vc_partner` writing the verdict.
-- **Ships a structured kill report** at `grill/kill-report.md` with six required sections in fixed order: Verdict / Lethal & Fixable / Lethal & Unfixable / Material & Fixable / Diligence Asks / Panel. Verdict label is one of four canonical labels: `Investable as-is`, `Investable with conditions`, `Pivot signal`, `Pass`.
+- **Ships a structured kill report** at `grill/kill-report.md` with seven required sections in fixed order: Verdict / Lethal & Fixable / Lethal & Unfixable / Material & Fixable / Diligence Asks / Panel / Iteration Evidence. Verdict label is one of four canonical labels: `Investable as-is`, `Investable with conditions`, `Pivot signal`, `Pass`. Iteration Evidence (added in v2.0.0) yellow-flags pristine pipelines where the canvas wasn't updated after RAT testing.
 - **Refuses to ship a soft report** — Round 1 must surface at least one lethal-fixable or lethal-unfixable read; if every probe is `material` or `pass`, the panel was too soft and Round 1 re-runs with sharper posture. The skill enforces this before assembling the file.
 - **Offers interactive defense mode** after the report ships — the founder picks a weakness number (e.g., `L1`), brings new evidence (a metric, a customer quote, a teardown), the relevant 1–2 panelists re-probe that line, and the verdict on that item only updates. Other items stay frozen. A single weakness can be defended at most 3 times per session before the verdict stands.
 - **Logs defenses to `grill/defense-log.md`** — append-only, dated. The kill report's affected line item gains a `Defended on YYYY-MM-DD` pointer rather than being rewritten in place.
-- **Composes downstream of `business-model-canvas` and `pitch-deck`** — reads their outputs as input, surfaces the Stress Tests and slide-contract anti-patterns as starting probes. Composes upstream of fix work — when the verdict is `Pivot signal`, the kill report's `Suggested attacks` route to `team-composer` for a multi-role workshop on the new direction.
+- **Composes downstream of `validation-canvas`, `riskiest-assumption-test`, and `pitch-deck`** — reads their outputs as input, surfaces the Stress Tests, RAT results, and slide-contract anti-patterns as starting probes. Composes upstream of fix work — when the verdict is `Pivot signal`, the kill report's `Suggested attacks` route to `team-composer` for a multi-role workshop on the new direction.
 
 ## What it doesn't do
 
 - **Brainstorm or shape the idea.** Use `team-composer` (or `superpowers:brainstorming` if installed) for that. Grilling a half-formed idea produces a kill report full of *not enough information* findings, which is worse than no kill report.
-- **Build artifacts.** No business model canvas, no deck, no brand kit — those route to `business-model-canvas`, `pitch-deck`, and `brand-workshop` respectively. Run those first; grill after.
+- **Build artifacts.** No validation canvas, no test plan, no deck, no brand kit — those route to `validation-canvas`, `riskiest-assumption-test`, `pitch-deck`, and `brand-workshop` respectively. Run those first; grill after.
 - **Improve the idea.** The kill report's `Suggested attack` lines are next moves, not improvements the skill makes for you. The founder acts on them, then optionally re-grills.
 - **Soften the verdict on request.** "Be nicer" is rejected. The report is what it is. The interactive defense mode is the right path to update verdicts — bring evidence, not vibes.
 - **Operate on a single sentence.** Refuses inputs below the minimum brief threshold. Garbage in produces a generic kill report; the skill won't pretend otherwise.
@@ -47,12 +47,12 @@ That's what this does. It's not a thinking partner. It's the panel after a deck 
 
 - **You're still shaping the idea.** Brainstorm first; grill after the idea has structure.
 - **You want constructive feedback or a plan.** Use `team-composer` with `scope=review` or `scope=planning`. The grill produces a verdict, not a plan.
-- **You want a deck or business model built.** Use `pitch-deck` or `business-model-canvas`. Then grill.
+- **You want a deck, test plan, or canvas built.** Use `pitch-deck`, `riskiest-assumption-test`, or `validation-canvas`. Then grill.
 - **The team you're assembling is for a non-startup decision** (architecture review, hiring debate, regulatory analysis). Use `team-composer`.
 
 ## How it works — 4 phases
 
-1. **Intake.** Read the working directory for `business-model.md`, `pitch/deck.html`, `brand-kit/brand-brief.md`. Classify the variant (idea / pre-seed / seed / Series A+). Detect signals.
+1. **Intake.** Read the working directory for `validation-canvas.md`, `rat/assumption-test-plan.md`, `pitch/deck.html`, `brand-kit/brand-brief.md`. Run the iteration-evidence check. Classify the variant (idea / pre-seed / seed / Series A+). Detect signals.
 2. **Panel resolution.** 4 fixed core + slot 5 resolved by detection rule + 0–3 specialists injected from signals + cap-and-trim if specialists exceed 3. Show the panel summary block to the user before grilling — they can challenge the panel before Round 1 starts.
 3. **Grilling — three rounds.**
    - **Round 1 (Probe).** Each panelist contributes one probe per startup-axis they own. Per-probe shape: probe / what I'm looking for / read (lethal-fixable | lethal-unfixable | material | pass) / falsifier.
@@ -66,7 +66,7 @@ A single file by default, with a second file for interactive defense logs:
 
 ```
 grill/
-├── kill-report.md     — Verdict, Lethal & Fixable, Lethal & Unfixable, Material & Fixable, Diligence Asks, Panel
+├── kill-report.md     — Verdict, Lethal & Fixable, Lethal & Unfixable, Material & Fixable, Diligence Asks, Panel, Iteration Evidence
 └── defense-log.md     — (only if interactive mode engages) dated defense rounds with re-probe outcomes
 ```
 
@@ -99,7 +99,8 @@ Once installed, Claude picks the skill up automatically from the description in 
 | Skill | When it kicks in |
 |---|---|
 | [`team-composer`](../team-composer/README.md) | Instead of this skill when the user wants brainstorming, planning, or constructive review. After this skill when the kill report's `Suggested attack` lines need a multi-role workshop. |
-| [`business-model-canvas`](../business-model-canvas/README.md) | Upstream input. If `business-model.md` exists, this skill reads its Stress Tests section as direct grilling ammunition. After a `Pivot signal` verdict to rebuild the model. |
+| [`validation-canvas`](../validation-canvas/README.md) | Upstream input. If `validation-canvas.md` exists, this skill reads its Stress Tests + un-relieved Pains as direct grilling ammunition. After a `Pivot signal` verdict to rebuild the canvas. |
+| [`riskiest-assumption-test`](../riskiest-assumption-test/README.md) | Upstream input. If `rat/assumption-test-plan.md` exists, this skill reads top-3 hypotheses + results. The iteration-evidence check yellow-flags pristine pipelines. After a verdict that names untested assumptions. |
 | [`pitch-deck`](../pitch-deck/README.md) | Upstream input. If `pitch/deck.html` exists, this skill probes the deck's required-slot answers. After this skill when the kill report demands a re-cut deck. |
 | [`brand-workshop`](../brand-workshop/README.md) | Upstream input when slot 5 = `@brand_strategist`. The panel reads `brand-brief.md`'s Positioning section. |
 | [`skill-evaluator`](../skill-evaluator/README.md) | When you want to audit this skill end-to-end. Good targets: the verdict-vs-body consistency rule, the no-lethal-skip rule, the interactive-invitation rule. |
@@ -110,17 +111,17 @@ Once installed, Claude picks the skill up automatically from the description in 
 This skill sits at the **end** of the startup-artifact chain in this repo. The pipeline:
 
 ```
-brand-workshop ──▶ business-model-canvas ──▶ pitch-deck ──▶ startup-grill
- (identity kit)       (9-block model)          (HTML deck)     (kill report)
+brand-workshop ──▶ validation-canvas ──▶ riskiest-assumption-test ──▶ pitch-deck ──▶ startup-grill
+ (identity kit)    (Lean Canvas + VPC)    (test plan + results)         (HTML deck)    (kill report)
 ```
 
-The first three *produce*; this one *probes*. Run them in order in the same working directory — they compose via shared folder conventions (`brand-kit/`, `business-model.md`, `pitch/`, `grill/`). Each is its own plugin and triggers on its own description; you don't have to chain them manually.
+The first four *produce*; this one *probes*. Run them in order in the same working directory — they compose via shared folder conventions (`brand-kit/`, `validation-canvas.md`, `rat/`, `pitch/`, `grill/`). Each is its own plugin and triggers on its own description; you don't have to chain them manually. Pipeline gates are weighted: light → medium → heavy → light. Loop-back is first-class — invalidated assumptions trigger canvas updates, not pipeline restarts.
 
 ## Status and scope
 
 v0.1. The fixed grill core (4 roles + slot 5) and the specialist injection table cover the canonical startup framings (B2B SaaS, dev tools, consumer brand, regulated consumer, AI consumer, indie game, biotech, fintech, climate). Edge cases that don't fit the matrix are surfaced explicitly — the kill report's panel section names *why* slot 5 resolved to what it did, so drift is visible in regression review.
 
-- **Supported:** idea / pre-seed / seed / Series A+ variants; fixed and adaptive panels; one-shot and interactive defense; composition with `business-model-canvas`, `pitch-deck`, and `brand-workshop` upstream artifacts.
+- **Supported:** idea / pre-seed / seed / Series A+ variants; fixed and adaptive panels; one-shot and interactive defense; composition with `validation-canvas`, `riskiest-assumption-test`, `pitch-deck`, and `brand-workshop` upstream artifacts; iteration-evidence check (v2.0.0).
 - **Adaptive:** slot 5 resolution by signal; specialist injection by signal; symmetric specialist forcing when one lens loses the core slot.
 - **Not supported:** softening the verdict by request; replacing human due diligence; grilling on inputs below the minimum brief threshold; auto-engaging interactive mode without an explicit defend message.
 

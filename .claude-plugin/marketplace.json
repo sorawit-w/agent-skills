@@ -9,15 +9,18 @@
     {
       "name": "agent-skills",
       "source": "./",
-      "description": "A shelf of Claude Code skills: brand-workshop, business-model-canvas, i18n-contextual-rewriting, pitch-deck, skill-evaluator, startup-grill, sub-agent-coordinator, team-composer, and tech-stack-recommendations.",
-      "version": "1.0.1",
+      "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, i18n-contextual-rewriting, pitch-deck, skill-evaluator, startup-grill, sub-agent-coordinator, team-composer, and tech-stack-recommendations.",
+      "version": "2.0.0",
       "author": {
         "name": "sorawit-w"
       },
       "keywords": [
         "team",
         "brand",
-        "business",
+        "validation",
+        "lean-canvas",
+        "vpc",
+        "assumption-testing",
         "i18n",
         "pitch",
         "skill",

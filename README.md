@@ -19,7 +19,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of nine specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of ten specialized skills in one go.
 - **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, and founders who want their startup adversarially probed.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -55,9 +55,10 @@ Click a skill to jump to its details.
 | <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="64" align="middle"/> | [`tech-stack-recommendations`](#tech-stack-recommendations) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. | You're starting a new project, or picking one layer, and want a default instead of a neutral grid. |
 | <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="64" align="middle"/> | [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. | You're editing a big i18n file without blowing token limits, or producing translations that shouldn't read as machine-converted English. |
 | <img src="assets/icons/brand-workshop.svg" alt="" width="64" align="middle"/> | [`brand-workshop`](#brand-workshop) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. | You need a real identity package for a product, app, or startup — not just a logo doodle. |
-| <img src="assets/icons/business-model-canvas.svg" alt="" width="64" align="middle"/> | [`business-model-canvas`](#business-model-canvas) | Interview a founder block-by-block and produce a rigorous Osterwalder canvas with explicit Stress Tests. | You need a business model that holds up to scrutiny before building the deck, the product, or the hire plan. |
-| <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](#pitch-deck) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. | An investor said "send me your deck" and you need a shippable v1 this week — content filled, not a template. |
-| <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](#startup-grill) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability with optional interactive defense. | You want your idea / deck / business model probed for what would actually kill it — not "thoughts to consider," a verdict you can act on. |
+| <img src="assets/icons/validation-canvas.svg" alt="" width="64" align="middle"/> | [`validation-canvas`](#validation-canvas) | Interview a founder block-by-block and produce a rigorous Lean Canvas + Value Proposition Canvas with explicit Stress Tests. Adapts to founder experience via 3-question intake. | You need a beliefs artifact that holds up to scrutiny — *what do we believe?* — before designing tests, building the deck, or pitching. |
+| <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="64" align="middle"/> | [`riskiest-assumption-test`](#riskiest-assumption-test) | Convert canvas Stress Tests into falsifiable hypotheses with success/kill criteria and chosen test methods. Ships a 1-page test plan + interactive risk × impact matrix. | You have beliefs in your canvas and need to know *what to test first*, with the cheapest experiment that could falsify it. |
+| <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](#pitch-deck) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. Heavy gate on `riskiest-assumption-test` results. | An investor said "send me your deck" and you've already validated your top assumptions — now you need a shippable v1 this week. |
+| <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](#startup-grill) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability with optional interactive defense. Includes an iteration-evidence check. | You want your idea / deck / canvas probed for what would actually kill it — not "thoughts to consider," a verdict you can act on. |
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
@@ -67,14 +68,18 @@ Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`
 
 Two pipelines the shelf is designed to support end-to-end.
 
-### 🧭 Startup pipeline — identity → model → deck → grill
+### 🧭 Startup pipeline — identity → beliefs → tests → deck → grill
 
 ```
-brand-workshop ──▶ business-model-canvas ──▶ pitch-deck ──▶ startup-grill
- (identity kit)       (9-block model)          (HTML deck)     (kill report)
+brand-workshop ──▶ validation-canvas ──▶ riskiest-assumption-test ──▶ pitch-deck ──▶ startup-grill
+ (identity kit)    (Lean Canvas + VPC)    (test plan + results)        (HTML deck)    (kill report)
 ```
 
-The artifacts compound. `brand-workshop` writes `brand-kit/design-system.md` — `business-model-canvas` and `pitch-deck` both pick it up automatically for consistent tokens. `business-model-canvas` writes `business-model.md` — `pitch-deck` seeds slides 2, 3, 6, and 7 from it and cross-checks the Ask against the Stress Tests. `startup-grill` reads all three (Stress Tests, slide-contract anti-patterns, brand positioning) as direct grilling ammunition and ships a `grill/kill-report.md` with a verdict you can act on. You don't have to wire anything up; running them in order is the wiring.
+**Sequential by default. No one-shot orchestrator** — each skill is invocable independently, but composes through filesystem conventions. **Inter-step gates are weighted:** `brand-workshop` → `validation-canvas` is light; `validation-canvas` → `riskiest-assumption-test` is medium (RAT STOPs without canvas); `riskiest-assumption-test` → `pitch-deck` is **heavy** (pitch-deck STOPs without populated `## Results` for top-3 hypotheses; override with `[PRE-VALIDATION DRAFT]` watermark); `pitch-deck` → `startup-grill` is light. **Loop-back is first-class** — invalidated hypotheses route back to `validation-canvas` in update mode, not a pipeline restart. Pristine pipelines (no canvas revision after testing) are the actual yellow flag, which `startup-grill` checks for in its kill-report `## Iteration Evidence` section.
+
+**The artifacts compound.** `brand-workshop` writes `brand-kit/design-system.md` — `validation-canvas`, `riskiest-assumption-test`, and `pitch-deck` all pick it up automatically for consistent tokens. `validation-canvas` writes `validation-canvas.md` (Lean Canvas + VPC) — its Stress Tests section seeds `riskiest-assumption-test`'s assumption dump; `pitch-deck` reads it to seed slides 2, 3, 6 and cross-checks the Ask against the Stress Tests. `riskiest-assumption-test` writes `rat/assumption-test-plan.md` + interactive `rat/test-matrix.html` — `pitch-deck` reads `## Top 3 Hypotheses` and `## Results` to inform the Validation slide and Traction claims; `startup-grill` reads them for the iteration-evidence check. `startup-grill` reads everything as direct grilling ammunition and ships a `grill/kill-report.md` with a verdict you can act on. You don't have to wire anything up; running them in order is the wiring.
+
+**Pipeline philosophy:** validation is iterative, not a checklist. The pipeline does NOT include a one-shot "run everything" mode by design — that would teach the wrong mental model. Each step's value is in the slow consideration it forces.
 
 ### 🛰 Delegation pipeline — discuss → build
 
@@ -190,40 +195,65 @@ team-composer ──▶ sub-agent-coordinator
 
 ### <img src="assets/icons/brand-workshop.svg" alt="" width="48" align="middle"/> &nbsp;`brand-workshop`
 
-**What it does.** Assembles a virtual creative team, runs a Discovery → Concept → Creation workshop, and ships a launch-ready identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), and a starter `design-system.md` (tokens only) that downstream skills like `pitch-deck` and `business-model-canvas` pick up automatically.
+**What it does.** Assembles a virtual creative team, runs a Discovery → Concept → Creation workshop, and ships a launch-ready identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), and a starter `design-system.md` (tokens only) that downstream skills like `validation-canvas`, `riskiest-assumption-test`, and `pitch-deck` pick up automatically.
 
 **Reach for it when.** You need a real identity package — positioning, voice, archetype, tagline, and mark all sharing the same rationale — not just a logo doodle. Skip the positioning and the logo is just a doodle.
 
 **Pairs well with.**
-- [`business-model-canvas`](#business-model-canvas) — auto-applies brand tokens from the kit.
+- [`validation-canvas`](#validation-canvas) — suggested next step. Auto-applies brand tokens from the kit.
+- [`riskiest-assumption-test`](#riskiest-assumption-test) — two steps downstream. Reads design tokens for the matrix HTML.
 - [`pitch-deck`](#pitch-deck) — reads `brand-kit/design-system.md` for consistent branding and owns the deck construction itself.
 - [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) — localize the descriptions pack while preserving tone.
 
 **Try it.**
 - "Run the full workshop for my meditation startup — identity, mark, voice, and design tokens."
 - "I have a one-paragraph startup idea. Take me through Discovery → Concept → Creation and ship a launch-ready kit."
-- "Brand-workshop first, then hand the kit to `business-model-canvas` and `pitch-deck` so the whole startup artifact chain shares tokens."
+- "Brand-workshop first, then hand the kit to `validation-canvas` and `pitch-deck` so the whole startup artifact chain shares tokens."
 
 ---
 
-<a id="business-model-canvas"></a>
+<a id="validation-canvas"></a>
 
-### <img src="assets/icons/business-model-canvas.svg" alt="" width="48" align="middle"/> &nbsp;`business-model-canvas`
+### <img src="assets/icons/validation-canvas.svg" alt="" width="48" align="middle"/> &nbsp;`validation-canvas`
 
-**What it does.** Interviews a founder block-by-block (customer-first reasoning order, at most three questions per block, total ~45–75 minutes for a first pass) and produces two files: `business-model.md` (canonical, editable, deck-parseable) and `business-model.html` (self-contained Osterwalder-grid canvas that prints cleanly to PDF). Runs a mandatory cross-block consistency pass, and ends with an explicit Stress Tests section naming the 3–5 assumptions most likely to kill the business.
+**What it does.** Interviews a founder with **experience-adaptive intake** (3 calibration questions at invocation → Guided / Focused / Compressed-with-Challenge mode), then produces a combined **Lean Canvas (Maurya) + Value Proposition Canvas (Osterwalder)** as `validation-canvas.md` (canonical, editable, downstream-parseable) and `validation-canvas.html` (self-contained visual that prints cleanly to PDF). Runs a mandatory 7-question cross-block consistency pass + a VPC fit check. Ends with a Stress Tests section naming the 3–5 assumptions most likely to kill the business — which feeds directly into `riskiest-assumption-test` next.
 
-**Reach for it when.** You need a business model that holds up to scrutiny before building the deck, the product, or the hire plan — with specificity gates that refuse category answers ("SMBs", "the internet") and customer-first reasoning enforced, not assumed.
+**Replaces** the prior `business-model-canvas` skill. Lean Canvas is the right altitude for an idea-stage founder; the 9-block Osterwalder BMC is a Series-A operating-plan tool — wrong altitude. For board packets that explicitly need the 9-block grid, use `team-composer` with `@startup_strategist` for a discussion-grade fill.
+
+**Reach for it when.** You need a beliefs artifact — *what do we believe?* — that holds up to scrutiny before testing assumptions, building the deck, or pitching. The intake adapts to your experience: first-timers get definitions and examples; repeat founders get push-back, not teaching.
 
 **Pairs well with.**
 - [`brand-workshop`](#brand-workshop) — upstream input; the canvas auto-applies brand tokens from the kit.
-- [`pitch-deck`](#pitch-deck) — downstream: `business-model.md` seeds slides 2, 3, 6, 7 and the Ask gets cross-checked against the Stress Tests.
+- [`riskiest-assumption-test`](#riskiest-assumption-test) — required next step (medium gate). Stress Tests seed the assumption dump; invalidated hypotheses loop back here in update mode.
+- [`pitch-deck`](#pitch-deck) — two steps downstream. Reads canvas headings to seed slides 2, 3, 6 and cross-checks the Ask against Stress Tests.
 - [`team-composer`](#team-composer) — when a block is contested, kick it to a full multi-role team for a focused session.
-- [`startup-grill`](#startup-grill) — after the canvas is done, run the grill to attack the Stress Tests with an adversarial panel.
+- [`startup-grill`](#startup-grill) — last step. Reads Stress Tests and un-relieved Pains as direct grilling ammunition.
 
 **Try it.**
-- "Interview me block-by-block and produce a BMC for my AI code-review tool."
+- "Build a validation canvas for my AI code-review tool."
+- "I'm a 3rd-time founder pivoting into healthtech — run the canvas in compressed mode and challenge me hard."
 - "`brand-workshop` is done — use `brand-kit/` as input and generate the canvas with auto-styled tokens."
-- "Build the canvas; when we're done, hand it to `pitch-deck` to seed slides 2/3/6/7 and cross-check the Ask."
+
+---
+
+<a id="riskiest-assumption-test"></a>
+
+### <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="48" align="middle"/> &nbsp;`riskiest-assumption-test`
+
+**What it does.** Reads `validation-canvas.md`, dumps every implicit belief categorized into desirability / viability / feasibility (Christensen), ranks them on a 3×3 risk × impact matrix, picks Top 3 from the high-impact corner, rewrites each as a falsifiable hypothesis ("We believe X. We'll know this is true if [measurable outcome] within [time]"), matches each to the cheapest test method (5-interview rule, landing page, fake-door, concierge MVP, Wizard of Oz, pre-sale, smoke test, or expert interview), and ships `rat/assumption-test-plan.md` (canonical) plus `rat/test-matrix.html` (interactive — drag to re-rank, click to expand, color-coded by category, prints cleanly).
+
+**Reach for it when.** You have beliefs in your canvas but no proof. You need to know what to test first, with the cheapest experiment that could actually falsify it. Investors and advisors keep asking "what have you validated?" and you don't have a structured answer. Or: a previous test invalidated something — re-invoke this skill in update mode to revise the plan and pick the next top 3.
+
+**Pairs well with.**
+- [`validation-canvas`](#validation-canvas) — required upstream (medium gate). Loop-back target when hypotheses invalidate.
+- [`pitch-deck`](#pitch-deck) — downstream (heavy gate). Pitch refuses to ship without populated `## Results` for top-3 hypotheses.
+- [`startup-grill`](#startup-grill) — last step. Reads Results to check for iteration evidence.
+- [`team-composer`](#team-composer) — discussion-grade alternative for multi-role validation strategy.
+
+**Try it.**
+- "I just shipped my validation canvas — what should I test first?"
+- "Design a fake-door test for my new auto-AP feature."
+- "My pre-sale failed — only 1 of 15 paid. Update my test plan and route me back to the canvas."
 
 ---
 
@@ -236,15 +266,16 @@ team-composer ──▶ sub-agent-coordinator
 **Reach for it when.** An investor said "send me your deck" and you need a shippable v1 this week with the actual content filled in — not a template waiting to be filled later.
 
 **Pairs well with.**
-- [`business-model-canvas`](#business-model-canvas) — reads `business-model.md` to seed slides and cross-check the Ask.
-- [`brand-workshop`](#brand-workshop) — reads `brand-kit/design-system.md` and `brand-kit/deck/pitch-template.html` for visuals.
+- [`validation-canvas`](#validation-canvas) — two steps upstream. Reads `validation-canvas.md` to seed slides 2/3/6 and cross-check the Ask.
+- [`riskiest-assumption-test`](#riskiest-assumption-test) — required direct upstream (heavy gate). Reads `rat/assumption-test-plan.md` Top 3 + Results to inform the Validation slide and Traction claims; refuses to ship a clean deck without populated Results (override: `[PRE-VALIDATION DRAFT]` watermark).
+- [`brand-workshop`](#brand-workshop) — reads `brand-kit/design-system.md` for visuals.
 - [`team-composer`](#team-composer) — when a slide claim is weak, spin up `@startup_strategist + @vc_partner + @senior_copywriter` to pressure-test it before shipping.
 - [`startup-grill`](#startup-grill) — after this skill ships, run the grill to probe the deck adversarially before it lands in an investor's inbox.
 
 **Try it.**
 - "Investor wants my seed deck by Friday — start the structured interview."
-- "Use `business-model.md` and `brand-kit/` to build the deck; refuse to ship with any cardinal sin."
-- "After v1 ships, kick it to `team-composer` (`@startup_strategist` + `@vc_partner` + `@senior_copywriter`) to pressure-test the Market slide."
+- "Use `validation-canvas.md` and `rat/assumption-test-plan.md` to build the deck; refuse to ship with any cardinal sin."
+- "I haven't tested anything yet but I want to see what the deck would look like — pre-validation draft mode."
 
 ---
 
@@ -257,7 +288,8 @@ team-composer ──▶ sub-agent-coordinator
 **Reach for it when.** You have a startup idea, deck, or business model and want it probed adversarially before you commit time, money, or a fundraise. You want a verdict you can act on, not "thoughts to consider." You want the lethal weakness named declaratively, with a falsifier attached, so you know exactly what evidence to bring.
 
 **Pairs well with.**
-- [`business-model-canvas`](#business-model-canvas) — upstream input. The Stress Tests section is direct grilling ammunition.
+- [`validation-canvas`](#validation-canvas) — upstream input. The Stress Tests section + un-relieved VPC Pains are direct grilling ammunition.
+- [`riskiest-assumption-test`](#riskiest-assumption-test) — upstream input. The iteration-evidence check (`## Iteration Evidence` section in the kill report, added v2.0.0) yellow-flags pristine pipelines where the canvas wasn't updated after RAT testing.
 - [`pitch-deck`](#pitch-deck) — upstream input. The deck's required-slot answers become starting probes.
 - [`brand-workshop`](#brand-workshop) — upstream input when slot 5 = `@brand_strategist`; the panel reads `brand-brief.md`'s Positioning section.
 - [`team-composer`](#team-composer) — instead of this skill when the user wants brainstorming or constructive review. After this skill when the kill report's `Suggested attack` lines need a multi-role workshop.
@@ -265,7 +297,7 @@ team-composer ──▶ sub-agent-coordinator
 
 **Try it.**
 - "Grill my startup idea: a B2B SaaS for accounting firms — pre-seed, $4k MRR, two co-founders. What would kill us?"
-- "I have `business-model.md` and `pitch/deck.html` ready — run the grill with the deck as primary input."
+- "I have `validation-canvas.md`, `rat/assumption-test-plan.md`, and `pitch/deck.html` ready — run the grill with the deck as primary input."
 - "Defending L1. We have a 6-month cohort retention curve at 87% logo retention. Re-probe."
 
 ---
@@ -283,7 +315,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`1.0.0` marks the structural shape — a single `agent-skills` plugin with narrow skills under `skills/`. Interface-level breaking changes will still be called out; expect active iteration on individual skills.
+`2.0.0` is the current release. Major changes from v1.x: the prior `business-model-canvas` skill was renamed to `validation-canvas` and refocused on the Lean Canvas + Value Proposition Canvas (the right altitude for an idea-stage founder); a new `riskiest-assumption-test` skill was inserted between canvas and pitch-deck; pipeline gates (light/medium/heavy/light) are enforced inside each skill's Phase 0; loop-back is first-class. See [CHANGELOG.md](CHANGELOG.md) for the full migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

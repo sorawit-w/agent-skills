@@ -87,8 +87,11 @@ they can't answer the three questions, the deck isn't ready for cold-email send
 - [ ] Ask amount on slide 10 is realistically fundable by the milestones listed
       (no "raise $2M, do $6M of work").
 - [ ] Team on slide 8 has the skills implied by the use-of-funds plan on slide 10.
-- [ ] If `business-model.md` has a top-severity Stress Test, the deck addresses it
+- [ ] If `validation-canvas.md` has a top-severity Stress Test, the deck addresses it
       (in Traction, Competition, or Ask) — not hidden in appendix.
+- [ ] If `rat/assumption-test-plan.md` has any **invalidated** top-3 hypothesis,
+      the canvas was updated AND the deck reflects the updated belief (not the
+      invalidated one). If you skipped the loop-back, this is a hard stop.
 
 ---
 

@@ -326,8 +326,13 @@ Before rendering, verify:
   $2M but milestones imply $6M of work, the numbers don't hold.
 - **Team (slide 8) has the skills to execute the ask (slide 10).** If the ask buys
   "10 sales hires" but the team has no GTM leader, flag it.
-- **If `business-model.md` Stress Tests identify a critical assumption, the deck
+- **If `validation-canvas.md` Stress Tests identify a critical assumption, the deck
   either addresses it (ideally in Traction) or acknowledges it in the Ask.**
+- **If `rat/assumption-test-plan.md` has confirmed any top-3 hypothesis, surface
+  the result on Traction (or on a dedicated Validation slide before Traction).
+  If any top-3 hypothesis was invalidated, the canvas MUST have been updated and
+  the deck MUST reflect the updated belief — otherwise the deck is built on a
+  belief the founder already knows is wrong.**
 
 **Single-slide rework:** when the user asks to rework only one slide, these
 same consistency checks apply against that slide's named adjacencies — see

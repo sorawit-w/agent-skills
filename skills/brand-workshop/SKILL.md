@@ -121,14 +121,14 @@ remix/audit tool for a live brand.
 > drift between the two skills causes real maintenance pain. When revisited,
 > unify role tag format (`@hyphen-case` here vs. `@snake_case` in team-composer).
 
-> **Planned companion plugins:** `pitch-deck` (founder-filled content that
-> consumes the brand assets produced here) and `business-model-canvas`
-> (@startup_strategist territory). Each will live in its own plugin directory,
-> matching the pattern used across this repo. They are intentionally not folded
-> into this skill: both require founder inputs — traction, revenue model, cost
-> structure, ask size — that are out of scope for a brand workshop. When those
-> plugins ship, add them to the "Use instead" table above. An umbrella
-> `startup-launch-kit` plugin may later orchestrate all three.
+> **Companion plugins (the startup pipeline).** This skill is step 1 of 5:
+> `brand-workshop` → `validation-canvas` → `riskiest-assumption-test` →
+> `pitch-deck` → `startup-grill`. Each lives in its own plugin directory.
+> They are intentionally not folded together: each requires founder inputs
+> (traction, revenue model, ask size, test results) that are out of scope
+> for a brand workshop. After this skill ships, suggest `validation-canvas`
+> as the next step — see Phase 7 (Closing). An umbrella `startup-launch-kit`
+> plugin may later orchestrate all five.
 
 ---
 
@@ -398,8 +398,9 @@ shipping. If any variant is over its hard limit, rewrite — do not truncate.
 
 Output `design-system.md` **as its own standalone file at the root of the output folder**.
 Do NOT fold the design system into `brand-brief.md` as a section — downstream plugins
-(`business-model-canvas`, `pitch-deck`) parse `design-system.md` directly and will not
-find tokens buried in another file. Scope is deliberately narrow: **tokens, not components**.
+(`validation-canvas`, `pitch-deck`, `riskiest-assumption-test`) parse `design-system.md`
+directly and will not find tokens buried in another file. Scope is deliberately narrow:
+**tokens, not components**.
 Button styles, form fields, grids, and motion depend on the engineering stack this skill
 does not choose — the implementing team adds those.
 
@@ -407,8 +408,8 @@ does not choose — the implementing team adds those.
 hex values as `Primary`, `Secondary`, `Accent` (these are contract keys —
 downstream plugins grep them) AND include the Token Mapping Convention block
 below verbatim. Without the block, maintainers reading `design-system.md` have
-no way to know that `--bmc-accent` and `--deck-accent` bind to `Primary`, not
-to `Accent`.
+no way to know that `--canvas-accent`, `--rat-accent`, and `--deck-accent`
+bind to `Primary`, not to `Accent`.
 
 **Copy this block verbatim into `design-system.md`, immediately after the
 Color Tokens hex list:**
@@ -417,14 +418,18 @@ Color Tokens hex list:**
 > **Token Mapping Convention** (cross-plugin contract — do not remove)
 >
 > - `Primary` → the brand hero color. Downstream plugins
->   (`business-model-canvas`, `pitch-deck`) bind it to their `--bmc-accent`
->   / `--deck-accent` token.
+>   (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) bind it
+>   to their `--canvas-accent` / `--rat-accent` / `--deck-accent` token.
 > - `Secondary` → a supporting brand color, not the hero.
 > - `Accent` → a secondary highlight color, NOT the hero. Do not let
->   downstream plugins bind this to `--bmc-accent` / `--deck-accent`.
+>   downstream plugins bind this to their accent tokens.
 >
 > The labels `Primary`, `Secondary`, `Accent` are contract keys — do not
 > rename them even if the palette is re-themed.
+>
+> Note (v2.0.0): the prior `--bmc-accent` token has been renamed to
+> `--canvas-accent` in lockstep with the `business-model-canvas` →
+> `validation-canvas` skill rename.
 ```
 
 Verify before shipping:
@@ -551,6 +556,23 @@ direction fundamentally changes). Update the brief to reflect changes.
 
 ---
 
+## Closing — suggest the next step (light gate)
+
+After the brand kit is presented, **end the response with a one-line suggestion
+to run `validation-canvas` next**:
+
+> *"Brand without a validated market is a logo on a hypothesis. Next step:
+> run `validation-canvas` to articulate what you believe about the problem,
+> segment, and economics. The canvas reads `brand-kit/design-system.md`
+> automatically for tokens."*
+
+This is a **light gate** — informational, not enforced. The founder is free to
+ship just the brand kit; this skill's job ends with the kit. But surfacing the
+next step prevents the common failure mode where a founder ships a beautiful
+identity for an idea they haven't pressure-tested.
+
+---
+
 ## Quality Checklist
 
 Before presenting final output, verify:
@@ -589,7 +611,8 @@ Before presenting final output, verify:
 | Skill | When to Use |
 |-------|-------------|
 | `pitch-deck` (our own) | After this skill, when the founder wants a real investor deck. `pitch-deck` consumes `design-system.md` (and optionally `brand-brief.md` + `descriptions.md`) emitted by this skill. Brand-workshop does not pre-emit a deck template — `pitch-deck` owns deck construction end-to-end. Do not duplicate deck-construction logic here. |
-| `business-model-canvas` (our own) | Either before or after. Brand-workshop assumes the founder knows their positioning; if they don't, run `business-model-canvas` first. |
+| `validation-canvas` (our own) | **Suggested next step (light gate).** After this skill ships the brand kit, the founder is expected to articulate beliefs about market and economics. Brand without a validated market is a logo on a hypothesis. |
+| `riskiest-assumption-test` (our own) | Two steps downstream of this skill. Tests the beliefs the validation canvas captures. |
 | `theme-factory` (Anthropic) | When the founder wants the design tokens applied to another artifact (landing page, one-pager). Brand-workshop's `design-system.md` is intentionally shaped to feed theme-factory. |
 | `canvas-design` (Anthropic) | When the founder wants high-fidelity static brand art (posters, campaign keyart) beyond a logo. Brand-workshop's SVG logo is the minimum viable mark, not a full art direction. |
 | `algorithmic-art` (Anthropic) | When the brand direction calls for generative / procedural visual motifs rather than a single mark. |

@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="business-model-canvas icon: nine-block grid with three filled cells" style="image-rendering: pixelated;">
-  <title>business-model-canvas</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="validation-canvas icon: Lean Canvas grid with three filled cells (Problem, UVP, Revenue Streams)" style="image-rendering: pixelated;">
+  <title>validation-canvas</title>
   <!-- Filled cells first (under the grid lines) -->
   <!-- TL cell: beige -->
   <g fill="#c9b58a">

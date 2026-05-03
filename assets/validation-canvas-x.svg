@@ -1,0 +1,348 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="validation-canvas — Lean Canvas + VPC, honestly filled" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>validation-canvas — Lean Canvas + VPC, honestly filled</title>
+  <desc>Pixel-art X/Twitter banner for the validation-canvas Claude Code plugin: title and pipeline phases on the left with a stress-tests card that hands off to riskiest-assumption-test, Maurya's Lean Canvas grid on the right (Problem · Solution+Key Metrics · UVP · Unfair Advantage+Channels · Customer Segments · Cost Structure · Revenue Streams) with a problem-and-customer-first dual arrow above it, and a Value Proposition Canvas fit-check strip beneath the grid (Customer Profile ↔ Value Map across Jobs/Pains/Gains and Products/Pain Relievers/Gain Creators).</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-vc-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan-vc-x)"/>
+
+  <!-- =========== TITLE BLOCK (left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="40" y="58" font-size="32" font-weight="700" fill="#1f2937" letter-spacing="1">validation-canvas</text>
+    <text x="40" y="86" font-size="15" fill="#6b7280">Lean Canvas + VPC,</text>
+    <text x="40" y="104" font-size="15" fill="#6b7280">honestly filled.</text>
+    <text x="40" y="132" font-size="10" fill="#9ca3af" letter-spacing="2">INTAKE · LEAN+VPC · CONSISTENCY · STRESS</text>
+  </g>
+
+  <!-- summary copy -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#374151">
+    <text x="40" y="172" font-size="12" letter-spacing="1">start with problem AND customer.</text>
+    <text x="40" y="188" font-size="12" letter-spacing="1">end with stress tests that</text>
+    <text x="40" y="204" font-size="12" letter-spacing="1">feed the next step.</text>
+  </g>
+
+  <!-- Stress tests card on the left -->
+  <g transform="translate(40, 226)">
+    <rect x="0" y="0" width="280" height="90" fill="#fffbeb"/>
+    <rect x="0" y="0" width="280" height="6" fill="#d97706"/>
+    <rect x="0" y="84" width="280" height="6" fill="#d97706"/>
+    <rect x="0" y="0" width="6" height="90" fill="#d97706"/>
+    <rect x="274" y="0" width="6" height="90" fill="#d97706"/>
+    <!-- warning triangle -->
+    <g transform="translate(16, 22)" fill="#d97706">
+      <rect x="12" y="0" width="4" height="4"/>
+      <rect x="10" y="4" width="8" height="4"/>
+      <rect x="8"  y="8" width="12" height="4"/>
+      <rect x="6"  y="12" width="16" height="4"/>
+      <rect x="4"  y="16" width="20" height="4"/>
+      <rect x="13" y="6" width="2" height="6" fill="#fffbeb"/>
+      <rect x="13" y="14" width="2" height="2" fill="#fffbeb"/>
+    </g>
+    <text x="50" y="32" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#78350f" letter-spacing="2">STRESS TESTS</text>
+    <text x="50" y="48" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#78350f" letter-spacing="1">3–5 assumptions that could</text>
+    <text x="50" y="60" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#78350f" letter-spacing="1">kill the business, flagged</text>
+    <text x="50" y="72" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#78350f" letter-spacing="1">with disconfirming experiments.</text>
+  </g>
+
+  <!-- → riskiest-assumption-test handoff badge (left, below stress tests) -->
+  <g transform="translate(40, 332)">
+    <rect x="0" y="0" width="280" height="58" fill="#1f2937"/>
+    <rect x="0" y="0" width="280" height="6" fill="#fbbf24"/>
+    <text x="140" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9ca3af" text-anchor="middle" letter-spacing="2">SEED FOR NEXT STEP →</text>
+    <text x="140" y="46" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" fill="#fde68a" text-anchor="middle" letter-spacing="1">riskiest-assumption-test</text>
+  </g>
+
+  <!-- footer tagline left -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#9ca3af">
+    <text x="40" y="430" font-size="10" letter-spacing="3">UNKNOWNS ARE DATA · NOT FILLER</text>
+  </g>
+
+  <!-- =========== DUAL REASONING ARROWS (above grid) =========== -->
+  <!-- left arrow: Problem → ... pointing rightward -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect x="360" y="74" width="380" height="3" fill="#d97706"/>
+    <rect x="736" y="70" width="3" height="11" fill="#d97706"/>
+    <rect x="732" y="72" width="4" height="7"  fill="#d97706"/>
+    <rect x="728" y="74" width="4" height="3"  fill="#d97706"/>
+    <text x="550" y="64" font-size="11" font-weight="700" fill="#d97706" letter-spacing="3" text-anchor="middle">PROBLEM-FIRST →</text>
+
+    <!-- right arrow: Customer Segments ← ... pointing leftward -->
+    <rect x="800" y="74" width="380" height="3" fill="#047857"/>
+    <rect x="800" y="70" width="3" height="11" fill="#047857"/>
+    <rect x="804" y="72" width="4" height="7"  fill="#047857"/>
+    <rect x="808" y="74" width="4" height="3"  fill="#047857"/>
+    <text x="990" y="64" font-size="11" font-weight="700" fill="#047857" letter-spacing="3" text-anchor="middle">← CUSTOMER-FIRST</text>
+
+    <!-- meet at UVP label -->
+    <text x="770" y="68" font-size="9" fill="#9ca3af" letter-spacing="1" text-anchor="middle">▼ UVP ▼</text>
+  </g>
+
+  <!-- ================================================================== -->
+  <!-- LEAN CANVAS GRID (Maurya layout) — x=360..1560, y=88..308 (220h)    -->
+  <!-- 5 cols × 240w each. Top row 130h (split cells 65h). Bottom 90h.     -->
+  <!-- ================================================================== -->
+  <g>
+    <!-- Outer frame -->
+    <rect x="360" y="88" width="1200" height="220" fill="#ffffff" stroke="#1f2937" stroke-width="2"/>
+
+    <!-- ============ COL 1 — PROBLEM (full height = 220) ============ -->
+    <rect x="360" y="88" width="240" height="220" fill="#fef3c7"/>
+    <rect x="360" y="88" width="240" height="6"   fill="#d97706"/>
+    <text x="372" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#78350f" letter-spacing="2">PROBLEM</text>
+    <!-- "1" badge -->
+    <g transform="translate(572, 100)">
+      <rect x="0" y="0" width="20" height="14" fill="#d97706"/>
+      <text x="10" y="11" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#fef3c7" text-anchor="middle">1</text>
+    </g>
+    <!-- top 3 problems -->
+    <rect x="372" y="128" width="190" height="3" fill="#d97706"/>
+    <rect x="372" y="138" width="200" height="3" fill="#d97706"/>
+    <rect x="372" y="148" width="170" height="3" fill="#d97706"/>
+    <!-- alternatives label + lines -->
+    <text x="372" y="172" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#92400e" letter-spacing="1">EXISTING ALTERNATIVES:</text>
+    <rect x="372" y="184" width="160" height="3" fill="#92400e"/>
+    <rect x="372" y="194" width="180" height="3" fill="#92400e"/>
+    <!-- pain glyph -->
+    <g transform="translate(394, 222)" fill="#92400e">
+      <rect x="0"  y="14" width="60" height="10"/>
+      <rect x="10" y="4"  width="40" height="30" fill="none" stroke="#92400e" stroke-width="2"/>
+      <rect x="22" y="14" width="4"  height="2" fill="#fef3c7"/>
+      <rect x="34" y="14" width="4"  height="2" fill="#fef3c7"/>
+      <rect x="22" y="22" width="4"  height="2" fill="#fef3c7"/>
+      <rect x="34" y="22" width="4"  height="2" fill="#fef3c7"/>
+      <rect x="28" y="18" width="4"  height="2" fill="#fef3c7"/>
+    </g>
+    <text x="476" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#92400e">that they</text>
+    <text x="476" y="264" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#92400e">currently use.</text>
+
+    <!-- ============ COL 2 — SOLUTION (top half) ============ -->
+    <rect x="600" y="88"  width="240" height="110" fill="#dbeafe"/>
+    <rect x="600" y="88"  width="240" height="6"   fill="#1d4ed8"/>
+    <text x="612" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#1e3a8a" letter-spacing="2">SOLUTION</text>
+    <rect x="612" y="128" width="180" height="3" fill="#1d4ed8"/>
+    <rect x="612" y="138" width="156" height="3" fill="#1d4ed8"/>
+    <rect x="612" y="148" width="200" height="3" fill="#1d4ed8"/>
+    <text x="612" y="178" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1e40af">▸ top 3 features only</text>
+
+    <!-- ============ COL 2 — KEY METRICS (bottom half) ============ -->
+    <rect x="600" y="198" width="240" height="110" fill="#dbeafe"/>
+    <rect x="600" y="198" width="240" height="3"   fill="#1d4ed8"/>
+    <text x="612" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#1e3a8a" letter-spacing="2">KEY METRICS</text>
+    <rect x="612" y="238" width="170" height="3" fill="#1d4ed8"/>
+    <rect x="612" y="248" width="148" height="3" fill="#1d4ed8"/>
+    <rect x="612" y="258" width="184" height="3" fill="#1d4ed8"/>
+    <!-- mini chart -->
+    <g transform="translate(744, 270)" fill="#1d4ed8">
+      <rect x="0"  y="20" width="6"  height="10"/>
+      <rect x="10" y="14" width="6"  height="16"/>
+      <rect x="20" y="6"  width="6"  height="24"/>
+      <rect x="30" y="0"  width="6"  height="30"/>
+    </g>
+    <text x="612" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1e40af">▸ AARRR (pirate metrics)</text>
+
+    <!-- ============ COL 3 — UNIQUE VALUE PROPOSITION (full height) ============ -->
+    <rect x="840" y="88" width="240" height="220" fill="#fce7f3"/>
+    <rect x="840" y="88" width="240" height="6"   fill="#be185d"/>
+    <text x="852" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#9d174d" letter-spacing="2">UNIQUE VALUE PROP.</text>
+    <!-- big quote-mark glyph -->
+    <g transform="translate(910, 130)" fill="#be185d">
+      <rect x="0"  y="0"  width="10" height="6"/>
+      <rect x="0"  y="6"  width="6"  height="14"/>
+      <rect x="0"  y="20" width="10" height="6"/>
+      <rect x="22" y="0"  width="10" height="6"/>
+      <rect x="26" y="6"  width="6"  height="14"/>
+      <rect x="22" y="20" width="10" height="6"/>
+      <rect x="44" y="0"  width="10" height="6"/>
+      <rect x="44" y="6"  width="6"  height="14"/>
+      <rect x="44" y="20" width="10" height="6"/>
+      <rect x="66" y="0"  width="10" height="6"/>
+      <rect x="70" y="6"  width="6"  height="14"/>
+      <rect x="66" y="20" width="10" height="6"/>
+    </g>
+    <!-- one-sentence UVP placeholder -->
+    <rect x="852" y="172" width="200" height="3" fill="#be185d"/>
+    <rect x="852" y="182" width="180" height="3" fill="#be185d"/>
+    <rect x="852" y="192" width="190" height="3" fill="#be185d"/>
+    <text x="852" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9d174d">▸ ONE sentence,</text>
+    <text x="852" y="230" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9d174d">  in segment's words</text>
+    <!-- sub: high-concept pitch -->
+    <rect x="852" y="250" width="160" height="2" fill="#db2777"/>
+    <rect x="852" y="258" width="180" height="2" fill="#db2777"/>
+    <text x="852" y="280" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#9d174d">▸ high-concept pitch</text>
+    <text x="852" y="292" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#9d174d">  (optional)</text>
+
+    <!-- ============ COL 4 — UNFAIR ADVANTAGE (top half) ============ -->
+    <rect x="1080" y="88"  width="240" height="110" fill="#e0e7ff"/>
+    <rect x="1080" y="88"  width="240" height="6"   fill="#4338ca"/>
+    <text x="1092" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#312e81" letter-spacing="2">UNFAIR ADVANTAGE</text>
+    <rect x="1092" y="128" width="170" height="3" fill="#4338ca"/>
+    <rect x="1092" y="138" width="150" height="3" fill="#4338ca"/>
+    <rect x="1092" y="148" width="184" height="3" fill="#4338ca"/>
+    <!-- shield glyph -->
+    <g transform="translate(1264, 158)" fill="#4338ca">
+      <rect x="6"  y="0"  width="14" height="2"/>
+      <rect x="2"  y="2"  width="22" height="2"/>
+      <rect x="0"  y="4"  width="26" height="14"/>
+      <rect x="2"  y="18" width="22" height="2"/>
+      <rect x="6"  y="20" width="14" height="2"/>
+      <rect x="10" y="22" width="6"  height="4"/>
+      <rect x="11" y="9"  width="4"  height="2" fill="#e0e7ff"/>
+      <rect x="9"  y="11" width="8"  height="2" fill="#e0e7ff"/>
+      <rect x="11" y="13" width="4"  height="2" fill="#e0e7ff"/>
+    </g>
+    <text x="1092" y="178" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#312e81">▸ can't be copied or bought</text>
+
+    <!-- ============ COL 4 — CHANNELS (bottom half) ============ -->
+    <rect x="1080" y="198" width="240" height="110" fill="#e0e7ff"/>
+    <rect x="1080" y="198" width="240" height="3"   fill="#4338ca"/>
+    <text x="1092" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#312e81" letter-spacing="2">CHANNELS</text>
+    <rect x="1092" y="238" width="184" height="3" fill="#4338ca"/>
+    <rect x="1092" y="248" width="160" height="3" fill="#4338ca"/>
+    <rect x="1092" y="258" width="170" height="3" fill="#4338ca"/>
+    <!-- antenna glyph -->
+    <g transform="translate(1252, 268)" fill="#4338ca">
+      <rect x="14" y="0"  width="4"  height="32"/>
+      <rect x="6"  y="8"  width="4"  height="2"/>
+      <rect x="22" y="8"  width="4"  height="2"/>
+      <rect x="2"  y="4"  width="4"  height="2"/>
+      <rect x="26" y="4"  width="4"  height="2"/>
+      <rect x="0"  y="0"  width="4"  height="2"/>
+      <rect x="28" y="0"  width="4"  height="2"/>
+    </g>
+    <text x="1092" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#312e81">▸ named platform · path to seg</text>
+
+    <!-- ============ COL 5 — CUSTOMER SEGMENTS (full height) ============ -->
+    <rect x="1320" y="88" width="240" height="220" fill="#d1fae5"/>
+    <rect x="1320" y="88" width="240" height="6"   fill="#047857"/>
+    <text x="1332" y="112" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#064e3b" letter-spacing="2">CUSTOMER SEGMENTS</text>
+    <!-- "1" badge -->
+    <g transform="translate(1532, 100)">
+      <rect x="0" y="0" width="20" height="14" fill="#047857"/>
+      <text x="10" y="11" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#d1fae5" text-anchor="middle">1</text>
+    </g>
+    <!-- target customers -->
+    <text x="1332" y="130" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#047857">▸ target customers:</text>
+    <rect x="1332" y="138" width="180" height="3" fill="#047857"/>
+    <rect x="1332" y="148" width="160" height="3" fill="#047857"/>
+    <!-- early adopters -->
+    <text x="1332" y="172" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#047857">▸ EARLY ADOPTERS:</text>
+    <rect x="1332" y="180" width="170" height="3" fill="#047857"/>
+    <rect x="1332" y="190" width="150" height="3" fill="#047857"/>
+    <!-- people icons -->
+    <g transform="translate(1346, 222)" fill="#047857">
+      <rect x="0"  y="0" width="10" height="10"/>
+      <rect x="-2" y="12" width="14" height="14"/>
+      <rect x="22" y="0" width="10" height="10"/>
+      <rect x="20" y="12" width="14" height="14"/>
+      <rect x="44" y="0" width="10" height="10"/>
+      <rect x="42" y="12" width="14" height="14"/>
+      <rect x="66" y="0" width="10" height="10"/>
+      <rect x="64" y="12" width="14" height="14"/>
+      <rect x="88" y="0" width="10" height="10"/>
+      <rect x="86" y="12" width="14" height="14"/>
+    </g>
+    <text x="1332" y="280" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#047857">name them by pattern, not</text>
+    <text x="1332" y="292" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#047857">demographic — "ICP-shaped"</text>
+  </g>
+
+  <!-- BOTTOM ROW — Cost Structure | Revenue Streams (rendered outside the 220h grid frame, below) -->
+  <!-- Re-think: the 220h frame is full canvas height including bottom. So Cost/Revenue need to live INSIDE that 220h. -->
+  <!-- I'll cover the bottom of the existing top-row split with overlay rects to create the Cost/Revenue strip. -->
+
+  <!-- Wait, my grid above only used the top portion. Let me overlay Cost/Revenue at the bottom -->
+  <!-- Actually I already have Solution+KeyMetrics filling COL 2 and Unfair+Channels filling COL 4 to height 308.   -->
+  <!-- So Cost/Revenue need to render BELOW the grid frame at y > 308. Let me NOT put them inside the 220h frame.  -->
+
+  <!-- COST STRUCTURE (bottom-left half, BELOW grid) -->
+  <g>
+    <rect x="360" y="316" width="600" height="44" fill="#fee2e2"/>
+    <rect x="360" y="316" width="600" height="4"  fill="#b91c1c"/>
+    <text x="372" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#7f1d1d" letter-spacing="2">COST STRUCTURE</text>
+    <rect x="372" y="346" width="240" height="3" fill="#b91c1c"/>
+    <rect x="616" y="346" width="180" height="3" fill="#b91c1c"/>
+    <!-- coin stack -->
+    <g transform="translate(906, 322)">
+      <rect x="0"  y="26" width="28" height="6" fill="#b91c1c"/>
+      <rect x="2"  y="18" width="24" height="6" fill="#b91c1c"/>
+      <rect x="4"  y="10" width="20" height="6" fill="#b91c1c"/>
+      <rect x="6"  y="2"  width="16" height="6" fill="#b91c1c"/>
+    </g>
+    <text x="950" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#7f1d1d" text-anchor="end">CAC</text>
+  </g>
+
+  <!-- REVENUE STREAMS (bottom-right half, BELOW grid) -->
+  <g>
+    <rect x="960" y="316" width="600" height="44" fill="#d1fae5"/>
+    <rect x="960" y="316" width="600" height="4"  fill="#047857"/>
+    <text x="972" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#064e3b" letter-spacing="2">REVENUE STREAMS</text>
+    <rect x="972" y="346" width="240" height="3" fill="#047857"/>
+    <rect x="1216" y="346" width="180" height="3" fill="#047857"/>
+    <!-- up-arrow glyph -->
+    <g transform="translate(1500, 322)">
+      <rect x="12" y="0"  width="6"  height="32" fill="#047857"/>
+      <rect x="6"  y="6"  width="18" height="4"  fill="#047857"/>
+      <rect x="0"  y="12" width="30" height="4"  fill="#047857"/>
+    </g>
+    <text x="1554" y="358" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#064e3b" text-anchor="end">LTV</text>
+  </g>
+
+  <!-- =========== VPC FIT-CHECK STRIP (bottom, full width below grid+cost/rev) =========== -->
+  <g>
+    <rect x="360" y="372" width="1200" height="68" fill="#ffffff" stroke="#0e7490" stroke-width="2"/>
+    <rect x="360" y="372" width="1200" height="16" fill="#0e7490"/>
+    <text x="960" y="384" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="3">VALUE PROPOSITION CANVAS — FIT CHECK</text>
+
+    <!-- VALUE MAP (left) -->
+    <g transform="translate(376, 396)">
+      <text x="6" y="10" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#155e75" letter-spacing="2">VALUE MAP</text>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#155e75">
+        <rect x="0"   y="14" width="140" height="22" fill="#cffafe" stroke="#0e7490" stroke-width="1"/>
+        <text x="70"  y="29" text-anchor="middle">Products &amp; Services</text>
+
+        <rect x="146" y="14" width="140" height="22" fill="#cffafe" stroke="#0e7490" stroke-width="1"/>
+        <text x="216" y="29" text-anchor="middle">Pain Relievers</text>
+
+        <rect x="292" y="14" width="140" height="22" fill="#cffafe" stroke="#0e7490" stroke-width="1"/>
+        <text x="362" y="29" text-anchor="middle">Gain Creators</text>
+      </g>
+    </g>
+
+    <!-- FIT badge in middle -->
+    <g transform="translate(826, 396)">
+      <rect x="0" y="14" width="268" height="22" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
+      <!-- left arrow -->
+      <rect x="14" y="24" width="22" height="3" fill="#d97706"/>
+      <rect x="13" y="22" width="3"  height="7" fill="#d97706"/>
+      <rect x="11" y="23" width="3"  height="5" fill="#d97706"/>
+      <!-- right arrow -->
+      <rect x="232" y="24" width="22" height="3" fill="#d97706"/>
+      <rect x="252" y="22" width="3"  height="7" fill="#d97706"/>
+      <rect x="255" y="23" width="3"  height="5" fill="#d97706"/>
+      <!-- center text -->
+      <text x="134" y="29" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#78350f" text-anchor="middle" letter-spacing="2">FIT CHECK · 1:1</text>
+    </g>
+
+    <!-- CUSTOMER PROFILE (right) -->
+    <g transform="translate(1112, 396)">
+      <text x="6" y="10" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#064e3b" letter-spacing="2">CUSTOMER PROFILE</text>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#064e3b">
+        <rect x="0"   y="14" width="140" height="22" fill="#a7f3d0" stroke="#047857" stroke-width="1"/>
+        <text x="70"  y="29" text-anchor="middle">Customer Jobs</text>
+
+        <rect x="146" y="14" width="140" height="22" fill="#a7f3d0" stroke="#047857" stroke-width="1"/>
+        <text x="216" y="29" text-anchor="middle">Customer Pains</text>
+
+        <rect x="292" y="14" width="140" height="22" fill="#a7f3d0" stroke="#047857" stroke-width="1"/>
+        <text x="362" y="29" text-anchor="middle">Customer Gains</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- footer note (right side, bottom) -->
+  <text x="1560" y="455" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9ca3af" text-anchor="end">v2.0.0 · validation-canvas.{md,html} · zero network deps</text>
+</svg>

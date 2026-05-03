@@ -24,7 +24,8 @@ the same append rule.
 
 ## File structure
 
-The report has **six required sections** in this exact order:
+The report has **seven required sections** in this exact order (Section 7
+added in v2.0.0):
 
 ```markdown
 # Kill Report — [Startup name]
@@ -36,10 +37,11 @@ The report has **six required sections** in this exact order:
 ## 4. Material & Fixable
 ## 5. Diligence Asks
 ## 6. Panel
+## 7. Iteration Evidence
 ```
 
-Sections 2 and 3 may be empty (state "None surfaced this run"); sections 1, 4,
-5, and 6 are mandatory and non-empty.
+Sections 2 and 3 may be empty (state "None surfaced this run"); sections 1,
+4, 5, 6, and 7 are mandatory and non-empty.
 
 ---
 
@@ -181,6 +183,82 @@ evidence diligence is not covered in this run."*
 
 ---
 
+## Section 7 — Iteration Evidence
+
+A short read on whether the founder is closing the loop on what they learn.
+Pulled from the iteration-evidence check in SKILL.md Phase 1 Step 1c.
+
+This section is **always present** but its content scales with what the
+working directory shows. Three states:
+
+### State A — Full pipeline with evidence of iteration
+
+```markdown
+## 7. Iteration Evidence
+
+✅ Pipeline shows iteration. `validation-canvas.md` was updated on
+[YYYY-MM-DD], after RAT Result entries on [YYYY-MM-DD]. Specifically,
+[block name] was revised in response to [hypothesis #N] being
+[confirmed | invalidated]. The deck reflects the updated belief.
+
+**Probe focus:** the founder is using the loop. Probes can assume the
+canvas is current and focus on what hasn't yet been tested.
+```
+
+### State B — Pristine pipeline (yellow flag)
+
+```markdown
+## 7. Iteration Evidence
+
+🟡 Pristine pipeline — `validation-canvas.md` was NOT updated after RAT
+Results landed. Either every top-3 hypothesis was confirmed (rare; be
+skeptical) or the founder is not closing the loop on what they're
+learning. The deck currently reflects the pre-test canvas.
+
+**Probe focus:** ask why no canvas update. If the answer is "everything
+confirmed", probe each top-3 result individually for whether the
+confirmation criterion was actually met. If the answer is "I haven't
+gotten to it", treat the deck's Traction claims as belief, not evidence.
+```
+
+### State C — RAT missing entirely (large yellow flag)
+
+```markdown
+## 7. Iteration Evidence
+
+🟠 No assumption testing in the pipeline — `rat/assumption-test-plan.md`
+is missing. The pitch was built directly from the canvas with no
+intervening validation step. **Treat every Traction-flavored claim as
+belief, not evidence.**
+
+**Probe focus:** for each major claim in the deck (Problem severity, UVP
+fit, channel CAC, willingness to pay), ask: "what test confirms this
+isn't your assumption?" Most answers will be vibes. Surface accordingly
+in Lethal & Fixable.
+```
+
+### State D — Canvas missing (panel can't cross-check)
+
+```markdown
+## 7. Iteration Evidence
+
+⚪ No `validation-canvas.md` in the working directory. Panel cannot
+cross-check the deck's claims against documented Stress Tests. The kill
+report is bounded by what the founder put in the brief or the deck
+directly.
+
+**Probe focus:** ask the founder for a one-paragraph problem and segment
+description before grilling, or accept that the panel will probe with
+less ammunition than usual.
+```
+
+This section is **light gate output** (informational, not a blocker — the
+kill report is the terminal pipeline step). But it surfaces a pattern that
+predicts startup outcomes well: founders who iterate beat founders who
+ship clean pipelines without revision.
+
+---
+
 ## Forbidden patterns
 
 The skill must refuse to ship a kill report that:
@@ -202,7 +280,7 @@ The skill must refuse to ship a kill report that:
 
 Before shipping `grill/kill-report.md`, verify:
 
-- [ ] All six sections present in the exact order above
+- [ ] All seven sections present in the exact order above
 - [ ] Verdict label is one of the four canonical labels
 - [ ] Verdict references at least one specific weakness from sections 2–4
 - [ ] Lethal & Fixable has 2–3 items (no more, no fewer if `Investable with conditions`)
@@ -211,5 +289,6 @@ Before shipping `grill/kill-report.md`, verify:
 - [ ] Diligence Asks are evidence requests, not change-the-business actions
 - [ ] No weakness appears in two severity sections
 - [ ] Panel table lists every role that contributed in Round 1
+- [ ] Iteration Evidence section reflects actual state of working directory (full / pristine / no-RAT / no-canvas)
 
 If any box is unchecked, fix before presenting the file.

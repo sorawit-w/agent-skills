@@ -14,7 +14,7 @@ brand-kit token substitution and print-to-PDF support.
 - AAA contrast for body text on projection backgrounds. AA minimum for accent elements.
 
 **How to use this template:**
-1. Read `business-model.md` and `brand-kit/design-system.md` if present.
+1. Read `validation-canvas.md`, `rat/assumption-test-plan.md`, and `brand-kit/design-system.md` if present.
 2. For each of the 10 slides, extract the required slots from `slide-contracts.md`.
 3. Substitute each `{{slide_N_…}}` placeholder with real founder content.
 4. If any cardinal slot is `[fill in: …]`, render the warning slide at position 0 (see

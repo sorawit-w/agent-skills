@@ -27,7 +27,7 @@ defensive.}}
 
 **Deep-dive redirect (optional):**
 {{If the pushback turns into a 5-minute tangent, where do you take them?
-Specifically: "Appendix slide X" or "the cohort data in business-model.md" or
+Specifically: "Appendix slide X" or "the validation result in rat/assumption-test-plan.md" or
 "pull up the metrics dashboard at [url]."}}
 ```
 
