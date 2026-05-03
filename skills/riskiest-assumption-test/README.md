@@ -1,5 +1,5 @@
 <p align="center">
-  <em>riskiest-assumption-test — convert beliefs into falsifiable hypotheses with success and kill criteria</em>
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/riskiest-assumption-test-li.svg" alt="riskiest-assumption-test — falsifiable hypotheses with success and kill criteria" width="100%"/>
 </p>
 
 # riskiest-assumption-test

@@ -1,5 +1,5 @@
 <p align="center">
-  <em>startup-launch-kit — opt-in orchestrator that sequences the five-step startup pipeline with shared state, never bypassing any gate.</em>
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/startup-launch-kit-li.svg" alt="startup-launch-kit — opt-in orchestrator that sequences the five-step startup pipeline" width="100%"/>
 </p>
 
 # startup-launch-kit

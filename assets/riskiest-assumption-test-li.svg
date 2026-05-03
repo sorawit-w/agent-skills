@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="riskiest-assumption-test — falsifiable hypotheses with success and kill criteria" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>riskiest-assumption-test — falsifiable hypotheses with success and kill criteria</title>
+  <desc>Pixel-art banner for the riskiest-assumption-test Claude Code plugin: title at top, large 3x3 risk-by-impact matrix with the high-risk + high-impact corner highlighted in gold and three TOP 3 hypothesis cards inside it, color-coded by category (red = desirability, blue = viability, green = feasibility), an 8-method catalog strip on the right, and a five-phase footer ribbon (READ - DUMP - RANK - REWRITE - TEST).</desc>
+
+  <defs>
+    <pattern id="scan-rat-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-rat-li)"/>
+
+  <!-- =========== TITLE BLOCK (centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="56" font-size="40" font-weight="700" fill="#1f2937" letter-spacing="2">riskiest-assumption-test</text>
+    <text x="600" y="86" font-size="17" fill="#6b7280">what have we proven? falsifiable hypotheses, success and kill criteria.</text>
+  </g>
+
+  <!-- =========== AXIS LABELS =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <!-- Y-axis label "IMPACT" rotated -->
+    <text x="68" y="290" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3" transform="rotate(-90, 68, 290)" text-anchor="middle">IMPACT →</text>
+    <!-- X-axis label "RISK" -->
+    <text x="430" y="496" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3" text-anchor="middle">RISK →</text>
+    <!-- Tick labels Y -->
+    <text x="86"  y="200" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="end">HIGH</text>
+    <text x="86"  y="290" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="end">MED</text>
+    <text x="86"  y="380" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="end">LOW</text>
+    <!-- Tick labels X -->
+    <text x="230" y="478" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="middle">LOW</text>
+    <text x="430" y="478" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="middle">MED</text>
+    <text x="630" y="478" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="middle">HIGH</text>
+  </g>
+
+  <!-- =========== 3x3 RISK x IMPACT MATRIX =========== -->
+  <!-- Frame: x=130, y=160, w=600, h=300 (each cell 200x100) -->
+  <rect x="130" y="160" width="600" height="300" fill="#ffffff" stroke="#1f2937" stroke-width="3"/>
+  <!-- Vertical grid -->
+  <rect x="330" y="160" width="2" height="300" fill="#1f2937"/>
+  <rect x="530" y="160" width="2" height="300" fill="#1f2937"/>
+  <!-- Horizontal grid -->
+  <rect x="130" y="260" width="600" height="2" fill="#1f2937"/>
+  <rect x="130" y="360" width="600" height="2" fill="#1f2937"/>
+
+  <!-- Top-3 highlight cell (high impact + high risk = top-right) -->
+  <rect x="532" y="162" width="196" height="96" fill="#fef3c7"/>
+  <!-- Top-3 stripe -->
+  <rect x="532" y="162" width="196" height="6" fill="#d97706"/>
+
+  <!-- TOP 3 label badge inside the highlight cell -->
+  <g transform="translate(636, 174)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect x="0" y="0" width="80" height="14" fill="#d97706"/>
+    <text x="40" y="11" font-size="9" font-weight="700" fill="#fef3c7" text-anchor="middle" letter-spacing="2">⭐ TOP 3</text>
+  </g>
+
+  <!-- 3 hypothesis cards inside Top-3 cell — color coded by category -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9">
+    <!-- Hypothesis 1 (desirability — red) -->
+    <rect x="540" y="194" width="40" height="22" fill="#ffffff" stroke="#b91c1c" stroke-width="1"/>
+    <rect x="540" y="194" width="40" height="3" fill="#b91c1c"/>
+    <text x="560" y="208" fill="#7f1d1d" text-anchor="middle">H1·D</text>
+    <!-- Hypothesis 2 (viability — blue) -->
+    <rect x="586" y="194" width="40" height="22" fill="#ffffff" stroke="#1d4ed8" stroke-width="1"/>
+    <rect x="586" y="194" width="40" height="3" fill="#1d4ed8"/>
+    <text x="606" y="208" fill="#1e3a8a" text-anchor="middle">H2·V</text>
+    <!-- Hypothesis 3 (feasibility — green) -->
+    <rect x="632" y="194" width="40" height="22" fill="#ffffff" stroke="#047857" stroke-width="1"/>
+    <rect x="632" y="194" width="40" height="3" fill="#047857"/>
+    <text x="652" y="208" fill="#064e3b" text-anchor="middle">H3·F</text>
+    <!-- Tiny "★" markers -->
+    <text x="552" y="240" fill="#8a6f00" font-size="10">★</text>
+    <text x="598" y="240" fill="#8a6f00" font-size="10">★</text>
+    <text x="644" y="240" fill="#8a6f00" font-size="10">★</text>
+  </g>
+
+  <!-- Other matrix cells with smaller dots representing lower-priority assumptions -->
+  <g fill="#9ca3af">
+    <!-- High impact + Med risk (also good candidates if Top 3 fillers needed) -->
+    <rect x="396" y="200" width="6" height="6"/>
+    <rect x="442" y="222" width="6" height="6"/>
+    <!-- Med impact + High risk -->
+    <rect x="600" y="290" width="6" height="6"/>
+    <rect x="650" y="320" width="6" height="6"/>
+    <!-- Med impact + Med risk -->
+    <rect x="406" y="300" width="6" height="6"/>
+    <rect x="450" y="332" width="6" height="6"/>
+    <!-- Low impact (don't bother — fewer dots) -->
+    <rect x="206" y="400" width="6" height="6"/>
+    <rect x="246" y="430" width="6" height="6"/>
+  </g>
+
+  <!-- "★ TEST THESE FIRST" arrow pointing to Top 3 cell -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="475" y="148" font-size="10" font-weight="700" fill="#d97706" letter-spacing="2" text-anchor="end">⭐ TEST THESE FIRST</text>
+    <!-- arrow -->
+    <rect x="488" y="142" width="40" height="3" fill="#d97706"/>
+    <rect x="528" y="138" width="3" height="11" fill="#d97706"/>
+    <rect x="525" y="140" width="4" height="7" fill="#d97706"/>
+    <rect x="522" y="142" width="4" height="3" fill="#d97706"/>
+  </g>
+
+  <!-- =========== HYPOTHESIS DETAIL CARDS (right side) =========== -->
+  <g transform="translate(770, 160)">
+    <!-- Card 1 - Desirability -->
+    <rect x="0"  y="0"  width="370" height="86" fill="#ffffff" stroke="#b91c1c" stroke-width="2"/>
+    <rect x="0"  y="0"  width="370" height="8"  fill="#b91c1c"/>
+    <text x="12" y="28" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#7f1d1d" letter-spacing="2">H1 · DESIRABILITY</text>
+    <text x="12" y="46" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">we believe</text>
+    <rect x="80" y="40" width="280" height="3" fill="#b91c1c"/>
+    <rect x="80" y="50" width="240" height="3" fill="#b91c1c"/>
+    <text x="12" y="68" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#92400e">▸ TEST: 5-interview rule · 8h · 14d</text>
+    <text x="12" y="80" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#92400e">▸ KILL: ≤ 1 of 5 confirms unprompted</text>
+
+    <!-- Card 2 - Viability -->
+    <rect x="0"  y="106" width="370" height="86" fill="#ffffff" stroke="#1d4ed8" stroke-width="2"/>
+    <rect x="0"  y="106" width="370" height="8"  fill="#1d4ed8"/>
+    <text x="12" y="134" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#1e3a8a" letter-spacing="2">H2 · VIABILITY</text>
+    <text x="12" y="152" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">we believe</text>
+    <rect x="80" y="146" width="280" height="3" fill="#1d4ed8"/>
+    <rect x="80" y="156" width="220" height="3" fill="#1d4ed8"/>
+    <text x="12" y="174" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1e40af">▸ TEST: pre-sale or LOI · 8h · 14d</text>
+    <text x="12" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1e40af">▸ KILL: ≤ 1 of 20 buys at full price</text>
+
+    <!-- Card 3 - Feasibility -->
+    <rect x="0"  y="212" width="370" height="86" fill="#ffffff" stroke="#047857" stroke-width="2"/>
+    <rect x="0"  y="212" width="370" height="8"  fill="#047857"/>
+    <text x="12" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#064e3b" letter-spacing="2">H3 · FEASIBILITY</text>
+    <text x="12" y="258" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">we believe</text>
+    <rect x="80" y="252" width="280" height="3" fill="#047857"/>
+    <rect x="80" y="262" width="240" height="3" fill="#047857"/>
+    <text x="12" y="280" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#065f46">▸ TEST: Wizard of Oz · 10h · 14d</text>
+    <text x="12" y="292" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#065f46">▸ KILL: users do not return in week 2</text>
+  </g>
+
+  <!-- =========== METHOD CATALOG STRIP (8 methods, bottom area) =========== -->
+  <g transform="translate(770, 480)">
+    <text x="0" y="0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#374151" letter-spacing="2">8 METHODS</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#6b7280">
+      <text x="0"  y="18">5-int · landing · fake-door</text>
+      <text x="0"  y="32">concierge · WoZ · pre-sale/LOI</text>
+      <text x="0"  y="46">smoke · expert</text>
+    </g>
+    <text x="0" y="68" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#9ca3af" font-style="italic">Maurya · Ries · Fitzpatrick · Savoia · Hall</text>
+  </g>
+
+  <!-- =========== FALSIFIABLE-HYPOTHESIS PATTERN (left bottom) =========== -->
+  <g transform="translate(130, 510)">
+    <rect x="0" y="0" width="600" height="60" fill="#ffffff" stroke="#1f2937" stroke-width="2"/>
+    <rect x="0" y="0" width="600" height="6" fill="#1f2937"/>
+    <text x="12" y="24" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#1f2937" letter-spacing="2">THE PATTERN</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#374151">
+      <text x="12" y="42">we believe [specific assumption about specific segment].</text>
+      <text x="12" y="54" fill="#1f2937" font-weight="700">we'll know this is true if [measurable outcome] within [time bound].</text>
+    </g>
+  </g>
+
+  <!-- =========== PHASE RIBBON (footer) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect x="40"  y="586" width="220" height="32" fill="#fef3c7"/>
+    <rect x="40"  y="586" width="220" height="6"  fill="#d97706"/>
+    <text x="150" y="608" font-size="11" font-weight="700" fill="#78350f" letter-spacing="3" text-anchor="middle">0 · READ</text>
+
+    <rect x="260" y="586" width="220" height="32" fill="#fce7f3"/>
+    <rect x="260" y="586" width="220" height="6"  fill="#be185d"/>
+    <text x="370" y="608" font-size="11" font-weight="700" fill="#9d174d" letter-spacing="3" text-anchor="middle">1 · DUMP</text>
+
+    <rect x="480" y="586" width="220" height="32" fill="#dbeafe"/>
+    <rect x="480" y="586" width="220" height="6"  fill="#1d4ed8"/>
+    <text x="590" y="608" font-size="11" font-weight="700" fill="#1e3a8a" letter-spacing="3" text-anchor="middle">2 · RANK</text>
+
+    <rect x="700" y="586" width="220" height="32" fill="#e0e7ff"/>
+    <rect x="700" y="586" width="220" height="6"  fill="#4338ca"/>
+    <text x="810" y="608" font-size="11" font-weight="700" fill="#312e81" letter-spacing="3" text-anchor="middle">3 · REWRITE</text>
+
+    <rect x="920" y="586" width="240" height="32" fill="#d1fae5"/>
+    <rect x="920" y="586" width="240" height="6"  fill="#047857"/>
+    <text x="1040" y="608" font-size="11" font-weight="700" fill="#064e3b" letter-spacing="3" text-anchor="middle">4 · TEST &amp; SHIP</text>
+  </g>
+</svg>

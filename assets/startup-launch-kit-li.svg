@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="startup-launch-kit — opt-in orchestrator that sequences the five-step startup pipeline" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>startup-launch-kit — opt-in orchestrator that sequences the five-step startup pipeline</title>
+  <desc>Pixel-art banner for the startup-launch-kit Claude Code plugin: title at top, five color-coded pipeline-step boxes connected by gates and a state-tracking thread on the left, kit-manifest.json card on the right showing intake answers and gate-override entry, and a footer note that every individual skill remains independently invocable and no gate is silently bypassed.</desc>
+
+  <defs>
+    <pattern id="scan-slk-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-slk-li)"/>
+
+  <!-- =========== TITLE BLOCK (centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="56" font-size="40" font-weight="700" fill="#1f2937" letter-spacing="2">startup-launch-kit</text>
+    <text x="600" y="86" font-size="17" fill="#6b7280">opt-in orchestrator. sequencing + state, never bypassing any gate.</text>
+  </g>
+
+  <!-- =========== PIPELINE COLUMN (left) =========== -->
+  <!-- 5 pipeline-step boxes, color-coded to match each skill's banner palette -->
+  <!-- Each box: 360 wide × 60 tall -->
+
+  <!-- State-tracking thread (vertical, left) -->
+  <rect x="78" y="135" width="6" height="320" fill="#1f2937"/>
+
+  <!-- Step 1: brand-workshop (amber) -->
+  <g>
+    <rect x="100" y="130" width="380" height="60" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <rect x="100" y="130" width="380" height="6" fill="#d97706"/>
+    <text x="116" y="160" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#78350f" letter-spacing="2">1 · brand-workshop</text>
+    <text x="116" y="180" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#92400e">identity kit → brand-kit/</text>
+    <text x="464" y="170" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#047857" text-anchor="end">✓</text>
+    <!-- thread connector -->
+    <rect x="84" y="156" width="16" height="2" fill="#1f2937"/>
+  </g>
+
+  <!-- Light gate -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="290" y="206" font-size="9" fill="#9ca3af" letter-spacing="2" text-anchor="middle">↓ light gate (suggestion)</text>
+  </g>
+
+  <!-- Step 2: validation-canvas (green) -->
+  <g>
+    <rect x="100" y="216" width="380" height="60" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+    <rect x="100" y="216" width="380" height="6" fill="#047857"/>
+    <text x="116" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#064e3b" letter-spacing="2">2 · validation-canvas</text>
+    <text x="116" y="266" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#065f46">lean + VPC → validation-canvas.{md,html}</text>
+    <text x="464" y="256" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#047857" text-anchor="end">✓</text>
+    <rect x="84" y="242" width="16" height="2" fill="#1f2937"/>
+  </g>
+
+  <!-- Medium gate -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="290" y="293" font-size="9" font-weight="700" fill="#d97706" letter-spacing="2" text-anchor="middle">↓ MEDIUM gate (no override)</text>
+  </g>
+
+  <!-- Step 3: riskiest-assumption-test (gold) -->
+  <g>
+    <rect x="100" y="303" width="380" height="60" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+    <rect x="100" y="303" width="380" height="6" fill="#b45309"/>
+    <text x="116" y="333" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#78350f" letter-spacing="2">3 · riskiest-assumption-test</text>
+    <text x="116" y="353" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#92400e">test plan + matrix → rat/</text>
+    <text x="464" y="343" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#047857" text-anchor="end">✓</text>
+    <rect x="84" y="329" width="16" height="2" fill="#1f2937"/>
+  </g>
+
+  <!-- Heavy gate -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="290" y="380" font-size="9" font-weight="700" fill="#b91c1c" letter-spacing="2" text-anchor="middle">↓ HEAVY gate (override = audit trail)</text>
+  </g>
+
+  <!-- Step 4: pitch-deck (pink) -->
+  <g>
+    <rect x="100" y="390" width="380" height="60" fill="#fce7f3" stroke="#be185d" stroke-width="2"/>
+    <rect x="100" y="390" width="380" height="6" fill="#be185d"/>
+    <text x="116" y="420" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#9d174d" letter-spacing="2">4 · pitch-deck</text>
+    <text x="116" y="440" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#9d174d">HTML deck → pitch/</text>
+    <text x="464" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#047857" text-anchor="end">✓</text>
+    <rect x="84" y="416" width="16" height="2" fill="#1f2937"/>
+  </g>
+
+  <!-- Light gate -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="290" y="466" font-size="9" fill="#9ca3af" letter-spacing="2" text-anchor="middle">↓ light gate</text>
+  </g>
+
+  <!-- Step 5: startup-grill (red) -->
+  <g>
+    <rect x="100" y="476" width="380" height="60" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+    <rect x="100" y="476" width="380" height="6" fill="#b91c1c"/>
+    <text x="116" y="506" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#7f1d1d" letter-spacing="2">5 · startup-grill</text>
+    <text x="116" y="526" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#7f1d1d">kill report → grill/kill-report.md</text>
+    <text x="464" y="516" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#047857" text-anchor="end">✓</text>
+    <rect x="84" y="502" width="16" height="2" fill="#1f2937"/>
+  </g>
+
+  <!-- =========== KIT-MANIFEST.JSON CARD (right) =========== -->
+  <g transform="translate(540, 130)">
+    <rect x="0" y="0" width="620" height="406" fill="#ffffff" stroke="#1f2937" stroke-width="3"/>
+    <rect x="0" y="0" width="620" height="32" fill="#1f2937"/>
+
+    <!-- "kit-manifest.json" header -->
+    <text x="14" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" fill="#fde68a" letter-spacing="2">{ } kit-manifest.json</text>
+    <text x="606" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#9ca3af" letter-spacing="2" text-anchor="end">v1 · atomic writes</text>
+
+    <!-- JSON-ish content -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937">
+      <text x="14"  y="56">{</text>
+      <text x="34"  y="74"><tspan fill="#9d174d">"manifest_version"</tspan>: <tspan fill="#1d4ed8">1</tspan>,</text>
+      <text x="34"  y="92"><tspan fill="#9d174d">"intake_answers"</tspan>: {</text>
+      <text x="54"  y="110" font-size="10"><tspan fill="#9d174d">"founding_history"</tspan>: <tspan fill="#047857">"yes-with-revenue"</tspan>,</text>
+      <text x="54"  y="124" font-size="10"><tspan fill="#9d174d">"domain_experience"</tspan>: <tspan fill="#047857">"yes"</tspan>,</text>
+      <text x="54"  y="138" font-size="10"><tspan fill="#9d174d">"customer_segment_experience"</tspan>: <tspan fill="#047857">"no"</tspan>,</text>
+      <text x="54"  y="152" font-size="10"><tspan fill="#9d174d">"inferred_mode"</tspan>: <tspan fill="#047857">"focused"</tspan></text>
+      <text x="34"  y="170">},</text>
+
+      <text x="34"  y="196"><tspan fill="#9d174d">"steps"</tspan>: [</text>
+      <text x="54"  y="214" font-size="10"><tspan fill="#9d174d">{ "skill"</tspan>: <tspan fill="#047857">"brand-workshop"</tspan>, <tspan fill="#9d174d">"status"</tspan>: <tspan fill="#047857">"completed"</tspan> },</text>
+      <text x="54"  y="230" font-size="10"><tspan fill="#9d174d">{ "skill"</tspan>: <tspan fill="#047857">"validation-canvas"</tspan>, <tspan fill="#9d174d">"status"</tspan>: <tspan fill="#047857">"completed"</tspan>, <tspan fill="#9d174d">"iterations"</tspan>: <tspan fill="#1d4ed8">2</tspan> },</text>
+      <text x="54"  y="246" font-size="10"><tspan fill="#9d174d">{ "skill"</tspan>: <tspan fill="#047857">"riskiest-assumption-test"</tspan>, <tspan fill="#9d174d">"status"</tspan>: <tspan fill="#047857">"completed"</tspan> },</text>
+      <text x="54"  y="262" font-size="10"><tspan fill="#9d174d">{ "skill"</tspan>: <tspan fill="#047857">"pitch-deck"</tspan>, <tspan fill="#9d174d">"status"</tspan>: <tspan fill="#047857">"completed"</tspan> },</text>
+      <text x="54"  y="278" font-size="10"><tspan fill="#9d174d">{ "skill"</tspan>: <tspan fill="#047857">"startup-grill"</tspan>, <tspan fill="#9d174d">"status"</tspan>: <tspan fill="#047857">"completed"</tspan> }</text>
+      <text x="34"  y="294">],</text>
+
+      <text x="34"  y="320"><tspan fill="#9d174d">"gate_overrides"</tspan>: [</text>
+      <text x="54"  y="338" font-size="10">{</text>
+      <text x="74"  y="352" font-size="10"><tspan fill="#9d174d">"gate"</tspan>: <tspan fill="#047857">"pitch-deck-pre-validation"</tspan>,</text>
+      <text x="74"  y="366" font-size="10"><tspan fill="#9d174d">"reason"</tspan>: <tspan fill="#047857">"advisor meeting Friday — directional…"</tspan>,</text>
+      <text x="74"  y="380" font-size="10"><tspan fill="#9d174d">"founder_acknowledged"</tspan>: <tspan fill="#1d4ed8">true</tspan></text>
+      <text x="54"  y="394" font-size="10">}</text>
+      <text x="34"  y="408">]</text>
+    </g>
+  </g>
+
+  <!-- =========== HARD-RULES BAR (footer) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect x="40" y="558" width="1120" height="40" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <rect x="40" y="558" width="1120" height="6" fill="#d97706"/>
+    <text x="600" y="582" font-size="11" font-weight="700" fill="#78350f" letter-spacing="2" text-anchor="middle">HARD RULES</text>
+    <text x="600" y="592" font-size="9" fill="#78350f" letter-spacing="1" text-anchor="middle">independent invocability is sacred · no silent bypass · no batching · loop-back is founder-driven</text>
+  </g>
+
+  <text x="600" y="618" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9ca3af" text-anchor="middle">opt-in convenience, not replacement · every individual skill stays independently invocable · zero network deps</text>
+</svg>

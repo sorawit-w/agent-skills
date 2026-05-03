@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="riskiest-assumption-test — falsifiable hypotheses with success and kill criteria" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>riskiest-assumption-test — falsifiable hypotheses with success and kill criteria</title>
+  <desc>Pixel-art X/Twitter banner for the riskiest-assumption-test Claude Code plugin: title block on the left with the falsifiable-hypothesis pattern, large 3x3 risk-by-impact matrix on the right with the high-risk + high-impact corner highlighted in gold, the canonical 8 test methods listed below, and a footer phase ribbon (READ - DUMP - RANK - REWRITE - TEST).</desc>
+
+  <defs>
+    <pattern id="scan-rat-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan-rat-x)"/>
+
+  <!-- =========== TITLE BLOCK (left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="40" y="58" font-size="32" font-weight="700" fill="#1f2937" letter-spacing="1">riskiest-assumption-test</text>
+    <text x="40" y="86" font-size="15" fill="#6b7280">what have we proven?</text>
+    <text x="40" y="106" font-size="15" fill="#6b7280">falsifiable hypotheses,</text>
+    <text x="40" y="124" font-size="15" fill="#6b7280">success and kill criteria.</text>
+    <text x="40" y="148" font-size="10" fill="#9ca3af" letter-spacing="2">DUMP · RANK · REWRITE · TEST · SHIP</text>
+  </g>
+
+  <!-- =========== THE PATTERN CARD (left bottom) =========== -->
+  <g transform="translate(40, 174)">
+    <rect x="0" y="0" width="540" height="92" fill="#ffffff" stroke="#1f2937" stroke-width="2"/>
+    <rect x="0" y="0" width="540" height="6" fill="#1f2937"/>
+    <text x="12" y="26" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#1f2937" letter-spacing="2">THE PATTERN</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#374151">
+      <text x="12" y="46">we believe</text>
+      <text x="12" y="58" fill="#6b7280">  [specific assumption about specific segment].</text>
+      <text x="12" y="76">we'll know this is true if</text>
+      <text x="12" y="88" fill="#1f2937" font-weight="700">  [measurable outcome] within [time bound].</text>
+    </g>
+  </g>
+
+  <!-- =========== 8 METHOD CATALOG (left bottom) =========== -->
+  <g transform="translate(40, 286)">
+    <text x="0" y="0" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#374151" letter-spacing="2">8 METHODS — CHEAP, FAST FALSIFICATION</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280">
+      <text x="0"   y="20">5-interview rule  ·  landing + email capture  ·  fake-door</text>
+      <text x="0"   y="34">concierge MVP  ·  Wizard of Oz  ·  pre-sale or LOI (B2B)</text>
+      <text x="0"   y="48">smoke test  ·  expert interview</text>
+    </g>
+    <text x="0" y="78" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9ca3af" font-style="italic">Maurya · Ries · Fitzpatrick · Savoia · Hall</text>
+  </g>
+
+  <!-- =========== AXIS LABELS for matrix =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="654" y="248" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3" transform="rotate(-90, 654, 248)" text-anchor="middle">IMPACT →</text>
+    <text x="934" y="408" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3" text-anchor="middle">RISK →</text>
+    <!-- Tick labels Y -->
+    <text x="678" y="180" font-size="9" fill="#9ca3af" letter-spacing="1" text-anchor="end">HIGH</text>
+    <text x="678" y="248" font-size="9" fill="#9ca3af" letter-spacing="1" text-anchor="end">MED</text>
+    <text x="678" y="316" font-size="9" fill="#9ca3af" letter-spacing="1" text-anchor="end">LOW</text>
+    <!-- Tick labels X -->
+    <text x="780"  y="394" font-size="9" fill="#9ca3af" letter-spacing="1" text-anchor="middle">LOW</text>
+    <text x="934"  y="394" font-size="9" fill="#9ca3af" letter-spacing="1" text-anchor="middle">MED</text>
+    <text x="1088" y="394" font-size="9" fill="#9ca3af" letter-spacing="1" text-anchor="middle">HIGH</text>
+  </g>
+
+  <!-- =========== 3x3 MATRIX (center-right, large) =========== -->
+  <!-- Frame: x=700, y=140, w=460, h=240 (each cell ~153x80) -->
+  <rect x="700" y="140" width="460" height="240" fill="#ffffff" stroke="#1f2937" stroke-width="3"/>
+  <rect x="853" y="140" width="2" height="240" fill="#1f2937"/>
+  <rect x="1006" y="140" width="2" height="240" fill="#1f2937"/>
+  <rect x="700" y="220" width="460" height="2" fill="#1f2937"/>
+  <rect x="700" y="300" width="460" height="2" fill="#1f2937"/>
+
+  <!-- Top-3 highlight cell (high impact + high risk = top-right) -->
+  <rect x="1008" y="142" width="150" height="76" fill="#fef3c7"/>
+  <rect x="1008" y="142" width="150" height="5" fill="#d97706"/>
+
+  <!-- TOP 3 badge -->
+  <g transform="translate(1051, 152)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <rect x="0" y="0" width="64" height="14" fill="#d97706"/>
+    <text x="32" y="11" font-size="8" font-weight="700" fill="#fef3c7" text-anchor="middle" letter-spacing="2">⭐ TOP 3</text>
+  </g>
+
+  <!-- 3 hypothesis cards inside Top-3 cell -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8">
+    <rect x="1014" y="170" width="42" height="20" fill="#ffffff" stroke="#b91c1c" stroke-width="1"/>
+    <rect x="1014" y="170" width="42" height="3" fill="#b91c1c"/>
+    <text x="1035" y="184" fill="#7f1d1d" text-anchor="middle">H1·D</text>
+
+    <rect x="1062" y="170" width="42" height="20" fill="#ffffff" stroke="#1d4ed8" stroke-width="1"/>
+    <rect x="1062" y="170" width="42" height="3" fill="#1d4ed8"/>
+    <text x="1083" y="184" fill="#1e3a8a" text-anchor="middle">H2·V</text>
+
+    <rect x="1110" y="170" width="42" height="20" fill="#ffffff" stroke="#047857" stroke-width="1"/>
+    <rect x="1110" y="170" width="42" height="3" fill="#047857"/>
+    <text x="1131" y="184" fill="#064e3b" text-anchor="middle">H3·F</text>
+
+    <text x="1024" y="208" fill="#8a6f00" font-size="9">★</text>
+    <text x="1072" y="208" fill="#8a6f00" font-size="9">★</text>
+    <text x="1120" y="208" fill="#8a6f00" font-size="9">★</text>
+  </g>
+
+  <!-- "TEST FIRST" arrow pointing to Top-3 cell -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="985" y="130" font-size="10" font-weight="700" fill="#d97706" letter-spacing="2" text-anchor="end">⭐ TEST THESE FIRST</text>
+    <rect x="998" y="125" width="40" height="3" fill="#d97706"/>
+    <rect x="1038" y="121" width="3" height="11" fill="#d97706"/>
+    <rect x="1035" y="123" width="4" height="7" fill="#d97706"/>
+    <rect x="1032" y="125" width="4" height="3" fill="#d97706"/>
+  </g>
+
+  <!-- Other matrix cells with smaller dots -->
+  <g fill="#9ca3af">
+    <rect x="900" y="170" width="5" height="5"/>
+    <rect x="935" y="195" width="5" height="5"/>
+    <rect x="1040" y="240" width="5" height="5"/>
+    <rect x="1090" y="270" width="5" height="5"/>
+    <rect x="900" y="240" width="5" height="5"/>
+    <rect x="935" y="270" width="5" height="5"/>
+    <rect x="765" y="320" width="5" height="5"/>
+    <rect x="800" y="350" width="5" height="5"/>
+  </g>
+
+  <!-- Category legend -->
+  <g transform="translate(700, 410)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10">
+    <rect x="0" y="0" width="12" height="12" fill="#ffffff" stroke="#b91c1c" stroke-width="2"/>
+    <text x="18" y="10" fill="#7f1d1d">Desirability</text>
+
+    <rect x="160" y="0" width="12" height="12" fill="#ffffff" stroke="#1d4ed8" stroke-width="2"/>
+    <text x="178" y="10" fill="#1e3a8a">Viability</text>
+
+    <rect x="290" y="0" width="12" height="12" fill="#ffffff" stroke="#047857" stroke-width="2"/>
+    <text x="308" y="10" fill="#064e3b">Feasibility</text>
+
+    <rect x="430" y="0" width="12" height="12" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+    <text x="448" y="10" fill="#78350f">⭐ TOP 3 (test first)</text>
+  </g>
+
+  <!-- footer tagline -->
+  <text x="40" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#9ca3af" letter-spacing="3">CHEAP · FAST · FALSIFIABLE</text>
+  <text x="1560" y="455" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9ca3af" text-anchor="end">v2.1.0 · rat/assumption-test-plan.{md,html} · zero network deps</text>
+</svg>

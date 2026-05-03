@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="startup-launch-kit — opt-in orchestrator that sequences the five-step startup pipeline" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>startup-launch-kit — opt-in orchestrator that sequences the five-step startup pipeline</title>
+  <desc>Pixel-art X/Twitter banner for the startup-launch-kit Claude Code plugin: title block on the left with hard-rules note, horizontal pipeline of five color-coded skill boxes connected by gates of varying weight, and kit-manifest.json card on the right showing the JSON state journal with intake answers and gate-override entry.</desc>
+
+  <defs>
+    <pattern id="scan-slk-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan-slk-x)"/>
+
+  <!-- =========== TITLE BLOCK (left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="40" y="58" font-size="32" font-weight="700" fill="#1f2937" letter-spacing="1">startup-launch-kit</text>
+    <text x="40" y="86" font-size="15" fill="#6b7280">opt-in orchestrator.</text>
+    <text x="40" y="106" font-size="15" fill="#6b7280">sequencing + state.</text>
+    <text x="40" y="124" font-size="15" fill="#6b7280">never bypasses any gate.</text>
+    <text x="40" y="148" font-size="10" fill="#9ca3af" letter-spacing="2">DISCOVER · INTAKE · SEQUENCE · LOOP-BACK · SUMMARY</text>
+  </g>
+
+  <!-- =========== HARD-RULES CARD (left bottom) =========== -->
+  <g transform="translate(40, 174)">
+    <rect x="0" y="0" width="380" height="220" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <rect x="0" y="0" width="380" height="6" fill="#d97706"/>
+    <text x="14" y="26" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#78350f" letter-spacing="2">HARD RULES (non-negotiable)</text>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#78350f">
+      <text x="14" y="50">1. independent invocability is sacred —</text>
+      <text x="14" y="64">   every skill works without orchestrator</text>
+      <text x="14" y="84">2. gates are NEVER bypassed —</text>
+      <text x="14" y="98">   override = explicit reason ≥ 20 chars</text>
+      <text x="14" y="118">3. NO batching —</text>
+      <text x="14" y="132">   each skill surfaces its own prompts</text>
+      <text x="14" y="152">4. loop-back is founder-driven —</text>
+      <text x="14" y="166">   orchestrator recommends, never auto-routes</text>
+      <text x="14" y="186">5. manifest is a hint, never truth —</text>
+      <text x="14" y="200">   filesystem state always wins</text>
+    </g>
+  </g>
+
+  <text x="40" y="430" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#9ca3af" letter-spacing="3">CONVENIENCE · NOT REPLACEMENT</text>
+
+  <!-- =========== HORIZONTAL PIPELINE (top right) =========== -->
+  <!-- 5 boxes side-by-side, x=460 to 1560, y=140-200 -->
+
+  <!-- Step 1 -->
+  <rect x="460" y="140" width="208" height="60" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+  <rect x="460" y="140" width="208" height="6" fill="#d97706"/>
+  <text x="564" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#78350f" letter-spacing="2" text-anchor="middle">1 · brand-workshop</text>
+  <text x="564" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#92400e" text-anchor="middle">→ brand-kit/</text>
+
+  <!-- Light gate arrow -->
+  <g fill="#9ca3af">
+    <rect x="668" y="168" width="6" height="3"/>
+    <rect x="674" y="166" width="3" height="7"/>
+    <rect x="677" y="167" width="3" height="5"/>
+    <rect x="680" y="168" width="3" height="3"/>
+  </g>
+
+  <!-- Step 2 -->
+  <rect x="685" y="140" width="208" height="60" fill="#d1fae5" stroke="#047857" stroke-width="2"/>
+  <rect x="685" y="140" width="208" height="6" fill="#047857"/>
+  <text x="789" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#064e3b" letter-spacing="2" text-anchor="middle">2 · validation-canvas</text>
+  <text x="789" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#065f46" text-anchor="middle">→ validation-canvas.md</text>
+
+  <!-- Medium gate arrow (orange) -->
+  <g fill="#d97706">
+    <rect x="893" y="168" width="6" height="3"/>
+    <rect x="899" y="166" width="3" height="7"/>
+    <rect x="902" y="167" width="3" height="5"/>
+    <rect x="905" y="168" width="3" height="3"/>
+  </g>
+  <text x="901" y="158" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="7" font-weight="700" fill="#d97706" text-anchor="middle">MED</text>
+
+  <!-- Step 3 -->
+  <rect x="910" y="140" width="208" height="60" fill="#fef3c7" stroke="#b45309" stroke-width="2"/>
+  <rect x="910" y="140" width="208" height="6" fill="#b45309"/>
+  <text x="1014" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#78350f" letter-spacing="2" text-anchor="middle">3 · RAT</text>
+  <text x="1014" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#92400e" text-anchor="middle">→ rat/</text>
+
+  <!-- Heavy gate arrow (red) -->
+  <g fill="#b91c1c">
+    <rect x="1118" y="168" width="6" height="3"/>
+    <rect x="1124" y="166" width="3" height="7"/>
+    <rect x="1127" y="167" width="3" height="5"/>
+    <rect x="1130" y="168" width="3" height="3"/>
+  </g>
+  <text x="1126" y="158" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="7" font-weight="700" fill="#b91c1c" text-anchor="middle">HEAVY</text>
+
+  <!-- Step 4 -->
+  <rect x="1135" y="140" width="208" height="60" fill="#fce7f3" stroke="#be185d" stroke-width="2"/>
+  <rect x="1135" y="140" width="208" height="6" fill="#be185d"/>
+  <text x="1239" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#9d174d" letter-spacing="2" text-anchor="middle">4 · pitch-deck</text>
+  <text x="1239" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9d174d" text-anchor="middle">→ pitch/deck.html</text>
+
+  <!-- Light gate arrow -->
+  <g fill="#9ca3af">
+    <rect x="1343" y="168" width="6" height="3"/>
+    <rect x="1349" y="166" width="3" height="7"/>
+    <rect x="1352" y="167" width="3" height="5"/>
+    <rect x="1355" y="168" width="3" height="3"/>
+  </g>
+
+  <!-- Step 5 -->
+  <rect x="1360" y="140" width="200" height="60" fill="#fee2e2" stroke="#b91c1c" stroke-width="2"/>
+  <rect x="1360" y="140" width="200" height="6" fill="#b91c1c"/>
+  <text x="1460" y="166" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#7f1d1d" letter-spacing="2" text-anchor="middle">5 · startup-grill</text>
+  <text x="1460" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#7f1d1d" text-anchor="middle">→ grill/kill-report.md</text>
+
+  <!-- Loop-back curved arrow indicator -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="1010" y="232" font-size="10" font-weight="700" fill="#6b7280" letter-spacing="2" text-anchor="middle">↶ loop-back (founder-driven)</text>
+  </g>
+
+  <!-- =========== KIT-MANIFEST.JSON CARD (right) =========== -->
+  <g transform="translate(460, 250)">
+    <rect x="0" y="0" width="1100" height="180" fill="#ffffff" stroke="#1f2937" stroke-width="3"/>
+    <rect x="0" y="0" width="1100" height="26" fill="#1f2937"/>
+
+    <text x="14" y="18" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#fde68a" letter-spacing="2">{ } kit-manifest.json</text>
+    <text x="1086" y="18" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#9ca3af" letter-spacing="2" text-anchor="end">v1 · atomic writes · audit trail</text>
+
+    <!-- Two-column JSON-ish content -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+      <!-- LEFT column: intake_answers -->
+      <text x="14"  y="48"><tspan fill="#9d174d">"intake_answers"</tspan>: {</text>
+      <text x="34"  y="64"><tspan fill="#9d174d">"founding_history"</tspan>: <tspan fill="#047857">"yes-with-revenue"</tspan>,</text>
+      <text x="34"  y="80"><tspan fill="#9d174d">"domain_experience"</tspan>: <tspan fill="#047857">"yes"</tspan>,</text>
+      <text x="34"  y="96"><tspan fill="#9d174d">"customer_segment_experience"</tspan>: <tspan fill="#047857">"no"</tspan>,</text>
+      <text x="34"  y="112"><tspan fill="#9d174d">"inferred_mode"</tspan>: <tspan fill="#047857">"focused"</tspan></text>
+      <text x="14"  y="128">},</text>
+
+      <text x="14"  y="148"><tspan fill="#9d174d">"steps"</tspan>: [ <tspan fill="#9ca3af">5 entries — see pipeline above</tspan> ],</text>
+
+      <!-- RIGHT column (offset to x=560): gate_overrides -->
+      <text x="560"  y="48"><tspan fill="#9d174d">"gate_overrides"</tspan>: [</text>
+      <text x="580"  y="64">{</text>
+      <text x="600"  y="80"><tspan fill="#9d174d">"gate"</tspan>: <tspan fill="#047857">"pitch-deck-pre-validation"</tspan>,</text>
+      <text x="600"  y="96"><tspan fill="#9d174d">"timestamp"</tspan>: <tspan fill="#047857">"2026-05-11T12:30:00Z"</tspan>,</text>
+      <text x="600"  y="112"><tspan fill="#9d174d">"reason"</tspan>: <tspan fill="#047857">"advisor meeting Friday —"</tspan></text>
+      <text x="664"  y="128"><tspan fill="#047857">"directional feedback before H3 lands"</tspan>,</text>
+      <text x="600"  y="144"><tspan fill="#9d174d">"founder_acknowledged"</tspan>: <tspan fill="#1d4ed8">true</tspan></text>
+      <text x="580"  y="160">}</text>
+    </g>
+  </g>
+
+  <text x="1560" y="455" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#9ca3af" text-anchor="end">v2.1.0 · kit-manifest.json · zero network deps</text>
+</svg>
