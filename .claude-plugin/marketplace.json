@@ -9,8 +9,8 @@
     {
       "name": "agent-skills",
       "source": "./",
-      "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, i18n-contextual-rewriting, pitch-deck, skill-evaluator, startup-grill, sub-agent-coordinator, team-composer, and tech-stack-recommendations.",
-      "version": "2.0.0",
+      "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, and tech-stack-recommendations.",
+      "version": "2.1.0",
       "author": {
         "name": "sorawit-w"
       },
@@ -21,6 +21,7 @@
         "lean-canvas",
         "vpc",
         "assumption-testing",
+        "orchestrator",
         "i18n",
         "pitch",
         "skill",

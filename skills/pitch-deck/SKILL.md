@@ -105,6 +105,37 @@ and the investor-read-test question it must pass.
 **Goal:** refuse to ship a clean investor deck built on untested assumptions.
 A pitch deck without validation is sales theater.
 
+### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+
+If `kit-manifest.json` exists in the working-directory root, read it. Use it
+as a hint, never as a bypass:
+
+- **Override-flag (special case for this skill):** if the manifest's
+  `gate_overrides[]` array contains an entry with `gate:
+  "pitch-deck-pre-validation"` and `founder_acknowledged: true`, honor the
+  override silently (proceed with `[PRE-VALIDATION DRAFT]` watermark per
+  Step 0.2 below) but surface a one-line acknowledgment: *"Manifest records
+  a [PRE-VALIDATION DRAFT] override from [date] — reason: [reason].
+  Proceeding with watermark."* Do NOT ask the founder to re-confirm; the
+  manifest entry IS the consent record.
+- If the manifest lists `pitch-deck` as `completed` with a recent mtime,
+  surface that fact: *"Manifest says you ran pitch-deck on [date]. Update
+  mode (single-slide rework or full rebuild), fresh run, or skip to grill?"*
+- Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
+  the issue inline and proceed as if no manifest exists.
+
+After this skill ships its artifacts (Phase 3 — build & ship), if
+`kit-manifest.json` exists, append/update this skill's entry. If a new
+override was used during this run (founder declared a pre-validation
+draft), record it in `gate_overrides[]` with timestamp + reason +
+`founder_acknowledged: true`. Use atomic write (write `.tmp`, then
+rename). If the manifest doesn't exist, do **NOT** create it — that's the
+`startup-launch-kit` orchestrator's job. See
+[`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
+for the schema and
+[`startup-launch-kit/references/gate-override-protocol.md`](../startup-launch-kit/references/gate-override-protocol.md)
+for the override format.
+
 ### Step 0.1 — Check for `rat/assumption-test-plan.md`
 
 If the file is **missing**, STOP and route the founder to

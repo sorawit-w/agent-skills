@@ -130,6 +130,33 @@ files from prior sessions are appended-to, never overwritten.
 
 **Goal:** assemble the brief the panel will grill.
 
+### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+
+If `kit-manifest.json` exists in the working-directory root, read it. Use it
+as a hint, never as a bypass:
+
+- If the manifest lists `startup-grill` as `completed` with a recent mtime,
+  surface that fact: *"Manifest says you ran the grill on [date]. New
+  defense round (interactive mode), fresh grill (rebuild kill report from
+  scratch), or skip and review the prior report?"*
+- The manifest's `gate_overrides[]` array is direct grilling ammunition:
+  every recorded override is a deliberate decision the founder made
+  to bypass a gate, and is worth probing in Round 1. Surface them in the
+  kill-report's `## Iteration Evidence` section per the Phase 1 Step 1c
+  iteration-evidence check.
+- The manifest's `iterations` counter on `validation-canvas` (incremented
+  on each loop-back) directly informs the iteration-evidence read: zero
+  iterations + populated RAT Results = pristine pipeline yellow flag.
+- Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
+  the issue inline and proceed as if no manifest exists.
+
+After this skill ships its kill report (Phase 3), if `kit-manifest.json`
+exists, append/update this skill's entry. Use atomic write (write `.tmp`,
+then rename). If the manifest doesn't exist, do **NOT** create it — that's
+the `startup-launch-kit` orchestrator's job. See
+[`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
+for the schema.
+
 ### Step 1 — Read the working directory
 
 Check for these files in order. When present, parse them as input — the

@@ -141,6 +141,33 @@ examples, and the stress tests that surface shaky assumptions.
 experience level. A first-time founder needs definitions and examples; a repeat
 founder needs push-back, not teaching.
 
+### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+
+If `kit-manifest.json` exists in the working-directory root, read it. Use it
+as a hint, never as a bypass:
+
+- **Intake-cache (special case for this skill):** if the manifest's
+  `intake_answers` cache is populated (the orchestrator already asked the
+  3-question intake), present the cached answers and **ask the founder to
+  confirm or update them** — do **NOT** silently skip Step 0.1. Single code
+  path through Phase 0; manifest is a hint that lets you start with defaults.
+  Example prompt: *"Manifest says: repeat founder, no domain experience, has
+  segment experience → focused mode. Confirm, or update any of these?"*
+- If the manifest lists `validation-canvas` as `completed` with a recent
+  mtime, surface that fact: *"Manifest says you ran validation-canvas on
+  [date]. Update mode (revise specific blocks per loop-back protocol),
+  fresh run, or skip to the next step?"*
+- Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
+  the issue inline and proceed as if no manifest exists.
+
+After this skill ships its artifacts (Phase 3 — render & ship), if
+`kit-manifest.json` exists, append/update this skill's entry. Use atomic
+write (write `.tmp`, then rename). Increment the `iterations` counter on
+update-mode runs. If the manifest doesn't exist, do **NOT** create it —
+that's the `startup-launch-kit` orchestrator's job. See
+[`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
+for the schema.
+
 ### Step 0.1 — Scan context for experience signals
 
 Before asking any calibration questions, scan the conversation context, working

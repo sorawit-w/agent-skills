@@ -19,7 +19,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of ten specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of eleven specialized skills in one go.
 - **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, and founders who want their startup adversarially probed.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -59,6 +59,7 @@ Click a skill to jump to its details.
 | <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="64" align="middle"/> | [`riskiest-assumption-test`](#riskiest-assumption-test) | Convert canvas Stress Tests into falsifiable hypotheses with success/kill criteria and chosen test methods. Ships a 1-page test plan + interactive risk × impact matrix. | You have beliefs in your canvas and need to know *what to test first*, with the cheapest experiment that could falsify it. |
 | <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](#pitch-deck) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. Heavy gate on `riskiest-assumption-test` results. | An investor said "send me your deck" and you've already validated your top assumptions — now you need a shippable v1 this week. |
 | <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](#startup-grill) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability with optional interactive defense. Includes an iteration-evidence check. | You want your idea / deck / canvas probed for what would actually kill it — not "thoughts to consider," a verdict you can act on. |
+| <img src="assets/icons/startup-launch-kit.svg" alt="" width="64" align="middle"/> | [`startup-launch-kit`](#startup-launch-kit) | Opt-in umbrella orchestrator that sequences the five-step startup pipeline (brand → canvas → tests → pitch → grill) with shared state via `kit-manifest.json`. Never bypasses gates; every individual skill stays independently invocable. | You're starting a new idea from scratch and want end-to-end coordination, OR you ran a few steps manually and want to absorb them into an orchestrated resume. |
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
@@ -79,7 +80,9 @@ brand-workshop ──▶ validation-canvas ──▶ riskiest-assumption-test �
 
 **The artifacts compound.** `brand-workshop` writes `brand-kit/design-system.md` — `validation-canvas`, `riskiest-assumption-test`, and `pitch-deck` all pick it up automatically for consistent tokens. `validation-canvas` writes `validation-canvas.md` (Lean Canvas + VPC) — its Stress Tests section seeds `riskiest-assumption-test`'s assumption dump; `pitch-deck` reads it to seed slides 2, 3, 6 and cross-checks the Ask against the Stress Tests. `riskiest-assumption-test` writes `rat/assumption-test-plan.md` + interactive `rat/test-matrix.html` — `pitch-deck` reads `## Top 3 Hypotheses` and `## Results` to inform the Validation slide and Traction claims; `startup-grill` reads them for the iteration-evidence check. `startup-grill` reads everything as direct grilling ammunition and ships a `grill/kill-report.md` with a verdict you can act on. You don't have to wire anything up; running them in order is the wiring.
 
-**Pipeline philosophy:** validation is iterative, not a checklist. The pipeline does NOT include a one-shot "run everything" mode by design — that would teach the wrong mental model. Each step's value is in the slow consideration it forces.
+**Pipeline philosophy:** validation is iterative, not a checklist. Each step's value is in the slow consideration it forces.
+
+**Pipeline shortcut (v2.1.0+):** the optional `startup-launch-kit` skill is an *opt-in orchestrator* that sequences the five steps with shared state via `kit-manifest.json`. It is **convenience, not replacement**: every individual skill remains independently invocable, every gate is honored (no silent bypass), and every step still surfaces its own prompts to the founder (no batching). The orchestrator preserves the philosophy by recording every gate override with a reason, by surfacing loop-back recommendations after RAT and grill (founder decides; never auto-routes), and by treating the manifest as a hint rather than truth (filesystem state always wins on reconciliation). Use it when you want end-to-end coordination without manual step-chaining; use the individual skills directly for any single-step or partial-pipeline work.
 
 ### 🛰 Delegation pipeline — discuss → build
 
@@ -302,6 +305,27 @@ team-composer ──▶ sub-agent-coordinator
 
 ---
 
+<a id="startup-launch-kit"></a>
+
+### <img src="assets/icons/startup-launch-kit.svg" alt="" width="48" align="middle"/> &nbsp;`startup-launch-kit`
+
+**What it does.** Opt-in umbrella orchestrator that sequences the five-step startup pipeline (`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill`) with shared state via `kit-manifest.json` (a thin JSON state journal: completed steps with mtimes, gate-override flags with reason+timestamp, founder-intake-answers cache, atomic writes). Calls each pipeline skill via the Skill tool — every skill runs as itself, surfaces its own prompts, ships its own artifacts. The orchestrator manages the manifest, enforces gate transitions, and surfaces loop-back recommendations after RAT or grill (founder decides; never auto-routes). The 3-question intake fires once at orchestrator level; downstream skills read the cache and offer to confirm/update.
+
+**Reach for it when.** You're starting a new idea from scratch and want end-to-end coordination through the whole pipeline; you're resuming a prior orchestrated session (manifest exists); or you ran a few steps manually and want to absorb them into an orchestrated resume.
+
+**Hard constraints (preserved from v2.0.0 philosophy).** Every individual pipeline skill remains independently invocable — the orchestrator depends on the skills, the skills do not depend on the orchestrator. Gates are never silently bypassed (overrides require explicit founder reason ≥ 20 chars + acknowledgment, recorded in `gate_overrides[]`, surfaced in `startup-grill`'s `## Iteration Evidence` section). No batching — every step's prompts go to the founder. Loop-back is founder-driven; the orchestrator surfaces recommendations, never routes.
+
+**Pairs well with.**
+- All five pipeline skills above — the orchestrator calls them in order. Use them directly for any single-step or partial-pipeline work.
+- [`team-composer`](#team-composer) — alternative for pipeline-strategy discussions, single-block deep dives, or work that doesn't fit the pipeline shape.
+
+**Try it.**
+- "Build my whole startup kit for [idea] — take me through everything."
+- "I ran brand-workshop and validation-canvas manually last week. Pick up where I left off."
+- "I want to ship a pre-validation draft of the deck for an advisor meeting Friday — record the override and proceed."
+
+---
+
 ## Design principles
 
 These aren't rules for contributors — they're the taste I'm trying to keep on the shelf.
@@ -315,7 +339,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`2.0.0` is the current release. Major changes from v1.x: the prior `business-model-canvas` skill was renamed to `validation-canvas` and refocused on the Lean Canvas + Value Proposition Canvas (the right altitude for an idea-stage founder); a new `riskiest-assumption-test` skill was inserted between canvas and pitch-deck; pipeline gates (light/medium/heavy/light) are enforced inside each skill's Phase 0; loop-back is first-class. See [CHANGELOG.md](CHANGELOG.md) for the full migration notes.
+`2.1.0` is the current release. Adds the opt-in `startup-launch-kit` orchestrator skill (sequences the five pipeline skills with shared state via `kit-manifest.json`, never bypasses gates, every individual skill stays independently invocable) plus deeper sourcing on `riskiest-assumption-test`'s test-method catalog (Maurya, Ries, Fitzpatrick, Savoia, Hall as canonical sources; new `sources.md` bibliography; Pre-Sale extends to a Pre-Sale-or-LOI variant for B2B viability). Additive over v2.0.0; no breaking changes. v2.0.0 invocations continue to work unchanged. See [CHANGELOG.md](CHANGELOG.md) for the full v2.1.0 entry and v2.0.0 migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

@@ -134,6 +134,28 @@ remix/audit tool for a live brand.
 
 ## Phase 1: Discovery
 
+### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+
+If `kit-manifest.json` exists in the working-directory root, read it. Use it
+as a hint, never as a bypass:
+
+- If the manifest lists `brand-workshop` as `completed` with a recent mtime,
+  surface that fact: *"Manifest says you ran brand-workshop on [date]. Update
+  mode (revise specific assets), fresh run (rebuild everything), or skip to
+  the next step?"*
+- If the manifest's `intake_answers` cache is populated, the founder has run
+  the orchestrator's intake — use those answers as defaults for the discovery
+  questions below (still surface them; do not silently skip).
+- Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
+  the issue inline and proceed as if no manifest exists.
+
+After this skill ships its artifacts (Phase 6 — output), if `kit-manifest.json`
+exists, append/update this skill's entry. Use atomic write (write `.tmp`, then
+rename). If the manifest doesn't exist, do **NOT** create it — that's the
+`startup-launch-kit` orchestrator's job. See
+[`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
+for the schema.
+
 ### Gather Inputs
 
 Collect the following from the user. If some are missing, ask concisely — but don't block

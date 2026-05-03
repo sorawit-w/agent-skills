@@ -88,6 +88,29 @@ skill.
 **Goal:** confirm `validation-canvas.md` exists, parse it, and STOP if it's
 missing.
 
+### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+
+If `kit-manifest.json` exists in the working-directory root, read it. Use it
+as a hint, never as a bypass:
+
+- If the manifest lists `riskiest-assumption-test` as `completed` with a
+  recent mtime, surface that fact: *"Manifest says you ran RAT on [date].
+  Update mode (re-rank, add results, revise top 3), fresh run, or skip to
+  the next step?"* Update mode is the common case — the founder just ran
+  experiments and is updating `## Results`.
+- The `intake_answers` cache, if populated, informs how to communicate
+  push-back rigor in Phase 3 (Hypothesis Rewriting) — repeat founders get
+  push-back on glib hypotheses regardless of declared mode.
+- Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
+  the issue inline and proceed as if no manifest exists.
+
+After this skill ships its artifacts (Phase 5 — render & ship), if
+`kit-manifest.json` exists, append/update this skill's entry. Use atomic
+write (write `.tmp`, then rename). If the manifest doesn't exist, do **NOT**
+create it — that's the `startup-launch-kit` orchestrator's job. See
+[`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
+for the schema.
+
 ### Step 0.1 — Check for `validation-canvas.md`
 
 If the file is missing in the working directory, **STOP** and route the

@@ -5,6 +5,140 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] — 2026-05-02
+
+Adds the **`startup-launch-kit` orchestrator** plus deeper sourcing on the
+**`riskiest-assumption-test` test-method catalog**. Both tracks are
+**additive and non-breaking** — every v2.0.0 invocation continues to work
+unchanged. The pipeline philosophy from v2.0.0 (*sequential teaches
+iteration*) is preserved by the orchestrator's design: gates are honored,
+overrides are recorded with reason, every step's prompts surface to the
+founder (no batching), and loop-back stays founder-driven.
+
+### Added
+
+- **NEW skill: `startup-launch-kit`.** Opt-in umbrella orchestrator that
+  sequences the five-step startup pipeline (`brand-workshop` →
+  `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` →
+  `startup-grill`) with shared state via `kit-manifest.json`.
+  - **Hard constraint preserved:** every individual pipeline skill remains
+    independently invocable. The orchestrator depends on the skills; the
+    skills do not depend on the orchestrator.
+  - **Auto-fires on end-to-end framing** ("build my whole startup kit",
+    "do the full pipeline", "set up my whole launch", etc.) AND via
+    explicit `/startup-launch-kit` slash command. Single-step requests
+    route to the named skill directly via the STOP gate.
+  - **Four phases:** Phase 0 (STOP gate + manifest discovery + filesystem
+    reconciliation), Phase 1 (3-question intake once at orchestrator
+    level, written to manifest cache), Phase 2 (sequence execution via
+    Skill tool invocation per step, with gate enforcement between),
+    Phase 3 (loop-back surfacing — founder decides; never auto-routes),
+    Phase 4 (final summary).
+  - **`kit-manifest.json` schema:** thin state journal with
+    `manifest_version: 1`, `created`/`updated` timestamps,
+    `intake_answers` cache, `steps[]` (status + mtime + iterations per
+    skill), and `gate_overrides[]` (audit-trail entries with reason ≥ 20
+    chars + `founder_acknowledged: true`). Atomic writes (`.tmp` +
+    rename). See `references/manifest-schema.md` for the full schema and
+    three worked examples.
+  - **State-detection rules** (manifest vs. filesystem reconciliation):
+    filesystem always wins on artifact presence; stale-artifact threshold
+    is 30 days; manifest entries get absorbed silently when a manual run
+    is detected; `blocked` status requires explicit founder unblocking.
+    See `references/state-detection.md` for the full reconciliation loop.
+  - **Gate-override protocol:** every override is append-only, persistent,
+    and revocable. Required fields enforced (gate identifier, ISO-8601
+    timestamp, ≥ 20-char reason, `founder_acknowledged: true`). Surfaced
+    in `startup-grill`'s `## Iteration Evidence` section as direct
+    grilling ammunition — overrides are deliberate decisions worth
+    probing, not hidden bypasses. See `references/gate-override-protocol.md`.
+  - **References shipped:** `manifest-schema.md`, `state-detection.md`,
+    `gate-override-protocol.md`.
+  - **New asset:** `assets/icons/startup-launch-kit.svg` — five color-coded
+    pipeline-step boxes connected by a state-tracking thread, manifest
+    indicator at the top.
+- **Phase A — manifest awareness in all 5 pipeline skills.** Each pipeline
+  skill (`brand-workshop`, `validation-canvas`, `riskiest-assumption-test`,
+  `pitch-deck`, `startup-grill`) gains an additive Step 0.0 that reads
+  `kit-manifest.json` if present, uses it as a hint (never as a bypass),
+  and appends/updates its own entry after writing artifacts. Five-line
+  pattern, identical across all five skills, with two special cases:
+  - **`validation-canvas` Step 0.0 — intake-cache:** if the manifest's
+    `intake_answers` cache is populated, present cached answers and ask
+    the founder to confirm or update (single code path through Phase 0;
+    never silently skip).
+  - **`pitch-deck` Step 0.0 — override-flag:** if the manifest records a
+    `pitch-deck-pre-validation` override with `founder_acknowledged:
+    true`, honor it silently (proceed with `[PRE-VALIDATION DRAFT]`
+    watermark) but surface a one-line acknowledgment.
+- **Catalog deepening — `riskiest-assumption-test/references/`.**
+  - **NEW: `sources.md`** — full bibliography for all canonical sources
+    referenced inline in the catalog. Primary sources: Maurya *Running
+    Lean* 3rd ed. (2022), Ries *Lean Startup* (2011), Fitzpatrick
+    *The Mom Test* (2013). Secondary: Savoia *The Right It / Pretotype
+    It* (2019), Hall *Just Enough Research* 2nd ed. (2019). Cited but
+    not primary: Blank *Four Steps to the Epiphany* (2nd ed., 2013;
+    cited for "get out of the building" framing and LOI-as-validation,
+    NOT for the dated four-stage Customer Development vocabulary).
+    Includes a "notes on conflicts and defaults" section that resolves
+    sample-size disagreements (n=5 floor per Maurya; expand if signal
+    is noisy per Hall) and concierge-vs-WoZ boundary (Maurya's
+    separation: concierge tests viability, WoZ tests experience).
+  - **`test-method-catalog.md` deepened in place:** intro paragraph
+    cites Blank's *get out of the building* + lists primary sources +
+    points to `sources.md`. Each of the 8 methods gains terse inline
+    surname-only citations (e.g., *per Maurya*, *following Fitzpatrick*)
+    where a source directly justifies a claim, plus a "Further reading"
+    line before the entry separator (3–5 references). Per-entry ceiling
+    (~60 lines) preserved for 7 of 8 methods.
+  - **Method 6 renamed and extended:** `Pre-Sale` → `Pre-Sale or Letter
+    of Intent (B2B variant)`. New LOI sub-section covers when LOI >
+    Pre-Sale (regulated industries, large enterprise procurement,
+    cofounder/team commitments), what makes an LOI credible (signed +
+    dated + named decision-maker + named dollar amount or seat count +
+    named trigger condition + signing authority), and investor-credibility
+    weighting (enterprise LOIs > equivalent-revenue individual pre-sales
+    per VC consensus; LOIs without specific dollar amounts < $1 of real
+    revenue). Method 6 ceiling: 75 lines (the explicit exception per the
+    v2.1.0 plan).
+  - **Common-trap deepening discipline (anti-bloat lazy rule):** added
+    Fitzpatrick's three sins (opinion / future-tense / hypothetical
+    questions) to the 5-Interview Rule's Common trap; added Savoia's
+    YODA principle ("Your Own Data Always") to Fake-Door's; added
+    Fitzpatrick's expert-flattery anti-pattern to Expert Interview's.
+    Other methods left untouched where current copy was already
+    source-aligned.
+- **`validation-canvas/references/folder-contract.md`** — un-deferred the
+  manifest section. The "no one-shot orchestrator" line now reads "as of
+  v2.1.0, the `startup-launch-kit` skill is an opt-in orchestrator…"
+  with explicit pointers to the orchestrator's references. Pipeline
+  skills are now manifest-aware (Phase A); the orchestrator owns the
+  manifest's lifecycle.
+- **Root `README.md`** — new `startup-launch-kit` row in the shelf table;
+  new detail section after `startup-grill`; new "Pipeline shortcut
+  (v2.1.0+)" paragraph in the startup pipeline description that explicitly
+  preserves the philosophy. Status section bumped to 2.1.0.
+- **Plugin manifest** — `startup-launch-kit` registered alphabetically
+  alphabetical-by-purpose at the end of the pipeline group; version
+  bumped `2.0.0` → `2.1.0`; description updated; new `orchestrator`
+  keyword added.
+
+### Notes
+
+- No changes to existing skills' content semantics — only additive Phase 0
+  manifest-awareness blocks (~30 lines per skill).
+- No new methods in the catalog; the 8-method count is preserved (Pre-Sale
+  absorbs LOI as a sub-section variant).
+- Customer Development sprints are still explicitly out of scope (per
+  v2.0.0, kept in the catalog's "What this catalog deliberately does NOT
+  include" closing section).
+- All five pipeline skills' frontmatter `description` fields are unchanged
+  in v2.1.0 — the orchestrator does not change how individual skills are
+  triggered.
+- Open follow-ups deferred to v2.2.0+: subset/custom pipelines, manifest
+  query API, multi-directory composition, Maurya 1st-edition addendum,
+  auto-routing of loop-back actions.
+
 ## [2.0.0] — 2026-05-02
 
 Restructures the startup pipeline. The prior `business-model-canvas` skill is

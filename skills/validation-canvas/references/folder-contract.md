@@ -78,9 +78,18 @@ on its upstream artifact, with weighted rigor:
 | `riskiest-assumption-test` | `pitch-deck` | **heavy** | pitch-deck's Phase 0 STOPs without `rat/assumption-test-plan.md` having populated `## Results`. Override available with `[PRE-VALIDATION DRAFT]` watermark |
 | `pitch-deck` | `startup-grill` | **light** | Grill works on minimum input (one-pager); just enriched by full pipeline |
 
-There is **no one-shot orchestrator skill** that runs the whole pipeline.
-This is intentional — sequential, one-step-at-a-time execution teaches the
-right mental model (validation is iterative, not a checklist).
+As of v2.1.0, the **`startup-launch-kit`** skill is an *opt-in*
+orchestrator that sequences the five steps with shared state via
+`kit-manifest.json`. It is convenience, not replacement: every individual
+skill remains independently invocable, the orchestrator never bypasses
+any gate, and every step still surfaces its own prompts to the founder
+(no batching). The pipeline philosophy — *sequential teaches iteration* —
+is preserved by the orchestrator's design (gates honored, overrides
+recorded with reason, loop-back stays founder-driven). See
+[`../../startup-launch-kit/SKILL.md`](../../startup-launch-kit/SKILL.md)
+for the orchestrator and
+[`../../startup-launch-kit/references/manifest-schema.md`](../../startup-launch-kit/references/manifest-schema.md)
+for the manifest schema.
 
 ---
 
@@ -135,16 +144,26 @@ When `validation-canvas` is invoked and `validation-canvas.md` already exists:
 
 ---
 
-## Manifest (deferred)
+## Manifest (v2.1.0+)
 
-A `kit-manifest.json` at the working-directory root is planned for a future
-`startup-launch-kit` orchestrator. Not implemented in v2 — folder
-conventions are enough. If/when the manifest ships, each plugin will:
+`kit-manifest.json` at the working-directory root is the orchestrator's
+state journal. Each pipeline skill is **manifest-aware** as of v2.1.0:
 
-- Read it at start, if present, to discover which artifacts exist.
-- Append/update its own entry after writing, if the manifest is present.
-- Not create the manifest if it doesn't exist (that's the orchestrator's
-  job).
+- Read the manifest at start, if present, to discover which artifacts
+  exist and what intake answers are cached.
+- Append/update this skill's entry after writing artifacts. Use atomic
+  write (write `.tmp`, then rename).
+- Do **NOT** create the manifest if it doesn't exist — that's the
+  orchestrator's (`startup-launch-kit`'s) job.
+- Treat manifest entries as *hints*, never as bypasses. Each skill's
+  Phase 0 still runs in full; the manifest provides defaults the founder
+  can confirm or update.
+- Manifest read failures (corrupt JSON, missing fields) are non-fatal —
+  log inline and proceed as if no manifest exists.
 
-A few lines of defensive read-if-present code keeps forward compatibility
-cheap.
+See [`../../startup-launch-kit/references/manifest-schema.md`](../../startup-launch-kit/references/manifest-schema.md)
+for the full schema and worked examples,
+[`../../startup-launch-kit/references/state-detection.md`](../../startup-launch-kit/references/state-detection.md)
+for the manifest-vs-filesystem reconciliation rules, and
+[`../../startup-launch-kit/references/gate-override-protocol.md`](../../startup-launch-kit/references/gate-override-protocol.md)
+for how gate overrides get recorded and audited.
