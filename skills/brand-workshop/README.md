@@ -4,7 +4,7 @@
 
 # brand-workshop
 
-A Claude Code skill that assembles a virtual creative team, runs a structured brand workshop across Discovery → Concept → Creation, and ships a launch-ready brand identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), and a starter `design-system.md` (tokens only). For pitch decks, hand off to the companion [`pitch-deck`](../pitch-deck/README.md) plugin, which reads `design-system.md` directly.
+A Claude Code skill that assembles a virtual creative team, runs a structured brand workshop across Discovery → Concept → Creation, and ships a launch-ready brand identity package: brand strategy brief (`.md`), tagline, code-generated logo (`.svg` rendered to `.png`), favicon pack with HTML install snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (bios + elevator pitch + boilerplate), and a starter `DESIGN.md` (tokens only). For pitch decks, hand off to the companion [`pitch-deck`](../pitch-deck/README.md) plugin, which reads `DESIGN.md` directly.
 
 ## Why this exists
 
@@ -26,9 +26,9 @@ That's what this does.
 - **Generates a favicon pack with drop-in HTML snippet** — `favicon.svg`, raster sizes (16 / 32 / 180 / 512), `site.webmanifest`, and a copy-paste `<link>` block that uses the brand's actual `theme_color`. If fine detail disappears at 16×16, authors a favicon-optimized variant instead of scaling a mark that becomes illegible.
 - **Ships a social banner set** — Open Graph 1200×630, X header 1500×500, LinkedIn banner 1584×396, Instagram square 1080×1080, profile avatar 400×400. Generous edge padding, tagline only on hero banners, light/dark variants when the palette allows.
 - **Assembles a descriptions pack** — tagline, short/medium/long bios, elevator pitch, press boilerplate, all in the voice established in the brief. Each variant stands alone (no truncation chains) and is verified under its platform's hard character limit.
-- **Ships a starter design system — tokens only** — `design-system.md` with color tokens, typography scale, spacing scale, radius scale, and voice principles. Explicitly not a component library: buttons, forms, and grids depend on the implementing team's stack and aren't this skill's call. Downstream plugins (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) read these tokens directly — no intermediate deck or canvas template is emitted here.
+- **Ships a starter design system — tokens only** — `DESIGN.md` with color tokens, typography scale, spacing scale, radius scale, and voice principles. Explicitly not a component library: buttons, forms, and grids depend on the implementing team's stack and aren't this skill's call. Downstream plugins (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) read these tokens directly — no intermediate deck or canvas template is emitted here.
 - **Produces a brand strategy brief** — executive summary, inputs, workshop transcript, final concept (tagline + logo description + color palette table + typography), and **rejected alternatives with reasoning**. The brief records the thinking, not just the output.
-- **Files every deliverable into a launch-ready kit** — `brand-brief.md`, `descriptions.md`, `design-system.md`, plus folders for logos, favicons, and social banners — all presented to the user together. Minimum-viable order if time or tooling is constrained: brand-brief + logo → descriptions → favicons → design-system → social banners.
+- **Files every deliverable into a launch-ready kit** — `brand-brief.md`, `descriptions.md`, `DESIGN.md`, plus folders for logos, favicons, and social banners — all presented to the user together. Minimum-viable order if time or tooling is constrained: brand-brief + logo → descriptions → favicons → DESIGN.md → social banners.
 - **Iterates surgically** — "more playful," "different palette," "tagline #3 instead" re-runs only the affected phase and updates the brief. Full workshop only re-runs when direction fundamentally changes.
 
 ## What it doesn't do
@@ -38,12 +38,12 @@ That's what this does.
 - **Brand voice reviews / style audits.** Those belong to `team-composer` with `@humorist` + `@senior_copywriter`, or to a dedicated review skill.
 - **AI-generated imagery by default.** Raster image generation is opt-in only (via Hugging Face `dynamic_space`), never the default path. The skill exists to ship *vector* identity you can actually ship.
 - **Replace human review on regulated or trademarked marks.** The cultural advisor flags obvious pitfalls, but the skill explicitly recommends human trademark and legal review before use.
-- **Emit a pitch deck or deck template.** Pitch decks are owned end-to-end by the companion [`pitch-deck`](../pitch-deck/README.md) plugin, which reads `design-system.md` directly and generates its own brand-skinned Reveal deck. Hand off there for both the scaffold and the filled content — don't ask this skill for either.
+- **Emit a pitch deck or deck template.** Pitch decks are owned end-to-end by the companion [`pitch-deck`](../pitch-deck/README.md) plugin, which reads `DESIGN.md` directly and generates its own brand-skinned Reveal deck. Hand off there for both the scaffold and the filled content — don't ask this skill for either.
 - **Produce a validation canvas (Lean Canvas + VPC).** Deliberately out of scope. A canvas needs revenue model, cost structure, and customer-job inputs this skill doesn't ask for. Use the `validation-canvas` companion skill (next step in the pipeline) or `team-composer` instead. For a 9-block Osterwalder BMC specifically, use `team-composer` with `@startup_strategist`.
 
 ## When to use it
 
-- You have a new product, app, or startup and the deliverable you actually need is a **launch-ready identity kit** — logo, tagline, brief, favicons, social banners, descriptions, and a starter design-system — handed off as a single bundle. (For decks, follow up with the companion `pitch-deck` plugin.)
+- You have a new product, app, or startup and the deliverable you actually need is a **launch-ready identity kit** — logo, tagline, brief, favicons, social banners, descriptions, and a starter `DESIGN.md` — handed off as a single bundle. (For decks, follow up with the companion `pitch-deck` plugin.)
 - You want the positioning work *done* — archetype, attributes, differentiation — not just a pretty mark.
 - You want the tagline and the logo to have been in the same conversation with each other. The convergence step is the point.
 - You want rejected alternatives documented, so refinement is a conversation, not a guessing game.
@@ -63,7 +63,7 @@ That's what this does.
    - **Visual Direction** (visual designer + UX/UI designer) — 2–3 logo concepts, palette with hex values, typography, favicon/dark-mode viability.
    - **Cultural & Market Check** (cultural advisor + growth strategist) — symbolism pitfalls, memorability, market fit.
    - **Convergence** (strategist-led) — vote, synthesize, declare final tagline + logo direction.
-3. **Creation.** Write the brand strategy brief (with full transcript and rejected alternatives). Generate the logo as SVG and render PNGs at 64 / 256 / 512. Build the favicon pack and its HTML install snippet. Render the social banner set. Assemble the descriptions pack from the copywriter's draft. Emit the starter `design-system.md`. Present every file together, organized into the launch-kit folder structure.
+3. **Creation.** Write the brand strategy brief (with full transcript and rejected alternatives). Generate the logo as SVG and render PNGs at 64 / 256 / 512. Build the favicon pack and its HTML install snippet. Render the social banner set. Assemble the descriptions pack from the copywriter's draft. Emit the starter `DESIGN.md`. Present every file together, organized into the launch-kit folder structure.
 
 Optional iteration loop: re-run only the affected phase when the user refines ("more serious," "swap the palette," "tagline #3 please"); update the brief to reflect the change.
 
@@ -75,13 +75,13 @@ A single launch-ready bundle, every file saved and presented:
 /
 ├── brand-brief.md      — Executive Summary, Inputs, Workshop Transcript, Final Concept, Rejected Alternatives
 ├── descriptions.md     — Tagline + short/medium/long bios + elevator pitch + press boilerplate
-├── design-system.md    — Color, typography, spacing, radius, voice — tokens only
+├── DESIGN.md    — Color, typography, spacing, radius, voice — tokens only
 ├── logos/              — logo.svg, logo-64.png, logo-256.png, logo-512.png
 ├── favicons/           — favicon.svg, 16/32/180/512 PNGs, site.webmanifest, favicon-install.html
 └── social/             — og-image, x-header, linkedin-banner, instagram-square, profile-avatar
 ```
 
-The tagline is called out prominently in the brief. Symbolism, color rationale, and palette usage are explained inline — the brief records thinking, not just output. Every asset downstream of the brief is derived from the same workshop decisions, so the bundle is consistent with itself by construction: the favicon is the logo simplified, the banners use the same palette and typography, and the descriptions share the tagline's voice. Downstream plugins (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) skin themselves from `design-system.md` directly.
+The tagline is called out prominently in the brief. Symbolism, color rationale, and palette usage are explained inline — the brief records thinking, not just output. Every asset downstream of the brief is derived from the same workshop decisions, so the bundle is consistent with itself by construction: the favicon is the logo simplified, the banners use the same palette and typography, and the descriptions share the tagline's voice. Downstream plugins (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) skin themselves from `DESIGN.md` directly.
 
 ## Design choices worth knowing
 
@@ -91,8 +91,8 @@ The tagline is called out prominently in the brief. Symbolism, color rationale, 
 - **Vector-first, raster on request.** AI image generation is opt-in because the default deliverable needs to be usable: an SVG scales, survives color conversions, and edits without regeneration. Raster marks are a liability masquerading as polish.
 - **Cultural & market check is a gate, not a footnote.** It sits between visual direction and convergence deliberately. A beautiful mark that lands badly in one of the target markets is a failed brief, and that catch happens before the vote, not after.
 - **Narrow cross-skill boundaries.** `brand-workshop` does identity deliverables; `team-composer` handles multi-dimensional product thinking; naming / voice / copy audits belong to more specialized skills. The skill's boundary table spells out which request belongs where so neither side over-reaches.
-- **Decks are out of scope.** Both the deck scaffold *and* the filled investor content belong to the companion `pitch-deck` plugin, which consumes `design-system.md` directly. Keeping decks out of this skill avoids duplicating styling logic and forking the source-of-truth for brand tokens.
-- **Tokens, not components.** `design-system.md` stops at color, type, spacing, radius, and voice. Button variants, form styles, grids, and motion depend on a framework choice this skill deliberately doesn't make — they belong to the implementing team, not to a brand workshop.
+- **Decks are out of scope.** Both the deck scaffold *and* the filled investor content belong to the companion `pitch-deck` plugin, which consumes `DESIGN.md` directly. Keeping decks out of this skill avoids duplicating styling logic and forking the source-of-truth for brand tokens.
+- **Tokens, not components.** `DESIGN.md` stops at color, type, spacing, radius, and voice. Button variants, form styles, grids, and motion depend on a framework choice this skill deliberately doesn't make — they belong to the implementing team, not to a brand workshop.
 
 ## Install
 
@@ -131,10 +131,10 @@ An umbrella `startup-launch-kit` plugin may later orchestrate the full pipeline 
 
 ## Status and scope
 
-v2.0.0. The role catalog covers the core branding team plus a regional cultural advisor. The deliverable set is a launch-ready identity kit — logo, tagline, brief, favicons, social banners, descriptions, and a starter design-system. Validation canvases, assumption tests, pitch decks, and adversarial grilling are out of scope: the `validation-canvas`, `riskiest-assumption-test`, `pitch-deck`, and `startup-grill` companion plugins read `design-system.md` directly and own those deliverables end-to-end. Minimalist-with-negative-space is the default logo style; `references/logo-styles.md` documents the alternatives available on request.
+v3.0.0. The role catalog covers the core branding team plus a regional cultural advisor. The deliverable set is a launch-ready identity kit — logo, tagline, brief, favicons, social banners, descriptions, and a starter `DESIGN.md` ([Google Labs spec](https://github.com/google-labs-code/design.md), alpha). Validation canvases, assumption tests, pitch decks, and adversarial grilling are out of scope: the `validation-canvas`, `riskiest-assumption-test`, `pitch-deck`, and `startup-grill` companion plugins read `DESIGN.md` directly and own those deliverables end-to-end. Minimalist-with-negative-space is the default logo style; `references/logo-styles.md` documents the alternatives available on request.
 
 - **Supported:** product / app / startup identity packages, iteration on existing concepts, multi-language taglines (with a note about font embedding for CJK/Thai/Arabic logotypes), HTML install snippet for favicons.
-- **Adaptable:** existing brand assets are respected as constraints; visual designer works within provided palettes/typography; the starter design-system can be extended by the implementing team with components in their framework of choice.
+- **Adaptable:** existing brand assets are respected as constraints; visual designer works within provided palettes/typography; the starter `DESIGN.md` can be extended by the implementing team with components in their framework of choice.
 - **Not supported:** trademark clearance, registered-mark review, AI image generation as default, live iterative pairing across every round, pitch-deck construction (scaffold *or* filled content), Business Model Canvas.
 
 ## Contributions

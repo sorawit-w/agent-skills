@@ -11,7 +11,7 @@ This is not a template you fill in later. The deck ships with the founder's real
 ## What it does
 
 - Runs a **structured narrative interview** in `@startup_strategist` + `@vc_partner` + `@senior_copywriter` + `@dataviz_engineer` voices, slide by slide, in the standard investor arc: Title → Problem → Solution → Market → Product → Business Model → Traction → Team → Competition → Ask.
-- **Reads upstream plugin output** when present. `validation-canvas.md` seeds slides 2, 3, 6 and cross-checks the Ask against the Stress Tests. `rat/assumption-test-plan.md` informs the Validation slide and Traction claims (and **gates clean shipping** — the deck refuses to ship without populated `## Results` for the top-3 hypotheses; override with `[PRE-VALIDATION DRAFT]` watermark). `brand-kit/design-system.md` supplies visual tokens.
+- **Reads upstream plugin output** when present. `validation-canvas.md` seeds slides 2, 3, 6 and cross-checks the Ask against the Stress Tests. `rat/assumption-test-plan.md` informs the Validation slide and Traction claims (and **gates clean shipping** — the deck refuses to ship without populated `## Results` for the top-3 hypotheses; override with `[PRE-VALIDATION DRAFT]` watermark). `brand-kit/DESIGN.md` supplies visual tokens from its YAML front matter ([Google Labs spec](https://github.com/google-labs-code/design.md), alpha).
 - **Enforces required-slot gating.** Every slide has cardinal slots (from `references/slide-contracts.md`). Unfilled cardinal slots block shipping — the skill renders a warning slide at position 0 that lists them, so the deck is obviously not-ready rather than subtly hollow.
 - **Refuses four cardinal sins:** TAM-only market sizing without SAM/SOM, traction numbers without a time axis, team slide without faces or relevant prior experience, vague ask without amount + milestones + runway.
 - **Runs a VC read test every 2–3 slides** mid-interview — not at the end. If something doesn't land, revise before continuing.
@@ -52,7 +52,7 @@ Three phases, all in one Claude session.
 
 **Phase 0 — RAT gate (~30 sec).** STOP if `rat/assumption-test-plan.md` is missing or its `## Results` is empty for top-3 hypotheses. Override path: founder declares "pre-validation draft" → proceed with watermark.
 
-**Phase 1 — Intake (~5 min).** Read the working directory for `validation-canvas.md`, `rat/assumption-test-plan.md`, `brand-kit/design-system.md`, `brand-kit/brand-brief.md`, `brand-kit/descriptions.md`. Ask the founder which deck variant (cold-email / warm-intro / demo day / follow-up). List missing cardinal slots before launching the interview so the founder can batch context.
+**Phase 1 — Intake (~5 min).** Read the working directory for `validation-canvas.md`, `rat/assumption-test-plan.md`, `brand-kit/DESIGN.md`, `brand-kit/brand-brief.md`, `brand-kit/descriptions.md`. Ask the founder which deck variant (cold-email / warm-intro / demo day / follow-up). List missing cardinal slots before launching the interview so the founder can batch context.
 
 **Phase 2 — Narrative Interview (~60–90 min for a first pass).** Slide by slide in the standard arc order. `@startup_strategist` leads; `@vc_partner` runs a read test every 2–3 slides; `@senior_copywriter` enforces one-claim-per-slide and cuts VC-speak; `@dataviz_engineer` designs the Market, Traction, and Competition charts. Unknowns get marked `[fill in: specific question]` rather than invented.
 
@@ -92,7 +92,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ## Related skills
 
-- **`brand-workshop`** — upstream. Produces the `brand-kit/` this skill reads for visual tokens (`design-system.md`), positioning/voice (`brand-brief.md`), and tagline (`descriptions.md`).
+- **`brand-workshop`** — upstream. Produces the `brand-kit/` this skill reads for visual tokens (`DESIGN.md`, spec: https://github.com/google-labs-code/design.md alpha), positioning/voice (`brand-brief.md`), and tagline (`descriptions.md`).
 - **`validation-canvas`** — two steps upstream. Produces `validation-canvas.md`, which this skill reads to seed the Problem, Solution, and Business Model slides — and to stress-test the Ask against the canvas's Stress Tests section.
 - **`riskiest-assumption-test`** — required direct upstream (heavy gate). Produces `rat/assumption-test-plan.md`. The deck refuses to ship without populated `## Results` for top-3 hypotheses.
 - **`startup-grill`** — downstream. Adversarially probes the deck after this skill ships.

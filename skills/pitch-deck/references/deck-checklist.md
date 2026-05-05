@@ -104,8 +104,7 @@ they can't answer the three questions, the deck isn't ready for cold-email send
 - [ ] `?print-pdf` produces a clean slide-per-page PDF.
 - [ ] AAA contrast for body text (≥ 7:1 on the projection background).
 - [ ] AA contrast for accent text (≥ 4.5:1).
-- [ ] Brand tokens applied if `<brand-root>/design-system.md` (or legacy
-      `brand-kit/design-system.md`) is present; neutral defaults otherwise.
+- [ ] Brand tokens applied if `<brand-root>/DESIGN.md` is present; neutral defaults otherwise.
 - [ ] No `<script src="https…">` or `<link rel="stylesheet" href="https…">` in the
       HTML.
 - [ ] All images are base64-inlined or live in the resolved pitch folder as

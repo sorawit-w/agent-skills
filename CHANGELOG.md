@@ -5,6 +5,77 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] — 2026-05-05
+
+Migrates `brand-workshop`'s starter design-system output to the
+[Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md)
+(spec version: `alpha`). The prior `design-system.md` artifact is replaced
+in lockstep across the four startup-pipeline skills that read it. **No
+backward-compat alias** — clean migration.
+
+### Changed (BREAKING)
+
+- **`brand-workshop` output rename: `design-system.md` → `DESIGN.md`.** The
+  starter design-system file is now emitted at `<brand-root>/DESIGN.md`
+  (uppercase, exactly that). When the founder adopts the brand kit into a
+  real repo, this file moves to the repo root per the spec convention.
+- **New file format: YAML front matter + markdown prose.**
+  - YAML front matter holds machine-readable design tokens — `colors`,
+    `typography`, `rounded`, `spacing`, plus `version` / `name` /
+    `description`. Tokens use spec-recommended names: `primary`,
+    `secondary`, `tertiary`, `neutral` (lowercase).
+  - Markdown body holds human-readable rationale, organized into the
+    canonical spec section order: Overview → Colors → Typography →
+    Layout → Shapes → Do's and Don'ts → Voice. (Components and Elevation
+    sections are intentionally omitted at "starter" scope — they're
+    stack-dependent.)
+- **Cross-plugin contract retired.** The previous "Token Mapping
+  Convention" block (`Primary | Secondary | Accent` prose labels grep'd
+  by downstream plugins) is removed entirely. Downstream plugins now read
+  `colors.primary` directly from the YAML front matter — no prose-grep
+  fallback.
+- **Downstream consumer updates** (input contract):
+  - `validation-canvas` — `--canvas-accent` now binds to `colors.primary`
+    from `<brand-root>/DESIGN.md` YAML front matter.
+  - `riskiest-assumption-test` — `--rat-accent` same.
+  - `pitch-deck` — `--deck-accent` same; typography tokens
+    (`--deck-font-heading`) bind to `typography.h1.fontFamily`.
+- **Quality Checklist gates rewritten** in `brand-workshop`:
+  - File exists at `<brand-root>/DESIGN.md` (uppercase).
+  - YAML front matter starts the file (`head -1` returns `---`).
+  - `colors.primary` exists in the YAML.
+  - Sections appear in canonical spec order.
+  - Old "Token Mapping Convention" verbatim-grep gate removed.
+
+### Added
+
+- **Spec compliance.** Every emitted `DESIGN.md` is structured to lint
+  clean against the optional `npx @google/design.md lint` CLI shipped by
+  Google Labs. The spec is alpha; brand-workshop pins its target version
+  to `alpha` and expects re-checking on each spec release.
+- **`@senior_product_designer` persona grounding** in `team-composer` —
+  if a `DESIGN.md` exists at repo root, treat its YAML tokens as locked
+  Round 1 constraints and challenge any deviation. Cite the prose body
+  when defending a design position.
+
+### Migration
+
+- **Existing v2.x users running brand-workshop:** new runs produce
+  `DESIGN.md` instead of `design-system.md`. Downstream skills only read
+  `DESIGN.md` going forward — old `design-system.md` files are no longer
+  parsed. Re-run `brand-workshop` to regenerate.
+- **Manual rename is not recommended.** Re-running the workshop is
+  cheaper than hand-converting prose labels to the YAML schema, since
+  the new format adds typography/spacing/rounded tokens the old file
+  didn't capture.
+
+### Plugin
+
+- Plugin version: `2.2.0` → `3.0.0` (BREAKING — output filename + schema
+  change in `brand-workshop`; input contract change in `validation-canvas`,
+  `riskiest-assumption-test`, `pitch-deck`).
+- Marketplace catalog: `2.1.0` → `3.0.0` (sync; was lagging plugin.json).
+
 ## [2.2.0] — 2026-05-05
 
 Tidies the founder's working directory by rooting all startup-pipeline

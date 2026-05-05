@@ -68,11 +68,11 @@ active there too) but differs in deliverable:
   selection) without committing to a full canvas. Discussion-grade, not
   artifact-grade.
 
-> **Companion plugin:** `brand-workshop`. If a brand artifact exists (at
-> `<brand-root>/design-system.md` per the conventions doc, or legacy
-> `brand-kit/design-system.md` at cwd root for backward compat), the HTML
-> canvas adopts the brand's color tokens from it. If not, falls back to
-> neutral defaults.
+> **Companion plugin:** `brand-workshop`. If a brand artifact exists at
+> `<brand-root>/DESIGN.md` per the conventions doc, the HTML canvas adopts
+> the brand's color tokens from it. If not, falls back to neutral defaults.
+>
+> **Design token spec:** `DESIGN.md` follows the [Google Labs spec](https://github.com/google-labs-code/design.md) (version: alpha, current as of 2026-05). Read `colors.primary` from the YAML front matter at the top of the file to extract the brand's primary color for `--canvas-accent`.
 
 > **Pipeline placement.** This skill is step 2 of 5 in the startup pipeline:
 > `brand-workshop` → **`validation-canvas`** → `riskiest-assumption-test` →
@@ -515,10 +515,10 @@ Read the template pattern in `references/canvas-html-template.md` and produce a
 single self-contained HTML file that:
 
 - Renders the Lean Canvas grid (top half) and the VPC fit diagram (bottom half).
-- Reads brand tokens from the brand artifact at `<kit-root>/brand/design-system.md`
-  (sibling of `<kit-root>/canvas/`) if it exists. Falls back to the legacy
-  path `brand-kit/design-system.md` (cwd-relative) for backward compat.
-  Otherwise uses neutral defaults.
+- Reads brand tokens from the brand artifact at `<kit-root>/brand/DESIGN.md`
+  (sibling of `<kit-root>/canvas/`) if it exists. Otherwise uses neutral
+  defaults. Extract the primary brand color from `colors.primary` in the
+  YAML front matter and bind it to `--canvas-accent`.
 - Prints cleanly to PDF via CSS paged media (`@page` rules).
 - Carries zero network dependencies.
 - Includes a footer line: "Generated [YYYY-MM-DD] · `validation-canvas.md` is
@@ -628,7 +628,7 @@ Before presenting to the user, verify each:
 **Rendering**
 - [ ] `validation-canvas.md` uses the exact heading structure above (so downstream tools can parse it)
 - [ ] `validation-canvas.html` is a single file, opens in a browser, prints cleanly to PDF
-- [ ] HTML canvas uses brand tokens if `<kit-root>/brand/design-system.md` (or legacy `brand-kit/design-system.md`) is present; neutral defaults otherwise
+- [ ] HTML canvas uses brand tokens if `<kit-root>/brand/DESIGN.md` is present; neutral defaults otherwise. Extracts `colors.primary` from YAML front matter.
 - [ ] No external network dependencies in the HTML
 
 **Shipping**
@@ -643,13 +643,13 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` (our own) | Before this skill, when a brand identity is needed. This skill reads `<kit-root>/brand/design-system.md` (or legacy `brand-kit/design-system.md`) if present to style the HTML canvas. |
+| `brand-workshop` (our own) | Before this skill, when a brand identity is needed. This skill reads `<kit-root>/brand/DESIGN.md` if present to style the HTML canvas. Extracts brand tokens from YAML front matter per [Google Labs spec](https://github.com/google-labs-code/design.md) (version: alpha). |
 | `riskiest-assumption-test` (our own) | **Required next step** (medium gate). After this skill ships, the founder is expected to run `riskiest-assumption-test` to convert Stress Tests into falsifiable hypotheses with success criteria. |
 | `pitch-deck` (our own) | Two steps downstream. The pitch-deck skill reads `validation-canvas.md` from the resolved canvas folder to seed slides 2, 3, 6 and to stress-test the Ask. Pitch-deck is gated on `<rat-root>/assumption-test-plan.md` having populated `## Results` (heavy gate). |
 | `startup-grill` (our own) | Last step. Reads `validation-canvas.md` Stress Tests, RAT results, and pitch deck slides as direct grilling ammunition. |
 | `team-composer` (our own) | Instead of this skill, when the founder wants a *discussion* on one narrow block rather than a full canvas artifact. Also when a 9-block Osterwalder BMC is explicitly required (board, grant). |
 | `tech-stack-recommendations` (our own) | When Solution or Channels include technology choices the founder hasn't made yet. |
-| `theme-factory` (Anthropic) | When the HTML canvas needs branded styling and no brand artifact (`<kit-root>/brand/design-system.md` or legacy `brand-kit/design-system.md`) is present. Apply theme-factory's tokens after content is finalized. |
+| `theme-factory` (Anthropic) | When the HTML canvas needs branded styling and no brand artifact (`<kit-root>/brand/DESIGN.md`) is present. Apply theme-factory's tokens after content is finalized. |
 | `docx` (Anthropic) | When the founder wants the canonical canvas as a `.docx` (board packet, grant application). Hand off `validation-canvas.md` as source. |
 | `web-artifacts-builder` (Anthropic) | For interactive canvas variants (filters, block toggling, nested details). Out of scope for v1 but natural upgrade path. |
 | `pdf` (Anthropic) | When merging the canvas into a larger packet. The HTML already prints cleanly to PDF; `pdf` is for programmatic assembly across multiple artifacts. |

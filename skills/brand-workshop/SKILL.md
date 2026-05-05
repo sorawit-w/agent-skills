@@ -9,10 +9,11 @@ description: >
   work. This skill runs a structured multi-role brainstorming workshop and produces: a brand
   strategy brief (.md), tagline, code-generated logo (.svg), favicon pack with HTML install
   snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (tagline +
-  bios + elevator pitch + boilerplate), and a starter design-system.md (tokens only).
+  bios + elevator pitch + boilerplate), and a starter DESIGN.md (tokens only).
   Even if the user only asks for a logo or only a tagline, use this skill — the full workshop
-  produces better results. For pitch decks, hand off to the `pitch-deck` skill, which
-  consumes `design-system.md` directly.
+  produces better results. Do NOT trigger on requests for pitch decks, presentations, or
+  investor materials — hand off to the `pitch-deck` skill instead, which consumes `DESIGN.md`
+  directly.
   Do NOT trigger on "refresh our existing brand", "update our current style guide",
   "evolve our identity", "our current brand", "our existing voice", "audit our logo",
   or any phrasing that implies a live brand being revised. Those belong to
@@ -73,9 +74,9 @@ moves through three phases: **Discovery → Concept → Creation**. The output i
 4. **Favicon Pack** — `favicon.svg`, raster sizes (16/32/180/512), `site.webmanifest`, and a copy-paste HTML `<link>` install snippet
 5. **Social Banner Set** — Open Graph (1200×630), X header (1500×500), LinkedIn banner (1584×396), Instagram square (1080×1080), profile avatar (400×400)
 6. **Descriptions Pack** (`descriptions.md`) — tagline + short/medium/long bios + elevator pitch + press boilerplate, all matched to brand voice
-7. **Starter Design System** (`design-system.md`) — tokens only: color, typography, spacing, radius, and voice principles (no component specs)
+7. **Starter Design System** (`DESIGN.md`) — tokens only: color, typography, spacing, radius, and voice principles (no component specs)
 
-Scope boundary: pitch decks (both the deck template *and* filled slide content) and the Business Model Canvas are intentionally out of scope. The `pitch-deck` skill reads `design-system.md` directly and generates a brand-skinned deck on its own — brand-workshop does not pre-emit a deck template. See Skill Boundaries below.
+Scope boundary: pitch decks (both the deck template *and* filled slide content) and the Business Model Canvas are intentionally out of scope. The `pitch-deck` skill reads `DESIGN.md` directly and generates a brand-skinned deck on its own — brand-workshop does not pre-emit a deck template. See Skill Boundaries below.
 
 ---
 
@@ -288,8 +289,9 @@ literal, not aspirational.
 ## Voice & Tone
 3–5 bullets from the copywriter describing how the brand speaks (e.g.,
 "confident but not arrogant", "plain language over jargon", "contractions OK").
-Must match the principles written into `design-system.md → Voice & Tone
-Principles` — these are the same ruleset, surfaced in two places.
+Must match the bullets written into `DESIGN.md → Voice` (the custom Voice
+section that brand-workshop appends after Do's and Don'ts) — these are the
+same ruleset, surfaced in two places.
 
 ## Workshop Transcript
 The full brainstorming from Phase 2, role by role.
@@ -435,100 +437,160 @@ shipping. If any variant is over its hard limit, rewrite — do not truncate.
 
 ---
 
-### Design System (Starter Tokens)
+### DESIGN.md (Starter Tokens)
 
-Output `design-system.md` **as its own standalone file at the root of the output folder**.
-Do NOT fold the design system into `brand-brief.md` as a section — downstream plugins
-(`validation-canvas`, `pitch-deck`, `riskiest-assumption-test`) parse `design-system.md`
-directly and will not find tokens buried in another file. Scope is deliberately narrow:
-**tokens, not components**.
-Button styles, form fields, grids, and motion depend on the engineering stack this skill
-does not choose — the implementing team adds those.
+Output `DESIGN.md` **as its own standalone file at the root of the output folder**, named exactly `DESIGN.md` (uppercase). When the founder adopts the brand kit into a real repo, this file moves to the repo root — that's the [Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md) convention. Do NOT fold tokens into `brand-brief.md` as a section — downstream plugins (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) parse `DESIGN.md` directly and will not find tokens buried in another file.
 
-**Mandatory — cross-plugin contract.** The `## Color Tokens` section MUST label
-hex values as `Primary`, `Secondary`, `Accent` (these are contract keys —
-downstream plugins grep them) AND include the Token Mapping Convention block
-below verbatim. Without the block, maintainers reading `design-system.md` have
-no way to know that `--canvas-accent`, `--rat-accent`, and `--deck-accent`
-bind to `Primary`, not to `Accent`.
+**Format**: [Google Labs DESIGN.md](https://github.com/google-labs-code/design.md), spec version `alpha` (current as of 2026-05; the spec is under active development — re-check when the spec ships a non-alpha tag). The file has two parts:
 
-**Copy this block verbatim into `design-system.md`, immediately after the
-Color Tokens hex list:**
+1. **YAML front matter** — machine-readable design tokens.
+2. **Markdown body** — human-readable rationale, organized into canonical sections.
 
-```markdown
-> **Token Mapping Convention** (cross-plugin contract — do not remove)
->
-> - `Primary` → the brand hero color. Downstream plugins
->   (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) bind it
->   to their `--canvas-accent` / `--rat-accent` / `--deck-accent` token.
-> - `Secondary` → a supporting brand color, not the hero.
-> - `Accent` → a secondary highlight color, NOT the hero. Do not let
->   downstream plugins bind this to their accent tokens.
->
-> The labels `Primary`, `Secondary`, `Accent` are contract keys — do not
-> rename them even if the palette is re-themed.
->
-> Note (v2.0.0): the prior `--bmc-accent` token has been renamed to
-> `--canvas-accent` in lockstep with the `business-model-canvas` →
-> `validation-canvas` skill rename.
-```
+Scope is deliberately narrow: **tokens, not components**. Button styles, form fields, grids, motion, and elevation depend on the engineering stack this skill does not choose — the implementing team adds those when they wire up the design system in their framework.
 
-Verify before shipping:
+**Cross-plugin contract.** Downstream plugins (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) bind their accent CSS variable (`--canvas-accent`, `--rat-accent`, `--deck-accent`) to `colors.primary` from the YAML front matter. Use the spec-recommended token names — `primary`, `secondary`, `tertiary`, `neutral` — do not invent alternatives or rename the keys. The previous `Primary | Secondary | Accent` convention is retired in favor of spec-aligned naming; downstream plugins read the YAML directly rather than greppping prose labels.
 
-```bash
-grep -c "Token Mapping Convention (cross-plugin contract" design-system.md
-# must return 1
-```
+**Section order (per spec).** The DESIGN.md spec defines a canonical section order. Brand-workshop emits a subset for "starter" scope. Sections present must appear in this order:
 
-If the count is 0, paste the block in and re-run the grep.
+1. **Overview** (required) — brand personality, audience, intended emotional response
+2. **Colors** (required) — palette rationale + per-color usage prose
+3. **Typography** (required) — type strategy + per-level role
+4. **Layout** (required, even if minimal) — grid model + spacing rhythm
+5. **Shapes** (required) — corner-radius philosophy
+6. **Do's and Don'ts** (required) — visual / design guardrails
+7. **Voice** (custom section appended after Do's and Don'ts; preserved by spec consumers as unknown but valid)
 
-**File structure:**
+Sections explicitly omitted at "starter" scope: **Elevation & Depth** and **Components** — both stack-dependent and the implementing team's responsibility.
 
-```markdown
-# Design System — [Brand Name]
+**File template.** Use this exact structure (replace bracketed placeholders with workshop output):
 
-## Color Tokens
-- Primary / Secondary / Accent (hex + usage guidance)
-- [Token Mapping Convention block — see above, copy verbatim]
-- Neutrals (background, surface, text-primary, text-secondary, border)
-- Semantic (success, warning, danger, info) harmonized with palette
+````markdown
+---
+version: alpha
+name: [Brand Name]
+description: [One-line summary of the brand's visual identity]
+colors:
+  primary: "#XXXXXX"      # brand hero color — drives CTAs, headlines, emphasis
+  secondary: "#XXXXXX"    # supporting brand color
+  tertiary: "#XXXXXX"     # accent / highlight, NOT the hero
+  neutral: "#XXXXXX"      # background / surface foundation
+  surface: "#FFFFFF"      # default page background — override neutral if needed
+  on-surface: "#XXXXXX"   # default text color on surface
+  error: "#XXXXXX"        # semantic error, harmonized with palette
+typography:
+  h1:
+    fontFamily: [Display Family]
+    fontSize: 48px
+    fontWeight: 600
+    lineHeight: 1.1
+    letterSpacing: -0.02em
+  h2:
+    fontFamily: [Display Family]
+    fontSize: 32px
+    fontWeight: 600
+    lineHeight: 1.2
+  body-md:
+    fontFamily: [Body Family]
+    fontSize: 16px
+    fontWeight: 400
+    lineHeight: 1.6
+  label-sm:
+    fontFamily: [Body Family]
+    fontSize: 12px
+    fontWeight: 500
+    lineHeight: 1
+    letterSpacing: 0.05em
+rounded:
+  none: 0
+  sm: 4px
+  md: 8px
+  lg: 16px
+  full: 9999px
+spacing:
+  xs: 4px
+  sm: 8px
+  md: 16px
+  lg: 24px
+  xl: 32px
+  "2xl": 48px
+  "3xl": 64px
+---
+
+# [Brand Name] — DESIGN.md
+
+## Overview
+
+A holistic description of the brand's look and feel: personality, target audience, the emotional response the UI should evoke. Whether it should feel playful or professional, dense or spacious. This is foundational context for an agent making stylistic decisions when no specific token applies.
+
+## Colors
+
+[Describe the palette's rooting principle — e.g., "high-contrast neutrals and a single evocative accent color".]
+
+- **Primary (#XXXXXX):** [Descriptive name + usage guidance]
+- **Secondary (#XXXXXX):** [Usage]
+- **Tertiary (#XXXXXX):** [Usage — clarify this is for accents, NOT the hero]
+- **Neutral (#XXXXXX):** [Foundation usage]
 
 ## Typography
-- Families: display, body, mono (with fallback stacks)
-- Weights in use
-- Type scale: h1 / h2 / h3 / body / small / caption with px and rem values
-- Line-height and tracking guidance
 
-## Spacing Scale
-4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 (or a modular scale that fits the brand)
+[Describe the typography strategy — e.g., "Two distinct weights of Public Sans for narrative; Space Grotesk for technical labels."]
 
-## Radius Scale
-0 / 4 / 8 / 16 / full
+- **Headlines (h1, h2):** [Family, weight, role]
+- **Body (body-md):** [Family, weight, role]
+- **Labels (label-sm):** [Family, weight, role]
 
-## Voice & Tone Principles
-3–5 bullet rules from the copywriter (e.g., "confident but not arrogant",
-"plain language over jargon", "contractions OK").
+## Layout
 
-## Out of Scope
-Buttons, forms, cards, grid systems, motion — these depend on the
-implementation stack and should be added by the engineering team that builds the product.
+[Describe layout strategy at a high level — e.g., "Fluid grid on mobile, fixed-max-width 1200px on desktop. 8px spacing scale with a 4px half-step for micro-adjustments. Components grouped via containment with 24px internal padding."]
+
+## Shapes
+
+[Describe corner-radius philosophy — e.g., "Architectural sharpness: 4px on interactive elements, 8px on cards, 16px on hero containers. Avoid mixing radii within a view."]
+
+## Do's and Don'ts
+
+- Do use `primary` only for the single most important action per screen
+- Do maintain WCAG AA contrast ratios (4.5:1 normal text, 3:1 large text)
+- Don't mix rounded and sharp corners in the same view
+- Don't use more than two font weights on a single screen
+- [Add 2–4 brand-specific guardrails surfaced during the workshop]
+
+## Voice
+
+3–5 bullet rules from the copywriter (e.g., "confident but not arrogant", "plain language over jargon", "contractions OK"). Custom section appended after Do's and Don'ts; preserved by spec-compliant consumers per the DESIGN.md spec's "unknown section" rule.
+````
+
+**Validation before shipping.** Run these checks against the emitted file:
+
+```bash
+# 1. File exists at output root, named exactly DESIGN.md (uppercase)
+test -f <brand-root>/DESIGN.md && echo "DESIGN.md present"
+
+# 2. YAML front matter starts the file
+head -1 <brand-root>/DESIGN.md | grep -qE '^---$' && echo "YAML front matter starts correctly"
+
+# 3. Required sections present in canonical order
+grep -nE "^## (Overview|Colors|Typography|Layout|Shapes|Do's and Don'ts|Voice)" <brand-root>/DESIGN.md
+# Should output 7 lines in spec order
+
+# 4. (Optional) Lint with Google's CLI if available — flags broken refs, contrast issues, orphaned tokens
+npx @google/design.md lint <brand-root>/DESIGN.md
 ```
 
-**Quality rule:** If a section has nothing substantive to say, drop the section rather than
-write placeholder text. An honest "tokens only" system beats a bloated fake one.
+**Quality rule.** If a section has nothing substantive to say, drop the section rather than write placeholder text. The spec preserves omitted sections without erroring. An honest "tokens only" file beats a bloated fake one.
 
 ---
 
 ### Pitch Deck — Out of Scope
 
 Brand-workshop does **not** emit a pitch-deck template. The `pitch-deck` skill reads
-`design-system.md` directly and generates its own brand-skinned Reveal.js deck — there
+`DESIGN.md` directly and generates its own brand-skinned Reveal.js deck — there
 is no intermediate template artifact for it to consume. Pre-emitting a deck here would
 duplicate work and fork the styling source of truth.
 
 If the founder wants a deck, recommend they invoke `pitch-deck` (or
 `team-composer` with `@startup_strategist` + `@vc_partner`) after this workshop
-completes. `pitch-deck` will read the `design-system.md` this skill produced.
+completes. `pitch-deck` will read the `DESIGN.md` this skill produced.
 
 ---
 
@@ -541,7 +603,7 @@ organized into subfolders so the deliverable reads like a launch-day kit:
 <brand-root>/
 ├── brand-brief.md
 ├── descriptions.md
-├── design-system.md
+├── DESIGN.md
 ├── logos/
 │   ├── logo.svg
 │   ├── logo-64.png
@@ -571,7 +633,7 @@ Where `<brand-root>` resolves per Phase 1 Step 0.0:
 - `${STARTUP_KIT_DOCS_ROOT}/brand/` — env-var override
 
 **Minimum viable set:** If time or tooling is constrained, ship in this order of priority:
-brand-brief + logo → descriptions → favicons → design-system → social banners.
+brand-brief + logo → descriptions → favicons → DESIGN.md → social banners.
 
 Present all files to the user using `present_files`.
 
@@ -612,7 +674,7 @@ to run `validation-canvas` next**:
 
 > *"Brand without a validated market is a logo on a hypothesis. Next step:
 > run `validation-canvas` to articulate what you believe about the problem,
-> segment, and economics. The canvas reads the design-system tokens
+> segment, and economics. The canvas reads the DESIGN.md tokens
 > automatically from the resolved brand folder."*
 
 This is a **light gate** — informational, not enforced. The founder is free to
@@ -643,11 +705,13 @@ Before presenting final output, verify:
 - [ ] All PNG banner files match their declared dimensions exactly
 - [ ] Descriptions pack: every variant is under its hard character limit (verified, not estimated)
 - [ ] Descriptions pack: each variant stands alone — no truncation chains
-- [ ] `<brand-root>/design-system.md` exists as a **standalone file** — NOT folded into `brand-brief.md` as a section. If the design system lives only inside the brief, this gate fails and the design system must be extracted into its own file before shipping.
-- [ ] Design system stays within tokens — no button/form/grid specs
-- [ ] Empty design-system sections are dropped rather than filled with placeholder text
-- [ ] `design-system.md` contains the Token Mapping Convention block **verbatim**, labelled `(cross-plugin contract — do not remove)`. Verify with: `grep -c "Token Mapping Convention (cross-plugin contract" <brand-root>/design-system.md` — must return `1`. If the count is 0, paste the block from SKILL.md's Design System section and re-run the grep.
-- [ ] No `deck/` subfolder is emitted under `<brand-root>/`. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `design-system.md` directly. Verify with: `[ ! -d <brand-root>/deck ] && echo OK`.
+- [ ] `<brand-root>/DESIGN.md` exists as a **standalone file** — NOT folded into `brand-brief.md` as a section. Filename is exactly `DESIGN.md` (uppercase) per the [Google Labs spec](https://github.com/google-labs-code/design.md). Verify: `test -f <brand-root>/DESIGN.md && echo OK`.
+- [ ] DESIGN.md begins with valid YAML front matter (delimited by `---` lines). Verify: `head -1 <brand-root>/DESIGN.md` returns exactly `---`.
+- [ ] YAML front matter contains the cross-plugin contract key `colors.primary`. Verify: `grep -E '^  primary:\s*"#' <brand-root>/DESIGN.md` returns one line. Downstream plugins (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) bind their accent CSS variable to this token.
+- [ ] DESIGN.md sections appear in canonical spec order: Overview → Colors → Typography → Layout → Shapes → Do's and Don'ts → Voice. Verify: `grep -nE "^## (Overview|Colors|Typography|Layout|Shapes|Do's and Don'ts|Voice)" <brand-root>/DESIGN.md` shows the seven headings in order.
+- [ ] Design system stays within tokens — no button/form/grid specs (Components and Elevation sections are intentionally omitted at "starter" scope).
+- [ ] Empty DESIGN.md sections are dropped rather than filled with placeholder text. The spec preserves omitted sections without erroring.
+- [ ] No `deck/` subfolder is emitted under `<brand-root>/`. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `DESIGN.md` directly. Verify: `[ ! -d <brand-root>/deck ] && echo OK`.
 
 **Shipping**
 - [ ] Files are saved under `<brand-root>/` per the folder structure shown in Output Files
@@ -660,10 +724,10 @@ Before presenting final output, verify:
 
 | Skill | When to Use |
 |-------|-------------|
-| `pitch-deck` (our own) | After this skill, when the founder wants a real investor deck. `pitch-deck` consumes `design-system.md` (and optionally `brand-brief.md` + `descriptions.md`) emitted by this skill. Brand-workshop does not pre-emit a deck template — `pitch-deck` owns deck construction end-to-end. Do not duplicate deck-construction logic here. |
+| `pitch-deck` (our own) | After this skill, when the founder wants a real investor deck. `pitch-deck` consumes `DESIGN.md` (and optionally `brand-brief.md` + `descriptions.md`) emitted by this skill. Brand-workshop does not pre-emit a deck template — `pitch-deck` owns deck construction end-to-end. Do not duplicate deck-construction logic here. |
 | `validation-canvas` (our own) | **Suggested next step (light gate).** After this skill ships the brand kit, the founder is expected to articulate beliefs about market and economics. Brand without a validated market is a logo on a hypothesis. |
 | `riskiest-assumption-test` (our own) | Two steps downstream of this skill. Tests the beliefs the validation canvas captures. |
-| `theme-factory` (Anthropic) | When the founder wants the design tokens applied to another artifact (landing page, one-pager). Brand-workshop's `design-system.md` is intentionally shaped to feed theme-factory. |
+| `theme-factory` (Anthropic) | When the founder wants the design tokens applied to another artifact (landing page, one-pager). Brand-workshop's `DESIGN.md` is intentionally shaped to feed theme-factory. |
 | `canvas-design` (Anthropic) | When the founder wants high-fidelity static brand art (posters, campaign keyart) beyond a logo. Brand-workshop's SVG logo is the minimum viable mark, not a full art direction. |
 | `algorithmic-art` (Anthropic) | When the brand direction calls for generative / procedural visual motifs rather than a single mark. |
 | `docx` (Anthropic) | When the founder wants the brand brief as a polished Word document (e.g., for a board or investor packet). |

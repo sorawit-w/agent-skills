@@ -12,9 +12,9 @@ Assumption Test Plan. Read this before producing `<rat-root>/test-matrix.html`.
   criteria, kill criteria, chosen test method, time bound, cost estimate,
   and Results status.
 - **Color-coded by category:** desirability / viability / feasibility get
-  three distinct accent colors (use brand tokens from
-  `<brand-root>/design-system.md`, or legacy `brand-kit/design-system.md`,
-  if present; neutral defaults otherwise).
+  three distinct accent colors (use brand tokens from `<brand-root>/DESIGN.md`
+  ([Google Labs spec](https://github.com/google-labs-code/design.md), version `alpha`),
+  or legacy `brand-kit/DESIGN.md`, if present; neutral defaults otherwise).
 - **Top-3 highlight:** the 3 cards selected as Top 3 in Phase 2 of the
   skill get a visible badge ("⭐ TOP 3") and a thicker border.
 - **Print-clean:** `@media print` collapses to a static grid that prints
@@ -38,10 +38,11 @@ path-resolution chain.
    status.
 3. Inject the assumption objects into the `ASSUMPTIONS` JS array in the
    template below.
-4. If the brand design system exists (`<brand-root>/design-system.md`, or
-   legacy `brand-kit/design-system.md` at cwd root), parse the primary,
-   surface, and text colors plus the body font-family, and substitute them
-   into the `:root` CSS custom properties. Otherwise keep the defaults.
+4. If the brand design system exists (`<brand-root>/DESIGN.md`, or
+   legacy `brand-kit/DESIGN.md` at cwd root), read the YAML front matter
+   at the top of the file (delimited by `---` lines) and extract `colors.primary`,
+   `colors.secondary`, and `colors.neutral` (the hex strings), plus `typography.body-md.fontFamily`.
+   Substitute them into the `:root` CSS custom properties. Otherwise keep the defaults.
 5. Save as `<rat-root>/test-matrix.html` (default `docs/rat/test-matrix.html`
    solo, `docs/startup-kit/rat/test-matrix.html` orchestrated).
 
@@ -320,25 +321,27 @@ path-resolution chain.
 
 ---
 
-## Brand token substitution (strict mapping)
+## Brand token substitution (DESIGN.md YAML mapping)
 
-If the brand design system exists (`<brand-root>/design-system.md` per the
-conventions doc, or legacy `brand-kit/design-system.md` at cwd root for
-backward compat), map sections → CSS variables **literally by the names
-below**.
+If the brand design system exists (`<brand-root>/DESIGN.md` per the
+[Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md),
+version `alpha`, or legacy `brand-kit/DESIGN.md` at cwd root for
+backward compat), read the YAML front matter and map to CSS variables **literally by the names below**.
 
-| CSS variable                | `design-system.md` section.key                  |
+Extract the hex strings from the YAML `colors` and `typography` objects:
+
+| CSS variable                | DESIGN.md YAML path        |
 |-----------------------------|-------------------------------------------------|
-| `--rat-bg`                  | `Color Tokens → Neutrals.background`            |
-| `--rat-surface`             | `Color Tokens → Neutrals.surface`               |
-| `--rat-text`                | `Color Tokens → Neutrals.text-primary`          |
-| `--rat-muted`               | `Color Tokens → Neutrals.text-secondary`        |
-| `--rat-border`              | `Color Tokens → Neutrals.border`                |
-| `--rat-accent`              | `Color Tokens → Primary`                        |
-| `--rat-font-body`           | `Typography → body`                             |
-| `--rat-cat-desirability`    | (keep neutral default unless brand provides a "warning" or "danger" semantic color) |
-| `--rat-cat-viability`       | (keep neutral default unless brand provides an "info" or "primary" semantic color) |
-| `--rat-cat-feasibility`     | (keep neutral default unless brand provides a "success" semantic color) |
+| `--rat-bg`                  | `colors.neutral`            |
+| `--rat-surface`             | `colors.surface`            |
+| `--rat-text`                | `colors.on-surface`         |
+| `--rat-muted`               | `colors.secondary`          |
+| `--rat-border`              | `colors.neutral` (dim by 30%) or use as-is |
+| `--rat-accent`              | `colors.primary`            |
+| `--rat-font-body`           | `typography.body-md.fontFamily` |
+| `--rat-cat-desirability`    | (keep neutral default unless brand provides a semantic "warning" or "danger" color) |
+| `--rat-cat-viability`       | (keep neutral default unless brand provides a semantic "info" or "primary" color) |
+| `--rat-cat-feasibility`     | (keep neutral default unless brand provides a semantic "success" color) |
 
 The category accent colors are deliberately left at neutral defaults — they
 need to be visually distinct from each other AND from the brand accent.

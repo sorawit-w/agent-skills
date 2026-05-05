@@ -41,9 +41,9 @@ three files go into the resolved pitch folder.
   the founder's data. The skill flags unsubstantiated traction but doesn't go
   validate it.
 - **Not a design tool.** Visual polish comes from the brand kit. If no brand
-  artifact is present (`<brand-root>/design-system.md` or legacy
-  `brand-kit/design-system.md`), the deck uses neutral-professional defaults —
-  don't try to invent a visual identity inside this skill.
+  artifact is present (`<brand-root>/DESIGN.md`), the deck uses neutral-
+  professional defaults — don't try to invent a visual identity inside this
+  skill.
 
 ## Skill Boundaries
 
@@ -59,10 +59,10 @@ This skill intentionally overlaps with `team-composer` (`@startup_strategist` an
 > **Companion plugins:**
 > - `brand-workshop` — upstream. Produces brand artifacts (under
 >   `<brand-root>/` per the conventions doc, or legacy `brand-kit/`) which
->   this skill reads for visual tokens (`design-system.md`),
+>   this skill reads for visual tokens (`DESIGN.md`),
 >   positioning/voice (`brand-brief.md`), and taglines (`descriptions.md`).
 >   Brand-workshop does not pre-emit a deck template; this skill generates
->   its own Reveal CSS from the design-system tokens.
+>   its own Reveal CSS from the DESIGN.md tokens.
 > - `validation-canvas` — upstream. If the validation canvas exists
 >   (`<canvas-root>/validation-canvas.md` or legacy
 >   `validation-canvas.md`), this skill reads it directly to seed the
@@ -227,7 +227,7 @@ path first; fall back to the legacy path for backward compat:
 |-------------------------------------|-------------------------------------------|---------------------------------------|
 | Validation canvas                   | `<canvas-root>/validation-canvas.md`      | `validation-canvas.md` (cwd root)     |
 | Assumption test plan                | `<rat-root>/assumption-test-plan.md`      | `rat/assumption-test-plan.md`         |
-| Brand design system                 | `<brand-root>/design-system.md`           | `brand-kit/design-system.md`          |
+| Brand design system                 | `<brand-root>/DESIGN.md`                  | —                                     |
 | Brand brief                         | `<brand-root>/brand-brief.md`             | `brand-kit/brand-brief.md`            |
 | Brand descriptions                  | `<brand-root>/descriptions.md`            | `brand-kit/descriptions.md`           |
 
@@ -250,12 +250,11 @@ What to extract from each:
    "Validation" slide before Traction) and `## Results` (the confirmed results
    become evidence on the Traction slide; invalidated results trigger the
    loop-back gate from Phase 0).
-3. **Brand design system** (from `brand-workshop`) — if present, extract
-   color tokens, typography, and logo path for deck styling. Use the same strict
-   token mapping as `validation-canvas` (see `validation-canvas`'s
-   `references/canvas-html-template.md` — `Color Tokens → Primary` maps to the
-   deck's accent; `Typography → display` maps to headings, fall back to
-   `Typography → body`).
+3. **Brand design system** (from `brand-workshop`) — if present, read the YAML
+   front matter at the top of `DESIGN.md` (see spec: https://github.com/google-labs-code/design.md,
+   version: alpha) and extract color tokens, typography, and logo path for deck styling.
+   Map `colors.primary` to the deck's `--deck-accent` CSS variable; map
+   `typography.h1.fontFamily` to headings (or `typography.body-md.fontFamily` as fallback).
 4. **Brand brief** (from `brand-workshop`) — if present, read the
    `## Positioning` and `## Voice & Tone` sections (named anchor headings) for
    tone matching. If those sections are missing, fall back to the `## Executive
@@ -266,8 +265,8 @@ What to extract from each:
 
 **Note on deck CSS:** `brand-workshop` does **not** emit a deck template or CSS file.
 This skill owns deck construction end-to-end. Generate the Reveal CSS directly from
-the tokens in `design-system.md` (color, typography, spacing) using the same strict
-mapping convention. Do not look for `<brand-root>/deck/pitch-styles.css` or
+the tokens in `DESIGN.md` (color, typography, spacing) via the YAML front matter.
+Do not look for `<brand-root>/deck/pitch-styles.css` or
 `<brand-root>/deck/pitch-template.html` (or their legacy `brand-kit/deck/`
 equivalents) — those artifacts no longer exist.
 
@@ -404,10 +403,10 @@ Follow the template pattern in `references/deck-template.md`. Key constraints:
 - **Single file.** Reveal.js core, theme CSS, plugin JS, and any images all inline or
   base64. No `<script src="https…">`. No `<link rel="stylesheet" href="https…">`.
 - **Brand token substitution.** If the brand design system is present
-  (`<brand-root>/design-system.md` or legacy `brand-kit/design-system.md`),
-  substitute color and font tokens into the Reveal theme via CSS custom
-  properties. Check contrast for projection (AAA for body text, AA minimum
-  for accents).
+  (`<brand-root>/DESIGN.md`), read the YAML front matter and substitute color
+  and font tokens into the Reveal theme via CSS custom properties. Map
+  `colors.primary` → `--deck-accent`, `typography.h1.fontFamily` → headings.
+  Check contrast for projection (AAA for body text, AA minimum for accents).
 - **Print-to-PDF.** Include `@media print` rules that hide controls, force one slide
   per page, and respect page breaks. Test that appending `?print-pdf` to the file URL
   produces a clean slide-per-page PDF when the user prints from the browser.
@@ -522,7 +521,7 @@ Before presenting to the user, verify each:
 - [ ] Keyboard navigation works (←/→/Space/Esc)
 - [ ] `?print-pdf` produces a clean slide-per-page PDF
 - [ ] AAA contrast for body text against projection backgrounds; AA minimum for accents
-- [ ] Brand tokens applied if `<brand-root>/design-system.md` (or legacy `brand-kit/design-system.md`) present; neutral defaults otherwise
+- [ ] Brand tokens applied if `<brand-root>/DESIGN.md` present; neutral defaults otherwise
 
 **Shipping**
 - [ ] Three files present: `deck.html`, `speaker-notes.md`, `deck-checklist.md`
@@ -538,13 +537,13 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` (our own) | Before this skill, when a brand kit is needed. This skill reads brand artifacts (`<brand-root>/{design-system,brand-brief,descriptions}.md` or legacy `brand-kit/{...}.md`) if present. Brand-workshop does not emit a deck template or CSS — this skill generates its own Reveal CSS from the design-system tokens. |
+| `brand-workshop` (our own) | Before this skill, when a brand kit is needed. This skill reads brand artifacts (`<brand-root>/DESIGN.md`, `<brand-root>/brand-brief.md`, `<brand-root>/descriptions.md`; or legacy `brand-kit/{DESIGN,brand-brief,descriptions}.md`) if present. Brand-workshop does not emit a deck template or CSS — this skill generates its own Reveal CSS from the DESIGN.md YAML tokens ([Google Labs spec](https://github.com/google-labs-code/design.md), alpha). |
 | `validation-canvas` (our own) | Two steps upstream. This skill reads the validation canvas (`<canvas-root>/validation-canvas.md` or legacy `validation-canvas.md`) to seed slides 2, 3, 6 and to stress-test the Ask against the Stress Tests section. |
 | `riskiest-assumption-test` (our own) | **Required direct upstream (heavy gate).** This skill STOPs unless the assumption-test plan (`<rat-root>/assumption-test-plan.md` or legacy `rat/assumption-test-plan.md`) has populated `## Results` for the top-3 hypotheses. RAT outcomes inform the Validation slide and Traction claims. Override: `[PRE-VALIDATION DRAFT]` watermark. |
 | `startup-grill` (our own) | After this skill, to adversarially probe the deck. Grill reads the deck and its upstream artifacts (canvas + RAT) together. |
 | `team-composer` (our own) | Instead of this skill when the founder wants discussion on narrative without committing to a full deck. Also for deep dives on single slides (e.g., Competition slide with `@competitive_intel` mental model). |
 | `tech-stack-recommendations` (our own) | When the Product slide depends on tech choices the founder hasn't made yet. |
-| `theme-factory` (Anthropic) | When the deck needs a visual theme and no brand artifact (`<brand-root>/design-system.md` or legacy `brand-kit/design-system.md`) is present. Apply after content is finalized. |
+| `theme-factory` (Anthropic) | When the deck needs a visual theme and no brand artifact (`<brand-root>/DESIGN.md`) is present. Apply after content is finalized. |
 | `canvas-design` (Anthropic) | For hero / cover-slide static art when the brand-kit logo is too minimal to anchor the opening slide. Also for one-off slide graphics that justify the investment in real design over a chart. |
 | `web-artifacts-builder` (Anthropic) | When the "deck" is actually a product demo that needs shadcn/ui components, routing, or state — i.e., beyond what Reveal.js can reasonably do. |
 | `doc-coauthoring` (Anthropic) | For the long-form founder memo that precedes the deck (e.g., converting a 10-page memo into 12 slides). |

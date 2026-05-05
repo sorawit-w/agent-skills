@@ -34,11 +34,11 @@ fallbacks indefinitely.
 When `validation-canvas` runs:
 
 1. **Check for the brand artifact.** Look at
-   `<brand-root>/design-system.md` (sibling of this skill's canvas root)
-   first; fall back to legacy `brand-kit/design-system.md` (cwd-relative).
-   If present, read the color tokens and font stack and apply them to
-   `validation-canvas.html` via the `:root` CSS custom properties (see
-   `canvas-html-template.md`).
+   `<brand-root>/DESIGN.md` (sibling of this skill's canvas root). If present,
+   read the color tokens and font stack from the YAML front matter and apply
+   them to `validation-canvas.html` via the `:root` CSS custom properties
+   (see `canvas-html-template.md`). Extract `colors.primary` from the YAML to
+   bind to `--canvas-accent`.
 2. **Check for an existing `validation-canvas.md`.** Look at
    `<canvas-root>/validation-canvas.md` first; fall back to cwd-relative
    `validation-canvas.md`. If present, read it first — treat the interview

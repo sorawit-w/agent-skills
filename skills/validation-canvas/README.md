@@ -21,7 +21,7 @@ This is not a template fill-in. The value is in the interview: experience-adapti
 - Produces **two files**, both saved to the founder's working directory:
   - `validation-canvas.md` — canonical, editable source of truth with headings the downstream skills (`pitch-deck`, `riskiest-assumption-test`, `startup-grill`) can parse.
   - `validation-canvas.html` — single self-contained HTML rendering the Lean Canvas grid (top) and VPC fit diagram (bottom). Opens in any browser, prints cleanly to PDF, zero network dependencies.
-- Applies brand tokens from `brand-kit/design-system.md` automatically if a `brand-workshop` kit is present in the working directory. Otherwise uses neutral defaults.
+- Applies brand tokens from `<brand-root>/DESIGN.md` automatically if a `brand-workshop` kit is present in the working directory. Extracts primary color from `colors.primary` in the YAML front matter per [Google Labs spec](https://github.com/google-labs-code/design.md) (version: alpha). Otherwise uses neutral defaults.
 - Ends with an explicit call-out of the strongest stress test, the cheapest disconfirming experiment, and the **next-step gate**: run `riskiest-assumption-test`.
 
 ## What it doesn't do
@@ -61,7 +61,7 @@ Four phases, all in one Claude session.
 
 **Phase 2 — Draft & Consistency Check.** All blocks written. Then a 7-question cross-block consistency pass that forces revision when problem ↔ segment alignment breaks, when a Solution feature has no Problem, when Cost Structure is just generic startup costs, or when Pains have no Relievers and Gains have no Creators. Then a Stress Tests section with the 3–5 assumptions most likely to fail, each with its failure mode and a disconfirming experiment.
 
-**Phase 3 — Render & Ship.** `validation-canvas.md` written with an exact heading structure (load-bearing cross-plugin contract). `validation-canvas.html` rendered from the template in `references/canvas-html-template.md`, adopting `brand-kit/design-system.md` tokens when present. Both files saved to the founder's working directory. Response ends with three lines: the top stress test, the cheapest this-week experiment, and the next-step gate to `riskiest-assumption-test`.
+**Phase 3 — Render & Ship.** `validation-canvas.md` written with an exact heading structure (load-bearing cross-plugin contract). `validation-canvas.html` rendered from the template in `references/canvas-html-template.md`, adopting `DESIGN.md` tokens when present, extracting from YAML front matter. Both files saved to the founder's working directory. Response ends with three lines: the top stress test, the cheapest this-week experiment, and the next-step gate to `riskiest-assumption-test`.
 
 ## What the output looks like
 
@@ -71,7 +71,7 @@ Four phases, all in one Claude session.
 └── validation-canvas.html     self-contained Lean+VPC visual (the primary deliverable)
 ```
 
-The HTML renders the Lean Canvas grid (Problem / Solution+Key Metrics / UVP / Unfair Advantage+Channels / Customer Segments on the top half; Cost Structure and Revenue Streams on the bottom) and the VPC fit diagram (Customer Profile ↔ Value Map). Prints to PDF cleanly. Adopts your brand tokens if `brand-kit/` is present.
+The HTML renders the Lean Canvas grid (Problem / Solution+Key Metrics / UVP / Unfair Advantage+Channels / Customer Segments on the top half; Cost Structure and Revenue Streams on the bottom) and the VPC fit diagram (Customer Profile ↔ Value Map). Prints to PDF cleanly. Adopts your brand tokens from `DESIGN.md` if present, extracting colors from the YAML front matter.
 
 ## Pipeline placement
 
@@ -108,7 +108,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ## Related skills
 
-- **`brand-workshop`** — upstream. Produces the `brand-kit/` this skill reads to style the HTML canvas.
+- **`brand-workshop`** — upstream. Produces `DESIGN.md` ([Google Labs spec](https://github.com/google-labs-code/design.md), alpha) which this skill reads to style the HTML canvas. Tokens are extracted from YAML front matter.
 - **`riskiest-assumption-test`** — downstream (medium gate). Reads this canvas's Stress Tests section as the seed for its assumption dump. Invalidations loop back to this skill in update mode.
 - **`pitch-deck`** — two steps downstream (heavy gate). Consumes `validation-canvas.md` to seed slides 2, 3, 6, and to stress-test the Ask. Gated on populated RAT `## Results`.
 - **`startup-grill`** — last step. Reads this canvas's Stress Tests + RAT results + pitch deck slides as direct grilling ammunition.

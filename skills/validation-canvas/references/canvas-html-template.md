@@ -18,10 +18,10 @@ Proposition Canvas** combined artifact. Read this before producing
   left, with arrows or bracket lines indicating the 1:1 fit mapping.
 - Prints cleanly to PDF via CSS paged media (`@page` at landscape A4 or
   Letter, with the Lean Canvas on page 1 and the VPC on page 2).
-- Applies brand tokens from `<brand-root>/design-system.md` (sibling of
-  canvas root) if present, falling back to legacy `brand-kit/design-system.md`
-  (cwd-relative) for backward compat. Otherwise uses the neutral defaults in
-  this template.
+- Applies brand tokens from `<brand-root>/DESIGN.md` (sibling of canvas root)
+  if present. Tokens are extracted from the YAML front matter per [Google Labs
+  spec](https://github.com/google-labs-code/design.md) (version: alpha).
+  Otherwise uses the neutral defaults in this template.
 - Footer line: `Generated [YYYY-MM-DD] · validation-canvas.md is the source
   of truth.`
 
@@ -32,10 +32,11 @@ Proposition Canvas** combined artifact. Read this before producing
 2. For each block, extract the bulleted claims. Preserve founder's wording.
 3. Substitute the placeholders below with the actual block content as
    semantic `<ul>` lists.
-4. If the brand design system exists (`<brand-root>/design-system.md`, or
-   legacy `brand-kit/design-system.md` at cwd root), parse the primary,
-   surface, and text colors plus the body font-family, and substitute them
-   into the `:root` CSS custom properties. Otherwise keep the defaults.
+4. If the brand design system exists at `<brand-root>/DESIGN.md`, extract
+   tokens from the YAML front matter (per [Google Labs spec](https://github.com/google-labs-code/design.md),
+   version: alpha): read `colors.primary`, `colors.secondary`, etc., and the
+   `typography` section. Substitute them into the `:root` CSS custom properties.
+   Otherwise keep the defaults.
 5. Save as `<canvas-root>/validation-canvas.html` (default
    `docs/canvas/validation-canvas.html` solo, `docs/startup-kit/canvas/validation-canvas.html`
    orchestrated).
@@ -54,7 +55,7 @@ Proposition Canvas** combined artifact. Read this before producing
 <style>
   :root {
     /* Override these from the brand design system when available
-       (<brand-root>/design-system.md, or legacy brand-kit/design-system.md) */
+       (<brand-root>/DESIGN.md, YAML front matter) */
     --canvas-bg: #fafaf7;
     --canvas-surface: #ffffff;
     --canvas-text: #1a1a1a;
@@ -307,43 +308,64 @@ Proposition Canvas** combined artifact. Read this before producing
 
 ## Brand token substitution (strict mapping)
 
-If the brand design system exists (`<brand-root>/design-system.md` per the
-conventions doc, or legacy `brand-kit/design-system.md` at cwd root for
-backward compat), map sections → CSS variables **literally by the names
-below**. Do not infer or rename on the fly — the mapping is a contract with
-`brand-workshop`'s `design-system.md` schema.
+If the brand design system exists at `<brand-root>/DESIGN.md` (per the
+conventions doc), extract tokens from the **YAML front matter** at the top of
+the file (delimited by `---` lines) and map them → CSS variables **literally
+by the names below**. Do not infer or rename on the fly — the
+mapping is a contract with `brand-workshop`'s DESIGN.md schema per
+[Google Labs spec](https://github.com/google-labs-code/design.md) (version: alpha).
 
-| CSS variable           | `design-system.md` section.key                         |
+| CSS variable           | DESIGN.md YAML path                                    |
 |------------------------|--------------------------------------------------------|
-| `--canvas-bg`          | `Color Tokens → Neutrals.background`                   |
-| `--canvas-surface`     | `Color Tokens → Neutrals.surface`                      |
-| `--canvas-text`        | `Color Tokens → Neutrals.text-primary`                 |
-| `--canvas-muted`       | `Color Tokens → Neutrals.text-secondary`               |
-| `--canvas-border`      | `Color Tokens → Neutrals.border`                       |
-| `--canvas-accent`      | `Color Tokens → Primary` (the brand hero color)        |
-| `--canvas-font-body`   | `Typography → body` (family stack)                     |
-| `--canvas-font-heading`| `Typography → display` (fall back to `Typography → body`) |
+| `--canvas-bg`          | `colors.neutral` (use as background)                   |
+| `--canvas-surface`     | `colors.neutral` (lighter variant if available)        |
+| `--canvas-text`        | `colors.neutral` (darker, for contrast on surface)     |
+| `--canvas-muted`       | `colors.secondary` (muted/secondary text)              |
+| `--canvas-border`      | `colors.tertiary` (or secondary as fallback)           |
+| `--canvas-accent`      | `colors.primary` (the brand hero color)                |
+| `--canvas-font-body`   | `typography.body.family` (family stack)                |
+| `--canvas-font-heading`| `typography.display.family` (fall back to `typography.body.family`) |
 
-Note: `brand-workshop` exposes both `Color Tokens → Primary` *and* a separate
-`Color Tokens → Accent`. **Map `--canvas-accent` to `Primary`, not to
-`Accent`** — `Accent` is a secondary highlight color in brand-workshop's
-vocabulary, while `Primary` is the brand hero that downstream plugins treat
-as their accent.
+Note: The DESIGN.md spec defines four color keys: `primary`, `secondary`,
+`tertiary`, `neutral`. **Map `--canvas-accent` to `colors.primary`** —
+`primary` is the brand hero that downstream plugins treat as their accent.
 
-> **Token contract migration note (v1 → v2).** This skill previously named
-> its accent variable `--bmc-accent`. v2.0.0 renamed it to `--canvas-accent`
-> in lockstep with the skill rename. Brand-workshop's Token Mapping
-> Convention block has been updated to reference both names during the
-> migration window.
-
-If a section is missing from `design-system.md`, keep the neutral default
-from the template's `:root` block and leave an HTML comment noting the
-fallback (e.g., `<!-- fallback: --canvas-accent not found in
-design-system.md -->`).
+If a color or field is missing from DESIGN.md's YAML front matter, keep the
+neutral default from the template's `:root` block and leave an HTML comment
+noting the fallback (e.g., `<!-- fallback: colors.primary not found in
+DESIGN.md YAML -->`).
 
 If the brand uses non-websafe fonts and you don't have a base64 webfont
 available, keep the system-font fallback — don't pull a webfont from a CDN.
 Zero network dependencies is a hard rule.
+
+---
+
+## DESIGN.md format (reference)
+
+The current brand-workshop output follows the [Google Labs DESIGN.md spec](https://github.com/google-labs-code/design.md) (alpha, 2026-05). A minimal valid file looks like:
+
+```
+---
+version: alpha
+name: <Brand Name>
+colors:
+  primary: "#1A1C1E"
+  secondary: "#6C7278"
+  tertiary: "#B8422E"
+  neutral: "#F7F5F2"
+typography:
+  body:
+    family: "system-ui, -apple-system, sans-serif"
+  display:
+    family: "system-ui, -apple-system, sans-serif"
+---
+
+## Overview
+...
+```
+
+Extract values from this front matter. If a field is missing, use the neutral defaults from the `:root` block.
 
 ---
 

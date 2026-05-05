@@ -519,7 +519,7 @@ Before presenting to the user, verify each:
 - [ ] `test-matrix.html` is a single file, opens in a browser, drag
       works, click-to-expand works, prints cleanly
 - [ ] `## Results` section preserved if existing file was being updated
-- [ ] Brand tokens applied if `<kit-root>/brand/design-system.md` (or legacy `brand-kit/design-system.md`) present
+- [ ] Brand tokens applied if `<kit-root>/brand/DESIGN.md` (or legacy `brand-kit/DESIGN.md`) present; reads `colors.primary` from YAML front matter
 - [ ] Files saved to the resolved RAT folder per Phase 0 Step 0.0 (not cwd root)
 - [ ] Smart-default notice surfaced if smart-default fired
 - [ ] Response ends with the three lines (riskiest assumption + cheapest
@@ -534,10 +534,10 @@ Before presenting to the user, verify each:
 | `validation-canvas` (our own) | **Required upstream** (medium gate). This skill STOPs without `validation-canvas.md`. After this skill ships, invalidated hypotheses route back to `validation-canvas` in update mode (loop-back). |
 | `pitch-deck` (our own) | Downstream (heavy gate). Pitch-deck STOPs without populated `## Results` for top-3 hypotheses. Override available with `[PRE-VALIDATION DRAFT]` watermark. |
 | `startup-grill` (our own) | Last step. Reads `<rat-root>/assumption-test-plan.md` Results to check whether canvas was iterated after testing (yellow-flags pristine pipelines). |
-| `brand-workshop` (our own) | Upstream — provides design tokens (`<kit-root>/brand/design-system.md` or legacy `brand-kit/design-system.md`) for the interactive matrix HTML. Optional. |
+| `brand-workshop` (our own) | Upstream — provides design tokens via `DESIGN.md` ([Google Labs spec](https://github.com/google-labs-code/design.md), version `alpha`; reads `colors.primary` from YAML front matter) at `<kit-root>/brand/DESIGN.md` or legacy `brand-kit/DESIGN.md` for the interactive matrix HTML. Optional. |
 | `team-composer` (our own) | Instead of this skill when the founder wants to *discuss* validation strategy without committing to a written plan. After this skill when the test plan needs multi-role pressure-testing. |
 | `web-artifacts-builder` (Anthropic) | After this skill names a fake-door / landing-page test, use this to actually build the test surface. |
-| `theme-factory` (Anthropic) | When the matrix HTML needs branded styling and no brand artifact (`<kit-root>/brand/design-system.md` or legacy `brand-kit/design-system.md`) is present. |
+| `theme-factory` (Anthropic) | When the matrix HTML needs branded styling and no brand artifact (`<kit-root>/brand/DESIGN.md` or legacy `brand-kit/DESIGN.md`) is present. |
 | `pdf` (Anthropic) | When merging the test plan into a board packet. |
 
 **Principle:** this skill owns the **test design** — what to test, how to
