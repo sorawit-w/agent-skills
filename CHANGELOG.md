@@ -5,6 +5,90 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] — 2026-05-05
+
+Tidies the founder's working directory by rooting all startup-pipeline
+artifacts under `docs/`. **Backward compatible**: every v2.1.0 invocation
+still works because skills read v1 paths via fallback.
+
+### Changed
+
+- **Default output paths now under `docs/`.** Each pipeline skill writes to
+  a per-skill subfolder:
+
+  | Skill                       | Solo path             | Orchestrated path                    |
+  |-----------------------------|-----------------------|--------------------------------------|
+  | `brand-workshop`            | `docs/brand/`         | `docs/startup-kit/brand/`            |
+  | `validation-canvas`         | `docs/canvas/`        | `docs/startup-kit/canvas/`           |
+  | `riskiest-assumption-test`  | `docs/rat/`           | `docs/startup-kit/rat/`              |
+  | `pitch-deck`                | `docs/pitch/`         | `docs/startup-kit/pitch/`            |
+  | `startup-grill`             | `docs/grill/`         | `docs/startup-kit/grill/`            |
+
+- **Path resolution precedence chain** (each pipeline skill, Step 0.0):
+  1. Explicit `output_dir` arg passed by the orchestrator
+  2. `STARTUP_KIT_DOCS_ROOT` env var (e.g., monorepos / Jekyll sites)
+  3. Smart default — if `docs/startup-kit/` exists, write to
+     `docs/startup-kit/<skill>/` and surface a one-line notice
+  4. Solo fallback: `docs/<skill>/`
+
+- **`kit-manifest.json` now lives at `docs/startup-kit/kit-manifest.json`**
+  (was `./kit-manifest.json` at cwd root). The orchestrator creates the
+  folder if absent. Legacy `./kit-manifest.json` is still read as a
+  backward-compat fallback.
+
+- **Cross-skill reads** (e.g., `pitch-deck` reading the validation canvas)
+  resolve via the same precedence chain — siblings of the resolved root —
+  with legacy v1 paths as fallback. Founders never need to migrate; the
+  fallback handles old artifacts indefinitely.
+
+- **Smart-default behavior:** running a child skill solo when
+  `docs/startup-kit/` already exists writes to
+  `docs/startup-kit/<skill>/` (auto-coalesces with prior orchestrated runs).
+  The skill logs *"Writing to `docs/startup-kit/<skill>/` (smart default).
+  Set `STARTUP_KIT_DOCS_ROOT=./docs` to write standalone instead."* — no
+  silent surprise.
+
+- **Re-run behavior:** overwrite, with git history as the version-control
+  layer. Skills with additive sections (`riskiest-assumption-test`'s
+  `## Results` table, `startup-grill`'s `defense-log.md`) preserve those
+  per their existing skill-specific contracts.
+
+- **Skill self-containment:** each skill's path-resolution rules live
+  inline in its own SKILL.md Step 0.0. No cross-skill or external doc
+  references — copying a single skill folder remains fully functional.
+
+### Migration
+
+- **Existing v1 users don't have to migrate.** Backward-compat reads
+  handle `brand-kit/`, `validation-canvas.md` at root, `rat/`, `pitch/`,
+  `grill/`, and `./kit-manifest.json` indefinitely.
+
+- **To consolidate manually** (optional — for a tidy repo):
+
+  ```bash
+  # Solo runs (no kit-manifest.json):
+  mkdir -p docs/canvas
+  mv brand-kit docs/brand
+  mv validation-canvas.md validation-canvas.html docs/canvas/
+  mv rat pitch grill docs/
+
+  # Orchestrated runs (kit-manifest.json at root):
+  mkdir -p docs/startup-kit/canvas
+  mv kit-manifest.json docs/startup-kit/
+  mv brand-kit docs/startup-kit/brand
+  mv validation-canvas.md validation-canvas.html docs/startup-kit/canvas/
+  mv rat pitch grill docs/startup-kit/
+  ```
+
+  Skip lines for folders that don't exist in your project.
+
+### Notes
+
+- Plugin version: `2.1.0` → `2.2.0` (MINOR — additive, non-breaking).
+- 19 files updated (6 SKILL.md + 12 reference files + plugin.json).
+- No new dependencies, no new skills, no new artifacts shipped — just
+  tidier defaults.
+
 ## [2.1.0] — 2026-05-02
 
 Adds the **`startup-launch-kit` orchestrator** plus deeper sourcing on the
