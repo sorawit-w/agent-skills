@@ -5,6 +5,121 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] — 2026-05-05
+
+Refines `handshake` following the pre-shipment audit (skill-evaluator pass +
+manual description-trigger read). Two body fixes for adherence, two
+description fixes for triggering accuracy. Minor bump rather than patch
+because the description changes affect *which* prompts trigger the skill.
+
+### Changed (handshake)
+
+- **SKILL.md description:** added `"tune in to me"`, `"set a working
+  agreement"`, and `"share my preferences"` to the trigger phrase list — the
+  skill body uses these phrasings but the description didn't mirror them, so
+  trigger queries that used those phrases were under-firing in the manual
+  description read.
+- **SKILL.md description:** added an explicit negative gate — *"NOT for
+  codebase orientation, performance-review calibration, or content gathering
+  (resumes, bios, requirements docs, CV bullets) — those are different jobs
+  handled by other skills."* Closes the over-triggering risk on adjacent
+  prompts that share keywords ("get to know," "calibration") but mean
+  different things.
+- **Phase 0 transition rule clarified.** Added a fifth bullet to "Rules for
+  Phase 0" naming the explicit branch on memory state: when memory is
+  empty, transition to Phase 1 in the same response; when memory is
+  non-empty, end the Phase 0 turn with the correction prompt and wait for
+  the user's reply before showing Q1. Resolves an ambiguity surfaced by the
+  audit where executors split 6:2 on whether to pause or proceed.
+- **Phase 1 voice rule added (META-LEAK).** New fifth bullet under "Hard
+  rules for Phase 1": do not name the skill ("handshake," "this skill,"
+  "the handshake skill is designed to…") in user-facing turns. Speak as a
+  colleague calibrating, not a meta-narrator. Two of the eight audit runs
+  leaked the skill name into the response — this rule closes the gap
+  without adding new structural rules elsewhere.
+
+### Audit details
+
+- 8-test audit via `skill-evaluator`: 31/37 assertions passed (84%) before
+  fixes. Of 5 failures, 2 were [SKILL] (META-LEAK on T7 and T8), 3 were
+  [BRIEF] framing on T2 (test-quality issues, not skill issues).
+- Manual description-trigger read flagged 4 risk areas; all 4 addressed in
+  this version. Optimization-loop run via `skill-creator/run_loop` deferred
+  to a Mac-terminal session because the sandbox `claude` CLI is not
+  authenticated.
+- No changes to: never-ask list, single-user contract, slash-command-only
+  triggering, capability-gated memory integration. Those held cleanly under
+  audit (T5 PII = 5/5, T6 multi-user = 5/5).
+
+### Plugin
+
+- Plugin version: `3.1.0` → `3.2.0` (minor — description triggering
+  changed; widened on three new phrases, narrowed via explicit negative
+  gate).
+- Marketplace catalog: `3.1.0` → `3.2.0` (sync).
+- Skills array: unchanged at 12.
+
+## [3.1.0] — 2026-05-05
+
+Adds the `handshake` skill — a brief, opt-in collaboration calibration ritual
+that runs before the real work. Additive over v3.0.0; no breaking changes. All
+prior skills continue to work unchanged.
+
+### Added
+
+- **New skill: `handshake`.** Slash-command-only at v1 (`/handshake`,
+  `/handshake --project`). Two-mode design:
+  - **Core mode** — shows ≤5 existing `user`-type memory entries (Phase 0
+    "show what I know"), then asks ≤4 high-leverage pill questions plus 1
+    free-text "what did past assistants get wrong?" question. Each question
+    states its behavioral payoff. Writes to `user`-type memory in the
+    existing two-tier store.
+  - **Project overlay** — optional, opt-in. Asks ≤6 scoped questions about
+    the current project (goal, stage, stakeholders, constraints, past
+    decisions, external resources). All skippable. Writes to `project`-type
+    memory — never `user`-type.
+- **Hard never-ask list** — encodes the same PII exclusions used by the
+  auto-memory system (protected attributes, government IDs, financial
+  accounts, health information, home addresses, secrets). The skill refuses
+  to ask, even if the user invites it.
+- **Single-user contract** — `handshake` calibrates only the agent for the
+  single person running this Claude instance. Multi-user identity awareness
+  is explicitly deferred to Phase 2 with evidence.
+- **Capability-gated memory integration** — defers to
+  `productivity:memory-management` for file-layout conventions if installed,
+  otherwise writes directly to the runtime's persistent memory using the
+  standard frontmatter format. Vendor identity is not a routing input.
+- **Show-then-ask preamble is mandatory.** Surfacing existing memory before
+  asking anything new is a non-negotiable design choice, not an option.
+  Skipping Phase 0 turns the skill into a survey, which it is not.
+- **Asset additions:** `assets/icons/handshake.svg` (32×32 pixel-art icon,
+  two hands clasping in the warm-orange accent palette) and
+  `assets/handshake-li.svg` (1200×627 banner: KNOW · ASK · CALIBRATE
+  three-card layout matching the repo's visual language).
+
+### Design choices worth knowing
+
+- **Three-part skill test was applied.** `handshake` passes on **unique
+  elicitation** (privacy-conscious, consent-gated, show-what-I-know-first,
+  hard never-ask list) and only partially on structure. The deliverable
+  (`user`-type and `project`-type memory entries) is shared with the
+  auto-memory system by design — `handshake` wraps the existing memory
+  contract; it does not invent a parallel one.
+- **Slash-command-only at v1, per the staged-rollout principle.** Aggressive
+  auto-trigger (when `user`-type memory is empty mid-conversation) is a
+  Phase 2 decision gated on observed user value. Other skills MAY suggest
+  invoking `/handshake`; never auto-route.
+- **Not folded into `startup-launch-kit`.** Calibration is a generic
+  collaboration primitive, not a startup pipeline step. Coupling them would
+  drift the kit's scope.
+
+### Plugin
+
+- Plugin version: `3.0.0` → `3.1.0` (additive — new skill, no breaking
+  changes to the v3.0.0 `DESIGN.md` schema or any pipeline contract).
+- Marketplace catalog: `3.0.0` → `3.1.0` (sync).
+- Skills array: 11 → 12.
+
 ## [3.0.0] — 2026-05-05
 
 Migrates `brand-workshop`'s starter design-system output to the

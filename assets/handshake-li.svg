@@ -1,0 +1,305 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="handshake — calibrate before the work starts" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>handshake — calibrate before the work starts</title>
+  <desc>Pixel-art banner for the handshake Claude Code plugin: title at top, three labeled cards across the middle. KNOW card (left) displays existing user-type memory entries with filenames in brackets. ASK card (center, highlighted) shows one example pill question with options including a Skip pill, plus a Why-I'm-asking caption. CALIBRATE card (right) shows a written-to-memory summary listing newly created user_*.md files with green DONE checks. Chapter labels KNOW · ASK · CALIBRATE below.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-hs" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-hs)"/>
+
+  <!-- =========== TITLE BLOCK (top, centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="88" font-size="44" font-weight="700" fill="#1f2937" letter-spacing="2">handshake</text>
+    <text x="600" y="124" font-size="20" fill="#6b7280">calibrate before the work starts</text>
+    <text x="600" y="154" font-size="12" fill="#9ca3af" letter-spacing="4">KNOW · ASK · CALIBRATE</text>
+  </g>
+
+  <!-- =========== SECTION LABELS (chapter markers under each card) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="200" y="578" font-size="13" fill="#1f2937" letter-spacing="4">KNOW</text>
+    <text x="600" y="578" font-size="13" fill="#c2410c" font-weight="700" letter-spacing="4">ASK</text>
+    <text x="995" y="578" font-size="13" fill="#1f2937" letter-spacing="4">CALIBRATE</text>
+  </g>
+
+  <!-- =========== CARD 1: KNOW (memory readout — clipboard style) =========== -->
+  <!-- Position: x=70, y=210, w=260, h=320 -->
+  <g>
+    <!-- card paper -->
+    <rect x="70"  y="210" width="260" height="320" fill="#f3e7c9"/>
+    <rect x="70"  y="210" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="70"  y="525" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="70"  y="210" width="5"   height="320" fill="#b79a5c"/>
+    <rect x="325" y="210" width="5"   height="320" fill="#b79a5c"/>
+    <!-- clip at top -->
+    <rect x="170" y="200" width="60" height="14" fill="#6b7280"/>
+    <rect x="180" y="194" width="40" height="6"  fill="#6b7280"/>
+
+    <!-- title bar -->
+    <rect x="76" y="222" width="248" height="34" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="94" y="245" font-size="18" font-weight="700">ON FILE</text>
+    </g>
+    <rect x="76" y="256" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- subtitle -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b7280" letter-spacing="1">
+      <text x="94" y="280">5 user-type entries</text>
+    </g>
+
+    <!-- entry 1 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" letter-spacing="0">
+      <text x="94" y="306" font-weight="700" fill="#c2410c">[user_role]</text>
+    </g>
+    <rect x="94"  y="312" width="200" height="3" fill="#6b7280"/>
+    <rect x="94"  y="318" width="160" height="3" fill="#9ca3af"/>
+
+    <!-- entry 2 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10">
+      <text x="94" y="346" font-weight="700" fill="#c2410c">[user_collab]</text>
+    </g>
+    <rect x="94"  y="352" width="200" height="3" fill="#6b7280"/>
+    <rect x="94"  y="358" width="140" height="3" fill="#9ca3af"/>
+
+    <!-- entry 3 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10">
+      <text x="94" y="386" font-weight="700" fill="#c2410c">[user_verbosity]</text>
+    </g>
+    <rect x="94"  y="392" width="200" height="3" fill="#6b7280"/>
+    <rect x="94"  y="398" width="120" height="3" fill="#9ca3af"/>
+
+    <!-- entry 4 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10">
+      <text x="94" y="426" font-weight="700" fill="#c2410c">[user_norms]</text>
+    </g>
+    <rect x="94"  y="432" width="200" height="3" fill="#6b7280"/>
+    <rect x="94"  y="438" width="170" height="3" fill="#9ca3af"/>
+
+    <!-- entry 5 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10">
+      <text x="94" y="466" font-weight="700" fill="#c2410c">[user_location]</text>
+    </g>
+    <rect x="94"  y="472" width="200" height="3" fill="#6b7280"/>
+    <rect x="94"  y="478" width="100" height="3" fill="#9ca3af"/>
+
+    <!-- footer prompt -->
+    <rect x="76" y="496" width="248" height="2" fill="#b79a5c"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+      <text x="94" y="514">anything stale? say so.</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 1 (KNOW -> ASK) =========== -->
+  <g transform="translate(340, 362)" fill="#6b7280">
+    <rect x="0"  y="6" width="60" height="6"/>
+    <rect x="54" y="0" width="6"  height="6"/>
+    <rect x="60" y="6" width="6"  height="6"/>
+    <rect x="54" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 2: ASK (highlighted center — one example pill question) =========== -->
+  <!-- Position: x=412, y=210, w=376, h=320 -->
+  <g>
+    <!-- outer tile -->
+    <rect x="412" y="210" width="376" height="320" fill="#ffffff"/>
+    <rect x="412" y="210" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="525" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="210" width="5"   height="320" fill="#c9b58a"/>
+    <rect x="783" y="210" width="5"   height="320" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="422" y="220" width="356" height="300" fill="#fdf7ea"/>
+
+    <!-- title bar -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="440" y="250" font-size="18" font-weight="700" fill="#1f2937" letter-spacing="1">QUESTION</text>
+      <text x="760" y="250" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">2 OF 4</text>
+    </g>
+    <rect x="436" y="262" width="328" height="2" fill="#c9b58a"/>
+
+    <!-- The question prompt -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="440" y="294" font-size="14" font-weight="700">When you give me a complex task,</text>
+      <text x="440" y="314" font-size="14" font-weight="700">what's your default preference?</text>
+    </g>
+
+    <!-- =========== PILL OPTIONS =========== -->
+    <!-- Pill 1: "Just do it, summarize after" -->
+    <g>
+      <rect x="440" y="338" width="290" height="28" fill="#ffffff"/>
+      <rect x="440" y="338" width="290" height="2"  fill="#1f2937"/>
+      <rect x="440" y="364" width="290" height="2"  fill="#1f2937"/>
+      <rect x="440" y="338" width="2"   height="28" fill="#1f2937"/>
+      <rect x="728" y="338" width="2"   height="28" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937">
+        <text x="454" y="357">Just do it, summarize after</text>
+      </g>
+    </g>
+
+    <!-- Pill 2: "Walk me through your plan first" — SELECTED (orange highlight) -->
+    <g>
+      <rect x="440" y="376" width="290" height="28" fill="#fde68a"/>
+      <rect x="440" y="376" width="290" height="2"  fill="#c2410c"/>
+      <rect x="440" y="402" width="290" height="2"  fill="#c2410c"/>
+      <rect x="440" y="376" width="2"   height="28" fill="#c2410c"/>
+      <rect x="728" y="376" width="2"   height="28" fill="#c2410c"/>
+      <!-- check mark -->
+      <rect x="448" y="388" width="2" height="2" fill="#c2410c"/>
+      <rect x="450" y="390" width="2" height="2" fill="#c2410c"/>
+      <rect x="452" y="392" width="2" height="2" fill="#c2410c"/>
+      <rect x="454" y="390" width="2" height="2" fill="#c2410c"/>
+      <rect x="456" y="388" width="2" height="2" fill="#c2410c"/>
+      <rect x="458" y="386" width="2" height="2" fill="#c2410c"/>
+      <rect x="460" y="384" width="2" height="2" fill="#c2410c"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937" font-weight="700">
+        <text x="470" y="395">Walk me through your plan first</text>
+      </g>
+    </g>
+
+    <!-- Pill 3: "Ask 1–2 questions, then start" -->
+    <g>
+      <rect x="440" y="414" width="290" height="28" fill="#ffffff"/>
+      <rect x="440" y="414" width="290" height="2"  fill="#1f2937"/>
+      <rect x="440" y="440" width="290" height="2"  fill="#1f2937"/>
+      <rect x="440" y="414" width="2"   height="28" fill="#1f2937"/>
+      <rect x="728" y="414" width="2"   height="28" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937">
+        <text x="454" y="433">Ask 1–2 questions, then start</text>
+      </g>
+    </g>
+
+    <!-- Pill 4: SKIP (mute styling — first-class option) -->
+    <g>
+      <rect x="440" y="452" width="80"  height="22" fill="#f3e7c9"/>
+      <rect x="440" y="452" width="80"  height="2"  fill="#9ca3af"/>
+      <rect x="440" y="472" width="80"  height="2"  fill="#9ca3af"/>
+      <rect x="440" y="452" width="2"   height="22" fill="#9ca3af"/>
+      <rect x="518" y="452" width="2"   height="22" fill="#9ca3af"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+        <text x="464" y="467">SKIP</text>
+      </g>
+    </g>
+
+    <!-- Why-I'm-asking caption (footer) -->
+    <rect x="436" y="488" width="328" height="2" fill="#c9b58a"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+      <text x="440" y="506">why: so I don't surprise you with</text>
+      <text x="440" y="518">the wrong altitude of involvement.</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 2 (ASK -> CALIBRATE) =========== -->
+  <g transform="translate(798, 362)" fill="#6b7280">
+    <rect x="0"  y="6" width="60" height="6"/>
+    <rect x="54" y="0" width="6"  height="6"/>
+    <rect x="60" y="6" width="6"  height="6"/>
+    <rect x="54" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 3: CALIBRATE (write-to-memory summary) =========== -->
+  <!-- Position: x=870, y=210, w=260, h=320 -->
+  <g>
+    <!-- card paper -->
+    <rect x="870"  y="210" width="260" height="320" fill="#f3e7c9"/>
+    <rect x="870"  y="210" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="870"  y="525" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="870"  y="210" width="5"   height="320" fill="#b79a5c"/>
+    <rect x="1125" y="210" width="5"   height="320" fill="#b79a5c"/>
+
+    <!-- title bar -->
+    <rect x="876" y="222" width="248" height="34" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="894" y="245" font-size="18" font-weight="700">WROTE</text>
+      <text x="1116" y="245" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">+5</text>
+    </g>
+    <rect x="876" y="256" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- subtitle -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#15803d" letter-spacing="1" font-weight="700">
+      <text x="894" y="280">user-type</text>
+    </g>
+
+    <!-- written file 1 -->
+    <g>
+      <!-- + sign -->
+      <rect x="894" y="296" width="2" height="6" fill="#15803d"/>
+      <rect x="892" y="298" width="6" height="2" fill="#15803d"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+        <text x="906" y="303">user_expertise.md</text>
+      </g>
+    </g>
+
+    <!-- written file 2 -->
+    <g>
+      <rect x="894" y="318" width="2" height="6" fill="#15803d"/>
+      <rect x="892" y="320" width="6" height="2" fill="#15803d"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+        <text x="906" y="325">user_collab.md</text>
+      </g>
+    </g>
+
+    <!-- written file 3 -->
+    <g>
+      <rect x="894" y="340" width="2" height="6" fill="#15803d"/>
+      <rect x="892" y="342" width="6" height="2" fill="#15803d"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+        <text x="906" y="347">user_verbosity.md</text>
+      </g>
+    </g>
+
+    <!-- written file 4 -->
+    <g>
+      <rect x="894" y="362" width="2" height="6" fill="#15803d"/>
+      <rect x="892" y="364" width="6" height="2" fill="#15803d"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+        <text x="906" y="369">user_norms.md</text>
+      </g>
+    </g>
+
+    <!-- written file 5 -->
+    <g>
+      <rect x="894" y="384" width="2" height="6" fill="#15803d"/>
+      <rect x="892" y="386" width="6" height="2" fill="#15803d"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+        <text x="906" y="389">user_frustration.md</text>
+      </g>
+    </g>
+
+    <!-- separator -->
+    <rect x="876" y="408" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- MEMORY.md updated (status badge) -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#15803d" letter-spacing="1" font-weight="700">
+      <text x="894" y="430">index</text>
+    </g>
+    <g>
+      <rect x="894" y="442" width="2" height="6" fill="#15803d"/>
+      <rect x="892" y="444" width="6" height="2" fill="#15803d"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+        <text x="906" y="449">MEMORY.md (+5)</text>
+      </g>
+    </g>
+
+    <!-- Done seal -->
+    <rect x="894" y="478" width="100" height="22" fill="#15803d"/>
+    <!-- check inside seal -->
+    <rect x="906" y="487" width="2" height="2" fill="#fdf7ea"/>
+    <rect x="908" y="489" width="2" height="2" fill="#fdf7ea"/>
+    <rect x="910" y="491" width="2" height="2" fill="#fdf7ea"/>
+    <rect x="912" y="489" width="2" height="2" fill="#fdf7ea"/>
+    <rect x="914" y="487" width="2" height="2" fill="#fdf7ea"/>
+    <rect x="916" y="485" width="2" height="2" fill="#fdf7ea"/>
+    <rect x="918" y="483" width="2" height="2" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#fdf7ea" font-weight="700" letter-spacing="2">
+      <text x="930" y="494">DONE</text>
+    </g>
+
+    <!-- footer note -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+      <text x="894" y="514">single-user · per-instance</text>
+    </g>
+  </g>
+
+</svg>

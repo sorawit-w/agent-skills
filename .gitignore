@@ -6,7 +6,7 @@
 ._*
 
 # Custom folder icons
-Icon
+Icon
 
 # Volume root files
 .DocumentRevisions-V100
@@ -181,3 +181,10 @@ playground.xcworkspace
 *.moved-aside
 *.xcuserstate
 *.xcscmblueprint
+
+### Project — agent-skills
+
+# Local skill-evaluation workspaces (eval sets, optimization-loop reports,
+# trigger-eval JSON, etc.). Useful locally for pre-shipment audits;
+# regenerated per audit run, not worth tracking.
+.eval/

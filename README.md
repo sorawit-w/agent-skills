@@ -19,8 +19,8 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of eleven specialized skills in one go.
-- **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, and founders who want their startup adversarially probed.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of twelve specialized skills in one go.
+- **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, founders who want their startup adversarially probed, and anyone who wants the agent to know how *they* prefer to collaborate before the work starts.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
 ## Install
@@ -53,6 +53,7 @@ Click a skill to jump to its details.
 | <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="64" align="middle"/> | [`sub-agent-coordinator`](#sub-agent-coordinator) | Orchestrate multi-agent work — briefing, coordination, and verification that don't drift. | You're kicking off a task bigger than fifteen minutes that's at least partially parallelizable. |
 | <img src="assets/icons/skill-evaluator.svg" alt="" width="64" align="middle"/> | [`skill-evaluator`](#skill-evaluator) | Audit a skill to see whether its rules actually land when Claude runs it. | You just wrote a skill, or one has been "mostly working" and you suspect a rule is being skipped. |
 | <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="64" align="middle"/> | [`tech-stack-recommendations`](#tech-stack-recommendations) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. | You're starting a new project, or picking one layer, and want a default instead of a neutral grid. |
+| <img src="assets/icons/handshake.svg" alt="" width="64" align="middle"/> | [`handshake`](#handshake) | A brief opt-in calibration ritual that shows you what's on file, then asks ≤4 high-leverage collaboration questions (and optionally ≤6 scoped project questions). Writes to the existing memory store. | You want the agent to know *how* you prefer to collaborate before it starts giving generic answers, or you want a transparent moment to see and correct what's been captured about you. |
 | <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="64" align="middle"/> | [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. | You're editing a big i18n file without blowing token limits, or producing translations that shouldn't read as machine-converted English. |
 | <img src="assets/icons/brand-workshop.svg" alt="" width="64" align="middle"/> | [`brand-workshop`](#brand-workshop) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. | You need a real identity package for a product, app, or startup — not just a logo doodle. |
 | <img src="assets/icons/validation-canvas.svg" alt="" width="64" align="middle"/> | [`validation-canvas`](#validation-canvas) | Interview a founder block-by-block and produce a rigorous Lean Canvas + Value Proposition Canvas with explicit Stress Tests. Adapts to founder experience via 3-question intake. | You need a beliefs artifact that holds up to scrutiny — *what do we believe?* — before designing tests, building the deck, or pitching. |
@@ -172,6 +173,27 @@ team-composer ──▶ sub-agent-coordinator
 - "I'm starting a SaaS side-project. Give me one opinionated stack I don't have to second-guess."
 - "We're migrating off Next.js on Vercel — recommend the path and name the trade-offs honestly."
 - "Kick off a `team-composer` architecture review and load `tech-stack-recommendations` as the architect's anchor position."
+
+---
+
+<a id="handshake"></a>
+
+### <img src="assets/icons/handshake.svg" alt="" width="48" align="middle"/> &nbsp;`handshake`
+
+**What it does.** A brief mutual exchange that establishes the terms of subsequent collaboration — not a friendship, not an interview, a handshake. Three phases: (1) **show what I know** — surfaces the most relevant existing `user`-type memory entries (≤5) with filenames in brackets, so you can correct stale facts before anything new gets added; (2) **core calibration** — asks ≤4 high-leverage pill questions (expertise framing, default collaboration mode, output verbosity, one explicit collaboration norm) plus 1 free-text "what did past assistants get wrong about you?" question, each with a stated behavioral payoff; (3) **optional project overlay** — ≤6 scoped questions about the current project (goal, stage, stakeholders, constraints, past decisions, external resources), all skippable, written to `project`-type memory. Closes with a written-to-memory summary so memory stays transparent. Hard never-ask list mirrors the auto-memory PII rules.
+
+**Reach for it when.** You want the agent to know how *you* prefer to collaborate before it starts giving generic answers. You've noticed memory accruing passively but never been shown what's on file. A new project is starting and `project`-type memory is empty. Or another skill suggests calibration because relevant memory is sparse.
+
+**Pairs well with.**
+- [`team-composer`](#team-composer) — when a team is about to be assembled and `user`-type memory is sparse, `team-composer` MAY suggest `/handshake` first so the team can be tailored to your collaboration style. Suggestion only; never auto-routes.
+- [`brand-workshop`](#brand-workshop) — similar — may suggest `/handshake` for a personal-brand or solo-founder identity package. Suggestion only.
+- [`validation-canvas`](#validation-canvas) / [`riskiest-assumption-test`](#riskiest-assumption-test) / [`pitch-deck`](#pitch-deck) — these read project state, not user state. May suggest `/handshake --project` at kickoff if `project`-type memory for the current work is empty. Suggestion only.
+- `productivity:memory-management` *(if installed)* — `handshake` writes into the same two-tier `MEMORY.md` + `memory/` store. Capability-gated: defers to `productivity:memory-management`'s file-layout conventions when present, otherwise writes directly to the runtime's persistent memory.
+
+**Try it.**
+- "Calibrate how we work — I'm tired of generic answers."
+- "Show me what you have on file about me, then ask the questions that would actually help."
+- "Run `/handshake --project` for this repo before we start the next sprint."
 
 ---
 
@@ -339,7 +361,11 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`2.1.0` is the current release. Adds the opt-in `startup-launch-kit` orchestrator skill (sequences the five pipeline skills with shared state via `kit-manifest.json`, never bypasses gates, every individual skill stays independently invocable) plus deeper sourcing on `riskiest-assumption-test`'s test-method catalog (Maurya, Ries, Fitzpatrick, Savoia, Hall as canonical sources; new `sources.md` bibliography; Pre-Sale extends to a Pre-Sale-or-LOI variant for B2B viability). Additive over v2.0.0; no breaking changes. v2.0.0 invocations continue to work unchanged. See [CHANGELOG.md](CHANGELOG.md) for the full v2.1.0 entry and v2.0.0 migration notes.
+`3.2.0` is the current release. Refines the `handshake` skill following its pre-shipment audit: description triggers widened on three new phrases (`"tune in to me"`, `"set a working agreement"`, `"share my preferences"`) and narrowed via an explicit negative gate against codebase orientation, performance-review calibration, and content gathering (resumes / bios). Two body fixes added — Phase 0 transition rule (explicit branch on whether memory is empty) and a Phase 1 voice rule (no naming the skill in user-facing turns). Minor bump rather than patch because triggering behavior changed.
+
+Earlier in v3.1.0: added the `handshake` skill — a brief, opt-in collaboration calibration ritual that runs before the real work (slash-command-only at v1, two-mode design with core calibration + optional project overlay, hard never-ask list, single-user contract, capability-gated integration with the existing two-tier memory store).
+
+Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The four downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter — clean migration, no backward-compat alias. See [CHANGELOG.md](CHANGELOG.md) for full v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
