@@ -19,25 +19,25 @@ defend).
 
 ## What this skill produces
 
-Every run produces exactly **two files**, both in `rat/` at the founder's
-working-directory root:
+Every run produces exactly **two files**, both in the resolved RAT root
+(see Phase 0 Step 0.0 for path resolution; default is `docs/rat/` for solo
+runs, `docs/startup-kit/rat/` when invoked via orchestrator):
 
-1. **`rat/assumption-test-plan.md`** — canonical, editable Markdown with
+1. **`assumption-test-plan.md`** — canonical, editable Markdown with
    sections: `## Assumptions Dump`, `## Ranking Matrix`, `## Top 3
    Hypotheses`, `## Test Plan`, `## Kill Criteria`, `## Results`.
    Headings are load-bearing — `pitch-deck` and `startup-grill` grep them.
    `## Results` is initially empty; the founder fills it in as tests
    complete, which triggers the loop-back protocol.
-2. **`rat/test-matrix.html`** — interactive risk × impact matrix. Single
+2. **`test-matrix.html`** — interactive risk × impact matrix. Single
    self-contained HTML file. Each assumption is a draggable card on a 2D
    plane; click to expand the hypothesis, success criteria, kill criteria,
    and chosen test method. Color-coded by category (desirability /
    viability / feasibility). Print-clean for inclusion in board decks.
    Zero network dependencies.
 
-Both files go into `rat/` inside the founder's working directory. Existing
-files from prior sessions are appended-to (Results section), never silently
-overwritten.
+Both files go into the resolved RAT folder. Existing files from prior
+sessions are appended-to (Results section), never silently overwritten.
 
 ---
 
@@ -88,10 +88,23 @@ skill.
 **Goal:** confirm `validation-canvas.md` exists, parse it, and STOP if it's
 missing.
 
-### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+### Step 0.0 — Path resolution + manifest awareness (v2.2.0+)
 
-If `kit-manifest.json` exists in the working-directory root, read it. Use it
-as a hint, never as a bypass:
+**Resolve the RAT root** once at invocation, in this precedence order
+(canonical chain):
+
+1. **Explicit `output_dir` arg** (passed by `startup-launch-kit`) → use as-is.
+2. **`STARTUP_KIT_DOCS_ROOT` env var** set → `${STARTUP_KIT_DOCS_ROOT}/rat/`.
+3. **Smart default — `docs/startup-kit/` exists** → `docs/startup-kit/rat/`.
+   Surface the smart-default notice: *"Writing to `docs/startup-kit/rat/`
+   (smart default). Set `STARTUP_KIT_DOCS_ROOT=./docs` to write standalone
+   instead."*
+4. **Solo fallback** → `docs/rat/`.
+
+**Manifest awareness.** Look for `kit-manifest.json` at
+`<resolved-kit-root>/kit-manifest.json` first; fall back to the
+working-directory root for backward compat. Use it as a hint, never as a
+bypass:
 
 - If the manifest lists `riskiest-assumption-test` as `completed` with a
   recent mtime, surface that fact: *"Manifest says you ran RAT on [date].
@@ -104,21 +117,30 @@ as a hint, never as a bypass:
 - Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
   the issue inline and proceed as if no manifest exists.
 
-After this skill ships its artifacts (Phase 5 — render & ship), if
-`kit-manifest.json` exists, append/update this skill's entry. Use atomic
-write (write `.tmp`, then rename). If the manifest doesn't exist, do **NOT**
-create it — that's the `startup-launch-kit` orchestrator's job. See
+After this skill ships its artifacts (Phase 5 — render & ship), if a
+manifest exists, append/update this skill's entry. Use atomic write (write
+`.tmp`, then rename). If the manifest doesn't exist, do **NOT** create it
+— that's the `startup-launch-kit` orchestrator's job. See
 [`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
 for the schema.
 
 ### Step 0.1 — Check for `validation-canvas.md`
 
-If the file is missing in the working directory, **STOP** and route the
-founder to `validation-canvas`:
+Look for `validation-canvas.md` at `<canvas-root>/validation-canvas.md` —
+the canvas root is the sibling of this skill's RAT root (e.g.,
+`docs/startup-kit/canvas/` when this skill's root is
+`docs/startup-kit/rat/`, or `docs/canvas/` when this skill's root is
+`docs/rat/`). Fall back to the legacy path `validation-canvas.md` (cwd
+root) for backward compat. If the file is missing at both, **STOP** and
+route the founder to `validation-canvas`:
 
 > *"This skill needs `validation-canvas.md` as its starting point — the
 > Stress Tests section is the seed for the assumption dump. Run
 > `validation-canvas` first; come back here when the canvas exists."*
+
+If the canvas was found at the legacy path, surface a one-line notice
+so the founder knows the artifact is at a v1 location: *"Read canvas
+from legacy v1 path."*
 
 **Override (rare):** if the founder explicitly says they have a canvas in
 their head and want to RAT a one-pager directly, accept a paragraph dump
@@ -133,11 +155,13 @@ seed. Then scan the Lean Canvas blocks for `[Unknown — …]` markers and the
 VPC for un-relieved Pains and un-created Gains. Each is an assumption
 candidate.
 
-### Step 0.3 — Check for prior `rat/assumption-test-plan.md`
+### Step 0.3 — Check for prior `assumption-test-plan.md`
 
-If present, this is a re-run. Surface the prior top-3 hypotheses and their
-Results status. Either the founder is updating Results (run Phase 5 only)
-or revising the plan (full Phase 1–5).
+Look at `<rat-root>/assumption-test-plan.md` first; fall back to legacy
+`rat/assumption-test-plan.md` (cwd-relative). If present, this is a re-run.
+Surface the prior top-3 hypotheses and their Results status. Either the
+founder is updating Results (run Phase 5 only) or revising the plan (full
+Phase 1–5).
 
 ---
 
@@ -278,10 +302,10 @@ For each top-3 hypothesis, write into the Test Plan:
 
 ## Phase 5: Render & Ship (and update mode)
 
-**Goal:** produce `rat/assumption-test-plan.md` and `rat/test-matrix.html`,
-save them, and present.
+**Goal:** produce `<rat-root>/assumption-test-plan.md` and
+`<rat-root>/test-matrix.html`, save them, and present.
 
-### Step 1 — Produce `rat/assumption-test-plan.md`
+### Step 1 — Produce `assumption-test-plan.md`
 
 Structure (headings are load-bearing — `pitch-deck` and `startup-grill`
 grep them):
@@ -365,7 +389,7 @@ triggers loop-back protocol per `validation-canvas/references/folder-contract.md
 > invalidated core assumptions.
 ```
 
-### Step 2 — Produce `rat/test-matrix.html`
+### Step 2 — Produce `test-matrix.html`
 
 Read the template pattern in `references/matrix-html-template.md` (see file
 for the full single-file Vanilla JS implementation). Key features:
@@ -389,10 +413,14 @@ NOT execute the experiments and does NOT write to the Markdown file. Edits
 in the HTML are session-local; persistence is the founder's job (re-run
 this skill to update the canonical Markdown).
 
-### Step 3 — Save to the working folder
+### Step 3 — Save to the resolved RAT folder
 
-- `rat/assumption-test-plan.md`
-- `rat/test-matrix.html`
+- `<rat-root>/assumption-test-plan.md`
+- `<rat-root>/test-matrix.html`
+
+Where `<rat-root>` is resolved per Phase 0 Step 0.0
+(`docs/startup-kit/rat/` orchestrated, `docs/rat/` solo default, etc.).
+Create the folder if absent.
 
 Existing files from prior sessions: append to `## Results`, never silently
 overwrite the rest. If the founder is materially revising the plan, ask
@@ -422,7 +450,7 @@ so the founder knows pitching is blocked until results land.
 
 When the founder re-invokes this skill after running tests:
 
-1. **Read existing `rat/assumption-test-plan.md`.** Identify which Results
+1. **Read existing `<rat-root>/assumption-test-plan.md`.** Identify which Results
    rows are populated.
 2. **Diff with prior state.** What changed?
 3. **For each invalidated hypothesis:** Surface the loop-back: *"Hypothesis
@@ -445,9 +473,16 @@ for the full pipeline-wide protocol.
 ## Output Files
 
 ```
-rat/assumption-test-plan.md   Canonical, editable test plan
-rat/test-matrix.html          Interactive risk × impact matrix
+<rat-root>/assumption-test-plan.md   Canonical, editable test plan
+<rat-root>/test-matrix.html          Interactive risk × impact matrix
 ```
+
+Where `<rat-root>` resolves per Phase 0 Step 0.0:
+
+- `docs/startup-kit/rat/` — orchestrated (via `startup-launch-kit`)
+- `docs/rat/` — solo default
+- `docs/startup-kit/rat/` — solo with `docs/startup-kit/` smart default
+- `${STARTUP_KIT_DOCS_ROOT}/rat/` — env-var override
 
 No other files. Do not scatter intermediate analyses across the working
 folder.
@@ -479,13 +514,14 @@ Before presenting to the user, verify each:
       interviews would do)
 
 **Phase 5 (Output)**
-- [ ] `rat/assumption-test-plan.md` uses the exact heading structure (so
+- [ ] `assumption-test-plan.md` uses the exact heading structure (so
       `pitch-deck` and `startup-grill` can parse it)
-- [ ] `rat/test-matrix.html` is a single file, opens in a browser, drag
+- [ ] `test-matrix.html` is a single file, opens in a browser, drag
       works, click-to-expand works, prints cleanly
 - [ ] `## Results` section preserved if existing file was being updated
-- [ ] Brand tokens applied if `brand-kit/design-system.md` present
-- [ ] Files saved to `rat/` inside the founder's working directory
+- [ ] Brand tokens applied if `<kit-root>/brand/design-system.md` (or legacy `brand-kit/design-system.md`) present
+- [ ] Files saved to the resolved RAT folder per Phase 0 Step 0.0 (not cwd root)
+- [ ] Smart-default notice surfaced if smart-default fired
 - [ ] Response ends with the three lines (riskiest assumption + cheapest
       test + heavy-gate-to-pitch-deck note)
 
@@ -497,11 +533,11 @@ Before presenting to the user, verify each:
 |-------|-------------|
 | `validation-canvas` (our own) | **Required upstream** (medium gate). This skill STOPs without `validation-canvas.md`. After this skill ships, invalidated hypotheses route back to `validation-canvas` in update mode (loop-back). |
 | `pitch-deck` (our own) | Downstream (heavy gate). Pitch-deck STOPs without populated `## Results` for top-3 hypotheses. Override available with `[PRE-VALIDATION DRAFT]` watermark. |
-| `startup-grill` (our own) | Last step. Reads `rat/assumption-test-plan.md` Results to check whether canvas was iterated after testing (yellow-flags pristine pipelines). |
-| `brand-workshop` (our own) | Upstream — provides design tokens for the interactive matrix HTML. Optional. |
+| `startup-grill` (our own) | Last step. Reads `<rat-root>/assumption-test-plan.md` Results to check whether canvas was iterated after testing (yellow-flags pristine pipelines). |
+| `brand-workshop` (our own) | Upstream — provides design tokens (`<kit-root>/brand/design-system.md` or legacy `brand-kit/design-system.md`) for the interactive matrix HTML. Optional. |
 | `team-composer` (our own) | Instead of this skill when the founder wants to *discuss* validation strategy without committing to a written plan. After this skill when the test plan needs multi-role pressure-testing. |
 | `web-artifacts-builder` (Anthropic) | After this skill names a fake-door / landing-page test, use this to actually build the test surface. |
-| `theme-factory` (Anthropic) | When the matrix HTML needs branded styling and no `brand-kit/` is present. |
+| `theme-factory` (Anthropic) | When the matrix HTML needs branded styling and no brand artifact (`<kit-root>/brand/design-system.md` or legacy `brand-kit/design-system.md`) is present. |
 | `pdf` (Anthropic) | When merging the test plan into a board packet. |
 
 **Principle:** this skill owns the **test design** — what to test, how to
@@ -510,5 +546,6 @@ not build the test surfaces, does not validate the canvas, and does not
 produce the pitch. Hand off rather than over-reach.
 
 **Graceful degradation:** if a referenced skill is not installed, this
-skill still ships `rat/assumption-test-plan.md` + `rat/test-matrix.html` —
-downstream integrations are enhancements, not requirements.
+skill still ships `<rat-root>/assumption-test-plan.md` +
+`<rat-root>/test-matrix.html` — downstream integrations are enhancements,
+not requirements.

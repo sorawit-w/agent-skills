@@ -12,13 +12,18 @@ downstream readability and the interactive defense flow.
 ## Output path
 
 ```
-grill/kill-report.md
+<grill-root>/kill-report.md
 ```
 
-If the working directory already has a `grill/kill-report.md` from a prior
+Where `<grill-root>` resolves per the `startup-grill` SKILL.md Phase 1
+Step 0.0: `docs/grill/` (solo default), `docs/startup-kit/grill/`
+(orchestrated or smart-default), or `${STARTUP_KIT_DOCS_ROOT}/grill/`
+(env-var override).
+
+If the resolved grill folder already has a `kill-report.md` from a prior
 session, **append** today's run as a new dated section at the top — never
-overwrite. The defense log (if any) lives at `grill/defense-log.md` and follows
-the same append rule.
+overwrite. The defense log (if any) lives at `<grill-root>/defense-log.md`
+and follows the same append rule.
 
 ---
 
@@ -226,10 +231,11 @@ gotten to it", treat the deck's Traction claims as belief, not evidence.
 ```markdown
 ## 7. Iteration Evidence
 
-🟠 No assumption testing in the pipeline — `rat/assumption-test-plan.md`
-is missing. The pitch was built directly from the canvas with no
-intervening validation step. **Treat every Traction-flavored claim as
-belief, not evidence.**
+🟠 No assumption testing in the pipeline — the assumption-test plan is
+missing (looked at `<rat-root>/assumption-test-plan.md` and the legacy
+`rat/assumption-test-plan.md` fallback; neither found). The pitch was
+built directly from the canvas with no intervening validation step.
+**Treat every Traction-flavored claim as belief, not evidence.**
 
 **Probe focus:** for each major claim in the deck (Problem severity, UVP
 fit, channel CAC, willingness to pay), ask: "what test confirms this
@@ -278,7 +284,7 @@ The skill must refuse to ship a kill report that:
 
 ## Verifier checklist
 
-Before shipping `grill/kill-report.md`, verify:
+Before shipping `<grill-root>/kill-report.md`, verify:
 
 - [ ] All seven sections present in the exact order above
 - [ ] Verdict label is one of the four canonical labels

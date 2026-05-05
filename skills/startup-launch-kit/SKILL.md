@@ -52,16 +52,18 @@ grill", "set up my launch kit"), or when the founder explicitly invokes
 The orchestrator does not produce its own content artifacts — it produces
 **sequencing + state**. Specifically:
 
-1. **`kit-manifest.json`** at the working-directory root — a thin JSON state
-   journal: manifest version, current step, completed steps with mtimes,
+1. **`docs/startup-kit/kit-manifest.json`** — a thin JSON state journal:
+   manifest version, current step, completed steps with mtimes,
    gate-override flags with reason+timestamp, founder-intake-answers cache.
-   Atomic writes (write `.tmp`, then rename). See
+   Atomic writes (write `.tmp`, then rename). The orchestrator creates the
+   `docs/startup-kit/` folder if absent. See
    [`references/manifest-schema.md`](references/manifest-schema.md) for the
    schema and three worked examples.
 2. **Sequenced invocations** of the five pipeline skills via the Skill tool.
    Each skill runs as itself with the founder seeing its normal prompts; the
-   orchestrator merely calls them in order, gates the transitions, and reads
-   the manifest entries each skill writes after completing.
+   orchestrator merely calls them in order, gates the transitions, passes
+   the per-skill `output_dir` (`docs/startup-kit/<skill>/`), and reads the
+   manifest entries each skill writes after completing.
 3. **A final-summary report** when all five steps complete: artifact list,
    gate-override log, iteration count, time-elapsed.
 
@@ -75,14 +77,39 @@ The orchestrator does NOT:
 
 ---
 
-## Phase 0: STOP gate + manifest discovery
+## Phase 0: STOP gate + path resolution + manifest discovery
 
 Apply the STOP-gate rules above first. If the request passes, then:
 
-1. **Look for `kit-manifest.json`** in the working-directory root.
-2. **If absent:** this is a fresh start. Create the manifest at the end of
-   Phase 1 once intake answers are captured. Proceed to Phase 1.
-3. **If present:** read it. Reconcile against the filesystem per
+### Step 0.1 — Resolve the kit root
+
+Resolve the kit root once at invocation, in this precedence order
+(canonical chain):
+
+1. **`STARTUP_KIT_DOCS_ROOT` env var** → `${STARTUP_KIT_DOCS_ROOT}/startup-kit/`
+2. **Default** → `docs/startup-kit/`
+
+The orchestrator passes `<kit_root>/<skill-folder>/` to each child skill as
+its `output_dir` argument when invoking. Per-skill folder names
+(`brand/`, `canvas/`, `rat/`, `pitch/`, `grill/`) are fixed by the
+conventions doc.
+
+If the kit root directory does not exist yet, create it before manifest
+discovery (mkdir -p semantics).
+
+### Step 0.2 — Manifest discovery
+
+1. **Look for `kit-manifest.json`** at `<kit_root>/kit-manifest.json` first.
+2. **Backward-compat fallback:** if absent, also check the
+   working-directory root (`./kit-manifest.json`). If found at the legacy
+   path, surface a one-line notice so the founder knows: *"Found legacy
+   `kit-manifest.json` at repo root. To consolidate, `mv kit-manifest.json
+   docs/startup-kit/` after this run."* Continue using the legacy location
+   for this run; do NOT auto-move.
+3. **If absent in both locations:** this is a fresh start. Create the
+   manifest at `<kit_root>/kit-manifest.json` at the end of Phase 1 once
+   intake answers are captured. Proceed to Phase 1.
+4. **If present:** read it. Reconcile against the filesystem per
    [`references/state-detection.md`](references/state-detection.md):
    - Files exist that the manifest doesn't list → assume manual run; absorb
      into the manifest with `status: "completed"` and the file's mtime.
@@ -179,7 +206,8 @@ After RAT Results land OR after `startup-grill` ships its kill report, scan
 for **invalidated hypotheses or canvas-block weaknesses**:
 
 - **From RAT:** any top-3 hypothesis with `result: "invalidated"` in
-  `rat/assumption-test-plan.md`.
+  the assumption-test plan (`<kit-root>/rat/assumption-test-plan.md` or
+  legacy `rat/assumption-test-plan.md`).
 - **From grill:** any "Lethal & Fixable" or "Material & Fixable" weakness
   whose `Suggested attack` line names a canvas block.
 
@@ -215,22 +243,22 @@ loop-back recommendations remain, surface a final summary:
 | pitch-deck              | ✅ completed | 1 | YYYY-MM-DD |
 | startup-grill           | ✅ completed | 1 | YYYY-MM-DD |
 
-**Artifacts produced:**
-- brand-kit/ (logo, brief, design system, descriptions, banners)
-- validation-canvas.md + .html
+**Artifacts produced (under `docs/startup-kit/`):**
+- brand/ (logo, brief, design system, descriptions, banners)
+- canvas/validation-canvas.md + .html
 - rat/assumption-test-plan.md + test-matrix.html
 - pitch/deck.html + speaker-notes.md + deck-checklist.md
 - grill/kill-report.md
 
-**Gate overrides recorded:** N (see kit-manifest.json `gate_overrides[]`)
+**Gate overrides recorded:** N (see docs/startup-kit/kit-manifest.json `gate_overrides[]`)
 
 **Time elapsed:** [start] → [end]
 
-**Terminal verdict:** see grill/kill-report.md
+**Terminal verdict:** see docs/startup-kit/grill/kill-report.md
 ```
 
-Point the founder to `grill/kill-report.md` as the authoritative read on
-where the startup stands.
+Point the founder to `docs/startup-kit/grill/kill-report.md` as the
+authoritative read on where the startup stands.
 
 ---
 
@@ -262,9 +290,13 @@ where the startup stands.
    (e.g., pitch-deck checking RAT Results), the downstream skill does that
    read — not the orchestrator.
 
-7. **Single working directory.** The orchestrator assumes one working
-   directory for the whole pipeline. Multi-directory composition is out of
-   scope (a future enhancement; not in v2.1.0).
+7. **Single working directory, single kit root.** The orchestrator assumes
+   one working directory for the whole pipeline AND a single kit root
+   (`docs/startup-kit/` by default, or `${STARTUP_KIT_DOCS_ROOT}/startup-kit/`
+   if the env var is set). The orchestrator passes the resolved per-skill
+   `output_dir` to each child skill at invocation. Multi-directory
+   composition (multiple startups in one repo) is out of scope; founders
+   running multiple startups should use separate working directories.
 
 ---
 

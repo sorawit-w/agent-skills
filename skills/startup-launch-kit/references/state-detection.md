@@ -1,10 +1,13 @@
 # State Detection — Manifest + Filesystem Reconciliation
 
-When the orchestrator (or any pipeline skill) reads `kit-manifest.json`, the
-manifest may disagree with the filesystem. Real artifacts can appear without
-manifest entries (manual run between orchestrator invocations); manifest
-entries can reference artifacts that have been deleted. **Filesystem state
-always wins**; the manifest is a hint that gets reconciled to match reality.
+When the orchestrator (or any pipeline skill) reads `kit-manifest.json`
+(at `<kit-root>/kit-manifest.json` — default
+`docs/startup-kit/kit-manifest.json` in v2.2.0+, with legacy
+`./kit-manifest.json` as a backward-compat fallback), the manifest may
+disagree with the filesystem. Real artifacts can appear without manifest
+entries (manual run between orchestrator invocations); manifest entries can
+reference artifacts that have been deleted. **Filesystem state always
+wins**; the manifest is a hint that gets reconciled to match reality.
 
 This document defines the reconciliation rules. Apply them at every
 orchestrator Phase 0 (after manifest discovery) and at every pipeline

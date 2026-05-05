@@ -14,7 +14,9 @@ by the `riskiest-assumption-test` skill that runs after this one.
 
 ## What this skill produces
 
-Always produced:
+Always produced under the resolved canvas root (see Phase 0.0 for path
+resolution; default is `docs/canvas/` for solo runs,
+`docs/startup-kit/canvas/` when invoked via orchestrator):
 
 1. **`validation-canvas.md`** — canonical, editable Markdown with two top-level
    sections: `## Lean Canvas` (nine blocks per Maurya) and `## Value Proposition
@@ -66,9 +68,11 @@ active there too) but differs in deliverable:
   selection) without committing to a full canvas. Discussion-grade, not
   artifact-grade.
 
-> **Companion plugin:** `brand-workshop`. If a `brand-kit/` directory exists in the
-> working folder, the HTML canvas adopts the brand's color tokens from
-> `brand-kit/design-system.md`. If not, falls back to neutral defaults.
+> **Companion plugin:** `brand-workshop`. If a brand artifact exists (at
+> `<brand-root>/design-system.md` per the conventions doc, or legacy
+> `brand-kit/design-system.md` at cwd root for backward compat), the HTML
+> canvas adopts the brand's color tokens from it. If not, falls back to
+> neutral defaults.
 
 > **Pipeline placement.** This skill is step 2 of 5 in the startup pipeline:
 > `brand-workshop` → **`validation-canvas`** → `riskiest-assumption-test` →
@@ -141,10 +145,24 @@ examples, and the stress tests that surface shaky assumptions.
 experience level. A first-time founder needs definitions and examples; a repeat
 founder needs push-back, not teaching.
 
-### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+### Step 0.0 — Path resolution + manifest awareness (v2.2.0+)
 
-If `kit-manifest.json` exists in the working-directory root, read it. Use it
-as a hint, never as a bypass:
+**Resolve the canvas root** once at invocation, in this precedence order
+(canonical chain):
+
+1. **Explicit `output_dir` arg** (passed by `startup-launch-kit`) → use as-is.
+2. **`STARTUP_KIT_DOCS_ROOT` env var** set → `${STARTUP_KIT_DOCS_ROOT}/canvas/`.
+3. **Smart default — `docs/startup-kit/` exists** → `docs/startup-kit/canvas/`.
+   Surface the smart-default notice: *"Writing to `docs/startup-kit/canvas/`
+   (smart default — `docs/startup-kit/` exists). Set
+   `STARTUP_KIT_DOCS_ROOT=./docs` to write standalone instead."*
+4. **Solo fallback** → `docs/canvas/`.
+
+**Manifest awareness.** Look for `kit-manifest.json` at
+`<resolved-kit-root>/kit-manifest.json` first (e.g.,
+`docs/startup-kit/kit-manifest.json`); fall back to the working-directory
+root for backward compat. If found at the legacy path, surface a one-line
+migration suggestion. Use it as a hint, never as a bypass:
 
 - **Intake-cache (special case for this skill):** if the manifest's
   `intake_answers` cache is populated (the orchestrator already asked the
@@ -160,11 +178,11 @@ as a hint, never as a bypass:
 - Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
   the issue inline and proceed as if no manifest exists.
 
-After this skill ships its artifacts (Phase 3 — render & ship), if
-`kit-manifest.json` exists, append/update this skill's entry. Use atomic
-write (write `.tmp`, then rename). Increment the `iterations` counter on
-update-mode runs. If the manifest doesn't exist, do **NOT** create it —
-that's the `startup-launch-kit` orchestrator's job. See
+After this skill ships its artifacts (Phase 3 — render & ship), if a
+manifest exists, append/update this skill's entry. Use atomic write (write
+`.tmp`, then rename). Increment the `iterations` counter on update-mode
+runs. If the manifest doesn't exist, do **NOT** create it — that's the
+`startup-launch-kit` orchestrator's job. See
 [`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
 for the schema.
 
@@ -497,23 +515,27 @@ Read the template pattern in `references/canvas-html-template.md` and produce a
 single self-contained HTML file that:
 
 - Renders the Lean Canvas grid (top half) and the VPC fit diagram (bottom half).
-- Reads brand tokens from `brand-kit/design-system.md` if the file exists in the
-  working directory. Otherwise uses neutral defaults.
+- Reads brand tokens from the brand artifact at `<kit-root>/brand/design-system.md`
+  (sibling of `<kit-root>/canvas/`) if it exists. Falls back to the legacy
+  path `brand-kit/design-system.md` (cwd-relative) for backward compat.
+  Otherwise uses neutral defaults.
 - Prints cleanly to PDF via CSS paged media (`@page` rules).
 - Carries zero network dependencies.
 - Includes a footer line: "Generated [YYYY-MM-DD] · `validation-canvas.md` is
   the source of truth."
 
-### Step 3 — Save to the working folder
+### Step 3 — Save to the resolved canvas folder
 
-Save both files to the founder's working directory, not a scratch folder:
+Save both files to the canvas folder resolved in Phase 0.0 Step 0.0:
 
-- `validation-canvas.md`
-- `validation-canvas.html`
+- `<canvas-root>/validation-canvas.md`
+- `<canvas-root>/validation-canvas.html`
 
-This matches the folder contract shared with `brand-workshop`,
+Where `<canvas-root>` is `docs/startup-kit/canvas/` (orchestrated),
+`docs/canvas/` (solo default), or the env-var override. Create the folder
+if absent. This matches the folder contract shared with `brand-workshop`,
 `riskiest-assumption-test`, `pitch-deck`, and `startup-grill`. See
-`references/folder-contract.md`.
+`references/folder-contract.md` for cross-skill loop-back protocol.
 
 ### Step 4 — Present to the user
 
@@ -537,14 +559,17 @@ meta-commentary about what changed.
 
 ## Update mode (loop-back from downstream)
 
-When this skill is invoked and `validation-canvas.md` already exists in the
-working directory, treat the run as an **update**, not a rewrite:
+When this skill is invoked and `validation-canvas.md` already exists at
+the resolved canvas root (or its legacy fallback), treat the run as an
+**update**, not a rewrite:
 
 1. **Read the existing file first.** Do not overwrite blocks the founder hasn't
    asked to change.
-2. **Detect what changed upstream.** If `rat/assumption-test-plan.md` exists and
-   has populated `## Results`, read it. Invalidated hypotheses point to specific
-   Lean Canvas / VPC blocks that need revision.
+2. **Detect what changed upstream.** If the assumption-test plan exists
+   (`<rat-root>/assumption-test-plan.md` or legacy
+   `rat/assumption-test-plan.md`) and has populated `## Results`, read it.
+   Invalidated hypotheses point to specific Lean Canvas / VPC blocks that
+   need revision.
 3. **Confirm the scope of update.** *"Your last canvas had X. The RAT results
    invalidated [hypothesis] — that maps to [block]. Update just that block, or
    re-run the full canvas?"*
@@ -562,9 +587,16 @@ not a failure mode. See `references/folder-contract.md` for the full protocol.
 ## Output Files
 
 ```
-validation-canvas.md              Canonical, editable source of truth
-validation-canvas.html            Self-contained visual canvas (primary deliverable)
+<canvas-root>/validation-canvas.md     Canonical, editable source of truth
+<canvas-root>/validation-canvas.html   Self-contained visual canvas (primary deliverable)
 ```
+
+Where `<canvas-root>` resolves per Phase 0.0 Step 0.0:
+
+- `docs/startup-kit/canvas/` — orchestrated (via `startup-launch-kit`)
+- `docs/canvas/` — solo default
+- `docs/startup-kit/canvas/` — solo with `docs/startup-kit/` smart default
+- `${STARTUP_KIT_DOCS_ROOT}/canvas/` — env-var override
 
 No other files. Do not scatter intermediate drafts across the working folder.
 
@@ -596,11 +628,12 @@ Before presenting to the user, verify each:
 **Rendering**
 - [ ] `validation-canvas.md` uses the exact heading structure above (so downstream tools can parse it)
 - [ ] `validation-canvas.html` is a single file, opens in a browser, prints cleanly to PDF
-- [ ] HTML canvas uses brand tokens if `brand-kit/design-system.md` is present; neutral defaults otherwise
+- [ ] HTML canvas uses brand tokens if `<kit-root>/brand/design-system.md` (or legacy `brand-kit/design-system.md`) is present; neutral defaults otherwise
 - [ ] No external network dependencies in the HTML
 
 **Shipping**
-- [ ] Both files saved to the founder's working directory (not a scratch folder)
+- [ ] Both files saved to the resolved canvas folder per Phase 0.0 Step 0.0 (not cwd root, not a scratch folder)
+- [ ] Smart-default notice surfaced if smart-default fired
 - [ ] Files presented via `present_files` or `computer://` links
 - [ ] Response ends with the three lines (top stress test + cheapest experiment + next-step gate to `riskiest-assumption-test`)
 
@@ -610,13 +643,13 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` (our own) | Before this skill, when a brand identity is needed. This skill reads `brand-kit/design-system.md` if present to style the HTML canvas. |
+| `brand-workshop` (our own) | Before this skill, when a brand identity is needed. This skill reads `<kit-root>/brand/design-system.md` (or legacy `brand-kit/design-system.md`) if present to style the HTML canvas. |
 | `riskiest-assumption-test` (our own) | **Required next step** (medium gate). After this skill ships, the founder is expected to run `riskiest-assumption-test` to convert Stress Tests into falsifiable hypotheses with success criteria. |
-| `pitch-deck` (our own) | Two steps downstream. The pitch-deck skill reads `validation-canvas.md` directly to seed slides 2, 3, 6 and to stress-test the Ask. Pitch-deck is gated on `rat/assumption-test-plan.md` having populated `## Results` (heavy gate). |
+| `pitch-deck` (our own) | Two steps downstream. The pitch-deck skill reads `validation-canvas.md` from the resolved canvas folder to seed slides 2, 3, 6 and to stress-test the Ask. Pitch-deck is gated on `<rat-root>/assumption-test-plan.md` having populated `## Results` (heavy gate). |
 | `startup-grill` (our own) | Last step. Reads `validation-canvas.md` Stress Tests, RAT results, and pitch deck slides as direct grilling ammunition. |
 | `team-composer` (our own) | Instead of this skill, when the founder wants a *discussion* on one narrow block rather than a full canvas artifact. Also when a 9-block Osterwalder BMC is explicitly required (board, grant). |
 | `tech-stack-recommendations` (our own) | When Solution or Channels include technology choices the founder hasn't made yet. |
-| `theme-factory` (Anthropic) | When the HTML canvas needs branded styling and no `brand-kit/design-system.md` is present. Apply theme-factory's tokens after content is finalized. |
+| `theme-factory` (Anthropic) | When the HTML canvas needs branded styling and no brand artifact (`<kit-root>/brand/design-system.md` or legacy `brand-kit/design-system.md`) is present. Apply theme-factory's tokens after content is finalized. |
 | `docx` (Anthropic) | When the founder wants the canonical canvas as a `.docx` (board packet, grant application). Hand off `validation-canvas.md` as source. |
 | `web-artifacts-builder` (Anthropic) | For interactive canvas variants (filters, block toggling, nested details). Out of scope for v1 but natural upgrade path. |
 | `pdf` (Anthropic) | When merging the canvas into a larger packet. The HTML already prints cleanly to PDF; `pdf` is for programmatic assembly across multiple artifacts. |

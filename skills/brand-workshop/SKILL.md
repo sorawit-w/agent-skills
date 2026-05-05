@@ -134,10 +134,29 @@ remix/audit tool for a live brand.
 
 ## Phase 1: Discovery
 
-### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+### Step 0.0 — Path resolution + manifest awareness (v2.2.0+)
 
-If `kit-manifest.json` exists in the working-directory root, read it. Use it
-as a hint, never as a bypass:
+**Resolve the brand root** once at invocation, in this precedence order
+(canonical chain):
+
+1. **Explicit `output_dir` arg** (passed by `startup-launch-kit`) → use as-is.
+2. **`STARTUP_KIT_DOCS_ROOT` env var** set → `${STARTUP_KIT_DOCS_ROOT}/brand/`.
+3. **Smart default — `docs/startup-kit/` exists** → `docs/startup-kit/brand/`.
+   Surface the smart-default notice: *"Writing to `docs/startup-kit/brand/`
+   (smart default). Set `STARTUP_KIT_DOCS_ROOT=./docs` to write standalone
+   instead."*
+4. **Solo fallback** → `docs/brand/`.
+
+**Note (v2.2.0 path migration):** prior versions wrote artifacts to the
+working-directory root and downstream skills expected `brand-kit/` as the
+prefix — these were inconsistent. v2.2.0 standardizes on `<brand-root>/`
+(default `docs/brand/`). Downstream skills include legacy `brand-kit/`
+fallback reads for backward compat.
+
+**Manifest awareness.** Look for `kit-manifest.json` at
+`<resolved-kit-root>/kit-manifest.json` first; fall back to the
+working-directory root for backward compat. Use it as a hint, never as a
+bypass:
 
 - If the manifest lists `brand-workshop` as `completed` with a recent mtime,
   surface that fact: *"Manifest says you ran brand-workshop on [date]. Update
@@ -149,7 +168,7 @@ as a hint, never as a bypass:
 - Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
   the issue inline and proceed as if no manifest exists.
 
-After this skill ships its artifacts (Phase 6 — output), if `kit-manifest.json`
+After this skill ships its artifacts (Phase 6 — output), if a manifest
 exists, append/update this skill's entry. Use atomic write (write `.tmp`, then
 rename). If the manifest doesn't exist, do **NOT** create it — that's the
 `startup-launch-kit` orchestrator's job. See
@@ -515,33 +534,41 @@ completes. `pitch-deck` will read the `design-system.md` this skill produced.
 
 ### Output Files
 
-Save all outputs to the working directory, organized into folders so the deliverable reads
-like a launch-day kit:
+Save all outputs to the resolved brand folder (see Phase 1 Step 0.0),
+organized into subfolders so the deliverable reads like a launch-day kit:
 
 ```
-/brand-brief.md
-/descriptions.md
-/design-system.md
-/logos/
-  logo.svg
-  logo-64.png
-  logo-256.png
-  logo-512.png
-/favicons/
-  favicon.svg
-  favicon-16.png
-  favicon-32.png
-  favicon-180.png
-  favicon-512.png
-  site.webmanifest
-  favicon-install.html
-/social/
-  og-image.png
-  x-header.png
-  linkedin-banner.png
-  instagram-square.png
-  profile-avatar.png
+<brand-root>/
+├── brand-brief.md
+├── descriptions.md
+├── design-system.md
+├── logos/
+│   ├── logo.svg
+│   ├── logo-64.png
+│   ├── logo-256.png
+│   └── logo-512.png
+├── favicons/
+│   ├── favicon.svg
+│   ├── favicon-16.png
+│   ├── favicon-32.png
+│   ├── favicon-180.png
+│   ├── favicon-512.png
+│   ├── site.webmanifest
+│   └── favicon-install.html
+└── social/
+    ├── og-image.png
+    ├── x-header.png
+    ├── linkedin-banner.png
+    ├── instagram-square.png
+    └── profile-avatar.png
 ```
+
+Where `<brand-root>` resolves per Phase 1 Step 0.0:
+
+- `docs/startup-kit/brand/` — orchestrated (via `startup-launch-kit`)
+- `docs/brand/` — solo default
+- `docs/startup-kit/brand/` — solo with `docs/startup-kit/` smart default
+- `${STARTUP_KIT_DOCS_ROOT}/brand/` — env-var override
 
 **Minimum viable set:** If time or tooling is constrained, ship in this order of priority:
 brand-brief + logo → descriptions → favicons → design-system → social banners.
@@ -585,8 +612,8 @@ to run `validation-canvas` next**:
 
 > *"Brand without a validated market is a logo on a hypothesis. Next step:
 > run `validation-canvas` to articulate what you believe about the problem,
-> segment, and economics. The canvas reads `brand-kit/design-system.md`
-> automatically for tokens."*
+> segment, and economics. The canvas reads the design-system tokens
+> automatically from the resolved brand folder."*
 
 This is a **light gate** — informational, not enforced. The founder is free to
 ship just the brand kit; this skill's job ends with the kit. But surfacing the
@@ -616,14 +643,15 @@ Before presenting final output, verify:
 - [ ] All PNG banner files match their declared dimensions exactly
 - [ ] Descriptions pack: every variant is under its hard character limit (verified, not estimated)
 - [ ] Descriptions pack: each variant stands alone — no truncation chains
-- [ ] `design-system.md` exists as a **standalone file** — NOT folded into `brand-brief.md` as a section. If the design system lives only inside the brief, this gate fails and the design system must be extracted into its own file before shipping.
+- [ ] `<brand-root>/design-system.md` exists as a **standalone file** — NOT folded into `brand-brief.md` as a section. If the design system lives only inside the brief, this gate fails and the design system must be extracted into its own file before shipping.
 - [ ] Design system stays within tokens — no button/form/grid specs
 - [ ] Empty design-system sections are dropped rather than filled with placeholder text
-- [ ] `design-system.md` contains the Token Mapping Convention block **verbatim**, labelled `(cross-plugin contract — do not remove)`. Verify with: `grep -c "Token Mapping Convention (cross-plugin contract" design-system.md` — must return `1`. If the count is 0, paste the block from SKILL.md's Design System section and re-run the grep.
-- [ ] No `deck/` folder is emitted. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `design-system.md` directly. Verify with: `[ ! -d deck ] && echo OK`.
+- [ ] `design-system.md` contains the Token Mapping Convention block **verbatim**, labelled `(cross-plugin contract — do not remove)`. Verify with: `grep -c "Token Mapping Convention (cross-plugin contract" <brand-root>/design-system.md` — must return `1`. If the count is 0, paste the block from SKILL.md's Design System section and re-run the grep.
+- [ ] No `deck/` subfolder is emitted under `<brand-root>/`. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `design-system.md` directly. Verify with: `[ ! -d <brand-root>/deck ] && echo OK`.
 
 **Shipping**
-- [ ] Files are saved into the folder structure shown in Output Files
+- [ ] Files are saved under `<brand-root>/` per the folder structure shown in Output Files
+- [ ] Smart-default notice surfaced if smart-default fired
 - [ ] Files are presented to the user using `present_files`
 
 ---
@@ -645,9 +673,9 @@ Before presenting final output, verify:
 **Principle:** this skill owns **net-new visual identity** for a business. It
 does not refresh existing brands (use `brand-voice:*` skills), does not model
 financials, and does not do customer validation. Artifacts downstream of the
-`brand-kit/` — decks, canvases, landing pages — are owned by their respective
+brand folder — decks, canvases, landing pages — are owned by their respective
 skills, which consume our output as input.
 
 **Graceful degradation:** if a referenced skill is not installed, this skill
-still ships a complete `brand-kit/` — the downstream integrations are
+still ships a complete brand folder — the downstream integrations are
 enhancements, not requirements.

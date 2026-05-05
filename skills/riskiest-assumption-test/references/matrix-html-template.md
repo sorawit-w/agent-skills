@@ -1,7 +1,7 @@
 # Test Matrix HTML Template — Reference
 
 The canonical self-contained interactive **risk × impact matrix** for the
-Assumption Test Plan. Read this before producing `rat/test-matrix.html`.
+Assumption Test Plan. Read this before producing `<rat-root>/test-matrix.html`.
 
 **Contract:**
 - Single file. All JS / CSS inline. Zero network dependencies.
@@ -12,31 +12,38 @@ Assumption Test Plan. Read this before producing `rat/test-matrix.html`.
   criteria, kill criteria, chosen test method, time bound, cost estimate,
   and Results status.
 - **Color-coded by category:** desirability / viability / feasibility get
-  three distinct accent colors (use brand-kit tokens if `brand-kit/` is
-  present; neutral defaults otherwise).
+  three distinct accent colors (use brand tokens from
+  `<brand-root>/design-system.md`, or legacy `brand-kit/design-system.md`,
+  if present; neutral defaults otherwise).
 - **Top-3 highlight:** the 3 cards selected as Top 3 in Phase 2 of the
   skill get a visible badge ("⭐ TOP 3") and a thicker border.
 - **Print-clean:** `@media print` collapses to a static grid that prints
   to PDF for board decks. Drag handles hide; expanded states collapse to
   a brief text summary; the matrix fits on a single landscape A4.
-- Footer line: `Generated [YYYY-MM-DD] · rat/assumption-test-plan.md is
-  the source of truth.`
+- Footer line: `Generated [YYYY-MM-DD] · assumption-test-plan.md is the
+  source of truth.`
+
+See the `riskiest-assumption-test` SKILL.md Phase 0 Step 0.0 for the full
+path-resolution chain.
 
 **How to use this template:**
 
-1. Read `rat/assumption-test-plan.md` — the canonical source you already
-   produced.
+1. Read `assumption-test-plan.md` from the resolved RAT folder
+   (`<rat-root>/assumption-test-plan.md`, with legacy fallback to
+   `rat/assumption-test-plan.md` at cwd root) — the canonical source you
+   already produced.
 2. For each assumption row, extract: id, label, category (D/V/F), risk
    level, impact level, hypothesis (full text), success criteria, kill
    criteria, test method, time bound, cost estimate, top-3 flag, results
    status.
 3. Inject the assumption objects into the `ASSUMPTIONS` JS array in the
    template below.
-4. If `brand-kit/design-system.md` exists in the working directory, parse
-   the primary, surface, and text colors plus the body font-family, and
-   substitute them into the `:root` CSS custom properties. Otherwise keep
-   the defaults.
-5. Save as `rat/test-matrix.html` in the working directory.
+4. If the brand design system exists (`<brand-root>/design-system.md`, or
+   legacy `brand-kit/design-system.md` at cwd root), parse the primary,
+   surface, and text colors plus the body font-family, and substitute them
+   into the `:root` CSS custom properties. Otherwise keep the defaults.
+5. Save as `<rat-root>/test-matrix.html` (default `docs/rat/test-matrix.html`
+   solo, `docs/startup-kit/rat/test-matrix.html` orchestrated).
 
 ---
 
@@ -225,7 +232,7 @@ Assumption Test Plan. Read this before producing `rat/test-matrix.html`.
   </div>
 
   <footer>
-    Generated {{generated_date}} · <code>rat/assumption-test-plan.md</code> is the source of truth.
+    Generated {{generated_date}} · <code>assumption-test-plan.md</code> is the source of truth.
     Re-ranking in this view is session-only — re-run the skill to persist changes.
   </footer>
 
@@ -315,8 +322,10 @@ Assumption Test Plan. Read this before producing `rat/test-matrix.html`.
 
 ## Brand token substitution (strict mapping)
 
-If `brand-kit/design-system.md` exists, map sections → CSS variables
-**literally by the names below**.
+If the brand design system exists (`<brand-root>/design-system.md` per the
+conventions doc, or legacy `brand-kit/design-system.md` at cwd root for
+backward compat), map sections → CSS variables **literally by the names
+below**.
 
 | CSS variable                | `design-system.md` section.key                  |
 |-----------------------------|-------------------------------------------------|

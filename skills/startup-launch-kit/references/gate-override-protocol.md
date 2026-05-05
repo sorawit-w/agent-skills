@@ -43,8 +43,9 @@ these as override-intent and proceeds to the recording step below.
 
 ## Recording an override (atomic + auditable)
 
-Every override is appended to `kit-manifest.json`'s `gate_overrides[]`
-array as a structured entry:
+Every override is appended to the `gate_overrides[]` array in
+`kit-manifest.json` (at `<kit-root>/kit-manifest.json`, with legacy
+`./kit-manifest.json` as a backward-compat fallback) as a structured entry:
 
 ```json
 {

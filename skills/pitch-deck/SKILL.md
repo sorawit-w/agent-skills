@@ -1,6 +1,6 @@
 ---
 name: pitch-deck
-description: Constructs an investor-ready pitch deck as a single self-contained HTML file (Reveal.js, print-to-PDF, zero network dependencies). Interviews the founder for real content — problem, solution, market, product, business model, traction, team, competition, ask, use of funds — and enforces one-claim-per-slide plus required-slot gating. Gated on `riskiest-assumption-test` results: the skill refuses to ship a clean deck unless `rat/assumption-test-plan.md` exists with populated `## Results` for the top-3 hypotheses (heavy gate; override available with a `[PRE-VALIDATION DRAFT]` watermark). Use whenever the user asks to "build a pitch deck", "create a fundraising deck", "make an investor deck", "put my pitch together", "Series A deck", "seed deck", "demo day deck", or uploads a validation-canvas.md / RAT plan / brand-kit and asks for the pitch. Also trigger when the user has `brand-workshop`, `validation-canvas`, and/or `riskiest-assumption-test` output ready and wants the next artifact, or when `@startup_strategist` + `@vc_partner` are the right lenses. Even if the user only asks for one slide (e.g., "help me with my market slide"), use this skill — the surrounding slides stress-test that slide's claims.
+description: Constructs an investor-ready pitch deck as a single self-contained HTML file (Reveal.js, print-to-PDF, zero network dependencies). Interviews the founder for real content — problem, solution, market, product, business model, traction, team, competition, ask, use of funds — and enforces one-claim-per-slide plus required-slot gating. Gated on `riskiest-assumption-test` results: the skill refuses to ship a clean deck unless the assumption-test plan from `riskiest-assumption-test` exists with populated `## Results` for the top-3 hypotheses (heavy gate; override available with a `[PRE-VALIDATION DRAFT]` watermark). Use whenever the user asks to "build a pitch deck", "create a fundraising deck", "make an investor deck", "put my pitch together", "Series A deck", "seed deck", "demo day deck", or uploads a validation-canvas / RAT plan / brand kit and asks for the pitch. Also trigger when the user has `brand-workshop`, `validation-canvas`, and/or `riskiest-assumption-test` output ready and wants the next artifact, or when `@startup_strategist` + `@vc_partner` are the right lenses. Even if the user only asks for one slide (e.g., "help me with my market slide"), use this skill — the surrounding slides stress-test that slide's claims.
 ---
 
 # Pitch Deck
@@ -11,21 +11,23 @@ slide template is the scaffold that keeps the narrative honest.
 
 ## What this skill produces
 
-Every run produces exactly THREE files at these exact paths:
+Every run produces exactly THREE files inside the resolved pitch root
+(see Phase 0 Step 0.0 for path resolution; default is `docs/pitch/` for
+solo runs, `docs/startup-kit/pitch/` when invoked via orchestrator):
 
-1. **`pitch/deck.html`** — single self-contained HTML file. Reveal.js-based, keyboard
+1. **`deck.html`** — single self-contained HTML file. Reveal.js-based, keyboard
    nav (←/→/Space/Esc), AAA contrast for projection, prints cleanly to PDF via
    `?print-pdf` query param + CSS paged media, zero network dependencies (all JS/CSS
    inline, images base64 if any).
-2. **`pitch/speaker-notes.md`** — per-slide speaker notes with the 15–30 second spoken
+2. **`speaker-notes.md`** — per-slide speaker notes with the 15–30 second spoken
    version of each slide's message and the most likely investor pushback.
-3. **`pitch/deck-checklist.md`** — before-you-send-this-deck checklist covering the
+3. **`deck-checklist.md`** — before-you-send-this-deck checklist covering the
    required-slot gate, the 90-second read test, and legal/disclosure reminders.
 
 All three paths are named explicitly in the response (see Phase 3 Step 5).
 Single-slide reworks still produce three files — the untouched files are
 regenerated from prior content so the pitch folder stays consistent. All
-three files go into `pitch/` inside the founder's working directory.
+three files go into the resolved pitch folder.
 
 ## What this skill is NOT
 
@@ -38,9 +40,10 @@ three files go into `pitch/` inside the founder's working directory.
 - **Not a substitute for customer validation.** Traction claims are only as good as
   the founder's data. The skill flags unsubstantiated traction but doesn't go
   validate it.
-- **Not a design tool.** Visual polish comes from the brand kit. If no `brand-kit/`
-  is present, the deck uses neutral-professional defaults — don't try to invent a
-  visual identity inside this skill.
+- **Not a design tool.** Visual polish comes from the brand kit. If no brand
+  artifact is present (`<brand-root>/design-system.md` or legacy
+  `brand-kit/design-system.md`), the deck uses neutral-professional defaults —
+  don't try to invent a visual identity inside this skill.
 
 ## Skill Boundaries
 
@@ -54,15 +57,20 @@ This skill intentionally overlaps with `team-composer` (`@startup_strategist` an
   without committing to a full deck.
 
 > **Companion plugins:**
-> - `brand-workshop` — upstream. Produces `brand-kit/` which this skill reads for
->   visual tokens (`design-system.md`), positioning/voice (`brand-brief.md`), and
->   taglines (`descriptions.md`). Brand-workshop does not pre-emit a deck template;
->   this skill generates its own Reveal CSS from the design-system tokens.
-> - `validation-canvas` — upstream. If `validation-canvas.md` exists, this skill
->   reads it directly to seed the Problem, Solution, and Business Model slides
->   and to stress-test the Ask slide against the Stress Tests section.
-> - `riskiest-assumption-test` — direct upstream (heavy gate). If
->   `rat/assumption-test-plan.md` exists, this skill reads its `## Top 3
+> - `brand-workshop` — upstream. Produces brand artifacts (under
+>   `<brand-root>/` per the conventions doc, or legacy `brand-kit/`) which
+>   this skill reads for visual tokens (`design-system.md`),
+>   positioning/voice (`brand-brief.md`), and taglines (`descriptions.md`).
+>   Brand-workshop does not pre-emit a deck template; this skill generates
+>   its own Reveal CSS from the design-system tokens.
+> - `validation-canvas` — upstream. If the validation canvas exists
+>   (`<canvas-root>/validation-canvas.md` or legacy
+>   `validation-canvas.md`), this skill reads it directly to seed the
+>   Problem, Solution, and Business Model slides and to stress-test the
+>   Ask slide against the Stress Tests section.
+> - `riskiest-assumption-test` — direct upstream (heavy gate). If the
+>   assumption-test plan exists (`<rat-root>/assumption-test-plan.md` or
+>   legacy `rat/assumption-test-plan.md`), this skill reads its `## Top 3
 >   Hypotheses` and `## Results` sections to inform the Validation slide and
 >   stress-test the Traction claims. **The deck refuses to ship as a clean
 >   investor draft unless the RAT Results are populated for the top-3
@@ -105,10 +113,26 @@ and the investor-read-test question it must pass.
 **Goal:** refuse to ship a clean investor deck built on untested assumptions.
 A pitch deck without validation is sales theater.
 
-### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+### Step 0.0 — Path resolution + manifest awareness (v2.2.0+)
 
-If `kit-manifest.json` exists in the working-directory root, read it. Use it
-as a hint, never as a bypass:
+**Resolve the pitch root** once at invocation, in this precedence order
+(canonical chain):
+
+1. **Explicit `output_dir` arg** (passed by `startup-launch-kit`) → use as-is.
+2. **`STARTUP_KIT_DOCS_ROOT` env var** set → `${STARTUP_KIT_DOCS_ROOT}/pitch/`.
+3. **Smart default — `docs/startup-kit/` exists** → `docs/startup-kit/pitch/`.
+   Surface the smart-default notice: *"Writing to `docs/startup-kit/pitch/`
+   (smart default). Set `STARTUP_KIT_DOCS_ROOT=./docs` to write standalone
+   instead."*
+4. **Solo fallback** → `docs/pitch/`.
+
+The same root resolution applies to sibling reads (`<canvas-root>/`,
+`<rat-root>/`, `<brand-root>/`) — they're siblings of the pitch root.
+
+**Manifest awareness.** Look for `kit-manifest.json` at
+`<resolved-kit-root>/kit-manifest.json` first; fall back to the
+working-directory root for backward compat. Use it as a hint, never as a
+bypass:
 
 - **Override-flag (special case for this skill):** if the manifest's
   `gate_overrides[]` array contains an entry with `gate:
@@ -124,24 +148,30 @@ as a hint, never as a bypass:
 - Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
   the issue inline and proceed as if no manifest exists.
 
-After this skill ships its artifacts (Phase 3 — build & ship), if
-`kit-manifest.json` exists, append/update this skill's entry. If a new
-override was used during this run (founder declared a pre-validation
-draft), record it in `gate_overrides[]` with timestamp + reason +
-`founder_acknowledged: true`. Use atomic write (write `.tmp`, then
-rename). If the manifest doesn't exist, do **NOT** create it — that's the
-`startup-launch-kit` orchestrator's job. See
+After this skill ships its artifacts (Phase 3 — build & ship), if a manifest
+exists, append/update this skill's entry. If a new override was used during
+this run (founder declared a pre-validation draft), record it in
+`gate_overrides[]` with timestamp + reason + `founder_acknowledged: true`.
+Use atomic write (write `.tmp`, then rename). If the manifest doesn't
+exist, do **NOT** create it — that's the `startup-launch-kit`
+orchestrator's job. See
 [`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
 for the schema and
 [`startup-launch-kit/references/gate-override-protocol.md`](../startup-launch-kit/references/gate-override-protocol.md)
 for the override format.
 
-### Step 0.1 — Check for `rat/assumption-test-plan.md`
+### Step 0.1 — Check for the assumption-test plan (heavy gate)
 
-If the file is **missing**, STOP and route the founder to
+Look for `assumption-test-plan.md` at `<rat-root>/assumption-test-plan.md`
+first (sibling of pitch root); fall back to the legacy path
+`rat/assumption-test-plan.md` (cwd-relative) for backward compat. If found
+at the legacy path, surface a one-line notice so the founder knows the
+artifact is at a v1 location: *"Read RAT plan from legacy v1 path."*
+
+If the file is **missing at both paths**, STOP and route the founder to
 `riskiest-assumption-test`:
 
-> *"This skill needs `rat/assumption-test-plan.md` with populated `## Results`
+> *"This skill needs the assumption-test plan with populated `## Results`
 > for the top-3 hypotheses. Pitching on untested assumptions is sales
 > theater — investors spot it instantly. Run `riskiest-assumption-test`
 > first, then come back here when at least one top-3 hypothesis has a
@@ -161,8 +191,8 @@ case:
 2. Add a `[PRE-VALIDATION DRAFT]` watermark to slide 1 (Title) and slide 0
    (the warning slide if any cardinal slots are unfilled).
 3. Add a footer line on every slide: *"Pre-validation draft —
-   `rat/assumption-test-plan.md` Results pending."*
-4. Output `pitch/deck-checklist.md` with a section explicitly listing what's
+   assumption-test-plan Results pending."*
+4. Output `<pitch-root>/deck-checklist.md` with a section explicitly listing what's
    NOT validated, so the founder owns the override decision.
 
 ### Step 0.3 — Light gate (always, even with full RAT)
@@ -170,10 +200,12 @@ case:
 Even when RAT Results are populated, scan for invalidated hypotheses:
 
 - If any top-3 hypothesis is **invalidated** in `## Results` AND the canvas
-  has not been updated since (mtime check on `validation-canvas.md` vs.
-  `rat/assumption-test-plan.md`), surface this and STOP:
+  has not been updated since (mtime check on
+  `<canvas-root>/validation-canvas.md` vs.
+  `<rat-root>/assumption-test-plan.md`, or their legacy fallback paths),
+  surface this and STOP:
 
-> *"Hypothesis [N] in your RAT was invalidated, but `validation-canvas.md`
+> *"Hypothesis [N] in your RAT was invalidated, but the validation canvas
 > hasn't been updated since. The deck would carry the invalidated belief.
 > Run `validation-canvas` in update mode first, then come back here."*
 
@@ -188,9 +220,24 @@ This is the loop-back protocol enforcement at the deck stage. See
 
 ### Step 1 — Read the working directory
 
-Check for these files, in order:
+Check for these files, in order. For each, look at the new conventions
+path first; fall back to the legacy path for backward compat:
 
-1. **`validation-canvas.md`** (from `validation-canvas`) — if present, parse the
+| File                                | New path                                  | Legacy fallback                       |
+|-------------------------------------|-------------------------------------------|---------------------------------------|
+| Validation canvas                   | `<canvas-root>/validation-canvas.md`      | `validation-canvas.md` (cwd root)     |
+| Assumption test plan                | `<rat-root>/assumption-test-plan.md`      | `rat/assumption-test-plan.md`         |
+| Brand design system                 | `<brand-root>/design-system.md`           | `brand-kit/design-system.md`          |
+| Brand brief                         | `<brand-root>/brand-brief.md`             | `brand-kit/brand-brief.md`            |
+| Brand descriptions                  | `<brand-root>/descriptions.md`            | `brand-kit/descriptions.md`           |
+
+If any sibling is found at the legacy path, surface a one-line notice so
+the founder knows the artifact is at a v1 location: *"Read upstream
+artifact from legacy v1 path."*
+
+What to extract from each:
+
+1. **Validation canvas** (from `validation-canvas`) — if present, parse the
    `### Customer Segments`, `### Unique Value Proposition`, `### Solution`,
    `### Revenue Streams`, `### Customer Jobs`, `### Customer Pains`, and
    `## Stress Tests` sections. These seed slides 2 (Problem — from `### Problem`
@@ -198,34 +245,35 @@ Check for these files, in order:
    Relievers`), 6 (Business Model — from `### Revenue Streams` + `### Cost
    Structure`), 7 (Traction — cross-checked against RAT Results below), and
    the anti-patterns check.
-2. **`rat/assumption-test-plan.md`** (from `riskiest-assumption-test`) — if
+2. **Assumption test plan** (from `riskiest-assumption-test`) — if
    present, read `## Top 3 Hypotheses` (each hypothesis seeds an optional
    "Validation" slide before Traction) and `## Results` (the confirmed results
    become evidence on the Traction slide; invalidated results trigger the
    loop-back gate from Phase 0).
-3. **`brand-kit/design-system.md`** (from `brand-workshop`) — if present, extract
+3. **Brand design system** (from `brand-workshop`) — if present, extract
    color tokens, typography, and logo path for deck styling. Use the same strict
    token mapping as `validation-canvas` (see `validation-canvas`'s
    `references/canvas-html-template.md` — `Color Tokens → Primary` maps to the
    deck's accent; `Typography → display` maps to headings, fall back to
    `Typography → body`).
-4. **`brand-kit/brand-brief.md`** (from `brand-workshop`) — if present, read the
+4. **Brand brief** (from `brand-workshop`) — if present, read the
    `## Positioning` and `## Voice & Tone` sections (named anchor headings) for
    tone matching. If those sections are missing, fall back to the `## Executive
    Summary` + `## Workshop Transcript` sections.
-5. **`brand-kit/descriptions.md`** (from `brand-workshop`) — if present, read the
+5. **Brand descriptions** (from `brand-workshop`) — if present, read the
    tagline row and short/medium bios. Slide 1 (Title) uses the tagline from here
    first, falling back to `brand-brief.md → Final Concept → Tagline`.
 
 **Note on deck CSS:** `brand-workshop` does **not** emit a deck template or CSS file.
 This skill owns deck construction end-to-end. Generate the Reveal CSS directly from
 the tokens in `design-system.md` (color, typography, spacing) using the same strict
-mapping convention. Do not look for `brand-kit/deck/pitch-styles.css` or
-`brand-kit/deck/pitch-template.html` — those artifacts no longer exist.
+mapping convention. Do not look for `<brand-root>/deck/pitch-styles.css` or
+`<brand-root>/deck/pitch-template.html` (or their legacy `brand-kit/deck/`
+equivalents) — those artifacts no longer exist.
 
-**If `validation-canvas.md` doesn't exist:** see Phase 0 — RAT gate already
-STOPped you. If `rat/assumption-test-plan.md` doesn't exist, same. If only
-`brand-kit/` is missing: proceed with neutral defaults; brand assets are
+**If the validation canvas doesn't exist:** see Phase 0 — RAT gate already
+STOPped you. If the assumption-test plan doesn't exist, same. If only the
+brand artifacts are missing: proceed with neutral defaults; brand assets are
 optional, validation is not.
 
 ### Step 2 — Classify the deck variant FIRST
@@ -254,7 +302,7 @@ me if wrong."
 ### Step 3 — Identify what's missing
 
 List the slides whose required slots (`references/slide-contracts.md`) aren't yet
-answered by inputs from `validation-canvas.md`, `rat/assumption-test-plan.md`, or
+answered by inputs from the validation canvas, the assumption-test plan, or
 prior founder content. Show the list to the founder before launching into the
 interview — this prevents surprise and lets the founder batch context.
 
@@ -333,7 +381,7 @@ When the user asks to rework ONE slide without rebuilding the full deck
    | Traction     | Business Model (MRR vs GMV vs users — match the model), Ask (trajectory supports runway) |
    | Team         | Ask (team has skills to execute the milestones) |
    | Competition  | Problem (segment), Solution (differentiation axis), Product (claim is demonstrable) |
-   | Ask          | Traction (trajectory supports milestones), Team (can execute), `validation-canvas.md` Stress Tests, `rat/assumption-test-plan.md` Results |
+   | Ask          | Traction (trajectory supports milestones), Team (can execute), validation canvas Stress Tests, assumption-test plan Results |
 
 3. Ask the founder briefly for the adjacent slides' current content, or read
    them from prior drafts if provided. Do not rework in isolation.
@@ -345,8 +393,9 @@ When the user asks to rework ONE slide without rebuilding the full deck
 
 ## Phase 3: Build & Ship
 
-**Goal:** produce `pitch/deck.html`, `pitch/speaker-notes.md`, and
-`pitch/deck-checklist.md`.
+**Goal:** produce `<pitch-root>/deck.html`, `<pitch-root>/speaker-notes.md`,
+and `<pitch-root>/deck-checklist.md`. The `<pitch-root>` is resolved per
+Phase 0 Step 0.0. Create the folder if absent.
 
 ### Step 1 — Assemble the Reveal.js HTML
 
@@ -354,9 +403,11 @@ Follow the template pattern in `references/deck-template.md`. Key constraints:
 
 - **Single file.** Reveal.js core, theme CSS, plugin JS, and any images all inline or
   base64. No `<script src="https…">`. No `<link rel="stylesheet" href="https…">`.
-- **Brand token substitution.** If `brand-kit/design-system.md` is present, substitute
-  color and font tokens into the Reveal theme via CSS custom properties. Check contrast
-  for projection (AAA for body text, AA minimum for accents).
+- **Brand token substitution.** If the brand design system is present
+  (`<brand-root>/design-system.md` or legacy `brand-kit/design-system.md`),
+  substitute color and font tokens into the Reveal theme via CSS custom
+  properties. Check contrast for projection (AAA for body text, AA minimum
+  for accents).
 - **Print-to-PDF.** Include `@media print` rules that hide controls, force one slide
   per page, and respect page breaks. Test that appending `?print-pdf` to the file URL
   produces a clean slide-per-page PDF when the user prints from the browser.
@@ -364,8 +415,8 @@ Follow the template pattern in `references/deck-template.md`. Key constraints:
   library. Market bar/stack, Traction line with time axis, Competition 2×2 — these
   three cover ~95% of deck chart needs.
 - **Images.** Base64-encode any images the founder provides. If the founder provides
-  image paths instead, copy the files into the `pitch/` folder and reference them
-  relatively — the deck still works offline even if the encoded version isn't used.
+  image paths instead, copy the files into the resolved pitch folder and reference
+  them relatively — the deck still works offline even if the encoded version isn't used.
 
 ### Step 2 — Required-slot gating
 
@@ -382,7 +433,7 @@ founder credibility with that firm.
 
 ### Step 3 — Write speaker notes
 
-For every slide, write `pitch/speaker-notes.md` with:
+For every slide, write `<pitch-root>/speaker-notes.md` with:
 
 - The **15–30 second spoken version** of the slide's message (investor meetings run
   fast — if a slide can't be delivered in 30 seconds, it's too dense).
@@ -394,7 +445,7 @@ See `references/speaker-notes.md` for the format.
 
 ### Step 4 — Write the deck checklist
 
-Produce `pitch/deck-checklist.md` covering:
+Produce `<pitch-root>/deck-checklist.md` covering:
 
 - **Before you send:** required slots filled, traction has a time axis, ask is
   specific, team slide has faces.
@@ -410,11 +461,12 @@ See `references/deck-checklist.md` for the template.
 
 Use `present_files` if available. Otherwise emit clickable `computer://` links.
 
-**Always name all three output files explicitly in the response:**
+**Always name all three output files explicitly in the response, with their
+full resolved paths:**
 
-- `pitch/deck.html`
-- `pitch/speaker-notes.md`
-- `pitch/deck-checklist.md`
+- `<pitch-root>/deck.html` (e.g., `docs/startup-kit/pitch/deck.html` or `docs/pitch/deck.html`)
+- `<pitch-root>/speaker-notes.md`
+- `<pitch-root>/deck-checklist.md`
 
 Name them even on partial runs — a single-slide rework still names the file
 being edited. Do not substitute "the deck file", "your slides", or "the notes"
@@ -436,11 +488,18 @@ write the prefix + `none` — never omit the line.
 ## Output Files
 
 ```
-pitch/
+<pitch-root>/
 ├── deck.html              Self-contained Reveal.js deck (primary deliverable)
 ├── speaker-notes.md       Per-slide 15–30 sec spoken version + likely pushback
 └── deck-checklist.md      Before-you-send gate + 90-second read test + legal
 ```
+
+Where `<pitch-root>` resolves per Phase 0 Step 0.0:
+
+- `docs/startup-kit/pitch/` — orchestrated (via `startup-launch-kit`)
+- `docs/pitch/` — solo default
+- `docs/startup-kit/pitch/` — solo with `docs/startup-kit/` smart default
+- `${STARTUP_KIT_DOCS_ROOT}/pitch/` — env-var override
 
 No other files. Do not scatter intermediate HTML drafts.
 
@@ -463,13 +522,14 @@ Before presenting to the user, verify each:
 - [ ] Keyboard navigation works (←/→/Space/Esc)
 - [ ] `?print-pdf` produces a clean slide-per-page PDF
 - [ ] AAA contrast for body text against projection backgrounds; AA minimum for accents
-- [ ] Brand tokens applied if `brand-kit/design-system.md` present; neutral defaults otherwise
+- [ ] Brand tokens applied if `<brand-root>/design-system.md` (or legacy `brand-kit/design-system.md`) present; neutral defaults otherwise
 
 **Shipping**
 - [ ] Three files present: `deck.html`, `speaker-notes.md`, `deck-checklist.md`
 - [ ] Speaker notes have 15–30 sec spoken version + likely pushback per slide
 - [ ] Checklist has the 90-second read test and legal reminders
-- [ ] Files saved to `pitch/` inside the founder's working directory
+- [ ] Files saved to the resolved pitch folder per Phase 0 Step 0.0 (not cwd root)
+- [ ] Smart-default notice surfaced if smart-default fired
 - [ ] Response ends with: weakest slide + worst remaining anti-pattern + single highest-value next edit
 
 ---
@@ -478,13 +538,13 @@ Before presenting to the user, verify each:
 
 | Skill | When to Use |
 |-------|-------------|
-| `brand-workshop` (our own) | Before this skill, when a brand kit is needed. This skill reads `brand-kit/design-system.md` (tokens), `brand-kit/brand-brief.md` (`## Positioning` + `## Voice & Tone`), and `brand-kit/descriptions.md` (tagline) if present. Brand-workshop does not emit a deck template or CSS — this skill generates its own Reveal CSS from the design-system tokens. |
-| `validation-canvas` (our own) | Two steps upstream. This skill reads `validation-canvas.md` to seed slides 2, 3, 6 and to stress-test the Ask against the Stress Tests section. |
-| `riskiest-assumption-test` (our own) | **Required direct upstream (heavy gate).** This skill STOPs unless `rat/assumption-test-plan.md` has populated `## Results` for the top-3 hypotheses. RAT outcomes inform the Validation slide and Traction claims. Override: `[PRE-VALIDATION DRAFT]` watermark. |
-| `startup-grill` (our own) | After this skill, to adversarially probe the deck. Grill reads `pitch/deck.html`, `validation-canvas.md`, and `rat/assumption-test-plan.md` together. |
+| `brand-workshop` (our own) | Before this skill, when a brand kit is needed. This skill reads brand artifacts (`<brand-root>/{design-system,brand-brief,descriptions}.md` or legacy `brand-kit/{...}.md`) if present. Brand-workshop does not emit a deck template or CSS — this skill generates its own Reveal CSS from the design-system tokens. |
+| `validation-canvas` (our own) | Two steps upstream. This skill reads the validation canvas (`<canvas-root>/validation-canvas.md` or legacy `validation-canvas.md`) to seed slides 2, 3, 6 and to stress-test the Ask against the Stress Tests section. |
+| `riskiest-assumption-test` (our own) | **Required direct upstream (heavy gate).** This skill STOPs unless the assumption-test plan (`<rat-root>/assumption-test-plan.md` or legacy `rat/assumption-test-plan.md`) has populated `## Results` for the top-3 hypotheses. RAT outcomes inform the Validation slide and Traction claims. Override: `[PRE-VALIDATION DRAFT]` watermark. |
+| `startup-grill` (our own) | After this skill, to adversarially probe the deck. Grill reads the deck and its upstream artifacts (canvas + RAT) together. |
 | `team-composer` (our own) | Instead of this skill when the founder wants discussion on narrative without committing to a full deck. Also for deep dives on single slides (e.g., Competition slide with `@competitive_intel` mental model). |
 | `tech-stack-recommendations` (our own) | When the Product slide depends on tech choices the founder hasn't made yet. |
-| `theme-factory` (Anthropic) | When the deck needs a visual theme and no `brand-kit/` is present. Apply after content is finalized. |
+| `theme-factory` (Anthropic) | When the deck needs a visual theme and no brand artifact (`<brand-root>/design-system.md` or legacy `brand-kit/design-system.md`) is present. Apply after content is finalized. |
 | `canvas-design` (Anthropic) | For hero / cover-slide static art when the brand-kit logo is too minimal to anchor the opening slide. Also for one-off slide graphics that justify the investment in real design over a chart. |
 | `web-artifacts-builder` (Anthropic) | When the "deck" is actually a product demo that needs shadcn/ui components, routing, or state — i.e., beyond what Reveal.js can reasonably do. |
 | `doc-coauthoring` (Anthropic) | For the long-form founder memo that precedes the deck (e.g., converting a 10-page memo into 12 slides). |
@@ -496,5 +556,5 @@ feed it; downstream decisions (negotiation, term sheets) are `@vc_partner` terri
 in `team-composer`.
 
 **Graceful degradation:** if a referenced skill is not installed, this skill still
-ships a complete `pitch/` folder — downstream integrations are enhancements, not
+ships a complete pitch folder — downstream integrations are enhancements, not
 requirements.

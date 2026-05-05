@@ -1,7 +1,7 @@
 # Speaker Notes — Format Reference
 
-The format for `pitch/speaker-notes.md`. One section per slide in the deck, in deck
-order. Each section has three required parts and one optional part.
+The format for `<pitch-root>/speaker-notes.md`. One section per slide in the deck, in
+deck order. Each section has three required parts and one optional part.
 
 **Purpose.** Speaker notes are not a teleprompter. They are a compressed rehearsal
 artifact — the 15–30 second version of the slide's message, the pushback you should
@@ -27,7 +27,7 @@ defensive.}}
 
 **Deep-dive redirect (optional):**
 {{If the pushback turns into a 5-minute tangent, where do you take them?
-Specifically: "Appendix slide X" or "the validation result in rat/assumption-test-plan.md" or
+Specifically: "Appendix slide X" or "the validation result in the assumption-test plan" or
 "pull up the metrics dashboard at [url]."}}
 ```
 

@@ -87,9 +87,11 @@ they can't answer the three questions, the deck isn't ready for cold-email send
 - [ ] Ask amount on slide 10 is realistically fundable by the milestones listed
       (no "raise $2M, do $6M of work").
 - [ ] Team on slide 8 has the skills implied by the use-of-funds plan on slide 10.
-- [ ] If `validation-canvas.md` has a top-severity Stress Test, the deck addresses it
+- [ ] If the validation canvas (`<canvas-root>/validation-canvas.md` or legacy
+      `validation-canvas.md`) has a top-severity Stress Test, the deck addresses it
       (in Traction, Competition, or Ask) — not hidden in appendix.
-- [ ] If `rat/assumption-test-plan.md` has any **invalidated** top-3 hypothesis,
+- [ ] If the assumption-test plan (`<rat-root>/assumption-test-plan.md` or legacy
+      `rat/assumption-test-plan.md`) has any **invalidated** top-3 hypothesis,
       the canvas was updated AND the deck reflects the updated belief (not the
       invalidated one). If you skipped the loop-back, this is a hard stop.
 
@@ -102,12 +104,12 @@ they can't answer the three questions, the deck isn't ready for cold-email send
 - [ ] `?print-pdf` produces a clean slide-per-page PDF.
 - [ ] AAA contrast for body text (≥ 7:1 on the projection background).
 - [ ] AA contrast for accent text (≥ 4.5:1).
-- [ ] Brand tokens applied if `brand-kit/design-system.md` is present; neutral
-      defaults otherwise.
+- [ ] Brand tokens applied if `<brand-root>/design-system.md` (or legacy
+      `brand-kit/design-system.md`) is present; neutral defaults otherwise.
 - [ ] No `<script src="https…">` or `<link rel="stylesheet" href="https…">` in the
       HTML.
-- [ ] All images are base64-inlined or live in the `pitch/` folder as relative
-      paths.
+- [ ] All images are base64-inlined or live in the resolved pitch folder as
+      relative paths.
 
 ---
 

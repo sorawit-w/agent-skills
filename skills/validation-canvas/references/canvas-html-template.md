@@ -18,21 +18,27 @@ Proposition Canvas** combined artifact. Read this before producing
   left, with arrows or bracket lines indicating the 1:1 fit mapping.
 - Prints cleanly to PDF via CSS paged media (`@page` at landscape A4 or
   Letter, with the Lean Canvas on page 1 and the VPC on page 2).
-- Applies brand tokens from `brand-kit/design-system.md` if present in the
-  working directory. Otherwise uses the neutral defaults in this template.
+- Applies brand tokens from `<brand-root>/design-system.md` (sibling of
+  canvas root) if present, falling back to legacy `brand-kit/design-system.md`
+  (cwd-relative) for backward compat. Otherwise uses the neutral defaults in
+  this template.
 - Footer line: `Generated [YYYY-MM-DD] · validation-canvas.md is the source
   of truth.`
 
 **How to use this template:**
-1. Read `validation-canvas.md` — the canonical source of truth you already
-   produced.
+1. Read `validation-canvas.md` from the resolved canvas folder
+   (`<canvas-root>/validation-canvas.md`) — the canonical source of truth
+   you already produced.
 2. For each block, extract the bulleted claims. Preserve founder's wording.
 3. Substitute the placeholders below with the actual block content as
    semantic `<ul>` lists.
-4. If `brand-kit/design-system.md` exists in the working directory, parse the
-   primary, surface, and text colors plus the body font-family, and substitute
-   them into the `:root` CSS custom properties. Otherwise keep the defaults.
-5. Save as `validation-canvas.html` in the working directory.
+4. If the brand design system exists (`<brand-root>/design-system.md`, or
+   legacy `brand-kit/design-system.md` at cwd root), parse the primary,
+   surface, and text colors plus the body font-family, and substitute them
+   into the `:root` CSS custom properties. Otherwise keep the defaults.
+5. Save as `<canvas-root>/validation-canvas.html` (default
+   `docs/canvas/validation-canvas.html` solo, `docs/startup-kit/canvas/validation-canvas.html`
+   orchestrated).
 
 ---
 
@@ -47,7 +53,8 @@ Proposition Canvas** combined artifact. Read this before producing
 <title>Validation Canvas — {{business_name}}</title>
 <style>
   :root {
-    /* Override these from brand-kit/design-system.md when available */
+    /* Override these from the brand design system when available
+       (<brand-root>/design-system.md, or legacy brand-kit/design-system.md) */
     --canvas-bg: #fafaf7;
     --canvas-surface: #ffffff;
     --canvas-text: #1a1a1a;
@@ -300,9 +307,11 @@ Proposition Canvas** combined artifact. Read this before producing
 
 ## Brand token substitution (strict mapping)
 
-If `brand-kit/design-system.md` exists, map sections → CSS variables
-**literally by the names below**. Do not infer or rename on the fly — the
-mapping is a contract with `brand-workshop`'s `design-system.md` schema.
+If the brand design system exists (`<brand-root>/design-system.md` per the
+conventions doc, or legacy `brand-kit/design-system.md` at cwd root for
+backward compat), map sections → CSS variables **literally by the names
+below**. Do not infer or rename on the fly — the mapping is a contract with
+`brand-workshop`'s `design-system.md` schema.
 
 | CSS variable           | `design-system.md` section.key                         |
 |------------------------|--------------------------------------------------------|

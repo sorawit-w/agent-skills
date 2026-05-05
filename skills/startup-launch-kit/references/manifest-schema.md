@@ -1,11 +1,16 @@
 # Manifest Schema — `kit-manifest.json`
 
-The canonical schema for the orchestrator's state journal at the
-working-directory root. Read this before reading or writing the manifest.
+The canonical schema for the orchestrator's state journal. Read this before
+reading or writing the manifest.
 
 **Contract:**
 
-- Single JSON file at `<founder-working-directory>/kit-manifest.json`.
+- Single JSON file at `<kit-root>/kit-manifest.json` (default
+  `docs/startup-kit/kit-manifest.json` in v2.2.0+; legacy v1 layouts placed
+  it at `<founder-working-directory>/kit-manifest.json` and that path is
+  still supported as a backward-compat fallback when reading). See the
+  `startup-launch-kit` SKILL.md Phase 0 Step 0.1 for the full
+  path-resolution chain.
 - Versioned from day one (`manifest_version: 1`).
 - Atomic writes: write `kit-manifest.json.tmp`, then rename. Never leave a
   partial-write file in the half-state.

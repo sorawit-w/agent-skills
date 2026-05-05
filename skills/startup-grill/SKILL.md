@@ -110,19 +110,21 @@ that produces a soft kill report.
 
 ## What this skill produces
 
-Every one-shot run produces exactly **one file**:
+Every one-shot run produces exactly **one file** inside the resolved grill
+root (see Phase 1 Step 0.0 for path resolution; default is `docs/grill/`
+for solo runs, `docs/startup-kit/grill/` when invoked via orchestrator):
 
-- **`grill/kill-report.md`** — the structured kill report. Format spec in
+- **`kill-report.md`** — the structured kill report. Format spec in
   `references/kill-report.md`.
 
 If the founder enters interactive defense mode, a second file is produced
 and updated on each defense round:
 
-- **`grill/defense-log.md`** — append-only log of founder defenses, panel
+- **`defense-log.md`** — append-only log of founder defenses, panel
   re-probes, and updated reads. Format spec in `references/round-structure.md`.
 
-Both files go into `grill/` inside the founder's working directory. Existing
-files from prior sessions are appended-to, never overwritten.
+Both files go into the resolved grill folder. Existing files from prior
+sessions are appended-to, never overwritten.
 
 ---
 
@@ -130,10 +132,27 @@ files from prior sessions are appended-to, never overwritten.
 
 **Goal:** assemble the brief the panel will grill.
 
-### Step 0.0 — Manifest awareness (optional, v2.1.0+)
+### Step 0.0 — Path resolution + manifest awareness (v2.2.0+)
 
-If `kit-manifest.json` exists in the working-directory root, read it. Use it
-as a hint, never as a bypass:
+**Resolve the grill root** once at invocation, in this precedence order
+(canonical chain):
+
+1. **Explicit `output_dir` arg** (passed by `startup-launch-kit`) → use as-is.
+2. **`STARTUP_KIT_DOCS_ROOT` env var** set → `${STARTUP_KIT_DOCS_ROOT}/grill/`.
+3. **Smart default — `docs/startup-kit/` exists** → `docs/startup-kit/grill/`.
+   Surface the smart-default notice: *"Writing to `docs/startup-kit/grill/`
+   (smart default). Set `STARTUP_KIT_DOCS_ROOT=./docs` to write standalone
+   instead."*
+4. **Solo fallback** → `docs/grill/`.
+
+The same root resolution applies to sibling reads (`<canvas-root>/`,
+`<rat-root>/`, `<pitch-root>/`, `<brand-root>/`) — they're siblings of the
+grill root.
+
+**Manifest awareness.** Look for `kit-manifest.json` at
+`<resolved-kit-root>/kit-manifest.json` first; fall back to the
+working-directory root for backward compat. Use it as a hint, never as a
+bypass:
 
 - If the manifest lists `startup-grill` as `completed` with a recent mtime,
   surface that fact: *"Manifest says you ran the grill on [date]. New
@@ -150,36 +169,50 @@ as a hint, never as a bypass:
 - Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
   the issue inline and proceed as if no manifest exists.
 
-After this skill ships its kill report (Phase 3), if `kit-manifest.json`
-exists, append/update this skill's entry. Use atomic write (write `.tmp`,
-then rename). If the manifest doesn't exist, do **NOT** create it — that's
-the `startup-launch-kit` orchestrator's job. See
+After this skill ships its kill report (Phase 3), if a manifest exists,
+append/update this skill's entry. Use atomic write (write `.tmp`, then
+rename). If the manifest doesn't exist, do **NOT** create it — that's the
+`startup-launch-kit` orchestrator's job. See
 [`startup-launch-kit/references/manifest-schema.md`](../startup-launch-kit/references/manifest-schema.md)
 for the schema.
 
 ### Step 1 — Read the working directory
 
-Check for these files in order. When present, parse them as input — the
-founder doesn't need to re-state what's already written down:
+Check for these files in order. For each, look at the new conventions
+path first; fall back to the legacy path for backward compat. If found at
+the legacy path, surface a one-line notice so the founder knows the
+artifact is at a v1 location (they may want to `mv` it under `docs/`):
+*"Read upstream artifact from legacy v1 path."*
 
-1. **`validation-canvas.md`** (from `validation-canvas`) — read the
+| File                  | New path                              | Legacy fallback                       |
+|-----------------------|---------------------------------------|---------------------------------------|
+| Validation canvas     | `<canvas-root>/validation-canvas.md`  | `validation-canvas.md` (cwd root)     |
+| Assumption test plan  | `<rat-root>/assumption-test-plan.md`  | `rat/assumption-test-plan.md`         |
+| Pitch deck            | `<pitch-root>/deck.html`              | `pitch/deck.html`                     |
+| Speaker notes         | `<pitch-root>/speaker-notes.md`       | `pitch/speaker-notes.md`              |
+| Brand brief           | `<brand-root>/brand-brief.md`         | `brand-kit/brand-brief.md`            |
+
+When present, parse each as input — the founder doesn't need to re-state
+what's already written down:
+
+1. **Validation canvas** (from `validation-canvas`) — read the
    `### Customer Segments`, `### Unique Value Proposition`, `### Revenue
    Streams`, `### Customer Pains`, `### Pain Relievers`, and `## Stress Tests`
    sections. The Stress Tests section is **direct ammunition** for grilling —
    surface those weaknesses unless the founder has explicitly retired them.
    Un-relieved Pains and un-created Gains in the VPC are also direct
    ammunition.
-2. **`rat/assumption-test-plan.md`** (from `riskiest-assumption-test`) — read
+2. **Assumption test plan** (from `riskiest-assumption-test`) — read
    `## Top 3 Hypotheses`, `## Test Plan`, and `## Results`. Confirmed results
    are evidence the founder can defend with; invalidated results that haven't
    propagated to the canvas are red flags. Pristine plans (no Results yet)
    indicate the founder skipped validation — see Step 1c below.
-3. **`pitch/deck.html`** + **`pitch/speaker-notes.md`** (from `pitch-deck`) —
-   parse the slide content for Problem, Solution, Market, Product, Business
-   Model, Traction, Team, Competition, Ask. Use `pitch-deck`'s
+3. **Pitch deck + speaker notes** (from `pitch-deck`) — parse the slide
+   content for Problem, Solution, Market, Product, Business Model, Traction,
+   Team, Competition, Ask. Use `pitch-deck`'s
    `references/slide-contracts.md` anti-patterns as a starting probe list.
-4. **`brand-kit/brand-brief.md`** (from `brand-workshop`) — read the
-   Positioning section (used by Slot 5 brand-strategist if active).
+4. **Brand brief** (from `brand-workshop`) — read the Positioning section
+   (used by Slot 5 brand-strategist if active).
 
 **If none exist:** ask the founder to provide a one-pager (or paste the
 deck / canvas into the conversation). Refuse to grill on a single sentence —
@@ -193,22 +226,21 @@ Compare timestamps and content across the pipeline artifacts to detect a
 revised after testing). This is a yellow flag, not a hard stop — but the
 panel should probe accordingly:
 
-1. If `validation-canvas.md` exists AND `rat/assumption-test-plan.md` exists
-   AND `## Results` in the RAT has populated rows: check whether
-   `validation-canvas.md`'s mtime is **earlier** than the latest Results
-   entry in `rat/assumption-test-plan.md`. Earlier mtime means the canvas
-   was NOT updated after testing.
+1. If the validation canvas exists AND the assumption-test plan exists
+   AND `## Results` in the RAT has populated rows: check whether the
+   canvas's mtime is **earlier** than the latest Results entry in the RAT
+   plan. Earlier mtime means the canvas was NOT updated after testing.
 2. If the canvas wasn't updated after RAT, surface as a yellow flag in the
    kill report's new `## Iteration Evidence` section: *"Canvas was not
    revised after assumption testing. Either the tests confirmed every
    belief (rare — be skeptical) or the founder is not closing the loop on
    what they learned. Probe accordingly."*
-3. If `rat/assumption-test-plan.md` is **missing** entirely while
-   `pitch/deck.html` exists: large yellow flag. Pitch built without
-   assumption testing is sales theater. Surface in `## Iteration Evidence`:
-   *"This pipeline shipped a pitch without testing assumptions. Treat
-   every Traction claim as belief, not evidence."*
-4. If `validation-canvas.md` is **missing** while later artifacts exist:
+3. If the assumption-test plan is **missing** entirely while the pitch
+   deck exists: large yellow flag. Pitch built without assumption testing
+   is sales theater. Surface in `## Iteration Evidence`: *"This pipeline
+   shipped a pitch without testing assumptions. Treat every Traction claim
+   as belief, not evidence."*
+4. If the validation canvas is **missing** while later artifacts exist:
    the founder may have compiled the pipeline manually. Surface as a flag
    that the kill-report can't cross-check beliefs against documented
    stress tests.
@@ -274,9 +306,11 @@ read."*
 
 ## Phase 3: Ship the kill report
 
-Write `grill/kill-report.md` per `references/kill-report.md`. All seven
-sections required, in order: Verdict / Lethal & Fixable / Lethal & Unfixable
-/ Material & Fixable / Diligence Asks / Panel / Iteration Evidence.
+Write `<grill-root>/kill-report.md` per `references/kill-report.md` (where
+`<grill-root>` is resolved per Phase 1 Step 0.0; create the folder if
+absent). All seven sections required, in order: Verdict / Lethal & Fixable /
+Lethal & Unfixable / Material & Fixable / Diligence Asks / Panel / Iteration
+Evidence.
 
 Run the file's verifier checklist before presenting:
 
@@ -307,9 +341,9 @@ If the founder picks a weakness and defends, run a defense round per
 1. Identify relevant panelists (1–2)
 2. Quote / summarize founder's defense
 3. Re-probe with new-evidence rule (vibes-only defenses rejected)
-4. Update the affected line item in `grill/kill-report.md` *only* — frozen
+4. Update the affected line item in `<grill-root>/kill-report.md` *only* — frozen
    items stay frozen
-5. Append the round to `grill/defense-log.md`
+5. Append the round to `<grill-root>/defense-log.md`
 
 A single weakness gets defended at most 3 times per session. After 3, the
 verdict stands.
@@ -337,9 +371,9 @@ The skill must refuse to ship if any of these are true:
 | Skill | When to use |
 |---|---|
 | `team-composer` | Instead of this skill when the user wants brainstorming, planning, or constructive review. After this skill when the kill report's `Suggested attack` lines need a multi-role workshop to scope. |
-| `validation-canvas` (our own) | Upstream input. If `validation-canvas.md` exists, this skill reads its Stress Tests section + un-relieved Pains + un-created Gains as direct grilling ammunition. After this skill when a `Pivot signal` verdict makes the founder rebuild their canvas. |
-| `riskiest-assumption-test` (our own) | Upstream input. If `rat/assumption-test-plan.md` exists, this skill reads `## Top 3 Hypotheses` and `## Results`. The iteration-evidence check (Phase 1 Step 1c) yellow-flags pristine pipelines. After this skill when the kill report names assumptions the founder hasn't tested yet. |
-| `pitch-deck` (our own) | Upstream input. If `pitch/deck.html` exists, this skill probes the deck's required-slot answers. After this skill when the kill report demands a re-cut deck. |
+| `validation-canvas` (our own) | Upstream input. If the validation canvas exists (`<canvas-root>/validation-canvas.md` or legacy `validation-canvas.md`), this skill reads its Stress Tests section + un-relieved Pains + un-created Gains as direct grilling ammunition. After this skill when a `Pivot signal` verdict makes the founder rebuild their canvas. |
+| `riskiest-assumption-test` (our own) | Upstream input. If the assumption-test plan exists (`<rat-root>/assumption-test-plan.md` or legacy `rat/assumption-test-plan.md`), this skill reads `## Top 3 Hypotheses` and `## Results`. The iteration-evidence check (Phase 1 Step 1c) yellow-flags pristine pipelines. After this skill when the kill report names assumptions the founder hasn't tested yet. |
+| `pitch-deck` (our own) | Upstream input. If the pitch deck exists (`<pitch-root>/deck.html` or legacy `pitch/deck.html`), this skill probes the deck's required-slot answers. After this skill when the kill report demands a re-cut deck. |
 | `brand-workshop` (our own) | Upstream input when slot 5 = `@brand_strategist` and the panel needs the brand brief's Positioning section as a reference. |
 | `skill-evaluator` (our own) | When you want to audit this skill's rules end-to-end. Good targets: the verdict-vs-body consistency rule, the no-lethal-skip rule, the interactive-invitation rule. |
 | `superpowers:brainstorming` (if installed) | Use *before* this skill when the user is still shaping the idea. Grilling a half-formed idea produces a kill report full of "not enough information" findings, which is worse than no kill report. |

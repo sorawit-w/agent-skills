@@ -9,17 +9,27 @@ brand-kit token substitution and print-to-PDF support.
 - Keyboard nav works out of the box: ←/→ arrows, Space for next, Esc for overview.
 - Appending `?print-pdf` to the file URL produces a clean slide-per-page PDF via the
   browser's print dialog.
-- Reads brand-kit tokens from `brand-kit/design-system.md` if present. Otherwise uses
-  the neutral-professional defaults below.
+- Reads brand tokens from `<brand-root>/design-system.md` (sibling of pitch root) if
+  present, falling back to legacy `brand-kit/design-system.md` (cwd-relative) for
+  backward compat. Otherwise uses the neutral-professional defaults below. See the
+  `pitch-deck` SKILL.md Phase 0 Step 0.0 for the path resolution chain.
 - AAA contrast for body text on projection backgrounds. AA minimum for accent elements.
 
 **How to use this template:**
-1. Read `validation-canvas.md`, `rat/assumption-test-plan.md`, and `brand-kit/design-system.md` if present.
+1. Read upstream artifacts (each with new-path-then-legacy-fallback resolution per
+   the conventions doc):
+   - Validation canvas at `<canvas-root>/validation-canvas.md` (legacy
+     `validation-canvas.md` at cwd root)
+   - Assumption-test plan at `<rat-root>/assumption-test-plan.md` (legacy
+     `rat/assumption-test-plan.md`)
+   - Brand design system at `<brand-root>/design-system.md` (legacy
+     `brand-kit/design-system.md`)
 2. For each of the 10 slides, extract the required slots from `slide-contracts.md`.
 3. Substitute each `{{slide_N_…}}` placeholder with real founder content.
 4. If any cardinal slot is `[fill in: …]`, render the warning slide at position 0 (see
    SKILL.md §Phase 3 Step 2).
-5. Save as `pitch/deck.html` in the working directory.
+5. Save as `<pitch-root>/deck.html` (default `docs/pitch/deck.html` solo,
+   `docs/startup-kit/pitch/deck.html` orchestrated).
 
 ---
 
@@ -34,7 +44,8 @@ brand-kit token substitution and print-to-PDF support.
 <title>{{company_name}} — Pitch Deck</title>
 <style>
   :root {
-    /* Override from brand-kit/design-system.md when available */
+    /* Override from the brand design system when available
+       (<brand-root>/design-system.md, or legacy brand-kit/design-system.md) */
     --deck-bg: #0f0f10;
     --deck-surface: #1a1a1c;
     --deck-text: #f5f5f2;
@@ -382,8 +393,10 @@ brand-kit token substitution and print-to-PDF support.
 
 ## Brand token substitution
 
-If `brand-kit/design-system.md` exists, extract these values and replace the `:root`
-defaults:
+If the brand design system exists (look at `<brand-root>/design-system.md`
+first per the conventions doc, then fall back to legacy
+`brand-kit/design-system.md` at cwd root), extract these values and replace
+the `:root` defaults:
 
 | CSS variable | Brand-kit source (typical) |
 |--------------|----------------------------|
@@ -435,6 +448,7 @@ what the style guide says.
 - **Logos:** prefer SVG when available (inline it directly). Otherwise PNG base64.
 
 If the founder provides image *file paths* instead of files, copy the images into
-`pitch/` and reference them relatively (`src="photo.jpg"`). This keeps the deck
-portable (you can share the `pitch/` folder) even when base64 isn't used. Document
-the choice in `speaker-notes.md` so the founder knows the deck isn't fully single-file.
+`<pitch-root>/` and reference them relatively (`src="photo.jpg"`). This keeps the deck
+portable (you can share the resolved pitch folder) even when base64 isn't used.
+Document the choice in `speaker-notes.md` so the founder knows the deck isn't fully
+single-file.

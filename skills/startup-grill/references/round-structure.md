@@ -115,8 +115,9 @@ verdict's footnote: *"@role dissents: [reason]."*
 
 ### Output
 
-After Round 3, the skill writes `grill/kill-report.md` per the spec in
-`kill-report.md` and presents the file to the user.
+After Round 3, the skill writes `<grill-root>/kill-report.md` per the spec
+in `kill-report.md` (where `<grill-root>` resolves per the `startup-grill`
+SKILL.md Phase 1 Step 0.0) and presents the file to the user.
 
 The response **closes with the interactive-mode invitation** (next section).
 
@@ -167,13 +168,13 @@ When the founder picks a weakness number and provides defense:
    - **Updated read:** [pass | material | lethal-fixable | lethal-unfixable | acknowledged | partially addressed]
    ```
 
-3. **Append to `grill/defense-log.md`** with the dated defense round and the
-   updated read. Format mirrors the kill report's lethal-item shape.
+3. **Append to `<grill-root>/defense-log.md`** with the dated defense round
+   and the updated read. Format mirrors the kill report's lethal-item shape.
 
 4. **Update the kill report's verdict line item only.** Find the matching
-   weakness in `grill/kill-report.md`, update its severity / read in place,
-   and add a one-line `**Defended on YYYY-MM-DD — see defense-log.md**`
-   pointer.
+   weakness in `<grill-root>/kill-report.md`, update its severity / read
+   in place, and add a one-line
+   `**Defended on YYYY-MM-DD — see defense-log.md**` pointer.
 
 5. **Do NOT regenerate the entire report.** Only the affected line item
    moves. Frozen items stay frozen.
