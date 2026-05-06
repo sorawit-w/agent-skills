@@ -5,9 +5,14 @@ Input:  assets/_drafts/hero-draft-05-chatgpt.png  (1916x821, 21:9)
 Output: assets/hero.png                            (1916x559, 24:7)
 
 Composites pixel-font text overlay (VT323) on the quiet left-third.
+Text sizes calibrated for GitHub README display (container ~916px, source 1916px,
+~48% downscale — sizes here are 2x the visual target).
+
 To change copy or fonts, edit constants below and re-run:
   python3 assets/_drafts/render_hero.py
-Then re-optimize with: oxipng -o 4 assets/hero.png
+Then re-quantize + optimize:
+  python3 -c "from PIL import Image; Image.open('assets/hero.png').convert('RGB').quantize(colors=256).save('assets/hero.png', 'PNG', optimize=True)"
+  python3 -c "import oxipng; oxipng.optimize('assets/hero.png', level=6, strip=oxipng.StripChunks.safe())"
 """
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
@@ -30,20 +35,20 @@ top = (H - target_h) // 2
 img = img.crop((0, top, W, top + target_h))
 
 draw = ImageDraw.Draw(img)
-title_f   = ImageFont.truetype(FONT, 80)
-tagline_f = ImageFont.truetype(FONT, 30)
-caption_f = ImageFont.truetype(FONT, 20)
+title_f   = ImageFont.truetype(FONT, 120)
+tagline_f = ImageFont.truetype(FONT, 48)
+caption_f = ImageFont.truetype(FONT, 32)
 
-def shadow_text(pos, text, font, fill=CHARCOAL, shadow=SHADOW, offset=(2, 2)):
+def shadow_text(pos, text, font, fill=CHARCOAL, shadow=SHADOW, offset=(3, 3)):
     sx, sy = offset
     x, y = pos
     draw.text((x+sx, y+sy), text, fill=shadow, font=font)
     draw.text(pos, text, fill=fill, font=font)
 
-X = 120
-shadow_text((X, 160), TITLE,   title_f)
-shadow_text((X, 250), TAGLINE, tagline_f)
-shadow_text((X, 350), CAPTION, caption_f)
+X = 110
+shadow_text((X, 100), TITLE,   title_f)
+shadow_text((X, 240), TAGLINE, tagline_f)
+shadow_text((X, 400), CAPTION, caption_f)
 
 img.save(OUT, "PNG", optimize=True)
 print(f"Saved {OUT} ({OUT.stat().st_size/1024:.0f} KB, {img.size[0]}x{img.size[1]})")
