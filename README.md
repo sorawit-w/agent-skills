@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/hero.png" alt="agent-skills — a personal shelf of Claude Code plugins" width="100%"/>
+  <img src="assets/hero.svg" alt="agent-skills — a personal shelf of Claude Code plugins" width="100%"/>
 </p>
 
 <h1 align="center">agent-skills</h1>
