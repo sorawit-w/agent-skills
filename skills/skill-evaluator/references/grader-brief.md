@@ -11,6 +11,8 @@ If the grader sees the skill's text, it will grade "did the executor follow the 
 
 The assertion is the rubric. The skill is not.
 
+<!-- Future: this is tier=standard work (literal-match grading against assertions, no creative synthesis). When opt-in cost-tier routing lands, this brief is a one-line target for Haiku-class. Do NOT downgrade silently — surface as opt-in config per the cross-skill model-routing policy. -->
+
 ## The Brief
 
 ```
@@ -71,6 +73,36 @@ No other prose. No recommendations. Just the grades.
 
 Never aggregate `unclear` into pass or fail in the summary counts. Report the three counts separately.
 
-## Grader calibration note
+## Fresh context per test (mandatory)
 
-When the same grader runs many tests in a row, drift can set in (getting stricter or looser over time). Prefer running each grader in a fresh context per test — or at minimum, re-read the grading rules at the start of each test.
+Each test gets its own grader sub-agent invocation with fresh context. Do NOT batch multiple tests into a single grader run, and do NOT reuse a grader sub-agent across tests.
+
+**Why:** when the same grader runs many tests in a row, drift sets in (getting stricter or looser over time), and prior assertions contaminate later judgments. The split-role design only delivers its bias-avoidance guarantee when each grading event is independent.
+
+This invariant mirrors the executor's "one prompt, one executor" rule. If the orchestrator cannot guarantee fresh context per test (e.g., platform constraint), say so explicitly in the findings report rather than silently sharing context.
+
+## High-stakes mode — optional second-grader quorum
+
+A second grader is **opt-in**, not the default. Cost roughly doubles when enabled (2× grading invocations per test), so reserve it for cases where a single grader's judgment is load-bearing.
+
+**Trigger when ANY of these apply:**
+
+- User explicitly requests ("high-stakes audit", "double-check the grading", "verify findings", "second-grader pass")
+- The audited skill gates a release in a regulated domain (finance, health, children, etc.)
+- A failed assertion would block ship/merge of safety-critical work
+- ≥30% of grader-1's verdicts came back `unclear` on first pass — signal that judgment is brittle
+
+**How it works:**
+
+1. Run grader-1 normally per the brief above.
+2. Spawn grader-2 with the SAME inputs (test prompt, executor output, assertion list), fresh context, no knowledge of grader-1's verdicts. Same brief, same anti-instructions.
+3. Compare per-assertion judgments:
+   - **Both agree (pass+pass or fail+fail)** → take the agreed verdict.
+   - **One `pass` + one `fail`** → demote to `unclear`. Surface both evidence quotes in the findings report under a "Disputed assertions" section so the human can adjudicate.
+   - **One verdict + one `unclear`** → take the `unclear`. Disagreement signals the assertion is too fuzzy (rubric-layer fix in Phase 5).
+   - **Both `unclear`** → `unclear` stands.
+4. Do NOT add a third grader as tiebreaker. Disagreement IS the signal that the rubric needs sharpening, not that we need more graders. A 2-of-3 majority would launder a fuzzy assertion as confidently `pass`/`fail` and defeat the purpose.
+
+**What changes in the brief itself:** nothing. Both graders run the exact same brief in fresh context. The asymmetry is at the orchestrator, not in the grader's instructions.
+
+**Reporting:** findings report adds a "Grading mode: single | quorum" line near the top, and a "Disputed assertions" subsection if any disagreements arose. If single-mode was used despite a trigger condition firing, surface that as a process note so the user knows the cheaper path was taken.

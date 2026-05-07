@@ -155,8 +155,11 @@ Run each test via two sub-agents with fresh context:
 - Receives: the test prompt, the executor's output, and the assertion list
 - Does NOT receive the target skill's text (to avoid bias toward what the skill *says* over what the executor *did*)
 - Output: per-assertion pass/fail with one-line evidence quote
+- **Fresh context per test (mandatory).** Each test gets its own grader sub-agent invocation. Do not batch tests into a shared grader. See `references/grader-brief.md` "Fresh context per test" for the rule and rationale.
 
 **Why split roles:** having the same agent execute and grade introduces bias. Fresh grader context with only the assertion list forces evidence-based judgment. See `references/executor-brief.md` and `references/grader-brief.md` for the briefs.
+
+**High-stakes mode (optional, opt-in):** for regulated audits, safety-critical ship gates, or when the user explicitly asks to double-check grading, run a **second grader** in fresh context on the same inputs. Disagreements demote to `unclear` and surface in a "Disputed assertions" subsection of the findings report. Cost roughly doubles, so default is off. Triggers, quorum rules, and reporting are in `references/grader-brief.md` "High-stakes mode — optional second-grader quorum".
 
 ### Phase 5 — Classify failures
 
@@ -224,12 +227,19 @@ This skill produces findings, not grades. A 95% pass rate can hide a single crit
 
 - `references/assertion-dictionary.md` — tag/sentence/evidence pattern, examples, anti-patterns
 - `references/executor-brief.md` — the executor sub-agent brief template
-- `references/grader-brief.md` — the grader sub-agent brief template + independence rules
+- `references/grader-brief.md` — the grader sub-agent brief template + independence rules + high-stakes second-grader quorum
 - `references/fix-taxonomy.md` — four-layer classification with examples
 - `references/findings-report.md` — user-facing output template
 - `references/terminal-ui.md` — lean-markdown output rules so reports read well in terminals and IDEs alike
+- `references/self-test-fixture.md` — *maintainer-only.* Known-good + known-broken fixture skills the harness audits to catch its own regressions. Run before every release of `skill-evaluator`. Not part of the user-facing 7-phase workflow.
 
 Read these when the phase calls for them. Do not front-load all references at once.
+
+## Self-test ritual (maintainer-only)
+
+Before shipping changes to `skill-evaluator` itself — to `SKILL.md`, the briefs, the fix taxonomy, or the report template — run the harness against the fixtures in `references/self-test-fixture.md`. Expected outputs are pinned there. Any deviation from the expected verdicts (false pass on the broken fixture, false fail on the good fixture, wrong fix-layer classification) blocks release.
+
+This is *not* part of the 7-phase workflow users invoke. It is the harness eating its own dogfood as a regression check. End users running `skill-evaluator` should never see or trigger this.
 
 ## Roadmap — v2 paired-skill collision harness
 
