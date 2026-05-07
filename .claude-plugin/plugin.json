@@ -1,13 +1,13 @@
 {
   "name": "agent-skills",
-  "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, and handshake (collaboration calibration ritual).",
-  "version": "3.3.0",
+  "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), gtm (BETA — go-to-market for startup products), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, and handshake (collaboration calibration ritual).",
+  "version": "3.4.0",
   "author": {
     "name": "sorawit-w",
     "url": "https://github.com/sorawit-w"
   },
   "license": "MIT",
-  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory"],
+  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory", "gtm", "go-to-market", "marketing"],
   "skills": [
     "./skills/brand-workshop",
     "./skills/validation-canvas",
@@ -15,6 +15,7 @@
     "./skills/pitch-deck",
     "./skills/startup-grill",
     "./skills/startup-launch-kit",
+    "./skills/gtm",
     "./skills/i18n-contextual-rewriting",
     "./skills/skill-evaluator",
     "./skills/sub-agent-coordinator",

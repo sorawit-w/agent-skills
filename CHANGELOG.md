@@ -5,6 +5,116 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] — 2026-05-06
+
+Adds the **`gtm`** skill in **BETA**. Seventh skill in the startup pipeline —
+covers the missing post-pipeline step (actually getting users) after
+`brand-workshop → validation-canvas → riskiest-assumption-test → pitch-deck →
+startup-grill`. Designed-for-orchestration: works standalone today, slots into
+a future virtual-company agent fleet via structured handoff events.
+
+> **⚠️ Beta — read before installing.** The skill ships with a 100% vs 27.8%
+> first-iteration eval delta (24/24 vs 7/24 across three test cases:
+> first-run-with-artifacts, cold-start, kill-switch). Those evals validate
+> *structural* reliability — config files, helper-function pattern, handoff
+> event vocabulary. They do **not** validate real founder workflows on a real
+> startup project; that dogfooding is the next milestone. Breaking changes
+> possible before v1 (graduating out of beta). Treat outputs as drafts to
+> review, not artifacts to ship.
+
+### Added (gtm — BETA)
+
+- **New skill: `gtm`.** Phased go-to-market for startup products. Builds a
+  GTM playbook from upstream artifacts (`validation-canvas`, `pitch-deck`,
+  `brand-workshop` `DESIGN.md`), produces multi-channel content, schedules
+  cadenced tasks (daily metrics pull, daily/weekly digests, 6-hour budget
+  check), enforces compliance (CAN-SPAM/GDPR/FTC/TOS), and emits structured
+  handoff events to `.workspace/events/` so downstream workers (support,
+  sales, eng) can plug in cleanly.
+- **Trust ramp (one-way) — P1 → P2 → P3.** P1 ships read-only playbook +
+  content drafts (no external API calls). P2 adds scheduled execution with
+  state and digests. P3 adds autonomous-with-escalation once MCPs are
+  configured. Skipping levels is a configured refusal — empirically, founders
+  who skip the ramp burn an account, reputation, or several thousand dollars
+  in ad spend within the first week.
+- **Architectural kill switch — never prompt-only.** `.gtm/HALT` file checked
+  by `require_active()` helper-function wrapper before every external action.
+  Three layers (HALT file → `state.json` status → harness-killable schedule
+  via the `schedule` skill). Honest about best-effort enforcement in a Claude
+  harness — see `references/kill-switch-pattern.md`.
+- **Project-local config.** `.gtm/` per-project folder with `config.yaml`,
+  `state.json`, `digests/`, `drafts/`, gitignored `secrets.local.yaml`. No
+  global `~/.gtm/`. Each project namespace lives in its own folder.
+- **Marketing skill orchestration with inline fallback.** When the
+  `marketing:*` plugin is installed (default in Claude Cowork/Code), gtm
+  dispatches per-channel content production via `sub-agent-coordinator`. When
+  not installed, falls back to inline prompts (lower quality, still
+  functional). See `references/marketing-fallback.md`.
+- **Region adapters.** `references/regions/{code}.md` per region in
+  `config.yaml#regions`. v1 ships `us` and a `_template.md`. Other regions
+  (TH, JP, EU, BR) deferred until real launches into those markets.
+- **Handoff event taxonomy v1.** `lead.captured`, `lead.qualified_b2b`,
+  `content.needs_eng`, `crisis.detected`, `feedback.collected`,
+  `experiment.concluded`. Append-only JSONL at
+  `<repo-root>/.workspace/events/YYYY-MM.jsonl`. Future workers consume by
+  `event_type` + `consumed_by` not containing their worker ID.
+- **Asset additions:**
+  - `assets/icons/gtm.svg` — 32×32 pixel-art megaphone with concentric
+    signal-wave accents in the warm-orange palette.
+  - `assets/gtm-li.svg` — 1200×627 LI-share banner: PLAYBOOK · CONTENT ·
+    DIGEST three-card layout matching the repo's visual language. Centre
+    card highlights the human-review approval gate (Approve & queue /
+    Revise / Pass / HALT) — the most distinctive behavior. Carries a
+    visible BETA pill in the top-right corner so the beta status is
+    obvious wherever the banner is shared.
+
+### Eval results (iteration-1)
+
+- 100% pass rate with skill (24/24 assertions) vs 27.8% baseline (7/24).
+- +72pp delta across three tests:
+  - **first-run-with-artifacts** — auto-detects `validation-canvas.md` +
+    `DESIGN.md` + `deck.html`, runs the wizard with smart defaults, creates
+    `.gtm/config.yaml` + `.gtm/state.json`, ships P1 playbook + content
+    drafts. 9/9 vs 3/9.
+  - **cold-start** — empty project, idea-stage. Wizard handles missing
+    artifacts gracefully, offers `brand-workshop` as a path, asks one Q at a
+    time. 6/6 vs 1/6.
+  - **kill-switch** — writes `.gtm/HALT` with the founder's reason, updates
+    `state.json` status to "halted", explains the helper-function
+    architecture honestly, walks through resume protocol cleanly. 9/9 vs 3/9.
+- Workspace, grader script, eval viewer, and benchmark.json retained
+  *locally* in `skills/gtm-workspace/` while iterating; not committed (git
+  ignore `skills/*-workspace/`).
+
+### Honest deferrals
+
+- **Description-optimization loop** (`skill-creator/run_loop.py`) deferred to
+  a Mac-terminal session because the sandbox `claude` CLI is not
+  authenticated. Manual surgical pass applied instead — added explicit
+  anti-triggers for: (a) Google Tag Manager (acronym overload), (b) "going to
+  market with [findings]" idiom, (c) single-channel content for non-startup
+  contexts (coffee shop announcements, personal posts). Description was
+  compressed from 3,183 chars to 1,018 chars to fit the frontmatter cap;
+  long-form versions of all rules remain in the SKILL.md body.
+- **`skill-evaluator` audit** deferred until after first dogfooded run —
+  iteration-1 evals were structural-only; rule-adherence audit on real
+  prompts is the right next step before v1.
+- **Real founder workflow dogfooding.** The 100% iteration-1 score reflects
+  pristine fixture inputs. Real-world use will surface what breaks.
+- **Region adapters beyond US.** TH, JP, EU, BR will be added when real
+  launches into those markets demand them.
+
+### Plugin
+
+- Plugin version: `3.2.0` → `3.4.0` (minor + skipped 3.3.0 to align plugin
+  and marketplace catalog versions; new skill, no breaking changes to any
+  existing skill).
+- Marketplace catalog: `3.2.0` → `3.4.0` (sync).
+- Plugin description: updated to list `gtm (BETA — go-to-market for startup
+  products)` after `startup-launch-kit`.
+- Skills array: 12 → 13.
+- Keywords added: `gtm`, `go-to-market`, `marketing`.
+
 ## [3.2.0] — 2026-05-05
 
 Refines `handshake` following the pre-shipment audit (skill-evaluator pass +

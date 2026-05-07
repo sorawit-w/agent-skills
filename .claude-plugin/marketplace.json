@@ -9,8 +9,8 @@
     {
       "name": "agent-skills",
       "source": "./",
-      "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, and handshake (collaboration calibration ritual).",
-      "version": "3.2.0",
+      "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), gtm (BETA — go-to-market for startup products), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, and handshake (collaboration calibration ritual).",
+      "version": "3.4.0",
       "author": {
         "name": "sorawit-w"
       },
@@ -29,7 +29,10 @@
         "sub-agent",
         "tech-stack",
         "calibration",
-        "memory"
+        "memory",
+        "gtm",
+        "go-to-market",
+        "marketing"
       ],
       "categories": "workflow"
     }

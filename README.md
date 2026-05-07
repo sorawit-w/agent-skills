@@ -19,7 +19,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of twelve specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of thirteen specialized skills in one go.
 - **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, founders who want their startup adversarially probed, and anyone who wants the agent to know how *they* prefer to collaborate before the work starts.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -61,6 +61,7 @@ Click a skill to jump to its details.
 | <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](#pitch-deck) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. Heavy gate on `riskiest-assumption-test` results. | An investor said "send me your deck" and you've already validated your top assumptions — now you need a shippable v1 this week. |
 | <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](#startup-grill) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability with optional interactive defense. Includes an iteration-evidence check. | You want your idea / deck / canvas probed for what would actually kill it — not "thoughts to consider," a verdict you can act on. |
 | <img src="assets/icons/startup-launch-kit.svg" alt="" width="64" align="middle"/> | [`startup-launch-kit`](#startup-launch-kit) | Opt-in umbrella orchestrator that sequences the five-step startup pipeline (brand → canvas → tests → pitch → grill) with shared state via `docs/startup-kit/kit-manifest.json`. Never bypasses gates; every individual skill stays independently invocable. | You're starting a new idea from scratch and want end-to-end coordination, OR you ran a few steps manually and want to absorb them into an orchestrated resume. |
+| <img src="assets/icons/gtm.svg" alt="" width="64" align="middle"/> | [`gtm`](#gtm) **🚧 BETA** | Phased go-to-market for startup products. Builds a GTM playbook from upstream artifacts, produces multi-channel content, schedules cadenced tasks, enforces compliance, emits handoff events. Trust ramp P1 → P2 → P3. Project-local `.gtm/`. Architectural kill switch via HALT file. | The pitch deck is locked and you need to actually get users — multi-channel marketing motion with state, scheduling, compliance gates, and a kill switch you can trust. **Beta** — evals are structural-only; not yet dogfooded on a real founder workflow. |
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
@@ -70,12 +71,14 @@ Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`
 
 Two pipelines the shelf is designed to support end-to-end.
 
-### 🧭 Startup pipeline — identity → beliefs → tests → deck → grill
+### 🧭 Startup pipeline — identity → beliefs → tests → deck → grill → ship 🚧
 
 ```
-brand-workshop ──▶ validation-canvas ──▶ riskiest-assumption-test ──▶ pitch-deck ──▶ startup-grill
- (identity kit)    (Lean Canvas + VPC)    (test plan + results)        (HTML deck)    (kill report)
+brand-workshop ──▶ validation-canvas ──▶ riskiest-assumption-test ──▶ pitch-deck ──▶ startup-grill ──▶ gtm 🚧
+ (identity kit)    (Lean Canvas + VPC)    (test plan + results)        (HTML deck)    (kill report)    (BETA — get users)
 ```
+
+The sixth step (`gtm`) is **beta** — it slots in after `startup-grill` for founders who've graduated the pipeline and want to actually go acquire users. Evals validate structural reliability; real-world dogfooding is the next milestone before v1.
 
 **Sequential by default. No one-shot orchestrator** — each skill is invocable independently, but composes through filesystem conventions. **Inter-step gates are weighted:** `brand-workshop` → `validation-canvas` is light; `validation-canvas` → `riskiest-assumption-test` is medium (RAT STOPs without canvas); `riskiest-assumption-test` → `pitch-deck` is **heavy** (pitch-deck STOPs without populated `## Results` for top-3 hypotheses; override with `[PRE-VALIDATION DRAFT]` watermark); `pitch-deck` → `startup-grill` is light. **Loop-back is first-class** — invalidated hypotheses route back to `validation-canvas` in update mode, not a pipeline restart. Pristine pipelines (no canvas revision after testing) are the actual yellow flag, which `startup-grill` checks for in its kill-report `## Iteration Evidence` section.
 
@@ -348,6 +351,38 @@ team-composer ──▶ sub-agent-coordinator
 
 ---
 
+<a id="gtm"></a>
+
+### <img src="assets/icons/gtm.svg" alt="" width="48" align="middle"/> &nbsp;`gtm` &nbsp;🚧&nbsp;**BETA**
+
+> **Beta — read before relying on it.** Iteration-1 evals scored 100% with-skill (24/24 assertions) vs 27.8% baseline (7/24, +72pp), but those validate *structural* reliability — config files, helper-function pattern, handoff event vocabulary. They do **not** validate real founder workflows on a real startup project; that dogfooding is the next milestone. Breaking changes possible before v1. Treat outputs as drafts to review, not artifacts to ship.
+
+**What it does.** Phased go-to-market for startup products — the sixth step in the startup pipeline, after `startup-grill`. Builds a GTM playbook from upstream artifacts (`validation-canvas.md`, `pitch-deck` content, `brand-workshop` `DESIGN.md`), produces multi-channel content via fan-out (X, TikTok, Reddit, blog/SEO, email, community/Discord), schedules cadenced tasks via the `schedule` skill (daily metrics pull, daily/weekly digests, 6-hour budget check), enforces compliance gates (CAN-SPAM, GDPR, FTC, COPPA, platform TOS), and emits structured handoff events (`lead.captured`, `content.needs_eng`, `crisis.detected`, etc.) to `.workspace/events/` so future workers (support, sales, eng) can plug in cleanly.
+
+**One-way trust ramp — P1 → P2 → P3.** P1 ships read-only playbook + content drafts (no external API calls). P2 adds scheduled execution with state and digests. P3 adds autonomous-with-escalation once MCPs are configured. Skipping levels is a configured refusal — empirically, founders who skip the ramp burn an account, reputation, or several thousand dollars in ad spend within the first week.
+
+**Architectural kill switch — never prompt-only.** `.gtm/HALT` file checked by a `require_active()` helper-function wrapper before every external action. Three layers (HALT file → `state.json` status → harness-killable schedule via the `schedule` skill). Honest about best-effort enforcement in a Claude harness — see `references/kill-switch-pattern.md`.
+
+**Marketing skill orchestration with inline fallback.** When the `marketing:*` plugin is installed (default in Claude Cowork/Code), `gtm` dispatches per-channel content production via [`sub-agent-coordinator`](#sub-agent-coordinator). When not installed, falls back to inline prompts — lower quality, still functional. See `references/marketing-fallback.md`.
+
+**Reach for it when.** The pitch deck is locked and you need to actually get users. You want multi-channel content with state, voice fidelity, compliance gates, and a kill switch you can trust. You have upstream artifacts (`validation-canvas.md`, `DESIGN.md`, pitch deck) and want them to flow into the next step automatically.
+
+**Pairs well with.**
+- [`brand-workshop`](#brand-workshop) — upstream input. `gtm` reads `DESIGN.md` for brand voice tokens. Wizard offers to invoke `brand-workshop` if no brand artifact exists.
+- [`validation-canvas`](#validation-canvas) — upstream input. `gtm` reads ICP, positioning, channels, and Stress Tests for the playbook.
+- [`pitch-deck`](#pitch-deck) — upstream input. `gtm` reads positioning and messaging from the deck content.
+- [`startup-grill`](#startup-grill) — adjacent. After `gtm` ships its P1 playbook, the founder may grill it for blind spots before promoting to P2.
+- [`sub-agent-coordinator`](#sub-agent-coordinator) — hard dispatch target. Multi-channel content fan-out runs through its patterns.
+- [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) — hard dispatch target. Non-English content drafts route through this skill for cultural adaptation.
+- [`tech-stack-recommendations`](#tech-stack-recommendations) — when `gtm` emits a `content.needs_eng` event for a landing page and the founder has no chosen stack.
+
+**Try it.**
+- "My pitch deck is ready and I want to start getting users — set up GTM for this project."
+- "kick off go-to-market for invoicy.app — B2C, US-only for now, freelance designer audience."
+- "halt all my marketing automations right now — there's a PR fire on TikTok. Then later, walk me through how to resume safely."
+
+---
+
 ## Design principles
 
 These aren't rules for contributors — they're the taste I'm trying to keep on the shelf.
@@ -361,11 +396,13 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`3.2.0` is the current release. Refines the `handshake` skill following its pre-shipment audit: description triggers widened on three new phrases (`"tune in to me"`, `"set a working agreement"`, `"share my preferences"`) and narrowed via an explicit negative gate against codebase orientation, performance-review calibration, and content gathering (resumes / bios). Two body fixes added — Phase 0 transition rule (explicit branch on whether memory is empty) and a Phase 1 voice rule (no naming the skill in user-facing turns). Minor bump rather than patch because triggering behavior changed.
+`3.4.0` is the current release. Adds the **`gtm`** skill in **🚧 BETA** — sixth step in the startup pipeline, covering the missing post-pipeline step (actually getting users) after `startup-grill`. Iteration-1 evals scored 100% with-skill vs 27.8% baseline (+72pp across three test cases: first-run-with-artifacts, cold-start, kill-switch). Those evals validate structural reliability — config files, helper-function kill switch, handoff event vocabulary — but do **not** validate real founder workflows; that dogfooding is the next milestone before graduating to v1. Breaking changes possible before then.
+
+Earlier in v3.2.0: refined the `handshake` skill following its pre-shipment audit — description triggers widened on three new phrases (`"tune in to me"`, `"set a working agreement"`, `"share my preferences"`) and narrowed via an explicit negative gate against codebase orientation, performance-review calibration, and content gathering. Two body fixes added (Phase 0 transition rule + Phase 1 voice rule).
 
 Earlier in v3.1.0: added the `handshake` skill — a brief, opt-in collaboration calibration ritual that runs before the real work (slash-command-only at v1, two-mode design with core calibration + optional project overlay, hard never-ask list, single-user contract, capability-gated integration with the existing two-tier memory store).
 
-Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The four downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter — clean migration, no backward-compat alias. See [CHANGELOG.md](CHANGELOG.md) for full v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
+Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

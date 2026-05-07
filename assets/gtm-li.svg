@@ -1,0 +1,344 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="gtm — ship the playbook, keep the gate" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>gtm — ship the playbook, keep the gate</title>
+  <desc>Pixel-art banner for the gtm Claude Code plugin (BETA). Title at top with a BETA badge in the top-right. Three cards across the middle. PLAYBOOK card (left) shows a 5-channel mix with brand-voice ticks, sourced from validation-canvas and DESIGN.md. CONTENT card (center, highlighted) shows a launch thread draft with a row of approval pills — Approve & queue (selected), Revise, Pass, Halt — the human-review gate as a first-class moment. DIGEST card (right) shows the weekly Discord retro with North Star progress and top wins/losses. Chapter labels PLAYBOOK · CONTENT · DIGEST below.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-gtm" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-gtm)"/>
+
+  <!-- =========== TITLE BLOCK (top, centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="88" font-size="44" font-weight="700" fill="#1f2937" letter-spacing="2">gtm</text>
+    <text x="600" y="124" font-size="20" fill="#6b7280">ship the playbook. keep the gate.</text>
+    <text x="600" y="154" font-size="12" fill="#9ca3af" letter-spacing="4">PLAYBOOK · CONTENT · DIGEST</text>
+  </g>
+
+  <!-- =========== BETA BADGE (top-right corner) =========== -->
+  <g transform="translate(1054, 50)">
+    <!-- pill background -->
+    <rect x="0"  y="0"  width="110" height="34" fill="#fde68a"/>
+    <!-- orange pixel border -->
+    <rect x="0"  y="0"  width="110" height="3"  fill="#c2410c"/>
+    <rect x="0"  y="31" width="110" height="3"  fill="#c2410c"/>
+    <rect x="0"  y="0"  width="3"   height="34" fill="#c2410c"/>
+    <rect x="107" y="0" width="3"   height="34" fill="#c2410c"/>
+    <!-- pixel-art warning triangle (left of text) -->
+    <g fill="#c2410c">
+      <rect x="14" y="22" width="2" height="2"/>
+      <rect x="16" y="20" width="2" height="2"/>
+      <rect x="18" y="18" width="2" height="2"/>
+      <rect x="20" y="16" width="2" height="2"/>
+      <rect x="22" y="14" width="2" height="2"/>
+      <rect x="24" y="16" width="2" height="2"/>
+      <rect x="26" y="18" width="2" height="2"/>
+      <rect x="28" y="20" width="2" height="2"/>
+      <rect x="30" y="22" width="2" height="2"/>
+      <rect x="14" y="22" width="18" height="2"/>
+      <!-- exclamation inside -->
+      <rect x="22" y="17" width="2" height="3" fill="#fde68a"/>
+      <rect x="22" y="21" width="2" height="1" fill="#fde68a"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="42" y="24" font-size="14" fill="#c2410c" font-weight="700" letter-spacing="3">BETA</text>
+    </g>
+  </g>
+
+  <!-- =========== SECTION LABELS =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="200" y="578" font-size="13" fill="#1f2937" letter-spacing="4">PLAYBOOK</text>
+    <text x="600" y="578" font-size="13" fill="#c2410c" font-weight="700" letter-spacing="4">CONTENT</text>
+    <text x="1000" y="578" font-size="13" fill="#1f2937" letter-spacing="4">DIGEST</text>
+  </g>
+
+  <!-- =========== CARD 1: PLAYBOOK (channel-mix readout) =========== -->
+  <!-- Position: x=70, y=210, w=260, h=320 -->
+  <g>
+    <!-- card paper -->
+    <rect x="70"  y="210" width="260" height="320" fill="#f3e7c9"/>
+    <rect x="70"  y="210" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="70"  y="525" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="70"  y="210" width="5"   height="320" fill="#b79a5c"/>
+    <rect x="325" y="210" width="5"   height="320" fill="#b79a5c"/>
+    <!-- folder tab at top -->
+    <rect x="170" y="200" width="60" height="14" fill="#6b7280"/>
+    <rect x="180" y="194" width="40" height="6"  fill="#6b7280"/>
+
+    <!-- title bar -->
+    <rect x="76" y="222" width="248" height="34" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="94" y="245" font-size="18" font-weight="700">PLAYBOOK</text>
+      <text x="306" y="245" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">P1</text>
+    </g>
+    <rect x="76" y="256" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- subtitle -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b7280" letter-spacing="1">
+      <text x="94" y="280">5 channels · brand voice locked</text>
+    </g>
+
+    <!-- channel 1: X -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">
+      <text x="94" y="306" fill="#1f2937" font-weight="700">X</text>
+      <text x="120" y="306" fill="#1f2937">launch thread</text>
+      <text x="306" y="306" fill="#15803d" text-anchor="end" font-weight="700">voice ✓</text>
+    </g>
+    <rect x="94" y="312" width="212" height="1" fill="#9ca3af"/>
+
+    <!-- channel 2: TikTok -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">
+      <text x="94" y="334" fill="#1f2937" font-weight="700">TikTok</text>
+      <text x="160" y="334" fill="#1f2937">3 hooks</text>
+      <text x="306" y="334" fill="#15803d" text-anchor="end" font-weight="700">voice ✓</text>
+    </g>
+    <rect x="94" y="340" width="212" height="1" fill="#9ca3af"/>
+
+    <!-- channel 3: Reddit -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">
+      <text x="94" y="362" fill="#1f2937" font-weight="700">Reddit</text>
+      <text x="160" y="362" fill="#1f2937">community plan</text>
+      <text x="306" y="362" fill="#15803d" text-anchor="end" font-weight="700">voice ✓</text>
+    </g>
+    <rect x="94" y="368" width="212" height="1" fill="#9ca3af"/>
+
+    <!-- channel 4: Blog -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">
+      <text x="94" y="390" fill="#1f2937" font-weight="700">Blog</text>
+      <text x="140" y="390" fill="#1f2937">SEO long-tail</text>
+      <text x="306" y="390" fill="#15803d" text-anchor="end" font-weight="700">voice ✓</text>
+    </g>
+    <rect x="94" y="396" width="212" height="1" fill="#9ca3af"/>
+
+    <!-- channel 5: Email -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11">
+      <text x="94" y="418" fill="#1f2937" font-weight="700">Email</text>
+      <text x="148" y="418" fill="#1f2937">5-step welcome</text>
+      <text x="306" y="418" fill="#15803d" text-anchor="end" font-weight="700">voice ✓</text>
+    </g>
+    <rect x="94" y="424" width="212" height="1" fill="#9ca3af"/>
+
+    <!-- compliance tag -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#15803d" font-weight="700" letter-spacing="1">
+      <text x="94" y="452">CAN-SPAM · GDPR · FTC</text>
+    </g>
+
+    <!-- separator -->
+    <rect x="76" y="468" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- footer prompt -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+      <text x="94" y="488">read from</text>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#c2410c" font-weight="700">
+      <text x="94" y="504">validation-canvas.md</text>
+      <text x="94" y="518">DESIGN.md</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 1 (PLAYBOOK -> CONTENT) =========== -->
+  <g transform="translate(340, 362)" fill="#6b7280">
+    <rect x="0"  y="6" width="60" height="6"/>
+    <rect x="54" y="0" width="6"  height="6"/>
+    <rect x="60" y="6" width="6"  height="6"/>
+    <rect x="54" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 2: CONTENT (highlighted center — first-use approval gate) =========== -->
+  <!-- Position: x=412, y=210, w=376, h=320 -->
+  <g>
+    <!-- outer tile -->
+    <rect x="412" y="210" width="376" height="320" fill="#ffffff"/>
+    <rect x="412" y="210" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="525" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="210" width="5"   height="320" fill="#c9b58a"/>
+    <rect x="783" y="210" width="5"   height="320" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="422" y="220" width="356" height="300" fill="#fdf7ea"/>
+
+    <!-- title bar -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="440" y="250" font-size="18" font-weight="700" fill="#1f2937" letter-spacing="1">DRAFT</text>
+      <text x="760" y="250" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">X · 1 OF 5</text>
+    </g>
+    <rect x="436" y="262" width="328" height="2" fill="#c9b58a"/>
+
+    <!-- The draft preview -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="440" y="290" font-size="13" font-weight="700">launch thread · 5 tweets</text>
+    </g>
+
+    <!-- voice tag pill (small) -->
+    <g>
+      <rect x="440" y="300" width="200" height="20" fill="#fde68a"/>
+      <rect x="440" y="300" width="200" height="2"  fill="#c2410c"/>
+      <rect x="440" y="318" width="200" height="2"  fill="#c2410c"/>
+      <rect x="440" y="300" width="2"   height="20" fill="#c2410c"/>
+      <rect x="638" y="300" width="2"   height="20" fill="#c2410c"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#c2410c" font-weight="700" letter-spacing="1">
+        <text x="450" y="314">VOICE: warm-confident · no-bs</text>
+      </g>
+    </g>
+
+    <!-- thread preview lines (mock content) -->
+    <rect x="440" y="332" width="320" height="3" fill="#1f2937"/>
+    <rect x="440" y="338" width="280" height="3" fill="#9ca3af"/>
+    <rect x="440" y="344" width="240" height="3" fill="#9ca3af"/>
+    <rect x="440" y="354" width="320" height="3" fill="#1f2937"/>
+    <rect x="440" y="360" width="200" height="3" fill="#9ca3af"/>
+
+    <!-- =========== APPROVAL PILLS =========== -->
+    <!-- Pill 1: Approve & queue — SELECTED (orange highlight) -->
+    <g>
+      <rect x="440" y="380" width="320" height="28" fill="#fde68a"/>
+      <rect x="440" y="380" width="320" height="2"  fill="#c2410c"/>
+      <rect x="440" y="406" width="320" height="2"  fill="#c2410c"/>
+      <rect x="440" y="380" width="2"   height="28" fill="#c2410c"/>
+      <rect x="758" y="380" width="2"   height="28" fill="#c2410c"/>
+      <!-- check mark -->
+      <rect x="448" y="392" width="2" height="2" fill="#c2410c"/>
+      <rect x="450" y="394" width="2" height="2" fill="#c2410c"/>
+      <rect x="452" y="396" width="2" height="2" fill="#c2410c"/>
+      <rect x="454" y="394" width="2" height="2" fill="#c2410c"/>
+      <rect x="456" y="392" width="2" height="2" fill="#c2410c"/>
+      <rect x="458" y="390" width="2" height="2" fill="#c2410c"/>
+      <rect x="460" y="388" width="2" height="2" fill="#c2410c"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937" font-weight="700">
+        <text x="470" y="399">Approve &amp; queue (first use of X)</text>
+      </g>
+    </g>
+
+    <!-- Pill 2: Revise -->
+    <g>
+      <rect x="440" y="416" width="155" height="28" fill="#ffffff"/>
+      <rect x="440" y="416" width="155" height="2"  fill="#1f2937"/>
+      <rect x="440" y="442" width="155" height="2"  fill="#1f2937"/>
+      <rect x="440" y="416" width="2"   height="28" fill="#1f2937"/>
+      <rect x="593" y="416" width="2"   height="28" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937">
+        <text x="454" y="435">Revise</text>
+      </g>
+    </g>
+
+    <!-- Pill 3: Pass -->
+    <g>
+      <rect x="605" y="416" width="155" height="28" fill="#ffffff"/>
+      <rect x="605" y="416" width="155" height="2"  fill="#1f2937"/>
+      <rect x="605" y="442" width="155" height="2"  fill="#1f2937"/>
+      <rect x="605" y="416" width="2"   height="28" fill="#1f2937"/>
+      <rect x="758" y="416" width="2"   height="28" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937">
+        <text x="619" y="435">Pass</text>
+      </g>
+    </g>
+
+    <!-- Pill 4: HALT (mute styling — kill switch surface) -->
+    <g>
+      <rect x="440" y="452" width="100" height="22" fill="#f3e7c9"/>
+      <rect x="440" y="452" width="100" height="2"  fill="#9ca3af"/>
+      <rect x="440" y="472" width="100" height="2"  fill="#9ca3af"/>
+      <rect x="440" y="452" width="2"   height="22" fill="#9ca3af"/>
+      <rect x="538" y="452" width="2"   height="22" fill="#9ca3af"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+        <text x="464" y="467">HALT</text>
+      </g>
+    </g>
+
+    <!-- footer caption -->
+    <rect x="436" y="488" width="328" height="2" fill="#c9b58a"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+      <text x="440" y="506">first use of any channel needs your</text>
+      <text x="440" y="518">approval. no auto-posting.</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 2 (CONTENT -> DIGEST) =========== -->
+  <g transform="translate(798, 362)" fill="#6b7280">
+    <rect x="0"  y="6" width="60" height="6"/>
+    <rect x="54" y="0" width="6"  height="6"/>
+    <rect x="60" y="6" width="6"  height="6"/>
+    <rect x="54" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 3: DIGEST (Discord weekly retro) =========== -->
+  <!-- Position: x=870, y=210, w=260, h=320 -->
+  <g>
+    <!-- card paper -->
+    <rect x="870"  y="210" width="260" height="320" fill="#f3e7c9"/>
+    <rect x="870"  y="210" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="870"  y="525" width="260" height="5"   fill="#b79a5c"/>
+    <rect x="870"  y="210" width="5"   height="320" fill="#b79a5c"/>
+    <rect x="1125" y="210" width="5"   height="320" fill="#b79a5c"/>
+
+    <!-- title bar -->
+    <rect x="876" y="222" width="248" height="34" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="894" y="245" font-size="18" font-weight="700">DIGEST</text>
+      <text x="1106" y="245" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">SUN 20:00</text>
+    </g>
+    <rect x="876" y="256" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- subtitle -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#6b7280" letter-spacing="1">
+      <text x="894" y="280">weekly retro · #agent-digest</text>
+    </g>
+
+    <!-- North Star (big number) -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="894" y="310" font-size="11" fill="#9ca3af" letter-spacing="1">WEEKLY SIGNUPS</text>
+      <text x="894" y="338" font-size="28" fill="#1f2937" font-weight="700">18</text>
+      <text x="935" y="338" font-size="14" fill="#6b7280">/ 50</text>
+      <text x="985" y="338" font-size="14" fill="#15803d" font-weight="700">+18</text>
+    </g>
+
+    <!-- separator -->
+    <rect x="876" y="350" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- top wins header -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#15803d" font-weight="700" letter-spacing="1">
+      <text x="894" y="372">▲ WINS</text>
+    </g>
+    <!-- win 1 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+      <text x="894" y="388">+ blog: "underbill" · 312 uniques</text>
+    </g>
+    <!-- win 2 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+      <text x="894" y="402">+ X thread · 4.2k impressions</text>
+    </g>
+    <!-- win 3 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+      <text x="894" y="416">+ email open rate · 38%</text>
+    </g>
+
+    <!-- losses header -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#c2410c" font-weight="700" letter-spacing="1">
+      <text x="894" y="438">▼ LOSSES</text>
+    </g>
+    <!-- loss 1 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+      <text x="894" y="454">- tiktok · 480 views (floor 1k)</text>
+    </g>
+    <!-- loss 2 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">
+      <text x="894" y="468">- reddit · deferred</text>
+    </g>
+
+    <!-- separator -->
+    <rect x="876" y="482" width="248" height="2" fill="#b79a5c"/>
+
+    <!-- handoff event tag -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#c2410c" font-weight="700" letter-spacing="1">
+      <text x="894" y="500">→ lead.captured · 18 events</text>
+    </g>
+
+    <!-- footer note -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280" letter-spacing="1">
+      <text x="894" y="518">next plan in 24h. HALT to pause.</text>
+    </g>
+  </g>
+
+</svg>

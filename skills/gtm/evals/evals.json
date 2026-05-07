@@ -1,0 +1,56 @@
+{
+  "skill_name": "gtm",
+  "evals": [
+    {
+      "id": 1,
+      "name": "first-run-with-artifacts",
+      "prompt": "My pitch deck is ready and I want to start getting users — set up GTM for this project.",
+      "expected_output": "Detects upstream artifacts, runs first-run wizard with smart defaults, creates .gtm/ folder structure, stays in P1 mode, surfaces a P1 playbook proposal.",
+      "files": ["validation-canvas.md", "deck.html", "DESIGN.md", "package.json"],
+      "assertions": [
+        "Creates .gtm/config.yaml in project root",
+        "Creates .gtm/state.json",
+        "Defaults to P1 mode (no external API calls)",
+        "Auto-detects brand voice from DESIGN.md (uses voice tokens, tagline, or color)",
+        "Auto-detects ICP/positioning from validation-canvas.md",
+        "Respects first-use channel gate (autonomous=false default OR response mentions first-use gate)",
+        "Mentions handoff event taxonomy (lead.captured or event vocabulary)",
+        "Mentions kill switch / HALT file pattern",
+        "Produces playbook content (drafts folder, strategy doc, or per-channel briefs)"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "cold-start",
+      "prompt": "I'm building an app that helps freelance designers track invoicing. Where do I even start with marketing?",
+      "expected_output": "No upstream artifacts detected. Wizard handles cold start gracefully — offers brand-workshop, asks one Q at a time, doesn't pretend to know things it can't. Recommends running upstream pipeline first or proceeding with P1.",
+      "files": [],
+      "assertions": [
+        "Acknowledges no upstream artifacts present",
+        "Offers brand-workshop or upstream skills as a path",
+        "Shows wizard structure (one question at a time, or first 1-2 Qs)",
+        "Gives founder a choice between proceeding now vs running upstream first",
+        "Does not pre-create content drafts before founder approval",
+        "Mentions P1 mode as the default starting point"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "kill-switch",
+      "prompt": "OK actually I want to halt all GTM activity right now — there's a PR fire on TikTok. Then later, walk me through how to resume safely.",
+      "expected_output": "Writes .gtm/HALT with reason, updates state.json status to halted, explains helper-function architecture honestly, distinguishes can-vs-cant under HALT, walks through resume protocol cleanly, acknowledges honest limitations.",
+      "files": [".gtm/config.yaml", ".gtm/state.json", "DESIGN.md", "package.json"],
+      "assertions": [
+        "Creates a HALT file (.gtm/HALT or HALT.yaml fallback)",
+        "HALT file carries the founder's stated reason ('PR fire on TikTok')",
+        "Updates state.json status to 'halted'",
+        "Explains the helper-function / require_active() architectural pattern",
+        "Distinguishes what GTM can do under HALT (read state, dry-run) from what it cannot (external actions)",
+        "Acknowledges this is architectural, not prompt-text-only enforcement",
+        "Walks through resume protocol (remove HALT file, verify, re-run)",
+        "Mentions the three layers (HALT file, state.json, harness scheduler)",
+        "Acknowledges honest limitations (best-effort enforcement in Claude harness)"
+      ]
+    }
+  ]
+}

@@ -188,3 +188,8 @@ playground.xcworkspace
 # trigger-eval JSON, etc.). Useful locally for pre-shipment audits;
 # regenerated per audit run, not worth tracking.
 .eval/
+
+# Skill-creator iteration workspaces (per-skill eval traces, grader scripts,
+# benchmark JSON, viewer HTML, run logs, packaged .skill bundles). Useful
+# locally between iterations; not worth tracking in git history.
+skills/*-workspace/
