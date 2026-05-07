@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="gtm — ship the playbook, keep the gate" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
   <title>gtm — ship the playbook, keep the gate</title>
-  <desc>Pixel-art banner for the gtm Claude Code plugin (BETA). Title at top with a BETA badge in the top-right. Three cards across the middle. PLAYBOOK card (left) shows a 5-channel mix with brand-voice ticks, sourced from validation-canvas and DESIGN.md. CONTENT card (center, highlighted) shows a launch thread draft with a row of approval pills — Approve & queue (selected), Revise, Pass, Halt — the human-review gate as a first-class moment. DIGEST card (right) shows the weekly Discord retro with North Star progress and top wins/losses. Chapter labels PLAYBOOK · CONTENT · DIGEST below.</desc>
+  <desc>Pixel-art banner for the gtm Claude Code plugin (BETA). Title at top with a BETA badge in the top-right. Three cards across the middle. PLAYBOOK card (left) shows a 5-channel mix with brand-voice ticks, sourced from validation-canvas and DESIGN.md. CONTENT card (center, highlighted) shows a launch thread draft with a row of approval pills — Approve &amp; queue (selected), Revise, Pass, Halt — the human-review gate as a first-class moment. DIGEST card (right) shows the weekly Discord retro with North Star progress and top wins/losses. Chapter labels PLAYBOOK · CONTENT · DIGEST below.</desc>
 
   <!-- background: soft warm paper with scanlines -->
   <defs>
