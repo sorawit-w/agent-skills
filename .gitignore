@@ -193,3 +193,10 @@ playground.xcworkspace
 # benchmark JSON, viewer HTML, run logs, packaged .skill bundles). Useful
 # locally between iterations; not worth tracking in git history.
 skills/*-workspace/
+
+# Asset working directories — draft renders, mockups, archived hero
+# versions, ad-hoc rendering scripts. Useful locally during banner / hero
+# design iteration; the shipped art lives at assets/<name>.svg and
+# assets/icons/<name>.svg.
+assets/_archive/
+assets/_drafts/
