@@ -419,7 +419,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`3.5.1` is the current release. Adherence-only patch to the `skill-evaluator` skill — tightens the executor-brief template so process-level assertions remain gradable even when an executor's user-facing deliverable is short. Surfaced during a self-audit of the brief against the `coding-rules` skill. No external contract change.
+`3.5.1` is the current release. Adherence-only patches surfaced during a `skill-evaluator` audit of the new `coding-rules` skill. Two doc/template-level changes: (1) tightens `skill-evaluator`'s executor-brief template so terse executors can't silently skip Trace/Reasoning sections; (2) clarifies the `coding-rules` README on how `load` and `install` differ in lifetime + adds explicit invocation examples for every sub-command. No external contract change to either skill.
 
 Earlier in v3.5.0: adds the **`coding-rules`** skill — a session loader for one author's opinionated agentic-coding rules, ported from a separate working repo. Five sub-commands (`load` / `reload` / `status` / `install` / `uninstall`), per-project install with per-file confirmation across `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules`, compaction-safe via `status` + `reload`. **The rules themselves are aggressively personal — read `BOOTSTRAP.md` end-to-end and fork before adopting.** No breaking changes; this is purely additive (`v0.1` skill).
 

@@ -65,6 +65,57 @@ The skill is invoked via `Skill` tool with `args: <sub-command>`. Defaults to `l
 
 Both `install` and `uninstall` are idempotent — re-running is safe.
 
+### How to invoke
+
+Slash command (recommended — unambiguous):
+
+```bash
+/agent-skills:coding-rules               # default sub-command: load
+/agent-skills:coding-rules load          # explicit
+/agent-skills:coding-rules reload        # after compaction
+/agent-skills:coding-rules status        # check whether rules are still loaded
+/agent-skills:coding-rules install       # persistent per-project setup
+/agent-skills:coding-rules uninstall     # mirror — both phases
+```
+
+If no other installed plugin defines a `coding-rules` skill, the short form `/coding-rules` also resolves. The namespaced form is always unambiguous and recommended.
+
+Or in natural language — Claude will route correctly:
+
+- "load coding-rules"
+- "install coding-rules in this project"
+- "are coding-rules still loaded?"
+- "reload coding-rules — they seem to have stopped applying"
+- "uninstall coding-rules"
+
+### `load` vs `install` — they're independent
+
+The two most-used sub-commands have different lifetimes. Worth understanding before you reach for either.
+
+- **`load`** reads `BOOTSTRAP.md` into the **current session's** context. The rules are active now and only now — when the session ends or context is compacted, they're gone.
+- **`install`** appends one instruction line to your project's vendor agent-instruction files (and, optionally, registers hooks) so **future sessions** auto-invoke `load` at session start. It does NOT touch the current session's BOOTSTRAP state.
+
+Neither command requires the other. Typical patterns:
+
+```bash
+# One-off in this session only — no persistence
+/agent-skills:coding-rules load
+
+# Persistent setup for future sessions — no immediate effect on this session
+/agent-skills:coding-rules install
+
+# First time in a project: persist AND activate now
+/agent-skills:coding-rules install
+/agent-skills:coding-rules load
+```
+
+**Subtle gotcha:** right after running `install` for the first time, BOOTSTRAP is **not** yet active in the current session — `install` only edited a file, it didn't load anything. Either run `load` manually in the same turn, or start a fresh session (where the install line in `CLAUDE.md` etc. will auto-fire `load`).
+
+After `install` is applied to a project, every future session in that project auto-loads via the install line — you shouldn't need to type anything. Exceptions:
+
+- **Mid-session compaction** stripped BOOTSTRAP → `/agent-skills:coding-rules reload` (or run `status` first to confirm).
+- **You want to verify** the rules are still active → `/agent-skills:coding-rules status`.
+
 ## What `install` actually does — two independent phases
 
 This is the most surface-area part of the skill, so the contract is laid out explicitly:

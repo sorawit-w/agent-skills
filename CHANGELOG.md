@@ -7,10 +7,11 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [3.5.1] — 2026-05-10
 
-Adherence-only patch to the `skill-evaluator` skill. Tightens the
-executor-brief template so process-level assertions remain gradable
-even when an executor's user-facing deliverable is short. No external
-contract change.
+Adherence-only patches surfaced during a `skill-evaluator` audit of
+the new `coding-rules` skill. Two doc/template-level changes — no
+external contract change to either skill. The audit itself produced
+zero rule-text edits to `coding-rules`; these patches address gaps
+in the harness and the user-facing docs that the audit exposed.
 
 ### Changed
 
@@ -26,23 +27,50 @@ contract change.
   - Brief now warns that skipping a required section will cause
     trace-dependent assertions to grade as `unclear` or `fail`.
 
+- **`skills/coding-rules/README.md`** — Sub-commands section expanded
+  with two new subsections:
+  - **How to invoke** — concrete slash-command examples for every
+    sub-command (`/agent-skills:coding-rules`, `… load`, `… reload`,
+    `… status`, `… install`, `… uninstall`) plus parallel
+    natural-language phrasings.
+  - **`load` vs `install` — they're independent** — explicit
+    clarification that `load` is session-scoped while `install` is
+    persistent-across-future-sessions; neither requires the other;
+    `install` does NOT auto-activate BOOTSTRAP in the current
+    session. Three example call patterns documenting the
+    standalone-load, standalone-install, and combined
+    first-time-in-project flows.
+
 ### Why
 
-A live-execute round-3 audit of the `coding-rules` skill surfaced one
-executor that produced a correct one-line `reload` confirmation but
-silently omitted Trace and Reasoning. The deliverable was right; the
-harness simply couldn't verify *how* the executor reached it. Two
-assertions on that test graded `fail` / `unclear` with no underlying
-skill problem — a brief-layer issue exposed by terse interactions.
+A live-execute round-3 audit of the `coding-rules` skill surfaced two
+adherence-layer gaps — neither in the skill's rule text:
+
+1. **`skill-evaluator`'s executor brief was too permissive about
+   output omissions.** One executor produced a correct one-line
+   `reload` confirmation but silently omitted Trace and Reasoning.
+   The deliverable was right; the harness couldn't verify *how* the
+   executor reached it. Two assertions graded `fail` / `unclear`
+   with no underlying skill problem — a brief-layer issue exposed
+   by terse interactions.
+2. **`coding-rules`' README didn't make `load` vs `install` clearly
+   independent.** A reader could plausibly conclude either "install
+   is required before load" or "install activates rules in the
+   current session" — both wrong. README now spells out the lifetime
+   distinction, the three common call patterns, and the subtle
+   gotcha that `install` doesn't activate BOOTSTRAP in the current
+   session.
 
 ### Notes
 
-- Adherence-only change. No behavior change to `skill-evaluator`'s
-  external contract — trigger phrases, phase ordering, fix taxonomy,
-  output template, artifact policy, second-grader quorum, and Phase
-  6.5 version-bump protocol all unchanged.
-- No skill-text edits to any other skill. The `coding-rules` audit
-  produced zero rule-text diffs across three rounds.
+- Adherence-only changes. No behavior change to either skill's
+  external contract — trigger phrases, sub-command semantics, phase
+  ordering, fix taxonomy, output template, artifact policy,
+  second-grader quorum, and Phase 6.5 version-bump protocol are all
+  unchanged.
+- No skill-text edits to any skill. The `coding-rules` audit itself
+  produced zero rule-text diffs across three rounds; the BOOTSTRAP
+  rules and SKILL.md sub-command logic ship unchanged.
 
 ---
 
