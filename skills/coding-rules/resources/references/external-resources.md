@@ -1,0 +1,108 @@
+# External Resources Registry
+
+A curated catalog of external skills, tools, and resources the agent can recommend and help install when the right signal is detected.
+
+---
+
+## How This Works
+
+1. **Detect a signal** — during project assessment or mid-task (see `recommendations.md`)
+2. **Check what's installed** — don't suggest what's already available
+3. **Look up this registry** — find matching resources by category or signal
+4. **Suggest with context** — tell the developer what you found, why it's relevant, and how to install
+5. **Install if approved** — run the install command; verify it works
+
+**Never install without developer approval.** Always present the suggestion and let them decide.
+
+---
+
+## Registry
+
+### Skills
+
+| Name | What It Does | Signals | Install | Source |
+|------|-------------|---------|---------|--------|
+| **superpowers** | Optional supplement — Socratic brainstorming variations, alternative sub-agent orchestration, cross-platform skill conventions. coding-rules has absorbed the core patterns (worktrees, branch finalization). | Working on a platform where coding-rules isn't installed, OR you want superpowers' more prescriptive Socratic style for design phases | Claude: `/plugin install superpowers@claude-plugins-official` · Cursor: `/add-plugin superpowers` · [Others](https://github.com/obra/superpowers#installation) | [GitHub](https://github.com/obra/superpowers) |
+| **mattpocock/skills** | Companion skill catalog — `/grill-with-docs` (alignment + domain glossary), `/diagnose` (debugging loop), `/tdd` (red-green vertical slices), `/triage`, `/to-prd`, `/to-issues`, `/improve-codebase-architecture`, `/zoom-out`, `/caveman`. coding-rules has absorbed the behavioral patterns (CONTEXT.md glossary lifecycle, feedback-loop discipline in `debugging.md`, destructive-git rules in `guardrails.md`). Install the skills themselves when you want them invocable on trigger rather than as always-on rules. | Want a grilling session before implementation, dedicated debug mode, TDD scaffolding, issue-triage state machine, or architecture-deepening reviews | `npx skills@latest add mattpocock/skills` (then run `/setup-matt-pocock-skills` once per repo) | [GitHub](https://github.com/mattpocock/skills) |
+| **forrestchang/andrej-karpathy-skills** | Single drop-in `CLAUDE.md` distilling four principles from Karpathy's observations on LLM coding pitfalls: Think Before Coding, Simplicity First, Surgical Changes, Goal-Driven Execution. coding-rules has absorbed the substance — `working-patterns.md` § Scope Discipline cites this repo as source. Reference value now is **compression-check** (see `CLAUDE.md` § Authoring style): when adding a rule, sanity-check it against Karpathy's 4-principle terseness — if your new rule restates one of those four in more words, you're paying recurring tokens for a familiar idea. | Periodic audit of coding-rules for bloat; sanity-check before promoting a rule into `BOOTSTRAP.md`; want a portable mini-CLAUDE.md for projects where coding-rules isn't installed | Reference only (already absorbed). Drop the upstream `CLAUDE.md` into a project's root if you want a minimal portable rule pack without coding-rules' full footprint. | [GitHub](https://github.com/forrestchang/andrej-karpathy-skills) |
+| **addyosmani/agent-skills** | 20-skill production plugin spanning the full lifecycle (`/spec` → `/plan` → `/build` → `/test` → `/review` → `/code-simplify` → `/ship`). coding-rules has absorbed two specific rules — `working-patterns.md` § Anti-Rationalization and § Source-Driven Framework Claims both cite this repo. **Not absorbed** (and worth knowing exist): `api-and-interface-design` (Hyrum's Law, One-Version Rule), `documentation-and-adrs` (ADR doctrine), `deprecation-and-migration`, `shipping-and-launch` (pre-launch checklist + staged rollouts), `code-review-and-quality` (Five-Axis Review, ~100-line change sizing), `code-simplification` (Chesterton's Fence, Rule of 500). Most of these have weaker analogs in coding-rules; they're available as a fuller catalog if any specific pattern proves load-bearing. | Want slash-command scaffold (`/spec`, `/plan`, `/build`, `/test`, `/review`, `/ship`) on a project; need ADR doctrine, deprecation/migration patterns, or formal five-axis review; want named mnemonics (Hyrum's Law, Beyonce Rule, Rule of 500, Chesterton's Fence) as enforceable checks | Claude: `/plugin marketplace add addyosmani/agent-skills && /plugin install agent-skills@addy-agent-skills` · [Others](https://github.com/addyosmani/agent-skills#quick-start) | [GitHub](https://github.com/addyosmani/agent-skills) |
+| **GSD (Get Shit Done)** | Framework alternative — spec-driven workflow with ~50 `/gsd-*` slash commands, 86 skills, 33 subagents, `.planning/` directory state, eager-loaded (~12k token cold-start; ~700 in `--minimal`). coding-rules has absorbed five prose-level patterns: vertical slices > horizontal layers (`sub-agent-delegation.md`), plan-fits-fresh-context heuristic (`implementation-planning.md`), migration-coupling check — ORM model change ⇒ migration in same task (`working-patterns.md` or `quality-gates.md`), prompt-injection treatment for agent-authored artifacts scoped by provenance (`guardrails.md`), parallel sub-agent codebase mapping (`roadmap.md` § Bootstrap). **Do NOT invoke `/gsd-*` commands from within coding-rules workflows** — their artifacts (`.planning/`, `PROJECT.md`, `REQUIREMENTS.md`, `HANDOFF.json`) don't integrate with `.ai/` and `ROADMAP.md`, creating two-sources-of-truth drift. GSD also recommends `--dangerously-skip-permissions` outright; this is the opposite of coding-rules' safety doctrine — do not adopt that stance even if running GSD upstream. | You've decided you want a full framework with scaffolding rather than coding-rules' methodology-over-scripts shape; project lives entirely in GSD's `.planning/` model and you don't need `.ai/` + `ROADMAP.md` portability | `npx get-shit-done-cc@latest` (interactive picker for runtime + global/local) | [GitHub](https://github.com/gsd-build/get-shit-done) |
+| **Claude Code built-in review commands** | Three official slash commands shipped with Claude Code v2.1.86+: `/review` (local PR review), `/security-review` (security pass on pending changes), `/ultrareview` (cloud-based deep review with fleet of parallel reviewer agents in remote sandbox; 5–10 min/run; every finding independently reproduced and verified). coding-rules has absorbed `/security-review`'s methodology into `validation.md` § Security Lens — Conditional Pass. `/review` is structurally equivalent to coding-rules' two-stage QA at High complexity (`validation.md` § Verification by Complexity) — pointer kept here for projects where coding-rules isn't installed. **`/ultrareview` is paid ($5–20/run after Pro/Max free runs expired 2026-05-05) and intentionally NOT wired** — invoke manually when stakes justify the cost (production deploys, security-critical paths, irreversible migrations). Wiring would either auto-spend money (unacceptable per the same principle as "never install major dependencies without approval") or surface suggestions that are noise more often than signal. | Project lacks coding-rules' `validation.md`; want a quick local PR review (`/review`); want the security lens via upstream command rather than the absorbed methodology (`/security-review`); ad-hoc deep review for high-stakes change (`/ultrareview`, paid) | Built into Claude Code v2.1.86+ — invoke directly | [`/ultrareview` docs](https://code.claude.com/docs/en/ultrareview) · [Slash commands](https://docs.anthropic.com/en/docs/claude-code/slash-commands) |
+| **context-mode** (mksglu) | MCP server + plugin (Node 18+, SQLite/FTS5-backed) solving output-side context bloat — sandboxes raw tool output (file reads, web fetches, Playwright snapshots) so only filtered/searched results enter the model's context window; claims 98% reduction in heavy scenarios. Ships 11 MCP tools (`ctx_execute`, `ctx_index`, `ctx_search`, `ctx_fetch_and_index`, etc.) + 5 hooks (PreToolUse/PostToolUse/PreCompact/SessionStart/UserPromptSubmit). 100% local, no telemetry, ELv2-licensed. coding-rules has absorbed one prose-level pattern: **"Think in Code, Not Data Processing"** → `working-patterns.md`. **Evaluate carefully before installing — the always-on hook intervention model conflicts with coding-rules' transparency / methodology-over-scripts philosophy.** Hooks rewrite tool calls invisibly; the bundled "terse like caveman" output style overrides Claude's natural voice. 14.1k stars but solo-maintainer with marketing-styling caveats (Fortune-500 logo wall links to `#`, HN #1 ranking badge as marketing) — real engineering, but bus-factor risk. | You're regularly hitting context-window pressure from tool output (large file reads, web fetches, Playwright snapshots); session compaction is causing context loss; you want sandboxed tool execution as a safety layer. **Skip if** you're not feeling the pain in practice — premature install adds infrastructure surface area for theoretical benefit. Try in a sandbox project before adopting on a daily driver. | Claude Code v1.0.33+: `/plugin marketplace add mksglu/context-mode && /plugin install context-mode` · Other platforms: `npm install -g context-mode` · Verify with `ctx_doctor` after install | [GitHub](https://github.com/mksglu/context-mode) |
+| **claude-mem** (thedotmack) | Claude Code plugin (Node 18+, Bun + uv + SQLite + Chroma vector DB) that auto-captures everything Claude does during sessions, compresses observations via the **Claude Agent SDK (Claude API calls — recurring hidden cost)**, and injects context into future sessions. 5 lifecycle hooks + worker service on **port 37777 — same port as `context-mode`, so the two cannot coexist**. 70.6k stars / 253 releases / v12.4.9 / AGPL-3.0 (viral copyleft) / $CMEM Solana token "officially embraced" by the author. **Specifically NOT recommended for stacks running coding-rules.** The auto-capture-everything model directly conflicts with `knowledge-management.md`'s explicit "agent proposes, human confirms" doctrine — the two are opposite philosophies and running both invites two-sources-of-truth drift. Hidden recurring API cost (compression calls Claude during background work) compounds the concern. **Nothing absorbed:** the 3-layer progressive-disclosure search pattern (`search` → `timeline` → `get_observations`) is a generic good-search-API shape coding-rules already implements (BOOTSTRAP Reference Index sharpening, `validation.md` complexity tiers); the `<private>` tag pattern is covered by `guardrails.md` secrets handling. | Stacks where you want total auto-recall and don't run coding-rules' `.ai/knowledge/` curated knowledge base; you accept the recurring Claude API cost for background compression; you've evaluated the AGPL-3.0 + $CMEM token-branding implications for your project. **If running coding-rules: skip.** | `npx claude-mem install` · Or: `/plugin marketplace add thedotmack/claude-mem && /plugin install claude-mem` (Claude Code) | [GitHub](https://github.com/thedotmack/claude-mem) |
+| **ui-ux-pro-max** | Design system generation — 67 styles, 161 palettes, 57 font pairings, 15 tech stacks, industry-aware reasoning | UI/UX work, design system creation, component styling, dashboard design | CLI: `npm i -g uipro-cli && uipro init --ai claude` · [Others](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill#installation) | [GitHub](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) |
+| **impeccable** | Frontend design quality — typography, color, spatial, motion, UX writing references + anti-pattern database + `/audit`, `/critique`, `/polish` commands. Counteracts AI's tendency toward generic-looking UI. Complements ui-ux-pro-max: that one *generates* a design system, impeccable *refines* and audits it. | UI polish, design critique, "this looks generic / AI-slop", pre-ship design audit, motion / typography review | See [repo install](https://github.com/pbakaus/impeccable#installation) — ships per-vendor folders (`.claude/`, `.cursor/`, `.opencode/`, etc.) | [GitHub](https://github.com/pbakaus/impeccable) |
+| **taste-skill** | Opinionated frontend bias to counter generic AI defaults — explicit dials for `DESIGN_VARIANCE` (1–10), `MOTION_INTENSITY` (1–10), `VISUAL_DENSITY` (1–10). Sibling to ui-ux-pro-max: this one sets *direction*, ui-ux-pro-max produces stack-specific code. Stacks well with `impeccable` for post-generation refinement. | UI execution where opinionated layout / motion / density matters; landing or marketing surfaces; user explicitly asks for anti-slop bias | See [repo install](https://github.com/Leonxlnx/taste-skill) | [GitHub](https://github.com/Leonxlnx/taste-skill) |
+| **frontend-design** (anthropics) | Official Anthropic skill (42-line SKILL.md, lightweight, free) bundled in `claude-plugins-official` marketplace. Auto-invokes on "build web component / page / application" requests. Anti-AI-slop framing: pick a BOLD aesthetic direction; five guidelines (Typography, Color & Theme, Motion, Spatial Composition, Backgrounds & Visual Details); hard prohibitions on Inter/Roboto/Arial, purple-on-white gradients, Space Grotesk convergence. **Position:** if installing only one frontend skill, start here — official baseline. Layer `impeccable` for active /audit/critique/polish commands, `taste-skill` for parameterized dials, `ui-ux-pro-max` for stack-specific code generation. **Caveats:** (1) auto-invocation can fire without explicit user request — lighter intervention than `context-mode` / `claude-mem` hooks but less explicit than command-invoked sibling skills; (2) when `DESIGN.md` is present at project root, treat it as authoritative regardless of the skill's "pick a direction" guidance — `references/design-md.md` rules apply. | Want a free, official, lightweight frontend baseline before evaluating richer third-party alternatives; need anti-AI-slop guidance for component / page / application work | Claude Code: `/plugin marketplace add anthropics/claude-plugins-official && /plugin install frontend-design` | [GitHub](https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design) |
+| **i18n-contextual-rewriting** | Culturally authentic translations for i18n files | `locales/` dir found, i18n package detected, translation work needed | Bundled — should already be installed | Local skill |
+| **tech-stack-recommendations** | Opinionated runtime/framework/hosting guidance for new projects | New project, no framework chosen, tech stack undecided | Bundled — should already be installed | Local skill |
+| **team-composer** | Assembles virtual team roles for brainstorming, planning, review | Brainstorming, planning, multi-perspective feedback needed | Bundled — should already be installed | Local skill |
+| **brand-workshop** | Collaborative branding — logo, tagline, brand strategy | New brand, rebrand, visual identity work | Bundled — should already be installed | Local skill |
+
+### Design Resources
+
+| Name | What It Does | Signals | How to Use | Source |
+|------|-------------|---------|------------|--------|
+| **DESIGN.md spec** | Canonical schema (YAML front matter + prose) for project-level design contracts — colors, typography, spacing, components. Ships `npx @google/design.md` CLI for `lint` and `export` (Tailwind theme, DTCG tokens). Spec is `alpha` (as of 2026-05). | Repo root contains a `DESIGN.md`, OR authoring one from scratch | Authority + editing rules: `references/design-md.md`. Lint: `npx @google/design.md lint DESIGN.md`. | [Spec](https://github.com/google-labs-code/design.md) · [Stitch docs](https://stitch.withgoogle.com/docs/design-md/overview) |
+| **awesome-design-md** | 59 curated DESIGN.md brand specs (Stripe, Linear, Notion, BMW, etc.) — colors, typography, components, layout in markdown | UI work with no design system, "make it look like [brand]", need brand reference | Fetch a DESIGN.md: `curl -O https://raw.githubusercontent.com/VoltAgent/awesome-design-md/main/design-md/{brand}/DESIGN.md` | [GitHub](https://github.com/VoltAgent/awesome-design-md) |
+
+> **When DESIGN.md is present at repo root**, treat its YAML front matter as authoritative for all UI/styling work. Full rule: `references/design-md.md`.
+
+**Combining DESIGN.md with ui-ux-pro-max:**
+- **As input** — Drop a DESIGN.md in project root. Tell ui-ux-pro-max to use it as brand constraints while it generates components, responsive rules, and stack-specific implementation.
+- **As validation** — Generate a design system from scratch, then compare against a similar brand's DESIGN.md to sanity-check quality.
+- **Mix-and-match** — Use a DESIGN.md for the aesthetic anchor (colors, typography, vibe) and let ui-ux-pro-max handle structural intelligence (variants, breakpoints, stack wiring).
+
+### Knowledge Base Tools
+
+| Name | What It Does | Signals | Install | Source |
+|------|-------------|---------|---------|--------|
+| **OpenKB** | Compiles `.ai/knowledge/` (or any markdown corpus) into a cross-linked wiki — summaries, concept pages, contradiction/orphan/stale lint, watch mode. Implements Karpathy's compounding-wiki pattern with vectorless retrieval via PageIndex. Optional executor of the doctrine in `knowledge-management.md`; the manual pattern there remains the default. | Project's `.ai/knowledge/` has grown past ~20 entries, manual cross-link/lint maintenance is slipping, or developer wants a one-command query interface | `pip install openkb && openkb init` (requires LLM API key) | [GitHub](https://github.com/VectifyAI/OpenKB) |
+
+### MCP Servers
+
+| Name | What It Does | Signals | Install | Source |
+|------|-------------|---------|---------|--------|
+| **JetBrains MCP** | IDE-native semantic tools — `find_usages`, `go_to_declaration`, `rename_refactoring`, `search_in_files_content`, run configurations, project inspections. Beats grep for typed languages. | Working in IntelliJ / PyCharm / WebStorm / GoLand / Rider / PhpStorm / Android Studio (2025.2+); typed-language project (Java, Kotlin, Scala, TypeScript, C#) | **Bundled in JetBrains 2025.2+**: enable at *Settings → Tools → MCP Server* (it auto-detects and writes the Claude Code config). For Claude Desktop, add `{"jetbrains": {"command": "npx", "args": ["-y", "@jetbrains/mcp-proxy"]}}` to `claude_desktop_config.json`. macOS + nvm gotcha: may need `sudo ln -sf "$(which npx)" /usr/local/bin/npx`. | [Docs](https://www.jetbrains.com/help/idea/mcp-server.html) · [Tool list](https://youtrack.jetbrains.com/articles/SUPPORT-A-2156/MCP-Available-Tools) |
+| **Chrome DevTools MCP** | Browser-runtime introspection — DOM inspection, console messages, network traces, performance profiling, page interaction against a live Chrome instance. Runtime counterpart to JetBrains MCP's static analysis: where JetBrains tells you what the code *says*, this tells you what the page *does*. Beats screenshot-based debugging when you need real DOM state, network timing, or console output. | Frontend / web-app work; debugging UI behavior in a running browser; performance investigation (Core Web Vitals, layout thrash, slow network requests); visual or behavioral regression hunting; need for live DOM, console, or network state | `npx chrome-devtools-mcp@latest` — wire into your agent's MCP config; requires Chrome installed locally | [GitHub](https://github.com/ChromeDevTools/chrome-devtools-mcp) |
+| **Figma MCP** | Extract design context, components, variables from Figma | Figma file links in README or docs | Search MCP registry: `["figma", "design"]` | MCP Registry |
+| **Linear MCP** | Issue tracking, project management | Linear URLs in commits or docs | Search MCP registry: `["linear", "project"]` | MCP Registry |
+| **Stripe MCP** | Payment management, subscriptions, webhooks | Stripe config files detected | Search MCP registry: `["stripe", "payment"]` | MCP Registry |
+| **Notion MCP** | Read/write docs, search knowledge base | Notion links in docs | Search MCP registry: `["notion", "knowledge"]` | MCP Registry |
+
+**Why JetBrains MCP is listed explicitly** (other MCPs go through the registry first): the prefer-rule in `references/working-patterns.md` references specific tool names, so consumers need a stable pointer to the canonical doc. If/when other IDEs ship comparable MCPs (LSP-bridge, language-server-MCP, etc.), generalize the prefer-rule rather than adding more rows here.
+
+> For MCP servers: always search the registry first (`search_mcp_registry`) rather than relying on this table — the registry is the authoritative source and has the latest options.
+
+---
+
+## Adding New Resources
+
+When you discover a useful external skill, tool, or resource:
+
+1. **Verify quality** — check the repo's stars, maintenance, documentation
+2. **Test compatibility** — confirm it works with the current agent platform
+3. **Add to this file** — include name, description, signals, install command, and source URL
+4. **Note it in `.ai/memory.log`** — so the discovery is tracked
+
+### Entry Template
+
+```markdown
+| **name** | What it does (one line) | When to suggest (signals) | Install command or usage | [GitHub](url) |
+```
+
+---
+
+## Lookup Flow
+
+```
+Signal detected (e.g., UI work with no design system)
+  ↓
+Check installed skills/tools
+  ├─ Already installed → Use it
+  └─ Not installed → Check this registry
+       ├─ Found → Suggest to developer with install command
+       └─ Not found → Search MCP registry (if available)
+            ├─ Found → Suggest with rationale
+            └─ Not found → Note the gap, move on
+```

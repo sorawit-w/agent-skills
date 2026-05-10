@@ -1,0 +1,13 @@
+# Knowledge Base Index
+
+Project knowledge — architecture decisions, domain context, conventions, and lessons learned.
+Read this index to find relevant context before planning or implementing.
+
+## Entries
+
+<!-- AUTO-INDEX:START -->
+<!-- Add entries as: - [Title](filename.md) — one-line summary (under 120 chars) -->
+<!-- The knowledge-reindex hook will rewrite the lines between these markers -->
+<!-- on each commit that touches an entry file. Edit anywhere outside the -->
+<!-- markers freely; the hook preserves all of it. -->
+<!-- AUTO-INDEX:END -->

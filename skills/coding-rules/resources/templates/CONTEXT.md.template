@@ -1,0 +1,33 @@
+# Project Context
+
+> Domain glossary and shared language for this project. Read this at session start. Use these terms in code, commit messages, and prose so humans and agents speak the same language.
+
+## How to use this file
+
+- **Read at session start.** The agent reads `CONTEXT.md` as part of project detection (BOOTSTRAP step 2).
+- **Use the terms.** When a concept here has a name, use that name — not a description. *"Materialization cascade"* beats *"the problem when a lesson inside a section is made real."*
+- **Propose additions, don't silently edit.** When new domain jargon emerges (a concept used 2+ times, a renamed entity, a new module that becomes vocabulary), surface it before writing.
+- **Enduring vocabulary, not session state.** Session state lives in `.ai/STATUS.md`; decisions and lessons in `.ai/knowledge/`; this file is the glossary.
+
+## Glossary
+
+<!-- Add entries below. Format: -->
+<!-- ### Term -->
+<!-- One- or two-sentence definition. Optional pointer to where it lives in code. -->
+<!-- -->
+<!-- Example: -->
+<!-- ### Materialization cascade -->
+<!-- The chain of effects when a lesson is given a concrete spot in the file system: -->
+<!-- section folder created, lesson markdown written, exercise scaffolded, tracked in -->
+<!-- `course-graph.json`. Lives in `src/course/materialize.ts`. -->
+
+## Module map (optional)
+
+<!-- One-line description per top-level module so agents and humans can orient. -->
+<!-- - `src/billing/` — invoice generation, line items, tax rules -->
+<!-- - `src/course/` — course graph, materialization, lesson lifecycle -->
+
+## Superseded terms
+
+<!-- When a term is retired, mark it here with the replacement. Don't delete. -->
+<!-- - **Old name** → **New name** — one-line reason. -->

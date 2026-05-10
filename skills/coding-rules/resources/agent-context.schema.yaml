@@ -1,0 +1,141 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+$title: "AI Project Context Schema"
+type: object
+
+$defs:
+  GuidelineLink:
+    type: object
+    properties:
+      file: { type: string }
+      version: { type: string }
+      checksum: { type: string }
+    required: [file]
+    additionalProperties: false
+
+  Runtime:
+    type: object
+    properties:
+      primary: { type: string }
+      language: { type: string }
+      target: { type: string }
+      compatibility:
+        type: object
+        additionalProperties: true
+      buildCommand: { type: string }
+      outputDir: { type: string }
+    required: [primary, language]
+    additionalProperties: true
+
+  Stack:
+    type: object
+    properties:
+      frameworks: { type: object, additionalProperties: true }
+      tools: { type: object, additionalProperties: true }
+      aiProviders:
+        type: array
+        items:
+          type: object
+          properties:
+            name: { type: string }
+            model: { type: string }
+            enabled: { type: boolean }
+          required: [name]
+          additionalProperties: true
+    additionalProperties: true
+
+  AiSection:
+    type: object
+    properties:
+      enabled: { type: boolean }
+      usage:
+        type: array
+        items: { type: string }
+      notes:
+        type: array
+        items: { type: string }
+      memoryPolicy:
+        type: object
+        additionalProperties: true
+    additionalProperties: true
+
+  KnowledgeSection:
+    type: object
+    properties:
+      enabled: { type: boolean }
+    additionalProperties: true
+
+  ContextSection:
+    type: object
+    properties:
+      enabled: { type: boolean }
+    additionalProperties: true
+
+  Status:
+    type: object
+    properties:
+      editableBy:
+        type: array
+        items: { type: string }
+      changePolicy: { type: string }
+      lastEditedBy: { type: string }
+    additionalProperties: true
+
+properties:
+  version:
+    type: string
+  lastUpdated:
+    type: string
+  linkedGuidelines:
+    $ref: "#/$defs/GuidelineLink"
+
+  project:
+    type: object
+    properties:
+      name: { type: string }
+      description: { type: string }
+      type: { type: string }
+      visibility: { type: string }
+    required: [name]
+    additionalProperties: true
+
+  runtime:
+    $ref: "#/$defs/Runtime"
+
+  stack:
+    $ref: "#/$defs/Stack"
+
+  entryPoints:
+    type: array
+    items: { type: string }
+
+  directories:
+    type: object
+    additionalProperties: true
+
+  ai:
+    $ref: "#/$defs/AiSection"
+
+  knowledge:
+    $ref: "#/$defs/KnowledgeSection"
+
+  context:
+    $ref: "#/$defs/ContextSection"
+
+  preferences:
+    type: object
+    additionalProperties: true
+
+  status:
+    $ref: "#/$defs/Status"
+
+  agentNotes:
+    type: object
+    description: "Free-form area that AI agents may extend."
+    additionalProperties: true
+
+required:
+  - project
+  - runtime
+  - stack
+
+additionalProperties: false

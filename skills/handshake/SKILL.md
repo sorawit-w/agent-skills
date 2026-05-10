@@ -269,7 +269,7 @@ If teammates want similar calibration:
   - `CLAUDE.md` at the repo root (loaded for every session in the repo), OR
   - `project`-type memory entries that the team agrees to commit to the repo.
 
-Multi-user awareness (e.g., "are you still Kiang, or someone else?" prompts) is an open Phase 2 question, gated on evidence that the case actually appears in practice.
+Multi-user awareness (e.g., "are you still the user this memory was built for, or someone else?" prompts) is an open Phase 2 question, gated on evidence that the case actually appears in practice.
 
 ---
 

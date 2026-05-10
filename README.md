@@ -19,8 +19,8 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of thirteen specialized skills in one go.
-- **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, founders who want their startup adversarially probed, and anyone who wants the agent to know how *they* prefer to collaborate before the work starts.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of fourteen specialized skills in one go.
+- **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, founders who want their startup adversarially probed, anyone who wants the agent to know how *they* prefer to collaborate before the work starts, and anyone who wants to load one author's opinionated coding-discipline preamble at session start (read the caveat first).
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
 ## Install
@@ -54,6 +54,7 @@ Click a skill to jump to its details.
 | <img src="assets/icons/skill-evaluator.svg" alt="" width="64" align="middle"/> | [`skill-evaluator`](#skill-evaluator) | Audit a skill to see whether its rules actually land when Claude runs it. | You just wrote a skill, or one has been "mostly working" and you suspect a rule is being skipped. |
 | <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="64" align="middle"/> | [`tech-stack-recommendations`](#tech-stack-recommendations) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. | You're starting a new project, or picking one layer, and want a default instead of a neutral grid. |
 | <img src="assets/icons/handshake.svg" alt="" width="64" align="middle"/> | [`handshake`](#handshake) | A brief opt-in calibration ritual that shows you what's on file, then asks ≤4 high-leverage collaboration questions (and optionally ≤6 scoped project questions). Writes to the existing memory store. | You want the agent to know *how* you prefer to collaborate before it starts giving generic answers, or you want a transparent moment to see and correct what's been captured about you. |
+| <img src="assets/icons/coding-rules.svg" alt="" width="64" align="middle"/> | [`coding-rules`](#coding-rules) **⚠️ OPINIONATED** | Loads one author's operating system for agentic coding into the session — branching, commit cadence, verification gates, sub-agent triggers, ambiguity-before-cost, plus a per-project install for vendor agent-instruction files. | You've read `BOOTSTRAP.md` end-to-end, the rules match your taste (or you've forked them), and you want them to load reliably across sessions. **Not a neutral best-practice guide — fork before adopting if your judgment differs.** |
 | <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="64" align="middle"/> | [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. | You're editing a big i18n file without blowing token limits, or producing translations that shouldn't read as machine-converted English. |
 | <img src="assets/icons/brand-workshop.svg" alt="" width="64" align="middle"/> | [`brand-workshop`](#brand-workshop) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. | You need a real identity package for a product, app, or startup — not just a logo doodle. |
 | <img src="assets/icons/validation-canvas.svg" alt="" width="64" align="middle"/> | [`validation-canvas`](#validation-canvas) | Interview a founder block-by-block and produce a rigorous Lean Canvas + Value Proposition Canvas with explicit Stress Tests. Adapts to founder experience via 3-question intake. | You need a beliefs artifact that holds up to scrutiny — *what do we believe?* — before designing tests, building the deck, or pitching. |
@@ -197,6 +198,28 @@ team-composer ──▶ sub-agent-coordinator
 - "Calibrate how we work — I'm tired of generic answers."
 - "Show me what you have on file about me, then ask the questions that would actually help."
 - "Run `/handshake --project` for this repo before we start the next sprint."
+
+---
+
+<a id="coding-rules"></a>
+
+### <img src="assets/icons/coding-rules.svg" alt="" width="48" align="middle"/> &nbsp;`coding-rules` &nbsp;⚠️&nbsp;**OPINIONATED**
+
+> **Read this before installing.** This skill is **deliberately, aggressively opinionated.** It captures *one author's* personal taste and loads on every session that uses it (real input-token cost). It is **not** a neutral best-practice guide. Read [`resources/BOOTSTRAP.md`](skills/coding-rules/resources/BOOTSTRAP.md) end-to-end before adopting; **fork, edit, or skip rules that don't fit your taste**. The skill provides a frame; your judgment is what makes it useful.
+
+**What it does.** Loads `resources/BOOTSTRAP.md` into the current session via the `Read` tool — Prime Directive (clarity over cleverness, safety over speed, never leave the repo broken), workflow routing by task type (`new-project` / `feature` / `bugfix` / `quick-task`), hard rules that apply on every task (branching, commit cadence, verification with fresh evidence, resource cleanup, manual-verification instructions, sub-agent delegation triggers, ambiguity-before-cost), and a reference index for the long tail. Five sub-commands via the `args` parameter: `load` (default), `reload` (re-inject BOOTSTRAP after compaction), `status` (check whether markers are present), `install` (two phases, both opt-in: Phase 1 appends one instruction line to your `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules` with per-file confirmation; Phase 2 optionally registers six PreToolUse / SessionStart guardrail hooks in your chosen settings file — `~/.claude/settings.json`, project `.claude/settings.json`, or project `.claude/settings.local.json` — with a single full-diff confirmation), `uninstall` (mirror, both phases). **Activation stays skill-scoped — never plugin-wide.** No `hooks` field in the parent plugin's `plugin.json`; users who installed for a different skill never silently inherit these guardrails.
+
+**Reach for it when.** You've read `BOOTSTRAP.md` end-to-end, the rules match your taste (or you've forked them), and you want them to load reliably across sessions in a project. You also want compaction-safety — long sessions can strip earlier context, and `args: status` + `args: reload` is the recovery path. **Don't reach for it** if you haven't read the rules, your team's conventions conflict (e.g., commit batching, work-on-`main`), or you want a neutral preamble — try a more general guide instead.
+
+**Pairs well with.**
+- [`skill-evaluator`](#skill-evaluator) — for evaluating rule changes. The skill's own `CLAUDE.md` enforces "no inline grading" — rule audits route to a fresh-context split-role harness to remove author bias.
+- Project-local `CLAUDE.md` / `AGENTS.md` — per BOOTSTRAP's priority order (User > Project config > Agent context > Playbook), the project's own instructions always win over rules in this skill.
+- `superpowers:*` *(if installed)* — overlap exists (TDD, brainstorming, verification-before-completion). Explicit user invocations win; otherwise this skill's BOOTSTRAP rules are the operating frame.
+
+**Try it.**
+- "Use the coding-rules skill to load my rules into this session."
+- "Use the coding-rules skill with `args: install` for this project — I want CLAUDE.md to auto-load it."
+- "Use the coding-rules skill with `args: status` — I want to check whether the rules are still in context after that long compaction."
 
 ---
 
@@ -396,13 +419,15 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`3.4.0` is the current release. Adds the **`gtm`** skill in **🚧 BETA** — sixth step in the startup pipeline, covering the missing post-pipeline step (actually getting users) after `startup-grill`. Iteration-1 evals scored 100% with-skill vs 27.8% baseline (+72pp across three test cases: first-run-with-artifacts, cold-start, kill-switch). Those evals validate structural reliability — config files, helper-function kill switch, handoff event vocabulary — but do **not** validate real founder workflows; that dogfooding is the next milestone before graduating to v1. Breaking changes possible before then.
+`3.5.0` is the current release. Adds the **`coding-rules`** skill — a session loader for one author's opinionated agentic-coding rules, ported from a separate working repo. Five sub-commands (`load` / `reload` / `status` / `install` / `uninstall`), per-project install with per-file confirmation across `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules`, compaction-safe via `status` + `reload`. **The rules themselves are aggressively personal — read `BOOTSTRAP.md` end-to-end and fork before adopting.** No breaking changes; this is purely additive (`v0.1` skill).
+
+Earlier in v3.4.0: adds the **`gtm`** skill in **🚧 BETA** — sixth step in the startup pipeline, covering the missing post-pipeline step (actually getting users) after `startup-grill`. Iteration-1 evals scored 100% with-skill vs 27.8% baseline (+72pp across three test cases: first-run-with-artifacts, cold-start, kill-switch). Those evals validate structural reliability — config files, helper-function kill switch, handoff event vocabulary — but do **not** validate real founder workflows; that dogfooding is the next milestone before graduating to v1. Breaking changes possible before then.
 
 Earlier in v3.2.0: refined the `handshake` skill following its pre-shipment audit — description triggers widened on three new phrases (`"tune in to me"`, `"set a working agreement"`, `"share my preferences"`) and narrowed via an explicit negative gate against codebase orientation, performance-review calibration, and content gathering. Two body fixes added (Phase 0 transition rule + Phase 1 voice rule).
 
 Earlier in v3.1.0: added the `handshake` skill — a brief, opt-in collaboration calibration ritual that runs before the real work (slash-command-only at v1, two-mode design with core calibration + optional project overlay, hard never-ask list, single-user contract, capability-gated integration with the existing two-tier memory store).
 
-Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
+Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

@@ -5,6 +5,129 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.0] — 2026-05-10
+
+Adds the **`coding-rules`** skill — a session loader for one author's
+opinionated agentic-coding rules, ported from a separate working repo. Pure
+addition, no breaking changes.
+
+> ⚠️ **Read before installing.** The rules are aggressively personal — captured
+> from years of breaking and fixing things while pairing with agents. They are
+> not a neutral best-practice guide. Read `BOOTSTRAP.md` end-to-end first; fork,
+> edit, or skip rules that don't fit your taste before adopting.
+
+### Added (coding-rules)
+
+- **New skill: `coding-rules`.** Session loader + per-project install for the
+  bundled BOOTSTRAP rules under `skills/coding-rules/resources/`. Five
+  sub-commands via the `args` parameter: `load` (default — `Read`s BOOTSTRAP
+  into context as a tool result), `reload` (re-inject after compaction),
+  `status` (scan for BOOTSTRAP signatures in current context), `install`
+  (two opt-in phases — Phase 1: per-file append to detected vendor
+  agent-instruction files `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` /
+  `.cursorrules`; Phase 2 (optional): register six `PreToolUse` /
+  `SessionStart` lifecycle hooks in a user-chosen settings file with a single
+  full-diff confirmation), `uninstall` (mirror — both phases optional, both
+  confirmed). Both phases idempotent; both bias toward not modifying files on
+  any uncertainty.
+- **Phase 2 hook registration — what gets wired** (when the user opts in):
+  - `PreToolUse` / matcher `Edit|Write` → `protect-env.sh` (hard-block
+    `.env` edits — security, not env-var disablable).
+  - `PreToolUse` / matcher `Bash` → `protect-git.sh` (hard-block destructive
+    git: `reset --hard`, `push --force` to protected branches, `clean -f`,
+    `branch -D`, `checkout .` / `restore .` / `checkout -- .` — data-loss,
+    not env-var disablable).
+  - `PreToolUse` / matcher `Bash` → `pre-commit-check.sh` (soft-warn on
+    missing quality gates before `git commit`; hard-block on detected
+    secrets in staged files).
+  - `SessionStart` → `session-start-context.sh` (inject `.ai/STATUS.md`
+    head + recent `.ai/memory.log` so the agent resumes with state).
+  - `SessionStart` → `knowledge-bootstrap.sh` (scaffold
+    `.ai/knowledge/KNOWLEDGE.md`, reindex AUTO-INDEX block, flag entries
+    older than 180 days).
+  - `SessionStart` → `context-bootstrap.sh` (scaffold `CONTEXT.md` if
+    missing; never overwrites an existing one).
+  Phase 2 writes by default to `<project>/.claude/settings.local.json`
+  (gitignored, machine-only — lowest blast radius); user may pick
+  `~/.claude/settings.json` (global) or `<project>/.claude/settings.json`
+  (committed) instead. Three soft hooks (`session-start-context`,
+  `knowledge-bootstrap`, `context-bootstrap`) plus the soft half of
+  `pre-commit-check` are runtime-disablable via the existing
+  `CODING_RULES_HOOK_DISABLED` env var (comma-separated, no spaces);
+  security-critical hooks are not env-var disablable by design.
+- **Auto-locate strategy.** Glob discovery (preferred) → `CODING_RULES_DIR` env
+  var → ask the user, in that order. Resolves whether the install is global
+  (`~/.claude/skills/coding-rules/`) or project-local
+  (`<project>/.claude/skills/coding-rules/`).
+- **Compaction-safe.** Long sessions can strip earlier context. `args: status`
+  checks whether BOOTSTRAP markers (`Prime Directive`, `<hard_rules>`, etc.)
+  are present; `args: reload` re-injects.
+- **Bundled rule content.** `resources/BOOTSTRAP.md` (loader entry),
+  `resources/workflows/` (`new-project.md`, `feature.md`, `bugfix.md`,
+  `quick-task.md`), `resources/references/` (~25 long-tail topic guides —
+  working patterns, quality gates, error handling, debugging, communication,
+  git worktrees, guardrails, validation, context management, sub-agent
+  delegation, vendor adapters, knowledge management, roadmap, hooks,
+  multi-tool support, safety mindset, design-token authority via `DESIGN.md`,
+  domain glossary), `resources/templates/` (starter `agent-context.yaml`,
+  `STATUS.md`, `KNOWLEDGE.md`, `CONTEXT.md`), `resources/hooks/` (optional
+  shell hooks for projects that want git/session-boundary enforcement), and
+  `resources/scripts/validate-agent-context.ts` (Bun/Node validator with
+  bundled JSON Schema).
+- **Asset additions:**
+  - `assets/icons/coding-rules.svg` — 32×32 pixel-art clipboard with a rule
+    checklist and a small opinion-stamp accent in the warm-orange palette.
+  - `assets/coding-rules-li.svg` + `.png` — 1200×627 LinkedIn-share banner:
+    DIRECTIVE · RULES · CAVEAT three-card layout matching the repo's visual
+    language. Centre card shows the six-item hard-rules checklist (orange
+    checks); right card carries a prominent OPINIONATED — READ FIRST stamp so
+    the caveat is visible wherever the banner is shared.
+  - `assets/coding-rules-x.svg` + `.png` — 1600×467 X-share banner adapting
+    the same content for X's aspect ratio.
+
+### Notes
+
+- **No breaking changes.** Pure addition. Existing skills, manifest layouts,
+  and CHANGELOG conventions are untouched.
+- **Activation stays skill-scoped — never plugin-wide (load-bearing design
+  choice).** No `hooks` field is added to the parent plugin's `plugin.json`,
+  and there is no `hooks/hooks.json` at the plugin root. Users who installed
+  `agent-skills@sorawit-w` for any other skill (`team-composer`, `pitch-deck`,
+  the startup pipeline, etc.) must not silently inherit `coding-rules`'
+  `PreToolUse` / `SessionStart` guardrails. Hooks are only ever registered
+  through Phase 2 of the skill's own `install` sub-command, with explicit
+  consent on both phases. Future contributors: do **not** lift this
+  restriction without a dedicated discussion — it preserves the opt-in
+  framing the skill's README sells.
+- **Reference fixes during port.** Two stale paths from the source repo were
+  updated:
+  - `resources/BOOTSTRAP.md`'s reference-index footer (was hardcoded to
+    `.ai/coding-rules/resources/`; now resolves correctly whether the rules
+    were loaded via the skill or copied into a project as a separate install).
+  - The usage comment in `resources/scripts/validate-agent-context.ts` (now
+    lists both possible install paths instead of assuming the legacy one).
+- **Opinion-vs-evaluation boundary preserved.** The skill's own `CLAUDE.md`
+  (which governs *editing* the rules, not loading them) routes rule changes to
+  the `skill-evaluator` skill for split-context audit. Inline grading by the
+  same agent that wrote the rule remains explicitly forbidden — that's the
+  asymmetric-reviewer principle the shelf is built around.
+- **Rule-cost gate enforced for future additions.** Every proposed new rule
+  must pass a five-question cost gate (line count, frequency, severity,
+  coverage, testability) before earning its place. Aesthetic rules are
+  explicitly rejected — agents won't self-enforce them and they bloat context
+  for no behavioral payoff.
+
+### Status
+
+`v0.1` of the `coding-rules` skill. The rules have been used and refined over
+time in the source repo, but the marketplace packaging is new — treat as
+alpha. Loader-behavior bug reports welcome via
+[issues](https://github.com/sorawit-w/agent-skills/issues); rule-content
+feedback should generally take the shape of fork-and-edit, not
+feature-request.
+
+---
+
 ## [3.4.0] — 2026-05-06
 
 Adds the **`gtm`** skill in **BETA**. Seventh skill in the startup pipeline —

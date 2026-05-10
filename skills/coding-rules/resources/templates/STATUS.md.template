@@ -1,0 +1,64 @@
+# Project Status
+
+> **Last updated:** {{ISO_TIMESTAMP}}
+> **Updated by:** {{AGENT_OR_HUMAN}}
+
+---
+
+## Current Position
+
+| Field | Value |
+|-------|-------|
+| **Phase** | [Planning / Setup / Foundation / Implementation / Integration / Deployment] |
+| **Milestone** | [milestone ID] |
+| **Milestone Goal** | [one-line description] |
+| **Working Branch** | [branch name] |
+
+---
+
+## Progress
+
+| Status | Count | Tasks |
+|--------|-------|-------|
+| Done | 0 | — |
+| In Progress | 0 | — |
+| Blocked | 0 | — |
+| Ready | 0 | — |
+
+---
+
+## Recent Completions
+
+| Task | Commit | Completed |
+|------|--------|-----------|
+| — | — | — |
+
+---
+
+## Next Up
+
+| Priority | Task | Dependencies |
+|----------|------|--------------|
+| 1 | — | — |
+| 2 | — | — |
+
+---
+
+## Blockers
+
+None.
+
+---
+
+## Notes for Human Review
+
+- [Decisions needing approval]
+- [Questions encountered]
+
+---
+
+## Session History
+
+| Timestamp | Agent | Tasks Completed | Notes |
+|-----------|-------|-----------------|-------|
+| — | — | — | — |

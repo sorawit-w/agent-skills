@@ -1,0 +1,231 @@
+# Coding Rules — Your Operating Rules
+
+> Most playbooks give the agent more to do. This one gives the agent a shape to hold.
+
+**You MUST read and strictly follow this document for every task. These are not suggestions — they are rules.**
+
+<prime_directive>
+## 1. Prime Directive
+
+```
+Clarity over cleverness. Safety over speed. Never leave the repo broken.
+```
+
+**Priority order** (when instructions conflict): User request > Project config > Agent context > This playbook.
+
+**Safety mindset is always on.** Every technical decision should pass through the safety lens: genuinely helpful, avoids harm, honest about limitations.
+</prime_directive>
+
+<detect_project>
+## 2. Detect Project State
+
+Read these files now:
+
+1. `agent-context.yaml` at project root — if missing, auto-generate from `templates/agent-context.yaml.template` (the file is versioned and shared across the team)
+2. Project config (`package.json`, `deno.json`, `pyproject.toml`)
+3. `.ai/memory.log` — recent session history (skip if missing)
+4. `.ai/STATUS.md` — current state (skip if missing)
+5. `.ai/knowledge/KNOWLEDGE.md` — knowledge base index (skip if missing, scan for relevant entries)
+6. `CONTEXT.md` — project domain glossary at project root; use these terms in code, plans, and prose. Scaffolded by the `context-bootstrap` hook if missing. See `references/domain-glossary.md`.
+7. `DESIGN.md` — design-token authority at project root. If present, the YAML front matter IS the canonical design contract for UI/styling work — do not invent alternative tokens. See `references/design-md.md`.
+8. Agent context — read whichever files are present at project root: `CLAUDE.md` (Claude Code), `AGENTS.md` (Codex), `AI-CONTEXT.md` (vendor-independent fallback), `.cursorrules` (Cursor). See `references/multi-tool.md` for the recommended symlink convention that keeps these in sync.
+9. `git log --oneline -20` — recent commit history
+</detect_project>
+
+<route_workflow>
+## 3. Route to Workflow
+
+Based on the task, you MUST read the appropriate workflow file before proceeding:
+
+| Task Type | Read This File |
+|-----------|---------------|
+| New project setup (no existing code) | `workflows/new-project.md` |
+| New feature or enhancement | `workflows/feature.md` |
+| Bug fix | `workflows/bugfix.md` |
+| Refactoring or tech debt | `workflows/feature.md` (same workflow) |
+| Documentation only | `workflows/quick-task.md` |
+| Config change, single-file edit | `workflows/quick-task.md` |
+
+**Read the workflow file now. It contains the detailed steps for your task type.** Do not proceed from memory — the workflow file has rules you need.
+</route_workflow>
+
+<hard_rules>
+## 4. Hard Rules (Always Apply)
+
+These rules apply to ALL tasks regardless of workflow. Violating any of these is a failure.
+
+### Branching
+
+**Never work on protected branches** — main, master, dev, develop, staging, release/*, trunk.
+
+**Worktree gate — answer before creating one:**
+
+1. Will another agent or sub-agent work on a different branch concurrently?
+2. Is there uncommitted work on another branch that must be preserved?
+3. Is this task expected to span multiple sessions (>1 day)?
+
+If **all three are no** → use `git checkout -b <type>/<short-description>` in-place; skip the worktree. Otherwise proceed with the worktree default below. Record the gate answers in one line (in `.ai/memory.log` or the commit footer) so the decision is auditable.
+
+**Default (gate → worktree): create a worktree at `.worktrees/<branch-name>/` for feature and bugfix work.** This provides physical isolation for parallel sub-agents and cleaner lifecycle management.
+
+```bash
+git worktree add .worktrees/<branch-name> -b <type>/<short-description>
+cd .worktrees/<branch-name>
+```
+
+Types: `feature`, `fix`, `refactor`, `test`, `docs`, `chore`
+
+**Package manager check before creating the worktree:** If `package-lock.json` is present (npm), `node_modules/ > 500MB`, or `package.json` has >50 direct dependencies, silently fall back to an in-place branch (`git checkout -b`) and note to the user: "npm detected; using in-place branch to avoid node_modules duplication." For Bun, pnpm, Deno, Python, Rust, Go, and most other stacks, worktree-default applies. See `references/git-worktrees.md` for the full detection table.
+
+**Exception:** `workflows/quick-task.md` stays in-place. Worktree overhead isn't justified for single-file edits or docs-only changes.
+
+Confirm you are on the correct branch before proceeding. If `git branch --show-current` returns a protected branch name, STOP and create a new branch/worktree.
+
+Full worktree tactics (creation, lifecycle, cleanup, failure modes): `references/git-worktrees.md`
+
+### Commit Discipline
+
+**Commit after every completed piece of work — not at the end of the session.** Each commit is a checkpoint. The workflow files define a task loop: implement → check → commit → log → repeat. You MUST pass through the commit gate on every iteration. Do NOT batch commits.
+
+```bash
+git add <specific-files>
+git commit -m "<type>(<scope>): <description>"
+```
+
+After committing, append to `.ai/memory.log`:
+
+```
+[YYYY-MM-DDTHH:MM:SSZ]
+Task: [task-id or description]
+Action: [what you did]
+Files: [modified files]
+Commit: [SHA]
+Status: DONE | BLOCKED
+Notes: [decisions, next steps]
+Observations: [optional — neutral facts noticed during the task, e.g. "Build took 47s",
+  "npm audit shows 3 moderate vulnerabilities", "Test suite: 312 tests, 2 skipped"]
+```
+
+**Observations are facts, not suggestions.** Record what you noticed — build times, warnings, skipped tests, deprecation notices, audit results. Do NOT recommend actions. The developer decides what to act on.
+
+### Verification
+
+**No completion claims without fresh evidence.** Never say "should work" or "probably passes."
+
+During iteration, use tiered checks for fast feedback (see `references/quality-gates.md`). Before committing, always run full gates:
+
+1. Run quality gates: `{build_command} && {lint_command} && {test_command}`
+2. Read the full output — check exit code AND content
+3. State results with evidence: "Tests pass: 47 passed, 0 failed"
+
+### Resource Cleanup
+
+Before declaring done, terminate every long-running process you spawned — dev servers, watchers (`tsc --watch`, `vitest --watch`), build daemons, tunnels (`ngrok`, `cloudflared`), test containers. Scan shell history for backgrounded commands; confirm with `ps` or `lsof -i :PORT`; terminate cleanly. Orphaned processes hold ports and confuse the developer's next move.
+
+**Exception — leave-running with disclosure.** If the developer asked you to keep a process up ("leave the dev server running so I can test"), do so AND name the live process in your completion report ("Left dev server on :3000 at your request"). Silent leave-running is a violation; disclosed leave-running is a handoff.
+
+### Manual Verification Instructions
+
+When your work is done, **always tell the developer how to manually verify it works:**
+
+```markdown
+## How to Verify
+
+1. [Step-by-step instructions to test manually]
+2. [What to look for — expected behavior, UI changes, API responses]
+3. [Edge cases worth testing]
+4. [Any environment setup needed]
+```
+
+### Sub-Agent Delegation
+
+Before implementing, check: does the task touch 3+ files, involve iterative debugging, or have multiple independent sub-tasks? If yes and your platform supports sub-agents (e.g., Claude Code, Aider), you MUST delegate. Read `references/sub-agent-delegation.md` for briefing templates and coordination patterns. If your platform does not support sub-agents, implement sequentially but still follow the task loop (commit after each piece of work).
+
+### Ambiguity-Before-Cost
+
+Before taking one of the costly actions listed below, check: is the user's request short AND ambiguous? If yes, ask one clarifying question rather than guessing. For ambiguity in cheaper work, the general "Clarify before assuming" rule (Task Approach #1) applies — do not cite this rule.
+
+Costly actions (closed list — if none apply, this rule does not fire):
+
+- Spawning sub-agents
+- Creating >3 new files
+- Modifying >5 existing files in one pass
+- Installing dependencies
+- Any irreversible git operation (force push, branch delete, reset --hard)
+
+### Output Discipline
+
+No preamble, no closing fluff, no restating the request. Do not open with "Sure!", "Great question!", or "Absolutely!". Do not close with "Let me know if you need anything else!" State what you did, what the result was, and what's next. Code and evidence first — explanation only if non-obvious.
+
+### Accuracy
+
+Never invent file paths, function names, API endpoints, or config values. If you have not read a file, do not reference its contents. If a value is unknown, say so — do not guess. Hallucinated paths waste tool calls and break the task loop.
+
+### Guardrails
+
+- Never commit secrets (API keys, tokens, passwords, certificates)
+- Never install major dependencies without approval
+- Stay on task — log out-of-scope issues, don't fix them. Don't suggest improvements unprompted — record observations as neutral facts in the log and let the developer decide what to act on.
+- Update docs when behavior changes
+- Do NOT merge — leave for human review
+
+Full guardrails: `references/guardrails.md`
+
+### Extension to legacy vendor-coupled files
+
+When asked to add code to a file that already imports a third-party vendor SDK directly, the additions match the file's existing pattern. Do NOT create new ports/adapters, modify constructor signatures, or refactor surrounding methods to use a new pattern — those belong to a deliberate migration workstream, not a method-add request. Full doctrine: `references/vendor-adapters.md` § Existing-Code Rule.
+</hard_rules>
+
+<when_stuck>
+## 5. When Stuck
+
+| Stuck on... | Do this |
+|---|---|
+| Unclear requirements | Ask 1–2 targeted questions. Don't guess silently. |
+| Architecture decision | Propose 2 options with trade-offs. Ask. |
+| Implementation approach | Search codebase for analogous code. Start simple. |
+| After 3 focused attempts | Log what you tried, mark BLOCKED, move on. |
+| Something outside your control | Create `DEVELOPER_TODO.md` entry and continue. |
+</when_stuck>
+
+<context_save>
+## 6. Before Context Fills
+
+When the conversation is getting long, proactively checkpoint:
+
+1. Commit and push all current work
+2. Update `.ai/STATUS.md` and `.ai/memory.log` with detailed state
+3. Compact or request a new session — the next session resumes from this checkpoint
+
+Details: `references/context-management.md`
+</context_save>
+
+<reference_index>
+## Reference Index
+
+All paths in this index are relative to the `resources/` directory where this `BOOTSTRAP.md` lives. The same paths resolve correctly whether the rules were loaded via the `coding-rules` skill (bundled at `<plugin-install>/skills/coding-rules/resources/`) or copied into a project (typically `.ai/coding-rules/resources/`). Load these when the workflow file tells you to, or when you need details for a specific action.
+
+| Topic | File |
+|-------|------|
+| Task approach, complexity routing, TDD (RED-GREEN-REFACTOR, characterization tests), scope discipline, anti-rationalization, code standards, checkpoints | `references/working-patterns.md` |
+| Quality gates, retry budgets, error recovery | `references/quality-gates.md` |
+| Full error handling & recovery trees | `references/error-handling.md` |
+| Systematic debugging (reproduce → hypothesize → fix) | `references/debugging.md` |
+| Commits, logging, status, boards, branches, dev TODOs | `references/communication.md` |
+| Git worktree tactics (creation, cleanup, package-manager detection/fallback, failure modes) | `references/git-worktrees.md` |
+| Guardrails, scope, security, documentation | `references/guardrails.md` |
+| QA sub-agent, manual verification | `references/validation.md` |
+| Session checkpoints, compaction, resuming, shutdown | `references/context-management.md` |
+| Sub-agent delegation, coordinator role, patterns | `references/sub-agent-delegation.md` |
+| Gap detection, MCP registry lookup | `references/recommendations.md` |
+| External skills, tools, design resources catalog | `references/external-resources.md` |
+| `DESIGN.md` authority — when present, editing safety, conflict resolution with downstream theme configs | `references/design-md.md` |
+| Unified project workflows (new + existing) | `references/workflows.md` |
+| Multi-session implementation planning | `references/implementation-planning.md` |
+| Automated hooks (enforcement, customization) | `references/hooks.md` |
+| Cross-tool support (Claude Code, Codex, fallbacks) | `references/multi-tool.md` |
+| Safety mindset, decision filters, engineering ethics | `references/safety-mindset.md` |
+| Project knowledge base — decisions, context, conventions, lessons | `references/knowledge-management.md` |
+| Living feature inventory — `ROADMAP.md` shape, status legends, bootstrap, update discipline | `references/roadmap.md` |
+| Vendor adapters — ports-and-adapters for third-party services, capability ports, when-not-to-use | `references/vendor-adapters.md` |
+</reference_index>

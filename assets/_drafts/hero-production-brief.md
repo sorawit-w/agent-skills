@@ -261,7 +261,7 @@ A candidate is shippable when:
 
 ---
 
-## Open questions for Kiang
+## Open questions
 
 1. Mascot name — keep **Pip**, or pick from the alternates (Cobb / Tilly / Nib)?
 2. Three visible tile contents — confirm **team-composer / brand-workshop / pitch-deck**, or pick three others?
