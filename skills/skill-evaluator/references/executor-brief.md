@@ -52,11 +52,13 @@ The skill has been loaded into your context. Follow it as you would on a real re
 
 ## Output format
 
-Single response. Include:
+Single response with three required sections, in this order. **All three are mandatory regardless of how brief the user-facing answer is.** A one-line deliverable does NOT exempt you from emitting the trace and reasoning sections — graders need them to verify process-level assertions.
 
-1. Reasoning (what you understood the user to want)
-2. Tool-call intents (or real calls, per mode above)
-3. Final deliverable (the thing you'd hand the user)
+1. **Trace** — one line per tool call, in execution order. Include real Read/Glob/Skill calls and any stated-intent entries. If you genuinely made zero tool calls, write `(no tool calls)` — never omit the section.
+2. **Reasoning** — what you understood the user to want, 1-3 short paragraphs.
+3. **Final deliverable** — the polished response you would hand the user.
+
+Skipping any of the three sections is treated as a brief violation and will cause trace-dependent assertions to grade as `unclear` or `fail`.
 
 ## Anti-instructions
 
@@ -64,6 +66,7 @@ Single response. Include:
 - Do NOT grade yourself or reference assertions
 - Do NOT ask clarifying questions beyond what the skill itself says to ask
 - Do NOT load additional skills beyond the target skill
+- Do NOT skip the Trace or Reasoning sections even if the deliverable is one line
 ```
 
 ## Tag vocabulary (stated-intent)

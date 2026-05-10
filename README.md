@@ -419,7 +419,9 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`3.5.0` is the current release. Adds the **`coding-rules`** skill — a session loader for one author's opinionated agentic-coding rules, ported from a separate working repo. Five sub-commands (`load` / `reload` / `status` / `install` / `uninstall`), per-project install with per-file confirmation across `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules`, compaction-safe via `status` + `reload`. **The rules themselves are aggressively personal — read `BOOTSTRAP.md` end-to-end and fork before adopting.** No breaking changes; this is purely additive (`v0.1` skill).
+`3.5.1` is the current release. Adherence-only patch to the `skill-evaluator` skill — tightens the executor-brief template so process-level assertions remain gradable even when an executor's user-facing deliverable is short. Surfaced during a self-audit of the brief against the `coding-rules` skill. No external contract change.
+
+Earlier in v3.5.0: adds the **`coding-rules`** skill — a session loader for one author's opinionated agentic-coding rules, ported from a separate working repo. Five sub-commands (`load` / `reload` / `status` / `install` / `uninstall`), per-project install with per-file confirmation across `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules`, compaction-safe via `status` + `reload`. **The rules themselves are aggressively personal — read `BOOTSTRAP.md` end-to-end and fork before adopting.** No breaking changes; this is purely additive (`v0.1` skill).
 
 Earlier in v3.4.0: adds the **`gtm`** skill in **🚧 BETA** — sixth step in the startup pipeline, covering the missing post-pipeline step (actually getting users) after `startup-grill`. Iteration-1 evals scored 100% with-skill vs 27.8% baseline (+72pp across three test cases: first-run-with-artifacts, cold-start, kill-switch). Those evals validate structural reliability — config files, helper-function kill switch, handoff event vocabulary — but do **not** validate real founder workflows; that dogfooding is the next milestone before graduating to v1. Breaking changes possible before then.
 
@@ -427,7 +429,7 @@ Earlier in v3.2.0: refined the `handshake` skill following its pre-shipment audi
 
 Earlier in v3.1.0: added the `handshake` skill — a brief, opt-in collaboration calibration ritual that runs before the real work (slash-command-only at v1, two-mode design with core calibration + optional project overlay, hard never-ask list, single-user contract, capability-gated integration with the existing two-tier memory store).
 
-Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
+Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.5.1 + v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

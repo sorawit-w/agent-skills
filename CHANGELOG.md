@@ -5,6 +5,47 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.5.1] — 2026-05-10
+
+Adherence-only patch to the `skill-evaluator` skill. Tightens the
+executor-brief template so process-level assertions remain gradable
+even when an executor's user-facing deliverable is short. No external
+contract change.
+
+### Changed
+
+- **`skills/skill-evaluator/references/executor-brief.md`** — Output
+  Format section rewritten:
+  - All three sections (Trace, Reasoning, Final deliverable) now
+    explicitly mandatory. A one-line deliverable does NOT exempt the
+    executor from emitting Trace and Reasoning.
+  - Trace section gains a `(no tool calls)` fallback so the section
+    is never silently dropped on zero-tool-call runs.
+  - Anti-instructions list extended with an explicit "Do NOT skip the
+    Trace or Reasoning sections even if the deliverable is one line".
+  - Brief now warns that skipping a required section will cause
+    trace-dependent assertions to grade as `unclear` or `fail`.
+
+### Why
+
+A live-execute round-3 audit of the `coding-rules` skill surfaced one
+executor that produced a correct one-line `reload` confirmation but
+silently omitted Trace and Reasoning. The deliverable was right; the
+harness simply couldn't verify *how* the executor reached it. Two
+assertions on that test graded `fail` / `unclear` with no underlying
+skill problem — a brief-layer issue exposed by terse interactions.
+
+### Notes
+
+- Adherence-only change. No behavior change to `skill-evaluator`'s
+  external contract — trigger phrases, phase ordering, fix taxonomy,
+  output template, artifact policy, second-grader quorum, and Phase
+  6.5 version-bump protocol all unchanged.
+- No skill-text edits to any other skill. The `coding-rules` audit
+  produced zero rule-text diffs across three rounds.
+
+---
+
 ## [3.5.0] — 2026-05-10
 
 Adds the **`coding-rules`** skill — a session loader for one author's
