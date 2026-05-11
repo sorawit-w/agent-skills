@@ -124,7 +124,11 @@ Task verb doesn't match any keyword in the heuristic. Example: a generic "help m
 
 ## Phase 2 — Load persona
 
-Once the role is picked, read its block from `team-composer/references/role-personas.md`. Extract **only these fields:**
+Once the role is picked, read its block from `team-composer/references/role-personas.md`.
+
+**Role name authority.** Use the EXACT role name from the catalog. Do NOT paraphrase, rename, or invent variants (e.g., `@accessibility_advocate` when the catalog has `@accessibility_specialist`). If the auto-pick heuristic returns a role and you can't find that exact name in the catalog, fall back to the closest catalog match and disclose: "Couldn't find @X in catalog; defaulting to @Y."
+
+Extract **only these fields:**
 
 - **Perspective** — the lens the role applies
 - **Signature phrases** — characteristic vocabulary, framings, questions they ask

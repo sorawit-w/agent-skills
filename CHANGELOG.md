@@ -5,6 +5,56 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.1] — 2026-05-11
+
+Adherence-only patch surfaced during pre-shipment `skill-evaluator`
+audit of the new `wear-the-hat` skill. One small SKILL.md addition
+closes a rule-adherence gap the audit exposed. No external contract
+change to any skill.
+
+### Changed
+
+- **`skills/wear-the-hat/SKILL.md`** — Phase 2 (Load persona) gains a
+  **Role name authority** paragraph: when reading a role from
+  `team-composer/references/role-personas.md`, use the exact name from
+  the catalog and do not paraphrase or invent variants. Adds a
+  graceful-degradation rule for the case where the auto-pick heuristic
+  returns a role that can't be found in the catalog (fall back to the
+  closest match with disclosure).
+
+### Why
+
+A live-execute round of the `skill-evaluator` audit on `wear-the-hat`
+surfaced one rule-adherence gap (T3 in the audit report): an executor
+reading the auto-pick heuristic correctly saw `@accessibility_specialist`
+for the "accessibility, a11y, WCAG" signal row, but renamed it to
+`@accessibility_advocate` when embodying the persona in the response.
+The SKILL.md Phase 2 didn't have an explicit rule about preserving the
+exact catalog name, so the rename slipped through.
+
+The auto-pick heuristic reference file already had a "Role name
+authority" rule for maintenance discipline ("rows MUST exist as defined
+personas in role-personas.md"), but that rule was framed as guidance to
+the heuristic-file author, not as a runtime rule for the executor loading
+a persona. This patch adds the runtime form of the same rule into
+SKILL.md Phase 2 — where the executor actually loads the role.
+
+### Notes
+
+- **Adherence-only.** No behavior change to any other skill.
+  `wear-the-hat`'s trigger gate, auto-pick outcomes, mode selection,
+  and team-composer handoff path are all unchanged.
+- **Audit ritual honored.** Per the pre-shipment skill-evaluator ritual,
+  the audit caught a gap that self-review reliably missed. Acting on it
+  now rather than batching keeps the remediation tight.
+- All other audit findings (5 across the three skills audited:
+  `wear-the-hat`, `sub-agent-coordinator`, `team-composer`) classified
+  as test-design issues (Layer 2 rubric / Layer 3 brief framing) — not
+  skill-text issues. No additional skill patches warranted. Overall
+  audit pass rate: 66/73 assertions (90.4%).
+
+---
+
 ## [3.6.0] — 2026-05-10
 
 Consolidates sub-agent brief conventions into `sub-agent-coordinator` as
