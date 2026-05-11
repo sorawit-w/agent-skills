@@ -5,6 +5,121 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.0] — 2026-05-10
+
+Consolidates sub-agent brief conventions into `sub-agent-coordinator` as
+the canonical home, adds the **`wear-the-hat`** skill for single-role
+embodiment, and updates `coding-rules` + `team-composer` to reference
+the consolidated framework. Additive changes only — no external contract
+breaks across existing skills.
+
+### Added
+
+- **New skill: `wear-the-hat`** — single-role embodiment for solo work
+  where the user wants one specific lens applied to a task without
+  convening a multi-role panel. Reuses `team-composer`'s
+  `role-personas.md` as the canonical role catalog (no parallel
+  taxonomy). 4-phase flow: trigger gate (deliberate signals only —
+  `@role` tags, embodiment phrases, hat metaphors, lens framings) →
+  pick role (explicit or auto-pick via keyword/verb table) → load
+  persona (perspective + signature phrases only — not biases) →
+  mode-select + execute (inline or sub-agent handoff). Four-outcome
+  auto-pick: clean match, multi-candidate (ask user), multi-role
+  (explicit handoff to `team-composer` with user confirmation), or
+  fallback default. Includes banner SVGs and icon.
+
+- **`sub-agent-coordinator` § Model Selection — Capability, Reasoning,
+  Speed** — three orthogonal axes for sub-agent model selection:
+  capability tier (low / standard / high), reasoning effort (off / on),
+  speed lane (flex / standard / priority). Default mapping for coding
+  work (10 rows), generic fallback mapping for non-coding (9 rows by
+  task shape), disclosure-in-brief contract for axis overrides.
+
+- **`sub-agent-coordinator` § Picking the Role** — task-verb-implicit
+  role principle, optional `Role:` tag using `team-composer`'s catalog
+  as shared vocabulary, runtime agent-type guidance (Explore / Plan /
+  code-reviewer / general-purpose) as orthogonal to role tag.
+
+- **`BLOCKED_SCOPE_EXPANDED` status** in `sub-agent-coordinator`'s Full
+  Brief Reporting Section. Preserves the hard "no nested spawning"
+  rule while letting sub-agents propose a split when scope expands.
+  Communication Protocol gains a paragraph on the three valid
+  orchestrator responses (approve split / re-brief tighter / accept
+  partial).
+
+- **`coding-rules` README Companion skills callout** — surfaces
+  `team-composer`, `sub-agent-coordinator`, `wear-the-hat`,
+  `skill-evaluator`, and `tech-stack-recommendations` near the top of
+  the README so readers see the constellation without scrolling past
+  220 lines.
+
+- **`coding-rules` BOOTSTRAP routing** for architecture/scope
+  decisions before coding — routes to `team-composer` first when
+  installed, otherwise to `When Stuck → Architecture decision`.
+
+- **`team-composer/references/role-personas.md` shared-catalog
+  header** — names the three consumers (team-composer,
+  sub-agent-coordinator, wear-the-hat) and the no-forking rule.
+
+### Changed
+
+- **`coding-rules/resources/references/sub-agent-delegation.md`** —
+  Capability Tier + Reasoning Effort section and Picking the Role
+  section both collapse to thin pointers at `sub-agent-coordinator`.
+  Rule 3 (no nested sub-agents) qualified to match coordinator's
+  Rule 6 with the `BLOCKED_SCOPE_EXPANDED` escalation path.
+
+- **`team-composer` Phase 6 Model Routing** — retires the "future
+  enhancement" note. Now points at `sub-agent-coordinator`'s Model
+  Selection section. Adds an explicit "do not encode vendor-specific
+  model strings" rule (e.g., no `opus-4-6` in skill content — they
+  rot across vendor releases).
+
+### Why
+
+The repo had three places where sub-agent brief conventions were
+documented or implied:
+
+1. `coding-rules/resources/references/sub-agent-delegation.md` —
+   delegation triggers, brief template anchors, coordination rules.
+2. `sub-agent-coordinator/SKILL.md` — full briefing templates,
+   coordination patterns, communication protocol.
+3. `team-composer` Phase 6 — model routing principles, deferred to
+   future implementation.
+
+Model selection, role-picking, and nested-spawning protocol were
+either missing entirely (model tiers were "future work" in
+team-composer's Phase 6) or fragmented across the three locations.
+This release moves the canonical framework into
+`sub-agent-coordinator` and reduces the other two skills to
+consumers — closing the gap that team-composer's Phase 6 had
+explicitly flagged.
+
+The new `wear-the-hat` skill captures a real workflow gap: cases
+where the user wants a specific role's lens on a task without
+running `team-composer`'s panel discussion or
+`sub-agent-coordinator`'s worker fan-out. The shape that previously
+required invoking `team-composer` and waiting for "someone in the
+team to work on it" now has a direct entry point.
+
+### Notes
+
+- **Backward-compatible.** No existing skill behavior breaks.
+  `wear-the-hat` triggers only on deliberate signals (explicit
+  `@role` tags, embodiment phrases, hat metaphors, lens framings);
+  it does NOT auto-fire on generic tasks that didn't ask for a role
+  lens.
+- **Shared catalog.** `team-composer/references/role-personas.md`
+  remains the single source of truth for role definitions. Three
+  consumers now reference it; extending the catalog there
+  propagates to all of them.
+- **Capability-gated graceful degradation.** `wear-the-hat` works
+  without `team-composer` installed (the `Role:` tag becomes
+  informational); `sub-agent-coordinator`'s Picking the Role
+  section similarly degrades cleanly.
+
+---
+
 ## [3.5.1] — 2026-05-10
 
 Adherence-only patches surfaced during a `skill-evaluator` audit of

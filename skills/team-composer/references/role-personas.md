@@ -1,5 +1,7 @@
 # Role Personas
 
+> **Shared catalog.** This file is the canonical role vocabulary for the agent-skills repo. Consumers: `team-composer` (panel assembly + discussion), `sub-agent-coordinator` (optional `Role:` tag in sub-agent briefs), `wear-the-hat` (single-role embodiment). When adding or renaming a role here, the change propagates to all three. Don't fork the catalog into other skills — extend it here instead.
+
 Each role has a distinct perspective, natural biases, communication style, signature
 vocabulary, and blind spots. These personas ensure the virtual team produces genuine
 multi-perspective output rather than restated agreement.

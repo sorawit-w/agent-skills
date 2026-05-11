@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="wear-the-hat icon: pixel-art fedora with warm hatband" style="image-rendering: pixelated;">
+  <title>wear-the-hat</title>
+  <!-- Crown (ink) -->
+  <g fill="#1f2937">
+    <rect x="12" y="8" width="8" height="2"/>
+    <rect x="10" y="10" width="12" height="4"/>
+  </g>
+  <!-- Hatband (warm accent) -->
+  <g fill="#c2410c">
+    <rect x="10" y="14" width="12" height="2"/>
+  </g>
+  <!-- Brim (ink, widening downward) -->
+  <g fill="#1f2937">
+    <rect x="8" y="16" width="16" height="2"/>
+    <rect x="4" y="18" width="24" height="2"/>
+  </g>
+</svg>

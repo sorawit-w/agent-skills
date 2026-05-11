@@ -1,0 +1,293 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="wear-the-hat — one hat per task, no panel needed" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>wear-the-hat — one hat per task, no panel needed</title>
+  <desc>Pixel-art banner for the wear-the-hat Claude Code plugin: title at top, a HAT RACK card on the left showing four labeled hats (security, architect, data-viz, copy), a PICKED card in the center showing one hat being put on with a 1-line disclosure, and a VOICE card on the right showing the role's signature phrases. Chapter labels RACK · PICK · VOICE below.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-wth-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-wth-li)"/>
+
+  <!-- =========== TITLE BLOCK (top, centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="88" font-size="44" font-weight="700" fill="#1f2937" letter-spacing="2">wear-the-hat</text>
+    <text x="600" y="124" font-size="20" fill="#6b7280">one hat per task, no panel needed</text>
+    <text x="600" y="154" font-size="12" fill="#9ca3af" letter-spacing="4">RACK · PICK · VOICE</text>
+  </g>
+
+  <!-- =========== SECTION LABELS (chapter markers) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="210" y="578" font-size="13" fill="#1f2937" letter-spacing="4">RACK</text>
+    <text x="600" y="578" font-size="13" fill="#c2410c" font-weight="700" letter-spacing="4">PICK</text>
+    <text x="995" y="578" font-size="13" fill="#1f2937" letter-spacing="4">VOICE</text>
+  </g>
+
+  <!-- =========== CARD 1: HAT RACK =========== -->
+  <!-- Position: x=70, y=200, w=280, h=330 -->
+  <g>
+    <!-- card paper -->
+    <rect x="70" y="200" width="280" height="330" fill="#f3e7c9"/>
+    <rect x="70" y="200" width="280" height="5"   fill="#b79a5c"/>
+    <rect x="70" y="525" width="280" height="5"   fill="#b79a5c"/>
+    <rect x="70" y="200" width="5"   height="330" fill="#b79a5c"/>
+    <rect x="345" y="200" width="5"  height="330" fill="#b79a5c"/>
+
+    <!-- title bar "HATS" -->
+    <rect x="76" y="212" width="268" height="34" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="94" y="235" font-size="18" font-weight="700">THE RACK</text>
+    </g>
+    <rect x="76" y="246" width="268" height="2" fill="#b79a5c"/>
+
+    <!-- wooden rack bar across -->
+    <rect x="100" y="288" width="220" height="6" fill="#8b6f3c"/>
+    <!-- pegs (small dots on rack) -->
+    <rect x="124" y="294" width="3" height="6" fill="#6b7280"/>
+    <rect x="184" y="294" width="3" height="6" fill="#6b7280"/>
+    <rect x="244" y="294" width="3" height="6" fill="#6b7280"/>
+    <rect x="304" y="294" width="3" height="6" fill="#6b7280"/>
+
+    <!-- =========== HAT 1: HARDHAT (security) =========== -->
+    <g transform="translate(110, 260)">
+      <!-- dome (yellow safety) -->
+      <rect x="4"  y="6"  width="22" height="3" fill="#fbbf24"/>
+      <rect x="2"  y="9"  width="26" height="6" fill="#fbbf24"/>
+      <!-- ridge -->
+      <rect x="14" y="2"  width="2"  height="4" fill="#c2410c"/>
+      <!-- brim (flat hardhat) -->
+      <rect x="0"  y="15" width="30" height="3" fill="#fbbf24"/>
+      <!-- outline -->
+      <rect x="4"  y="5"  width="22" height="1" fill="#92400e"/>
+      <rect x="2"  y="8"  width="26" height="1" fill="#92400e"/>
+      <rect x="0"  y="14" width="30" height="1" fill="#92400e"/>
+    </g>
+    <!-- label: SECURITY -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+      <text x="125" y="320" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="1">SECURITY</text>
+      <text x="125" y="334" font-size="8" fill="#6b7280">@security_specialist</text>
+    </g>
+
+    <!-- =========== HAT 2: TOP HAT (architect) =========== -->
+    <g transform="translate(172, 254)">
+      <!-- crown (tall) -->
+      <rect x="6"  y="0"  width="18" height="18" fill="#1f2937"/>
+      <!-- band -->
+      <rect x="6"  y="14" width="18" height="2"  fill="#c2410c"/>
+      <!-- brim -->
+      <rect x="0"  y="20" width="30" height="3"  fill="#1f2937"/>
+    </g>
+    <!-- label: ARCHITECT -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+      <text x="185" y="320" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="1">ARCHITECT</text>
+      <text x="185" y="334" font-size="8" fill="#6b7280">@senior_software_</text>
+      <text x="185" y="346" font-size="8" fill="#6b7280">architect</text>
+    </g>
+
+    <!-- =========== HAT 3: VISOR (data-viz) =========== -->
+    <g transform="translate(232, 270)">
+      <!-- visor band -->
+      <rect x="2"  y="0"  width="26" height="6"  fill="#0e7490"/>
+      <!-- transparent brim shape -->
+      <rect x="0"  y="6"  width="30" height="4"  fill="#bae6fd"/>
+      <rect x="0"  y="9"  width="30" height="2"  fill="#0e7490"/>
+    </g>
+    <!-- label: DATA-VIZ -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+      <text x="247" y="320" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="1">DATA-VIZ</text>
+      <text x="247" y="334" font-size="8" fill="#6b7280">@dataviz_engineer</text>
+    </g>
+
+    <!-- =========== HAT 4: BERET (copywriter) =========== -->
+    <g transform="translate(290, 260)">
+      <!-- beret dome -->
+      <rect x="4"  y="6"  width="22" height="2" fill="#b91c1c"/>
+      <rect x="2"  y="8"  width="26" height="8" fill="#b91c1c"/>
+      <!-- stem on top -->
+      <rect x="14" y="2"  width="2"  height="4" fill="#1f2937"/>
+      <!-- band -->
+      <rect x="2"  y="16" width="26" height="2" fill="#1f2937"/>
+    </g>
+    <!-- label: COPY -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+      <text x="305" y="320" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="1">COPY</text>
+      <text x="305" y="334" font-size="8" fill="#6b7280">@senior_copywriter</text>
+    </g>
+
+    <!-- footer: catalog reference -->
+    <rect x="90" y="476" width="240" height="36" fill="#fdf7ea"/>
+    <rect x="90" y="476" width="240" height="2"  fill="#b79a5c"/>
+    <rect x="90" y="510" width="240" height="2"  fill="#b79a5c"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="100" y="492" font-size="10" font-weight="700" fill="#c2410c" letter-spacing="2">CATALOG</text>
+      <text x="100" y="504" font-size="9"  fill="#6b7280">team-composer/role-personas.md</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 1 (RACK -> PICK) =========== -->
+  <g transform="translate(358, 362)" fill="#6b7280">
+    <rect x="0"  y="6" width="40" height="6"/>
+    <rect x="34" y="0" width="6"  height="6"/>
+    <rect x="40" y="6" width="6"  height="6"/>
+    <rect x="34" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 2: PICK (selected hat + disclosure) =========== -->
+  <!-- Position: x=412, y=200, w=376, h=330 -->
+  <g>
+    <!-- outer tile -->
+    <rect x="412" y="200" width="376" height="330" fill="#ffffff"/>
+    <rect x="412" y="200" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="525" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="200" width="5"   height="330" fill="#c9b58a"/>
+    <rect x="783" y="200" width="5"   height="330" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="422" y="210" width="356" height="310" fill="#fdf7ea"/>
+
+    <!-- title bar -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="440" y="240" font-size="18" font-weight="700" fill="#1f2937" letter-spacing="1">PICK ONE</text>
+      <text x="760" y="240" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">SOLO</text>
+    </g>
+    <rect x="436" y="252" width="328" height="2" fill="#c9b58a"/>
+
+    <!-- =========== FIGURE (head outline) =========== -->
+    <!-- head/avatar centered -->
+    <g transform="translate(550, 312)">
+      <!-- face oval (light) -->
+      <rect x="22" y="8"  width="36" height="46" fill="#fde68a"/>
+      <rect x="18" y="14" width="44" height="36" fill="#fde68a"/>
+      <!-- eyes -->
+      <rect x="28" y="28" width="4" height="4" fill="#1f2937"/>
+      <rect x="48" y="28" width="4" height="4" fill="#1f2937"/>
+      <!-- smile -->
+      <rect x="34" y="42" width="12" height="2" fill="#1f2937"/>
+      <!-- outline -->
+      <rect x="22" y="6"  width="36" height="2" fill="#1f2937"/>
+      <rect x="18" y="12" width="4"  height="2" fill="#1f2937"/>
+      <rect x="58" y="12" width="4"  height="2" fill="#1f2937"/>
+      <rect x="18" y="50" width="44" height="2" fill="#1f2937"/>
+    </g>
+
+    <!-- =========== SELECTED HAT: HARDHAT on figure =========== -->
+    <g transform="translate(553, 280)">
+      <!-- dome -->
+      <rect x="4"  y="6"  width="50" height="4" fill="#fbbf24"/>
+      <rect x="0"  y="10" width="58" height="10" fill="#fbbf24"/>
+      <!-- ridge -->
+      <rect x="27" y="0"  width="4"  height="6" fill="#c2410c"/>
+      <!-- band (highlighted - glowing) -->
+      <rect x="0"  y="20" width="58" height="4" fill="#c2410c"/>
+      <!-- brim -->
+      <rect x="-4" y="24" width="66" height="4" fill="#fbbf24"/>
+      <!-- outline -->
+      <rect x="4"  y="5"  width="50" height="1" fill="#92400e"/>
+      <rect x="0"  y="9"  width="58" height="1" fill="#92400e"/>
+      <rect x="-4" y="23" width="66" height="1" fill="#92400e"/>
+    </g>
+
+    <!-- glow lines around the hat (selected indicator) -->
+    <g fill="#c2410c">
+      <rect x="510" y="290" width="4" height="4"/>
+      <rect x="500" y="304" width="4" height="4"/>
+      <rect x="498" y="320" width="4" height="4"/>
+      <rect x="500" y="336" width="4" height="4"/>
+
+      <rect x="696" y="290" width="4" height="4"/>
+      <rect x="706" y="304" width="4" height="4"/>
+      <rect x="708" y="320" width="4" height="4"/>
+      <rect x="706" y="336" width="4" height="4"/>
+    </g>
+
+    <!-- =========== DISCLOSURE BOX (1-line) =========== -->
+    <rect x="440" y="430" width="320" height="58" fill="#fde68a"/>
+    <rect x="440" y="430" width="320" height="4" fill="#c2410c"/>
+    <rect x="440" y="484" width="320" height="4" fill="#c2410c"/>
+    <rect x="440" y="430" width="4"   height="58" fill="#c2410c"/>
+    <rect x="756" y="430" width="4"   height="58" fill="#c2410c"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="456" y="454" font-size="11" font-weight="700" fill="#1f2937" letter-spacing="2">WEARING</text>
+      <text x="456" y="476" font-size="13" font-weight="700" fill="#c2410c">@security_specialist</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 2 (PICK -> VOICE) =========== -->
+  <g transform="translate(798, 362)" fill="#c2410c">
+    <rect x="0"  y="6" width="50" height="6"/>
+    <rect x="44" y="0" width="6"  height="6"/>
+    <rect x="50" y="6" width="6"  height="6"/>
+    <rect x="44" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 3: VOICE (signature phrases) =========== -->
+  <!-- Position: x=860, y=200, w=270, h=330 -->
+  <g>
+    <!-- outer tile -->
+    <rect x="860" y="200" width="270" height="330" fill="#ffffff"/>
+    <rect x="860" y="200" width="270" height="5"   fill="#c9b58a"/>
+    <rect x="860" y="525" width="270" height="5"   fill="#c9b58a"/>
+    <rect x="860" y="200" width="5"   height="330" fill="#c9b58a"/>
+    <rect x="1125" y="200" width="5"  height="330" fill="#c9b58a"/>
+    <!-- inner panel -->
+    <rect x="870" y="210" width="250" height="310" fill="#fdf7ea"/>
+
+    <!-- title bar -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="886" y="240" font-size="18" font-weight="700" fill="#1f2937" letter-spacing="1">IN VOICE</text>
+      <text x="1102" y="240" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">SIGNATURE</text>
+    </g>
+    <rect x="880" y="252" width="230" height="2" fill="#c9b58a"/>
+
+    <!-- speech bubble shape -->
+    <rect x="884" y="270" width="220" height="180" fill="#fef3c7"/>
+    <rect x="884" y="270" width="220" height="3" fill="#c2410c"/>
+    <rect x="884" y="447" width="220" height="3" fill="#c2410c"/>
+    <rect x="884" y="270" width="3"   height="180" fill="#c2410c"/>
+    <rect x="1101" y="270" width="3"  height="180" fill="#c2410c"/>
+    <!-- bubble tail -->
+    <rect x="884" y="450" width="20" height="3" fill="#c2410c"/>
+    <rect x="884" y="453" width="14" height="3" fill="#c2410c"/>
+    <rect x="884" y="456" width="8"  height="3" fill="#c2410c"/>
+    <rect x="887" y="450" width="14" height="3" fill="#fef3c7"/>
+    <rect x="887" y="453" width="8"  height="3" fill="#fef3c7"/>
+
+    <!-- phrase 1 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="900" y="298" font-size="11" font-weight="700" fill="#c2410c" letter-spacing="1">"</text>
+      <text x="912" y="298" font-size="11" fill="#1f2937">What's the threat</text>
+      <text x="912" y="314" font-size="11" fill="#1f2937">model here?"</text>
+    </g>
+
+    <!-- divider -->
+    <rect x="900" y="328" width="180" height="1" fill="#c9b58a"/>
+
+    <!-- phrase 2 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="900" y="354" font-size="11" font-weight="700" fill="#c2410c" letter-spacing="1">"</text>
+      <text x="912" y="354" font-size="11" fill="#1f2937">How does an attacker</text>
+      <text x="912" y="370" font-size="11" fill="#1f2937">exploit this?"</text>
+    </g>
+
+    <!-- divider -->
+    <rect x="900" y="384" width="180" height="1" fill="#c9b58a"/>
+
+    <!-- phrase 3 -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="900" y="410" font-size="11" font-weight="700" fill="#c2410c" letter-spacing="1">"</text>
+      <text x="912" y="410" font-size="11" fill="#1f2937">We need defense</text>
+      <text x="912" y="426" font-size="11" fill="#1f2937">in depth."</text>
+    </g>
+
+    <!-- footer: perspective lens chip -->
+    <rect x="884" y="476" width="220" height="36" fill="#bae6fd"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="896" y="494" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="2">PERSPECTIVE</text>
+      <text x="896" y="506" font-size="9"  fill="#1f2937">System integrity &amp; security</text>
+    </g>
+  </g>
+
+  <!-- =========== GROUND LINE under the three cards =========== -->
+  <rect x="50" y="546" width="1100" height="2" fill="#eadfcf"/>
+</svg>

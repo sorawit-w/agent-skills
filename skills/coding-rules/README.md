@@ -30,6 +30,7 @@ Skills you'll likely want alongside `coding-rules` — all ship in this same mar
 |---|---|
 | [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | Multi-role discussion *before* coding — "monolith vs services?", "which DB?", "is this refactor worth it?" Surfaces trade-offs the rules can't. |
 | [`sub-agent-coordinator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/sub-agent-coordinator) | Coordination patterns *during* execution — fan-out, pipeline, specialist routing, briefing templates. The natural sibling to BOOTSTRAP's `sub-agent-delegation` reference. |
+| [`wear-the-hat`](https://github.com/sorawit-w/agent-skills/tree/main/skills/wear-the-hat) | When you want one specific lens applied to a task without convening a full panel — `@security_specialist` on auth code, `@dataviz_engineer` on a chart, `@accessibility_specialist` on a UI. Single-role embodiment. |
 | [`skill-evaluator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/skill-evaluator) | Auditing rule changes via split-context review — never grade rules in the same agent that wrote them. |
 | [`tech-stack-recommendations`](https://github.com/sorawit-w/agent-skills/tree/main/skills/tech-stack-recommendations) | Picking a runtime / framework / database / hosting target on a new project or migration. Pairs with `workflows/new-project.md`. |
 
