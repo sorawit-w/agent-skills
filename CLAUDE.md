@@ -98,6 +98,18 @@ A version bump touches exactly these four files. Miss one and the manifest is in
 3. `CHANGELOG.md` — new entry at the top using `## [<version>] — <YYYY-MM-DD>` heading
 4. `README.md` Status section (~line 420+) — promote new version to the "is the current release" line; demote prior version to "Earlier in vX.Y.Z"; update the "See CHANGELOG.md for full vX + ..." reference at the bottom of the Status section
 
+### When the release ADDS a new skill — root README needs three more touches
+
+The Status section bump is not enough on its own. A new skill must also appear in the root README's catalog or it stays invisible to readers browsing the repo:
+
+5. **TL;DR count** (~line 22) — the "a curated shelf of N specialized skills" line. Increment `N`.
+6. **"The shelf" table** (~line 50) — add a row for the new skill: icon image, anchor link, "What it's for" one-liner, "Reach for it when" one-liner. Match the existing column structure exactly. Place the row next to thematically-related skills (e.g., role/delegation skills cluster near `team-composer` and `sub-agent-coordinator`).
+7. **"Skill details" section** (~line 103+) — add a full detail entry: anchor `<a id="skill-name"></a>`, H3 with icon image and name, then `**What it does**` / `**Reach for it when**` / `**Pairs well with**` (bulleted, linking to other skills) / `**Try it**` (3 example prompts) blocks. Place near related skills in the same order as the shelf table.
+
+Skipping any of these is the failure mode caught after shipping `wear-the-hat` in 3.6.0 — the skill existed and was registered in the plugin manifest, but was invisible in the root README catalog. Status section mentions only persist until the next release demotes them; the catalog is permanent.
+
+**Optional polish for new skills:** update the `**Pairs well with**` bullets in adjacent skills' detail entries so cross-references are bidirectional (e.g., when adding `wear-the-hat`, mention it under `team-composer` and `sub-agent-coordinator`'s "Pairs well with" lists too). Treat as nice-to-have, not blocker.
+
 ### Semver — what counts as what
 
 - **MAJOR** (`X.0.0`): breaking changes to existing skills' triggers, output shapes, or contracts. Users would need to migrate.

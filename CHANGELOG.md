@@ -5,6 +5,62 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.2] — 2026-05-11
+
+Adherence-only documentation patch. The 3.6.0 release introduced the
+`wear-the-hat` skill but failed to update the root README's catalog
+sections — TL;DR count, "The shelf" table, and "Skill details" entry.
+The skill was registered in `plugin.json` / `marketplace.json` (so it
+auto-triggers on its description) but invisible to GitHub-repo readers
+browsing the README. This patch fills those gaps and adds a new-skill
+catalog requirement to `CLAUDE.md`'s release ritual so future skill
+additions don't miss the catalog updates.
+
+### Changed
+
+- **`README.md`** — TL;DR count corrected (fourteen → fifteen); new
+  row for `wear-the-hat` in "The shelf" table (between
+  `sub-agent-coordinator` and `skill-evaluator`); full skill-details
+  entry for `wear-the-hat` added with anchor, icon, **What it does** /
+  **Reach for it when** / **Pairs well with** / **Try it** sections;
+  "Pairs well with" lists in `team-composer`, `sub-agent-coordinator`,
+  and `coding-rules` entries updated to reference `wear-the-hat`
+  bidirectionally.
+
+- **`CLAUDE.md`** — release ritual expanded: when a release ADDS a
+  new skill, three additional root-README touches are required beyond
+  the standard 4-file version bump (TL;DR count + "The shelf" table +
+  "Skill details" section). Catches the exact failure mode that
+  affected 3.6.0.
+
+### Why
+
+A new skill registered in the plugin manifests will auto-trigger on
+its description (Claude reads frontmatter to decide whether to
+invoke), but human readers browsing the GitHub repo discover skills
+through the root README's catalog. Without catalog updates, the new
+skill is effectively invisible to the human-reader discovery path —
+Status section mentions persist only until the next release demotes
+them; the catalog is permanent.
+
+`CLAUDE.md` previously listed 4 files for a version bump but didn't
+flag the additional requirement when introducing a new skill. 3.6.0
+hit this trap; 3.6.2 closes it both by fixing 3.6.0's omission and
+by adding the rule to `CLAUDE.md` so future Claude sessions catch
+it before shipping.
+
+### Notes
+
+- **Adherence-only.** No behavior change to any skill — every skill's
+  triggers, contracts, and outputs are unchanged.
+- **Optional polish applied.** Adjacent skills' "Pairs well with"
+  lists (team-composer, sub-agent-coordinator, coding-rules) now
+  reference `wear-the-hat` bidirectionally. The wear-the-hat entry
+  already referenced these neighbors; now the neighbors reference
+  back.
+
+---
+
 ## [3.6.1] — 2026-05-11
 
 Adherence-only patch surfaced during pre-shipment `skill-evaluator`

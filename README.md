@@ -19,7 +19,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of fourteen specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of fifteen specialized skills in one go.
 - **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, founders who want their startup adversarially probed, anyone who wants the agent to know how *they* prefer to collaborate before the work starts, and anyone who wants to load one author's opinionated coding-discipline preamble at session start (read the caveat first).
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -51,6 +51,7 @@ Click a skill to jump to its details.
 |:---:|:---|:---|:---|
 | <img src="assets/icons/team-composer.svg" alt="" width="64" align="middle"/> | [`team-composer`](#team-composer) | Assemble the right virtual team and run a 3-round discussion that forces real disagreement. | You want multi-perspective planning or review with a conclusion you can act on. |
 | <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="64" align="middle"/> | [`sub-agent-coordinator`](#sub-agent-coordinator) | Orchestrate multi-agent work — briefing, coordination, and verification that don't drift. | You're kicking off a task bigger than fifteen minutes that's at least partially parallelizable. |
+| <img src="assets/icons/wear-the-hat.svg" alt="" width="64" align="middle"/> | [`wear-the-hat`](#wear-the-hat) | Pick one role from `team-composer`'s catalog and do the work in their voice — solo embodiment, no panel discussion. Auto-picks when you don't name a role; hands off to `team-composer` for multi-role tasks. | You want a specific lens (`@security_specialist`, `@dataviz_engineer`, `@accessibility_specialist`) applied to a task without convening a full panel. |
 | <img src="assets/icons/skill-evaluator.svg" alt="" width="64" align="middle"/> | [`skill-evaluator`](#skill-evaluator) | Audit a skill to see whether its rules actually land when Claude runs it. | You just wrote a skill, or one has been "mostly working" and you suspect a rule is being skipped. |
 | <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="64" align="middle"/> | [`tech-stack-recommendations`](#tech-stack-recommendations) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. | You're starting a new project, or picking one layer, and want a default instead of a neutral grid. |
 | <img src="assets/icons/handshake.svg" alt="" width="64" align="middle"/> | [`handshake`](#handshake) | A brief opt-in calibration ritual that shows you what's on file, then asks ≤4 high-leverage collaboration questions (and optionally ≤6 scoped project questions). Writes to the existing memory store. | You want the agent to know *how* you prefer to collaborate before it starts giving generic answers, or you want a transparent moment to see and correct what's been captured about you. |
@@ -112,6 +113,7 @@ team-composer ──▶ sub-agent-coordinator
 
 **Pairs well with.**
 - [`sub-agent-coordinator`](#sub-agent-coordinator) — Phase 6 delegates deliverable production through its patterns.
+- [`wear-the-hat`](#wear-the-hat) — when the task wants ONE specific lens applied, not a multi-role panel discussion. Inverse use case from this skill.
 - [`skill-evaluator`](#skill-evaluator) — audit team-composer (or any team-driven skill) for rules that get quietly skipped.
 - [`tech-stack-recommendations`](#tech-stack-recommendations) — when the architect role needs an opinionated stack to anchor the debate.
 - [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) — when the `@i18n_specialist` is on the team and the output needs to ship in multiple locales.
@@ -133,12 +135,34 @@ team-composer ──▶ sub-agent-coordinator
 
 **Pairs well with.**
 - [`team-composer`](#team-composer) — natural upstream: discussion finishes, deliverables fan out via coordinator patterns.
+- [`wear-the-hat`](#wear-the-hat) — sub-agent mode hands off a brief with `Role:` tag and persona context baked in; this skill's spawning protocol owns the rest.
 - [`skill-evaluator`](#skill-evaluator) — spawn evaluator sub-agents to stress-test other skills in parallel.
 
 **Try it.**
 - "Refactor all 14 React components from class to function — coordinate in parallel."
 - "Debug our flaky CI suite: spawn a researcher, a fixer, and a reviewer with clear briefs."
 - "After `team-composer` concludes, brief sub-agents to produce the per-role deliverables the conclusion assigned."
+
+---
+
+<a id="wear-the-hat"></a>
+
+### <img src="assets/icons/wear-the-hat.svg" alt="" width="48" align="middle"/> &nbsp;`wear-the-hat`
+
+**What it does.** Triggers on deliberate role-lens signals (explicit `@role` tags, embodiment phrases like "act as" or "wear the hat of", lens framings like "from the X perspective"), picks one role (explicit if named, auto-picked via a small keyword/verb table otherwise), loads only perspective + signature phrases from `team-composer`'s catalog (NOT the role's blind spots or biases), and executes the work — inline for short analytical responses, sub-agent mode for tasks hitting `sub-agent-coordinator`'s spawning signals. Four-outcome auto-pick: clean match, multi-candidate (asks user), multi-role task (offers `team-composer` handoff with explicit confirmation, never silent), or fallback default. Catalog stays in `team-composer/references/role-personas.md` — no parallel taxonomy.
+
+**Reach for it when.** You want one specific lens on a task — `@security_specialist` for an auth audit, `@dataviz_engineer` for a chart spec, `@accessibility_specialist` for a UI — without the panel ceremony of `team-composer`. Or you want a brief produced for a sub-agent with persona context baked in before handing off to `sub-agent-coordinator`.
+
+**Pairs well with.**
+- [`team-composer`](#team-composer) — owns the role catalog (`role-personas.md`). `wear-the-hat` consumes it. Multi-role tasks route here with explicit user confirmation.
+- [`sub-agent-coordinator`](#sub-agent-coordinator) — sub-agent mode produces a brief with `Role:` tag and persona context, then hands off to coordinator's protocol; no duplicate spawning logic.
+- [`coding-rules`](#coding-rules) — coding-task role embodiment composes naturally: `coding-rules` sets the engineering discipline; `wear-the-hat` applies the lens.
+- [`brand-workshop`](#brand-workshop) — pure brand-identity packages route to `brand-workshop`; `wear-the-hat` redirects.
+
+**Try it.**
+- "Audit `middleware/auth.ts` for missing CSRF guards as `@security_specialist`."
+- "Act as a data-viz engineer and review this chart spec."
+- "Wear the hat of the accessibility specialist for this UI review."
 
 ---
 
@@ -213,6 +237,7 @@ team-composer ──▶ sub-agent-coordinator
 
 **Pairs well with.**
 - [`skill-evaluator`](#skill-evaluator) — for evaluating rule changes. The skill's own `CLAUDE.md` enforces "no inline grading" — rule audits route to a fresh-context split-role harness to remove author bias.
+- [`wear-the-hat`](#wear-the-hat) — coding-task role embodiment composes naturally: this skill sets the engineering discipline; `wear-the-hat` applies the specific lens (`@security_specialist`, `@dataviz_engineer`, etc.) for the task at hand.
 - Project-local `CLAUDE.md` / `AGENTS.md` — per BOOTSTRAP's priority order (User > Project config > Agent context > Playbook), the project's own instructions always win over rules in this skill.
 - `superpowers:*` *(if installed)* — overlap exists (TDD, brainstorming, verification-before-completion). Explicit user invocations win; otherwise this skill's BOOTSTRAP rules are the operating frame.
 
@@ -419,7 +444,9 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`3.6.1` is the current release. Adherence-only patch from a pre-shipment `skill-evaluator` audit of the new `wear-the-hat` skill. Adds a **Role name authority** rule to Phase 2 (Load persona): use the exact role name from `team-composer/references/role-personas.md`; do not paraphrase or invent variants. Includes a graceful-degradation fallback when the auto-pick heuristic returns a role not present in the catalog. No other behavior change. All other audit findings across the three skills audited (`wear-the-hat`, `sub-agent-coordinator`, `team-composer`) classified as test-design issues, not skill issues. Overall pass rate 66/73 assertions (90.4%).
+`3.6.2` is the current release. Adherence-only documentation patch. The 3.6.0 release introduced the `wear-the-hat` skill but failed to update the root README's catalog sections (TL;DR count, "The shelf" table, "Skill details" entry) — the skill was registered in the plugin manifests but invisible to GitHub readers browsing the catalog. This patch fills those gaps and adds a new-skill catalog requirement to `CLAUDE.md`'s release ritual so future skill additions don't miss the catalog updates. Adjacent skills' "Pairs well with" lists now reference `wear-the-hat` bidirectionally.
+
+Earlier in v3.6.1: Adherence-only patch from a pre-shipment `skill-evaluator` audit of the new `wear-the-hat` skill. Adds a **Role name authority** rule to Phase 2 (Load persona): use the exact role name from `team-composer/references/role-personas.md`; do not paraphrase or invent variants. Includes a graceful-degradation fallback when the auto-pick heuristic returns a role not present in the catalog. No other behavior change. All other audit findings across the three skills audited (`wear-the-hat`, `sub-agent-coordinator`, `team-composer`) classified as test-design issues, not skill issues. Overall pass rate 66/73 assertions (90.4%).
 
 Earlier in v3.6.0: Consolidates sub-agent brief conventions into `sub-agent-coordinator` as the canonical home — three orthogonal axes for model selection (capability tier / reasoning effort / speed lane) with default mapping for coding work and generic fallback for non-coding; a Picking the Role section that reuses `team-composer`'s catalog as shared vocabulary; and a `BLOCKED_SCOPE_EXPANDED` status that lets sub-agents escalate scope expansion without breaking the hard no-nested-spawning rule. Adds the **`wear-the-hat`** skill for single-role embodiment — when you want one specific lens (`@security_specialist`, `@dataviz_engineer`, etc.) applied to a task without convening a multi-role panel. Updates `coding-rules` (Companion skills callout, BOOTSTRAP routing) and `team-composer` (Phase 6 Model Routing retires the "future enhancement" note). Additive only — no breaking changes.
 
@@ -433,7 +460,7 @@ Earlier in v3.2.0: refined the `handshake` skill following its pre-shipment audi
 
 Earlier in v3.1.0: added the `handshake` skill — a brief, opt-in collaboration calibration ritual that runs before the real work (slash-command-only at v1, two-mode design with core calibration + optional project overlay, hard never-ask list, single-user contract, capability-gated integration with the existing two-tier memory store).
 
-Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.6.1 + v3.6.0 + v3.5.1 + v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
+Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.6.2 + v3.6.1 + v3.6.0 + v3.5.1 + v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
