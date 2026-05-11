@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="ai-eval-review icon: a 3+3+1 grid of eval-review blocks with cohort and adversarial blocks accented and a gap marker on ground-truth" style="image-rendering: pixelated;">
+  <title>ai-eval-review</title>
+  <!-- Top row: 3 cells (Blocks 1-3) -->
+  <g fill="#c9b58a">
+    <rect x="4"  y="4" width="7" height="7"/>
+    <rect x="13" y="4" width="7" height="7"/>
+    <rect x="22" y="4" width="6" height="7"/>
+  </g>
+  <!-- Middle row: 3 cells (Blocks 4-6) — block 5 (cohorts) accented teal, block 6 (adversarial) accented teal -->
+  <rect x="4" y="13" width="7" height="7" fill="#c9b58a"/>
+  <rect x="13" y="13" width="7" height="7" fill="#0e7490"/>
+  <rect x="22" y="13" width="6" height="7" fill="#0e7490"/>
+  <!-- Bottom row: 1 wide cell (Block 7 — drift/monitoring) — neutral with teal stripe -->
+  <rect x="4" y="22" width="24" height="6" fill="#c9b58a"/>
+  <rect x="4" y="22" width="24" height="2" fill="#0e7490"/>
+  <!-- Gap marker on block 2 (top middle): red "!" — ground truth gap, common -->
+  <g fill="#b91c1c">
+    <rect x="15" y="6" width="3" height="2"/>
+    <rect x="15" y="9" width="3" height="1"/>
+  </g>
+  <!-- Grid lines (ink) -->
+  <g fill="#1f2937">
+    <!-- Outer border -->
+    <rect x="2" y="2" width="28" height="2"/>
+    <rect x="2" y="28" width="28" height="2"/>
+    <rect x="2" y="2" width="2" height="28"/>
+    <rect x="28" y="2" width="2" height="28"/>
+    <!-- Vertical dividers (top + middle rows) -->
+    <rect x="11" y="2" width="2" height="20"/>
+    <rect x="20" y="2" width="2" height="20"/>
+    <!-- Horizontal dividers -->
+    <rect x="2" y="11" width="28" height="2"/>
+    <rect x="2" y="20" width="28" height="2"/>
+  </g>
+</svg>

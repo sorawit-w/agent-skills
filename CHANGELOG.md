@@ -5,6 +5,250 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.8.0] — 2026-05-11
+
+Adds the **`ai-eval-review`** skill — sibling to `ai-ux-review`, shipped
+the same day. Eval-design-completeness review for AI products: seven
+elicitation blocks covering necessity → ground truth → offline eval →
+online metrics → cohorts + disparate impact → adversarial + robustness
+→ drift + monitoring. Six mandatory cross-block checks plus a regulatory
+cross-cutting lens (EU AI Act / FDA SaMD / FTC). Produces editable
+Markdown plus a self-contained HTML visualization (3+3+1 card grid in
+teal — visually distinct from `ai-ux-review`'s warm orange when both
+reviews are open). Authored from first principles; informed by HELM
+(Apache 2.0), Anthropic's claude-cookbooks (MIT), OpenAI Evals (MIT),
+and EU AI Act / FTC / FDA SaMD regulatory texts — none reproduced
+verbatim.
+
+### Added
+
+- **`skills/ai-eval-review/SKILL.md`** — full skill with frontmatter,
+  Phase 0 intake (resolves `docs/ai-ux/` shared folder; reads
+  `ai-ux-review.md` Block 7 gaps and seeds Block 1 from them; four
+  intake facts), Phase 1 block-by-block elicitation (`@data_scientist` +
+  `@ai_system_architect` + `@ai_safety_specialist` + `@senior_product_manager`
+  + `@legal_compliance_advisor`), Phase 2 cross-block stress test with
+  regulatory cross-cutting lens, Phase 3 render-and-ship, update mode,
+  quality checklist.
+- **`skills/ai-eval-review/references/blocks/01-07*.md`** — seven block
+  reference files. Each carries the block's definition, primary probe,
+  secondary probes per AI type (LLM-specific, agentic-specific,
+  classical-ML), acceptance criteria, common gap patterns, and a worked
+  example (continuing the LLM email-drafting product from `ai-ux-review`
+  for narrative continuity). All authored from first principles —
+  zero verbatim content from any cited influence.
+- **`skills/ai-eval-review/templates/ai-eval-review.md`** — starter
+  Markdown template with seven H2 sections, Block 6's adversarial table
+  (failure mode × severity × eval set × resistance rate), Gap Summary
+  placeholder.
+- **`skills/ai-eval-review/templates/ai-eval-review.html`** — single
+  self-contained HTML. Mirrors `ai-ux-review`'s 3+3+1 card grid for
+  visual parity; teal `--ai-eval-accent` (vs. ai-ux-review's warm
+  orange) signals sibling-not-twin relationship. Block 6 includes an
+  inline adversarial table. CSS paged media for clean PDF print, zero
+  network dependencies, no localStorage.
+- **`skills/ai-eval-review/README.md`** — user-facing README per the
+  14-section convention. Explicit "Influences" section names HELM,
+  Anthropic claude-cookbooks, OpenAI Evals, EU AI Act, FTC, FDA SaMD
+  with their licenses and the copyright-vs-derivative-work reasoning.
+- **`assets/ai-eval-review-li.svg`** — LinkedIn banner (1200×627). Same
+  three-card composition as `ai-ux-review`'s banner for visual sibling
+  parity, but content is eval-specific (dashboard with `?` chips on the
+  left, eval-block walk in the middle with Blocks 5+6 accented teal
+  under a "RESPONSIBLE-AI" tag, review artifact on the right).
+- **`assets/ai-eval-review-x.svg`** — X/Twitter banner (1600×467),
+  adapted to wide aspect.
+- **`assets/icons/ai-eval-review.svg`** — 32×32 icon. Same 3+3+1 grid
+  structure as `ai-ux-review`'s icon but with Blocks 5+6 accented teal
+  and Block 2 carrying the gap marker (ground-truth quality, the most
+  common eval gap).
+- **`skills/ai-ux-review/SKILL.md`** + **`skills/ai-ux-review/README.md`**
+  — bidirectional cross-link to `ai-eval-review` added to "Cross-Skill
+  Integration" and "Related skills" sections respectively (mirrors the
+  forward link this skill carries).
+- **`.claude-plugin/plugin.json`** + **`marketplace.json`** — new skill
+  registered, version bumped to 3.8.0, six new keywords (`eval`,
+  `evaluation`, `mlops`, `fairness`, `drift`, `ground-truth`).
+- **`README.md`** — TL;DR skill count incremented (sixteen → seventeen);
+  new row in "The shelf" table immediately after `ai-ux-review`; full
+  skill-details entry with anchor, icon, what-it-does, reach-for-it-when,
+  pairs-well-with, try-it. Status section promotes 3.8.0 to the current
+  line and demotes 3.7.0 to "Earlier in v3.7.0."
+
+### Changed
+
+- **`skills/ai-ux-review/SKILL.md`** + **`README.md`** — both files'
+  cross-skill-integration / related-skills sections now reference
+  `ai-eval-review` as the sibling skill. No other changes to ai-ux-review's
+  behavior, frontmatter, or trigger phrases.
+
+### Why
+
+The shelf now has two skills covering AI products: `ai-ux-review` for the
+human-AI design surface (was the experience intentionally designed?) and
+`ai-eval-review` for the measurement layer (do we have signal for whether
+the design works?). The three-part skill-separation test held: unique
+structure (eval-specific blocks), distinct deliverable (eval review
+artifact), new elicitation pattern (eval-design-completeness via probes
+and acceptance criteria, different from ai-ux-review's design-completeness).
+
+The team-composer discussion that scoped this skill (10 roles, three
+rounds, full conclusion) converged on "eval-design-completeness, not
+engineering implementation" — the skill names what to measure and where
+the gaps are, but does not write eval code, label data, or configure
+monitoring infrastructure. That layer lives in HELM, Anthropic's
+claude-cookbooks, OpenAI Evals, W&B, Evidently, or the team's eval
+platform.
+
+Block 6 is the boundary block: `ai-ux-review` Block 6 (Output Integrity)
+asks *was prompt-injection mitigation designed?*; `ai-eval-review` Block
+6 (Adversarial & Robustness) asks *is prompt-injection resistance
+measured?*. The Phase 2 cross-block check explicitly verifies the boundary.
+
+Block 5 (Cohort breakdown & disparate impact) carries the responsible-AI
+weight as a first-class block — mirroring `ai-ux-review`'s decision to
+make Block 6 (Output Integrity) first-class rather than relegate it to a
+sub-bullet. Both choices come from the same design principle: under-served
+concerns should be elevated, not folded.
+
+Regulatory rigor (EU AI Act high-risk, FDA SaMD, FTC AI guidance) lives
+as a cross-cutting lens applied in Phase 2, not as its own block. Treating
+regulation as a lens forces it to influence eval rigor where it actually
+applies (Blocks 2, 4, 5, 6, 7); treating it as a block would compress it
+into a checklist and miss the cross-cutting nature.
+
+### Notes
+
+- **Pre-shipment audit ritual still owed.** Same as `ai-ux-review` —
+  run `skill-evaluator` and `skill-creator`'s description-check on this
+  skill's `SKILL.md` from a Mac terminal before commit. Expected
+  categories of audit findings: trigger overlap with `ai-ux-review` (the
+  "this skill assumes the UX layer is reviewed" boundary clause should
+  fire), Block 6 specificity across AI types (LLM-specific probes
+  dominate the reference file; classical-ML and agentic adaptations are
+  shorter), regulatory cross-check's edge cases.
+- **Block 1 ≠ Block 4 distinction is load-bearing.** The single most
+  common AI eval failure is conflating the success target (Block 1) with
+  the production metric (Block 4). The skill's Phase 2 cross-block check
+  #1 verifies the proxy-vs-direct relationship is named honestly.
+- **Block 2's label-quality push-back may surprise builders.** Most AI
+  teams treat labels as a solved problem. The skill is designed to surface
+  label-quality debt teams haven't noticed. Expect this block to generate
+  more `[Gap — …]` markers than any other on first run.
+- **No `kit-manifest.json` integration yet.** This skill ships standalone
+  and via sibling composition with `ai-ux-review`. Future enhancement
+  candidate: integrate into the `startup-launch-kit` orchestrator's
+  `kit-manifest.json` flow if AI-product startups want both reviews as
+  part of the pipeline.
+
+## [3.7.0] — 2026-05-11
+
+Adds the **`ai-ux-review`** skill — design-completeness review for AI
+products and features. Seven elicitation blocks (necessity → mental model →
+trust → feedback → errors → output integrity → success), six mandatory
+cross-block checks, and a Gap Summary that names the unmade design
+decisions with cheapest-experiment-to-resolve. Produces editable Markdown
+plus a self-contained HTML visualization. Authored from first principles;
+inspired by Google's [People + AI Guidebook](https://pair.withgoogle.com/guidebook/)
+(CC BY-NC-SA 4.0) but not a derivative work — no Guidebook prose,
+worksheets, or pattern names reproduced.
+
+### Added
+
+- **`skills/ai-ux-review/SKILL.md`** — full skill with frontmatter, intake
+  phase, seven-block elicitation, cross-block stress test, render-and-ship
+  phase, update mode, quality checklist, and cross-skill integration. The
+  `[Gap — …]` marker is first-class and rolls up into Phase 2's Gap
+  Summary.
+- **`skills/ai-ux-review/references/blocks/01-07.md`** — seven block
+  reference files. Each carries the block's definition, primary probe,
+  secondary probes, acceptance criteria, common gap patterns, and a worked
+  example (LLM email drafting throughout, for narrative coherence). All
+  authored in the skill's own voice — no PAIR Guidebook text imported.
+- **`skills/ai-ux-review/templates/ai-ux-review.md`** — starter Markdown
+  template with the seven H2 sections and Gap Summary placeholder.
+- **`skills/ai-ux-review/templates/ai-ux-review.html`** — single
+  self-contained HTML template. Renders blocks as cards in a 3+3+1 grid,
+  `[GAP]` chips on blocks with unresolved decisions, Gap Summary footer.
+  CSS paged media for clean PDF print, brand-token-aware via
+  `--ai-ux-accent` custom property, zero network dependencies, no
+  localStorage.
+- **`skills/ai-ux-review/README.md`** — user-facing README per the 14-section
+  repo convention, with an explicit "Influences" section laying out the
+  PAIR attribution and the copyright-vs-license reasoning for why this
+  skill is not a derivative work.
+- **`assets/ai-ux-review-li.svg`** — LinkedIn banner (1200×627), pixel-art,
+  scanlined warm paper, three-card composition (AI feature spec →
+  seven-block walk with Block 6 accented as the gen-AI layer → review
+  artifact with gap chips), chapter ribbon below.
+- **`assets/ai-ux-review-x.svg`** — X/Twitter banner (1600×467), same
+  composition adapted for the wider aspect ratio.
+- **`assets/icons/ai-ux-review.svg`** — 32×32 icon: a 3+3+1 grid of blocks
+  with Block 6 in the warm accent (gen-AI integrity layer) and a red gap
+  marker on Block 2.
+- **`.claude-plugin/plugin.json`** + **`marketplace.json`** — new skill
+  registered, version bumped to 3.7.0, five new keywords (`ai-ux`,
+  `human-ai`, `design-review`, `hallucination`, `responsible-ai`).
+- **`README.md`** — TL;DR skill count incremented (fifteen → sixteen);
+  new row in "The shelf" table next to `skill-evaluator` and
+  `tech-stack-recommendations`; full skill-details entry with anchor,
+  icon, what-it-does, reach-for-it-when, pairs-well-with, try-it. Status
+  section promotes 3.7.0 to the current line and demotes 3.6.3 to
+  "Earlier in v3.6.3."
+
+### Changed
+
+- None. Existing skills' SKILL.md, README, and trigger phrases unchanged.
+  All other touches are additive registrations.
+
+### Why
+
+The shelf had no AI-product UX review skill. The closest existing tool
+was `team-composer` with `@ux_researcher` + `@ai_safety_specialist` — a
+discussion mode, not a persistent artifact. The decision to add a
+standalone skill rather than extend `team-composer` followed the repo's
+three-part test:
+
+1. **Unique structure** — block-by-block elicitation with acceptance
+   criteria and explicit gap markers, not multi-role debate.
+2. **Distinct deliverable** — a persistent Markdown + HTML artifact the
+   builder can edit and share, not a transcript.
+3. **New elicitation pattern** — design-completeness questions ("have
+   you designed for X?") differ structurally from `validation-canvas`'s
+   declarative belief capture ("here's what I think is true").
+
+The skill is inspired by Google's PAIR Guidebook (CC BY-NC-SA 4.0). The
+license analysis (see `ai-ux-review/README.md` → Influences) confirms
+copyright protects expression, not ideas — using general AI UX concepts
+in our own voice with our own elicitation flow is not a derivative work.
+No PAIR prose, worksheets, illustrations, or pattern names are
+reproduced anywhere in the skill or its references.
+
+Block 6 (Output Integrity) is the modernization layer that differentiates
+this skill from a re-housing of pre-2022 frameworks. It covers
+hallucination handling, output verifiability, provenance and citation,
+prompt-injection exposure, multi-turn drift, and agent autonomy levels —
+the gen-AI surface that PAIR's 2021 framework predates.
+
+### Notes
+
+- **Pre-shipment audit ritual still owed.** The skill ships with locked
+  frontmatter and full body, but `skill-evaluator` and `skill-creator`'s
+  description-check have not been run on the new `SKILL.md`. Run them
+  before committing (the sandbox can't dispatch fresh-context subagents
+  for this kind of audit). Expected categories of audit findings:
+  trigger-phrase overlap with `validation-canvas` for AI startups (the
+  explicit boundary clause should fire), Block 6 specificity for
+  non-LLM AI types, output-path resolution under the kit orchestrator.
+- **Future companion skill candidate.** `ai-eval-rubric` is named in
+  Block 7's "eval gap to companion" field as the natural place for the
+  engineering eval layer (data labeling, eval code, online metrics
+  setup, drift monitoring). Not built; not promised.
+- **Block headings are load-bearing.** `## Block 1 — …` through
+  `## Block 7 — …` and `## Gap Summary` are the parse anchors for any
+  future companion skill. Adding or renumbering blocks is a MINOR bump
+  minimum.
+
 ## [3.6.3] — 2026-05-11
 
 Absorb harness-engineering vocabulary into `CLAUDE.md` and existing skills.

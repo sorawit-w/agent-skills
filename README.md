@@ -19,7 +19,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of fifteen specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of seventeen specialized skills in one go.
 - **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, founders who want their startup adversarially probed, anyone who wants the agent to know how *they* prefer to collaborate before the work starts, and anyone who wants to load one author's opinionated coding-discipline preamble at session start (read the caveat first).
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -64,6 +64,8 @@ Click a skill to jump to its details.
 | <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](#startup-grill) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability with optional interactive defense. Includes an iteration-evidence check. | You want your idea / deck / canvas probed for what would actually kill it — not "thoughts to consider," a verdict you can act on. |
 | <img src="assets/icons/startup-launch-kit.svg" alt="" width="64" align="middle"/> | [`startup-launch-kit`](#startup-launch-kit) | Opt-in umbrella orchestrator that sequences the five-step startup pipeline (brand → canvas → tests → pitch → grill) with shared state via `docs/startup-kit/kit-manifest.json`. Never bypasses gates; every individual skill stays independently invocable. | You're starting a new idea from scratch and want end-to-end coordination, OR you ran a few steps manually and want to absorb them into an orchestrated resume. |
 | <img src="assets/icons/gtm.svg" alt="" width="64" align="middle"/> | [`gtm`](#gtm) **🚧 BETA** | Phased go-to-market for startup products. Builds a GTM playbook from upstream artifacts, produces multi-channel content, schedules cadenced tasks, enforces compliance, emits handoff events. Trust ramp P1 → P2 → P3. Project-local `.gtm/`. Architectural kill switch via HALT file. | The pitch deck is locked and you need to actually get users — multi-channel marketing motion with state, scheduling, compliance gates, and a kill switch you can trust. **Beta** — evals are structural-only; not yet dogfooded on a real founder workflow. |
+| <img src="assets/icons/ai-ux-review.svg" alt="" width="64" align="middle"/> | [`ai-ux-review`](#ai-ux-review) | Design-completeness review for AI products. Seven blocks (necessity → mental model → trust → feedback → errors → output integrity → success), six cross-block checks, explicit `[Gap — …]` markers. Ships MD + self-contained HTML. | You're about to ship an AI feature (or already did) and want a structured pre-launch review — not a vibe check, a forced walk through the decisions that quietly get skipped. Especially the gen-AI integrity surface (hallucination, provenance, prompt injection, agent autonomy). |
+| <img src="assets/icons/ai-eval-review.svg" alt="" width="64" align="middle"/> | [`ai-eval-review`](#ai-eval-review) | Eval-design-completeness review for AI products — sibling to `ai-ux-review`. Seven blocks (necessity & success → ground truth → offline eval → online metrics → cohorts + disparate impact → adversarial + robustness → drift + monitoring), six cross-block checks plus regulatory lens. Ships MD + self-contained HTML. | You want a structured eval review for an AI product — not "we ran some tests," a forced walk through ground-truth quality, cohort breakdown, adversarial coverage, and drift detection. Especially when `ai-ux-review` Block 7 surfaced eval gaps that need to be made concrete. |
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
@@ -119,6 +121,7 @@ team-composer ──▶ sub-agent-coordinator
 - [`skill-evaluator`](#skill-evaluator) — audit team-composer (or any team-driven skill) for rules that get quietly skipped.
 - [`tech-stack-recommendations`](#tech-stack-recommendations) — when the architect role needs an opinionated stack to anchor the debate.
 - [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) — when the `@i18n_specialist` is on the team and the output needs to ship in multiple locales.
+- [`ai-ux-review`](#ai-ux-review) / [`ai-eval-review`](#ai-eval-review) — discussion-grade alternative inverse. Use `team-composer` with `@ux_researcher` + `@ai_safety_specialist` (or `@data_scientist` + `@ai_safety_specialist` for eval) when you want a *narrow one-block discussion* rather than a full structured review artifact. Use the dedicated review skills when you want the persistent MD + HTML output.
 
 **Try it.**
 - "Bring a team together to review this mobile auth architecture before we ship."
@@ -306,6 +309,8 @@ team-composer ──▶ sub-agent-coordinator
 - [`pitch-deck`](#pitch-deck) — two steps downstream. Reads canvas headings to seed slides 2, 3, 6 and cross-checks the Ask against Stress Tests.
 - [`team-composer`](#team-composer) — when a block is contested, kick it to a full multi-role team for a focused session.
 - [`startup-grill`](#startup-grill) — last step. Reads Stress Tests and un-relieved Pains as direct grilling ammunition.
+- [`ai-ux-review`](#ai-ux-review) — for AI-flavored startups, the natural next step after the canvas is settled. This skill reads `validation-canvas.md` if present and skips business-model questions, focusing purely on the human-AI design layer.
+- [`ai-eval-review`](#ai-eval-review) — sibling of `ai-ux-review`. When the AI product's eval rigor is the load-bearing question (regulated domain, classification with disparate-impact risk, drift-sensitive deployment), this is the measurement-side review.
 
 **Try it.**
 - "Build a validation canvas for my AI code-review tool."
@@ -327,6 +332,7 @@ team-composer ──▶ sub-agent-coordinator
 - [`pitch-deck`](#pitch-deck) — downstream (heavy gate). Pitch refuses to ship without populated `## Results` for top-3 hypotheses.
 - [`startup-grill`](#startup-grill) — last step. Reads Results to check for iteration evidence.
 - [`team-composer`](#team-composer) — discussion-grade alternative for multi-role validation strategy.
+- [`ai-ux-review`](#ai-ux-review) / [`ai-eval-review`](#ai-eval-review) — composition. When the Gap Summary from either AI-review skill surfaces an *assumption that needs testing* (not just deciding — e.g., "we assume voice-sample-based prompting matches user voice well enough"), hand it here to convert into a falsifiable hypothesis with success / kill criteria.
 
 **Try it.**
 - "I just shipped my validation canvas — what should I test first?"
@@ -433,6 +439,51 @@ team-composer ──▶ sub-agent-coordinator
 
 ---
 
+<a id="ai-ux-review"></a>
+
+### <img src="assets/icons/ai-ux-review.svg" alt="" width="48" align="middle"/> &nbsp;`ai-ux-review`
+
+**What it does.** Walks an AI product or feature through seven design-completeness blocks — necessity check (why AI here vs. a deterministic alternative), mental model, trust calibration, feedback + control, errors + graceful failure, output integrity (hallucination, provenance, prompt injection, multi-turn drift, agent autonomy — the gen-AI surface), and success + evaluation. Roles active: `@ux_researcher`, `@ai_safety_specialist`, `@lead_behavioral_scientist`, `@senior_product_designer`, `@senior_product_manager`. Specificity gate rejects category answers; gaps are first-class outputs marked `[Gap — …]`. Six mandatory cross-block checks. Ships `ai-ux-review.md` + a self-contained `ai-ux-review.html` (3+3+1 card grid with `[GAP]` chips, Gap Summary footer). Reads `validation-canvas.md` if present and skips business-model questions; reads `<brand-root>/DESIGN.md` for tokens.
+
+**Reach for it when.** You're about to ship an AI feature and want a structured pre-launch design review — or you already shipped, and fluent-but-wrong outputs are surfacing. Especially when you suspect the output-integrity surface (hallucination, provenance, prompt injection, agent autonomy) was underdesigned. Or when a cofounder asked "how do we know this is responsible AI?" and the answer isn't yet structured enough to defend.
+
+**Pairs well with.**
+- [`validation-canvas`](#validation-canvas) — upstream for AI startups. When present, this skill skips business-model questions and audits UX execution only.
+- [`brand-workshop`](#brand-workshop) — upstream when a brand identity exists. This skill reads `DESIGN.md` to style the HTML output.
+- [`team-composer`](#team-composer) — alternative when the request is one narrow block (e.g., "let's debate trust calibration") rather than a full review. Discussion-grade, no artifact.
+- [`riskiest-assumption-test`](#riskiest-assumption-test) — composition. If the Gap Summary surfaces design assumptions that need *testing* (not just deciding), hand the gaps to RAT.
+- [`startup-grill`](#startup-grill) — adjacent. Adversarial pre-mortem with a verdict. Different mode from this skill's cooperative gap detection.
+
+**Try it.**
+- "Review the UX of our LLM email-draft feature before launch — focus on trust and output integrity."
+- "We just shipped an agentic feature and fluent-but-wrong outputs are surfacing. Walk us through the review."
+- "Review the AI feature in our app — `validation-canvas.md` is already in `docs/canvas/`; skip the business-model questions and audit the UX layer."
+
+---
+
+<a id="ai-eval-review"></a>
+
+### <img src="assets/icons/ai-eval-review.svg" alt="" width="48" align="middle"/> &nbsp;`ai-eval-review`
+
+**What it does.** Walks the **eval layer** of an AI product through seven design-completeness blocks — necessity & success definition (what does "good enough to ship" mean, what's the offline criterion), ground truth & label quality (where do labels come from, inter-annotator agreement, coverage gaps), offline eval design (eval set composition, distribution alignment, leakage protection, statistical power, baseline), online metrics & signal (success-tracking metric, failure signal independent of engagement, counter-metrics, per-cohort visibility), cohort breakdown & disparate impact (per-segment performance, fairness, harm distribution — the responsible-AI block), adversarial & robustness (red-team coverage, prompt injection, OOD, jailbreak resistance, distribution shift), and drift detection & monitoring (model / behavior / data drift, alerting, runbook). Roles active: `@data_scientist`, `@ai_system_architect`, `@ai_safety_specialist`, `@senior_product_manager`, `@legal_compliance_advisor`. Six mandatory cross-block checks plus a regulatory cross-cutting lens (EU AI Act / FDA SaMD / FTC). Specificity gate rejects "we measure accuracy" answers. Ships `ai-eval-review.md` + a self-contained `ai-eval-review.html` (3+3+1 card grid with adversarial-eval table in Block 6, gap chips, Gap Summary footer; teal accent — sibling to `ai-ux-review`'s warm orange). When `ai-ux-review.md` exists, reads its Block 7 (Success & Evaluation) gaps and seeds Block 1 here from them.
+
+**Reach for it when.** You want a structured eval review for an AI product — pre-launch rigor check, post-launch eval gap audit, or follow-up to an `ai-ux-review` run where Block 7 surfaced eval-side gaps. Especially when the team treats labels as solved (Block 2 will surface debt), engagement as the success metric (Block 4's failure-signal check catches this), or aggregate accuracy as enough (Block 5's cohort breakdown surfaces the cases hidden in the mean). Also when regulatory context applies (EU AI Act high-risk, FDA SaMD, FTC-adjacent) and eval rigor needs to be proportional to risk class.
+
+**Pairs well with.**
+- [`ai-ux-review`](#ai-ux-review) — **sibling skill.** Same shape, same elicitation pattern, different subject. Run both for a complete AI product review.
+- [`validation-canvas`](#validation-canvas) — upstream for AI startups. Block 5 (Cohort breakdown) reads Customer Segments.
+- [`brand-workshop`](#brand-workshop) — upstream when a brand exists. HTML output styled from `DESIGN.md`.
+- [`team-composer`](#team-composer) — alternative for one-block discussions (e.g., "let's debate ground-truth labeling strategy") rather than a full review artifact.
+- [`riskiest-assumption-test`](#riskiest-assumption-test) — composition. Gap Summary entries that are *assumptions about evals* (e.g., "we assume single-annotator labels are accurate enough") become RAT hypotheses.
+- [`startup-grill`](#startup-grill) — adjacent. Adversarial pre-mortem with verdict; different mode from this skill's cooperative gap detection.
+
+**Try it.**
+- "Review the eval setup for our classification model before launch — push hard on ground truth and cohort breakdown."
+- "We have `ai-ux-review.md` with Block 7 gaps for our LLM feature. Walk through the eval review next, seeded from those gaps."
+- "Eval review for our medical-imaging classifier — we're FDA SaMD class II, so apply regulatory rigor across Blocks 2, 5, and 6."
+
+---
+
 ## Design principles
 
 These aren't rules for contributors — they're the taste I'm trying to keep on the shelf.
@@ -446,7 +497,11 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`3.6.3` is the current release. Doc-only patch absorbing **harness engineering** vocabulary into `CLAUDE.md` and existing skills. No new skill, no rule changes — names the discipline that skill authoring in this repo was already doing partly by instinct (context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline), and points at `coding-rules` as the canonical implementation. Adds Design Principle 6 to `CLAUDE.md` ("Observable feedback loops over aspirational prose," with a reactive-constraint corollary), a "Harness lens" audit section to `skill-evaluator`, framing paragraphs to `sub-agent-coordinator` and `team-composer` Phase 6.6, and an `AGENTS.md` cross-vendor pointer to `CLAUDE.md`. An earlier draft added a `progress.md` continuity log + slash commands; both were removed when review confirmed `coding-rules`' `.ai/memory.log` + `.ai/STATUS.md` + session-start hooks are the sharper, working system.
+`3.8.0` is the current release. Adds the **`ai-eval-review`** skill — eval-design-completeness review for AI products, sibling to `ai-ux-review` (which shipped in 3.7.0). Seven elicitation blocks (necessity & success → ground truth → offline eval → online metrics → cohorts + disparate impact → adversarial + robustness → drift + monitoring), six mandatory cross-block checks plus a regulatory cross-cutting lens (EU AI Act / FDA SaMD / FTC AI guidance). Ships editable Markdown plus a self-contained HTML visualization (3+3+1 card grid in teal, sibling tone to `ai-ux-review`'s warm orange; Block 6 includes an adversarial-eval table). When `ai-ux-review.md` exists, reads Block 7 (Success & Evaluation) gaps and seeds Block 1 here from them — the two skills compose cleanly via `docs/ai-ux/`. Authored from first principles; informed by [HELM](https://github.com/stanford-crfm/helm) (Apache 2.0), [Anthropic's claude-cookbooks](https://github.com/anthropics/anthropic-cookbook) (MIT), [OpenAI Evals](https://github.com/openai/evals) (MIT), EU AI Act, FTC AI guidance, FDA SaMD eval expectations — none reproduced verbatim. Cross-link added bidirectionally to `ai-ux-review`. No breaking changes — additive only.
+
+Earlier in v3.7.0: Added the **`ai-ux-review`** skill — design-completeness review for AI products. Seven elicitation blocks (necessity → mental model → trust → feedback → errors → output integrity → success), six mandatory cross-block checks, explicit `[Gap — …]` markers as first-class outputs. Ships editable Markdown plus a self-contained HTML visualization (3+3+1 card grid with `[GAP]` chips and Gap Summary footer). Block 6 (Output Integrity) is the gen-AI modernization layer — hallucination handling, output verifiability, provenance + citation, prompt-injection exposure, multi-turn drift, agent-autonomy levels — that pre-2022 frameworks under-cover. Inspired by Google's [People + AI Guidebook](https://pair.withgoogle.com/guidebook/) (CC BY-NC-SA 4.0) but **not a derivative work** — authored from first principles in its own voice; no Guidebook prose, worksheets, illustrations, or pattern names reproduced. See the skill's README → Influences for the full copyright-vs-license reasoning. Reads `validation-canvas.md` if present and skips business-model questions; reads `<brand-root>/DESIGN.md` for tokens.
+
+Earlier in v3.6.3: Doc-only patch absorbing **harness engineering** vocabulary into `CLAUDE.md` and existing skills. No new skill, no rule changes — names the discipline that skill authoring in this repo was already doing partly by instinct (context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline), and points at `coding-rules` as the canonical implementation. Adds Design Principle 6 to `CLAUDE.md` ("Observable feedback loops over aspirational prose," with a reactive-constraint corollary), a "Harness lens" audit section to `skill-evaluator`, framing paragraphs to `sub-agent-coordinator` and `team-composer` Phase 6.6, and an `AGENTS.md` cross-vendor pointer to `CLAUDE.md`. An earlier draft added a `progress.md` continuity log + slash commands; both were removed when review confirmed `coding-rules`' `.ai/memory.log` + `.ai/STATUS.md` + session-start hooks are the sharper, working system.
 
 Earlier in v3.6.2: Adherence-only documentation patch. The 3.6.0 release introduced the `wear-the-hat` skill but failed to update the root README's catalog sections (TL;DR count, "The shelf" table, "Skill details" entry) — the skill was registered in the plugin manifests but invisible to GitHub readers browsing the catalog. This patch fills those gaps and adds a new-skill catalog requirement to `CLAUDE.md`'s release ritual so future skill additions don't miss the catalog updates. Adjacent skills' "Pairs well with" lists now reference `wear-the-hat` bidirectionally.
 
@@ -464,7 +519,7 @@ Earlier in v3.2.0: refined the `handshake` skill following its pre-shipment audi
 
 Earlier in v3.1.0: added the `handshake` skill — a brief, opt-in collaboration calibration ritual that runs before the real work (slash-command-only at v1, two-mode design with core calibration + optional project overlay, hard never-ask list, single-user contract, capability-gated integration with the existing two-tier memory store).
 
-Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.6.3 + v3.6.2 + v3.6.1 + v3.6.0 + v3.5.1 + v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
+Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.8.0 + v3.7.0 + v3.6.3 + v3.6.2 + v3.6.1 + v3.6.0 + v3.5.1 + v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

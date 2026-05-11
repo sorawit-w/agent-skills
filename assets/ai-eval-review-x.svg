@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="ai-eval-review — Do we have signal for whether this AI actually works?" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>ai-eval-review — Do we have signal for whether this AI actually works?</title>
+  <desc>Pixel-art X/Twitter banner for the ai-eval-review Claude Code plugin: title top-left, three-card flow — an AI dashboard with mostly unmeasured metrics, a seven-block eval-design walk with Blocks 5 (cohorts) and 6 (adversarial) accented in teal as the responsible-AI surface, and an eval review artifact with gap chips. Chapter ribbon below.</desc>
+
+  <defs>
+    <pattern id="scan-aieval-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan-aieval-x)"/>
+
+  <!-- TITLE BLOCK (top-left) -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="60" y="56" font-size="38" font-weight="700" fill="#1f2937" letter-spacing="2">ai-eval-review</text>
+    <text x="60" y="84" font-size="16" fill="#6b7280">Do we have signal for whether this AI actually works?</text>
+  </g>
+
+  <!-- =========== CARD 1 — AI DASHBOARD WITH GAPS =========== -->
+  <g>
+    <rect x="60" y="120" width="340" height="220" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <rect x="60" y="120" width="340" height="28" fill="#1f2937"/>
+    <text x="230" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#fdf7ea" text-anchor="middle" letter-spacing="2">PRODUCTION DASHBOARD</text>
+
+    <!-- KPI tiles -->
+    <rect x="78" y="166" width="148" height="44" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+    <text x="152" y="180" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#15803d" text-anchor="middle">ENGAGEMENT</text>
+    <text x="152" y="200" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">↑ 72%</text>
+
+    <rect x="234" y="166" width="148" height="44" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+    <text x="308" y="180" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#b91c1c" text-anchor="middle">GROUND TRUTH</text>
+    <text x="308" y="200" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">?</text>
+
+    <rect x="78" y="218" width="148" height="44" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+    <text x="152" y="232" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#b91c1c" text-anchor="middle">PER-COHORT</text>
+    <text x="152" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">?</text>
+
+    <rect x="234" y="218" width="148" height="44" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+    <text x="308" y="232" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#b91c1c" text-anchor="middle">DRIFT</text>
+    <text x="308" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">?</text>
+
+    <rect x="78" y="270" width="304" height="36" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+    <text x="230" y="284" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#b91c1c" text-anchor="middle">ADVERSARIAL / ROBUSTNESS</text>
+    <text x="230" y="298" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#b91c1c" text-anchor="middle">UNMEASURED</text>
+
+    <text x="230" y="324" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280" text-anchor="middle" letter-spacing="1">engagement up. is anything else working?</text>
+  </g>
+
+  <!-- arrow 1 -->
+  <g fill="#6b7280">
+    <rect x="410" y="218" width="32" height="4"/>
+    <rect x="438" y="214" width="4"  height="12"/>
+    <rect x="442" y="216" width="4"  height="8"/>
+    <rect x="446" y="218" width="4"  height="4"/>
+  </g>
+
+  <!-- =========== CARD 2 — SEVEN BLOCKS WALK =========== -->
+  <g>
+    <rect x="460" y="120" width="560" height="220" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <rect x="460" y="120" width="560" height="28" fill="#0e7490"/>
+    <text x="740" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#f5efe6" text-anchor="middle" letter-spacing="2">SEVEN-BLOCK EVAL WALK</text>
+
+    <!-- 7 block chips -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <!-- Top row -->
+      <rect x="478" y="162" width="170" height="46" fill="#fef3c7" stroke="#92400e" stroke-width="2"/>
+      <rect x="478" y="162" width="170" height="12" fill="#92400e"/>
+      <text x="563" y="172" font-size="9"  font-weight="700" fill="#fef3c7" text-anchor="middle" letter-spacing="2">BLOCK 1</text>
+      <text x="563" y="194" font-size="9"  font-weight="700" fill="#92400e" text-anchor="middle">NECESSITY + SUCCESS</text>
+
+      <rect x="654" y="162" width="170" height="46" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="654" y="162" width="170" height="12" fill="#1e3a8a"/>
+      <text x="739" y="172" font-size="9"  font-weight="700" fill="#dbeafe" text-anchor="middle" letter-spacing="2">BLOCK 2</text>
+      <text x="739" y="194" font-size="9"  font-weight="700" fill="#1e3a8a" text-anchor="middle">GROUND TRUTH</text>
+
+      <rect x="830" y="162" width="170" height="46" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="830" y="162" width="170" height="12" fill="#1e3a8a"/>
+      <text x="915" y="172" font-size="9"  font-weight="700" fill="#dbeafe" text-anchor="middle" letter-spacing="2">BLOCK 3</text>
+      <text x="915" y="194" font-size="9"  font-weight="700" fill="#1e3a8a" text-anchor="middle">OFFLINE EVAL</text>
+
+      <!-- Middle row — Block 5+6 accented teal -->
+      <rect x="478" y="216" width="170" height="46" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="478" y="216" width="170" height="12" fill="#1e3a8a"/>
+      <text x="563" y="226" font-size="9"  font-weight="700" fill="#dbeafe" text-anchor="middle" letter-spacing="2">BLOCK 4</text>
+      <text x="563" y="248" font-size="9"  font-weight="700" fill="#1e3a8a" text-anchor="middle">ONLINE METRICS</text>
+
+      <!-- Block 5 - ACCENTED -->
+      <rect x="654" y="216" width="170" height="46" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+      <rect x="654" y="216" width="170" height="12" fill="#0e7490"/>
+      <text x="739" y="226" font-size="9"  font-weight="700" fill="#bae6fd" text-anchor="middle" letter-spacing="2">BLOCK 5</text>
+      <text x="739" y="248" font-size="9"  font-weight="700" fill="#0c4a6e" text-anchor="middle">COHORTS + DI</text>
+
+      <!-- Block 6 - ACCENTED -->
+      <rect x="830" y="216" width="170" height="46" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+      <rect x="830" y="216" width="170" height="12" fill="#0e7490"/>
+      <text x="915" y="226" font-size="9"  font-weight="700" fill="#bae6fd" text-anchor="middle" letter-spacing="2">BLOCK 6</text>
+      <text x="915" y="248" font-size="9"  font-weight="700" fill="#0c4a6e" text-anchor="middle">ADVERSARIAL + ROBUST</text>
+
+      <!-- "RESPONSIBLE-AI" tag -->
+      <rect x="712" y="204" width="60" height="11" fill="#0e7490"/>
+      <text x="742" y="213" font-size="7"  font-weight="700" fill="#bae6fd" text-anchor="middle" letter-spacing="1">RESPONSIBLE-AI</text>
+
+      <!-- Block 7 - full width -->
+      <rect x="478" y="270" width="522" height="40" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+      <rect x="478" y="270" width="522" height="12" fill="#15803d"/>
+      <text x="739" y="280" font-size="9"  font-weight="700" fill="#dcfce7" text-anchor="middle" letter-spacing="2">BLOCK 7 — DRIFT DETECTION &amp; MONITORING</text>
+      <text x="739" y="302" font-size="9"  font-weight="700" fill="#15803d" text-anchor="middle">is the AI still working tomorrow?</text>
+    </g>
+
+    <text x="740" y="328" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280" text-anchor="middle" letter-spacing="2">FIXED REASONING ORDER · 1 → 7</text>
+  </g>
+
+  <!-- arrow 2 -->
+  <g fill="#0e7490">
+    <rect x="1030" y="218" width="32" height="4"/>
+    <rect x="1058" y="214" width="4"  height="12"/>
+    <rect x="1062" y="216" width="4"  height="8"/>
+    <rect x="1066" y="218" width="4"  height="4"/>
+  </g>
+
+  <!-- =========== CARD 3 — EVAL REVIEW OUTPUT =========== -->
+  <g>
+    <rect x="1080" y="120" width="460" height="220" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <rect x="1080" y="120" width="460" height="28" fill="#1f2937"/>
+    <text x="1310" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#fdf7ea" text-anchor="middle" letter-spacing="2">EVAL REVIEW ARTIFACT</text>
+
+    <!-- mini block grid -->
+    <g>
+      <rect x="1098" y="164" width="138" height="28" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+      <text x="1167" y="175" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">B1 — DONE</text>
+      <text x="1167" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" fill="#15803d" text-anchor="middle">success defined</text>
+
+      <rect x="1240" y="164" width="138" height="28" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+      <text x="1309" y="175" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">B2 — [GAP]</text>
+      <text x="1309" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" font-weight="700" fill="#b91c1c" text-anchor="middle">single-annotator labels</text>
+
+      <rect x="1382" y="164" width="138" height="28" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+      <text x="1451" y="175" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">B3 — DONE</text>
+      <text x="1451" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" fill="#15803d" text-anchor="middle">offline eval set</text>
+
+      <rect x="1098" y="196" width="138" height="28" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+      <text x="1167" y="207" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">B4 — DONE</text>
+      <text x="1167" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" fill="#15803d" text-anchor="middle">online metrics</text>
+
+      <rect x="1240" y="196" width="138" height="28" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+      <text x="1309" y="207" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">B5 — [GAP]</text>
+      <text x="1309" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" font-weight="700" fill="#b91c1c" text-anchor="middle">no cohort dashboard</text>
+
+      <rect x="1382" y="196" width="138" height="28" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+      <text x="1451" y="207" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">B6 — [GAP]</text>
+      <text x="1451" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" font-weight="700" fill="#b91c1c" text-anchor="middle">no adversarial eval</text>
+
+      <rect x="1098" y="228" width="422" height="28" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+      <text x="1309" y="239" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">B7 — [GAP] no drift detector</text>
+    </g>
+
+    <!-- gap summary mini -->
+    <rect x="1098" y="266" width="422" height="56" fill="white" stroke="#1f2937" stroke-width="2"/>
+    <text x="1106" y="279" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#1f2937" letter-spacing="1">GAP SUMMARY</text>
+    <line x1="1106" y1="284" x2="1512" y2="284" stroke="#0e7490" stroke-width="2"/>
+    <text x="1106" y="298" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#1f2937">• ground truth: single-annotator → ceiling 0.65</text>
+    <text x="1106" y="311" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#1f2937">• cohorts: aggregate-only metrics hide cohort failures</text>
+  </g>
+
+  <!-- chapter-marker ribbon -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="230"  y="378" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3">INTAKE</text>
+    <text x="740"  y="378" font-size="11" font-weight="700" fill="#0e7490" letter-spacing="3">7-BLOCK WALK</text>
+    <text x="1100" y="378" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3">CROSS-BLOCK</text>
+    <text x="1380" y="378" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3">GAP SUMMARY</text>
+  </g>
+  <g fill="#9ca3af">
+    <rect x="290"  y="374" width="380" height="2"/>
+    <rect x="820"  y="374" width="220" height="2"/>
+    <rect x="1180" y="374" width="160" height="2"/>
+  </g>
+
+  <!-- footer pipeline note -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="60"   y="430" font-size="11" fill="#1f2937" letter-spacing="1">eval-design-completeness · sibling of ai-ux-review · seven blocks · MD + HTML</text>
+    <text x="1540" y="430" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="end">informed by HELM / Anthropic / OpenAI Evals · authored from first principles</text>
+  </g>
+</svg>

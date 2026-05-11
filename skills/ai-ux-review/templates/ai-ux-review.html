@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AI UX Review — {{PRODUCT_NAME}}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  :root {
+    --ai-ux-accent: #c2410c;          /* overridden if DESIGN.md is present */
+    --ai-ux-accent-soft: #fed7aa;
+    --ink: #1f2937;
+    --ink-muted: #6b7280;
+    --paper: #f5efe6;
+    --paper-edge: #eadfcf;
+    --card: #fdf7ea;
+    --card-border: #c9b58a;
+    --gap-bg: #fee2e2;
+    --gap-fg: #b91c1c;
+    --ok-bg: #dcfce7;
+    --ok-fg: #15803d;
+    --info-bg: #bae6fd;
+    --info-fg: #0e7490;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  body {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    line-height: 1.5;
+    padding: 32px 24px 48px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  header {
+    border-bottom: 3px solid var(--ink);
+    padding-bottom: 16px;
+    margin-bottom: 28px;
+  }
+  header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    letter-spacing: 1px;
+  }
+  header .subtitle {
+    color: var(--ink-muted);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+  header .meta {
+    display: flex;
+    gap: 12px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .chip {
+    display: inline-block;
+    padding: 3px 10px;
+    border: 2px solid var(--ink);
+    background: var(--card);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .chip-accent { background: var(--ai-ux-accent); color: white; border-color: var(--ai-ux-accent); }
+  .chip-gap   { background: var(--gap-bg); color: var(--gap-fg); border-color: var(--gap-fg); }
+  .chip-ok    { background: var(--ok-bg);  color: var(--ok-fg);  border-color: var(--ok-fg);  }
+  .chip-info  { background: var(--info-bg); color: var(--info-fg); border-color: var(--info-fg); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .grid-row-2 { grid-template-columns: repeat(3, 1fr); }
+  .grid-row-3 { grid-template-columns: 1fr; margin-top: 18px; }
+
+  .card {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 240px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .card header {
+    border: none;
+    border-bottom: 2px solid var(--ink);
+    padding: 8px 12px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--ai-ux-accent);
+    color: white;
+  }
+  .card-num {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    opacity: 0.85;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .card-body {
+    padding: 12px 14px;
+    font-size: 13px;
+    flex: 1;
+  }
+  .card-body ul {
+    margin: 4px 0;
+    padding-left: 16px;
+  }
+  .card-body li {
+    margin-bottom: 4px;
+  }
+  .card-body strong {
+    color: var(--ink);
+  }
+  .card-body em.gap-marker {
+    color: var(--gap-fg);
+    font-style: normal;
+    font-weight: 700;
+    background: var(--gap-bg);
+    padding: 1px 4px;
+    border: 1px solid var(--gap-fg);
+  }
+
+  .block-7 {
+    grid-column: 1 / -1;
+  }
+  .block-7 .card-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .gap-summary {
+    margin-top: 36px;
+    background: white;
+    border: 3px solid var(--ink);
+    padding: 20px 22px;
+  }
+  .gap-summary h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--ai-ux-accent);
+    padding-bottom: 6px;
+  }
+  .gap-summary ol { padding-left: 22px; margin: 0; }
+  .gap-summary li {
+    margin-bottom: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .gap-summary li strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--gap-fg);
+  }
+  .gap-summary .label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    margin-right: 6px;
+  }
+
+  footer {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--card-border);
+    color: var(--ink-muted);
+    font-size: 11px;
+    line-height: 1.6;
+  }
+  footer a {
+    color: var(--ai-ux-accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--ai-ux-accent);
+  }
+
+  @media (max-width: 900px) {
+    .grid, .grid-row-2 { grid-template-columns: 1fr; }
+    .block-7 .card-body { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    @page { size: A4; margin: 12mm; }
+    html, body { background: white; }
+    body { padding: 0; max-width: none; }
+    .card { box-shadow: none; }
+    .grid, .grid-row-2 { grid-template-columns: repeat(3, 1fr); }
+    .block-7 .card-body { grid-template-columns: 1fr 1fr; }
+    footer { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AI UX Review — {{PRODUCT_NAME}}</h1>
+  <div class="subtitle">A design-completeness review of the human-AI surface. Authored {{DATE}}.</div>
+  <div class="meta">
+    <span class="chip chip-info">Lifecycle: {{LIFECYCLE}}</span>
+    <span class="chip chip-info">AI type: {{AI_TYPE}}</span>
+    <span class="chip chip-accent">{{N_GAPS}} unresolved gap(s)</span>
+  </div>
+</header>
+
+<section class="grid">
+
+  <article class="card" id="block-1">
+    <header>
+      <span class="card-num">BLOCK 1</span>
+      <span class="card-title">Why AI Here?</span>
+      {{#GAP_1}}<span class="chip chip-gap">GAP</span>{{/GAP_1}}
+    </header>
+    <div class="card-body">
+      <ul>
+        <li><strong>User task:</strong> {{BLOCK_1_USER_TASK}}</li>
+        <li><strong>Non-AI alternative:</strong> {{BLOCK_1_ALT}}</li>
+        <li><strong>Reason AI wins:</strong> {{BLOCK_1_REASON}}</li>
+        <li><strong>Cost acknowledged:</strong> {{BLOCK_1_COST}}</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="card" id="block-2">
+    <header>
+      <span class="card-num">BLOCK 2</span>
+      <span class="card-title">Mental Model</span>
+      {{#GAP_2}}<span class="chip chip-gap">GAP</span>{{/GAP_2}}
+    </header>
+    <div class="card-body">
+      <p>{{BLOCK_2_MODEL}}</p>
+      <ul>
+        <li><strong>Misalignment 1:</strong> {{BLOCK_2_MISALIGN_1}}</li>
+        <li><strong>Misalignment 2:</strong> {{BLOCK_2_MISALIGN_2}}</li>
+        <li><strong>Evidence basis:</strong> {{BLOCK_2_EVIDENCE}}</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="card" id="block-3">
+    <header>
+      <span class="card-num">BLOCK 3</span>
+      <span class="card-title">Trust Calibration</span>
+      {{#GAP_3}}<span class="chip chip-gap">GAP</span>{{/GAP_3}}
+    </header>
+    <div class="card-body">
+      <ul>
+        <li><strong>Surface 1:</strong> {{BLOCK_3_SURFACE_1}}</li>
+        <li><strong>Surface 2:</strong> {{BLOCK_3_SURFACE_2}}</li>
+        <li><strong>Surface 3:</strong> {{BLOCK_3_SURFACE_3}}</li>
+        <li><strong>Strategy:</strong> {{BLOCK_3_STRATEGY}}</li>
+        <li><strong>Under-trust path:</strong> {{BLOCK_3_UNDER}}</li>
+        <li><strong>Over-trust path:</strong> {{BLOCK_3_OVER}}</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="card" id="block-4">
+    <header>
+      <span class="card-num">BLOCK 4</span>
+      <span class="card-title">Feedback &amp; Control</span>
+      {{#GAP_4}}<span class="chip chip-gap">GAP</span>{{/GAP_4}}
+    </header>
+    <div class="card-body">
+      <ul>
+        <li><strong>Correction:</strong> {{BLOCK_4_CORRECTION}}</li>
+        <li><strong>Override path:</strong> {{BLOCK_4_OVERRIDE}}</li>
+        <li><strong>Autonomy level:</strong> {{BLOCK_4_AUTONOMY}}</li>
+        <li><strong>Hand-off:</strong> {{BLOCK_4_HANDOFF}}</li>
+        <li><strong>Take-over:</strong> {{BLOCK_4_TAKEOVER}}</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="card" id="block-5">
+    <header>
+      <span class="card-num">BLOCK 5</span>
+      <span class="card-title">Errors &amp; Graceful Failure</span>
+      {{#GAP_5}}<span class="chip chip-gap">GAP</span>{{/GAP_5}}
+    </header>
+    <div class="card-body">
+      <ul>
+        <li><strong>System:</strong> {{BLOCK_5_SYSTEM}}</li>
+        <li><strong>Fluent-but-wrong:</strong> {{BLOCK_5_FLUENT_WRONG}}</li>
+        <li><strong>Refusal:</strong> {{BLOCK_5_REFUSAL}}</li>
+        <li><strong>User-flagging:</strong> {{BLOCK_5_FLAGGING}}</li>
+        <li><strong>Latency threshold:</strong> {{BLOCK_5_LATENCY}}</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="card" id="block-6">
+    <header>
+      <span class="card-num">BLOCK 6</span>
+      <span class="card-title">Output Integrity</span>
+      {{#GAP_6}}<span class="chip chip-gap">GAP</span>{{/GAP_6}}
+    </header>
+    <div class="card-body">
+      <ul>
+        <li><strong>Verifiability:</strong> {{BLOCK_6_VERIFY}}</li>
+        <li><strong>Provenance:</strong> {{BLOCK_6_PROV}}</li>
+        <li><strong>Hallucination defense:</strong> {{BLOCK_6_HALLUC}}</li>
+        <li><strong>Injection surface:</strong> {{BLOCK_6_INJECT}}</li>
+        <li><strong>Autonomy / reversibility:</strong> {{BLOCK_6_AUTO_REV}}</li>
+        <li><strong>Multi-turn or OOD:</strong> {{BLOCK_6_DRIFT}}</li>
+      </ul>
+    </div>
+  </article>
+
+  <article class="card block-7" id="block-7">
+    <header>
+      <span class="card-num">BLOCK 7</span>
+      <span class="card-title">Success &amp; Evaluation</span>
+      {{#GAP_7}}<span class="chip chip-gap">GAP</span>{{/GAP_7}}
+    </header>
+    <div class="card-body">
+      <div>
+        <ul>
+          <li><strong>Offline criterion:</strong> {{BLOCK_7_OFFLINE}}</li>
+          <li><strong>Online metric:</strong> {{BLOCK_7_ONLINE}}</li>
+          <li><strong>Proxy or direct:</strong> {{BLOCK_7_PROXY}}</li>
+          <li><strong>Failure signal:</strong> {{BLOCK_7_FAIL}}</li>
+        </ul>
+      </div>
+      <div>
+        <ul>
+          <li><strong>Gap to truth:</strong> {{BLOCK_7_GAP_TRUTH}}</li>
+          <li><strong>Per-segment:</strong> {{BLOCK_7_SEGMENT}}</li>
+          <li><strong>Drift detection:</strong> {{BLOCK_7_DRIFT}}</li>
+          <li><strong>Eval gap to companion:</strong> {{BLOCK_7_COMPANION}}</li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+</section>
+
+<section class="gap-summary">
+  <h2>Gap Summary</h2>
+  <ol>
+    <li>
+      <strong>{{GAP_1_TITLE}}</strong>
+      <span class="label">Why it matters:</span> {{GAP_1_WHY}}<br/>
+      <span class="label">Cheapest experiment:</span> {{GAP_1_EXP}}
+    </li>
+    <li>
+      <strong>{{GAP_2_TITLE}}</strong>
+      <span class="label">Why it matters:</span> {{GAP_2_WHY}}<br/>
+      <span class="label">Cheapest experiment:</span> {{GAP_2_EXP}}
+    </li>
+    <li>
+      <strong>{{GAP_3_TITLE}}</strong>
+      <span class="label">Why it matters:</span> {{GAP_3_WHY}}<br/>
+      <span class="label">Cheapest experiment:</span> {{GAP_3_EXP}}
+    </li>
+  </ol>
+</section>
+
+<footer>
+  Generated {{DATE}} · <code>ai-ux-review.md</code> is the source of truth · Print-to-PDF supported<br/>
+  Produced by the <code>ai-ux-review</code> skill in <a href="https://github.com/sorawit-w/agent-skills">sorawit-w/agent-skills</a>. Inspired by Google's <a href="https://pair.withgoogle.com/guidebook/">People + AI Guidebook</a> (CC BY-NC-SA 4.0); authored from first principles. See the skill's README for the full influences note.
+</footer>
+
+</body>
+</html>

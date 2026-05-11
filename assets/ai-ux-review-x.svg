@@ -1,0 +1,183 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="ai-ux-review — Has the human side actually been designed?" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>ai-ux-review — Has the human side actually been designed?</title>
+  <desc>Pixel-art X/Twitter banner for the ai-ux-review Claude Code plugin: title top-left, three-card flow — an AI feature spec with unresolved question marks, a seven-block elicitation walk (Block 6 accented as the gen-AI integrity layer), and a review artifact with gap-summary chips. Chapter ribbon below: INTAKE · 7 BLOCKS · CROSS-BLOCK · GAP SUMMARY.</desc>
+
+  <defs>
+    <pattern id="scan-aiux-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan-aiux-x)"/>
+
+  <!-- TITLE BLOCK (top-left) -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="60" y="56" font-size="38" font-weight="700" fill="#1f2937" letter-spacing="2">ai-ux-review</text>
+    <text x="60" y="84" font-size="16" fill="#6b7280">Has the human side actually been designed?</text>
+  </g>
+
+  <!-- =========== CARD 1 — AI FEATURE SPEC =========== -->
+  <g>
+    <rect x="60" y="120" width="340" height="220" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <rect x="60" y="120" width="340" height="28" fill="#1f2937"/>
+    <text x="230" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#fdf7ea" text-anchor="middle" letter-spacing="2">AI FEATURE SPEC</text>
+
+    <!-- prompt input -->
+    <text x="78" y="174" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="1">> DRAFT GENERATOR</text>
+    <rect x="78" y="184" width="304" height="22" fill="white" stroke="#9ca3af" stroke-width="1"/>
+    <text x="84" y="199" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280">type a one-line ask…</text>
+
+    <!-- draft output -->
+    <rect x="78" y="216" width="304" height="80" fill="#eff6ff" stroke="#1d4ed8" stroke-width="1"/>
+    <text x="86" y="231" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#1d4ed8">AI DRAFT</text>
+    <rect x="86" y="240" width="280" height="2" fill="#1d4ed8"/>
+    <rect x="86" y="248" width="260" height="2" fill="#1d4ed8"/>
+    <rect x="86" y="256" width="290" height="2" fill="#1d4ed8"/>
+    <rect x="86" y="264" width="240" height="2" fill="#1d4ed8"/>
+    <rect x="86" y="272" width="270" height="2" fill="#1d4ed8"/>
+    <rect x="86" y="280" width="200" height="2" fill="#1d4ed8"/>
+
+    <!-- unresolved question marks -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#b91c1c" font-weight="700">
+      <text x="100" y="170" font-size="16">?</text>
+      <text x="200" y="165" font-size="20">?</text>
+      <text x="300" y="170" font-size="16">?</text>
+      <text x="370" y="160" font-size="22">?</text>
+    </g>
+
+    <text x="230" y="320" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280" text-anchor="middle" letter-spacing="1">trust? errors? autonomy? — unmade</text>
+  </g>
+
+  <!-- arrow 1 -->
+  <g fill="#6b7280">
+    <rect x="410" y="218" width="32" height="4"/>
+    <rect x="438" y="214" width="4"  height="12"/>
+    <rect x="442" y="216" width="4"  height="8"/>
+    <rect x="446" y="218" width="4"  height="4"/>
+  </g>
+
+  <!-- =========== CARD 2 — SEVEN BLOCKS WALK =========== -->
+  <g>
+    <rect x="460" y="120" width="560" height="220" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <rect x="460" y="120" width="560" height="28" fill="#c2410c"/>
+    <text x="740" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#f5efe6" text-anchor="middle" letter-spacing="2">SEVEN-BLOCK WALK</text>
+
+    <!-- 7 block chips, 3+3+1 layout (smaller for X) -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <!-- Top row -->
+      <rect x="478" y="162" width="170" height="46" fill="#fef3c7" stroke="#92400e" stroke-width="2"/>
+      <rect x="478" y="162" width="170" height="12" fill="#92400e"/>
+      <text x="563" y="172" font-size="9"  font-weight="700" fill="#fef3c7" text-anchor="middle" letter-spacing="2">BLOCK 1</text>
+      <text x="563" y="194" font-size="9"  font-weight="700" fill="#92400e" text-anchor="middle">WHY AI HERE?</text>
+
+      <rect x="654" y="162" width="170" height="46" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="654" y="162" width="170" height="12" fill="#1e3a8a"/>
+      <text x="739" y="172" font-size="9"  font-weight="700" fill="#dbeafe" text-anchor="middle" letter-spacing="2">BLOCK 2</text>
+      <text x="739" y="194" font-size="9"  font-weight="700" fill="#1e3a8a" text-anchor="middle">MENTAL MODEL</text>
+
+      <rect x="830" y="162" width="170" height="46" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="830" y="162" width="170" height="12" fill="#1e3a8a"/>
+      <text x="915" y="172" font-size="9"  font-weight="700" fill="#dbeafe" text-anchor="middle" letter-spacing="2">BLOCK 3</text>
+      <text x="915" y="194" font-size="9"  font-weight="700" fill="#1e3a8a" text-anchor="middle">TRUST CALIB.</text>
+
+      <!-- Middle row -->
+      <rect x="478" y="216" width="170" height="46" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="478" y="216" width="170" height="12" fill="#1e3a8a"/>
+      <text x="563" y="226" font-size="9"  font-weight="700" fill="#dbeafe" text-anchor="middle" letter-spacing="2">BLOCK 4</text>
+      <text x="563" y="248" font-size="9"  font-weight="700" fill="#1e3a8a" text-anchor="middle">FEEDBACK + CONTROL</text>
+
+      <rect x="654" y="216" width="170" height="46" fill="#dbeafe" stroke="#1e3a8a" stroke-width="2"/>
+      <rect x="654" y="216" width="170" height="12" fill="#1e3a8a"/>
+      <text x="739" y="226" font-size="9"  font-weight="700" fill="#dbeafe" text-anchor="middle" letter-spacing="2">BLOCK 5</text>
+      <text x="739" y="248" font-size="9"  font-weight="700" fill="#1e3a8a" text-anchor="middle">ERRORS + RECOVERY</text>
+
+      <!-- Block 6 - ACCENTED -->
+      <rect x="830" y="216" width="170" height="46" fill="#fed7aa" stroke="#c2410c" stroke-width="2"/>
+      <rect x="830" y="216" width="170" height="12" fill="#c2410c"/>
+      <text x="915" y="226" font-size="9"  font-weight="700" fill="#fed7aa" text-anchor="middle" letter-spacing="2">BLOCK 6</text>
+      <text x="915" y="248" font-size="9"  font-weight="700" fill="#9a3412" text-anchor="middle">OUTPUT INTEGRITY</text>
+      <!-- GEN-AI tag -->
+      <rect x="958" y="204" width="42" height="11" fill="#c2410c"/>
+      <text x="979" y="213" font-size="7"  font-weight="700" fill="#fdf7ea" text-anchor="middle" letter-spacing="1">GEN-AI</text>
+
+      <!-- Block 7 - full width -->
+      <rect x="478" y="270" width="522" height="40" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+      <rect x="478" y="270" width="522" height="12" fill="#15803d"/>
+      <text x="739" y="280" font-size="9"  font-weight="700" fill="#dcfce7" text-anchor="middle" letter-spacing="2">BLOCK 7 — SUCCESS &amp; EVALUATION</text>
+      <text x="739" y="302" font-size="9"  font-weight="700" fill="#15803d" text-anchor="middle">how do we know it's actually working in production?</text>
+    </g>
+
+    <text x="740" y="328" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280" text-anchor="middle" letter-spacing="2">FIXED REASONING ORDER · 1 → 7</text>
+  </g>
+
+  <!-- arrow 2 -->
+  <g fill="#c2410c">
+    <rect x="1030" y="218" width="32" height="4"/>
+    <rect x="1058" y="214" width="4"  height="12"/>
+    <rect x="1062" y="216" width="4"  height="8"/>
+    <rect x="1066" y="218" width="4"  height="4"/>
+  </g>
+
+  <!-- =========== CARD 3 — REVIEW OUTPUT =========== -->
+  <g>
+    <rect x="1080" y="120" width="460" height="220" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <rect x="1080" y="120" width="460" height="28" fill="#1f2937"/>
+    <text x="1310" y="140" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#fdf7ea" text-anchor="middle" letter-spacing="2">REVIEW ARTIFACT</text>
+
+    <!-- mini block grid with status -->
+    <g>
+      <rect x="1098" y="164" width="138" height="28" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+      <text x="1167" y="175" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">B1 — DONE</text>
+      <text x="1167" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" fill="#15803d" text-anchor="middle">why AI</text>
+
+      <rect x="1240" y="164" width="138" height="28" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+      <text x="1309" y="175" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">B2 — [GAP]</text>
+      <text x="1309" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" font-weight="700" fill="#b91c1c" text-anchor="middle">no research basis</text>
+
+      <rect x="1382" y="164" width="138" height="28" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+      <text x="1451" y="175" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">B3 — DONE</text>
+      <text x="1451" y="186" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" fill="#15803d" text-anchor="middle">trust</text>
+
+      <rect x="1098" y="196" width="138" height="28" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+      <text x="1167" y="207" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">B4 — DONE</text>
+      <text x="1167" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" fill="#15803d" text-anchor="middle">feedback</text>
+
+      <rect x="1240" y="196" width="138" height="28" fill="#dcfce7" stroke="#15803d" stroke-width="1"/>
+      <text x="1309" y="207" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#15803d" text-anchor="middle">B5 — DONE</text>
+      <text x="1309" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" fill="#15803d" text-anchor="middle">errors</text>
+
+      <rect x="1382" y="196" width="138" height="28" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+      <text x="1451" y="207" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">B6 — [GAP]</text>
+      <text x="1451" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="6" font-weight="700" fill="#b91c1c" text-anchor="middle">injection unmapped</text>
+
+      <rect x="1098" y="228" width="422" height="28" fill="#fee2e2" stroke="#b91c1c" stroke-width="1"/>
+      <text x="1309" y="239" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" font-weight="700" fill="#b91c1c" text-anchor="middle">B7 — [GAP] no failure signal</text>
+    </g>
+
+    <!-- gap summary mini -->
+    <rect x="1098" y="266" width="422" height="56" fill="white" stroke="#1f2937" stroke-width="2"/>
+    <text x="1106" y="279" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#1f2937" letter-spacing="1">GAP SUMMARY</text>
+    <line x1="1106" y1="284" x2="1512" y2="284" stroke="#c2410c" stroke-width="2"/>
+    <text x="1106" y="298" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#1f2937">• mental model: no user-research evidence</text>
+    <text x="1106" y="311" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#1f2937">• prompt injection: not designed for in v1</text>
+  </g>
+
+  <!-- chapter-marker ribbon -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="230"  y="378" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3">INTAKE</text>
+    <text x="740"  y="378" font-size="11" font-weight="700" fill="#c2410c" letter-spacing="3">7-BLOCK WALK</text>
+    <text x="1100" y="378" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3">CROSS-BLOCK</text>
+    <text x="1380" y="378" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="3">GAP SUMMARY</text>
+  </g>
+  <g fill="#9ca3af">
+    <rect x="290"  y="374" width="380" height="2"/>
+    <rect x="820"  y="374" width="220" height="2"/>
+    <rect x="1180" y="374" width="160" height="2"/>
+  </g>
+
+  <!-- footer pipeline note -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="60"   y="430" font-size="11" fill="#1f2937" letter-spacing="1">design-completeness for AI products · seven blocks · explicit gaps · MD + HTML</text>
+    <text x="1540" y="430" font-size="10" fill="#9ca3af" letter-spacing="1" text-anchor="end">inspired by Google's PAIR Guidebook · authored from first principles</text>
+  </g>
+</svg>
