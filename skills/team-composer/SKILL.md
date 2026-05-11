@@ -602,26 +602,11 @@ sequentially — one role at a time — referencing the discussion conclusion th
 
 ### Model Routing
 
-**Default: sub-agents inherit the orchestrator's model.** No silent downgrading.
+**Default: sub-agents inherit the orchestrator's model.** No silent downgrading — the user chose a model for a reason.
 
-The user chose a model for a reason. Automatically routing sub-agents to a cheaper
-model is an optimization that trades quality for cost without the user's consent.
+For deliberate selection across capability tier, reasoning effort, and speed lane, see `sub-agent-coordinator` § Model Selection — Capability, Reasoning, Speed. That section defines the axes (low/standard/high · off/on · flex/standard/priority), defaults, and disclosure contract. When this skill spawns deliverable sub-agents (per the Phase 6 trigger table), the brief's Constraints section carries `Tier:` / `Thinking:` / `Lane:` lines per that contract.
 
-If tiered routing is needed (e.g., cost-sensitive environments), it should be:
-
-1. **Vendor-agnostic** — use capability tiers, not model names:
-   - `tier: high` — complex reasoning, creative synthesis, system design (e.g., "write a system design doc")
-   - `tier: standard` — structured extraction, template-driven work (e.g., "list files this design touches")
-2. **Routed by task type, not role** — an architect writing a design doc needs `high`;
-   the same architect listing affected files needs `standard`. The task determines the tier.
-3. **Opt-in, not automatic** — surface as a configuration option (e.g., "economy mode"),
-   never as hidden default behavior
-4. **Gracefully degrade** — if the vendor offers only one model tier, everything runs
-   on that tier. No errors, no fallbacks-to-fallbacks.
-
-> **Future enhancement:** Tiered model routing is not implemented yet. The default
-> (inherit from orchestrator) is correct until the tier abstraction is built and
-> tested. When implemented, add a `model_tier` field to the sub-agent brief template.
+Downstream consumers (e.g., `coding-rules`) may provide opinionated task-to-tier mappings calibrated to their domain — defer to those mappings when present. Do not silently override `sub-agent-coordinator`'s inherit-by-default behavior, and do not encode vendor-specific model strings (e.g., `opus-4-6`) in this skill — they rot across vendor releases.
 
 ### Opinion Weighting
 

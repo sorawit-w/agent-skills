@@ -22,6 +22,19 @@ This skill packages one person's methodology as a loadable session preamble:
 
 If your taste matches, the skill will feel like an extension of how you already think. If it doesn't, please **fork and adapt** rather than installing as-is.
 
+## Companion skills
+
+Skills you'll likely want alongside `coding-rules` — all ship in this same marketplace. Brief overview here; deeper integration notes in [Cross-skill integration](#cross-skill-integration) below.
+
+| Skill | Use it for |
+|---|---|
+| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | Multi-role discussion *before* coding — "monolith vs services?", "which DB?", "is this refactor worth it?" Surfaces trade-offs the rules can't. |
+| [`sub-agent-coordinator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/sub-agent-coordinator) | Coordination patterns *during* execution — fan-out, pipeline, specialist routing, briefing templates. The natural sibling to BOOTSTRAP's `sub-agent-delegation` reference. |
+| [`skill-evaluator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/skill-evaluator) | Auditing rule changes via split-context review — never grade rules in the same agent that wrote them. |
+| [`tech-stack-recommendations`](https://github.com/sorawit-w/agent-skills/tree/main/skills/tech-stack-recommendations) | Picking a runtime / framework / database / hosting target on a new project or migration. Pairs with `workflows/new-project.md`. |
+
+None are required — `coding-rules` works on its own. They sharpen the edges where it deliberately stays thin (multi-role planning, sub-agent coordination, rule evaluation, stack selection).
+
 ## What it does
 
 - **Loads `resources/BOOTSTRAP.md`** into the current session via the `Read` tool, so the rules enter conversation context as a tool result (not a paraphrase).

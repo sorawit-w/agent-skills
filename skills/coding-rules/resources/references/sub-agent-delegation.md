@@ -74,9 +74,23 @@ When breaking work into parallel sub-agent tasks, prefer **vertical slices** (ea
 
 2. **Trust-but-verify** — Read the sub-agent's verification report. Only re-run quality gates if the report is missing, incomplete, or shows failures.
 
-3. **No nested sub-agents** — Sub-agents do not spawn their own sub-agents. All spawning is done by the coordinating agent.
+3. **No nested sub-agents** — Sub-agents do not spawn their own sub-agents. All spawning is done by the coordinating agent. If work expands beyond scope, report `BLOCKED_SCOPE_EXPANDED` with a proposed split — see `sub-agent-coordinator` for the full protocol.
 
 4. **Shared worktree by default** — Sub-agents operate in the same worktree as the coordinator. Rely on rule 1 (non-overlapping files) to prevent conflicts.
+
+---
+
+## Capability Tier + Reasoning Effort
+
+Model selection axes (capability tier / reasoning effort / speed lane) AND the canonical default mapping for coding work both live in `sub-agent-coordinator` § Model Selection — Capability, Reasoning, Speed. **coding-rules inherits both without overrides.**
+
+If a coding-rules-specific override emerges later (e.g., "for this team, every production-path change is `high` regardless of scope"), add it here as a thin overlay table rather than forking the full matrix.
+
+---
+
+## Picking the Role
+
+See `sub-agent-coordinator` § Picking the Role for the full protocol. coding-rules adds no overrides — Task verb conveys role implicitly; optionally tag with a canonical persona name from `team-composer`'s catalog (e.g., `Role: @security_specialist`, `Role: @dataviz_engineer`) when a richer lens is wanted. For multi-perspective discussion of one decision (panel, not worker), use `team-composer` directly.
 
 ---
 

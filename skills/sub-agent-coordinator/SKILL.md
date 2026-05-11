@@ -231,6 +231,7 @@ Constraints:
 - Use [library/pattern] established in the codebase
 - Do not commit to main — leave on working branch
 - Tool budget: ~[N] calls (wrap up and report if approaching limit)
+- Model selection (inherit if omitted): Tier=[low|standard|high], Thinking=[off|on], Lane=[flex|standard|priority] — see § Model Selection — Capability, Reasoning, Speed
 ```
 
 #### Success Criteria Section
@@ -257,13 +258,101 @@ Start by reading these files to understand the context:
 
 ```
 When done, provide:
-  - Task status: DONE | FAILED | BLOCKED
+  - Task status: DONE | FAILED | BLOCKED | BLOCKED_SCOPE_EXPANDED
   - Files modified: [list of files]
   - Tests added: [list of test files]
   - Verification results: build pass/fail, lint pass/fail, test pass/fail
   - Any notes or decisions made during implementation
   - Any blockers encountered
+
+If status is BLOCKED_SCOPE_EXPANDED, also provide:
+  - Reason: one-line explanation of why the original scope was insufficient
+  - Proposed split: N independently-spawnable sub-briefs, each with Task / Scope / Done-when criteria
+  - Partial work: what was completed within the original scope (if anything)
 ```
+
+---
+
+## Model Selection — Capability, Reasoning, Speed
+
+Three orthogonal axes determine what the sub-agent runs as. **Defaults to inherit from orchestrator across all three.** Specify a value only when the task warrants a deliberate change.
+
+### The Axes
+
+- **Capability tier** (model size): `low` / `standard` / `high`. Maps to current vendor lineups — Haiku/Sonnet/Opus, 4.1-mini/4.1/o-series, Flash/Pro/Ultra. Tier names survive vendor releases; specific model strings rot.
+- **Reasoning effort** (extended thinking): `off` / `on`. Independent of tier — you can dial reasoning on Sonnet, on o-mini, on Gemini Pro. Pays back its cost on hypothesis generation and impact analysis; wasted on mechanical tasks.
+- **Speed lane** (latency vs cost): `flex` / `standard` / `priority`. Vendor-specific names (Anthropic Priority Tier, OpenAI Priority/Flex, Google provisioned throughput) map onto these three buckets at the orchestrator's discretion.
+
+### Defaults
+
+- **Capability tier:** inherit from orchestrator. Never silently downgrade — the developer chose the orchestrator's model for a reason.
+- **Reasoning effort:** off. Turn on only when the task surface requires hypothesis generation or non-obvious impact analysis.
+- **Speed lane:** standard. Flip to priority when the orchestrator is blocked on parallel sub-agents (interactive fan-out) or when a human is actively waiting on a sub-agent's output (reviewer-in-the-loop). Flip to flex for background work where latency is irrelevant.
+
+### Default Mapping (Coding Work)
+
+The mapping below is the canonical default for coding sub-agents. It calibrates the framework to what coding work actually looks like — not abstract enough to be domain-neutral, but defensible across most engineering teams. Other-domain consumers (creative writing, customer outreach, research synthesis) should fork it with their own calibration; the framework itself (axes, defaults, disclosure contract) carries over.
+
+| Sub-agent task | Tier | Thinking |
+|---|---|---|
+| Mechanical rename, list/enumerate files, format/lint fix | low | off |
+| Extract structured data, fill template, simple translation | low | off |
+| Research / audit / survey a codebase | standard | optional |
+| Verify, validate, regression-test against a checklist | standard | off |
+| Implement on isolated feature (UI polish, single CRUD endpoint, doc fix) | standard | off |
+| Architect, design, synthesize a plan | high | optional |
+| Implement on critical path (auth, billing, data integrity, security) | high | optional |
+| Debug — cause known, fix mechanical | low or standard | off |
+| Debug — root cause unknown, multi-file impact | high | **on** |
+| Cross-cutting refactor with non-obvious blast radius | high | **on** |
+
+**When `thinking: on` is required** (the bolded rows): hypothesis generation across an unknown problem space, or impact analysis across a non-obvious blast radius — depth pays back its cost. For "optional" rows, default off and flip on if the task surfaces a hairier-than-expected sub-problem mid-flight.
+
+Override individual rows when your domain or codebase warrants it (e.g., a shop that ships to production daily may bump `Implement on isolated feature` to `high`). Disclose any deviation per the contract below.
+
+### Generic Mapping (Non-Coding / Fallback)
+
+Use when the sub-agent's task isn't coding work, or when no row in `Default Mapping (Coding Work)` clearly fits. These rows describe **task shapes** rather than specific verbs, so they generalize across domains — writing, research, design, customer-facing work, analysis, ops.
+
+| Task shape | Tier | Thinking |
+|---|---|---|
+| Mechanical transformation, extraction, enumeration, templated output | low | off |
+| Read-heavy synthesis (summarize, audit, survey, compare against a fixed corpus) | standard | optional |
+| Checklist verification against fixed criteria | standard | off |
+| Bounded authoring with clear constraints (single deliverable, known shape) | standard | off |
+| High-stakes bounded authoring (errors have material consequences — legal, financial, customer-facing, security-adjacent) | high | optional |
+| Open-ended authoring with taste required (strategy, design, creative direction) | high | optional |
+| Cross-component synthesis (architecture, system design, multi-source integration) | high | optional |
+| Hypothesis generation in an unknown problem space | high | **on** |
+| Impact analysis across non-obvious blast radius | high | **on** |
+
+**Lookup order:** if the sub-agent is doing coding work, check `Default Mapping (Coding Work)` first; fall back here if no coding row fits. If not coding work, start here directly. The two tables agree on principles — the coding table is a specialization that names common coding verbs; the generic table names the underlying shapes.
+
+### Disclosure Contract
+
+Any axis change from "inherit" must be stated in the brief. Add to the Full Brief's Constraints section (or the Quick Brief's metadata) one line per changed axis:
+
+```
+Tier: low (downgraded from orchestrator's standard — task is mechanical extract).
+Thinking: on (orchestrator had it off — root cause unknown, need hypothesis space).
+Lane: priority (interactive fan-out, blocking 4 siblings).
+```
+
+Lines may be omitted when inheriting that axis from the orchestrator. The point is that any *deliberate* change is auditable.
+
+---
+
+## Picking the Role
+
+The `Task:` field IS the role. `Task: implement /api/users PATCH endpoint` is implicitly an engineer role; `Task: audit middleware/ for missing CSRF guards` is implicitly an auditor role. Don't over-formalize — name the verb and the surface area, the role follows.
+
+**Optional: tag with a canonical role from `team-composer`'s catalog.** When the brief warrants a richer lens than the Task verb conveys — security audit, data-viz design, accessibility review, AI-safety review — add a `Role:` line citing a persona from `team-composer/references/role-personas.md` (e.g., `Role: @security_specialist`, `Role: @dataviz_engineer`). The orchestrator may load relevant skills + the role's persona context (perspective, bias, blind spots, signature vocabulary) into the briefing. Without `team-composer` installed, the tag is informational only — graceful degradation.
+
+**Why the catalog, not a fresh taxonomy:** `team-composer`'s `role-personas.md` is already the canonical role vocabulary in this repo. Maintaining a parallel set of worker-role labels would duplicate naming and rot in the gap. Reuse the catalog as vocabulary; do NOT reuse `team-composer`'s signal-based panel-selection algorithm here — that algorithm picks N panelists for one decision, which is the wrong shape for picking 1 worker per task.
+
+**Runtime agent type (when the platform exposes it):** match the brief's Task verb to the most constrained type that can complete the work — `Explore` for read-heavy investigation, `Plan` for planning-without-edits, `code-reviewer` for review-only configurations, `general-purpose` for implementation. The constraint is a feature: a read-only sub-agent can't accidentally edit, can't run dangerous bash, can't drift into adjacent work. Role tag (semantic) and runtime type (functional) are independent — a `Role: @security_specialist` brief might still run as `Explore` if the work is purely read-heavy.
+
+**For multi-perspective brainstorming** (architect + designer + PM discussing the same decision, producing one synthesized output), use `team-composer` directly — those are panelists, not workers. See `Before you delegate — is this parallel work or a team discussion?` above for the routing.
 
 ---
 
@@ -350,7 +439,7 @@ Follow these rules to avoid conflicts and maintain coherence:
    - Any decisions made during implementation
    - Any blockers
 
-6. **No nested sub-agents** — Sub-agents do not spawn their own sub-agents. All spawning is done by the coordinating agent.
+6. **No nested sub-agents** — Sub-agents do not spawn their own sub-agents. All spawning is done by the coordinating agent. *If the work is bigger than scoped, report `BLOCKED_SCOPE_EXPANDED` with a proposed split (see Reporting Section); the orchestrator decides whether to spawn the children.*
 
 7. **Unblock dependent tasks** — After a sub-agent completes, immediately evaluate which downstream tasks are now unblocked and can be spawned next.
 
@@ -372,6 +461,8 @@ Delegation doesn't end at spawning. Active coordination prevents stuck sub-agent
 - Respond to unblocking requests promptly — a stuck sub-agent wastes parallel capacity
 - Verify results immediately after sub-agent reports back (don't batch verification)
 - Maintain a mental model of what each sub-agent is working on and when it should finish
+
+**When a sub-agent reports `BLOCKED_SCOPE_EXPANDED`** — treat it as a planning event, not a failure. The sub-agent's scoped discovery has surfaced something the original brief missed. Three valid responses: (1) approve the proposed split and spawn the children as separate sub-agents, (2) narrow the scope and re-brief the original sub-agent with tighter Done-when criteria, or (3) reject the split and accept the partial work. Don't silently ignore the proposal — chronic over-scoping AND chronic ignored proposals both indicate briefing discipline worth investigating.
 
 ---
 

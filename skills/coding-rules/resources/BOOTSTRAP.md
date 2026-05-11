@@ -39,6 +39,7 @@ Based on the task, you MUST read the appropriate workflow file before proceeding
 
 | Task Type | Read This File |
 |-----------|---------------|
+| Architecture / scope decision *before* coding | Run `team-composer` first (if installed) for multi-role trade-off discussion; come back here to route the resulting work. Otherwise see `When Stuck → Architecture decision`. |
 | New project setup (no existing code) | `workflows/new-project.md` |
 | New feature or enhancement | `workflows/feature.md` |
 | Bug fix | `workflows/bugfix.md` |
@@ -182,7 +183,7 @@ When asked to add code to a file that already imports a third-party vendor SDK d
 | Stuck on... | Do this |
 |---|---|
 | Unclear requirements | Ask 1–2 targeted questions. Don't guess silently. |
-| Architecture decision | Propose 2 options with trade-offs. Ask. |
+| Architecture decision | Run `team-composer` (if installed) for multi-role trade-off discussion. Otherwise propose 2 options with trade-offs and ask. |
 | Implementation approach | Search codebase for analogous code. Start simple. |
 | After 3 focused attempts | Log what you tried, mark BLOCKED, move on. |
 | Something outside your control | Create `DEVELOPER_TODO.md` entry and continue. |
