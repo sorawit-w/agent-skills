@@ -51,6 +51,18 @@ If the user asks to evaluate a creative-synthesis skill, say the harness is not 
 
 You can chain them: evaluator finds a gap → creator's conventions guide the rule-text fix.
 
+## Harness lens — what to audit beyond rule adherence
+
+Rule-adherence audits catch *whether the agent follows what the skill says*. The **harness lens** catches a different class of failure: *whether the skill is shaped right in the first place*. Run these five questions in addition to (not instead of) the standard adherence checks. They're cheap; one or two will usually surface a real issue.
+
+1. **Does the skill name its primitives?** A well-shaped skill is explicit about which of the five harness primitives it serves: context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. If the skill mixes all five implicitly, it probably has a scope problem. Flag: "Skill doesn't name what kind of work it's doing for the agent."
+2. **Progressive disclosure or front-loaded?** Is the SKILL.md body trying to be the encyclopedia, or is it a map that points to `references/` for detail? If body length > ~300 lines without clear section-then-reference structure, the skill is front-loading context that should be lazy. Flag: "Body should be a table of contents; details belong in `references/`."
+3. **Are feedback loops machine-checkable, or only prose?** Look for rules of the form "the agent should consider X" with no audit, no reviewer, no checkable artifact. Those rules drift. Flag: "Rule X is aspirational — propose a structured check (linter / reviewer subagent / explicit artifact gate)."
+4. **Environment-failure vs. prompt-failure misdiagnosis.** When the skill describes a known failure mode and prescribes "try harder" prompting, the diagnosis is probably wrong. Ask: *what capability is missing from the agent's environment?* (a tool, a reference file, an upstream artifact, an explicit gate). Flag: "Rule Y treats an environment failure as a prompting failure — consider adding [specific capability]."
+5. **State-preservation gap.** Does the skill produce artifacts a future session can pick up, or does it dump output to chat? For workflow skills that span sessions, output going only to chat is a state-preservation failure. Flag: "Outputs should land at a predictable path so a follow-up session can resume without re-briefing."
+
+Treat each finding the same way as adherence findings: classify by fix layer (skill text / rubric / brief / fixture) and propose targeted diffs. The harness lens does **not** change the rest of the workflow.
+
 ## Dependencies
 
 - **`skill-creator`** (Anthropic-shipped) — recommended. Used to enforce authoring conventions when you propose rule-text diffs. Suggest installation if the user doesn't have it.

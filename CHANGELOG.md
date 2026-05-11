@@ -5,6 +5,96 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.6.3] — 2026-05-11
+
+Absorb harness-engineering vocabulary into `CLAUDE.md` and existing skills.
+No new skill, no rule changes — names the discipline that skill authoring
+in this repo was already doing partly by instinct, and points at
+`coding-rules` as the canonical implementation.
+
+### Added
+
+- **`CLAUDE.md`** — new "Harness vocabulary" section after Quick reference:
+  the five primitives (context engineering, progressive disclosure,
+  observable feedback loops, state preservation, eval discipline) with one
+  repo pointer each, plus a "Canonical implementation in this repo"
+  paragraph naming `coding-rules`. External-reading footnote links the
+  Anthropic, OpenAI, and `AGENTS.md` sources.
+- **`CLAUDE.md`** — new **Design Principle 6** "Observable feedback loops
+  over aspirational prose," with a reactive-constraint corollary. Cites
+  `team-composer` Phase 6.6 Plan-review, `skill-evaluator`, the
+  pre-shipment audit ritual, and the four-file version bump as existing
+  examples of the principle.
+- **`skills/coding-rules/SKILL.md`** — new "Harness engineering connection"
+  section mapping each primitive to its concrete artifact in `coding-rules`
+  (`BOOTSTRAP.md`, `CONTEXT.md`, vendor agent-context files, `references/`,
+  hooks like `pre-commit-check.sh` / `protect-env.sh` / `protect-git.sh` /
+  `session-start-context.sh` / `knowledge-bootstrap.sh`, `.ai/memory.log`,
+  `.ai/STATUS.md`, `.ai/knowledge/`, `.ai/BLOCKERS.md`, `quality-gates.md`,
+  `validation.md`). Names `coding-rules` as the canonical implementation
+  that the abstract vocabulary in `CLAUDE.md` describes.
+- **`skills/skill-evaluator/SKILL.md`** — new "Harness lens" section with
+  five audit questions beyond rule adherence: does the skill name its
+  primitives; is it using progressive disclosure or front-loading; are
+  feedback loops machine-checkable; is a known failure mode an environment
+  problem misdiagnosed as a prompting problem; is there a state-
+  preservation gap.
+- **`skills/sub-agent-coordinator/SKILL.md`** — framing paragraph in the
+  intro: sub-agent coordination is harness engineering for delegated work
+  (briefings carry context, verify-before-completion is a feedback loop,
+  no-nested-sub-agents is state preservation). Names what's already there;
+  doesn't change mechanics.
+- **`skills/team-composer/SKILL.md`** — one-line annotation on Phase 6.6
+  intro naming it as an observable feedback loop over the draft Structured
+  Plan.
+- **`README.md`** — one sentence after "The shelf" pointing readers at the
+  harness vocabulary in `CLAUDE.md`.
+- **`AGENTS.md`** — new eleven-line pointer to `CLAUDE.md` as a
+  cross-vendor convention ([agents.md](https://agents.md/)). Non-Claude
+  agents (Codex, Copilot, others) land in the same place a Claude Code
+  session would. No content duplicated.
+
+### Changed
+
+- **`CLAUDE.md`** Skill anatomy table — `references/*.md` row annotated to
+  name **progressive disclosure** explicitly as the harness pattern of
+  loading detail on demand instead of front-loading into `SKILL.md`.
+
+### Why
+
+Anthropic and OpenAI both published harness-engineering posts framing the
+work *around* the agent — context, scaffolding, feedback, state, eval — as
+a discipline distinct from prompting. This repo was already doing most of
+it under different names. Absorbing the vocabulary lets future skill edits
+cite the primitives deliberately rather than rediscover them. The choice
+to absorb into existing files (rather than add a top-level skill) follows
+this repo's separation test: a new skill is justified when the workflow is
+both reusable and elicitation-shaped, neither of which fits "name a
+discipline already practiced."
+
+An earlier draft of this release added a `progress.md` continuity log and
+a `workflow-templates/` folder with `init-project` / `resume-project`
+slash commands. Both were removed during review — they duplicated
+`coding-rules`' `.ai/memory.log`, `.ai/STATUS.md`, and session-start
+hooks (`session-start-context.sh`, `knowledge-bootstrap.sh`), which are
+the sharper, working system. The State preservation row in the Harness
+vocabulary table now cites those `coding-rules` artifacts directly.
+
+External reading:
+- [Effective harnesses for long-running agents (Anthropic)](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
+- [Harness design for long-running application development (Anthropic)](https://www.anthropic.com/engineering/harness-design-long-running-apps)
+- [Harness engineering: leveraging Codex in an agent-first world (OpenAI)](https://openai.com/index/harness-engineering/)
+- [agents.md convention](https://agents.md/)
+
+### Notes
+
+- No skill rules, triggers, YAML frontmatter, or output contracts changed.
+  All edits are additive prose.
+- No new top-level skill. Harness-engineering principles live in
+  `CLAUDE.md` and existing skill bodies, not as a separate skill.
+- `skills/coding-rules/resources/agent-context.schema.yaml` had a
+  pre-existing local modification unrelated to this release; not included.
+
 ## [3.6.2] — 2026-05-11
 
 Adherence-only documentation patch. The 3.6.0 release introduced the

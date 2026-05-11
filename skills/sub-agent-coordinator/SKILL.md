@@ -33,6 +33,8 @@ Orchestrate focused work across multiple sub-agents using proven patterns. This 
 
 Use this skill to **parallelize independent work, avoid conflicts, and maintain coordination state** across sub-agents.
 
+> **Framing — sub-agent coordination is harness engineering for delegated work.** Each primitive shows up here explicitly: *context engineering* lives in the briefing templates (what the sub-agent sees before it starts); *observable feedback loops* live in the verify-before-completion gate and structured-result contracts; *state preservation* is why all spawning happens at the parent level (no nested sub-agents) — nested state is unrecoverable. When a sub-agent run fails, ask which primitive was underspecified before asking whether the sub-agent was "wrong."
+
 ---
 
 ## What Are Sub-Agents

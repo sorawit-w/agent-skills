@@ -19,6 +19,24 @@ Once the BOOTSTRAP.md path is resolved, all other resource paths follow the same
 
 ---
 
+## Harness engineering connection
+
+`coding-rules` is the **canonical implementation of harness-engineering primitives** in this repo. The vocabulary lives in [`CLAUDE.md`](../../CLAUDE.md) → "Harness vocabulary"; the working machinery lives here. Map:
+
+| Harness primitive | Concrete artifact in `coding-rules` |
+|---|---|
+| **Context engineering** | `CONTEXT.md` (project domain glossary at root) + `BOOTSTRAP.md` (operating rules) + vendor agent-context files (`CLAUDE.md`, `AGENTS.md`, `AI-CONTEXT.md`, `.cursorrules`) kept in sync — see `references/multi-tool.md` |
+| **Progressive disclosure** | `BOOTSTRAP.md` is the index; `resources/references/*.md` carry the long-tail (debugging, knowledge-management, sub-agent-delegation, validation, etc.) loaded only when cited |
+| **Observable feedback loops** | `hooks/pre-commit-check.sh`, `hooks/protect-env.sh`, `hooks/protect-git.sh`, quality gates from `references/quality-gates.md`, verification gates from `references/validation.md` |
+| **State preservation** | `.ai/memory.log` (append-only session history) + `.ai/STATUS.md` (current ephemeral state) + `.ai/knowledge/` (curated wiki of decisions/conventions/lessons) + `.ai/BLOCKERS.md` (created only when blocked) — all bootstrapped by `hooks/session-start-context.sh` and `hooks/knowledge-bootstrap.sh` |
+| **Eval discipline** | `references/quality-gates.md` + verification-before-completion pattern; pre-commit hook enforces gates mechanically rather than relying on agent memory |
+
+This skill's job is the **loading** step — getting BOOTSTRAP into context reliably so the rules and artifact conventions govern the session. The rules themselves live in `resources/BOOTSTRAP.md`; the supporting machinery (hooks, references, workflows, templates) sits under `resources/`.
+
+**When the harness-engineering vocabulary in `CLAUDE.md` cites a primitive, this skill is usually the concrete example.** If you want to see what context engineering, progressive disclosure, observable feedback loops, state preservation, or eval discipline look like *implemented* (not just described), read the corresponding row above.
+
+---
+
 ## Sub-command routing
 
 Determine the sub-command from the `args` parameter passed when the skill was invoked. If `args` is empty or unset, default to `load`. The user may also express intent in natural language (e.g., "install coding-rules in this project" → `install`).

@@ -67,6 +67,8 @@ Click a skill to jump to its details.
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
+This repo treats skill authoring as **harness engineering** — designing the context, scaffolding, feedback loops, state, and eval discipline *around* an agent so it can do reliable work. See [`CLAUDE.md`](CLAUDE.md) → "Harness vocabulary" for the five primitives and where each shows up in the shelf.
+
 ---
 
 ## How skills chain
@@ -444,7 +446,9 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-`3.6.2` is the current release. Adherence-only documentation patch. The 3.6.0 release introduced the `wear-the-hat` skill but failed to update the root README's catalog sections (TL;DR count, "The shelf" table, "Skill details" entry) — the skill was registered in the plugin manifests but invisible to GitHub readers browsing the catalog. This patch fills those gaps and adds a new-skill catalog requirement to `CLAUDE.md`'s release ritual so future skill additions don't miss the catalog updates. Adjacent skills' "Pairs well with" lists now reference `wear-the-hat` bidirectionally.
+`3.6.3` is the current release. Doc-only patch absorbing **harness engineering** vocabulary into `CLAUDE.md` and existing skills. No new skill, no rule changes — names the discipline that skill authoring in this repo was already doing partly by instinct (context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline), and points at `coding-rules` as the canonical implementation. Adds Design Principle 6 to `CLAUDE.md` ("Observable feedback loops over aspirational prose," with a reactive-constraint corollary), a "Harness lens" audit section to `skill-evaluator`, framing paragraphs to `sub-agent-coordinator` and `team-composer` Phase 6.6, and an `AGENTS.md` cross-vendor pointer to `CLAUDE.md`. An earlier draft added a `progress.md` continuity log + slash commands; both were removed when review confirmed `coding-rules`' `.ai/memory.log` + `.ai/STATUS.md` + session-start hooks are the sharper, working system.
+
+Earlier in v3.6.2: Adherence-only documentation patch. The 3.6.0 release introduced the `wear-the-hat` skill but failed to update the root README's catalog sections (TL;DR count, "The shelf" table, "Skill details" entry) — the skill was registered in the plugin manifests but invisible to GitHub readers browsing the catalog. This patch fills those gaps and adds a new-skill catalog requirement to `CLAUDE.md`'s release ritual so future skill additions don't miss the catalog updates. Adjacent skills' "Pairs well with" lists now reference `wear-the-hat` bidirectionally.
 
 Earlier in v3.6.1: Adherence-only patch from a pre-shipment `skill-evaluator` audit of the new `wear-the-hat` skill. Adds a **Role name authority** rule to Phase 2 (Load persona): use the exact role name from `team-composer/references/role-personas.md`; do not paraphrase or invent variants. Includes a graceful-degradation fallback when the auto-pick heuristic returns a role not present in the catalog. No other behavior change. All other audit findings across the three skills audited (`wear-the-hat`, `sub-agent-coordinator`, `team-composer`) classified as test-design issues, not skill issues. Overall pass rate 66/73 assertions (90.4%).
 
@@ -460,7 +464,7 @@ Earlier in v3.2.0: refined the `handshake` skill following its pre-shipment audi
 
 Earlier in v3.1.0: added the `handshake` skill — a brief, opt-in collaboration calibration ritual that runs before the real work (slash-command-only at v1, two-mode design with core calibration + optional project overlay, hard never-ask list, single-user contract, capability-gated integration with the existing two-tier memory store).
 
-Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.6.2 + v3.6.1 + v3.6.0 + v3.5.1 + v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
+Earlier in v3.0.0: `brand-workshop`'s starter design-system output migrated to the [Google Labs `DESIGN.md` format](https://github.com/google-labs-code/design.md) (alpha spec). The downstream startup-pipeline skills (`validation-canvas`, `riskiest-assumption-test`, `pitch-deck`) now read tokens directly from `colors.primary` in the YAML front matter. See [CHANGELOG.md](CHANGELOG.md) for full v3.6.3 + v3.6.2 + v3.6.1 + v3.6.0 + v3.5.1 + v3.5.0 + v3.4.0 + v3.2.0 + v3.1.0 + v3.0.0 entries and migration notes.
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

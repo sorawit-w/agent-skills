@@ -710,6 +710,8 @@ un-flagged assumptions, missing files/modules, dependency cycles, scope drift ri
 `@staff_engineer` keeps authorship and decides what to fold in. This asymmetry is
 deliberate — two co-authors produce two competing voices and no clear final.
 
+> **Harness-engineering framing:** Phase 6.6 is an *observable feedback loop* over the draft Structured Plan — a machine-checkable review pass that turns "is this plan rigorous?" into a structured artifact instead of a vibe. See CLAUDE.md → "Harness vocabulary" for the family of primitives this slots into.
+
 ### When to Trigger
 
 Two-stage rollout. Ship conservatively at Stage 1, lower the threshold to Stage 2

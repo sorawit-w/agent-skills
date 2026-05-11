@@ -26,6 +26,28 @@ This file is your onboarding when working on **skill authoring in this repo**. I
 
 ---
 
+## Harness vocabulary
+
+Skill authoring in this repo is **harness engineering** — the discipline of designing everything *around* an agent that determines whether it succeeds: context, scaffolding, feedback, state, evaluation. We already do most of this; naming the primitives lets future edits be deliberate instead of accidental.
+
+The five primitives, with one concrete repo pointer each:
+
+| Primitive | What it means here | Repo example |
+|---|---|---|
+| **Context engineering** | Organize information so the agent can reason over it. Repo-local, versioned, not in chat threads. | `SKILL.md` frontmatter `description` + `instructions` — what the agent sees before it decides to invoke. |
+| **Progressive disclosure** | Load detail on demand instead of front-loading everything. The harness pattern behind `references/`. | `team-composer/references/role-personas.md` — read lazily when the skill body cites it. |
+| **Observable feedback loops** | Prefer machine-checkable signal over aspirational prose. Linters, audits, structured reviewers beat "be careful." | `skill-evaluator` (rule-adherence audit) + `team-composer` Phase 6.6 (Plan-subagent structural review). |
+| **State preservation** | Carry useful context across session boundaries. Skill authoring sessions are short; project work isn't. | The `coding-rules` skill's `.ai/memory.log` (append-only session log) + `.ai/STATUS.md` (current state) + `.ai/knowledge/` (curated wiki). Canonical implementation in this repo — see `skills/coding-rules/SKILL.md`. |
+| **Eval discipline** | Decide what "working" means before shipping. | Pre-shipment audit ritual: `skill-evaluator` + `skill-creator` description check before version bump. |
+
+**Canonical implementation in this repo:** the [`coding-rules`](skills/coding-rules/SKILL.md) skill. The five primitives above are vocabulary; `coding-rules` is the working machinery — `BOOTSTRAP.md` for context, `references/` for progressive disclosure, hooks like `pre-commit-check.sh` for feedback loops, `.ai/memory.log` + `.ai/STATUS.md` + `.ai/knowledge/` for state preservation, `references/quality-gates.md` for eval discipline. When this vocabulary cites a primitive abstractly, `coding-rules/SKILL.md` shows it implemented concretely.
+
+**External reading:** Anthropic ([effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), [harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps)); OpenAI ([harness engineering](https://openai.com/index/harness-engineering/)); the [`AGENTS.md`](https://agents.md/) convention.
+
+**How to use this vocabulary.** When you propose a new rule or skill change, ask: *which primitive is this serving?* If you can't answer, the change is probably speculative. When you debug a skill that "just isn't working," ask: *is the environment underspecified (context, scaffolding, feedback) or is the prompt wrong?* Most agent failures are environment failures wearing a prompt-failure mask.
+
+---
+
 ## Skill anatomy
 
 A complete skill ships with the files below. Existing skills are templates by example — read at least one before creating a new one (`sub-agent-coordinator`, `team-composer`, and `wear-the-hat` are recent and consistent).
@@ -34,7 +56,7 @@ A complete skill ships with the files below. Existing skills are templates by ex
 |---|---|---|
 | `skills/<name>/SKILL.md` | yes | YAML frontmatter + skill body |
 | `skills/<name>/README.md` | yes | User-facing docs — banner at top, then standard sections |
-| `skills/<name>/references/*.md` | optional | Long-tail topic guides loaded by the skill body |
+| `skills/<name>/references/*.md` | optional | Long-tail topic guides loaded by the skill body. This is **progressive disclosure** — the harness pattern of loading detail on demand instead of front-loading everything into `SKILL.md`. |
 | `skills/<name>/templates/*` | optional | Starter files the skill emits |
 | `skills/<name>/commands/*.md` | optional | Slash-command entry points |
 | `skills/<name>/CLAUDE.md` | optional | Skill-internal authoring rules (rare; coding-rules has one) |
@@ -267,6 +289,20 @@ When drafting an "opinionated overlay" on top of a framework, row-by-row ask: "w
 **Example:** the sub-agent-coordinator coding-work mapping (10 rows) started in `coding-rules` as an "opinionated overlay." On review, 9 of 10 rows were universal defaults, not personal taste — they got promoted to coordinator's `Default Mapping (Coding Work)`. coding-rules became a thin pointer.
 
 **Why:** the temptation is to draw the framework/opinion line along skill boundaries (coordinator = framework; coding-rules = opinion). The real line is along *actual taste* — and most calibration matrices have more defensible defaults than they look like at first.
+
+### 6. Observable feedback loops over aspirational prose
+
+Prefer constraints the harness can *check* over rules only a careful human reviewer can verify. Aspirational prose ("be rigorous", "consider edge cases") drifts on contact with real runs; structured reviewers, linters, and audit rituals do not.
+
+**Examples in this repo:**
+- `team-composer` Phase 6.6 — a `Plan` subagent reviews the draft Structured Plan and returns ranked findings. The check happens; "be rigorous" is reified.
+- `skill-evaluator` — split-context audit that asks "does the text land?" instead of trusting self-review.
+- Pre-shipment audit ritual — `skill-evaluator` + description check run before every version bump that touches SKILL.md.
+- The four-file version bump in this CLAUDE.md — concrete checklist beats "remember to update the manifest."
+
+**Reactive corollary.** Every line of a good rule traces to a specific past failure. If you can't name the failure you're preventing, the rule is speculative — it belongs in `docs/` or a `references/` file until a real incident promotes it.
+
+**Why:** harness engineering literature converges on this — "the fix is almost never *try harder*; it's *make the missing capability legible and enforceable.*" Prose rules ask the agent to try harder. Feedback loops give the agent (or auditor) something to check against.
 
 ---
 
