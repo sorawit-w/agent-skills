@@ -1,6 +1,25 @@
 ---
 name: validation-canvas
-description: Elicits founder beliefs block-by-block to produce a Lean Canvas (Maurya) + Value Proposition Canvas (Osterwalder) combined artifact as both `validation-canvas.md` (canonical, editable) and `validation-canvas.html` (self-contained visual). Job — "what do we believe?" (declarative). Adapts to founder experience via a 3-question intake at invocation that maps to Guided / Focused / Compressed-with-Challenge modes. Use whenever the user asks to "build a validation canvas", "lean canvas for my startup", "VPC", "value proposition canvas", "map out my business model", "fill in the lean blocks", or uploads a product idea and asks how to articulate the model. Also trigger when the user has brand-workshop output ready and wants the next strategy artifact, or when `@startup_strategist` is the right lens. Even if the user only asks for one block (e.g., "help me figure out my unfair advantage"), use this skill — the other blocks stress-test that block's claims. NOTE: this skill replaces the prior `business-model-canvas` (BMC) skill; the Lean Canvas is the right altitude for an idea-stage founder, where BMC was wrong altitude (Series-A operating plan). For nine-block BMC compatibility (board packets, regulated pitches), use `team-composer` with `@startup_strategist` instead.
+description: >
+  Elicits founder beliefs block-by-block to produce a Lean Canvas (Maurya)
+  + Value Proposition Canvas (Osterwalder) combined artifact as both
+  `validation-canvas.md` (canonical, editable) and `validation-canvas.html`
+  (self-contained visual). Job — "what do we believe?" (declarative).
+  Adapts to founder experience via a 3-question intake at invocation that
+  maps to Guided / Focused / Compressed-with-Challenge modes. Use whenever
+  the user asks to "build a validation canvas", "lean canvas for my
+  startup", "VPC", "value proposition canvas", "map out my business
+  model", "fill in the lean blocks", or uploads a product idea and asks
+  how to articulate the model. Also trigger when the user has
+  brand-workshop output ready and wants the next strategy artifact, or
+  when `@startup_strategist` is the right lens. Even if the user only
+  asks for one block (e.g., "help me figure out my unfair advantage"),
+  use this skill — the other blocks stress-test that block's claims.
+  NOTE: this skill replaces the prior `business-model-canvas` (BMC)
+  skill; the Lean Canvas is the right altitude for an idea-stage founder,
+  where BMC was wrong altitude (Series-A operating plan). For nine-block
+  BMC compatibility (board packets, regulated pitches), use `team-composer`
+  with `@startup_strategist` instead.
 ---
 
 # Validation Canvas

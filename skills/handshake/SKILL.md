@@ -16,31 +16,6 @@ description: >
   ("get to know my codebase"), performance-review calibration ("set Q3
   calibration goals"), or content gathering (resumes, bios, requirements docs,
   CV bullets) — those are different jobs handled by other skills.
-instructions: |
-  Load this skill when:
-  - The user invokes the `/handshake` slash command directly
-  - The user says "calibrate how we work," "let's set working preferences,"
-    "tune in to me," "set up a working agreement," or "get to know me"
-  - Another skill (e.g., `team-composer`, `brand-workshop`) suggests running
-    handshake first because relevant `user`-type memory is empty or stale,
-    AND the user accepts that suggestion
-
-  Do NOT load this skill when:
-  - The user is in the middle of unrelated work and hasn't asked for calibration
-  - There is no persistent memory system available in the current runtime
-    (the skill writes to memory — without it, there's nothing to capture)
-  - The user has already run `/handshake` recently and has core `user`-type
-    memory entries — re-invocation should be deliberate, not automatic
-  - The request is for project-content gathering (resume bullets, codebase
-    summaries, requirements docs) — that's a different skill's job
-
-tags:
-  - calibration
-  - collaboration
-  - memory
-  - onboarding
-  - personalization
-  - working-agreement
 ---
 
 # Handshake
@@ -319,3 +294,24 @@ Not accepting external contributions right now. Feel free to fork.
 ## License
 
 MIT — see the [LICENSE](https://github.com/sorawit-w/agent-skills/blob/main/LICENSE) file at the repo root.
+
+## When to use this skill
+
+Load this skill when:
+- The user invokes the `/handshake` slash command directly
+- The user says "calibrate how we work," "let's set working preferences,"
+  "tune in to me," "set up a working agreement," or "get to know me"
+- Another skill (e.g., `team-composer`, `brand-workshop`) suggests running
+  handshake first because relevant `user`-type memory is empty or stale,
+  AND the user accepts that suggestion
+
+Do NOT load this skill when:
+- The user is in the middle of unrelated work and hasn't asked for calibration
+- There is no persistent memory system available in the current runtime
+  (the skill writes to memory — without it, there's nothing to capture)
+- The user has already run `/handshake` recently and has core `user`-type
+  memory entries — re-invocation should be deliberate, not automatic
+- The request is for project-content gathering (resume bullets, codebase
+  summaries, requirements docs) — that's a different skill's job
+
+**Tags:** calibration, collaboration, memory, onboarding, personalization, working-agreement

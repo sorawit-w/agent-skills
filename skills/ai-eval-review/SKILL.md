@@ -37,16 +37,6 @@ description: >
   gaps, it does not implement them — see HELM, Anthropic's eval cookbook,
   OpenAI Evals, Weights & Biases, or Evidently for implementation tools);
   pitch deck construction (use `pitch-deck`).
-tags:
-  - ai
-  - eval
-  - evaluation
-  - mlops
-  - responsible-ai
-  - fairness
-  - drift
-  - llm
-  - design-review
 ---
 
 # AI Eval Review
@@ -545,3 +535,5 @@ enhancements, not requirements.
 Read these when the phase calls for them. Do not front-load all references
 at once — that's the progressive disclosure pattern this repo uses (see
 `CLAUDE.md` → "Harness vocabulary").
+
+**Tags:** ai, eval, evaluation, mlops, responsible-ai, fairness, drift, llm, design-review

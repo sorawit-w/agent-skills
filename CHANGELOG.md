@@ -5,6 +5,73 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.9.2] — 2026-05-11
+
+Adherence-only YAML frontmatter cleanup across 8 skills to align with the
+cross-tool [SKILL.md standard](https://agentskills.io) consumed by Claude
+Code, Codex CLI, Gemini CLI, Cursor, and other agents. No skill behavior
+or description content changed.
+
+### Fixed
+
+- **`skills/coding-rules/SKILL.md`**, **`skills/pitch-deck/SKILL.md`**,
+  **`skills/validation-canvas/SKILL.md`** — plain-inline `description:`
+  fields contained `: ` (colon-space) sequences that YAML parsers
+  interpreted as nested mapping keys, breaking frontmatter parsing
+  entirely. Each `description:` is now a `>` folded scalar (the same
+  style 9 other skills already use). PyYAML strict mode + Codex now
+  accept all three.
+
+### Changed
+
+- **`skills/handshake/SKILL.md`**, **`skills/sub-agent-coordinator/SKILL.md`**,
+  **`skills/wear-the-hat/SKILL.md`** — moved `instructions:` and `tags:`
+  frontmatter keys into the body as a new `## When to use this skill`
+  section + `**Tags:**` line. Codex's documented optional fields are
+  `when_to_use`, `allowed-tools`, `disable-model-invocation`,
+  `argument-hint`, `arguments`, `paths`, `model`, `effort` —
+  `instructions` and `tags` are not in the allowlist. Moving them to
+  the body preserves all content (Claude reads the body on activation
+  regardless) and avoids unknown-field errors in stricter parsers.
+- **`skills/ai-ux-review/SKILL.md`**, **`skills/ai-eval-review/SKILL.md`** —
+  same treatment for `tags:` (no `instructions:` to move). Defensive
+  alignment with the same standard.
+
+### Why
+
+Reactive corollary — the user reported three named skills (`coding-rules`,
+`pitch-deck`, `validation-canvas`) failing to load in Codex with "invalid
+YAML frontmatter" errors, plus `handshake` as a fourth case with a
+different failure mode. PyYAML confirmed the three with `: ` collisions
+in plain-inline scalars; `handshake` parsed cleanly per PyYAML, so the
+unverified-but-plausible hypothesis is unknown-field rejection on the
+`instructions:` key. Fix #1 (move to body) addresses both failure modes
+without information loss and without changing Claude behavior. The two
+tags-only skills (`ai-ux-review`, `ai-eval-review`) got the same
+treatment defensively even though no failure was reported, because the
+risk profile is identical to the affected three.
+
+### Verification
+
+- PyYAML strict-mode validation across all 17 SKILL.md files: **17/17
+  pass** after the patch (3 were invalid before, 14 valid before).
+- All 5 cleaned files now contain only `name` + `description` in
+  frontmatter — the documented minimum required by both Claude Code and
+  Codex per the open agent skills standard.
+
+### Notes
+
+- Cosmetic: the new `## When to use this skill` section in
+  `handshake` / `sub-agent-coordinator` / `wear-the-hat` sits after the
+  existing `## License` section. Functional correctness is unaffected;
+  structural reorder deferred to a future cleanup.
+- No README catalog changes — frontmatter patch inside existing skills,
+  not new skills.
+- The `handshake` failure was not directly reproducible via PyYAML, so
+  the fix for that skill is hypothesis-driven (labeled as such in the
+  conversation that produced this patch, per the §Diagnosis rule
+  introduced in v3.9.0).
+
 ## [3.9.1] — 2026-05-11
 
 Adherence-only documentation patch. Surfaces the token cost of

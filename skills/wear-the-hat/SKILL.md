@@ -18,25 +18,6 @@ description: >
   Reuses `team-composer/references/role-personas.md` as the canonical role
   catalog (no duplicate taxonomy). For panel discussion of one decision use
   `team-composer`; for parallel worker fan-out use `sub-agent-coordinator`.
-instructions: |
-  Load this skill when:
-  - The user explicitly tags a role with `@role` from the team-composer catalog
-  - The user uses a role-embodiment phrase ("act as", "wear the hat of",
-    "as the [role]", "from the [role]'s perspective", "embody", "channel")
-  - The user wants one specific lens applied to a task — solo, not panel
-
-  Do NOT load this skill when:
-  - The user wants multiple roles to discuss the same decision → team-composer
-  - The user wants N parallel workers on independent tasks → sub-agent-coordinator
-  - The task has no role-lens framing — let the normal skill stack handle it
-
-tags:
-  - role
-  - persona
-  - solo-embodiment
-  - single-role
-  - lens
-  - auto-pick
 ---
 
 # wear-the-hat
@@ -236,3 +217,18 @@ Equivalent to the natural-language form, just unambiguous.
 ## Status
 
 v0.1 — new skill. Catalog lives in `team-composer` until a fourth consumer emerges or the catalog moves to a shared location. The auto-pick heuristic is a small keyword/verb table (~25–30 rows), not an ML classifier — calibrate by editing `references/auto-pick-heuristic.md`.
+
+## When to use this skill
+
+Load this skill when:
+- The user explicitly tags a role with `@role` from the team-composer catalog
+- The user uses a role-embodiment phrase ("act as", "wear the hat of",
+  "as the [role]", "from the [role]'s perspective", "embody", "channel")
+- The user wants one specific lens applied to a task — solo, not panel
+
+Do NOT load this skill when:
+- The user wants multiple roles to discuss the same decision → team-composer
+- The user wants N parallel workers on independent tasks → sub-agent-coordinator
+- The task has no role-lens framing — let the normal skill stack handle it
+
+**Tags:** role, persona, solo-embodiment, single-role, lens, auto-pick

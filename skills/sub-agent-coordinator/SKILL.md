@@ -5,26 +5,6 @@ description: >
   Use this skill when delegating focused tasks to parallel sub-agents, coordinating
   iterations, or architecting complex workflows. Load this whenever you need
   spawning signals, briefing templates, coordination patterns, or communication protocols.
-instructions: |
-  Load this skill when:
-  - Delegating work to sub-agents (fan-out parallel tasks, pipelines, specialist routing)
-  - You need briefing templates (quick vs. full) for sub-agent spawn commands
-  - Architecting coordination patterns (fan-out, pipeline, specialist domain, review/validation)
-  - Resolving coordination issues (file conflicts, communication, nested delegation)
-  - Designing workflow checkpoints and quality gates
-  
-  Do NOT load this if:
-  - Your platform does not support sub-agents (use sequential implementation instead)
-  - The task is trivial (<2 minutes) or single-file
-  - You need only basic delegation signals (the fallback stub covers this)
-
-tags:
-  - coordination
-  - delegation
-  - orchestration
-  - sub-agents
-  - parallelization
-  - workflow
 ---
 
 # Sub-Agent Coordinator
@@ -602,3 +582,19 @@ Before spawning a sub-agent, verify:
 ---
 
 Originally part of the coding-rules project (MIT).
+
+## When to use this skill
+
+Load this skill when:
+- Delegating work to sub-agents (fan-out parallel tasks, pipelines, specialist routing)
+- You need briefing templates (quick vs. full) for sub-agent spawn commands
+- Architecting coordination patterns (fan-out, pipeline, specialist domain, review/validation)
+- Resolving coordination issues (file conflicts, communication, nested delegation)
+- Designing workflow checkpoints and quality gates
+
+Do NOT load this if:
+- Your platform does not support sub-agents (use sequential implementation instead)
+- The task is trivial (<2 minutes) or single-file
+- You need only basic delegation signals (the fallback stub covers this)
+
+**Tags:** coordination, delegation, orchestration, sub-agents, parallelization, workflow

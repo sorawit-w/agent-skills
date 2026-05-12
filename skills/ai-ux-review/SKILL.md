@@ -35,13 +35,6 @@ description: >
   `@ai_safety_specialist`); building evaluation pipelines, writing eval code,
   or labeling datasets (this skill names eval gaps, it does not implement
   them); pitch deck construction (use `pitch-deck`).
-tags:
-  - ai
-  - ux
-  - human-centered-ai
-  - design-review
-  - llm
-  - responsible-ai
 ---
 
 # AI UX Review
@@ -556,3 +549,5 @@ enhancements, not requirements.
 Read these when the phase calls for them. Do not front-load all references
 at once — that's the progressive disclosure pattern this repo uses (see
 `CLAUDE.md` → "Harness vocabulary").
+
+**Tags:** ai, ux, human-centered-ai, design-review, llm, responsible-ai

@@ -1,6 +1,13 @@
 ---
 name: coding-rules
-description: Load, install, reload, check status of, or uninstall the coding-rules guardrails system. Invoke ONLY when the user explicitly mentions "coding-rules", "/coding-rules", or asks to load/install/uninstall/check coding-rules guardrails. Do NOT invoke on general coding tasks (fixing bugs, implementing features, refactoring) — coding-rules is a meta-system that itself governs how those tasks are done. Sub-commands via the args parameter: `load` (default), `reload`, `status`, `install`, `uninstall`.
+description: >
+  Load, install, reload, check status of, or uninstall the coding-rules
+  guardrails system. Invoke ONLY when the user explicitly mentions
+  "coding-rules", "/coding-rules", or asks to load/install/uninstall/check
+  coding-rules guardrails. Do NOT invoke on general coding tasks (fixing
+  bugs, implementing features, refactoring) — coding-rules is a meta-system
+  that itself governs how those tasks are done. Sub-commands via the args
+  parameter: `load` (default), `reload`, `status`, `install`, `uninstall`.
 ---
 
 # coding-rules — session loader
