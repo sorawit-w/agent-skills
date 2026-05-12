@@ -78,6 +78,20 @@ The two chain naturally: evaluator finds a gap → creator's conventions guide t
 - **Assertions ≠ scoring.** The report leads with failure classification, not a percentage. A pass rate is a weak signal; a classified failure list is an actionable one.
 - **Layer-aware fix taxonomy.** Reflexively attributing every failure to the skill text produces over-written skills full of band-aids for test problems. Forcing the classification prevents that.
 
+## What it costs to run
+
+**Token-hungry by design.** The split-role harness in Phase 4 is the load-bearing constraint that makes the audit independent — collapse it and you lose the bias-free grading the whole skill exists to provide. A typical run consumes:
+
+- **One executor sub-agent per test** — reads the target `SKILL.md` and every referenced file before doing anything else.
+- **One grader sub-agent per test, fresh context, no skill-text access** — cannot be batched across tests. The rule says *"fresh context per test (mandatory)"* because batched graders drift toward consistency over evidence.
+- **Phase 1 read pass** — every reference file the target skill cites. Skill bodies are often 30–60% in references, so this is not optional.
+
+For 5 test prompts that's ~10 sub-agent invocations plus the Phase 1 read pass. For 10 prompts with opt-in high-stakes mode (second-grader quorum), ~30. Plan accordingly.
+
+The cost is intentional: the same agent that executed the skill cannot fairly grade whether it followed the skill, and prompting a grader to "be objective" still drifts toward what the skill *said to do* over what was *actually done*. Cheaper variants exist (in-context adversarial review, single-sub-agent audits), but they trade signal for cost — and "the audit said it was fine" carries weight only when the audit was independent.
+
+**When a lighter pass is the right substitute.** For a single-section rule edit (one paragraph, well-scoped), in-context adversarial review by the author surfaces ~80–90% of the value at ~10% of the cost. Save the full harness for whole-skill changes, critical-rule additions, or audits that need to be defensible (regulated context, ship gate, "we shipped a bug last time" situations).
+
 ## Install
 
 This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/claude-code) plugin inside the [`sorawit-w/agent-skills`](https://github.com/sorawit-w/agent-skills) marketplace. From Claude Code or Cowork:

@@ -5,6 +5,45 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.9.1] — 2026-05-11
+
+Adherence-only documentation patch. Surfaces the token cost of
+`skill-evaluator`'s split-role harness in both the skill's README and
+the root README. The information was already present in Phase 4 of
+`skill-evaluator`'s `SKILL.md` (high-stakes mode "Cost roughly doubles,
+so default is off") but tucked deep in the workflow rather than where
+users deciding whether to invoke the skill would see it.
+
+### Changed
+
+- **`skills/skill-evaluator/README.md`** — new `## What it costs to
+  run` section between "Design choices worth knowing" and "Install."
+  Names the per-test cost (one executor + one grader sub-agent, fresh
+  context for the grader, Phase 1 read pass through every reference
+  file the target skill cites), the typical run cost (~10 sub-agent
+  invocations for 5 prompts, ~30 for 10 prompts + opt-in second-grader
+  quorum), the design rationale (bias-free grading is the load-bearing
+  constraint), and when a lighter in-context adversarial review is the
+  right substitute (single-section rule edits — ~80–90% of the value
+  at ~10% of the cost).
+- **`README.md`** (root) — new `**Heads up — token-hungry by design.**`
+  paragraph in the `skill-evaluator` detail entry, between "Reach for
+  it when" and "Pairs well with." Compressed restatement pointing
+  readers at the skill's own README for the full cost breakdown.
+
+### Why
+
+"Is this expensive?" is the first question users ask before invoking
+an audit harness, and the answer was buried in workflow-body prose.
+Surfacing it in both the per-skill README (where users land after
+deciding to look) and the root README (where users decide whether to
+look) means readers can make the call without reading Phase 4 first.
+
+### Notes
+
+- No skill text or behavior changes. `SKILL.md` is unchanged.
+- No new skills, no catalog changes, no breaking changes.
+
 ## [3.9.0] — 2026-05-11
 
 Adds a new **§Diagnosis** hard rule to `coding-rules`' BOOTSTRAP.md.
