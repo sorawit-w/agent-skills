@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  pixel-art title-card SVG template.
+
+  USAGE
+  ~~~~~
+  Replace these tokens:
+    {{TITLE}}        the title text, e.g. "Whispers of the Flame"
+    {{FONT}}         font family, e.g. "VT323" (default) or "Pixelify Sans" / "Press Start 2P" / "Silkscreen" / "DotGothic16"
+    {{FG_COLOR}}     title foreground hex, e.g. #f5e7c4
+    {{SHADOW_COLOR}} inset shadow hex, e.g. #3a2a1a
+    {{BG_COLOR}}     background hex, e.g. #1f1410 (or "transparent" to overlay on a generated image)
+    {{WIDTH}}        canvas width in px (default 1280)
+    {{HEIGHT}}       canvas height in px (default 720)
+    {{FONT_SIZE}}    title font size in px (default 96 for 1280x720; scale proportionally for other sizes)
+
+  The template ships with VT323 + the candlelit-interior palette by default.
+  Replace tokens by hand or via a small generator (e.g. sed, Python).
+
+  RENDERING
+  ~~~~~~~~~
+  The @import in <style> loads the Google Font when the SVG is
+  rendered in a browser. For headless renderers (e.g. resvg, rsvg-convert,
+  Inkscape CLI), embed the font locally or rasterize via a browser-based
+  pipeline (e.g. Playwright screenshot). Without the font loaded, the
+  text falls back to the browser's monospace and loses the pixel character.
+
+  NOTE on XML comment rules: this comment uses tildes for underlines
+  because the XML 1.0 spec forbids the literal two-hyphen sequence in
+  comments; double-hyphen would terminate the comment early.
+-->
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1280 720"
+     width="1280" height="720"
+     role="img"
+     aria-label="{{TITLE}} - pixel-art title card"
+     shape-rendering="crispEdges"
+     style="image-rendering: pixelated; image-rendering: crisp-edges;">
+
+  <title>{{TITLE}}</title>
+  <desc>Pixel-art title card with VT323 font, bold + inset-shadow styling, palette-matched.</desc>
+
+  <defs>
+    <!-- Load VT323 (default) from Google Fonts. Swap the family name in the @import URL when changing fonts. -->
+    <style type="text/css">
+      @import url('https://fonts.googleapis.com/css2?family=VT323&amp;family=Pixelify+Sans:wght@400;700&amp;family=Press+Start+2P&amp;family=Silkscreen:wght@400;700&amp;family=DotGothic16&amp;display=swap');
+      .pixel-title-fg {
+        font-family: '{{FONT}}', 'VT323', ui-monospace, Menlo, monospace;
+        font-size: {{FONT_SIZE}}px;
+        fill: {{FG_COLOR}};
+        font-weight: 400;
+      }
+      .pixel-title-shadow {
+        font-family: '{{FONT}}', 'VT323', ui-monospace, Menlo, monospace;
+        font-size: {{FONT_SIZE}}px;
+        fill: {{SHADOW_COLOR}};
+        font-weight: 400;
+      }
+    </style>
+
+    <!-- Optional scanlined warm-paper pattern for lo-fi mode -->
+    <pattern id="pixel-art-scan" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+
+  <!-- Background. Replace fill with url(#pixel-art-scan) for lo-fi mode, or "none" for overlay on a generated image. -->
+  <rect width="1280" height="720" fill="{{BG_COLOR}}"/>
+
+  <!-- Inset shadow (drawn first, offset by +4/+4) -->
+  <text x="640" y="368"
+        class="pixel-title-shadow"
+        text-anchor="middle"
+        dominant-baseline="middle">{{TITLE}}</text>
+
+  <!-- Foreground title (drawn on top, offset by -2/-2 from shadow for "inset" feel) -->
+  <text x="636" y="362"
+        class="pixel-title-fg"
+        text-anchor="middle"
+        dominant-baseline="middle">{{TITLE}}</text>
+
+  <!--
+    OPTIONAL: chapter marker below title.
+    Uncomment and edit if you want a subtitle row.
+  -->
+  <!--
+  <text x="640" y="460"
+        font-family="VT323, ui-monospace, monospace"
+        font-size="36"
+        fill="{{SHADOW_COLOR}}"
+        text-anchor="middle"
+        letter-spacing="6">CHAPTER ONE</text>
+  -->
+</svg>

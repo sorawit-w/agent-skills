@@ -1,13 +1,13 @@
 {
   "name": "agent-skills",
-  "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), gtm (BETA — go-to-market for startup products), ai-ux-review (design-completeness review for AI products), ai-eval-review (eval-design-completeness review — sibling to ai-ux-review), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, handshake (collaboration calibration ritual), wear-the-hat (single-role embodiment for solo work), and coding-rules (opinionated agentic-coding rule loader — read first).",
-  "version": "3.9.2",
+  "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), gtm (BETA — go-to-market for startup products), ai-ux-review (design-completeness review for AI products), ai-eval-review (eval-design-completeness review — sibling to ai-ux-review), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, handshake (collaboration calibration ritual), wear-the-hat (single-role embodiment for solo work), coding-rules (opinionated agentic-coding rule loader — read first), and pixel-art (BETA — hi-density pixel-art studio with built-in design system, model-agnostic prompts, and capability-gated image-gen routing).",
+  "version": "3.10.2",
   "author": {
     "name": "sorawit-w",
     "url": "https://github.com/sorawit-w"
   },
   "license": "MIT",
-  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory", "gtm", "go-to-market", "marketing", "coding-rules", "guardrails", "agentic-coding", "role", "persona", "lens", "ai-ux", "human-ai", "design-review", "hallucination", "responsible-ai", "eval", "evaluation", "mlops", "fairness", "drift", "ground-truth"],
+  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory", "gtm", "go-to-market", "marketing", "coding-rules", "guardrails", "agentic-coding", "role", "persona", "lens", "ai-ux", "human-ai", "design-review", "hallucination", "responsible-ai", "eval", "evaluation", "mlops", "fairness", "drift", "ground-truth", "pixel-art", "image-generation", "design-system", "VT323", "hi-density", "title-card", "capability-gated"],
   "skills": [
     "./skills/brand-workshop",
     "./skills/validation-canvas",
@@ -25,6 +25,7 @@
     "./skills/tech-stack-recommendations",
     "./skills/handshake",
     "./skills/wear-the-hat",
-    "./skills/coding-rules"
+    "./skills/coding-rules",
+    "./skills/pixel-art"
   ]
 }

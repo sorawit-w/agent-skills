@@ -1,0 +1,235 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="pixel-art — hi-density pixel-art studio with built-in design system and model-agnostic prompts" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>pixel-art — hi-density pixel-art studio</title>
+  <desc>Pixel-art banner for the pixel-art Claude Code plugin (X format): title top-left, three panels in a row (brief → design system → output mini-scene with lighthouse and ships), pixel-art arrows between panels.</desc>
+
+  <defs>
+    <pattern id="paper-pa-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#paper-pa-x)"/>
+
+  <!-- =========== TITLE BLOCK (top-left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="60" y="64" font-size="42" font-weight="700" fill="#1f2937" letter-spacing="2">pixel-art</text>
+    <text x="60" y="92" font-size="18" fill="#6b7280">a hi-density pixel-art studio.</text>
+  </g>
+
+  <!-- =========== PANEL 1: BRIEF =========== -->
+  <g transform="translate(60, 130)">
+    <rect x="0" y="0" width="280" height="220" fill="#fdf7ea" stroke="#c9b58a" stroke-width="4"/>
+    <rect x="0" y="0" width="280" height="8" fill="#c2410c"/>
+
+    <g fill="#9ca3af">
+      <rect x="20" y="32" width="240" height="4"/>
+      <rect x="20" y="44" width="200" height="4"/>
+      <rect x="20" y="56" width="240" height="4"/>
+      <rect x="20" y="68" width="160" height="4"/>
+    </g>
+    <rect x="20" y="88" width="240" height="14" fill="#fde68a"/>
+    <g fill="#3a2a1a">
+      <rect x="26" y="92" width="6" height="6"/>
+      <rect x="34" y="92" width="6" height="6"/>
+      <rect x="42" y="92" width="6" height="6"/>
+      <rect x="54" y="92" width="6" height="6"/>
+      <rect x="62" y="92" width="6" height="6"/>
+      <rect x="70" y="92" width="6" height="6"/>
+      <rect x="82" y="92" width="6" height="6"/>
+      <rect x="90" y="92" width="6" height="6"/>
+      <rect x="98" y="92" width="6" height="6"/>
+      <rect x="110" y="92" width="6" height="6"/>
+      <rect x="118" y="92" width="6" height="6"/>
+      <rect x="126" y="92" width="6" height="6"/>
+      <rect x="134" y="92" width="6" height="6"/>
+    </g>
+    <g fill="#9ca3af">
+      <rect x="20" y="118" width="220" height="4"/>
+      <rect x="20" y="130" width="240" height="4"/>
+      <rect x="20" y="142" width="190" height="4"/>
+    </g>
+
+    <text x="140" y="200" font-family="ui-monospace, monospace" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="700" letter-spacing="3">BRIEF</text>
+  </g>
+
+  <!-- Arrow 1 -->
+  <g transform="translate(360, 220)" fill="#6b7280">
+    <rect x="0"  y="10" width="100" height="6"/>
+    <rect x="92" y="4"  width="6"   height="6"/>
+    <rect x="98" y="10" width="6"   height="6"/>
+    <rect x="92" y="16" width="6"   height="6"/>
+  </g>
+
+  <!-- =========== PANEL 2: DESIGN SYSTEM =========== -->
+  <g transform="translate(490, 130)">
+    <rect x="0" y="0" width="280" height="220" fill="#f3e7c9" stroke="#b79a5c" stroke-width="4"/>
+    <rect x="0" y="0" width="280" height="8" fill="#c2410c"/>
+
+    <text x="140" y="28" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280" text-anchor="middle" letter-spacing="2">PALETTE — WARM COASTAL</text>
+    <g transform="translate(20, 36)">
+      <rect x="0"   y="0" width="40" height="28" fill="#d9c2a3"/>
+      <rect x="44"  y="0" width="40" height="28" fill="#5d8aa8"/>
+      <rect x="88"  y="0" width="40" height="28" fill="#f7f0e0"/>
+      <rect x="132" y="0" width="40" height="28" fill="#8b8680"/>
+      <rect x="176" y="0" width="40" height="28" fill="#b1542a"/>
+      <rect x="220" y="0" width="20" height="28" fill="#264653"/>
+    </g>
+
+    <text x="140" y="86" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280" text-anchor="middle" letter-spacing="2">DENSITY · DITHERING · CLUSTERS</text>
+
+    <!-- mini density grid (8x4 of small dots) -->
+    <g transform="translate(20, 96)">
+      <!-- ramp 1 -->
+      <rect x="0"  y="0" width="20" height="20" fill="#264653"/>
+      <rect x="22" y="0" width="20" height="20" fill="#264653"/>
+      <rect x="22" y="0" width="4"  height="4"  fill="#5d8aa8"/>
+      <rect x="30" y="0" width="4"  height="4"  fill="#5d8aa8"/>
+      <rect x="38" y="0" width="4"  height="4"  fill="#5d8aa8"/>
+      <rect x="22" y="8" width="4"  height="4"  fill="#5d8aa8"/>
+      <rect x="30" y="8" width="4"  height="4"  fill="#5d8aa8"/>
+      <rect x="38" y="8" width="4"  height="4"  fill="#5d8aa8"/>
+      <rect x="22" y="16" width="4" height="4"  fill="#5d8aa8"/>
+      <rect x="30" y="16" width="4" height="4"  fill="#5d8aa8"/>
+      <rect x="38" y="16" width="4" height="4"  fill="#5d8aa8"/>
+      <rect x="44" y="0" width="20" height="20" fill="#5d8aa8"/>
+      <rect x="66" y="0" width="20" height="20" fill="#5d8aa8"/>
+      <rect x="66" y="0" width="4"  height="4"  fill="#d9c2a3"/>
+      <rect x="74" y="0" width="4"  height="4"  fill="#d9c2a3"/>
+      <rect x="82" y="0" width="4"  height="4"  fill="#d9c2a3"/>
+      <rect x="66" y="8" width="4"  height="4"  fill="#d9c2a3"/>
+      <rect x="74" y="8" width="4"  height="4"  fill="#d9c2a3"/>
+      <rect x="82" y="8" width="4"  height="4"  fill="#d9c2a3"/>
+      <rect x="66" y="16" width="4" height="4"  fill="#d9c2a3"/>
+      <rect x="74" y="16" width="4" height="4"  fill="#d9c2a3"/>
+      <rect x="82" y="16" width="4" height="4"  fill="#d9c2a3"/>
+      <rect x="88" y="0" width="20" height="20" fill="#d9c2a3"/>
+      <rect x="110" y="0" width="20" height="20" fill="#d9c2a3"/>
+      <rect x="110" y="0" width="4" height="4"  fill="#f7f0e0"/>
+      <rect x="118" y="0" width="4" height="4"  fill="#f7f0e0"/>
+      <rect x="126" y="0" width="4" height="4"  fill="#f7f0e0"/>
+      <rect x="110" y="8" width="4" height="4"  fill="#f7f0e0"/>
+      <rect x="118" y="8" width="4" height="4"  fill="#f7f0e0"/>
+      <rect x="126" y="8" width="4" height="4"  fill="#f7f0e0"/>
+      <rect x="110" y="16" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="118" y="16" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="126" y="16" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="132" y="0" width="20" height="20" fill="#f7f0e0"/>
+      <rect x="154" y="0" width="20" height="20" fill="#f7f0e0"/>
+      <rect x="176" y="0" width="20" height="20" fill="#f7f0e0"/>
+      <rect x="198" y="0" width="20" height="20" fill="#f7f0e0"/>
+      <rect x="220" y="0" width="20" height="20" fill="#f7f0e0"/>
+    </g>
+
+    <text x="140" y="146" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280" text-anchor="middle" letter-spacing="2">FONT — VT323 (DEFAULT)</text>
+    <text x="140" y="180" font-family="VT323, ui-monospace, monospace" font-size="28" fill="#1f2937" text-anchor="middle">Whispers of the Flame</text>
+
+    <text x="140" y="206" font-family="ui-monospace, monospace" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="700" letter-spacing="3">DESIGN SYSTEM</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g transform="translate(790, 220)" fill="#c2410c">
+    <rect x="0"  y="10" width="100" height="6"/>
+    <rect x="92" y="4"  width="6"   height="6"/>
+    <rect x="98" y="10" width="6"   height="6"/>
+    <rect x="92" y="16" width="6"   height="6"/>
+  </g>
+
+  <!-- =========== PANEL 3: OUTPUT scene =========== -->
+  <g transform="translate(920, 130)">
+    <rect x="0" y="0" width="280" height="220" fill="#264653" stroke="#1f2937" stroke-width="4"/>
+
+    <!-- sky -->
+    <rect x="4" y="4" width="272" height="100" fill="#5d8aa8"/>
+    <rect x="4" y="98" width="272" height="6" fill="#b1542a"/>
+    <rect x="4" y="98" width="272" height="2" fill="#d9c2a3"/>
+
+    <!-- castle silhouette right cliff -->
+    <g transform="translate(196, 30)" fill="#1f2937">
+      <rect x="0"  y="48" width="64" height="56"/>
+      <rect x="0"  y="38" width="8"  height="10"/>
+      <rect x="14" y="30" width="8"  height="18"/>
+      <rect x="28" y="34" width="8"  height="14"/>
+      <rect x="42" y="28" width="8"  height="20"/>
+      <rect x="56" y="36" width="8"  height="12"/>
+    </g>
+    <g transform="translate(186, 100)" fill="#3a2a1a">
+      <rect x="0" y="0" width="84" height="20"/>
+    </g>
+
+    <!-- lighthouse -->
+    <g transform="translate(44, 16)">
+      <rect x="8"  y="0"  width="20" height="4" fill="#1f2937"/>
+      <rect x="6"  y="4"  width="24" height="4" fill="#1f2937"/>
+      <rect x="4"  y="8"  width="28" height="14" fill="#1f2937"/>
+      <rect x="12" y="12" width="12" height="6"  fill="#fde68a"/>
+      <rect x="14" y="14" width="8"  height="2"  fill="#ffffff"/>
+      <rect x="2"  y="22" width="32" height="4"  fill="#1f2937"/>
+      <rect x="8"  y="26" width="20" height="60" fill="#f7f0e0"/>
+      <rect x="8"  y="26" width="20" height="4"  fill="#1f2937"/>
+      <rect x="8"  y="42" width="20" height="4"  fill="#b1542a"/>
+      <rect x="8"  y="62" width="20" height="4"  fill="#b1542a"/>
+      <rect x="8"  y="80" width="20" height="6"  fill="#1f2937"/>
+    </g>
+
+    <!-- water -->
+    <rect x="4" y="104" width="272" height="82" fill="#264653"/>
+    <g fill="#5d8aa8">
+      <rect x="4"  y="108" width="272" height="2"/>
+      <rect x="4"  y="116" width="272" height="2"/>
+      <rect x="4"  y="124" width="272" height="2"/>
+      <rect x="4"  y="132" width="272" height="2"/>
+      <rect x="4"  y="140" width="272" height="2"/>
+      <rect x="4"  y="148" width="272" height="2"/>
+      <rect x="4"  y="156" width="272" height="2"/>
+      <rect x="4"  y="164" width="272" height="2"/>
+      <rect x="4"  y="172" width="272" height="2"/>
+    </g>
+    <g fill="#b1542a">
+      <rect x="56" y="110" width="4" height="2"/>
+      <rect x="56" y="118" width="4" height="2"/>
+      <rect x="58" y="126" width="4" height="2"/>
+      <rect x="60" y="134" width="4" height="2"/>
+      <rect x="62" y="142" width="4" height="2"/>
+    </g>
+
+    <!-- ships -->
+    <g fill="#1f2937">
+      <rect x="80"  y="100" width="22" height="6"/>
+      <rect x="82"  y="98"  width="18" height="2"/>
+      <rect x="90"  y="86"  width="2"  height="14"/>
+      <rect x="86"  y="88"  width="12" height="2"/>
+      <rect x="124" y="98"  width="26" height="6"/>
+      <rect x="126" y="96"  width="22" height="2"/>
+      <rect x="134" y="80"  width="2"  height="18"/>
+      <rect x="128" y="84"  width="14" height="2"/>
+      <rect x="130" y="90"  width="10" height="2"/>
+      <rect x="166" y="100" width="22" height="6"/>
+      <rect x="168" y="98"  width="18" height="2"/>
+      <rect x="174" y="86"  width="2"  height="14"/>
+      <rect x="170" y="88"  width="12" height="2"/>
+    </g>
+
+    <!-- dock -->
+    <g transform="translate(4, 186)">
+      <rect x="0"  y="0"  width="272" height="20" fill="#8b6f3c"/>
+      <rect x="0"  y="0"  width="272" height="3"  fill="#a8784a"/>
+      <rect x="40"  y="3" width="2" height="17" fill="#6b5530"/>
+      <rect x="90"  y="3" width="2" height="17" fill="#6b5530"/>
+      <rect x="140" y="3" width="2" height="17" fill="#6b5530"/>
+      <rect x="190" y="3" width="2" height="17" fill="#6b5530"/>
+      <rect x="240" y="3" width="2" height="17" fill="#6b5530"/>
+    </g>
+
+    <text x="140" y="210" font-family="ui-monospace, monospace" font-size="14" fill="#f7f0e0" text-anchor="middle" font-weight="700" letter-spacing="3">OUTPUT</text>
+  </g>
+
+  <!-- =========== FOOTER =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="60" y="400" font-size="13" fill="#1f2937" letter-spacing="3" font-weight="700">CAPABILITY-GATED · MODEL-AGNOSTIC · SVG TITLE CARDS</text>
+    <text x="60" y="424" font-size="11" fill="#9ca3af" letter-spacing="2">z-image · imagen · openai · midjourney · sdxl · or no MCP at all</text>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="end">
+    <text x="1540" y="400" font-size="13" fill="#1f2937" letter-spacing="3" font-weight="700">HI-FI · LO-FI</text>
+    <text x="1540" y="424" font-size="11" fill="#9ca3af" letter-spacing="2">no living-artist names · original compositions only</text>
+  </g>
+</svg>

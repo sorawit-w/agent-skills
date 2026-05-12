@@ -1,0 +1,368 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="pixel-art — hi-density pixel-art studio with built-in design system, model-agnostic prompts, and a code-based title-card SVG path" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>pixel-art — hi-density pixel-art studio</title>
+  <desc>Pixel-art banner for the pixel-art Claude Code plugin: title at top, three panels in a row (brief → design system → output mini-scene with lighthouse, ships, dock), pixel-art arrows between panels, footer tagline.</desc>
+
+  <defs>
+    <pattern id="paper-pa" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#paper-pa)"/>
+
+  <!-- =========== TITLE BLOCK =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="72" font-size="44" font-weight="700" fill="#1f2937" letter-spacing="2">pixel-art</text>
+    <text x="600" y="108" font-size="20" fill="#6b7280">a hi-density pixel-art studio.</text>
+  </g>
+
+  <!-- =========== PANEL 1: BRIEF =========== -->
+  <g transform="translate(80, 180)">
+    <!-- card -->
+    <rect x="0" y="0" width="240" height="260" fill="#fdf7ea" stroke="#c9b58a" stroke-width="4"/>
+    <rect x="0" y="0" width="240" height="8" fill="#c2410c"/>
+
+    <!-- brief lines (placeholder text) -->
+    <g fill="#9ca3af">
+      <rect x="20" y="36" width="200" height="4"/>
+      <rect x="20" y="48" width="170" height="4"/>
+      <rect x="20" y="60" width="200" height="4"/>
+      <rect x="20" y="72" width="120" height="4"/>
+    </g>
+    <!-- highlighted phrase: "harbor at dusk" -->
+    <rect x="20" y="92" width="200" height="14" fill="#fde68a"/>
+    <g fill="#3a2a1a">
+      <rect x="26" y="96" width="6" height="6"/>
+      <rect x="34" y="96" width="6" height="6"/>
+      <rect x="42" y="96" width="6" height="6"/>
+      <rect x="50" y="96" width="6" height="6"/>
+      <rect x="58" y="96" width="6" height="6"/>
+      <rect x="66" y="96" width="6" height="6"/>
+      <rect x="78" y="96" width="6" height="6"/>
+      <rect x="86" y="96" width="6" height="6"/>
+      <rect x="94" y="96" width="6" height="6"/>
+      <rect x="106" y="96" width="6" height="6"/>
+      <rect x="114" y="96" width="6" height="6"/>
+      <rect x="122" y="96" width="6" height="6"/>
+      <rect x="130" y="96" width="6" height="6"/>
+      <rect x="138" y="96" width="6" height="6"/>
+    </g>
+    <g fill="#9ca3af">
+      <rect x="20" y="124" width="180" height="4"/>
+      <rect x="20" y="136" width="200" height="4"/>
+      <rect x="20" y="148" width="160" height="4"/>
+      <rect x="20" y="160" width="190" height="4"/>
+    </g>
+
+    <!-- "you type" mini-callout -->
+    <g transform="translate(20, 184)">
+      <rect x="0" y="0" width="12" height="12" fill="#c2410c"/>
+      <rect x="2" y="2" width="2" height="2" fill="#fdf7ea"/>
+      <rect x="6" y="2" width="4" height="2" fill="#fdf7ea"/>
+      <rect x="2" y="6" width="8" height="2" fill="#fdf7ea"/>
+    </g>
+    <g font-family="ui-monospace, monospace" fill="#1f2937">
+      <text x="40" y="194" font-size="11" letter-spacing="1">4 — 6 WORDS</text>
+    </g>
+
+    <!-- label -->
+    <text x="120" y="240" font-family="ui-monospace, monospace" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="700" letter-spacing="3">BRIEF</text>
+  </g>
+
+  <!-- Arrow 1: panel 1 → panel 2 (entering = gray) -->
+  <g transform="translate(336, 295)" fill="#6b7280">
+    <rect x="0"  y="10" width="86" height="6"/>
+    <rect x="78" y="4"  width="6"  height="6"/>
+    <rect x="84" y="10" width="6"  height="6"/>
+    <rect x="78" y="16" width="6"  height="6"/>
+  </g>
+
+  <!-- =========== PANEL 2: DESIGN SYSTEM =========== -->
+  <g transform="translate(460, 180)">
+    <rect x="0" y="0" width="240" height="260" fill="#f3e7c9" stroke="#b79a5c" stroke-width="4"/>
+    <rect x="0" y="0" width="240" height="8" fill="#c2410c"/>
+
+    <!-- header -->
+    <text x="120" y="28" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280" text-anchor="middle" letter-spacing="2">PALETTE — WARM COASTAL</text>
+
+    <!-- palette swatches -->
+    <g transform="translate(20, 36)">
+      <rect x="0"   y="0" width="32" height="28" fill="#d9c2a3"/>
+      <rect x="36"  y="0" width="32" height="28" fill="#5d8aa8"/>
+      <rect x="72"  y="0" width="32" height="28" fill="#f7f0e0"/>
+      <rect x="108" y="0" width="32" height="28" fill="#8b8680"/>
+      <rect x="144" y="0" width="32" height="28" fill="#b1542a"/>
+      <rect x="180" y="0" width="20" height="28" fill="#264653"/>
+    </g>
+
+    <!-- density header -->
+    <text x="120" y="84" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280" text-anchor="middle" letter-spacing="2">DENSITY — DITHERING</text>
+
+    <!-- density grid: 16x6 dithered band showing hue ramp -->
+    <g transform="translate(20, 90)">
+      <!-- block ramp from dark to light with checkerboard transitions -->
+      <rect x="0"  y="0" width="20" height="20" fill="#264653"/>
+      <rect x="20" y="0" width="20" height="20" fill="#264653"/>
+      <!-- transition 1 -->
+      <rect x="20" y="0" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="28" y="0" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="36" y="0" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="24" y="4" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="32" y="4" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="20" y="8" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="28" y="8" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="36" y="8" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="24" y="12" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="32" y="12" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="20" y="16" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="28" y="16" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="36" y="16" width="4" height="4" fill="#5d8aa8"/>
+      <rect x="40" y="0" width="20" height="20" fill="#5d8aa8"/>
+      <rect x="60" y="0" width="20" height="20" fill="#5d8aa8"/>
+      <!-- transition 2 -->
+      <rect x="60" y="0" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="68" y="0" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="76" y="0" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="64" y="4" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="72" y="4" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="60" y="8" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="68" y="8" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="76" y="8" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="64" y="12" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="72" y="12" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="60" y="16" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="68" y="16" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="76" y="16" width="4" height="4" fill="#d9c2a3"/>
+      <rect x="80" y="0" width="20" height="20" fill="#d9c2a3"/>
+      <rect x="100" y="0" width="20" height="20" fill="#d9c2a3"/>
+      <!-- transition 3 -->
+      <rect x="100" y="0" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="108" y="0" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="116" y="0" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="104" y="4" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="112" y="4" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="100" y="8" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="108" y="8" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="116" y="8" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="104" y="12" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="112" y="12" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="100" y="16" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="108" y="16" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="116" y="16" width="4" height="4" fill="#f7f0e0"/>
+      <rect x="120" y="0" width="20" height="20" fill="#f7f0e0"/>
+      <rect x="140" y="0" width="20" height="20" fill="#f7f0e0"/>
+      <rect x="160" y="0" width="20" height="20" fill="#f7f0e0"/>
+      <rect x="180" y="0" width="20" height="20" fill="#f7f0e0"/>
+    </g>
+
+    <!-- font sample -->
+    <text x="120" y="152" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280" text-anchor="middle" letter-spacing="2">FONT — VT323 (DEFAULT)</text>
+    <text x="120" y="190" font-family="VT323, ui-monospace, monospace" font-size="32" fill="#1f2937" text-anchor="middle">Whispers</text>
+
+    <!-- label -->
+    <text x="120" y="240" font-family="ui-monospace, monospace" font-size="14" fill="#1f2937" text-anchor="middle" font-weight="700" letter-spacing="3">DESIGN SYSTEM</text>
+  </g>
+
+  <!-- Arrow 2: panel 2 → panel 3 (exiting = warm) -->
+  <g transform="translate(716, 295)" fill="#c2410c">
+    <rect x="0"  y="10" width="86" height="6"/>
+    <rect x="78" y="4"  width="6"  height="6"/>
+    <rect x="84" y="10" width="6"  height="6"/>
+    <rect x="78" y="16" width="6"  height="6"/>
+  </g>
+
+  <!-- =========== PANEL 3: OUTPUT (mini pixel-art scene) =========== -->
+  <g transform="translate(840, 180)">
+    <!-- frame border in ink -->
+    <rect x="0" y="0" width="240" height="260" fill="#264653" stroke="#1f2937" stroke-width="4"/>
+
+    <!-- sky (sea-blue) -->
+    <rect x="4" y="4" width="232" height="120" fill="#5d8aa8"/>
+    <!-- sky dithering toward warm horizon -->
+    <g fill="#d9c2a3">
+      <rect x="4"   y="100" width="4" height="4"/>
+      <rect x="12"  y="100" width="4" height="4"/>
+      <rect x="20"  y="100" width="4" height="4"/>
+      <rect x="28"  y="100" width="4" height="4"/>
+      <rect x="36"  y="100" width="4" height="4"/>
+      <rect x="44"  y="100" width="4" height="4"/>
+      <rect x="52"  y="100" width="4" height="4"/>
+      <rect x="60"  y="100" width="4" height="4"/>
+      <rect x="68"  y="100" width="4" height="4"/>
+      <rect x="76"  y="100" width="4" height="4"/>
+      <rect x="84"  y="100" width="4" height="4"/>
+      <rect x="92"  y="100" width="4" height="4"/>
+      <rect x="100" y="100" width="4" height="4"/>
+      <rect x="108" y="100" width="4" height="4"/>
+      <rect x="116" y="100" width="4" height="4"/>
+      <rect x="124" y="100" width="4" height="4"/>
+      <rect x="132" y="100" width="4" height="4"/>
+      <rect x="140" y="100" width="4" height="4"/>
+      <rect x="148" y="100" width="4" height="4"/>
+      <rect x="156" y="100" width="4" height="4"/>
+      <rect x="164" y="100" width="4" height="4"/>
+      <rect x="172" y="100" width="4" height="4"/>
+      <rect x="180" y="100" width="4" height="4"/>
+      <rect x="188" y="100" width="4" height="4"/>
+      <rect x="196" y="100" width="4" height="4"/>
+      <rect x="204" y="100" width="4" height="4"/>
+      <rect x="212" y="100" width="4" height="4"/>
+      <rect x="220" y="100" width="4" height="4"/>
+      <rect x="228" y="100" width="4" height="4"/>
+      <rect x="8"  y="108" width="4" height="4"/>
+      <rect x="16" y="108" width="4" height="4"/>
+      <rect x="24" y="108" width="4" height="4"/>
+      <rect x="32" y="108" width="4" height="4"/>
+      <rect x="40" y="108" width="4" height="4"/>
+      <rect x="48" y="108" width="4" height="4"/>
+      <rect x="56" y="108" width="4" height="4"/>
+      <rect x="64" y="108" width="4" height="4"/>
+      <rect x="72" y="108" width="4" height="4"/>
+      <rect x="80" y="108" width="4" height="4"/>
+      <rect x="88" y="108" width="4" height="4"/>
+      <rect x="96" y="108" width="4" height="4"/>
+      <rect x="104" y="108" width="4" height="4"/>
+      <rect x="112" y="108" width="4" height="4"/>
+      <rect x="120" y="108" width="4" height="4"/>
+      <rect x="128" y="108" width="4" height="4"/>
+      <rect x="136" y="108" width="4" height="4"/>
+      <rect x="144" y="108" width="4" height="4"/>
+      <rect x="152" y="108" width="4" height="4"/>
+      <rect x="160" y="108" width="4" height="4"/>
+      <rect x="168" y="108" width="4" height="4"/>
+      <rect x="176" y="108" width="4" height="4"/>
+      <rect x="184" y="108" width="4" height="4"/>
+      <rect x="192" y="108" width="4" height="4"/>
+      <rect x="200" y="108" width="4" height="4"/>
+      <rect x="208" y="108" width="4" height="4"/>
+      <rect x="216" y="108" width="4" height="4"/>
+      <rect x="224" y="108" width="4" height="4"/>
+      <rect x="232" y="108" width="4" height="4"/>
+    </g>
+
+    <!-- warm horizon glow -->
+    <rect x="4" y="116" width="232" height="8" fill="#b1542a"/>
+    <rect x="4" y="116" width="232" height="2" fill="#d9c2a3"/>
+
+    <!-- distant castle silhouette on right cliff -->
+    <g transform="translate(168, 60)" fill="#1f2937">
+      <rect x="0"  y="40" width="60" height="60"/>
+      <rect x="0"  y="30" width="8"  height="10"/>
+      <rect x="12" y="22" width="8"  height="18"/>
+      <rect x="24" y="26" width="8"  height="14"/>
+      <rect x="36" y="20" width="8"  height="20"/>
+      <rect x="48" y="28" width="8"  height="12"/>
+    </g>
+    <!-- cliff under castle -->
+    <g transform="translate(160, 100)" fill="#3a2a1a">
+      <rect x="0"  y="0"  width="80" height="24"/>
+      <rect x="0"  y="0"  width="80" height="4"/>
+    </g>
+
+    <!-- lighthouse silhouette on left -->
+    <g transform="translate(36, 44)">
+      <!-- roof -->
+      <rect x="8"  y="0"  width="20" height="4" fill="#1f2937"/>
+      <rect x="6"  y="4"  width="24" height="4" fill="#1f2937"/>
+      <!-- top room -->
+      <rect x="4"  y="8"  width="28" height="14" fill="#1f2937"/>
+      <!-- light (warm accent) -->
+      <rect x="12" y="12" width="12" height="6"  fill="#fde68a"/>
+      <rect x="14" y="14" width="8"  height="2"  fill="#ffffff"/>
+      <!-- light platform -->
+      <rect x="2"  y="22" width="32" height="4"  fill="#1f2937"/>
+      <!-- tower -->
+      <rect x="8"  y="26" width="20" height="56" fill="#f7f0e0"/>
+      <rect x="8"  y="26" width="20" height="4"  fill="#1f2937"/>
+      <rect x="8"  y="40" width="20" height="4"  fill="#b1542a"/>
+      <rect x="8"  y="58" width="20" height="4"  fill="#b1542a"/>
+      <rect x="8"  y="76" width="20" height="6"  fill="#1f2937"/>
+    </g>
+
+    <!-- water surface -->
+    <rect x="4" y="124" width="232" height="92" fill="#264653"/>
+    <!-- water dither (horizontal bands) -->
+    <g fill="#5d8aa8">
+      <rect x="4"  y="126" width="232" height="2"/>
+      <rect x="4"  y="134" width="232" height="2"/>
+      <rect x="4"  y="142" width="232" height="2"/>
+      <rect x="4"  y="150" width="232" height="2"/>
+      <rect x="4"  y="158" width="232" height="2"/>
+      <rect x="4"  y="166" width="232" height="2"/>
+      <rect x="4"  y="174" width="232" height="2"/>
+      <rect x="4"  y="182" width="232" height="2"/>
+      <rect x="4"  y="190" width="232" height="2"/>
+    </g>
+    <!-- warm reflection (lighthouse light) -->
+    <g fill="#b1542a">
+      <rect x="48" y="128" width="4" height="2"/>
+      <rect x="48" y="136" width="4" height="2"/>
+      <rect x="50" y="144" width="4" height="2"/>
+      <rect x="52" y="152" width="4" height="2"/>
+      <rect x="54" y="160" width="4" height="2"/>
+      <rect x="56" y="168" width="4" height="2"/>
+    </g>
+
+    <!-- ships - 3 silhouettes -->
+    <g fill="#1f2937">
+      <!-- ship 1 (small, left-mid) -->
+      <rect x="60"  y="120" width="20" height="6"/>
+      <rect x="62"  y="118" width="16" height="2"/>
+      <rect x="68"  y="106" width="2"  height="14"/>
+      <rect x="64"  y="108" width="12" height="2"/>
+      <!-- ship 2 (mid) -->
+      <rect x="100" y="118" width="24" height="6"/>
+      <rect x="102" y="116" width="20" height="2"/>
+      <rect x="110" y="100" width="2"  height="18"/>
+      <rect x="104" y="104" width="14" height="2"/>
+      <rect x="106" y="110" width="10" height="2"/>
+      <!-- ship 3 (right) -->
+      <rect x="138" y="120" width="20" height="6"/>
+      <rect x="140" y="118" width="16" height="2"/>
+      <rect x="146" y="106" width="2"  height="14"/>
+      <rect x="142" y="108" width="12" height="2"/>
+    </g>
+
+    <!-- dock foreground -->
+    <g transform="translate(4, 216)">
+      <rect x="0"  y="0"  width="232" height="22" fill="#8b6f3c"/>
+      <rect x="0"  y="0"  width="232" height="3"  fill="#a8784a"/>
+      <rect x="40"  y="3" width="2" height="19" fill="#6b5530"/>
+      <rect x="80"  y="3" width="2" height="19" fill="#6b5530"/>
+      <rect x="120" y="3" width="2" height="19" fill="#6b5530"/>
+      <rect x="160" y="3" width="2" height="19" fill="#6b5530"/>
+      <rect x="200" y="3" width="2" height="19" fill="#6b5530"/>
+    </g>
+
+    <!-- a crate on the dock -->
+    <g transform="translate(168, 200)">
+      <rect x="0" y="0" width="16" height="16" fill="#8b6f3c"/>
+      <rect x="0" y="0" width="16" height="3"  fill="#a8784a"/>
+      <rect x="0" y="0" width="3"  height="16" fill="#6b5530"/>
+      <rect x="13" y="0" width="3" height="16" fill="#6b5530"/>
+    </g>
+
+    <!-- label -->
+    <text x="120" y="248" font-family="ui-monospace, monospace" font-size="14" fill="#f7f0e0" text-anchor="middle" font-weight="700" letter-spacing="3">OUTPUT</text>
+  </g>
+
+  <!-- =========== CHAPTER MARKERS =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937" text-anchor="middle">
+    <text x="200"  y="488" font-size="11" letter-spacing="3" font-weight="700">CAPABILITY-GATED</text>
+    <text x="600"  y="488" font-size="11" letter-spacing="3" font-weight="700">MODEL-AGNOSTIC</text>
+    <text x="1000" y="488" font-size="11" letter-spacing="3" font-weight="700">SVG TITLE CARDS</text>
+  </g>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#9ca3af" text-anchor="middle">
+    <text x="200"  y="506" font-size="9" letter-spacing="1">z-image, imagen, openai, or none</text>
+    <text x="600"  y="506" font-size="9" letter-spacing="1">one prompt, every generator</text>
+    <text x="1000" y="506" font-size="9" letter-spacing="1">VT323 default · 4 alternates</text>
+  </g>
+
+  <!-- ground line below panels -->
+  <rect x="80" y="544" width="1040" height="2" fill="#eadfcf"/>
+
+  <!-- =========== FOOTER TAGLINE =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="604" font-size="12" fill="#9ca3af" letter-spacing="4">HI-FI · LO-FI · TITLE CARDS · NO LIVING-ARTIST NAMES</text>
+  </g>
+</svg>

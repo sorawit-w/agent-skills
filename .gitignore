@@ -200,3 +200,10 @@ skills/*-workspace/
 # assets/icons/<name>.svg.
 assets/_archive/
 assets/_drafts/
+
+# Skill runtime output directories — generations, prompt-brief artifacts,
+# smoke-test renders, pinned reference outputs. The skill's SKILL.md
+# writes here at runtime (e.g., `pixel-art` writes
+# `docs/pixel-art/<slug>-<date>.{png,webp,md,svg}`). Useful locally;
+# not part of the shipped skill.
+docs/pixel-art/

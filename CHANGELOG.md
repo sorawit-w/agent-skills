@@ -5,6 +5,263 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.10.2] — 2026-05-11
+
+Adherence patch on `pixel-art` from a pre-shipment `skill-evaluator`
+audit (4 tests, 17 assertions, 17/17 pass with two coverage gaps
+flagged). Two SKILL.md text findings folded in, plus the skill is
+formally labeled **🚧 BETA** until it has been dogfooded across more
+subject categories and generators than the smoke test exercised.
+
+### Changed
+
+- **`skills/pixel-art/SKILL.md`** (verification section) — updated
+  from "at least 4 of 5 craft markers" to "at least 5 of 6" with
+  marker 6 (pixel scale matches density anchor) inlined.
+  `references/anti-patterns.md` was updated to the 6-marker checklist
+  in v3.10.1 but the SKILL.md mirror paragraph still said "4 of 5" —
+  stale-after-patch inconsistency surfaced by the audit's T1 executor
+  sub-agent (not by the grader rubric, which is the failure mode the
+  `skill-evaluator` "don't lead with the pass-rate number" rule warns
+  about).
+- **`skills/pixel-art/SKILL.md`** (IP guardrail section) — tightened
+  from *"Never reference a living artist by name"* to *"Never
+  reference any specific named artist — living or deceased."* Deceased
+  artists' work is typically still under copyright; the literal
+  v3.10.0 / v3.10.1 wording left an ambiguity (e.g., Eyvind Earle,
+  d. 2000). The audit's T2 executor handled it correctly by choosing
+  the safer interpretation and explicitly flagged the gap — folded
+  into the rule text here so a less cautious executor cannot leak the
+  reference through on a different prompt.
+
+### Added
+
+- **🚧 BETA label** on `pixel-art` — surfaced in the SKILL.md body
+  callout, plugin manifest descriptions, and root README shelf +
+  detail sections. Same pattern as `gtm` (v3.4.0): structural
+  smoke-tests pass and the routing rule + IP guardrail + craft-marker
+  discipline are verified at the rule level, but the broader surface
+  has not been dogfooded yet — scenes-only smoke test, Z-image only,
+  no reference-image-supplied briefs. Patches expected as adjacent
+  surface area surfaces gaps.
+
+### Why
+
+The 17/17 audit pass-rate hides two real findings — both Layer-1
+skill-text gaps surfaced via executor sub-agent self-reflection, not
+via the grader rubric. Pass-rate without coverage context is
+misleading; `skill-evaluator`'s "Assertions ≠ Scoring" rule is the
+right framing. v3.10.2 closes the pre-shipment audit ritual loop that
+CLAUDE.md mandates for SKILL.md rule-text changes (recommended in
+v3.10.0, deferred in v3.10.1, run here).
+
+The BETA label is honest signaling. The skill works for moderate-
+density scenes via Z-image and produces correct routing decisions for
+hi-density briefs — both verified in the smoke test. But the broader
+surface (characters, buildings, nature, lo-fi banners, non-Z-image
+generators, reference-image-supplied briefs, multi-MCP routing) is
+unverified in practice. Same shape as `gtm`'s BETA status —
+structural reliability without real-workflow validation.
+
+### Notes
+
+- No new feature, no contract change for existing flows.
+- Coverage gaps flagged by the audit and not closed in v3.10.2 —
+  author/auditor bias (same person designed skill + tests), untested
+  Path-B-only-when-no-MCP-connected, untested style-mode ambiguity,
+  untested lo-fi generation, untested multi-MCP routing, untested
+  reference-image-supplied briefs. Next audit round (with a different
+  test author or new prompt angles) is the right close. v1 graduation
+  gated on those gaps being exercised in real use, not on hitting a
+  new pass-rate target.
+- Same `skills/pixel-art/SKILL.md` file got both Finding A + Finding B
+  edits in this patch; PyYAML strict-mode validation still passes.
+
+## [3.10.1] — 2026-05-11
+
+Adherence patch for `pixel-art`. Folds in real findings from the
+first end-to-end smoke test (medieval harbor at dusk via Z-image
+Turbo) which surfaced a routing-gap: Z-image scored 5/5 on the
+original craft-marker checklist while still failing the user's
+actual density target. Z-image caps at moderate density
+(Stardew / Octopath aesthetic) and cannot reach hi-density
+AI-pixel-art density via prompting alone — verified across two
+regen attempts with explicit density emphasis and a resolution
+bump from 1536×864 to 2048×1152.
+
+### Changed
+
+- **`skills/pixel-art/references/density.md`** — replaced the
+  "approximately 96 pixels per character" numeric target (which
+  image-gen models do not honor) with a **named density-anchor
+  table**: 8-bit/NES, 16-bit/SNES, modern indie (Stardew / Celeste),
+  HD-pixel-game (Octopath / Sea of Stars), and AI-pixel-art-density
+  (matching hi-density AI-rendered references). Image-gen models
+  honor named aesthetics from their training data far better than
+  numeric pixel-per-unit constraints.
+- **`skills/pixel-art/references/anti-patterns.md`** — added a
+  **6th craft marker**: *"Pixel scale matches the density anchor."*
+  Markers 1–5 check *how pixels behave* (hue shifts, clusters,
+  dithering, banding, edge cleanup); marker 6 checks *whether the
+  pixels are the right size*. The hi-fi pass bar raised from 4/5 to
+  5/6. Added regenerate-recipe for marker 6 misses — *"if the anchor
+  is HD-pixel-game-density or above and you're on Z-image, switch
+  generators; prompt-only fixes cap at moderate density."*
+- **`skills/pixel-art/references/model-routing.md`** — sharpened
+  Z-image's "Known weak spots" to call out the density ceiling
+  explicitly, named the empirical verification, and listed the
+  escalation paths (Midjourney `--niji 6`, SDXL + pixel-art LoRA).
+  Added a new **"Picking by density target"** section that maps each
+  density anchor to the right generator and names the routing rule:
+  *"if the user supplies a hi-density reference, do not start with
+  Z-image even if it is the only connected MCP — generate a Midjourney
+  or SDXL prompt brief via Path B instead. That is a real, useful
+  output, not a degraded fallback."*
+- **`skills/pixel-art/SKILL.md`** — Phase 3 (Generation routing) gets
+  a **density-target pre-check** that runs *before* the MCP-availability
+  check. If the brief's density anchor is HD-pixel-game-density or
+  above, the skill skips Z-image and routes to Path B with a
+  Midjourney or SDXL prompt brief, even when Z-image is the only
+  connected MCP. Closes the routing gap that produced the smoke-test
+  miss.
+
+### Why
+
+The 3.10.0 design assumed prompt-only fixes could push any image
+generator to any density target. Empirical smoke testing falsified
+that — Z-image has a hard ceiling and won't reach hi-density via
+prompting. The skill's checklist passed (5/5 markers) while the user's
+actual taste target failed, which is the worst possible failure
+mode: a green light on a wrong output. Marker 6 (pixel scale matches
+density anchor) is the missing check that catches this; the routing
+rule (don't start with Z-image for hi-density briefs) is the upstream
+fix so the failure doesn't happen in the first place.
+
+Adherence-pattern parallel: same shape as v3.6.1 (skill-evaluator
+audit surfaced a rule gap in `wear-the-hat`) and v3.5.1 (audit
+surfaced executor-brief and `coding-rules` README gaps). Here the
+auditor was a real smoke test, not a sub-agent — the gap surfaced
+faster.
+
+### Notes
+
+- No new feature, no new skill. Pure adherence patch on `pixel-art`.
+- Pre-existing prompt briefs and references (palette / composition /
+  lighting / fonts / templates) unchanged.
+- Recommended next: run `skill-evaluator` against the patched
+  `SKILL.md` to confirm the Phase 3 density pre-check rule lands as
+  written. The CLAUDE.md pre-shipment audit ritual applies to any
+  SKILL.md rule-text change; deferred here because the change is
+  responsive to a confirmed empirical finding (same precedent as
+  v3.6.1 / v3.9.2 ship-then-audit pattern).
+
+## [3.10.0] — 2026-05-11
+
+Adds the **`pixel-art`** skill — a pocket-sized hi-density pixel-art
+studio with a built-in design system, model-agnostic prompts, and a
+code-based SVG title-card path. Encodes palette, density, composition,
+lighting, typography, and craft-marker discipline once so the user
+does not have to re-specify the style on every prompt.
+
+### Added
+
+- **`skills/pixel-art/`** — new skill (v0.1) with:
+  - **Two style modes:** `hi-fi` (default, painterly hi-density pixel
+    art — anchors on the user's medieval harbor and tavern interior
+    references) and `lo-fi` (scanlined warm-paper banner aesthetic,
+    matching the repo's own banners).
+  - **Five subject categories:** scenes, characters, buildings,
+    nature, title cards. Each has its own prompt template; all share
+    the same `references/` design system.
+  - **`references/` design system (8 files):** `style-modes.md`,
+    `palette.md` (5 hi-fi palettes + lo-fi banner anchors with hex
+    tokens), `density.md` (per-mode pixel density + dithering rules),
+    `composition.md` (three-layer scene rule, eye-line, focal point,
+    light source), `lighting.md` (6 lighting profiles — golden hour,
+    candlelit, twilight, stormy, midday, dawn, plus banner / lo-fi),
+    `fonts.md` (5-font catalog with **VT323 as default** per the user's
+    pick, plus Pixelify Sans, Press Start 2P, Silkscreen, DotGothic16),
+    `anti-patterns.md` (5-marker craft-marker checklist + explicit
+    forbid list), `model-routing.md` (per-generator phrasing tweaks
+    for Z-image, OpenAI Image / DALL-E 3, Imagen / Nano Banana,
+    Midjourney, SDXL).
+  - **`templates/` prompt scaffolds (7 files):** scene, character,
+    building, nature, title-card-prompt, title-card.svg (portable SVG
+    template with VT323 + bold + inset-shadow styling — the
+    "Whispers of the Flame" look), and prompt-brief-fallback (the
+    Path B copy-pasteable brief format).
+  - **Capability-gated generation routing.** Path A: if an image-gen
+    MCP is connected (Z-image Turbo, Imagen, OpenAI Image, etc.),
+    generate inline with per-model phrasing tweaks. Path B: emit a
+    copy-pasteable, model-agnostic prompt brief with per-model
+    variants — first-class deliverable, not degraded fallback.
+  - **Title-card SVG path.** Subject `title-card` additionally emits
+    a portable SVG using VT323 with bold + inset-shadow styling; works
+    without any image generator.
+  - **IP guardrail** mirroring `algorithmic-art`'s standard: no
+    living-artist names in prompts; original compositions only.
+  - **5-marker craft-marker checklist** (hi-fi mode) — deliberate hue
+    shifts, cluster studies, banding avoidance, painterly mid-tones
+    via dithering, clean edges. Each marker has a regenerate recipe.
+- **`assets/pixel-art-li.svg`**, **`assets/pixel-art-x.svg`** —
+  LinkedIn (1200×627) and X (1600×467) banners. Three-panel
+  composition: brief → design system (palette swatches + density
+  ramp + VT323 sample) → output mini-scene (lighthouse, ships,
+  castle silhouette, dithered water and sky).
+- **`assets/icons/pixel-art.svg`** — 32×32 icon: tiny pixel-art scene
+  with lighthouse (warm-accent light + reflection), ships, water
+  bands.
+
+### Changed
+
+- `README.md` (root) — TL;DR count seventeen → eighteen; new shelf
+  table row for `pixel-art`; new Skill details entry; Status section
+  promotes 3.10.0 and demotes 3.9.2.
+- `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` —
+  version 3.9.2 → 3.10.0; description appended; skills list appended;
+  keywords appended (`pixel-art`, `image-generation`, `design-system`,
+  `VT323`, `hi-density`, `title-card`, `capability-gated`).
+
+### Why
+
+Re-typing palette, density, composition, lighting, and typography on
+every pixel-art generation request is wasteful and produces drift
+across runs. The skill encodes them once in `references/` and lets
+the user express *intent* in 4–6 words. The design choice that
+matters most: gating on **capability**, not **vendor**. The skill
+works with any image-gen MCP that is connected, and it works without
+any MCP via the model-agnostic prompt brief. This avoids the
+two failure modes the planning discussion surfaced — (a) skill
+hard-locked to a single image generator that the user may not have,
+and (b) skill silently falls through to "no output" when no MCP is
+present. Path B is first-class instead.
+
+The title-card subject was bumped into v1 (rather than deferred to
+v2) because typography is the most code-friendly subject and the
+user's "Whispers of the Flame" reference is the clearest example
+of the skill's value. Image models render text inconsistently;
+SVG renders it perfectly. The skill pairs image-model background
+generation with SVG text overlay so the user gets atmospheric
+backdrops plus crisp typography in one deliverable.
+
+VT323 is the default font per the user's pick during the planning
+discussion. The catalog of four alternates covers the common pixel
+typography cases (modern friendly, hard arcade, tiny labels, JRPG).
+
+### Notes
+
+- The skill ships without a pinned reference image set — those are
+  generated by the user post-install (fresh originals chosen during
+  planning to avoid any derivative-IP concern over the user's
+  reference screenshots).
+- Pre-shipment `skill-evaluator` + `skill-creator` description-check
+  audits are recommended before users build on top of this skill;
+  see `CLAUDE.md` → "Pre-shipment audit ritual."
+- Out of scope for v1: image-to-pixel-art conversion of existing
+  photographs; animated / sprite-sheet output; path C hybrid
+  (programmatic composition skeleton + model fill). Future minor
+  releases if demand surfaces.
+
 ## [3.9.2] — 2026-05-11
 
 Adherence-only YAML frontmatter cleanup across 8 skills to align with the
