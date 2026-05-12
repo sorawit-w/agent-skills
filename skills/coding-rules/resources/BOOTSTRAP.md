@@ -119,6 +119,22 @@ During iteration, use tiered checks for fast feedback (see `references/quality-g
 2. Read the full output — check exit code AND content
 3. State results with evidence: "Tests pass: 47 passed, 0 failed"
 
+### Diagnosis
+
+**Diagnose with evidence, not symptoms.** Before you propose a fix or any code edit, you must have read the specific code, log, config, or doc that confirms the cause — not pattern-matched from the error message, the stack trace, or what a similar bug usually looks like. An error message names the symptom, not the cause; reading the error is not the same as reading the code that produced it.
+
+**Cite the evidence in your response:** name the file:line, log line, or spec section that supports your claim. **The citation must be from code, logs, or config you actually read in this session** — citing a file you have not opened is a §Accuracy violation (invented path), not evidence. A claim that cannot be traced to a concrete artifact you read is a guess.
+
+**Reasonable effort** means doing at least **two** of: reading the code that owns the failing path; checking `git log` / `git diff` for recent changes; grepping the codebase for the failing symbol; reading the governing spec or config. One search that returns nothing is not reasonable effort.
+
+**If evidence is not reachable after reasonable effort, STOP and surface the uncertainty.** Do NOT ship a guess as a fix. Return instead:
+
+1. **Your best hypothesis, labeled as a hypothesis** — "I suspect X, but I have not confirmed it."
+2. **The verification path** — "To confirm, read Y or run Z."
+3. **1–3 candidate fixes with trade-offs** — let the developer choose. If only one is plausible given current evidence, present that one and explain why alternatives don't fit; do not fabricate weak alternatives to fill the list.
+
+This generalizes the Iron Law in `references/debugging.md` ("No fixes without root cause investigation first") to all coding work, not just bugfixes. Symptom-driven patches in feature work — adding `*` to a CORS allow-list, wrapping in `try/catch` to silence an error, copying a Stack Overflow snippet whose context you have not verified — are the same failure mode under a different name.
+
 ### Resource Cleanup
 
 Before declaring done, terminate every long-running process you spawned — dev servers, watchers (`tsc --watch`, `vitest --watch`), build daemons, tunnels (`ngrok`, `cloudflared`), test containers. Scan shell history for backgrounded commands; confirm with `ps` or `lsof -i :PORT`; terminate cleanly. Orphaned processes hold ports and confuse the developer's next move.
@@ -185,7 +201,8 @@ When asked to add code to a file that already imports a third-party vendor SDK d
 | Unclear requirements | Ask 1–2 targeted questions. Don't guess silently. |
 | Architecture decision | Run `team-composer` (if installed) for multi-role trade-off discussion. Otherwise propose 2 options with trade-offs and ask. |
 | Implementation approach | Search codebase for analogous code. Start simple. |
-| After 3 focused attempts | Log what you tried, mark BLOCKED, move on. |
+| Can't find evidence for the cause | Apply §Diagnosis escape valve — surface a labeled hypothesis + verification path + 1–3 candidate fixes. Do NOT ship a guess. |
+| After 3 focused attempts | Apply §Diagnosis escape valve first (hypothesis + path + options). Then mark BLOCKED. |
 | Something outside your control | Create `DEVELOPER_TODO.md` entry and continue. |
 </when_stuck>
 

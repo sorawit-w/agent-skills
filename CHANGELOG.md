@@ -5,6 +5,78 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.9.0] — 2026-05-11
+
+Adds a new **§Diagnosis** hard rule to `coding-rules`' BOOTSTRAP.md.
+Closes the symptom-driven-fix failure mode — pattern-matching on error
+messages, stack traces, or "what a similar bug usually looks like"
+without reading the code that actually produced the failure. Generalizes
+the Iron Law from `references/debugging.md` ("No fixes without root
+cause investigation first") to all coding work, not just bugfixes —
+feature-work failures (adding `*` to CORS allow-lists, wrapping in
+`try/catch` to silence errors, copy-pasting unverified snippets) are
+the same failure mode under a different name.
+
+### Added
+
+- **`skills/coding-rules/resources/BOOTSTRAP.md`** — new `### Diagnosis`
+  section between `### Verification` and `### Resource Cleanup` in
+  `<hard_rules>`. Three bolded leads: "Diagnose with evidence, not
+  symptoms" (scope: any code edit, not just non-trivial), "Cite the
+  evidence in your response" (citation must be from code/logs/config
+  actually read this session, not invented — citing a file you have
+  not opened is a §Accuracy violation), and "If evidence is not
+  reachable after reasonable effort, STOP and surface the uncertainty"
+  (escape valve: labeled hypothesis + verification path + 1–3 candidate
+  fixes, with an anti-fabrication clause for the list). Defines
+  "reasonable effort" as at least 2-of-4 concrete actions: read failing
+  path / check `git log` / grep for failing symbol / read governing
+  spec.
+- **`skills/coding-rules/resources/BOOTSTRAP.md`** — new row in §When
+  Stuck table: "Can't find evidence for the cause → Apply §Diagnosis
+  escape valve."
+
+### Changed
+
+- **`skills/coding-rules/resources/BOOTSTRAP.md`** — §When Stuck table
+  row "After 3 focused attempts" now sequences: apply §Diagnosis escape
+  valve first (hypothesis + path + options), then mark BLOCKED.
+  Previous wording made escape valve and BLOCKED look like competing
+  options.
+
+### Why
+
+The Iron Law in `references/debugging.md` already says "no fixes
+without root cause investigation first" — but it (a) lives in a
+level-2 reference file that only loads via the bugfix workflow, (b) is
+framed around *debugging* only, leaving feature-work symptom-fixing
+untouched, and (c) provides no sanctioned alternative when the agent
+genuinely can't find evidence, so agents under any pressure to ship
+rationalize past it. This release promotes the rule to a top-level
+Hard Rule in BOOTSTRAP (loaded in every session), generalizes the
+scope, and adds an explicit escape valve so agents have somewhere to
+land that isn't "ship a guess as a fix."
+
+Pre-shipment ritual: in-context `skill-evaluator` audit on the drafted
+rule surfaced six adherence gaps — three load-bearing (citation could
+be invented, "non-trivial edit" was a scope leak, "confirms the cause"
+allowed the error message itself to count as evidence) and three
+lower-risk (effort threshold undefined, fabricated-alternative pressure
+on the 2–3 fixes requirement, ambiguous interaction with the "After 3
+attempts → BLOCKED" rule). All six were folded into the shipped rule
+text.
+
+### Notes
+
+- No breaking changes — additive Hard Rule + clarification to one
+  §When Stuck row.
+- The rule cannot currently be mechanically enforced; a future hook
+  (`pre-edit-check.sh` that blocks `Edit` on a file the agent hasn't
+  `Read` in this session) is the natural next step and is filed
+  against `references/hooks.md` enhancements rather than this release.
+- No README catalog changes — this is a rule addition inside an
+  existing skill, not a new skill.
+
 ## [3.8.0] — 2026-05-11
 
 Adds the **`ai-eval-review`** skill — sibling to `ai-ux-review`, shipped
