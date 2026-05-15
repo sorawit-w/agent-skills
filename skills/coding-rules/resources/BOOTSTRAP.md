@@ -47,6 +47,17 @@ Based on the task, you MUST read the appropriate workflow file before proceeding
 | Documentation only | `workflows/quick-task.md` |
 | Config change, single-file edit | `workflows/quick-task.md` |
 
+**High-stakes path override — always route to `workflows/feature.md`, never `quick-task.md`,** when the change touches any of these paths, even for one-line edits:
+
+- **Schema migrations:** `**/migrations/**`, `**/prisma/migrations/**`, `**/alembic/**`, `**/db/migrate/**`, `**/drizzle/**`
+- **Authentication / authorization:** `**/auth/**`, files matching `*authz*` / `*authentication*` / `*login*` / `*session*` / `*token*`
+- **Payments / billing:** `**/payments/**`, `**/billing/**`, `**/stripe/**`, `**/checkout/**`
+- **Infrastructure:** `**/*.tf`, `**/*.tfvars`, `**/terraform/**`, `**/k8s/**`, `**/kubernetes/**`, `**/Dockerfile*`, `**/docker-compose*.{yml,yaml}`, `**/helm/**`
+- **CI/CD:** `**/.github/workflows/**`, `**/.gitlab-ci.{yml,yaml}`, `**/Jenkinsfile`, `**/.circleci/**`, `**/buildkite/**`
+- **Production-traffic-shaping values:** retry/timeout/rate-limit constants, feature-flag defaults that gate prod traffic, secrets-loading code
+
+The blast radius on these paths is not bounded by LOC. A one-character change to a rate-limit constant or a migration file can take down production — the discipline floor must scale to the risk surface, not the diff size.
+
 **Read the workflow file now. It contains the detailed steps for your task type.** Do not proceed from memory — the workflow file has rules you need.
 </route_workflow>
 

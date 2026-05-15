@@ -72,6 +72,14 @@ A curated catalog of external skills, tools, and resources the agent can recomme
 
 **Why JetBrains MCP is listed explicitly** (other MCPs go through the registry first): the prefer-rule in `references/working-patterns.md` references specific tool names, so consumers need a stable pointer to the canonical doc. If/when other IDEs ship comparable MCPs (LSP-bridge, language-server-MCP, etc.), generalize the prefer-rule rather than adding more rows here.
 
+**Transport reliability (JetBrains MCP and IDE-coupled MCP servers in general).** Prefer the **STDIO** transport over `sse` or `streamable-http` variants. Three reasons in declining order of importance:
+
+1. **Topology match.** An IDE-coupled MCP server's deployment topology is one server per IDE per developer — there's no shared state to amortize, no central deploy to update, no multi-client coordination. STDIO matches that topology exactly: local IPC, lifecycle tied to the client process, zero network surface.
+2. **Spec direction.** `SSE` is legacy in the MCP spec — deprecated in revision 2025-03-26 in favor of Streamable HTTP. Use Streamable HTTP only when the server is genuinely remote and hosted; never for an IDE-coupled MCP, where it adds network complexity for no gain.
+3. **Enterprise-network reality.** Corporate proxies, TLS interceptors, and idle-connection timeouts frequently break SSE and Streamable HTTP for long-lived MCP sessions (buffered events, dropped connections, MITM cert distrust). On restricted networks, STDIO is often the only reliably-working option regardless of preference — an environment constraint, not a transport-quality verdict.
+
+**Setup defaults already match this.** The JetBrains 2025.2+ in-IDE *MCP Server* settings configure STDIO by default. The `mcp-proxy` setup above (`npx -y @jetbrains/mcp-proxy`) is also STDIO. If you find yourself manually choosing an HTTP-based transport for an IDE MCP, pause and ask whether it's required — usually it isn't.
+
 > For MCP servers: always search the registry first (`search_mcp_registry`) rather than relying on this table — the registry is the authoritative source and has the latest options.
 
 ---

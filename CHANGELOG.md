@@ -5,6 +5,163 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.11.0] — 2026-05-12
+
+Hardens the `coding-rules` workflow boundaries to fix two stacked failure
+modes: agents over-applying full TDD + build + lint discipline to one-line
+copy changes (turning 30-second tasks into 5-minute ceremonies), and
+agents *under*-applying discipline by self-classifying a one-line edit to
+`auth/middleware.ts` (or `migrations/`, `payments/`, `terraform/`, etc.)
+as quick-task and skipping the verification floor because the LOC delta
+looked small. Five additions across four files in
+`skills/coding-rules/resources/` — no `SKILL.md` text changes, no new
+skill, no breaking changes.
+
+### Added
+
+- **`skills/coding-rules/resources/workflows/quick-task.md`**
+  (`<fit_check>` section) — hard-floor criteria for quick-task routing:
+  no new files, no test logic changes, no schema/contract/public-type
+  changes, no high-stakes paths (see BOOTSTRAP §3), diff stays
+  ≤ ~50 LOC, change is strings/copy/comments/config/data/formatting only
+  (not logic, not refactoring, not behavior change). Comes with a
+  2–4-line declaration template the agent states before starting (files,
+  estimated LOC, type of change, confirmation that no new
+  files/tests/schema/contracts/high-stakes paths are touched). If the
+  agent can't state the fit cleanly, the task doesn't fit and routes to
+  `workflows/feature.md`.
+- **`skills/coding-rules/resources/workflows/quick-task.md`** (step 3
+  rewrite) — split into 3a Scope-check and 3b Quality-check. 3a runs
+  `git diff --stat` *after* implementation and re-validates the declared
+  fit; if the actual diff now violates any fit criterion (LOC over
+  budget, new file appeared, test/schema/contract/infra path touched,
+  behavior change snuck in), the agent STOPS and escalates to
+  `workflows/feature.md` from step 2. Trust-but-verify counterweight to
+  self-classification — declared scope must match actual diff, or the
+  workflow upgrades mid-task.
+- **`skills/coding-rules/resources/BOOTSTRAP.md`** §3 (Route to Workflow)
+  — high-stakes path override block that always routes to
+  `workflows/feature.md` regardless of the task-type table, for: schema
+  migrations (`**/migrations/**`, `**/prisma/migrations/**`,
+  `**/alembic/**`, `**/db/migrate/**`, `**/drizzle/**`), auth/authz code
+  (`**/auth/**`, `*authz*` / `*authentication*` / `*login*` / `*session*`
+  / `*token*` filename matches), payments/billing flows (`**/payments/**`,
+  `**/billing/**`, `**/stripe/**`, `**/checkout/**`), infrastructure
+  (`**/*.tf`, `**/*.tfvars`, `**/terraform/**`, `**/k8s/**`,
+  `**/kubernetes/**`, `**/Dockerfile*`, `**/docker-compose*.{yml,yaml}`,
+  `**/helm/**`), CI/CD pipelines (`**/.github/workflows/**`,
+  `**/.gitlab-ci.{yml,yaml}`, `**/Jenkinsfile`, `**/.circleci/**`,
+  `**/buildkite/**`), and production-traffic-shaping values
+  (retry/timeout/rate-limit constants, prod-gating feature-flag defaults,
+  secrets-loading code). Closes the "one-line config change in
+  `/auth/`" abuse pattern — blast radius isn't bounded by LOC, so the
+  discipline floor can't be either.
+- **`skills/coding-rules/resources/references/quality-gates.md`**
+  (Formatter Scope section) — forbids repo-wide formatter and auto-fix
+  invocations (`prettier --write .`, `eslint --fix .`,
+  `biome check --apply .`, `black .`, `gofmt -w .`,
+  `rustfmt --recursive .`). Defers to `lint-staged` / `husky` /
+  `pre-commit` / `lefthook` when detected (via `package.json`
+  `lint-staged` key, `.husky/pre-commit`, `.pre-commit-config.yaml`, or
+  `lefthook.yml`). Provides touched-files-only invocation patterns per
+  stack (Prettier, ESLint, Biome, Black, gofmt, rustfmt) using
+  `git diff --name-only HEAD --diff-filter=ACMR` piped through `xargs -r`
+  to avoid the zero-arg-means-format-everything trap that most formatters
+  fall into when given no file arguments. Names the explicit
+  normalization-pass exception (adopting a new formatter config,
+  one-off repo normalization) with an announce-the-scope requirement so
+  the developer isn't surprised by a 200-file diff.
+- **`skills/coding-rules/resources/references/external-resources.md`**
+  (Transport reliability paragraph) — STDIO preference for IDE-coupled
+  MCP servers (JetBrains MCP and future LSP-bridge / language-server-MCP
+  variants). Three reasons in declining order of importance:
+  topology match (one server per IDE per developer = no shared state to
+  amortize, no central deploy to update, no multi-client coordination —
+  STDIO matches the topology exactly); spec direction (`sse` was
+  deprecated in the MCP spec revision 2025-03-26 in favor of Streamable
+  HTTP — use Streamable HTTP only when the server is genuinely remote and
+  hosted, never for an IDE-coupled MCP); enterprise-network reality
+  (corporate proxies, TLS interceptors, and idle-connection timeouts
+  frequently break SSE and Streamable HTTP for long-lived MCP sessions
+  through buffered events, dropped connections, and MITM cert distrust —
+  on restricted networks STDIO is often the only reliably-working option
+  regardless of topology preference). Notes that JetBrains 2025.2+
+  in-IDE *MCP Server* settings and the `mcp-proxy` setup already default
+  to STDIO; manually choosing an HTTP-based transport for an IDE MCP is
+  almost always unnecessary.
+
+### Why
+
+Two failure modes were stacking. Mode 1: agents over-applying full
+discipline to legitimately trivial tasks — comment fixes, copy updates,
+config-value tweaks — running build + lint + full test suite when none
+of those gates can catch a regression that's not present. Mode 2: agents
+*under*-applying discipline by routing a one-line `auth/middleware.ts`
+edit through `quick-task.md` because the LOC delta looked small, even
+though the blast radius (auth, all sessions, all users) is the highest
+in the codebase. Both modes came from the same root cause — the existing
+`quick-task` vs `feature` boundary was advisory ("complexity 1–3")
+rather than enforceable, and entirely self-declared without a
+post-implementation check.
+
+This release adds three enforcement layers without inventing new
+vocabulary:
+
+1. **Negative criteria for the trivial path** — `quick-task` fits only
+   if specific things are NOT being touched (new files, test logic,
+   schemas, contracts, high-stakes paths). What's NOT touched is
+   observable from the diff; "complexity" was a self-rating.
+2. **Path-pattern elevation** — auth / payments / migrations / infra /
+   CI always get `feature.md` regardless of LOC. The blast radius
+   matters, not the diff size. Hard-coded glob list, not self-declared.
+3. **Post-implementation diff-check** — declared scope must match actual
+   diff, or the workflow upgrades mid-task. Trust-but-verify, not honor
+   system.
+
+The formatter-scope rule addresses an adjacent observed pain point:
+prettier-creep ballooning diffs into 200-file noise that hides the
+actual change. The IDE-MCP transport-reliability note addresses another:
+SSE and Streamable-HTTP MCP transports breaking on restricted corporate
+networks where STDIO would have worked fine.
+
+Vocabulary stayed deliberately native — no parallel "Tier 0 / 1 / 2"
+naming was introduced. The existing `quick-task` / `feature` / `bugfix`
+workflows are the tier system; this release hardens their boundaries
+instead of inventing a parallel one. Introducing new tier numbers would
+have created the abstraction-vs-payoff drag the change is meant to
+remove.
+
+### Notes
+
+- **No `SKILL.md` text changes.** All edits live under
+  `skills/coding-rules/resources/`. Per `CLAUDE.md`, the pre-shipment
+  `skill-evaluator` + `skill-creator` description audit is required for
+  `SKILL.md` text changes; resource-file additions don't require it.
+  Self-review pass run on the four diffs; cross-references checked
+  (quick-task's fit-check references BOOTSTRAP §3's path override; the
+  formatter scope rule and the high-stakes path list are mutually
+  consistent).
+- **Diff-check is one-sided.** Only added to `quick-task.md` where the
+  abuse pattern is "self-classify down to skip discipline."
+  `workflows/feature.md` already has full gates + complexity-scaled
+  validation + delegation signals; adding a diff-check there is
+  gold-plating until evidence emerges that `feature.md` sessions
+  self-classify their internal complexity rating too low.
+- **BOOTSTRAP.md weight.** The high-stakes path override added ~15 lines
+  to a file loaded into every `coding-rules` session. Inside the budget
+  for a full operating playbook (vs. a frontmatter-adjacent skill) but
+  worth flagging — a future v3.11.x could move the glob list to
+  `references/guardrails.md` and leave a one-line pointer in BOOTSTRAP
+  if loaded-context size becomes a real concern.
+- **No keyword changes** in `plugin.json` / `marketplace.json`. Existing
+  `coding-rules`, `guardrails`, `agentic-coding` keywords cover the
+  additions; no new themes were introduced. No description-text changes
+  in either manifest — no skills added or removed.
+- **Backwards-compatible.** Existing sessions resume cleanly. Agents
+  that had already routed to `feature.md` for high-stakes paths see no
+  change; agents that had been routing to `quick-task.md` for those
+  paths now correctly elevate.
+
 ## [3.10.2] — 2026-05-11
 
 Adherence patch on `pixel-art` from a pre-shipment `skill-evaluator`
