@@ -86,7 +86,7 @@ a brand-new user answers all nine.
   real result, not an absence.
 - **Capability-gated.** It writes to whatever memory the runtime exposes, and
   generates a pixel-art portrait if an image generator is available — otherwise
-  it uses a built-in class character. No hard dependency.
+  it uses a bundled hi-density pixel-art class portrait. No hard dependency.
 - **Honest about MBTI.** MBTI is offered only as an optional fast-path you
   confirm dial by dial — never presented as science.
 
@@ -104,7 +104,7 @@ Then invoke it any time with `/whoami`.
 | Skill | Relationship |
 |-------|-------------|
 | `handshake` | Downstream. `whoami` is the person-level profile; `handshake` calibrates one project and pre-fills its core questions from your whoami profile. |
-| `pixel-art` | `whoami` calls it (if an image generator is available) to generate your class character portrait; falls back to a built-in SVG. |
+| `pixel-art` | `whoami` calls it (if an image generator is available) to generate your class character portrait; falls back to a bundled hi-density pixel-art PNG. |
 | memory system | `whoami` writes its profile as a standard `user`-type memory so every session is calibrated. |
 
 ## Status and scope

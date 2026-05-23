@@ -46,16 +46,24 @@ subclass.
 
 ## Default characters
 
-13 renders, built as **6 axis-family designs + Wildcard = 7 designs**. Each axis
-design is rendered in a **high and a low variant** — shared base figure,
-different pose / palette / props — so a Vanguard and a Marshal visibly belong to
-the same family. The high/low pairing makes bipolarity visible in the portrait,
-echoing the lollipop chart. Files: `assets/characters/<class>.svg` (skill-local,
-lowercase class name, e.g. `assets/characters/vanguard.svg`).
+13 portraits, **hi-density pixel art** — a 64×64 logical pixel grid with
+shade ramps, hue-shifted shadows, dithered backgrounds and a crisp 1px
+silhouette outline, rendered to 512×512 PNG. Built as **6 axis-family designs
++ Wildcard = 7 designs**. Each axis design has a **high and a low variant** —
+shared base figure (helm, cowl, hood, hat, or face), different crest /
+palette / emblem — so a Vanguard and a Marshal visibly belong to the same
+family. The high/low pairing makes bipolarity visible in the portrait,
+echoing the lollipop chart.
 
-The portrait on the character sheet is capability-gated: a generated pixel-art
-portrait when `pixel-art` + an image generator are available, otherwise the
-default class SVG embedded inline.
+Files: `assets/characters/<class>.png` (skill-local, lowercase class name,
+e.g. `assets/characters/vanguard.png`). The set is produced deterministically
+by `assets/characters/generate-portraits.py` (Python + Pillow) — re-run it to
+regenerate or restyle every portrait at once.
+
+The portrait on the character sheet is capability-gated: a freshly generated
+pixel-art portrait when `pixel-art` + an image generator are available,
+otherwise the bundled class PNG, base64-embedded inline so the sheet stays
+self-contained.
 
 ## IP note
 

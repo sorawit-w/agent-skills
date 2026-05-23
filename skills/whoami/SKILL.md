@@ -97,8 +97,8 @@ subclass from `references/class-map.md`; carry forward existing flexible traits
 1. Optionally offer a cosmetic color-theme pick (or use the class default).
 2. Generate the character portrait — capability-gated: if `pixel-art` + an image
    generator are available, generate a class-anchored pixel character and
-   base64-embed it; otherwise use the default class SVG from
-   `assets/characters/`.
+   base64-embed it; otherwise base64-embed the bundled hi-density class PNG
+   from `assets/characters/<class>.png`.
 3. Write the portable `whoami-profile.md` (`templates/profile-template.md`) and
    the self-contained HTML character sheet (`templates/character-sheet.html`).
 4. Write runtime memory (capability-gated) + a dated snapshot.
@@ -145,7 +145,8 @@ is upstream and one-directional — it never reads or depends on `handshake`.
 - `references/mbti-mapping.md` — MBTI → dial priors
 - `references/persistence.md` — profile schema, memory contract, snapshots
 - `templates/profile-template.md`, `templates/character-sheet.html`
-- `assets/characters/*.svg` — 13 default class characters
+- `assets/characters/*.png` — 13 hi-density pixel-art class portraits;
+  `assets/characters/generate-portraits.py` regenerates the set
 - `commands/whoami.md` — slash-command entry point (`/whoami`, `/whoami rerun`)
 
 ## When to use this skill

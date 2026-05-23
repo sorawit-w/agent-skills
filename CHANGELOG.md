@@ -5,6 +5,62 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.13.1] — 2026-05-23
+
+Replaces `whoami`'s 13 bundled class portraits with **hi-density pixel art**,
+adds a deterministic generator that produces them, and folds in the batched
+`skill-evaluator` findings-report enhancement.
+
+### Changed
+
+- **`skills/whoami/assets/characters/*.png`** — the 13 default class portraits
+  are now hi-density pixel art: a 64×64 logical pixel grid with per-material
+  shade ramps, hue-shifted shadows, a dithered warm-cream background, and a
+  crisp 1px silhouette outline, rendered to 512×512 PNG. They replace the
+  first release's coarse ~10-rect SVG emblems. Six axis-family base figures
+  (helm, cowl, hood, hat, face) in high/low variants plus Wildcard, so paired
+  classes (e.g. Vanguard / Marshal) visibly share a family.
+- **`skills/whoami/references/class-map.md`**, **`skills/whoami/SKILL.md`**,
+  **`skills/whoami/README.md`** — character references now point at
+  `assets/characters/<class>.png`; the capability-gating note describes the
+  bundled PNG fallback.
+- **`skills/skill-evaluator/references/findings-report.md`** — the Next-steps
+  flow gains a Step 4 capability-gating a handoff to `skill-creator`'s
+  description-check, plus an authoring-guidance subsection. Batched per the
+  earlier "batch it" decision — it carried no standalone release.
+
+### Added
+
+- **`skills/whoami/assets/characters/generate-portraits.py`** — a
+  deterministic Python + Pillow generator that renders all 13 portraits from
+  one parametric figure system; re-run it to regenerate or restyle the set.
+
+### Removed
+
+- **`skills/whoami/assets/characters/*.svg`** — the 13 coarse SVG emblems,
+  superseded by the PNG set.
+
+### Why
+
+The first `whoami` release shipped the class characters as hand-authored SVGs
+at roughly ten rectangles each — closer to glyphs than to the hi-density
+pixel art the skill's own `pixel-art` integration implies. This release
+brings the bundled fallback art up to the density the skill describes. The
+generator is kept in-repo (not just its output) so the set is reproducible
+and restyleable — context engineering over a frozen asset dump.
+
+Live AI-model generation via a connected image MCP returns images only as
+remote temp URLs with no reliable path to pull the binary into the repo
+filesystem; a deterministic local generator sidesteps that entirely and keeps
+the default art version-controlled and auditable.
+
+### Notes
+
+- PATCH: bundled-asset replacement plus a batched doc enhancement. No skill
+  triggers, output shapes, or contracts changed.
+- The character-sheet template already styled `.portrait img`; embedding PNG
+  portraits needed no template change.
+
 ## [3.13.0] — 2026-05-23
 
 Adds the **`whoami`** skill — a portable collaboration profile that calibrates
