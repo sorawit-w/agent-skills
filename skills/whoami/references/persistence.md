@@ -16,7 +16,9 @@ it** — generate the profile first.
 ## The portable profile — `whoami-profile.md`
 
 YAML frontmatter (machine-readable) + plain-prose body (the summary — one
-consistent register, shared verbatim with the HTML report). See
+consistent register, shared verbatim with the HTML report). Keep the summary
+to **at most three short paragraphs** — it is a scannable synthesis, not an
+essay; the class and dials carry the at-a-glance read. See
 `templates/profile-template.md` for the skeleton.
 
 Only profile data lives here — never volunteered sensitive facts, never secrets.

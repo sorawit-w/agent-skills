@@ -19,14 +19,15 @@
   .top h1{margin:0;font-size:22px;letter-spacing:2px;}
   .top .date{color:var(--muted);font-size:13px;}
   .class-card{text-align:center;margin:18px 0 6px;}
-  .portrait{width:128px;height:128px;margin:0 auto 10px;}
-  .portrait svg,.portrait img{width:100%;height:100%;
+  .portrait{width:128px;height:128px;margin:0 auto 10px;
+    border-radius:8px;overflow:hidden;}
+  .portrait svg,.portrait img{display:block;width:100%;height:100%;
     image-rendering:pixelated;image-rendering:crisp-edges;}
   .class-card .class{font-size:28px;font-weight:700;color:var(--accent);}
   .class-card .identity{color:var(--muted);font-size:14px;margin-top:4px;
     font-style:italic;}
   .dials{margin:18px 0 4px;}
-  .dial{margin:14px 0;}
+  .dial{margin:20px 0;}
   .dial-head{display:flex;justify-content:space-between;align-items:baseline;
     font-size:13px;margin-bottom:5px;}
   .dial-head .name{font-weight:700;letter-spacing:.5px;}
@@ -40,9 +41,9 @@
   .track .dot{position:absolute;top:1px;width:12px;height:12px;
     border-radius:50%;background:var(--accent);border:2px solid var(--card);
     box-shadow:0 0 0 1px var(--accent);transform:translateX(-6px);}
-  .poles{display:flex;justify-content:space-between;font-size:11px;
+  .poles{display:flex;justify-content:space-between;font-size:12px;
     color:var(--muted);margin-top:3px;}
-  .legend{text-align:center;color:var(--muted);font-size:11px;
+  .legend{text-align:center;color:var(--muted);font-size:12px;
     margin:8px 0 20px;}
   .section-title{font-size:13px;letter-spacing:2px;text-transform:uppercase;
     color:var(--border-dark);border-bottom:1px solid var(--ring);
@@ -57,6 +58,10 @@
   .empty{color:var(--muted);font-size:13px;font-style:italic;}
   footer{margin-top:24px;border-top:1px solid var(--ring);padding-top:10px;
     color:var(--muted);font-size:12px;text-align:center;}
+  footer p{margin:0;}
+  footer .colophon{font-size:12px;margin-top:14px;letter-spacing:.3px;}
+  footer .colophon a{color:inherit;text-decoration:none;}
+  footer .colophon a:hover{color:var(--accent);text-decoration:underline;}
   @media print{
     body{background:#fff;padding:0;}
     .sheet{border:none;}
@@ -86,8 +91,11 @@
   <div class="section-title">Summary</div>
   <div class="summary">{{SUMMARY}}</div>
 
-  <footer>Self-reported snapshot from a whoami session — a prior, not a
-    verdict. Revise on contradiction.</footer>
+  <footer>
+    <p class="disclaimer">A self-reported prior, not a verdict. Revise on
+      contradiction.</p>
+    <p class="colophon"><a href="https://github.com/sorawit-w/agent-skills">github.com/sorawit-w/agent-skills</a></p>
+  </footer>
 </div>
 
 <script>
