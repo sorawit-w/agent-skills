@@ -207,13 +207,7 @@
     <text x="884" y="326" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#1f2937" letter-spacing="1">GAP SUMMARY</text>
     <line x1="884" y1="332" x2="1116" y2="332" stroke="#c2410c" stroke-width="2"/>
 
-    <!-- gap items -->
-    <g fill="#1f2937" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8">
-      <text x="884" y="346">1. Mental-model evidence: no</text>
-      <text x="884" y="346" dx="0" dy="0">1. Mental-model evidence: no</text>
-      <text x="884" y="346" dx="200" dy="0"/>
-    </g>
-    <!-- bars in lieu of full text for clarity -->
+    <!-- gap items: bullet bars + text -->
     <rect x="884" y="344" width="6" height="2" fill="#1f2937"/>
     <text x="894" y="347" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="8" fill="#1f2937">no user-research basis</text>
     <rect x="884" y="358" width="6" height="2" fill="#1f2937"/>
