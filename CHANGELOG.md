@@ -21,8 +21,8 @@ findings-report enhancement.
   family. Each was generated with an AI image model from a per-class prompt
   specification (style, palette, subject, headgear, crest, emblem, mood) and
   ships at 512×512 PNG (~370 KB) so the base64-embedded HTML character sheet
-  stays light; the 1254×1254 source renders are archived locally, not
-  tracked. They replace the first release's coarse ~10-rectangle SVG emblems.
+  stays light. They replace the first release's coarse ~10-rectangle SVG
+  emblems.
 - **`skills/whoami/references/class-map.md`**, **`skills/whoami/SKILL.md`**,
   **`skills/whoami/README.md`**, **`README.md`** — character references now
   point at `assets/characters/<class>.png`; the capability-gating note
@@ -51,8 +51,7 @@ consistently against a connected image generator.
 - PATCH: bundled-asset replacement plus a batched doc enhancement. No skill
   triggers, output shapes, or contracts changed.
 - Portraits ship at 512×512 (~370 KB) so the base64-embedded character sheet
-  stays light; full-resolution sources are kept in a local, git-ignored
-  archive rather than shipped.
+  stays light.
 - The character-sheet template already styled `.portrait img`; embedding PNG
   portraits needed no template change.
 

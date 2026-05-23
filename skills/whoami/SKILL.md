@@ -1,21 +1,20 @@
 ---
 name: whoami
 description: >
-  Runs a short, conversational interview that builds a portable profile of the
-  user — who they are and how they want to be collaborated with — so the agent
-  can tailor every response. Triggers on `/whoami`, "get to know me", "set up
-  my profile", "personalize how you work with me", "calibrate how you respond",
-  the user mentioning they are new to AI or switching agent vendors, or a
-  request for their collaboration "character sheet" or player profile. Produces
-  six collaboration dials (Initiative, Depth, Breadth, Rationale, Warmth,
-  Challenge), an RPG-style class + subclass with a character portrait, a stored
-  memory profile, and a self-contained HTML character sheet. When a profile
-  already exists, bare `/whoami` shows what the agent knows and offers to
-  correct or re-run; `/whoami rerun` re-runs the interview. Does NOT trigger
-  for project- or task-specific work calibration (use `handshake`), routine
-  memory edits or CRUD (use the memory-management skill), or brand-voice work.
-  `whoami` is the broad, person-level profile; `handshake` is the narrow,
-  project-level one — whoami feeds handshake.
+  A short, conversational interview that builds a portable profile of the
+  user — who they are and how they want to be collaborated with — so the
+  agent can tailor its responses. Triggers on `/whoami`, "get to know me",
+  "set up my profile", "personalize how you work with me", "calibrate how
+  you respond", the user mentioning they are new to AI or switching agent
+  vendors, or a request for their collaboration "character sheet" or player
+  profile. Produces six collaboration dials, an RPG-style class + subclass
+  with a character portrait, a memory profile, and a self-contained HTML
+  character sheet. When a profile exists, bare `/whoami` reviews it and
+  offers to correct or re-run; `/whoami rerun` restarts the interview. Does
+  NOT trigger for project- or task-specific work calibration (use
+  `handshake`), routine memory edits or CRUD (use memory-management), or
+  brand-voice work. `whoami` is person-level and broad; `handshake` is
+  project-level and feeds from it.
 ---
 
 # whoami
