@@ -91,6 +91,7 @@ If the test set did not exercise some rules in the skill (and you noticed during
 1. Apply the proposed skill-text diffs (review each — they are suggestions, not mandates).
 2. Rewrite the flagged rubric/brief/fixture items.
 3. Re-run the evaluation (manually — skill-evaluator does not auto-iterate).
+4. If `skill-creator` is available, run its description-check. This audit covers rule *adherence* — whether the skill's instructions land when Claude runs them — not *triggering*, whether the description fires on the right requests and stays quiet on the wrong ones. Triggering is `skill-creator`'s half; together they are the full pre-shipment ritual, and one alone leaves half the skill unaudited. Don't auto-invoke it — recommend it and let the human run it (per Phase 7, skill-evaluator does not drive iteration).
 ```
 
 ## Authoring guidance
@@ -109,6 +110,16 @@ If `skill-creator` is available, follow its authoring rules when proposing diffs
 - Keep SKILL.md under ~500 lines; push detail into `references/`
 
 If `skill-creator` is NOT available, still apply these conventions — they're reasonable defaults even without the skill loaded.
+
+### Capability-gate the skill-creator handoff
+
+Step 4 of Next steps is the *triggering* half of the pre-shipment ritual.
+Include it only when `skill-creator` is present in the session's available
+skills; drop the step entirely otherwise — don't recommend a tool the user
+can't reach. And never auto-invoke `skill-creator`: skill-evaluator's Phase 7
+hands iteration to the human, and the description-check carries environment
+needs (an authenticated CLI) this adherence audit does not. Recommend the
+handoff; do not route it.
 
 ### One finding per tag cluster
 
