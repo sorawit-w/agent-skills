@@ -5,6 +5,83 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.13.0] — 2026-05-23
+
+Adds the **`whoami`** skill — a portable collaboration profile that calibrates
+how the agent works with each user. A short conversational interview produces
+six bipolar collaboration dials (Initiative, Depth, Breadth, Rationale, Warmth,
+Challenge), an RPG-style class + subclass from a 12-class taxonomy, a runtime
+memory entry, a portable `whoami-profile.md` source-of-truth file, and a
+self-contained HTML character sheet. Sibling to `handshake` — `whoami` is the
+broad, person-level profile; `handshake` calibrates one project and now reads
+the whoami profile to pre-fill its core questions.
+
+### Added
+
+- **`skills/whoami/SKILL.md`** — invocation gate (`/whoami` show mode vs
+  `/whoami rerun`), the nine-step interview flow, the six-dial convergence
+  model, data-handling rules, persistence contract.
+- **`skills/whoami/references/` (8 files)** — `dials.md`, `question-bank.md`
+  (9 scenario questions + domain variants + scoring), `class-map.md` (12-class
+  bipolar taxonomy + Wildcard), `subclass-blurbs.md` (120 combination blurbs),
+  `background-questions.md`, `adaptive-phrasing.md`, `mbti-mapping.md`,
+  `persistence.md`.
+- **`skills/whoami/templates/` (2 files)** — `profile-template.md` and
+  `character-sheet.html` (self-contained, diverging-lollipop dials).
+- **`skills/whoami/commands/whoami.md`** — slash-command entry point.
+- **`skills/whoami/README.md`** — user-facing README.
+- **`assets/whoami-li.svg`**, **`assets/whoami-x.svg`**,
+  **`assets/icons/whoami.svg`** — LinkedIn / X banners + 32×32 icon.
+- **`skills/whoami/assets/characters/` (13 SVGs)** — default class characters,
+  6 axis-family designs in high/low variants plus Wildcard.
+
+### Changed
+
+- **`skills/handshake/SKILL.md`** — Phase 1 now checks for a `whoami-profile.md`
+  and pre-fills the core questions from it (confirm, not cold-ask); new
+  cross-skill row; "get to know me" dropped from its trigger phrases to
+  disambiguate from `whoami`. One-directional — `handshake` never writes back.
+- `README.md` (root) — TL;DR count eighteen → nineteen; new shelf-table row
+  next to `handshake`; new Skill-details entry; Status section promotes
+  3.13.0 and demotes 3.12.0.
+- `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` — version
+  3.12.0 → 3.13.0; description, skills list, and keywords appended.
+
+### Why
+
+An agent gives better answers when it knows the user — but that knowledge is
+scattered, implicit, or trapped in one vendor's memory, and a new or
+vendor-switching user starts from zero every time. `whoami` makes "who I am
+and how I want to be worked with" an explicit, ~3-minute setup.
+
+It passes the repo's three-part skill-separation test against `handshake`:
+unique structure (gamified scenario interview converging on six dials),
+distinct deliverable (portable profile + HTML character sheet), and a new
+elicitation pattern (bipolar-dial scoring with an MBTI fast-path).
+
+Two design choices worth recording. The character sheet renders the dials as
+**diverging lollipops, not a radar** — every dial is bipolar, and a radar
+misreads a strong low preference as "weak." And the class taxonomy is **12
+classes (6 axes × 2 poles)**, chosen over a staged 6-now/12-later rollout
+because a taxonomy is foundational structure — expanding it post-launch would
+re-derive every existing user's profile.
+
+### Notes
+
+- Pre-shipment audits run on `skills/whoami`. `skill-evaluator` behavioral
+  audit (6 tests, 24/24 assertions, blind graders) folded in two skill-text
+  findings — protected attributes enumerated in `background-questions.md`, and
+  "get to know me" disambiguated from `handshake`'s triggers. `skill-creator`
+  triggering check (16 queries — 8 should-trigger, 8 should-not — 16/16
+  correct): description validated, no change. The canonical `run_eval` CLI
+  needs an authenticated terminal; the in-repo run used a sub-agent substitute.
+- Capability-gated throughout: writes to whatever memory the runtime exposes;
+  generates a pixel-art portrait via `pixel-art` only when an image generator
+  is available, else the built-in class SVGs.
+- English-first MVP; i18n deferred.
+- Character SVGs are a first authoring pass — competent and consistent, best
+  given a visual polish review since they render in a browser.
+
 ## [3.12.0] — 2026-05-22
 
 Adds an opt-in HTML export capability to `coding-rules`: on explicit

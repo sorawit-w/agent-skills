@@ -1,0 +1,81 @@
+<svg viewBox="0 0 1600 467" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="whoami — learn who you are working with, then build a collaboration character sheet" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+<title>whoami</title>
+<desc>Pixel-art banner, three panels left to right: a sparse what-I-know card, a six-dial interview card, and a character-sheet output card.</desc>
+<defs>
+<pattern id="paperx" width="8" height="6" patternUnits="userSpaceOnUse">
+<rect width="8" height="6" fill="#f5efe6"/>
+<rect width="8" height="2" fill="#eadfcf"/>
+</pattern>
+</defs>
+<rect width="1600" height="467" fill="url(#paperx)"/>
+
+<text x="60" y="64" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="44" font-weight="700" fill="#1f2937">whoami</text>
+<text x="62" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" fill="#6b7280">know who you're working with</text>
+
+<!-- LEFT CARD -->
+<rect x="60" y="120" width="430" height="250" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+<rect x="60" y="120" width="430" height="32" fill="#1f2937"/>
+<text x="275" y="141" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="3" fill="#f5efe6">WHAT I KNOW</text>
+<text x="104" y="262" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="96" font-weight="700" fill="#eadfcf">?</text>
+<text x="214" y="296" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="68" font-weight="700" fill="#ddd0b6">?</text>
+<text x="300" y="240" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="52" font-weight="700" fill="#eadfcf">?</text>
+<rect x="90" y="312" width="370" height="11" fill="#eadfcf"/>
+<rect x="90" y="334" width="270" height="11" fill="#eadfcf"/>
+
+<!-- arrow left to center -->
+<g fill="#6b7280">
+<rect x="506" y="240" width="42" height="10"/>
+<rect x="540" y="232" width="9" height="9"/>
+<rect x="540" y="249" width="9" height="9"/>
+<rect x="548" y="240" width="9" height="10"/>
+</g>
+
+<!-- CENTER CARD: six dials -->
+<rect x="585" y="120" width="430" height="250" fill="#f3e7c9" stroke="#c2410c" stroke-width="3"/>
+<rect x="585" y="120" width="430" height="32" fill="#c2410c"/>
+<text x="800" y="141" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="3" fill="#fdf7ea">SIX DIALS</text>
+<g>
+<rect x="615" y="189" width="370" height="3" fill="#d8c79b"/><rect x="798" y="184" width="4" height="13" fill="#b79a5c"/><rect x="800" y="189" width="72" height="3" fill="#c2410c"/><rect x="865" y="183" width="14" height="14" fill="#c2410c"/>
+<rect x="615" y="223" width="370" height="3" fill="#d8c79b"/><rect x="798" y="218" width="4" height="13" fill="#b79a5c"/><rect x="800" y="223" width="144" height="3" fill="#c2410c"/><rect x="937" y="217" width="14" height="14" fill="#c2410c"/>
+<rect x="615" y="257" width="370" height="3" fill="#d8c79b"/><rect x="798" y="252" width="4" height="13" fill="#b79a5c"/><rect x="712" y="257" width="88" height="3" fill="#c2410c"/><rect x="705" y="251" width="14" height="14" fill="#c2410c"/>
+<rect x="615" y="291" width="370" height="3" fill="#d8c79b"/><rect x="798" y="286" width="4" height="13" fill="#b79a5c"/><rect x="800" y="291" width="58" height="3" fill="#c2410c"/><rect x="851" y="285" width="14" height="14" fill="#c2410c"/>
+<rect x="615" y="325" width="370" height="3" fill="#d8c79b"/><rect x="798" y="320" width="4" height="13" fill="#b79a5c"/><rect x="690" y="325" width="110" height="3" fill="#c2410c"/><rect x="683" y="319" width="14" height="14" fill="#c2410c"/>
+<rect x="615" y="359" width="370" height="3" fill="#d8c79b"/><rect x="798" y="354" width="4" height="13" fill="#b79a5c"/><rect x="800" y="359" width="116" height="3" fill="#c2410c"/><rect x="909" y="353" width="14" height="14" fill="#c2410c"/>
+</g>
+
+<!-- arrow center to right -->
+<g fill="#c2410c">
+<rect x="1031" y="240" width="42" height="10"/>
+<rect x="1065" y="232" width="9" height="9"/>
+<rect x="1065" y="249" width="9" height="9"/>
+<rect x="1073" y="240" width="9" height="10"/>
+</g>
+
+<!-- RIGHT CARD: character sheet -->
+<rect x="1110" y="120" width="430" height="250" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+<rect x="1110" y="120" width="430" height="32" fill="#1f2937"/>
+<text x="1325" y="141" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="3" fill="#f5efe6">CHARACTER SHEET</text>
+<rect x="1301" y="170" width="48" height="44" fill="#1f2937"/>
+<rect x="1301" y="185" width="48" height="9" fill="#c2410c"/>
+<rect x="1311" y="177" width="6" height="6" fill="#f5efe6"/>
+<rect x="1333" y="177" width="6" height="6" fill="#f5efe6"/>
+<rect x="1285" y="218" width="80" height="24" fill="#1f2937"/>
+<text x="1325" y="276" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="21" font-weight="700" fill="#c2410c">LOREMASTER</text>
+<g>
+<rect x="1158" y="305" width="334" height="3" fill="#d8c79b"/><rect x="1323" y="300" width="4" height="13" fill="#b79a5c"/><rect x="1325" y="305" width="55" height="3" fill="#c2410c"/><rect x="1373" y="299" width="14" height="14" fill="#c2410c"/>
+<rect x="1158" y="333" width="334" height="3" fill="#d8c79b"/><rect x="1323" y="328" width="4" height="13" fill="#b79a5c"/><rect x="1270" y="333" width="55" height="3" fill="#c2410c"/><rect x="1263" y="327" width="14" height="14" fill="#c2410c"/>
+<rect x="1158" y="361" width="334" height="3" fill="#d8c79b"/><rect x="1323" y="356" width="4" height="13" fill="#b79a5c"/><rect x="1325" y="361" width="75" height="3" fill="#c2410c"/><rect x="1393" y="355" width="14" height="14" fill="#c2410c"/>
+</g>
+
+<!-- chapter markers -->
+<g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="3" fill="#6b7280">
+<rect x="585" y="410" width="9" height="9" fill="#c2410c"/>
+<text x="603" y="419">REVIEW</text>
+<rect x="715" y="410" width="9" height="9" fill="#c2410c"/>
+<text x="733" y="419">ASK</text>
+<rect x="815" y="410" width="9" height="9" fill="#c2410c"/>
+<text x="833" y="419">SCORE</text>
+<rect x="935" y="410" width="9" height="9" fill="#c2410c"/>
+<text x="953" y="419">SHEET</text>
+</g>
+</svg>

@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>whoami — character sheet</title>
+<style>
+  :root{
+    --paper:#f5efe6; --card:#fdf7ea; --border:#c9b58a; --border-dark:#b79a5c;
+    --ink:#1f2937; --accent:#c2410c; --muted:#6b7280; --ring:#eadfcf;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);padding:32px 16px;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+  .sheet{max-width:720px;margin:0 auto;background:var(--card);
+    border:2px solid var(--border-dark);border-radius:10px;padding:28px;}
+  .top{display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:2px solid var(--border);padding-bottom:12px;margin-bottom:8px;}
+  .top h1{margin:0;font-size:22px;letter-spacing:2px;}
+  .top .date{color:var(--muted);font-size:13px;}
+  .class-card{text-align:center;margin:18px 0 6px;}
+  .portrait{width:128px;height:128px;margin:0 auto 10px;}
+  .portrait svg,.portrait img{width:100%;height:100%;
+    image-rendering:pixelated;image-rendering:crisp-edges;}
+  .class-card .class{font-size:28px;font-weight:700;color:var(--accent);}
+  .class-card .identity{color:var(--muted);font-size:14px;margin-top:4px;
+    font-style:italic;}
+  .dials{margin:18px 0 4px;}
+  .dial{margin:14px 0;}
+  .dial-head{display:flex;justify-content:space-between;align-items:baseline;
+    font-size:13px;margin-bottom:5px;}
+  .dial-head .name{font-weight:700;letter-spacing:.5px;}
+  .dial-head .val{color:var(--muted);font-size:12px;}
+  .track{position:relative;height:14px;}
+  .track .rail{position:absolute;top:6px;left:0;right:0;height:2px;
+    background:var(--ring);}
+  .track .tick{position:absolute;top:2px;left:50%;width:2px;height:10px;
+    background:var(--border-dark);transform:translateX(-1px);}
+  .track .conn{position:absolute;top:6px;height:2px;background:var(--accent);}
+  .track .dot{position:absolute;top:1px;width:12px;height:12px;
+    border-radius:50%;background:var(--accent);border:2px solid var(--card);
+    box-shadow:0 0 0 1px var(--accent);transform:translateX(-6px);}
+  .poles{display:flex;justify-content:space-between;font-size:11px;
+    color:var(--muted);margin-top:3px;}
+  .legend{text-align:center;color:var(--muted);font-size:11px;
+    margin:8px 0 20px;}
+  .section-title{font-size:13px;letter-spacing:2px;text-transform:uppercase;
+    color:var(--border-dark);border-bottom:1px solid var(--ring);
+    padding-bottom:4px;margin:24px 0 12px;}
+  .trait{margin:10px 0;}
+  .trait .lbl{display:flex;justify-content:space-between;font-size:13px;}
+  .bar{height:10px;background:var(--ring);border-radius:5px;overflow:hidden;
+    margin-top:3px;}
+  .bar > span{display:block;height:100%;background:var(--accent);}
+  .summary{font-family:-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:15px;line-height:1.6;}
+  .empty{color:var(--muted);font-size:13px;font-style:italic;}
+  footer{margin-top:24px;border-top:1px solid var(--ring);padding-top:10px;
+    color:var(--muted);font-size:12px;text-align:center;}
+  @media print{
+    body{background:#fff;padding:0;}
+    .sheet{border:none;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="top">
+    <h1>whoami</h1>
+    <span class="date">{{GENERATED_DATE}}</span>
+  </div>
+
+  <div class="class-card">
+    <div class="portrait">{{PORTRAIT}}</div>
+    <div class="class" id="className"></div>
+    <div class="identity" id="identity"></div>
+  </div>
+
+  <div class="dials" id="dials"></div>
+  <p class="legend">Center tick marks no strong preference either way.</p>
+
+  <div class="section-title">Specializations</div>
+  <div id="traits"></div>
+
+  <div class="section-title">Summary</div>
+  <div class="summary">{{SUMMARY}}</div>
+
+  <footer>Self-reported snapshot from a whoami session — a prior, not a
+    verdict. Revise on contradiction.</footer>
+</div>
+
+<script>
+const data = {
+  class: "{{CLASS}}",
+  subclass: "{{SUBCLASS}}",                 // "" if none
+  identity: "{{CLASS_IDENTITY}}",
+  dials: {                                  // 0-10
+    initiative: {{INITIATIVE}}, depth: {{DEPTH}}, breadth: {{BREADTH}},
+    rationale: {{RATIONALE}}, warmth: {{WARMTH}}, challenge: {{CHALLENGE}}
+  },
+  flexibleTraits: {{FLEXIBLE_TRAITS_JSON}}  // [] or [{name,value}], <=5
+};
+
+document.getElementById('className').textContent =
+  data.subclass ? data.class + " / " + data.subclass : data.class;
+document.getElementById('identity').textContent = data.identity;
+
+// ---- dials: diverging lollipops ----
+// Pole labels are canonical in references/dials.md.
+(function(){
+  const defs=[
+    {k:'initiative',name:'Initiative',lo:'Wait for my go',hi:'Run with it'},
+    {k:'depth',     name:'Depth',     lo:'Bottom line',   hi:'Full picture'},
+    {k:'breadth',   name:'Breadth',   lo:'One answer',    hi:'All options'},
+    {k:'rationale', name:'Rationale', lo:'Just the answer',hi:'Show the why'},
+    {k:'warmth',    name:'Warmth',    lo:'All business',  hi:'Companion'},
+    {k:'challenge', name:'Challenge', lo:'Back me up',    hi:'Push back'}
+  ];
+  const box=document.getElementById('dials');
+  defs.forEach(d=>{
+    const v=data.dials[d.k], pct=v*10;
+    const lo=Math.min(50,pct), hi=Math.max(50,pct);
+    const toward=v>=5?d.hi:d.lo;
+    const row=document.createElement('div');
+    row.className='dial';
+    row.innerHTML=
+      '<div class="dial-head"><span class="name">'+d.name+'</span>'+
+        '<span class="val">'+v+'/10</span></div>'+
+      '<div class="track" role="img" aria-label="'+d.name+': '+v+
+        ' of 10, toward '+toward+'">'+
+        '<div class="rail"></div><div class="tick"></div>'+
+        '<div class="conn" style="left:'+lo+'%;width:'+(hi-lo)+'%"></div>'+
+        '<div class="dot" style="left:'+pct+'%"></div>'+
+      '</div>'+
+      '<div class="poles"><span>'+d.lo+'</span><span>'+d.hi+'</span></div>';
+    box.appendChild(row);
+  });
+})();
+
+// ---- flexible traits ----
+(function(){
+  const box=document.getElementById('traits');
+  if(!data.flexibleTraits || !data.flexibleTraits.length){
+    box.innerHTML='<p class="empty">No specializations yet — these grow as '+
+      'we work together.</p>';
+    return;
+  }
+  data.flexibleTraits.forEach(t=>{
+    const d=document.createElement('div');d.className='trait';
+    d.innerHTML='<div class="lbl"><span>'+t.name+'</span><span>'+t.value+
+      '/10</span></div><div class="bar"><span style="width:'+
+      (t.value*10)+'%"></span></div>';
+    box.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>

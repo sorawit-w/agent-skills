@@ -11,7 +11,7 @@ description: >
   user can skip any item. Slash-command-only at v1 (no aggressive auto-trigger).
   Use this skill when the user invokes `/handshake`, when they ask to "calibrate
   how we work," "tune in to me," "set a working agreement," "share my
-  preferences," or "get to know me," or when an upstream skill suggests
+  preferences," or when an upstream skill suggests
   calibration because user memory is sparse. NOT for codebase orientation
   ("get to know my codebase"), performance-review calibration ("set Q3
   calibration goals"), or content gathering (resumes, bios, requirements docs,
@@ -100,6 +100,8 @@ Anything stale or wrong? Tell me and I'll update before we go further.
 - **Transition to Phase 1 in the SAME response when memory is empty** — nothing to confirm, so proceeding directly avoids dead air. **When memory is non-empty, end the Phase 0 turn with the correction prompt and WAIT for the user's reply before showing Q1.** Surfacing memory and Q1 in one breath defeats the "show first, then ask" purpose — the user needs a beat to read what's on file before being asked something new.
 
 ### Phase 1 — Core calibration (always runs)
+
+**Check for a `whoami` profile first.** If the runtime has a `whoami-profile.md` — the broad, person-level collaboration profile produced by the upstream sibling skill `whoami` — read its six dials and background and use them to **pre-fill** the core questions: present the inferred answer and ask the user to confirm or adjust, rather than cold-asking. Suggested mapping — Q1 from `background.ai_experience` / `background.role`; Q2 from the Initiative dial (high → "just do it, summarize after"; low → "walk me through your plan first"); Q3 from the Depth dial (high → thorough; low → terse); Q4 from the dial furthest from neutral (e.g. high Challenge → "push back if I'm wrong"). A `whoami` profile is a strong prior — confirm, don't re-interrogate. This read is one-directional: `handshake` never writes back to the `whoami` profile. If no profile exists, ask the questions cold as below.
 
 Ask ≤4 pill questions plus 1 free-text question. Each question MUST be:
 
@@ -254,7 +256,7 @@ Multi-user awareness (e.g., "are you still the user this memory was built for, o
 |---|---|
 | `/handshake` slash command | Run Phase 0 → Phase 1. Offer Phase 2 if appropriate. |
 | `/handshake --project` | Run Phase 0 → Phase 1 → Phase 2 (project overlay required). |
-| User says "calibrate," "tune in," "set working preferences," "get to know me" | Run as if `/handshake` was invoked. |
+| User says "calibrate," "tune in," "set working preferences" | Run as if `/handshake` was invoked. |
 | Another skill suggests handshake AND user accepts | Run as if `/handshake` was invoked. The suggesting skill MUST get explicit user acceptance — never auto-route. |
 | Memory is empty mid-conversation, user has not asked | Do NOT auto-trigger. May offer a one-line suggestion at most. |
 
@@ -265,6 +267,7 @@ Multi-user awareness (e.g., "are you still the user this memory was built for, o
 | Skill | When to interact |
 |---|---|
 | `productivity:memory-management` (if installed) | `handshake` writes into the same two-tier `MEMORY.md` + `memory/` store. If `productivity:memory-management` is installed and managing the file layout, defer to its conventions for file location and frontmatter — do not invent a parallel layout. If not installed, write directly into the runtime's persistent memory store using the standard frontmatter format. **Capability-gated, not vendor-gated.** |
+| `whoami` | Upstream sibling. `whoami` builds the broad person-level collaboration profile; `handshake` reads `whoami-profile.md` to pre-fill its Phase 1 core questions (confirm, not cold-ask). One-directional — `handshake` never writes back to the `whoami` profile. |
 | `team-composer` | When `team-composer` is about to assemble a team and `user`-type memory is empty, it MAY suggest running `/handshake` first so the team can be tailored. Suggestion only — never auto-route. |
 | `brand-workshop` | Similar — may suggest `/handshake` if running for a personal-brand or solo-founder identity package and user memory is sparse. Suggestion only. |
 | `validation-canvas` / `riskiest-assumption-test` / `pitch-deck` | These read project state, not user state. May suggest `/handshake --project` at kickoff if `project`-type memory for the current work is empty. Suggestion only. |
@@ -300,7 +303,7 @@ MIT — see the [LICENSE](https://github.com/sorawit-w/agent-skills/blob/main/LI
 Load this skill when:
 - The user invokes the `/handshake` slash command directly
 - The user says "calibrate how we work," "let's set working preferences,"
-  "tune in to me," "set up a working agreement," or "get to know me"
+  "tune in to me," or "set up a working agreement"
 - Another skill (e.g., `team-composer`, `brand-workshop`) suggests running
   handshake first because relevant `user`-type memory is empty or stale,
   AND the user accepts that suggestion
