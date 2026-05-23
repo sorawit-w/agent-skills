@@ -5,6 +5,82 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.12.0] — 2026-05-22
+
+Adds an opt-in HTML export capability to `coding-rules`: on explicit
+request, the agent can render a Markdown document as a single
+self-contained, shareable HTML file. Markdown stays the canonical source of
+truth — the HTML is a point-in-time snapshot. Two new files plus two small
+edits inside `skills/coding-rules/resources/`; no `SKILL.md` text changes,
+no new skill, no new sub-command, no breaking changes.
+
+### Added
+
+- **`skills/coding-rules/resources/references/html-export.md`** — new
+  reference doc defining the opt-in HTML export convention. Fires only when
+  the developer explicitly asks for an HTML / shareable / printable version
+  of an existing document — never automatically, never as a substitute for
+  the Markdown. Specifies what "self-contained" means (single file, all CSS
+  inline, no CDN, no build step, system fonts, vanilla JS only if genuinely
+  needed — matching the convention `pitch-deck` / `validation-canvas` /
+  `riskiest-assumption-test` already follow), the snapshot contract
+  (`.html` written alongside the `.md`, never synced back, stale by
+  design), deterministic production (standard Markdown→HTML converter + the
+  bundled template, never hand-authored tag by tag), and an explicit "do
+  not reach for UI skills" rule (`ui-ux-pro-max`, `taste-skill`,
+  `impeccable` are interface tools — wrong category for a document render,
+  and would create a second design authority).
+- **`skills/coding-rules/resources/templates/html-export.html.template`** —
+  bundled single-file HTML wrapper with the default document stylesheet:
+  legible centered measure, print styles for clean PDF output, and a
+  snapshot footer. Exposes its tokens as CSS custom properties in `:root` —
+  that block is the single override surface when a `DESIGN.md` is present.
+  Placeholders: `{{TITLE}}`, `{{CONTENT}}`, `{{SOURCE}}`, `{{DATE}}`.
+
+### Changed
+
+- **`skills/coding-rules/resources/BOOTSTRAP.md`** — one row added to the
+  Reference Index pointing at `references/html-export.md`.
+- **`skills/coding-rules/resources/references/design-md.md`** — names HTML
+  document export in "When This Rule Fires" (the export's stylesheet
+  references design tokens, so `DESIGN.md` governs it) and adds a See Also
+  pointer to `html-export.md`.
+
+### Why
+
+The trigger was a question about whether agent-authored documentation
+should move from Markdown to HTML, since humans increasingly prefer HTML
+for its visual rendering. The answer landed on: keep Markdown as the
+canonical authoring and working format — it is cheaper for the agent to
+read and edit, diffs cleanly, and keeps the `.ai/` state system coherent —
+and treat HTML as an opt-in *export*, not an authoring format.
+
+A mandatory "human docs → HTML" rule was rejected: it would force the agent
+to classify every document as human- vs agent-facing on the fly, and that
+classification is genuinely ambiguous for `ROADMAP.md`, `CONTEXT.md`,
+`DEVELOPER_TODO.md`, and `DESIGN.md`. Opt-in deletes the classification —
+the developer asks when the developer needs it.
+
+Single self-contained HTML (rather than HTML with external CSS/JS) because
+the use case is sharing: emailed, dropped in chat, opened offline,
+archived. External assets break the moment the file leaves its folder.
+
+No new skill: producing self-contained HTML fails the repo's three-part
+skill-separation test (no unique structure, deliverable, or elicitation) —
+it is a thin transform, correctly placed as rule content inside
+`coding-rules`. No sub-command either: the existing five (`load` /
+`reload` / `status` / `install` / `uninstall`) are lifecycle operations on
+the guardrails system; HTML export is task work and belongs in the rule
+content, reached by natural language once BOOTSTRAP is loaded.
+
+### Notes
+
+- Additive only. Existing `coding-rules` behavior is unchanged — the export
+  does nothing unless explicitly requested.
+- `DESIGN.md` remains the single design-token authority; `html-export.md`
+  is a consumer that points to `references/design-md.md` and never copies
+  tokens.
+
 ## [3.11.0] — 2026-05-12
 
 Hardens the `coding-rules` workflow boundaries to fix two stacked failure

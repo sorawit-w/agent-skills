@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<!--
+  coding-rules — bundled HTML export template.
+  Renders a Markdown document as a single self-contained, shareable HTML file.
+  Governed by references/html-export.md.
+
+  Placeholders the exporter fills:
+    {{TITLE}}    browser tab title (derive from the doc's first H1 or filename)
+    {{CONTENT}}  the Markdown body converted to HTML
+    {{SOURCE}}   source Markdown filename, e.g. postmortem.md
+    {{DATE}}     export date, e.g. 2026-05-22
+
+  Styling override surface: the :root block below. When a DESIGN.md exists at
+  repo root, overwrite these custom properties with DESIGN.md tokens and change
+  nothing else. With no DESIGN.md, ship this default as-is.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<style>
+  :root {
+    --bg:        #fbfaf8;
+    --ink:       #1f2937;
+    --ink-muted: #6b7280;
+    --accent:    #c2410c;
+    --border:    #e5e0d8;
+    --code-bg:   #f3f1ec;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --measure:   46rem;
+    --radius:    6px;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .doc {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 4rem 1.5rem 2rem;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.25;
+    font-weight: 600;
+    margin: 2.25em 0 0.6em;
+  }
+  h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-top: 0;
+    padding-bottom: 0.3em;
+    border-bottom: 3px solid var(--accent);
+  }
+  h2 { font-size: 1.45rem; }
+  h3 { font-size: 1.18rem; }
+  h4, h5, h6 { font-size: 1rem; }
+
+  p, ul, ol, blockquote, table, pre { margin: 0 0 1.1em; }
+
+  a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+  ul, ol { padding-left: 1.5em; }
+  li { margin: 0.25em 0; }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 0.12em 0.35em;
+    border-radius: 3px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.9em 1em;
+    overflow-x: auto;
+  }
+  pre code { background: none; padding: 0; font-size: 0.85em; }
+
+  blockquote {
+    margin-left: 0;
+    padding: 0.2em 1.1em;
+    border-left: 3px solid var(--accent);
+    color: var(--ink-muted);
+  }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.94em; }
+  th, td { border: 1px solid var(--border); padding: 0.5em 0.7em; text-align: left; }
+  th { background: var(--code-bg); font-weight: 600; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 2em 0; }
+  img { max-width: 100%; height: auto; }
+
+  .doc-footer {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 1.2rem 1.5rem 3rem;
+    border-top: 1px solid var(--border);
+    color: var(--ink-muted);
+    font-size: 0.8rem;
+  }
+
+  @media print {
+    :root { --bg: #ffffff; }
+    body { font-size: 11pt; }
+    .doc { padding: 0; max-width: none; }
+    .doc-footer { padding: 1rem 0 0; max-width: none; }
+    a { color: var(--ink); }
+    pre, code, th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    pre, blockquote, table, img { break-inside: avoid; }
+    h1, h2, h3, h4 { break-after: avoid; }
+  }
+</style>
+</head>
+<body>
+<main class="doc">
+{{CONTENT}}
+</main>
+<footer class="doc-footer">
+Point-in-time HTML snapshot of <code>{{SOURCE}}</code>, exported {{DATE}}. The Markdown file is the source of truth.
+</footer>
+</body>
+</html>

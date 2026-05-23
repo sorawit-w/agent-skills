@@ -9,6 +9,8 @@ The agent's contract for repos that contain a project-level `DESIGN.md`.
 - The repo has a file named exactly `DESIGN.md` (uppercase) at its root, AND
 - The current task touches UI, styling, theming, or anything that references design tokens (colors, typography, spacing, radius, motion).
 
+**HTML document export counts.** Producing a self-contained HTML version of a document (see `references/html-export.md`) is a styling task — its stylesheet references design tokens — so `DESIGN.md` governs the export's colors and typography.
+
 If both conditions hold, this rule overrides any local guess about design tokens. If `DESIGN.md` is absent, see [Absence](#absence) below.
 
 ---
@@ -100,3 +102,4 @@ The DESIGN.md spec is at `alpha` (current as of 2026-05). Schema may break befor
 - `references/external-resources.md` → `impeccable` — frontend quality / anti-slop refinement after generation.
 - `references/external-resources.md` → `taste-skill` — opinionated dial-based bias (DESIGN_VARIANCE / MOTION_INTENSITY / VISUAL_DENSITY) for UI execution.
 - `agent-skills:brand-workshop` (upstream producer) — emits a starter `DESIGN.md` as part of a brand-identity package; the founder moves it to repo root when adopting.
+- `references/html-export.md` — opt-in self-contained HTML document export; consumes `DESIGN.md` tokens for its stylesheet when present.
