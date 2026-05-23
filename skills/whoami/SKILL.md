@@ -145,8 +145,8 @@ is upstream and one-directional — it never reads or depends on `handshake`.
 - `references/mbti-mapping.md` — MBTI → dial priors
 - `references/persistence.md` — profile schema, memory contract, snapshots
 - `templates/profile-template.md`, `templates/character-sheet.html`
-- `assets/characters/*.png` — 13 hi-density pixel-art class portraits;
-  `assets/characters/generate-portraits.py` regenerates the set
+- `assets/characters/*.png` — 13 hi-density pixel-art class portraits
+  (512×512), one per class
 - `commands/whoami.md` — slash-command entry point (`/whoami`, `/whoami rerun`)
 
 ## When to use this skill

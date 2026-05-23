@@ -207,3 +207,9 @@ assets/_drafts/
 # `docs/pixel-art/<slug>-<date>.{png,webp,md,svg}`). Useful locally;
 # not part of the shipped skill.
 docs/pixel-art/
+
+# whoami character-portrait working files — the full-resolution source
+# archive and the review contact sheet. The shipped portraits are the
+# 512×512 skills/whoami/assets/characters/<class>.png files.
+skills/whoami/assets/characters/archived/
+skills/whoami/assets/characters/_contact.png

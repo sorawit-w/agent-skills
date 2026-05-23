@@ -7,57 +7,52 @@ versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [3.13.1] — 2026-05-23
 
-Replaces `whoami`'s 13 bundled class portraits with **hi-density pixel art**,
-adds a deterministic generator that produces them, and folds in the batched
-`skill-evaluator` findings-report enhancement.
+Replaces `whoami`'s 13 bundled class portraits with hi-density pixel-art
+character portraits, and folds in the batched `skill-evaluator`
+findings-report enhancement.
 
 ### Changed
 
 - **`skills/whoami/assets/characters/*.png`** — the 13 default class portraits
-  are now hi-density pixel art: a 64×64 logical pixel grid with per-material
-  shade ramps, hue-shifted shadows, a dithered warm-cream background, and a
-  crisp 1px silhouette outline, rendered to 512×512 PNG. They replace the
-  first release's coarse ~10-rect SVG emblems. Six axis-family base figures
-  (helm, cowl, hood, hat, face) in high/low variants plus Wildcard, so paired
-  classes (e.g. Vanguard / Marshal) visibly share a family.
+  are now hi-density pixel-art character busts: helmed, hooded, hatted, or
+  bare-faced figures with shade ramps, dithered backgrounds, and a class
+  emblem each. Six axis-family designs in high/low variant pairs plus
+  Wildcard, so paired classes (e.g. Vanguard / Marshal) visibly share a
+  family. Each was generated with an AI image model from a per-class prompt
+  specification (style, palette, subject, headgear, crest, emblem, mood) and
+  ships at 512×512 PNG (~370 KB) so the base64-embedded HTML character sheet
+  stays light; the 1254×1254 source renders are archived locally, not
+  tracked. They replace the first release's coarse ~10-rectangle SVG emblems.
 - **`skills/whoami/references/class-map.md`**, **`skills/whoami/SKILL.md`**,
-  **`skills/whoami/README.md`** — character references now point at
-  `assets/characters/<class>.png`; the capability-gating note describes the
-  bundled PNG fallback.
+  **`skills/whoami/README.md`**, **`README.md`** — character references now
+  point at `assets/characters/<class>.png`; the capability-gating note
+  describes the bundled PNG fallback.
 - **`skills/skill-evaluator/references/findings-report.md`** — the Next-steps
   flow gains a Step 4 capability-gating a handoff to `skill-creator`'s
   description-check, plus an authoring-guidance subsection. Batched per the
   earlier "batch it" decision — it carried no standalone release.
 
-### Added
-
-- **`skills/whoami/assets/characters/generate-portraits.py`** — a
-  deterministic Python + Pillow generator that renders all 13 portraits from
-  one parametric figure system; re-run it to regenerate or restyle the set.
-
 ### Removed
 
 - **`skills/whoami/assets/characters/*.svg`** — the 13 coarse SVG emblems,
-  superseded by the PNG set.
+  superseded by the PNG portraits.
 
 ### Why
 
 The first `whoami` release shipped the class characters as hand-authored SVGs
 at roughly ten rectangles each — closer to glyphs than to the hi-density
 pixel art the skill's own `pixel-art` integration implies. This release
-brings the bundled fallback art up to the density the skill describes. The
-generator is kept in-repo (not just its output) so the set is reproducible
-and restyleable — context engineering over a frozen asset dump.
-
-Live AI-model generation via a connected image MCP returns images only as
-remote temp URLs with no reliable path to pull the binary into the repo
-filesystem; a deterministic local generator sidesteps that entirely and keeps
-the default art version-controlled and auditable.
+brings the bundled portraits up to that bar. Each portrait is specified by a
+reusable per-class prompt, so the set can be regenerated or restyled
+consistently against a connected image generator.
 
 ### Notes
 
 - PATCH: bundled-asset replacement plus a batched doc enhancement. No skill
   triggers, output shapes, or contracts changed.
+- Portraits ship at 512×512 (~370 KB) so the base64-embedded character sheet
+  stays light; full-resolution sources are kept in a local, git-ignored
+  archive rather than shipped.
 - The character-sheet template already styled `.portrait img`; embedding PNG
   portraits needed no template change.
 
