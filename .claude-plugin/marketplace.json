@@ -10,7 +10,7 @@
       "name": "agent-skills",
       "source": "./",
       "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), gtm (BETA — go-to-market for startup products), ai-ux-review (design-completeness review for AI products), ai-eval-review (eval-design-completeness review — sibling to ai-ux-review), i18n-contextual-rewriting, skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, handshake (collaboration calibration ritual), wear-the-hat (single-role embodiment for solo work), coding-rules (opinionated agentic-coding rule loader — read first), pixel-art (BETA — hi-density pixel-art studio with built-in design system, model-agnostic prompts, and capability-gated image-gen routing), and whoami (a portable collaboration profile that calibrates how the agent works with each user).",
-      "version": "3.15.3",
+      "version": "3.16.0",
       "author": {
         "name": "sorawit-w"
       },

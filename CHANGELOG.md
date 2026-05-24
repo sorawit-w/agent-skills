@@ -5,6 +5,60 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.16.0] — 2026-05-24
+
+Closes the cross-runtime portability loop for `whoami`: a profile can now be
+carried *into* a new runtime by import, and pushed *out* to every Claude Code
+session via a global block.
+
+### Added
+
+- **`whoami` global persistence (Step 9).** After persisting the profile,
+  `whoami` now offers — opt-in, one confirmation — to add a condensed profile
+  block to `~/.claude/CLAUDE.md`, so the profile calibrates every Claude Code
+  session rather than only the current workspace. The block is delimited with
+  `<!-- whoami:start -->` / `<!-- whoami:end -->` for in-place updates on a
+  re-run or correction, and carries only profile data (sensitive-free by
+  construction). Capability-gated: where `~/.claude/` is outside the skill's
+  reachable file scope (e.g. a Cowork session connected to a project folder),
+  the skill hands the user the exact block to paste rather than writing it, and
+  never requests `~/.claude/` as a directory.
+- **`whoami` profile import.** When `/whoami` finds no local memory, it now
+  offers — before the cold interview — to import an existing profile the user
+  built in another runtime or workspace. Two formats are accepted: a full
+  `whoami-profile.md` (full fidelity; skips the cold interview) or the condensed
+  `<!-- whoami -->` block from a `~/.claude/CLAUDE.md` (the prose summary is
+  re-authored from the dials). The profile can be pasted in or handed over as a
+  file. A new `persistence.md` section, "Importing an existing profile", carries
+  the contract — including that class/subclass is re-derived from the imported
+  dials rather than trusted verbatim.
+- **`whoami` README — "Cross-runtime portability" section.** States the
+  limitation explicitly: each runtime keeps its own memory store, and `whoami`
+  cannot autonomously reach another runtime's store or `~/.claude/` — so
+  cross-runtime transfer is always user-mediated.
+
+### Why
+
+Each runtime — Claude Code, Cowork, Claude Chat — keeps its own memory store,
+and none can read another's. A profile built in one place did not travel: a
+user switching runtimes, or running `whoami` in a second Cowork workspace,
+started cold every time. The portable `whoami-profile.md` was always the
+intended carrier, but nothing in the flow surfaced it at the moment it mattered
+— a fresh run with empty memory. 3.16.0 closes both directions: global
+persistence pushes the profile out to every Claude Code session; import pulls a
+profile in from a file the user provides. The boundary is honest by design —
+the skill cannot cross runtime memory scopes on its own, so transfer is
+user-mediated, and the README now says so plainly.
+
+### Notes
+
+- MINOR: new opt-in behavior, backwards-compatible. No existing trigger,
+  output contract, or stored-profile schema changed.
+- Pre-shipment audit: `skill-evaluator` run on the changed SKILL.md surface —
+  7 tests, 33 assertions, 33/33 pass, harness lens clean. The frontmatter
+  `description` is unchanged from 3.15.x, so the `skill-creator` description
+  check carries forward; no new triggers were introduced.
+
 ## [3.15.3] — 2026-05-23
 
 Restructures the root README into a lean table-of-contents, and fills six

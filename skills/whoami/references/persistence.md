@@ -120,6 +120,109 @@ is always in context without opening the file:
 On a re-run, find the existing entry and index line and update them **in
 place** — never duplicate.
 
+## Global persistence — `~/.claude/CLAUDE.md` (opt-in)
+
+The runtime memory contract above persists the profile where the *current*
+runtime auto-loads it — but that target is often workspace- or project-scoped
+(a Cowork space, one project's `./CLAUDE.md`). For a profile that should
+calibrate **every** session regardless of project, there is one more target:
+the user-global `~/.claude/CLAUDE.md`, which Claude Code loads into every
+session.
+
+After persisting the profile, **offer** — never silently — to add a condensed
+whoami block there:
+
+> "Want this loaded into every Claude Code session, not just this workspace? I
+> can add a short profile block to your global `~/.claude/CLAUDE.md`."
+
+On an explicit yes:
+
+- **Condensed, not the whole profile — compact for *signal*, not bone-terse.**
+  `~/.claude/CLAUDE.md` is re-sent as input every turn, so the block stays
+  compact: class + subclass; the six dials, each as **one substantive line**
+  carrying its behavioral nuance (not a bare number or a 6-word tag); the
+  **specializations** as a single line, with a short note on what they imply
+  (assumed expertise level, how to deliver); and the anti-patterns. Leave out
+  the YAML frontmatter (machine metadata) and the prose summary (it restates
+  the dials) — both stay in the portable `whoami-profile.md`. The block must be
+  **self-sufficient** — an agent reading only `CLAUDE.md` is fully calibrated;
+  a pointer to the full profile is optional, useful only where a readable copy
+  exists.
+- **Delimit it.** Wrap the block in `<!-- whoami:start -->` …
+  `<!-- whoami:end -->` so a re-run or correction updates it **in place**
+  (find the delimiters, replace between them — never append a second block),
+  and the user can find or delete it.
+- **Touch nothing else.** Create `~/.claude/CLAUDE.md` if absent; if present,
+  leave every other line untouched.
+- **Confirm before writing.** This edits the user's global config — show the
+  exact block and require an explicit yes, the standard `coding-rules` uses
+  for its `CLAUDE.md` install. A decline ends it; do not re-ask.
+
+Capability-gated. `~/.claude/CLAUDE.md` is Claude Code's user-global memory
+file — reachable when the skill runs in Claude Code. If `~/.claude/` is
+**outside the skill's reachable file scope** (e.g. a Cowork session connected
+to a project folder, not the home directory), the skill cannot write the file
+directly: do **not** request `~/.claude/` as a directory — it is
+application-internal — instead show the user the exact block and a one-line
+instruction to paste it into `~/.claude/CLAUDE.md` themselves. If the runtime
+exposes a different global-memory location, target that. If it exposes none,
+skip the offer rather than inventing a path.
+
+Block shape:
+
+    <!-- whoami:start -->
+    ## How I work with AI — whoami profile · <Class> / <Subclass>
+
+    - Initiative <n> — <when to act vs. check in>
+    - Depth <n> — <how much detail; how to deliver it>
+    - Breadth <n> — <options + trade-offs vs. a single recommendation>
+    - Rationale <n> — <how much working / confidence to show>
+    - Warmth <n> — <tone>
+    - Challenge <n> — <how hard to push back, and when to stop>
+    - Strengths — <specializations + values>; <what they imply>
+    - Avoid — <2–3 anti-patterns>
+    <!-- whoami:end -->
+
+Only profile data goes in the block — sensitive-free by construction, like the
+portable profile.
+
+## Importing an existing profile
+
+A profile built in one runtime does not automatically appear in another. Each
+runtime has its own memory store, and the skill **cannot autonomously reach**
+another runtime's store, another workspace's store, or `~/.claude/CLAUDE.md` —
+those are outside its file scope. Cross-runtime transfer is therefore always
+**user-mediated**: the user hands over a profile they already have — pasted in,
+or as a file in a folder the skill can read — and the skill parses it.
+
+Offer the import whenever Step 2 finds no local data, before the cold interview.
+Two formats are accepted:
+
+- **Full `whoami-profile.md`** — full-fidelity. The YAML frontmatter carries the
+  six dials, class/subclass, `flexible_traits`, `anti_patterns`, and background;
+  the body carries the prose summary. Reconstruct the dials, traits,
+  anti-patterns, background, and summary verbatim. Re-derive class/subclass from
+  the imported dials; if the stored class label disagrees (a hand-edited or
+  older-version file), trust the derivation and flag the drift.
+- **Condensed `<!-- whoami:start -->…<!-- whoami:end -->` block** — the block a
+  Claude Code user has in their `~/.claude/CLAUDE.md`. It carries the six dials,
+  the specializations (the `Strengths` line), and the anti-patterns (the
+  `Avoid` line) — reconstruct those verbatim. Re-derive class/subclass from the
+  dials (the block prints a class label too, but the dials are authoritative);
+  flag any mismatch. It does **not** carry the prose summary (omitted by
+  design): re-author it from the dials per the summary guidance above. Fill
+  background only from what the user states.
+
+Imported values are a **prior, not a verdict** — exactly like inferred ones.
+Show them in Step 7 and have the user confirm or nudge each before anything is
+stored; an import skips the cold elicitation, never the confirmation. Once
+confirmed, persist normally — a fresh canonical `whoami-profile.md`, memory
+entry, snapshot, and HTML sheet for *this* runtime.
+
+Do not parse the HTML character sheet as an import source — it is rendered
+output, lossy to reverse. The canonical `whoami-profile.md` and the condensed
+block are the only supported import formats.
+
 ## Snapshots & versioning
 
 Each run writes a dated snapshot; the canonical profile is always a copy of the

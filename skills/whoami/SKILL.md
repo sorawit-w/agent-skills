@@ -76,7 +76,11 @@ question is skippable, everything changeable later.
 
 **Step 2 — Review what you know.** Read runtime memory. Prior `whoami` profile →
 Re-run. Other user memory, no profile → summarize what you already know in plain
-language. Nothing → say "We're starting fresh" and go to Step 4.
+language. Nothing in memory → before going cold, offer to import an existing
+profile (Step 5's fast-input shortcut): the user may have run `whoami` in
+another runtime or workspace and can hand over the result. A full
+`whoami-profile.md` import skips Steps 4 and 6 — go straight to Step 7. If the
+user has nothing to import, say "We're starting fresh" and go to Step 4.
 
 **Step 3 — Correct.** Let the user fix anything stale or wrong before continuing.
 
@@ -86,9 +90,16 @@ opt-out. Follow the data-handling rules below. Answers set the domain bucket and
 tone for adaptive phrasing; the anti-patterns question captures 2–3 named agent
 failure modes to avoid.
 
-**Step 5 — Optional fast input.** Offer the shortcuts: an MBTI type or a prior
-`whoami-profile.md`. Map per `references/mbti-mapping.md` or parse the file.
-Treat results as estimates, never final.
+**Step 5 — Optional fast input.** Offer the shortcuts: an MBTI type, or an
+existing `whoami` profile to import — pasted in, or handed over as a file in a
+reachable folder. Two profile formats are accepted: a full `whoami-profile.md`
+(full fidelity) or the condensed `<!-- whoami:start -->…<!-- whoami:end -->`
+block from a `~/.claude/CLAUDE.md` (the prose summary is re-authored from the
+dials, since the block omits it). The skill cannot autonomously reach another
+runtime's memory store or `~/.claude/CLAUDE.md` — cross-runtime transfer is
+always user-mediated. Map MBTI per `references/mbti-mapping.md`; parse a profile
+per `references/persistence.md` → "Importing an existing profile". Treat results
+as estimates, never final.
 
 **Step 6 — Infer dial estimates.** From memory + background + MBTI/profile,
 estimate each of the six dials; tag each high / medium / low confidence.
@@ -121,7 +132,12 @@ traits forward.
    **from those persisted values** — for the values it displays, the sheet
    never shows data the profile lacks nor drops data it holds.
 4. Write runtime memory (capability-gated) + a dated snapshot.
-5. Show the user the result and where it lives.
+5. Offer **global persistence** — a confirmed, condensed whoami block in
+   `~/.claude/CLAUDE.md` so the profile calibrates every session, not just
+   this workspace (written directly where reachable, otherwise handed to the
+   user to paste). Opt-in, one confirmation; see `references/persistence.md`
+   → "Global persistence". A decline ends it.
+6. Show the user the result and where it lives.
 
 ## Show mode & the correction path
 
@@ -130,8 +146,8 @@ class/subclass (offer to open the HTML sheet), then offer:
 
 - **Correct something** → the user describes the change in free text. Interpret
   it → map to the affected dial(s), background, or trait → show the proposed
-  change → confirm → persist (new dated snapshot; canonical + memory updated in
-  place). If the correction is ambiguous, ask one targeted question rather than
+  change → confirm → persist (new dated snapshot; canonical, memory, and any
+  `~/.claude/CLAUDE.md` block updated in place). If the correction is ambiguous, ask one targeted question rather than
   guessing. This does **not** re-run the interview.
 - **Re-run** → enter Re-run mode.
 - **Regenerate the sheet** → the **Regenerate** flow: re-render the HTML
@@ -169,7 +185,7 @@ is upstream and one-directional — it never reads or depends on `handshake`.
 - `references/background-questions.md` — background set + data-handling policy
 - `references/adaptive-phrasing.md` — tone + domain-skinning rules
 - `references/mbti-mapping.md` — MBTI → dial priors
-- `references/persistence.md` — profile schema, memory contract, snapshots
+- `references/persistence.md` — profile schema, memory contract, import, snapshots
 - `templates/profile-template.md`, `templates/character-sheet.html`
 - `assets/characters/*.png` — 13 hi-density pixel-art class portraits
   (512×512), one per class

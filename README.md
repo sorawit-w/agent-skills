@@ -461,7 +461,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `3.15.3`.** Root README restructured into a lean table-of-contents — the shelf links straight to each skill's README, Skill-details entries trimmed to examples + pairings, the Status section slimmed; six skill READMEs gained or completed their cross-skill sections. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `3.16.0`.** `whoami` closes its cross-runtime portability loop — it can now import an existing profile (a `whoami-profile.md` or a condensed `~/.claude/CLAUDE.md` block) when a runtime starts cold, and it offers to push a condensed profile block to `~/.claude/CLAUDE.md` so the profile calibrates every Claude Code session. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

@@ -18,7 +18,8 @@ it with a character sheet you keep.
 - Runs a short, conversational interview — no forms, no Likert scales.
 - Opens by showing what it already knows about you; you correct anything stale.
 - Asks 7–9 gamified scenario questions, skinned to your field.
-- Optional MBTI fast-path — pre-fills estimates, you confirm dial by dial.
+- Optional fast-path — import an existing profile from another runtime, or
+  pre-fill from an MBTI type; you confirm dial by dial.
 - Scores six collaboration dials: Initiative, Depth, Breadth, Rationale,
   Warmth, Challenge.
 - Assigns an RPG-style class + subclass with a character portrait.
@@ -118,6 +119,23 @@ Then invoke it any time with `/whoami`.
 | `handshake` | Downstream. `whoami` is the person-level profile; `handshake` calibrates one project and pre-fills its core questions from your whoami profile. |
 | `pixel-art` | `whoami` calls it (if an image generator is available) to generate your class character portrait; falls back to a bundled hi-density pixel-art PNG. |
 | memory system | `whoami` writes its profile as a standard `user`-type memory so every session is calibrated. |
+
+## Cross-runtime portability
+
+The profile is portable, but portability is **manual by design** — a real
+limitation worth knowing up front. Each runtime keeps its own memory: Claude
+Code uses `~/.claude/CLAUDE.md` (global) plus project `CLAUDE.md` files; Cowork
+uses a per-workspace memory store; Claude Chat uses its own account-side memory.
+None can read another's, and `whoami` **cannot cross that boundary for you** —
+it can't open another runtime's store or `~/.claude/`.
+
+So a profile built in one place does not appear automatically in another. To
+carry it over you hand `whoami` the result yourself: when you run `/whoami`
+somewhere new and it finds nothing, it offers to import — paste your
+`whoami-profile.md` (or the `<!-- whoami -->` block from your
+`~/.claude/CLAUDE.md`), or drop the file in a folder the agent can read. It
+parses that instead of interviewing you cold. The file is yours; moving it
+between runtimes is a copy-paste, not an integration.
 
 ## Status and scope
 
