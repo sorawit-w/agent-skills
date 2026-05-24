@@ -53,13 +53,14 @@ You can chain them: evaluator finds a gap → creator's conventions guide the ru
 
 ## Harness lens — what to audit beyond rule adherence
 
-Rule-adherence audits catch *whether the agent follows what the skill says*. The **harness lens** catches a different class of failure: *whether the skill is shaped right in the first place*. Run these five questions in addition to (not instead of) the standard adherence checks. They're cheap; one or two will usually surface a real issue.
+Rule-adherence audits catch *whether the agent follows what the skill says*. The **harness lens** catches a different class of failure: *whether the skill is shaped right in the first place*. Run these six questions in addition to (not instead of) the standard adherence checks. They're cheap; one or two will usually surface a real issue.
 
 1. **Does the skill name its primitives?** A well-shaped skill is explicit about which of the five harness primitives it serves: context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. If the skill mixes all five implicitly, it probably has a scope problem. Flag: "Skill doesn't name what kind of work it's doing for the agent."
 2. **Progressive disclosure or front-loaded?** Is the SKILL.md body trying to be the encyclopedia, or is it a map that points to `references/` for detail? If body length > ~300 lines without clear section-then-reference structure, the skill is front-loading context that should be lazy. Flag: "Body should be a table of contents; details belong in `references/`."
 3. **Are feedback loops machine-checkable, or only prose?** Look for rules of the form "the agent should consider X" with no audit, no reviewer, no checkable artifact. Those rules drift. Flag: "Rule X is aspirational — propose a structured check (linter / reviewer subagent / explicit artifact gate)."
 4. **Environment-failure vs. prompt-failure misdiagnosis.** When the skill describes a known failure mode and prescribes "try harder" prompting, the diagnosis is probably wrong. Ask: *what capability is missing from the agent's environment?* (a tool, a reference file, an upstream artifact, an explicit gate). Flag: "Rule Y treats an environment failure as a prompting failure — consider adding [specific capability]."
 5. **State-preservation gap.** Does the skill produce artifacts a future session can pick up, or does it dump output to chat? For workflow skills that span sessions, output going only to chat is a state-preservation failure. Flag: "Outputs should land at a predictable path so a follow-up session can resume without re-briefing."
+6. **Undefined-state coverage.** A skill's happy path quietly depends on things existing — an upstream artifact, a canonical file, a populated field, a prior step's output. For each such dependency ask: *does the skill define what happens when it's absent?* If not, that is an undefined state — the skill will improvise there, usually badly, and a rule-adherence audit will not catch it because there is no rule to adhere to or violate. Flag: "Rule X assumes [resource] exists but defines no behavior when it's missing — add an explicit absent-state branch." Pairs with the absent-state test category in Phase 3: this question names the gap, Phase 3 tests it.
 
 Treat each finding the same way as adherence findings: classify by fix layer (skill text / rubric / brief / fixture) and propose targeted diffs. The harness lens does **not** change the rest of the workflow.
 
@@ -130,12 +131,13 @@ If the user gives a one-word skill name with no context and you cannot figure ou
 
 ### Phase 3 — Generate test prompts + assertions
 
-Produce **5–10 test prompts** that span the skill's declared surface area:
+Produce **6–12 test prompts** that span the skill's declared surface area:
 
 - **Happy path** (2–3) — requests the skill's description directly matches
 - **Edge cases** (2–3) — requests at the boundary of the trigger phrases
 - **Adjacent non-matches** (1–2) — requests that *look like* they should trigger the skill but shouldn't, to check for over-triggering
 - **Rule-specific stress tests** (1–2) — requests designed to make Claude violate a specific rule in the skill
+- **Absent-state tests** (1–2) — for every resource a rule quietly *assumes exists* (an upstream artifact, a canonical file, a populated field, a prior step's output), write a request where that resource is **absent**. These catch the states a skill's happy path depends on but never defines behavior for — the most common source of bugs that slip an audit. Load-bearing: the fixture must actually withhold the resource. A fixture that supplies it "to be realistic" hides the exact bug — the absence *is* the fixture.
 
 For each test prompt, write **3–7 assertions** using the tag/sentence/evidence pattern (see `references/assertion-dictionary.md`). Every assertion must be independently gradable from the executor's output alone — no need for the grader to re-read the skill to judge it.
 
@@ -183,6 +185,8 @@ For every failed assertion, classify the root cause using the four-layer fix tax
 4. **Fixture scaffolding** — the executor needed context (files, tool access) that wasn't provided
 
 **Layers 2–4 are not skill failures.** A well-classified "this is a rubric problem" is useful — it means the skill is probably fine and the test needs rewriting. Don't reflexively attribute every failure to the skill text.
+
+**Absent-state tests classify as Layer 1.** When an absent-state test (Phase 3) makes the executor stall or improvise because the assumed resource is missing, that is a **skill-text** finding — the skill should define absent-state behavior — not a Layer 4 fixture gap. The absence was the test's point; do not "fix" it by adding the resource to the fixture.
 
 ### Phase 6 — Produce findings report
 

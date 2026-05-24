@@ -76,6 +76,8 @@ The executor needed something to exist — a file, a directory structure, tool a
 
 **Fix shape:** add fixture context to the test brief — include the file, describe the directory, enumerate available tools.
 
+**Exception — absent-state tests.** When the failing test is an *absent-state test* (a Phase 3 test that deliberately withholds a resource to probe what the skill does without it), an executor that stalls or improvises is NOT a fixture gap — the absence was the test's whole point. Classify it as **Layer 1 (skill text)**: the skill should define absent-state behavior. "Fixing" it by adding the resource to the fixture deletes the test.
+
 **Example:**
 
 > Prompt: "Run the shutdown ritual on this project."
@@ -88,7 +90,7 @@ The executor needed something to exist — a file, a directory structure, tool a
 When a failure is hard to classify, run this order:
 
 1. **Did the prompt itself cause the detour?** → brief framing
-2. **Did the executor lack needed context?** → fixture scaffolding
+2. **Did the executor lack needed context?** → fixture scaffolding — *unless* the test deliberately withheld that context as an absent-state test, which is skill text (step 4)
 3. **Is the assertion itself defensible?** → if no, rubric
 4. **If all three above are clean, it's the skill.** → skill text
 

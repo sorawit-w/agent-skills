@@ -5,6 +5,55 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.15.1] — 2026-05-23
+
+Adds absent-state test coverage to `skill-evaluator` — the gap that let a
+silent-data-loss bug pass a clean 33/33 audit in v3.14.0.
+
+### Added
+
+- **`skills/skill-evaluator/SKILL.md`** — Phase 3 gains a fifth test category,
+  **Absent-state tests** (1–2 per audit; prompt count raised 5–10 → 6–12): for
+  every resource a rule quietly assumes exists (an upstream artifact, a
+  canonical file, a populated field, a prior step's output), a test where that
+  resource is absent. Load-bearing rule — the fixture must actually withhold
+  the resource; a fixture that supplies it "to be realistic" hides the bug.
+  The harness lens gains a sixth question, **Undefined-state coverage**, which
+  names the same gap at the shape-audit level.
+
+### Changed
+
+- **`skills/skill-evaluator/SKILL.md`** (Phase 5) and
+  **`skills/skill-evaluator/references/fix-taxonomy.md`** (Layer 4 + the
+  classification decision order) — an absent-state test whose executor stalls
+  or improvises because the assumed resource is missing now classifies as
+  **Layer 1 (skill text)**, not Layer 4 (fixture scaffolding). Without this
+  carve-out the failure would mis-route to "add the fixture" — which deletes
+  the test and leaves the skill bug unfixed.
+
+### Why
+
+In v3.14.0, `skill-evaluator` audited `whoami` and returned 33/33 — yet a real
+bug (Regenerate silently dropping specializations when the canonical profile
+was absent) was live the whole time. The audit's T6 test had a fixture that
+stipulated a fully-populated canonical profile, ruling the buggy state out by
+construction. A rule-adherence audit can only find bugs its fixtures expose,
+and nothing in the harness prompted the test author to probe the states a
+skill leaves *undefined*. This release closes that: the absent-state category
+forces a test for every assumed-present resource, the harness-lens question
+flags undefined states at the shape level, and the classification carve-out
+routes the caught failure to the skill, not the fixture.
+
+### Notes
+
+- PATCH: additive audit guidance, no change to `skill-evaluator`'s workflow
+  logic or contracts. Precedent — v3.6.3 shipped the entire harness lens as a
+  doc-only patch.
+- `skill-evaluator`'s self-test ritual checks classification *logic* against
+  fixtures; this change adds a documented carve-out, not new logic, so the
+  self-test would not add signal. Reviewed in-context — the review caught the
+  Phase-5 / fix-taxonomy cross-consistency requirement during implementation.
+
 ## [3.15.0] — 2026-05-23
 
 Rewrites `whoami`'s summary-authoring house style. The character-sheet summary
