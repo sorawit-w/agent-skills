@@ -35,6 +35,16 @@ empty state faithfully reflects the profile — it is never a fallback for
 "couldn't find them." The bug to guard against is the opposite: a sheet that
 shows data the profile lacks, or drops data the profile holds.
 
+**Regenerate requires the canonical profile.** Regenerate renders only from
+`whoami-profile.md`. If that file does not exist, Regenerate **stops** and
+renders nothing — it does not fall back to the `user`-type memory entry, a
+snapshot, or any other source. Tell the user the canonical profile is missing
+and that `/whoami` or `/whoami rerun` will build it. The reason it must stop
+rather than improvise: a non-canonical source carries no structured
+`flexible_traits`, so the Specializations section silently collapses to empty —
+the exact "drops data the profile holds" failure named above. A partial sheet
+is not an acceptable degradation; stopping is.
+
 ## The portable profile — `whoami-profile.md`
 
 YAML frontmatter (machine-readable) + plain-prose body (the summary — shared

@@ -5,6 +5,50 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.14.1] — 2026-05-23
+
+Hardens `whoami`'s Regenerate flow against a silent-data-loss defect: when the
+canonical `whoami-profile.md` is missing, Regenerate now stops instead of
+improvising a lossy character sheet.
+
+### Fixed
+
+- **`skills/whoami/references/persistence.md`**, **`skills/whoami/SKILL.md`** —
+  the Regenerate flow gains a fail-loud precondition. Regenerate renders only
+  from the canonical `whoami-profile.md`; if that file does not exist it now
+  **stops and renders nothing** — no fallback to the `user`-type memory entry,
+  a snapshot, or any partial source — and directs the user to `/whoami` or
+  `/whoami rerun` to build the profile. `persistence.md` carries the contract;
+  `SKILL.md`'s "Regenerate the sheet" bullet carries the matching precondition
+  and a pointer to it.
+
+### Why
+
+A regeneration with no canonical profile present silently produced a character
+sheet with an empty Specializations section — the profile's `flexible_traits`
+existed only in the prose `user`-type memory entry, which carries no structured
+array for the HTML template to read, so the section collapsed to empty.
+`persistence.md` already named this class of failure ("a sheet that ... drops
+data the profile holds") as the bug to guard against; the Regenerate flow simply
+had no defined behavior when its source of truth was absent, so it improvised.
+The fix removes the improvisation path entirely — a partial sheet is not an
+acceptable degradation, stopping is. Fail-loud was chosen over self-heal
+(reconstructing the canonical profile from the prose memory entry) because the
+lossy prose-parsing in self-heal is the same fragility that caused the bug.
+
+### Notes
+
+- PATCH: a bug-fix rule addition. Behavior changes only in the
+  previously-broken case (missing canonical profile); correct usage is
+  unaffected. No new skill, no trigger or contract change.
+- Reviewed in-context (single-section rule edit) rather than via the full
+  split-role `skill-evaluator` harness — proportionate for a one-bullet
+  precondition; see v3.9.1's note on in-context review for single-section edits.
+- Two boundaries left uncovered by design: a canonical file that exists but is
+  malformed or empty (rarer, separate case), and Show-mode still offering
+  "Regenerate" when the canonical is absent (the precondition catches it, but a
+  pre-check would be cleaner UX).
+
 ## [3.14.0] — 2026-05-23
 
 Refines `whoami` in response to an external 6/10 review, and adds a

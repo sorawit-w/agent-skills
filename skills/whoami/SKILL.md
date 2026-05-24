@@ -137,7 +137,10 @@ class/subclass (offer to open the HTML sheet), then offer:
 - **Regenerate the sheet** → the **Regenerate** flow: re-render the HTML
   character sheet from the saved `whoami-profile.md` with no interview — a pure
   render of the stored summary, dials, class, and specializations. Useful after
-  a template update.
+  a template update. **Precondition:** if `whoami-profile.md` does not exist,
+  Regenerate stops and directs the user to `/whoami` or `/whoami rerun` — it
+  never renders from the memory entry or a partial source (see
+  `references/persistence.md` → "Regeneration vs. rerun").
 - **Looks good** → done; nothing written.
 
 ## Data-handling rules
