@@ -17,7 +17,13 @@ confirm known answers rather than re-asking.
    research, planning — whatever comes to mind." → `background.primary_uses`
 5. **Language** — "What language, or languages, do you want to work in?" →
    `background.languages`
-6. **Free text** — "Anything else you'd want me to know about you or how you
+6. **Anti-patterns** — "When you work with AI assistants — me or any other —
+   what do they most often get *wrong*? The concrete moments: things like
+   'buries the answer instead of leading with it,' 'keeps relitigating after
+   I've decided,' or 'over-explains things I already know.'" → `anti_patterns`.
+   Capture 2–3 as short, checkable phrases; if an answer is abstract ("too
+   verbose"), ask one follow-up to pin it to an observable moment.
+7. **Free text** — "Anything else you'd want me to know about you or how you
    like to work? Totally optional." → routed per the policy below
 
 For a `new` user, briefly say why you're asking ("this helps me tailor how I
@@ -26,7 +32,7 @@ work with you"). `field` + `primary_uses` set the domain bucket for
 
 ## Data-handling policy
 
-- **Never solicit protected attributes.** Questions 1–5 stay scoped to
+- **Never solicit protected attributes.** Questions 1–6 stay scoped to
   collaboration-relevant facts. The free-text field is the *only* entry point
   for anything sensitive, and only if the user volunteers it. Protected
   attributes — treat every one of these as sensitive (never scored, never in

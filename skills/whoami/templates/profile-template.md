@@ -1,5 +1,5 @@
 ---
-schema_version: 1
+schema_version: 2
 whoami_version: "{{WHOAMI_VERSION}}"
 generated: "{{DATE}}"
 source: "{{SOURCE}}"                  # fresh | mbti-import | profile-import
@@ -13,6 +13,7 @@ dials:                                # 0–10
 class: "{{CLASS}}"
 subclass: "{{SUBCLASS}}"              # "" if none
 flexible_traits: {{FLEXIBLE_TRAITS}}  # [{name, value}] up to 5, seeded from background; [] only if none surfaced
+anti_patterns: {{ANTI_PATTERNS}}      # 2–3 short strings — agent failure modes to avoid; [] if none surfaced
 background:
   role: "{{ROLE}}"
   field: "{{FIELD}}"

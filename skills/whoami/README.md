@@ -48,7 +48,12 @@ Invoke with `/whoami`.
 
 ## When not to use it
 
-- Calibrating for one specific project → `handshake`.
+- Calibrating for one specific project, or per-task modes (greenfield vs.
+  debugging) → `handshake`.
+- A code "definition of done" — what clears the bar, commit vs. propose →
+  `handshake` for project defaults, `coding-rules` for coding discipline.
+- Accruing corrections over time → the runtime's `feedback`-type memory;
+  `whoami` only seeds the first few anti-patterns, it isn't re-run for each.
 - Routine memory edits → the memory-management skill.
 - Generating content → a content skill.
 
@@ -74,10 +79,17 @@ a brand-new user answers all nine.
   how thorough the agent is, how much it pushes back, how much initiative it
   takes. The profile is an operating manual, not a horoscope.
 - **A prior, not a verdict.** The profile is stored as a revisable snapshot.
-  The agent holds it lightly; it never overrides what you do now.
+  The agent holds it lightly, never overrides what you do now, and *flags the
+  mismatch* when your live behavior diverges — instead of silently deferring to
+  a stale dial.
 - **Portable by design.** The source of truth is `whoami-profile.md`, a plain
   file you own. Switching vendors = hand the new agent that file, or just run
   `/whoami` again.
+- **Deliberately not per-mode, not chat-mined.** whoami stays one person-level
+  profile. Per-task modes (architecture vs. debugging) belong to `handshake`;
+  mining past corrections belongs to the `feedback`-memory layer. Both were
+  weighed and declined — a third profile altitude and a chat-scraper would
+  trade whoami's portability and restraint for machinery you'd never tune.
 - **Bipolar dials, honest chart.** Every dial has two real poles; the character
   sheet shows them as diverging lollipops, not a radar — a radar would misread
   a strong low preference as "weak."

@@ -17,6 +17,8 @@
   .top{display:flex;justify-content:space-between;align-items:baseline;
     border-bottom:2px solid var(--border);padding-bottom:12px;margin-bottom:8px;}
   .top h1{margin:0;font-size:22px;letter-spacing:2px;}
+  .top .subtitle{margin:3px 0 0;color:var(--muted);font-size:13px;
+    letter-spacing:.3px;font-weight:400;}
   .top .date{color:var(--muted);font-size:13px;}
   .class-card{text-align:center;margin:18px 0 6px;}
   .portrait{width:128px;height:128px;margin:0 auto 10px;
@@ -72,7 +74,10 @@
 <body>
 <div class="sheet">
   <div class="top">
-    <h1>whoami</h1>
+    <div class="brand">
+      <h1>whoami</h1>
+      <p class="subtitle">An AI collaboration profile</p>
+    </div>
     <span class="date">{{GENERATED_DATE}}</span>
   </div>
 
@@ -92,8 +97,8 @@
   <div class="summary">{{SUMMARY}}</div>
 
   <footer>
-    <p class="disclaimer">A self-reported prior, not a verdict. Revise on
-      contradiction.</p>
+    <p class="disclaimer">Dials are collaboration preferences, not scores. A
+      self-reported prior, not a verdict — revise on contradiction.</p>
     <p class="colophon"><a href="https://github.com/sorawit-w/agent-skills">github.com/sorawit-w/agent-skills</a></p>
   </footer>
 </div>

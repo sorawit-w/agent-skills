@@ -56,6 +56,20 @@ Only profile data lives here — never volunteered sensitive facts, never secret
 The portable profile is sensitive-free **by construction**, so sharing it is
 always safe.
 
+## Anti-patterns — seed here, grow in feedback-memory
+
+The `anti_patterns` field holds agent failure modes to avoid (e.g. "buries the
+answer", "relitigates after I've decided"), captured by the anti-patterns
+question in Step 4. whoami **seeds** 2–3 from the interview; they ride in the
+portable profile and in the `user`-type memory entry, so they are consulted
+every session.
+
+The *living* set grows beyond whoami: as real misfires surface in everyday
+work, they accrue as standard `feedback`-type memories through the runtime's
+normal memory mechanism. whoami does not own that long tail — it only seeds the
+start. A rerun re-elicits and resets the profile's `anti_patterns`; the
+`feedback`-type memories accrue independently between runs.
+
 ## Runtime memory contract
 
 Capability-gated — detect the runtime's memory mechanism; never hardcode paths.
@@ -69,10 +83,12 @@ Capability-gated — detect the runtime's memory mechanism; never hardcode paths
 The portable profile is always written, regardless of path.
 
 **The `user`-type entry** holds the collaboration profile only — prose summary,
-six dial values, class/subclass, flexible traits — plus the framing line:
+six dial values, class/subclass, flexible traits, anti-patterns — plus the
+framing line:
 
 > *Self-reported snapshot from a whoami session on <date> — a prior, not a
-> verdict. Revise on contradiction.*
+> verdict. Calibrate from it, but follow live behavior when it contradicts;
+> flag the mismatch and offer to revise.*
 
 **The index line** (~150-char budget) carries compressed scores so calibration
 is always in context without opening the file:

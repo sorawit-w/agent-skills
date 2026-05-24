@@ -5,6 +5,81 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.14.0] — 2026-05-23
+
+Refines `whoami` in response to an external 6/10 review, and adds a
+social-share clarity fix to the HTML character sheet. The interview now
+captures the agent failure modes a user wants avoided, the prior-not-verdict
+principle becomes an active behavior, and out-of-scope needs are routed to
+their proper skills.
+
+### Added
+
+- **`skills/whoami/references/background-questions.md`** — a new anti-patterns
+  background question (Q6): asks what AI assistants most often get wrong and
+  captures 2–3 named failure modes as short, checkable phrases. An abstract
+  answer ("too verbose") gets one follow-up to pin it to an observable moment.
+- **`skills/whoami/templates/profile-template.md`** — an `anti_patterns` field
+  carrying those 2–3 phrases; the captured set rides in the portable profile
+  and the `user`-type memory entry so it is consulted every session.
+- **`skills/whoami/templates/character-sheet.html`** — a header subtitle
+  ("An AI collaboration profile") and a footer legend ("Dials are
+  collaboration preferences, not scores") so a sheet shared on social media
+  is not misread as a competence scorecard.
+
+### Changed
+
+- **`skills/whoami/templates/profile-template.md`** — profile `schema_version`
+  bumped 1 → 2 for the added `anti_patterns` field. Additive: `handshake`
+  reads dials + background from the frontmatter and is unaffected.
+- **`skills/whoami/SKILL.md`** — Core Principle 4 rewritten from passive
+  ("hold the profile lightly") to active drift-handling: when live behavior
+  contradicts a stored dial or trait, follow the live behavior, flag the
+  mismatch, and revise on confirmation. A new "Out of scope — route
+  elsewhere" block sends per-task / per-mode calibration and the code
+  definition-of-done to `handshake` / `coding-rules`, and correction-accrual
+  to `feedback`-type memory. Steps 4, 8, and 9 wire the anti-patterns capture
+  through elicitation and persistence.
+- **`skills/whoami/references/persistence.md`** — the `user`-type memory
+  entry's framing line strengthened to active ("follow live behavior when it
+  contradicts; flag the mismatch and offer to revise"); a new section on
+  seeding anti-patterns here and growing them in `feedback`-type memory;
+  summary guidance made structure-first.
+- **`skills/whoami/README.md`** — "When not to use it" expanded with the
+  routing targets; a new design-choices note records the per-mode-profile and
+  chat-mining non-goals as deliberately declined.
+
+### Why
+
+An external review of `whoami` (via Claude.ai chat) scored it 6/10. A
+team-composer discussion concluded the score reflected whoami's worst case —
+a pre-calibrated session where the profile adds little — and that one
+net-new gap was real: the skill never asked the user what AI assistants get
+*wrong*, so it began every relationship blind to known failure modes. That
+gap became the anti-patterns question. The remaining review points were
+addressed by routing rather than new machinery (out-of-scope guidance), or by
+making the existing prior-not-verdict principle behaviorally active instead
+of passive — a profile silently deferred to is worse than no profile.
+Per-mode profiles and chat-mining were weighed and declined; recording the
+decision keeps it from being relitigated.
+
+The character-sheet fix is separate but cohesive. The sheet is designed to
+be shared, and a decontextualized "Initiative 1/10" reads as a grade to a
+recruiter who never ran the interview. Naming the subject at the top and
+"preferences, not scores" at the foot re-categorizes the artifact at a
+glance.
+
+### Notes
+
+- MINOR: a new anti-patterns feature plus an additive `schema_version`
+  1 → 2 bump. No breaking changes — `handshake`'s read contract is
+  unaffected.
+- Pre-shipment `skill-evaluator` audit: 6 tests, 33 assertions, 33/33 pass —
+  covering anti-patterns capture, active drift-handling, out-of-scope
+  routing, and the Regenerate flow. The frontmatter `description` is
+  unchanged from v3.13.1, so this is a body-only release; the v3.13.1
+  triggering check still holds.
+
 ## [3.13.1] — 2026-05-23
 
 Replaces `whoami`'s 13 bundled class portraits with hi-density pixel-art

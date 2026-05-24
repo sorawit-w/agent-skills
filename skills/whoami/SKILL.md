@@ -36,8 +36,11 @@ person-level profile and feeds `handshake`.
    shown before it lands.
 3. **Skip what you already know.** Only ask a scenario question for a dial you
    cannot fill confidently.
-4. **Hold the profile lightly** — revise on contradiction; never let it override
-   what the user does now.
+4. **Hold the profile lightly — surface drift, don't absorb it.** It calibrates
+   the starting point; it never overrides what the user does now. When live
+   behavior contradicts a dial or trait, follow the live behavior, say so
+   ("that runs against your profile — update it?"), and revise on confirmation.
+   A profile silently deferred to is worse than no profile.
 5. **The knowing is the point; the character sheet is the delight.** Calibrate
    behavior from the six dial values, never from the class label.
 
@@ -60,8 +63,8 @@ existing profile pre-fills everything (**Re-run**).
 
 **Three flows, kept distinct.** *Fresh* and *Rerun* both run the interview and
 write the profile — and a **rerun resets**: it re-derives everything (dials,
-class, specializations, summary) and overwrites the profile with the new
-results. *Regenerate* runs **no interview** — it re-renders the artifacts from
+class, specializations, anti-patterns, summary) and overwrites the profile
+with the new results. *Regenerate* runs **no interview** — it re-renders the artifacts from
 the saved `whoami-profile.md`, mirroring the stored values exactly. See
 `references/persistence.md` → "Regeneration vs. rerun" for the contract.
 
@@ -80,7 +83,8 @@ language. Nothing → say "We're starting fresh" and go to Step 4.
 **Step 4 — Background.** Ask the background questions
 (`references/background-questions.md`), one at a time, conversational, every item
 opt-out. Follow the data-handling rules below. Answers set the domain bucket and
-tone for adaptive phrasing.
+tone for adaptive phrasing; the anti-patterns question captures 2–3 named agent
+failure modes to avoid.
 
 **Step 5 — Optional fast input.** Offer the shortcuts: an MBTI type or a prior
 `whoami-profile.md`. Map per `references/mbti-mapping.md` or parse the file.
@@ -112,10 +116,10 @@ traits forward.
    from `assets/characters/<class>.png`.
 3. Write the portable `whoami-profile.md` first
    (`templates/profile-template.md`) — it is the source of truth and **must
-   carry the summary and the specializations**. Then render the self-contained
-   HTML character sheet (`templates/character-sheet.html`) **from those
-   persisted values** — the sheet never shows data the profile lacks, nor drops
-   data it holds.
+   carry the summary, the specializations, and the anti-patterns**. Then render
+   the self-contained HTML character sheet (`templates/character-sheet.html`)
+   **from those persisted values** — for the values it displays, the sheet
+   never shows data the profile lacks nor drops data it holds.
 4. Write runtime memory (capability-gated) + a dated snapshot.
 5. Show the user the result and where it lives.
 
@@ -171,10 +175,20 @@ is upstream and one-directional — it never reads or depends on `handshake`.
 ## When to use this skill
 
 Load when the user wants to set up, view, or update a personal collaboration
-profile. Do NOT load for project/task calibration (use `handshake`), routine
-memory edits, or content generation. Primary entry point is `/whoami`;
-`/whoami rerun` forces a re-interview. Auto-triggering is conservative — only
-suggest whoami when user memory is sparse and tailored help would clearly
-benefit, never mid-task.
+profile. Primary entry point is `/whoami`; `/whoami rerun` forces a
+re-interview. Auto-triggering is conservative — only suggest whoami when user
+memory is sparse and tailored help would clearly benefit, never mid-task.
+
+**Out of scope — route elsewhere.** whoami is a *person-level, portable,
+point-in-time* profile. It deliberately does not absorb:
+
+- Project- or task-level calibration, including per-task modes (greenfield vs.
+  debugging) → `handshake`.
+- A code "definition of done" — what clears the bar, commit-vs-propose →
+  `handshake` for project defaults, `coding-rules` for coding discipline.
+- Accruing corrections over time → the runtime's `feedback`-type memory;
+  whoami only seeds the first few anti-patterns.
+- Routine memory edits or CRUD → memory-management. Content generation → a
+  content skill.
 
 **Tags:** personalization, onboarding, user-profile, memory, gamification
