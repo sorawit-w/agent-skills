@@ -5,6 +5,50 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.15.3] — 2026-05-23
+
+Restructures the root README into a lean table-of-contents, and fills six
+missing or incomplete skill-README cross-skill sections.
+
+### Changed
+
+- **`README.md`** — drops from 611 to ~476 lines. "The shelf" loses its
+  "Reach for it when" column and each row now links straight to the skill's
+  own README — it is a true table of contents. The "Skill details" section is
+  trimmed: each entry keeps its README-linked header, `Pairs well with`, and
+  `Try it` examples, and drops the verbose `What it does` / `Reach for it
+  when` prose, which duplicated each skill's own README. The "Status" section
+  drops its 26-paragraph prose version history (a lossy duplicate of
+  `CHANGELOG.md`) for a one-line current-release pointer plus the
+  project-meta lines.
+- **`CLAUDE.md`** — the release ritual's README-touch steps (Status-section
+  bump, new-skill shelf row, new-skill Skill-details entry) updated to match
+  the restructured shapes.
+
+### Added
+
+- **Cross-skill integration sections** added to `gtm`, `skill-evaluator`,
+  `sub-agent-coordinator`, and `handshake` (which lacked one), and completed
+  in `team-composer` and `tech-stack-recommendations` (which were missing
+  rows). All six now conform to the README structure `CLAUDE.md` already
+  specifies.
+
+### Why
+
+The root README had grown to 611 lines — about 69% of it a "Skill details"
+section that re-summarized each skill, content each skill's own README
+already carries in more depth. A documentation-coverage audit across all 19
+skills confirmed the verbose prose was redundant, with two real gaps worth
+preserving: the curated `Try it` example prompts (kept, in the trimmed
+entries) and six skills whose own READMEs lacked a complete cross-skill
+section (now fixed). The result is a README that reads as a catalog, not an
+encyclopedia, with each skill's full documentation one link away.
+
+### Notes
+
+- PATCH: documentation restructure and additions only. No skill behavior, no
+  SKILL.md text, no triggers changed.
+
 ## [3.15.2] — 2026-05-23
 
 Two small `whoami` consistency fixes — a mis-formatted version label and an

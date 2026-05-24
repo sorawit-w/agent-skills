@@ -118,15 +118,15 @@ A version bump touches exactly these four files. Miss one and the manifest is in
 1. `.claude-plugin/plugin.json` — `version` field
 2. `.claude-plugin/marketplace.json` — `version` field (same value)
 3. `CHANGELOG.md` — new entry at the top using `## [<version>] — <YYYY-MM-DD>` heading
-4. `README.md` Status section (~line 420+) — promote new version to the "is the current release" line; demote prior version to "Earlier in vX.Y.Z"; update the "See CHANGELOG.md for full vX + ..." reference at the bottom of the Status section
+4. `README.md` Status section — update the one-line **Current release** blurb (new version number + a one-sentence summary of what's newest). The Status section carries only the current-release pointer; full per-version history lives in `CHANGELOG.md`.
 
 ### When the release ADDS a new skill — root README needs three more touches
 
 The Status section bump is not enough on its own. A new skill must also appear in the root README's catalog or it stays invisible to readers browsing the repo:
 
 5. **TL;DR count** (~line 22) — the "a curated shelf of N specialized skills" line. Increment `N`.
-6. **"The shelf" table** (~line 50) — add a row for the new skill: icon image, anchor link, "What it's for" one-liner, "Reach for it when" one-liner. Match the existing column structure exactly. Place the row next to thematically-related skills (e.g., role/delegation skills cluster near `team-composer` and `sub-agent-coordinator`).
-7. **"Skill details" section** (~line 103+) — add a full detail entry: anchor `<a id="skill-name"></a>`, H3 with icon image and name, then `**What it does**` / `**Reach for it when**` / `**Pairs well with**` (bulleted, linking to other skills) / `**Try it**` (3 example prompts) blocks. Place near related skills in the same order as the shelf table.
+6. **"The shelf" table** — add a row: icon image, skill name linked to its own README (`skills/<name>/README.md`), and a "What it's for" one-liner. Three columns — match the existing structure exactly. Place the row next to thematically-related skills (e.g., role/delegation skills cluster near `team-composer` and `sub-agent-coordinator`).
+7. **"Skill details" section** — add a trimmed detail entry: anchor `<a id="skill-name"></a>`, H3 with icon image and the skill name **linked to its README** (`skills/<name>/README.md`), then a `**Pairs well with**` block (bulleted, each link pointing to another skill's README) and a `**Try it**` block (3 example prompts). No "What it does" / "Reach for it when" prose — that lives in the skill's own README. Place near related skills in the same order as the shelf table.
 
 Skipping any of these is the failure mode caught after shipping `wear-the-hat` in 3.6.0 — the skill existed and was registered in the plugin manifest, but was invisible in the root README catalog. Status section mentions only persist until the next release demotes them; the catalog is permanent.
 

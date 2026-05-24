@@ -75,6 +75,14 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "delegate this," "fan out the work," "spawn sub-agents," "coordinate this rollout," or any prompt where the work is clearly parallelizable across more than one file or domain.
 
+## Cross-skill integration
+
+| Skill | Relationship |
+|-------|-------------|
+| `team-composer` | Natural upstream: a 3-round discussion finishes, then deliverables fan out via coordinator patterns. |
+| `wear-the-hat` | Sub-agent mode hands off a brief with a `Role:` tag and persona context baked in; this skill's spawning protocol owns the rest. |
+| `skill-evaluator` | Spawn evaluator sub-agents to stress-test other skills in parallel. |
+
 ## Status and scope
 
 v0.1. Originally extracted from the coding-rules project (MIT). The scope is intentionally narrow:

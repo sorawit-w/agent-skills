@@ -103,6 +103,10 @@ Once installed, Claude picks the skill up automatically from the description in 
 | `i18n-contextual-rewriting` | When the i18n specialist is active and the team produces translatable content. |
 | `theme-factory` | When any team-composer deliverable needs consistent visual styling. |
 | `pptx` (fallback only) | Only when the user explicitly requests `.pptx`; otherwise a self-contained HTML deck is preferred for decks. |
+| `sub-agent-coordinator` | Phase 6 delegates deliverable production through its patterns. |
+| `wear-the-hat` | When the task wants ONE specific lens applied, not a multi-role panel discussion. |
+| `skill-evaluator` | Audit team-composer (or any team-driven skill) for rules that get quietly skipped. |
+| `ai-ux-review` / `ai-eval-review` | Discussion-grade alternative: use team-composer for a narrow one-block discussion rather than a full structured review artifact. |
 
 The principle: this skill owns team assembly and discussion. When the discussion produces actionable deliverables, hand off to the specialized skill rather than attempting it inline.
 

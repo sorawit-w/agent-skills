@@ -103,6 +103,13 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "evaluate this skill," "audit a skill," "stress-test my skill," or "does this skill actually work."
 
+## Cross-skill integration
+
+| Skill | Relationship |
+|-------|-------------|
+| Every other skill on this shelf | Use `skill-evaluator` to audit any of them; the shelf is only as sharp as its weakest rule. |
+| `sub-agent-coordinator` | Run evaluation variants in parallel (different prompt sets, different grader instances) and converge the findings. |
+
 ## Status and scope
 
 v1. The scope is intentionally narrow:

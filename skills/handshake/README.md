@@ -76,6 +76,16 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 Once installed, invocation triggers on `/handshake`, `/handshake --project`, or phrases like "calibrate how we work," "set a working agreement," "tune in to me," or "let's get on the same page about how we collaborate."
 
+## Cross-skill integration
+
+| Skill | Relationship |
+|-------|-------------|
+| `whoami` | Sibling. `whoami` is the broad person-level profile; `handshake` calibrates one project and pre-fills its core questions from the whoami profile. |
+| `team-composer` | When a team is about to be assembled and `user`-type memory is sparse, `team-composer` may suggest `/handshake` first. Suggestion only; never auto-routes. |
+| `brand-workshop` | May suggest `/handshake` for a personal-brand or solo-founder identity package. Suggestion only. |
+| `validation-canvas` / `riskiest-assumption-test` / `pitch-deck` | These read project state; may suggest `/handshake --project` at kickoff if `project`-type memory is empty. Suggestion only. |
+| `productivity:memory-management` *(if installed)* | `handshake` writes into the same two-tier `MEMORY.md` + `memory/` store; capability-gated, defers to its file-layout conventions when present. |
+
 ## Status and scope
 
 `v0.1` — slash-command-only triggering, two-mode design (core + project overlay), single-user contract, hard never-ask list, capability-gated memory integration.

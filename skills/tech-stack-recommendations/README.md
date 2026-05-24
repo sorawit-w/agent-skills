@@ -100,6 +100,7 @@ Every recommendation should be accompanied by the override factors that apply â€
 | `brand-workshop` | Separate concern (identity / tagline / logo), not stack-related. |
 | [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | Pairs with this skill on the Web/Styling layer once the stack is picked. |
 | `engineering:architecture` / `engineering:tech-debt` | Preferred over this skill when the project already has a stack and the question is "should we change it?" rather than "what do we pick?" |
+| `skill-evaluator` | Audit the stack rules against your real constraints before committing. |
 
 The principle: this skill owns greenfield + migration stack selection. Questions about *existing* architecture decisions go to the engineering skills.
 

@@ -92,6 +92,18 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 Once installed, invocation triggers on phrases like "set up GTM for my startup," "create a launch plan," "build my marketing playbook," "kick off go-to-market," "schedule social posts for my product," "post-launch marketing," or having the upstream pipeline output and asking "what's next for getting users."
 
+## Cross-skill integration
+
+| Skill | Relationship |
+|-------|-------------|
+| `brand-workshop` | Upstream input. `gtm` reads `DESIGN.md` for brand voice tokens; the wizard offers to invoke `brand-workshop` if no brand artifact exists. |
+| `validation-canvas` | Upstream input. `gtm` reads ICP, positioning, channels, and Stress Tests for the playbook. |
+| `pitch-deck` | Upstream input. `gtm` reads positioning and messaging from the deck content. |
+| `startup-grill` | Adjacent. After `gtm` ships its P1 playbook, the founder may grill it for blind spots before promoting to P2. |
+| `sub-agent-coordinator` | Hard dispatch target. Multi-channel content fan-out runs through its patterns. |
+| `i18n-contextual-rewriting` | Hard dispatch target. Non-English content drafts route through it for cultural adaptation. |
+| `tech-stack-recommendations` | When `gtm` emits a `content.needs_eng` event for a landing page and the founder has no chosen stack. |
+
 ## Status and scope
 
 `v0.1` — **BETA**. Single-project per-repo, B2C primary, US region adapter only, three-phase trust ramp, architectural kill switch, six-event handoff taxonomy, `marketing:*` orchestration with inline fallback.
