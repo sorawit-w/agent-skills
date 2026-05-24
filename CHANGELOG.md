@@ -5,6 +5,50 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.15.0] — 2026-05-23
+
+Rewrites `whoami`'s summary-authoring house style. The character-sheet summary
+is now written as the agent speaking to the user — second person,
+conversational, interpretive — instead of a structure-first dial readout.
+
+### Changed
+
+- **`skills/whoami/references/persistence.md`** — the "portable profile" summary
+  guidance is replaced. Old guidance: structure-first, at most four paragraphs,
+  one facet each, a bold key-phrase per paragraph. New guidance: the summary is
+  the agent talking to the user — second person ("You think in routes..."), one
+  warm conversational voice that reads the user and states the agent's own side
+  of the deal. Four rules: interpret the dials but never recite them (no
+  "(Breadth 9)" parentheticals); conversational prose with no bold anchors;
+  about three short paragraphs on a loose arc, not a rigid one-facet-per-
+  paragraph template; no bio recitation — let the characterization carry who
+  the person is. A read-aloud test replaces the old scan-in-one-pass rationale.
+  The "Regeneration vs. rerun" cross-reference was updated to match
+  ("the structure-first summary rules" → "the summary-authoring guidance").
+
+### Why
+
+The structure-first guidance produced summaries that read like a parameter
+dump — every paragraph ended in a parenthetical dial citation ("(Breadth 9)",
+"(Initiative 1)"), and the bold anchors, meant to aid scanning, reinforced the
+spec-sheet feel. The summary's job is to *interpret* the six dials into a human
+read, not echo them; a sheet a user might share should sound like one
+collaborator briefing another, not a config file annotating itself. The
+second-person agent-to-user voice was chosen from a six-style exploration. The
+dials already have their own section on the sheet, so the summary is free to be
+purely characterful.
+
+### Notes
+
+- MINOR: a deliberate change to the skill's summary output style. No new skill,
+  no trigger change; `handshake` reads frontmatter, not the summary prose, so
+  its contract is unaffected.
+- `references/persistence.md`-only change — no SKILL.md text touched, so the
+  split-role `skill-evaluator` audit was not required; reviewed in-context.
+- Existing stored summaries are unaffected — Regenerate still mirrors them
+  verbatim. The new style applies to summaries authored on a Fresh run or
+  Rerun from this version forward.
+
 ## [3.14.1] — 2026-05-23
 
 Hardens `whoami`'s Regenerate flow against a silent-data-loss defect: when the

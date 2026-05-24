@@ -25,8 +25,8 @@ The profile being canonical means two operations stay distinct:
   values exactly: the saved summary verbatim, the saved `flexible_traits`
   verbatim, the saved dials and class. It never re-derives and never edits the
   profile. It never rewrites, expands, or "improves" the stored summary — even
-  if that summary is sparse or does not meet the structure guidance below. The
-  structure-first summary rules govern *authoring* a summary on a Fresh run or
+  if that summary is sparse or does not match the summary guidance below. The
+  summary-authoring guidance governs *authoring* a summary on a Fresh run or
   Rerun; a Regenerate only renders what is already stored.
 
 Because Regenerate is a pure mirror, an **empty specializations section is
@@ -48,17 +48,29 @@ is not an acceptable degradation; stopping is.
 ## The portable profile — `whoami-profile.md`
 
 YAML frontmatter (machine-readable) + plain-prose body (the summary — shared
-verbatim with the HTML report). Write the summary **structure-first** so every
-regeneration reads the same way:
+verbatim with the HTML report).
 
-- **At most four short paragraphs**, one facet per paragraph — roughly: who
-  they are + class → the one or two defining moves → how to deliver to them →
-  working style + warmth.
-- **Bold the key phrase** in each paragraph (e.g. *transparency*, *bottom line
-  first*) — the bold anchors are what make the summary scan in one pass, not
-  brevity.
-- One steady register throughout: describe the user, and give the agent plain,
-  direct guidance.
+**The summary is the agent talking to the user.** Write it in the second
+person, as one collaborator describing how the two of you work together — it
+reads the user ("You think in routes...") and states the agent's own side of
+the deal ("...I'd rather propose and wait than move on my own"), in one warm,
+conversational voice.
+
+- **Interpret the dials; never recite them.** Characterize how the person
+  works — do not name dial values or tag them in parentheses ("(Breadth 9)").
+  The dials have their own section on the sheet; the summary turns those six
+  numbers into a human read, it does not echo them.
+- **Conversational prose, no bold anchors.** Flowing paragraphs, no bolded
+  scan-phrases — bolding re-imposes the spec-sheet feel the summary exists to
+  avoid. Let the voice carry it instead.
+- **About three short paragraphs**, lean. A loose arc — how they approach a
+  decision → how to deliver to them → how they handle disagreement — not a
+  rigid one-facet-per-paragraph template.
+- **No bio recitation.** Don't open with a job title or résumé line; let the
+  characterization carry who the person is.
+
+The test: read it back as if briefing a new teammate on this person out loud.
+A person talking → it lands. A parameter dump → it doesn't.
 
 See `templates/profile-template.md` for the skeleton.
 
