@@ -1,6 +1,5 @@
 ---
 schema_version: 2
-whoami_version: "{{WHOAMI_VERSION}}"
 generated: "{{DATE}}"
 source: "{{SOURCE}}"                  # fresh | mbti-import | profile-import
 dials:                                # 0–10

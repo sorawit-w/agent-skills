@@ -5,6 +5,41 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.15.2] — 2026-05-23
+
+Two small `whoami` consistency fixes — a mis-formatted version label and an
+orphaned template field.
+
+### Changed
+
+- **`skills/whoami/README.md`** — the "Status and scope" version marker
+  `v0.1.0` → `v0.1`, matching the two-part house format the other eleven
+  skills use. The marker is a coarse maturity label, not bumped per plugin
+  release — only the format was off.
+
+### Removed
+
+- **`skills/whoami/templates/profile-template.md`** — the `whoami_version`
+  frontmatter field. It was an orphaned placeholder: a repo-wide grep found a
+  single occurrence — its own definition — with no fill rule (no Step 9 or
+  `persistence.md` instruction said what `{{WHOAMI_VERSION}}` resolves to) and
+  no consumer (`handshake` reads `schema_version`, not this). As a `{{…}}`
+  placeholder with no defined value it was a latent undefined-state field —
+  every Fresh run would leave it literal or guess. `generated` + `source`
+  already stamp provenance; `schema_version` already covers format detection.
+
+### Why
+
+Surfaced while auditing the `whoami` and root READMEs for accuracy. The
+`pixel-art` pairing checked out as accurate; the version marker and the
+`whoami_version` field did not. Removing the field is consumer-invisible —
+nothing reads it — so `schema_version` stays 2; no profile-format bump.
+
+### Notes
+
+- PATCH: doc + template consistency cleanup, no behavior change, no new skill,
+  no SKILL.md text touched.
+
 ## [3.15.1] — 2026-05-23
 
 Adds absent-state test coverage to `skill-evaluator` — the gap that let a

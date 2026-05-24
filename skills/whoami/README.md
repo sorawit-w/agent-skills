@@ -121,7 +121,7 @@ Then invoke it any time with `/whoami`.
 
 ## Status and scope
 
-v0.1.0. English-first — i18n deferred. Live pixel-art portrait generation is
+v0.1. English-first — i18n deferred. Live pixel-art portrait generation is
 capability-gated, with built-in fallback class characters. The 12-class
 taxonomy and the MBTI fast-path are fully supported.
 
