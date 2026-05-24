@@ -58,6 +58,13 @@ memory → pre-fills and confirms (**Review-and-correct**); the user offers an
 MBTI type or prior profile → pre-fills from it (**Import**); a re-run → the
 existing profile pre-fills everything (**Re-run**).
 
+**Three flows, kept distinct.** *Fresh* and *Rerun* both run the interview and
+write the profile — and a **rerun resets**: it re-derives everything (dials,
+class, specializations, summary) and overwrites the profile with the new
+results. *Regenerate* runs **no interview** — it re-renders the artifacts from
+the saved `whoami-profile.md`, mirroring the stored values exactly. See
+`references/persistence.md` → "Regeneration vs. rerun" for the contract.
+
 ## The flow
 
 **Step 1 — Open.** Briefly say what this is: a short conversational setup so you
@@ -89,8 +96,13 @@ own voice, with adaptive phrasing (`references/adaptive-phrasing.md`). Every dia
 ends explicitly user-confirmed.
 
 **Step 8 — Finalize.** Score per `references/question-bank.md`; derive class +
-subclass from `references/class-map.md`; carry forward existing flexible traits
-(≤5).
+subclass from `references/class-map.md`. Then derive the user's
+**specializations** (flexible traits — up to five, each a short name + 0–10
+strength) from the background, runtime memory, and the working preferences
+surfaced during the interview; confirm them with the user. If nothing
+distinctive surfaced, leave specializations empty rather than invent. A rerun
+re-derives and re-confirms specializations; it does not silently carry old
+traits forward.
 
 **Step 9 — Persist and report.** Per `references/persistence.md`:
 1. Optionally offer a cosmetic color-theme pick (or use the class default).
@@ -98,15 +110,19 @@ subclass from `references/class-map.md`; carry forward existing flexible traits
    generator are available, generate a class-anchored pixel character and
    base64-embed it; otherwise base64-embed the bundled hi-density class PNG
    from `assets/characters/<class>.png`.
-3. Write the portable `whoami-profile.md` (`templates/profile-template.md`) and
-   the self-contained HTML character sheet (`templates/character-sheet.html`).
+3. Write the portable `whoami-profile.md` first
+   (`templates/profile-template.md`) — it is the source of truth and **must
+   carry the summary and the specializations**. Then render the self-contained
+   HTML character sheet (`templates/character-sheet.html`) **from those
+   persisted values** — the sheet never shows data the profile lacks, nor drops
+   data it holds.
 4. Write runtime memory (capability-gated) + a dated snapshot.
 5. Show the user the result and where it lives.
 
 ## Show mode & the correction path
 
 When bare `/whoami` finds an existing profile, present the prose summary +
-class/subclass (offer to open the HTML sheet), then offer three choices:
+class/subclass (offer to open the HTML sheet), then offer:
 
 - **Correct something** → the user describes the change in free text. Interpret
   it → map to the affected dial(s), background, or trait → show the proposed
@@ -114,6 +130,10 @@ class/subclass (offer to open the HTML sheet), then offer three choices:
   place). If the correction is ambiguous, ask one targeted question rather than
   guessing. This does **not** re-run the interview.
 - **Re-run** → enter Re-run mode.
+- **Regenerate the sheet** → the **Regenerate** flow: re-render the HTML
+  character sheet from the saved `whoami-profile.md` with no interview — a pure
+  render of the stored summary, dials, class, and specializations. Useful after
+  a template update.
 - **Looks good** → done; nothing written.
 
 ## Data-handling rules

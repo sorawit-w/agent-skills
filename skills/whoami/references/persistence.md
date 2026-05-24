@@ -13,13 +13,44 @@ How `whoami` stores its results. Three artifacts, one source of truth.
 The profile is canonical. The memory entry and HTML are both **derived from
 it** — generate the profile first.
 
+## Regeneration vs. rerun
+
+The profile being canonical means two operations stay distinct:
+
+- **Rerun** (`/whoami rerun`) — runs the interview again, re-derives everything
+  (dials, class, specializations, summary), and **overwrites**
+  `whoami-profile.md`. A rerun resets — the new results win.
+- **Regenerate** — re-renders the artifacts (HTML sheet, memory entry) from the
+  **existing** `whoami-profile.md` with no interview. It mirrors the stored
+  values exactly: the saved summary verbatim, the saved `flexible_traits`
+  verbatim, the saved dials and class. It never re-derives and never edits the
+  profile. It never rewrites, expands, or "improves" the stored summary — even
+  if that summary is sparse or does not meet the structure guidance below. The
+  structure-first summary rules govern *authoring* a summary on a Fresh run or
+  Rerun; a Regenerate only renders what is already stored.
+
+Because Regenerate is a pure mirror, an **empty specializations section is
+correct output** when the profile's `flexible_traits` is genuinely `[]`. The
+empty state faithfully reflects the profile — it is never a fallback for
+"couldn't find them." The bug to guard against is the opposite: a sheet that
+shows data the profile lacks, or drops data the profile holds.
+
 ## The portable profile — `whoami-profile.md`
 
-YAML frontmatter (machine-readable) + plain-prose body (the summary — one
-consistent register, shared verbatim with the HTML report). Keep the summary
-to **at most three short paragraphs** — it is a scannable synthesis, not an
-essay; the class and dials carry the at-a-glance read. See
-`templates/profile-template.md` for the skeleton.
+YAML frontmatter (machine-readable) + plain-prose body (the summary — shared
+verbatim with the HTML report). Write the summary **structure-first** so every
+regeneration reads the same way:
+
+- **At most four short paragraphs**, one facet per paragraph — roughly: who
+  they are + class → the one or two defining moves → how to deliver to them →
+  working style + warmth.
+- **Bold the key phrase** in each paragraph (e.g. *transparency*, *bottom line
+  first*) — the bold anchors are what make the summary scan in one pass, not
+  brevity.
+- One steady register throughout: describe the user, and give the agent plain,
+  direct guidance.
+
+See `templates/profile-template.md` for the skeleton.
 
 Only profile data lives here — never volunteered sensitive facts, never secrets.
 The portable profile is sensitive-free **by construction**, so sharing it is

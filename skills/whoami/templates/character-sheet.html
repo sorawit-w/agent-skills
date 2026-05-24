@@ -150,8 +150,7 @@ document.getElementById('identity').textContent = data.identity;
 (function(){
   const box=document.getElementById('traits');
   if(!data.flexibleTraits || !data.flexibleTraits.length){
-    box.innerHTML='<p class="empty">No specializations yet — these grow as '+
-      'we work together.</p>';
+    box.innerHTML='<p class="empty">No specializations recorded yet.</p>';
     return;
   }
   data.flexibleTraits.forEach(t=>{

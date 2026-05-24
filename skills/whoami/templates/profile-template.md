@@ -12,7 +12,7 @@ dials:                                # 0–10
   challenge: {{CHALLENGE}}
 class: "{{CLASS}}"
 subclass: "{{SUBCLASS}}"              # "" if none
-flexible_traits: {{FLEXIBLE_TRAITS}}  # [] on a fresh run; else [{name, value}], <=5
+flexible_traits: {{FLEXIBLE_TRAITS}}  # [{name, value}] up to 5, seeded from background; [] only if none surfaced
 background:
   role: "{{ROLE}}"
   field: "{{FIELD}}"
