@@ -439,7 +439,7 @@ Before any external action ships, verify:
 
 **Content quality**
 - [ ] Brand voice applied — output passed `marketing:brand-review` (or inline)
-- [ ] Region adapter applied — non-English drafts went through `i18n-contextual-rewriting`
+- [ ] Region adapter applied — non-English drafts went through `i18n`
 - [ ] No secrets in the output (token, key, password, OAuth code, session ID)
 - [ ] Required disclosures present (`#ad`, sponsored tag, unsubscribe link)
 
@@ -468,7 +468,7 @@ Before any external action ships, verify:
 | `startup-grill` (our own) | Adjacent. After GTM ships P1 playbook, the founder may grill it for blind spots. |
 | `startup-launch-kit` (our own) | Optional orchestrator. GTM is post-pipeline (after pitch-deck). The kit can call GTM as a sixth step in a future version. |
 | `team-composer` (our own) | Use for *discussion* on a narrow GTM question (channel choice, messaging review) when the artifact-grade playbook isn't needed. |
-| `i18n-contextual-rewriting` (our own) | Hard dispatch target. Non-English content drafts route through this skill for cultural adaptation, not raw machine translation. |
+| `i18n` (our own) | Hard dispatch target. Non-English content drafts route through this skill for cultural adaptation, not raw machine translation. |
 | `sub-agent-coordinator` (our own) | Hard dispatch target. Multi-channel content fan-out runs through this skill's patterns. |
 | `tech-stack-recommendations` (our own) | When GTM emits a `content.needs_eng` event for a landing page and the founder has no chosen stack. |
 | `schedule` (Anthropic) | Hard dispatch target. Cadenced tasks (daily metrics pull, daily digest, weekly retro, 6-hour budget check) register here at first run. |
@@ -489,6 +489,6 @@ is delegated to `marketing:*` when available, with inline fallback when not.
 - Missing `marketing:*` plugin → inline content prompts, lower quality, surfaced warning to founder once per session.
 - Missing `schedule` skill → cadenced tasks become a `.gtm/scheduled-tasks.md` reminder file the founder runs manually; warning surfaced.
 - Missing Discord MCP → digests written to `.gtm/digests/` and surfaced as copy-paste blocks in chat.
-- Missing `i18n-contextual-rewriting` → English-only mode with warning if any region in config requires non-English.
+- Missing `i18n` → English-only mode with warning if any region in config requires non-English.
 - Missing `brand-workshop` output → wizard asks for brand voice description; offers to invoke `brand-workshop` if installed.
 - Missing all upstream artifacts → wizard runs longer (asks for ICP, positioning, voice directly); recommends running upstream pipeline first.

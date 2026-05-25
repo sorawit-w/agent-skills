@@ -38,7 +38,7 @@ GTM's main config are tuned for this market.
 - **Primary language:** `en-US`
 - **Local variants matter?** Yes — en-US vs en-GB spellings (color/colour) and idiom (parking lot vs car park) are noticeable. Default to en-US unless config says otherwise.
 - **Mix patterns:** None significant.
-- **Translation guidance:** N/A for primary content; if the project has en-GB or other variants, route through `i18n-contextual-rewriting`.
+- **Translation guidance:** N/A for primary content; if the project has en-GB or other variants, route through `i18n`.
 
 ## Local regulations
 

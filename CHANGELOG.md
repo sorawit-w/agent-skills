@@ -5,6 +5,29 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] — 2026-05-24
+
+Renames `i18n-contextual-rewriting` → `i18n`, extracts its per-locale knowledge into a shared reference, and adds a new `define` skill for contextual definition/translation. Skill count 19 → 20.
+
+### Added
+
+- **`define` skill.** Contextual definition and translation of a single word or phrase, resolved from the sentence/paragraph around it — the "Sider select-and-define" experience minus the browser selection. Learner-framed (contextual meaning, why-this-sense, register, etymology, related senses, CEFR difficulty) and bilingual-capable (optional contextual translation into a target language). Ships with SKILL.md, README, and pixel-art banners + icon.
+- **`skills/i18n/references/locale-knowledge.md`.** A shared cultural engine — the per-locale translation teams, cultural notes, pluralization categories, counter-word rules, dialect/classical/honorific facts, and the zh-CN → zh-TW "not a character swap" rule — extracted out of the i18n SKILL.md body so both `i18n` and `define` consume one source of truth.
+
+### Changed
+
+- **Renamed `i18n-contextual-rewriting` → `i18n`** across the skill folder, its 5 assets, the `name:` frontmatter, and every live cross-reference (root README catalog + Start-here + skill-graph, both manifests, and the gtm / team-composer / brand-workshop / tech-stack-recommendations / coding-rules integration tables). Now that `define` carries the comprehension capability, `i18n` cleanly names the translation-file / production skill.
+- **`i18n` SKILL.md** now references `locale-knowledge.md` for per-locale teams and facts instead of inlining them; it keeps Part 1 (file handling) and its `@ux localization reviewer` / `@i18n engineer` roles. Added an anti-trigger pointing single-word "what does X mean here" lookups to `define`.
+
+### Why
+
+A team-composer discussion concluded that *comprehension* (define a word in context) and *production* (ship localized strings/files) are different jobs — different triggers, outputs, and users — so they warrant two skills, not a merge. But they share one **cultural engine**: the per-locale teams, register systems, dialects, classical forms, and counter words apply equally whether you're translating a UI string or glossing a word in chat. So the locale knowledge moved into a single reference both skills load; `i18n` works on i18n files, `define` answers inline, on the same engine.
+
+### Notes
+
+- **BREAKING:** the skill's invocation name and folder/asset paths changed (`i18n-contextual-rewriting` → `i18n`). Update any external references to the old name. Historical CHANGELOG entries intentionally keep the old name (accurate record).
+- Install remains the bundled plugin: `/plugin install agent-skills@sorawit-w`.
+
 ## [3.16.2] — 2026-05-24
 
 Fixes the skill-graph Mermaid diagram failing to render on GitHub, and splits a developer/coding audience out of the over-broad skill-authoring bucket. Doc-only.

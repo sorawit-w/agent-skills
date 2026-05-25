@@ -101,7 +101,7 @@ Once installed, invocation triggers on phrases like "set up GTM for my startup,"
 | `pitch-deck` | Upstream input. `gtm` reads positioning and messaging from the deck content. |
 | `startup-grill` | Adjacent. After `gtm` ships its P1 playbook, the founder may grill it for blind spots before promoting to P2. |
 | `sub-agent-coordinator` | Hard dispatch target. Multi-channel content fan-out runs through its patterns. |
-| `i18n-contextual-rewriting` | Hard dispatch target. Non-English content drafts route through it for cultural adaptation. |
+| `i18n` | Hard dispatch target. Non-English content drafts route through it for cultural adaptation. |
 | `tech-stack-recommendations` | When `gtm` emits a `content.needs_eng` event for a landing page and the founder has no chosen stack. |
 
 ## Status and scope

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="define icon: pixel-art magnifier focusing on a word" style="image-rendering: pixelated;">
+  <title>define</title>
+  <!-- lens fill (warm accent) -->
+  <g fill="#c2410c">
+    <rect x="8" y="7" width="8" height="10"/>
+  </g>
+  <!-- magnifier ring + handle + focused character (ink) -->
+  <g fill="#1f2937">
+    <!-- ring -->
+    <rect x="10" y="5" width="4" height="2"/>
+    <rect x="8" y="7" width="2" height="2"/>
+    <rect x="14" y="7" width="2" height="2"/>
+    <rect x="6" y="9" width="2" height="6"/>
+    <rect x="16" y="9" width="2" height="6"/>
+    <rect x="8" y="15" width="2" height="2"/>
+    <rect x="14" y="15" width="2" height="2"/>
+    <rect x="10" y="17" width="4" height="2"/>
+    <!-- focused character (a vertical stroke under the lens) -->
+    <rect x="11" y="9" width="2" height="2"/>
+    <rect x="11" y="12" width="2" height="3"/>
+    <!-- handle -->
+    <rect x="17" y="17" width="3" height="3"/>
+    <rect x="20" y="20" width="3" height="3"/>
+    <rect x="23" y="23" width="3" height="3"/>
+  </g>
+</svg>

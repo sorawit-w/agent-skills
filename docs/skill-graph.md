@@ -4,7 +4,7 @@ The canonical map of every skill on the shelf — what it does, who reaches for 
 
 For per-skill usage, design notes, and cross-skill detail, follow each name to its own README under [`skills/`](../skills/).
 
-## Nodes — the 19 skills
+## Nodes — the 20 skills
 
 Audience buckets map to the README's "Start here" rows: **Startup** (build & validate a startup), **Review** (review a product or AI product), **Code** (writing & shipping code), **Author** (authoring & auditing skills), **Calibrate/visual** (calibrate, localize & visuals).
 
@@ -27,7 +27,8 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`wear-the-hat`](../skills/wear-the-hat/README.md) | Single-role solo embodiment (one lens, no panel) | Anyone wanting one expert lens | stable | Code |
 | [`whoami`](../skills/whoami/README.md) | Person-level collaboration profile (6 dials, RPG class) | Users new to AI / switching vendors | stable | Calibrate/visual |
 | [`handshake`](../skills/handshake/README.md) | Brief project/collaboration calibration ritual | Anyone wanting tailored calibration | stable | Calibrate/visual |
-| [`i18n-contextual-rewriting`](../skills/i18n-contextual-rewriting/README.md) | Safe edits on large translation files + cultural rewriting | Localization eng, product teams | stable | Calibrate/visual |
+| [`i18n`](../skills/i18n/README.md) | Safe edits on large translation files + cultural rewriting | Localization eng, product teams | stable | Calibrate/visual |
+| [`define`](../skills/define/README.md) | Contextual definition/translation of a word or phrase from its surrounding sentence (learner gloss) | Language learners, readers, translators | stable | Calibrate/visual |
 | [`pixel-art`](../skills/pixel-art/README.md) | Hi-fi / lo-fi pixel art + prompt briefs + SVG title cards | Designers, game devs, creators | 🚧 BETA | Calibrate/visual |
 
 ## Edges — how the skills relate
@@ -53,7 +54,8 @@ graph LR
   VC -.->|AI startups| AUX
   RAT -.->|gaps to tests| AUX
   GTM -.->|content fan-out| SAC
-  GTM -.->|non-EN content| I18N[i18n-contextual-rewriting]
+  GTM -.->|non-EN content| I18N[i18n]
+  DEF[define] -.->|shared locale engine| I18N
   PXL[pixel-art] -.->|portrait| WAI
   SE[skill-evaluator] -.->|audits any skill| TC
   CR[coding-rules] -.->|discipline + lens| WTH

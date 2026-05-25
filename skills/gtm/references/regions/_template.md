@@ -39,7 +39,7 @@ VK in Russia, Facebook still dominates in some markets).
 - **Local variants matter?** [e.g., en-US vs en-GB; pt-BR vs pt-PT]
 - **Mix patterns:** [e.g., Thai with English loanwords vs pure Thai]
 - **Translation guidance:** content drafts route through
-  `i18n-contextual-rewriting` — link to or summarize any project-specific
+  `i18n` — link to or summarize any project-specific
   glossary
 
 ## Local regulations
@@ -94,7 +94,7 @@ When the founder adds this region to `config.yaml#regions`, GTM:
 1. Loads this file
 2. Wraps channel-worker prompts with the cultural and linguistic context
    from above
-3. Routes non-primary-language drafts through `i18n-contextual-rewriting`
+3. Routes non-primary-language drafts through `i18n`
    (or warns if not installed)
 4. Adds applicable compliance flags from local regulations to
    `config.yaml#compliance.*`

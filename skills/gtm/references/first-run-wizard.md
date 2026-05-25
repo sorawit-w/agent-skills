@@ -153,7 +153,7 @@ founder, or asked.
 **Prompt:**
 > "Primary region for this project: [detected default, e.g., US]. Add any
 > secondary regions (TH, JP, EU, BR, etc.) for content adaptation. For each
-> non-English region, drafts will route through `i18n-contextual-rewriting`
+> non-English region, drafts will route through `i18n`
 > for cultural adaptation."
 
 **Stored as:** `config.yaml#regions: [primary_code, ...secondary_codes]` and

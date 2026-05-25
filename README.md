@@ -19,7 +19,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of nineteen specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty specialized skills in one go.
 - **Who it's for** — anyone on Claude Code or Cowork who wants auto-triggering expertise for a specific job. [**Start here**](#start-here) to find yours.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -55,7 +55,7 @@ New here? Find your job and jump in. The full catalog is in [The shelf](#the-she
 | **Reviewing a product or AI product** — design, evals, multi-perspective critique | [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`validation-canvas`](#validation-canvas) |
 | **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) |
 | **Authoring & auditing skills** — design, build & audit your own skills | [`skill-evaluator`](#skill-evaluator) · [`team-composer`](#team-composer) · [`sub-agent-coordinator`](#sub-agent-coordinator) · see [Building on the shelf](#building-on-the-shelf) |
-| **Calibrating, localizing & visuals** — make the agent yours, ship in any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
+| **Calibrating, localizing & visuals** — make the agent yours, ship or read any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n`](#i18n) · [`define`](#define) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
 
 ---
 
@@ -73,7 +73,8 @@ Each skill links to its own README — the full doc with usage, design notes, an
 | <img src="assets/icons/handshake.svg" alt="" width="64" align="middle"/> | [`handshake`](skills/handshake/README.md) | A brief opt-in calibration ritual that shows you what's on file, then asks a few high-leverage collaboration questions. |
 | <img src="assets/icons/whoami.svg" alt="" width="64" align="middle"/> | [`whoami`](skills/whoami/README.md) | A short conversational interview that profiles how you want to be collaborated with — six dials, an RPG class, a portable profile, and an HTML character sheet. |
 | <img src="assets/icons/coding-rules.svg" alt="" width="64" align="middle"/> | [`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** | Loads one author's operating system for agentic coding into the session — branching, commit cadence, verification gates, sub-agent triggers. |
-| <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="64" align="middle"/> | [`i18n-contextual-rewriting`](skills/i18n-contextual-rewriting/README.md) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. |
+| <img src="assets/icons/i18n.svg" alt="" width="64" align="middle"/> | [`i18n`](skills/i18n/README.md) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. |
+| <img src="assets/icons/define.svg" alt="" width="64" align="middle"/> | [`define`](skills/define/README.md) | The true in-context meaning of a word or phrase — sense resolved from the sentence around it, with a learner-grade gloss and optional contextual translation. |
 | <img src="assets/icons/brand-workshop.svg" alt="" width="64" align="middle"/> | [`brand-workshop`](skills/brand-workshop/README.md) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. |
 | <img src="assets/icons/validation-canvas.svg" alt="" width="64" align="middle"/> | [`validation-canvas`](skills/validation-canvas/README.md) | Interview a founder block-by-block and produce a rigorous Lean Canvas + Value Proposition Canvas with explicit Stress Tests. |
 | <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="64" align="middle"/> | [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) | Convert canvas Stress Tests into falsifiable hypotheses with success/kill criteria. Ships a 1-page test plan + interactive risk × impact matrix. |
@@ -136,7 +137,7 @@ Each entry below is a quick reference — example prompts and which skills it pa
 - [`wear-the-hat`](skills/wear-the-hat/README.md) — when the task wants ONE specific lens applied, not a multi-role panel discussion. Inverse use case from this skill.
 - [`skill-evaluator`](skills/skill-evaluator/README.md) — audit team-composer (or any team-driven skill) for rules that get quietly skipped.
 - [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — when the architect role needs an opinionated stack to anchor the debate.
-- [`i18n-contextual-rewriting`](skills/i18n-contextual-rewriting/README.md) — when the `@i18n_specialist` is on the team and the output needs to ship in multiple locales.
+- [`i18n`](skills/i18n/README.md) — when the `@i18n_specialist` is on the team and the output needs to ship in multiple locales.
 - [`ai-ux-review`](skills/ai-ux-review/README.md) / [`ai-eval-review`](skills/ai-eval-review/README.md) — discussion-grade alternative inverse. Use `team-composer` with `@ux_researcher` + `@ai_safety_specialist` (or `@data_scientist` + `@ai_safety_specialist` for eval) when you want a *narrow one-block discussion* rather than a full structured review artifact. Use the dedicated review skills when you want the persistent MD + HTML output.
 
 **Try it.**
@@ -262,11 +263,12 @@ Each entry below is a quick reference — example prompts and which skills it pa
 
 ---
 
-<a id="i18n-contextual-rewriting"></a>
+<a id="i18n"></a>
 
-### <img src="assets/icons/i18n-contextual-rewriting.svg" alt="" width="48" align="middle"/> &nbsp;[`i18n-contextual-rewriting`](skills/i18n-contextual-rewriting/README.md)
+### <img src="assets/icons/i18n.svg" alt="" width="48" align="middle"/> &nbsp;[`i18n`](skills/i18n/README.md)
 
 **Pairs well with.**
+- [`define`](skills/define/README.md) — the comprehension sibling, sharing the same locale engine (`references/locale-knowledge.md`). `i18n` ships localized files; `define` explains a word/phrase in context.
 - [`team-composer`](skills/team-composer/README.md) — when `@i18n_specialist` is on the team, this skill executes the translation work the team's output needs.
 - [`brand-workshop`](skills/brand-workshop/README.md) — localize the descriptions pack (taglines, bios, boilerplate) without losing voice.
 
@@ -274,6 +276,21 @@ Each entry below is a quick reference — example prompts and which skills it pa
 - "Translate this onboarding flow into Thai, Japanese, and Korean — cultural rewriting, not machine translation."
 - "Edit three keys in a 4,000-line `zh-CN.json` without rewriting the whole file or blowing the token budget."
 - "`brand-workshop` just shipped the descriptions pack — localize it into `th` and `ja` and keep the voice."
+
+---
+
+<a id="define"></a>
+
+### <img src="assets/icons/define.svg" alt="" width="48" align="middle"/> &nbsp;[`define`](skills/define/README.md)
+
+**Pairs well with.**
+- [`i18n`](skills/i18n/README.md) — the production sibling, sharing the same locale engine. Editing locale files / adding a language → `i18n`; "what does this word mean here" → `define`.
+- [`team-composer`](skills/team-composer/README.md) — when a definition or translation choice is contested and benefits from multi-perspective discussion rather than a single gloss.
+
+**Try it.**
+- "What does ออเจ้า mean in 'ออเจ้าจักไปไหน'? Give me the register and why that sense."
+- "Define 'leverage' as used in this sentence — and how it differs from 'use'."
+- "Translate just '木漏れ日' in this paragraph into English, in context."
 
 ---
 
@@ -285,7 +302,7 @@ Each entry below is a quick reference — example prompts and which skills it pa
 - [`validation-canvas`](skills/validation-canvas/README.md) — suggested next step. Auto-applies brand tokens from the kit.
 - [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — two steps downstream. Reads design tokens for the matrix HTML.
 - [`pitch-deck`](skills/pitch-deck/README.md) — reads the brand design system (`docs/brand/DESIGN.md`) for consistent branding and owns the deck construction itself.
-- [`i18n-contextual-rewriting`](skills/i18n-contextual-rewriting/README.md) — localize the descriptions pack while preserving tone.
+- [`i18n`](skills/i18n/README.md) — localize the descriptions pack while preserving tone.
 
 **Try it.**
 - "Run the full workshop for my meditation startup — identity, mark, voice, and design tokens."
@@ -396,7 +413,7 @@ Each entry below is a quick reference — example prompts and which skills it pa
 - [`pitch-deck`](skills/pitch-deck/README.md) — upstream input. `gtm` reads positioning and messaging from the deck content.
 - [`startup-grill`](skills/startup-grill/README.md) — adjacent. After `gtm` ships its P1 playbook, the founder may grill it for blind spots before promoting to P2.
 - [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — hard dispatch target. Multi-channel content fan-out runs through its patterns.
-- [`i18n-contextual-rewriting`](skills/i18n-contextual-rewriting/README.md) — hard dispatch target. Non-English content drafts route through this skill for cultural adaptation.
+- [`i18n`](skills/i18n/README.md) — hard dispatch target. Non-English content drafts route through this skill for cultural adaptation.
 - [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — when `gtm` emits a `content.needs_eng` event for a landing page and the founder has no chosen stack.
 
 **Try it.**
@@ -489,7 +506,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `3.16.2`.** The root README is intent-first: a "Start here" audience link-index (five job-to-be-done buckets — build a startup · review a product · write code · author skills · calibrate/localize/visuals) helps users find the right skill fast, a "Building on the shelf" section gives contributors an authoring on-ramp, and [`docs/skill-graph.md`](docs/skill-graph.md) is a canonical map of every skill and how they relate (now rendering correctly on GitHub). Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.0.0`.** Renamed `i18n-contextual-rewriting` → `i18n` and added a new `define` skill — contextual definition/translation of a word or phrase from the sentence around it. Both skills now share one cultural engine (`skills/i18n/references/locale-knowledge.md`): `i18n` ships localized files, `define` explains a word in context. Shelf count is now twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

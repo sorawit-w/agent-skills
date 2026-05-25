@@ -159,7 +159,7 @@ created_by: "gtm-wizard-v1"
 
 ### `languages`
 - BCP 47 codes (`en`, `th`, `ja`, `zh-CN`)
-- Non-English entries trigger routing through `i18n-contextual-rewriting`
+- Non-English entries trigger routing through `i18n`
   if installed; warning otherwise
 
 ## Validation

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/i18n-contextual-rewriting-li.svg" alt="i18n-contextual-rewriting — surgical edits, cultural rewrites" width="100%"/>
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/i18n-li.svg" alt="i18n — surgical edits, cultural rewrites" width="100%"/>
 </p>
 
-# i18n-contextual-rewriting
+# i18n
 
 A Claude Code skill for working with internationalization files the way a careful localization engineer would — surgical edits on large translation files, and translations that feel like they were written by someone who lives in the market, not machine-converted from English.
 
@@ -103,7 +103,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install i18n-contextual-rewriting@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Once installed, Claude picks up the skill automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "translate," "i18n," "localization," "locale," "add language," "translation keys," or any mention of a specific locale code (`th`, `ja`, `ko`, `zh-CN`, `de`, `fr`, `es`, `it`, `zh-TW`, `zh-HK`, `th-bupphe`, etc.).

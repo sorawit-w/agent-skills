@@ -100,7 +100,7 @@ Once installed, Claude picks the skill up automatically from the description in 
 | `brand-workshop` | Preferred for pure brand-identity deliverables (logo + tagline + strategy brief). |
 | [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) | When the designer or frontend engineer needs to produce high-fidelity UI. |
 | `tech-stack-recommendations` | When the architect/lead needs to pick or evaluate a stack. |
-| `i18n-contextual-rewriting` | When the i18n specialist is active and the team produces translatable content. |
+| `i18n` | When the i18n specialist is active and the team produces translatable content. |
 | `theme-factory` | When any team-composer deliverable needs consistent visual styling. |
 | `pptx` (fallback only) | Only when the user explicitly requests `.pptx`; otherwise a self-contained HTML deck is preferred for decks. |
 | `sub-agent-coordinator` | Phase 6 delegates deliverable production through its patterns. |

@@ -877,7 +877,7 @@ and run structured discussion. The difference is what they produce.
 |-------|-------------|
 | `sub-agent-coordinator` | When any Phase 6, 6.5, or 6.6 trigger fires and the team is about to spawn deliverable or reviewer sub-agents. Load it for briefing templates (Quick / Full), coordination patterns (fan-out, pipeline, specialist, review), spawning checklists, and the no-nested-sub-agents invariant. |
 | `Plan` subagent (built-in) | Phase 6.6 hands the draft Structured Plan to the `Plan` subagent for a structural rigor pass. Skipped with a logged fallback if the `Plan` subagent type is not registered in the current runtime. |
-| `i18n-contextual-rewriting` | When `@i18n_specialist` is active and the team produces translatable content. |
+| `i18n` | When `@i18n_specialist` is active and the team produces translatable content. |
 | `brand-workshop` | When the deliverable is a brand identity package (logo + tagline + brief). See Skill Boundaries above — prefer `brand-workshop` directly for pure branding requests. |
 | `validation-canvas` | When `@startup_strategist` is active and the deliverable is a persistent Lean Canvas + Value Proposition Canvas artifact (editable Markdown + self-contained HTML). Prefer the skill directly for "build me a validation canvas" / "lean canvas" / "VPC" requests; use team-composer for discussion-grade work on one block, or for a 9-block Osterwalder BMC fill (which `validation-canvas` deliberately does not support — different altitude). |
 | `riskiest-assumption-test` | When `@startup_strategist` is active and the deliverable is a 1-page Assumption Test Plan + interactive risk × impact matrix. Prefer the skill directly for "test my assumptions" / "RAT" / "what should I validate first" requests. |

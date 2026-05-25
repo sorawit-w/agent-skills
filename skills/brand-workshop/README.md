@@ -112,7 +112,7 @@ Once installed, Claude picks the skill up automatically from the description in 
 | [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | Preferred when branding is one of several dimensions in a product decision. `team-composer` may in turn hand off to this skill if the scope narrows to pure identity. |
 | `design:ux-copy` | When the copy work is microcopy / error states / CTAs rather than brand voice. |
 | `marketing:brand-review` | For reviewing existing content against an already-established brand. |
-| `i18n-contextual-rewriting` | When the tagline needs culturally adapted translations beyond English. |
+| `i18n` | When the tagline needs culturally adapted translations beyond English. |
 | `theme-factory` | When downstream deliverables (decks, landing pages) need to apply the produced identity system consistently. |
 | `canvas-design` / `pptx` (fallback only) | Only when the user needs a static brand poster or a deck built on top of the produced identity. |
 

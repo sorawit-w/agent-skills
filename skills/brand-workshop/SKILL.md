@@ -647,7 +647,7 @@ Present all files to the user using `present_files`.
   those constraints and notes it.
 - **User wants multiple logo options**: Generate 2-3 SVG variants and present them for selection.
 - **User wants tagline in multiple languages**: Generate the primary in English, then produce
-  culturally adapted (not literal) translations. Note: use the i18n-contextual-rewriting skill
+  culturally adapted (not literal) translations. Note: use the i18n skill
   if available for quality translations.
 - **Non-Latin scripts in logo**: Flag that SVG text rendering for CJK/Thai/Arabic may need
   font embedding. Recommend logotype as a separate asset for those scripts.
