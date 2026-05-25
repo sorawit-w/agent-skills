@@ -506,7 +506,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.0.0`.** Renamed `i18n-contextual-rewriting` → `i18n` and added a new `define` skill — contextual definition/translation of a word or phrase from the sentence around it. Both skills now share one cultural engine (`skills/i18n/references/locale-knowledge.md`): `i18n` ships localized files, `define` explains a word in context. Shelf count is now twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.0.1`.** `skill-evaluator` gains a seventh harness-lens question — "is every word load-bearing?" — and CLAUDE.md gains a matching prose-economy authoring principle, both absorbed from a review of the external `nidhinjs/prompt-master` skill (MIT). Shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

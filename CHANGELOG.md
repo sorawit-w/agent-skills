@@ -5,6 +5,26 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.1] — 2026-05-25
+
+Absorbs two prose-economy patterns from a review of the external `nidhinjs/prompt-master` skill (MIT): a new `skill-evaluator` audit dimension and a matching repo authoring principle. No new skill, no trigger changes. Shelf count stays at 20.
+
+### Added
+
+- **`skill-evaluator` harness-lens question 7 — "Is every word load-bearing?"** The audit now checks rule *phrasing tightness* alongside the existing six shaping questions: prose bloat (restating/hedging/padding) and vague phrasing (soft verbs/adjectives where a precise operation removes guesswork), with a caveat that a *why* line preventing a misread earns its tokens. Findings classify as Layer 1 (skill text); no change to the Phase 5/6 workflow.
+- **CLAUDE.md Design principle #7 — "Prose economy — every word load-bearing."** The authoring-time counterpart to the audit question: cut words that don't change what the agent does, but keep a *why* that prevents a misread (the reactive corollary applied to prose).
+
+### Why
+
+A review of `nidhinjs/prompt-master` (a vendor-gated prompt-generation skill) asked what was worth absorbing into this shelf. Most of it — per-model routing tables, tool-specific templates, the Opus-4.7 task brief — was rejected as off-scope and high-rot: it gates on vendor/version strings, which violates CLAUDE.md Principle #1 (capability-gated, not vendor-gated routing). The durable, portable idea was editorial: "the best prompt is the one where every word is load-bearing." That token-efficiency lens had no home here — `skill-evaluator` checked whether rules *land*, not whether they're *tightly phrased* — so it became audit question 7 plus authoring principle #7.
+
+The stop-conditions / forbidden-actions rigor from prompt-master was evaluated and **rejected as already covered**: `sub-agent-coordinator` carries scope/constraints fencing, `coding-rules` carries the destructive-action safety machinery (reversibility matrix, `protect-git.sh` hook, human-review-before-merge), and the harness gates destructive actions by default.
+
+### Notes
+
+- Question 7 was itself tightened during the pre-shipment split-context audit, which caught that the first draft padded a *why* that merely restated section framing — the rule failed its own test before shipping.
+- Attribution: prose-economy pattern adapted from [`nidhinjs/prompt-master`](https://github.com/nidhinjs/prompt-master) (MIT).
+
 ## [4.0.0] — 2026-05-24
 
 Renames `i18n-contextual-rewriting` → `i18n`, extracts its per-locale knowledge into a shared reference, and adds a new `define` skill for contextual definition/translation. Skill count 19 → 20.

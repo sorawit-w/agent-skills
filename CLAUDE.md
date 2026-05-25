@@ -307,6 +307,14 @@ Prefer constraints the harness can *check* over rules only a careful human revie
 
 **Why:** harness engineering literature converges on this — "the fix is almost never *try harder*; it's *make the missing capability legible and enforceable.*" Prose rules ask the agent to try harder. Feedback loops give the agent (or auditor) something to check against.
 
+### 7. Prose economy — every word load-bearing
+
+When authoring SKILL.md rule text, cut any word that doesn't change what the agent does. Two failure shapes: **prose bloat** (restating, hedging, padding) and **vague phrasing** (soft verbs/adjectives — "handle appropriately", "be thorough" — where a precise operation removes the guesswork).
+
+**Caveat:** economy serves clarity, not brevity for its own sake — a *why* line that prevents a misread earns its tokens. This is the reactive corollary (#6) applied to prose: cut what prevents nothing, keep what prevents a misread.
+
+**Why:** the SKILL.md body is context the agent reloads before every decision, so bloat there is paid on every run. `skill-evaluator`'s harness lens checks this at audit time (question 7); this principle is the authoring-time version. Pattern adapted from `nidhinjs/prompt-master` (MIT).
+
 ---
 
 ## What's NOT here
