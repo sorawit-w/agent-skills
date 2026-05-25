@@ -309,31 +309,6 @@ Prefer constraints the harness can *check* over rules only a careful human revie
 
 ---
 
-## Environment quirks
-
-These are specific to the working environment; worth knowing to avoid wasted time.
-
-### Sandbox cannot unlink anywhere in the mount
-
-The sandbox where bash and file tools run has a FUSE-mounted view of this repo. **The mount blocks `unlink` across the entire repo, not just in `.git/`.** Concretely:
-
-- Creating new files: works
-- Editing existing files: works
-- Deleting / moving / renaming files: **blocked** — fails with permission errors
-- Git operations that touch the working tree (`git mv`, `git rm`, `git clean`, commits that delete files): **must run from Mac terminal**, not the sandbox
-
-When cleanup or removal is needed, do the new-file part in-session and ask the user to run the deletion / commit from their Mac terminal.
-
-### Commits run from Mac terminal
-
-The user owns commits and pushes. The sandbox can stage changes via file edits, but `git commit` and `git push` happen on the Mac. When asked for a commit message, provide the message text; don't try to commit in the sandbox.
-
-### Path translation between tool surfaces
-
-File tools (Read / Write / Edit) use macOS absolute paths (e.g., `/Users/kiang/projects/agent-skills/...`). Bash commands use the sandbox mount path (`/sessions/.../mnt/agent-skills/...`). Translate between them when running shell commands that work on file paths — the same file has two valid addresses depending on which tool you're using.
-
----
-
 ## What's NOT here
 
 For depth on topics this file deliberately skims:
