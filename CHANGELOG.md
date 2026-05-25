@@ -5,6 +5,29 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.16.1] — 2026-05-24
+
+Makes the root README intent-first for users and surfaces the authoring path for contributors, and adds a canonical skill map to the repo. Doc-only.
+
+### Added
+
+- **README "Start here — by what you're doing" section.** An intent-first audience link-index (four job-to-be-done buckets) placed after Install, before The shelf. Links into existing skill anchors — a navigation lens, not a second catalog.
+- **README "Building on the shelf" section.** A developer-experience entry point surfacing authoring material previously visible only in `CLAUDE.md` — skill anatomy, the five harness primitives, the release ritual — plus pointers to the skill graph and `skill-evaluator`.
+- **`docs/skill-graph.md`.** Canonical knowledge graph of all 19 skills: a node table (purpose · audience · status · audience bucket) and a Mermaid relationship graph (solid = gated handoff, dashed = pairs-with). The single source the README's two new sections point at.
+
+### Changed
+
+- **Trimmed the TL;DR "who it's for" line** to a one-sentence pointer into the new "Start here" section, removing the run-on duplication.
+- **CLAUDE.md release ritual** now lists five README/graph touch-points for a new skill (added the "Start here" audience map and `docs/skill-graph.md` as items 8–9); added a Quick-reference row for the skill graph.
+
+### Why
+
+The README organized skills only by capability (what each does), forcing a reader with a job to scan 19 rows to find their cluster, and kept all authoring guidance in `CLAUDE.md` with no entry point from the front door. The two new sections add an intent-first lens (UX) and an author on-ramp (DX) without disturbing the flat shelf reference. The audience layer is a link-index by deliberate design — re-describing skills would create a fourth hand-synced copy; the release-ritual update names the new surfaces so they stay in sync.
+
+### Notes
+
+- Doc-only release — no `SKILL.md` text changed, so no pre-shipment audit required. Skill count unchanged at 19.
+
 ## [3.16.0] — 2026-05-24
 
 Closes the cross-runtime portability loop for `whoami`: a profile can now be

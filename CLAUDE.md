@@ -19,6 +19,7 @@ This file is your onboarding when working on **skill authoring in this repo**. I
 | Plugin version | `plugin.json` + `marketplace.json` + `CHANGELOG.md` top entry + `README.md` Status section (4 files total) |
 | Release notes | `CHANGELOG.md` — Keep-a-Changelog format |
 | Repo-wide architectural context | Root `README.md` |
+| Skill knowledge graph (nodes + edges + audience buckets) | `docs/skill-graph.md` |
 | Shared role catalog | `skills/team-composer/references/role-personas.md` |
 | Sub-agent brief conventions | `skills/sub-agent-coordinator/SKILL.md` |
 | Coding-task discipline (opt-in) | `skills/coding-rules/` |
@@ -120,13 +121,15 @@ A version bump touches exactly these four files. Miss one and the manifest is in
 3. `CHANGELOG.md` — new entry at the top using `## [<version>] — <YYYY-MM-DD>` heading
 4. `README.md` Status section — update the one-line **Current release** blurb (new version number + a one-sentence summary of what's newest). The Status section carries only the current-release pointer; full per-version history lives in `CHANGELOG.md`.
 
-### When the release ADDS a new skill — root README needs three more touches
+### When the release ADDS a new skill — root README needs five more touches
 
-The Status section bump is not enough on its own. A new skill must also appear in the root README's catalog or it stays invisible to readers browsing the repo:
+The Status section bump is not enough on its own. A new skill must also appear in the root README's catalog and navigation, plus the skill graph, or it stays invisible to readers browsing the repo:
 
 5. **TL;DR count** (~line 22) — the "a curated shelf of N specialized skills" line. Increment `N`.
 6. **"The shelf" table** — add a row: icon image, skill name linked to its own README (`skills/<name>/README.md`), and a "What it's for" one-liner. Three columns — match the existing structure exactly. Place the row next to thematically-related skills (e.g., role/delegation skills cluster near `team-composer` and `sub-agent-coordinator`).
 7. **"Skill details" section** — add a trimmed detail entry: anchor `<a id="skill-name"></a>`, H3 with icon image and the skill name **linked to its README** (`skills/<name>/README.md`), then a `**Pairs well with**` block (bulleted, each link pointing to another skill's README) and a `**Try it**` block (3 example prompts). No "What it does" / "Reach for it when" prose — that lives in the skill's own README. Place near related skills in the same order as the shelf table.
+8. **"Start here" audience map** (README) — add the new skill to ≥1 job-to-be-done row of the `## Start here` section. One link entry into the skill's Skill-details anchor; do **not** re-describe the skill (the row is a link index, not a second catalog). Every skill must appear in at least one audience row.
+9. **Skill graph** (`docs/skill-graph.md`) — add a node row to the table (name, purpose, audience, status, bucket) and any new relationship edges to the Mermaid graph. This is the canonical map the README's "Start here" and "Building on the shelf" sections point at.
 
 Skipping any of these is the failure mode caught after shipping `wear-the-hat` in 3.6.0 — the skill existed and was registered in the plugin manifest, but was invisible in the root README catalog. Status section mentions only persist until the next release demotes them; the catalog is permanent.
 

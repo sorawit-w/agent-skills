@@ -20,7 +20,7 @@
 ## TL;DR
 
 - **What this is** — a single Claude Code plugin that installs a curated shelf of nineteen specialized skills in one go.
-- **Who it's for** — anyone using Claude Code or Cowork who wants auto-triggering expertise for a specific job: founders pitching investors, PMs brainstorming with a team, engineers writing or auditing a skill, localizers rewriting inside cultural reality, founders who want their startup adversarially probed, anyone who wants the agent to know how *they* prefer to collaborate before the work starts, and anyone who wants to load one author's opinionated coding-discipline preamble at session start (read the caveat first).
+- **Who it's for** — anyone on Claude Code or Cowork who wants auto-triggering expertise for a specific job. [**Start here**](#start-here) to find yours.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
 ## Install
@@ -40,6 +40,21 @@ That's it — every skill below is now on the shelf. Works from both [Claude Cod
 ```
 
 > Claude Code caches the marketplace index locally — new skills and fixes only appear after an explicit refresh.
+
+---
+
+<a id="start-here"></a>
+
+## Start here — by what you're doing
+
+New here? Find your job and jump in. The full catalog is in [The shelf](#the-shelf); the whole skill map is in [`docs/skill-graph.md`](docs/skill-graph.md).
+
+| If you're… | Start with |
+|:---|:---|
+| **Building & validating a startup** — idea to investor-ready | The [startup pipeline](#how-skills-chain): [`brand-workshop`](#brand-workshop) → [`validation-canvas`](#validation-canvas) → [`riskiest-assumption-test`](#riskiest-assumption-test) → [`pitch-deck`](#pitch-deck) → [`startup-grill`](#startup-grill); [`startup-launch-kit`](#startup-launch-kit) orchestrates, [`gtm`](#gtm) gets users |
+| **Reviewing a product or AI product** — design, evals, multi-perspective critique | [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`validation-canvas`](#validation-canvas) |
+| **Authoring, auditing & coordinating skills** — build, audit, orchestrate | [`skill-evaluator`](#skill-evaluator) · [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) · [`team-composer`](#team-composer) |
+| **Calibrating, localizing & visuals** — make the agent yours, ship in any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
 
 ---
 
@@ -448,6 +463,18 @@ Each entry below is a quick reference — example prompts and which skills it pa
 
 ---
 
+## Building on the shelf
+
+Writing your own skill, or forking one of these? Skill authoring here is **harness engineering** — designing the context, scaffolding, and feedback loops around the agent. Start with:
+
+- **Conventions & skill anatomy** — [`CLAUDE.md` → Skill anatomy](CLAUDE.md#skill-anatomy) (file structure, SKILL.md frontmatter, README shape, visual style).
+- **The five harness primitives** — [`CLAUDE.md` → Harness vocabulary](CLAUDE.md#harness-vocabulary): context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. [`coding-rules`](skills/coding-rules/README.md) is the canonical implementation.
+- **The skill map** — [`docs/skill-graph.md`](docs/skill-graph.md): every skill, its audience, and how they relate.
+- **Release ritual** — [`CLAUDE.md` → Release ritual](CLAUDE.md#release-ritual): the 4-file version bump + pre-shipment audit.
+- **Audit a skill** — [`skill-evaluator`](skills/skill-evaluator/README.md) checks whether a skill's rules actually land when Claude runs them.
+
+---
+
 ## Design principles
 
 These aren't rules for contributors — they're the taste I'm trying to keep on the shelf.
@@ -461,7 +488,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `3.16.0`.** `whoami` closes its cross-runtime portability loop — it can now import an existing profile (a `whoami-profile.md` or a condensed `~/.claude/CLAUDE.md` block) when a runtime starts cold, and it offers to push a condensed profile block to `~/.claude/CLAUDE.md` so the profile calibrates every Claude Code session. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `3.16.1`.** The root README is now intent-first: a "Start here" audience link-index (four job-to-be-done buckets) helps users find the right skill fast, a "Building on the shelf" section gives contributors an authoring on-ramp, and the new [`docs/skill-graph.md`](docs/skill-graph.md) is a canonical map of every skill and how they relate. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
