@@ -53,7 +53,8 @@ New here? Find your job and jump in. The full catalog is in [The shelf](#the-she
 |:---|:---|
 | **Building & validating a startup** — idea to investor-ready | The [startup pipeline](#how-skills-chain): [`brand-workshop`](#brand-workshop) → [`validation-canvas`](#validation-canvas) → [`riskiest-assumption-test`](#riskiest-assumption-test) → [`pitch-deck`](#pitch-deck) → [`startup-grill`](#startup-grill); [`startup-launch-kit`](#startup-launch-kit) orchestrates, [`gtm`](#gtm) gets users |
 | **Reviewing a product or AI product** — design, evals, multi-perspective critique | [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`validation-canvas`](#validation-canvas) |
-| **Authoring, auditing & coordinating skills** — build, audit, orchestrate | [`skill-evaluator`](#skill-evaluator) · [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) · [`team-composer`](#team-composer) |
+| **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) |
+| **Authoring & auditing skills** — design, build & audit your own skills | [`skill-evaluator`](#skill-evaluator) · [`team-composer`](#team-composer) · [`sub-agent-coordinator`](#sub-agent-coordinator) · see [Building on the shelf](#building-on-the-shelf) |
 | **Calibrating, localizing & visuals** — make the agent yours, ship in any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n-contextual-rewriting`](#i18n-contextual-rewriting) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
 
 ---
@@ -488,7 +489,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `3.16.1`.** The root README is now intent-first: a "Start here" audience link-index (four job-to-be-done buckets) helps users find the right skill fast, a "Building on the shelf" section gives contributors an authoring on-ramp, and the new [`docs/skill-graph.md`](docs/skill-graph.md) is a canonical map of every skill and how they relate. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `3.16.2`.** The root README is intent-first: a "Start here" audience link-index (five job-to-be-done buckets — build a startup · review a product · write code · author skills · calibrate/localize/visuals) helps users find the right skill fast, a "Building on the shelf" section gives contributors an authoring on-ramp, and [`docs/skill-graph.md`](docs/skill-graph.md) is a canonical map of every skill and how they relate (now rendering correctly on GitHub). Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

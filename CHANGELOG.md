@@ -5,13 +5,33 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.16.2] — 2026-05-24
+
+Fixes the skill-graph Mermaid diagram failing to render on GitHub, and splits a developer/coding audience out of the over-broad skill-authoring bucket. Doc-only.
+
+### Fixed
+
+- **`docs/skill-graph.md` Mermaid render error on GitHub.** Labeled edges used the inline dotted form `-. text .->`; a period inside a label (`DESIGN.md`) collided with the `.->` closing token and triggered a lexer error. All labeled edges now use the pipe-label form `-.->|label|`, which delimits labels safely.
+
+### Changed
+
+- **"Start here" now has five audience buckets, not four.** Split a developer/coding audience out of the over-broad "authoring, auditing & coordinating" row: a new **Writing & shipping code** row (`coding-rules`, `tech-stack-recommendations`, `sub-agent-coordinator`, `wear-the-hat`); the **Authoring & auditing skills** row keeps `skill-evaluator`, `team-composer`, `sub-agent-coordinator` and points to "Building on the shelf". Propagated to `docs/skill-graph.md`'s bucket column and intro.
+
+### Why
+
+`coding-rules` and `tech-stack-recommendations` are developer-facing (agentic-coding discipline, stack choice), not skill-authoring tools — bucketing them under "authoring skills" mis-served the largest audience, developers writing application code. The Mermaid bug shipped in 3.16.1 because the diagram was only structurally verified, not rendered on GitHub before release.
+
+### Notes
+
+- Doc-only release — no `SKILL.md` text changed; skill count unchanged at 19.
+
 ## [3.16.1] — 2026-05-24
 
 Makes the root README intent-first for users and surfaces the authoring path for contributors, and adds a canonical skill map to the repo. Doc-only.
 
 ### Added
 
-- **README "Start here — by what you're doing" section.** An intent-first audience link-index (four job-to-be-done buckets) placed after Install, before The shelf. Links into existing skill anchors — a navigation lens, not a second catalog.
+- **README "Start here — by what you're doing" section.** An intent-first audience link-index placed after Install, before The shelf. Links into existing skill anchors — a navigation lens, not a second catalog.
 - **README "Building on the shelf" section.** A developer-experience entry point surfacing authoring material previously visible only in `CLAUDE.md` — skill anatomy, the five harness primitives, the release ritual — plus pointers to the skill graph and `skill-evaluator`.
 - **`docs/skill-graph.md`.** Canonical knowledge graph of all 19 skills: a node table (purpose · audience · status · audience bucket) and a Mermaid relationship graph (solid = gated handoff, dashed = pairs-with). The single source the README's two new sections point at.
 
