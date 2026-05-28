@@ -1,0 +1,58 @@
+agent-skills
+Copyright (c) 2026 sorawit-w
+
+This product is licensed under the MIT License (see LICENSE).
+
+This product includes patterns, vocabulary, and methodology adapted from
+the projects listed below. Each is referenced in the specific file where
+the adaptation lives — this NOTICE is the consolidated index.
+
+---
+
+## Modern Web Guidance (Google Chrome team)
+
+- Source: https://github.com/GoogleChrome/modern-web-guidance-src
+- License: Apache License, Version 2.0 (see https://www.apache.org/licenses/LICENSE-2.0)
+- Copyright: Google LLC and Modern Web Guidance contributors
+
+Methodology adapted (concept and vocabulary only — no verbatim code or prose):
+
+- The closed-loop calibration pattern (paired gold-standard + negative
+  fixtures; grader must pass on gold AND fail on negative) →
+  `skills/skill-evaluator/references/calibration-loop.md`.
+- The Playwright grader shape (paired `.spec.ts` over gold + negative
+  HTML fixtures with inverted expectations; assertion targets across
+  computed styles, accessibility tree, runtime behavior, and resource
+  loading) → `skills/skill-evaluator/references/playwright-grader-shape.md`.
+- The *opportunity* (`100% − unguided-pass-rate`) and *uplift*
+  (`guided − unguided`) measurement vocabulary → cited in the
+  `skills/ai-eval-review/SKILL.md` Influences callout and in
+  `skills/skill-evaluator/references/calibration-loop.md`.
+
+Modern Web Guidance is additionally cross-referenced (not absorbed)
+from the coding-rules external-resources registry and the team-composer
+Cross-Skill Integration table.
+
+---
+
+## Other absorbed patterns
+
+The following projects have specific patterns absorbed into this repo;
+each absorption is attributed inline in the file where it lives. They
+are not re-listed here in detail to avoid drift between the inline
+attribution (authoritative) and this NOTICE.
+
+- `nidhinjs/prompt-master` (MIT) — prose-economy lens; see
+  `skills/skill-evaluator/SKILL.md` harness lens question 7 and
+  CLAUDE.md § Design principles #7.
+- `elementalsouls/Claude-BugHunter` — discipline patterns absorbed into
+  `skills/coding-rules/resources/references/validation.md`,
+  `debugging.md`, and `working-patterns.md` (see file-level
+  attribution).
+- `addyosmani/agent-skills` — two specific rules in
+  `skills/coding-rules/resources/references/working-patterns.md` cite
+  this repo as source.
+
+When in doubt, the inline attribution in the file where the pattern
+lives is authoritative. This NOTICE consolidates the third-party
+copyright statements required by the upstream licenses.

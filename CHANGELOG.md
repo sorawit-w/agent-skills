@@ -5,6 +5,44 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] — 2026-05-27
+
+Absorbs eval-harness *methodology* from `GoogleChrome/modern-web-guidance-src` (Apache-2.0) into `skill-evaluator` and `ai-eval-review`, adds a cross-reference registry row in `coding-rules` + `team-composer` (parallel to the 4.0.3 `addyosmani/web-quality-skills` precedent), and ships the repo's first `NOTICE` file consolidating third-party attribution. No content forked, no new skill on the shelf, no trigger changes. Shelf count stays at twenty.
+
+### Added
+
+- **`skill-evaluator/references/calibration-loop.md`** — gold-standard + negative fixture pattern for calibrating load-bearing assertions in skill audits. Also documents the *opportunity* (`100% − unguided-pass-rate`) and *uplift* (`guided − unguided`) measurement vocabulary, scoped explicitly as out-of-band for this skill (skill-evaluator measures rule adherence, not skill value — `skill-creator`'s `run_eval` owns the uplift measurement). Applies to web-output skills only.
+- **`skill-evaluator/references/playwright-grader-shape.md`** — concrete companion to `calibration-loop.md`. Shows the paired `.spec.ts` over gold + negative HTML fixtures with the `shouldPass` inversion pattern, plus an assertion-target catalog (computed styles, a11y tree, runtime behavior, resource load) selected for what travels cleanly from Modern Web Guidance's web-platform context to skill-output audits in this repo.
+- **`skill-evaluator/SKILL.md`** — one paragraph in Phase 3 (Generate test prompts + assertions) telling auditors when to recommend a calibrated grader pair, with the qualifier "for load-bearing assertions on web-output skills" to keep the cost discipline honest. Two new entries in the Reference files index.
+- **`ai-eval-review/SKILL.md`** — `GoogleChrome/modern-web-guidance-src` added to the Influences callout block alongside HELM / claude-cookbooks / OpenAI Evals. Cross-reference pointer to `skill-evaluator/references/calibration-loop.md` rather than duplicating the methodology (per CLAUDE.md "shared resources — don't fork, extend in place").
+- **`coding-rules/resources/references/external-resources.md`** — new registry row for `GoogleChrome/modern-web-guidance`. Documents the primary skill + CLI (`npx modern-web-guidance@latest search/retrieve`), three megaskill packs, four platform install paths, eval-uplift evidence (+29 to +44pp over unguided baselines), and explicit positioning relative to `addyosmani/web-quality-skills` (audits shipped code vs. guides new code — complementary, not overlapping).
+- **`team-composer/SKILL.md`** — new Cross-Skill Integration row for `GoogleChrome/modern-web-guidance`. Trigger conditions scoped to *authoring* modern UI behavior (`@senior_frontend_engineer` writing modern UI, `@senior_product_designer` raising a native-API question, user asking "what's the modern way to do X"). Differentiated from the `addyosmani/web-quality-skills` row directly above: addyosmani for *auditing*, modern-web-guidance for *guiding new code*. Suggest-install pattern (never auto-install).
+- **`NOTICE`** — new repo-root file. Consolidated third-party attribution index. Modern Web Guidance gets the full attribution block (concept-level, no verbatim code lifted); other previously-absorbed projects (`prompt-master`, `Claude-BugHunter`, `addyosmani/agent-skills`) are listed by name with pointers to inline attribution as the authoritative source — deliberately not re-stated in detail to avoid drift.
+- **`README.md` License section** — one-line pointer to `NOTICE` for third-party adaptations.
+
+### Why
+
+A team-composer workshop walked through `GoogleChrome/modern-web-guidance-src` (582★, Apache-2.0, maintained by Chrome + Edge teams + community). The team converged on **methodology absorption only, content cross-reference only** for two compounding reasons:
+
+(a) **Calibration cadence we cannot match.** Modern Web Guidance runs weekly eval rounds with +29 to +44pp uplift measurements over unguided baselines. A fork would lag every release and lose the eval signal that justifies their token-pruning decisions. Cross-reference keeps users on the calibrated upstream.
+
+(b) **Layer mismatch on domain content.** Their content is web-platform domain knowledge (View Transitions, INP diagnostics, modern selectors, native AI APIs). Our shelf is agent/workflow skills. Forking domain content into our skills would dilute positioning and create a maintenance trap, exactly the failure mode the 4.0.3 absorption review surfaced for `addyosmani/web-quality-skills`.
+
+What did transfer was their **eval-harness shape** — paired gold-standard + negative fixtures so a grader's pass on the gold AND fail on the negative is what proves an assertion isn't vacuous. That pattern is domain-agnostic and directly applicable to auditing skills that produce web output. `@lead_software_engineer` argued for concrete absorption (the Playwright `.spec.ts` template), `@senior_software_architect` argued for conceptual-only; the user resolved the disagreement in favor of concrete, which is why this release ships both `calibration-loop.md` (conceptual) and `playwright-grader-shape.md` (concrete) rather than one merged file. The split lets workflow-skill audits cite just the calibration concept without loading the Playwright template they don't need.
+
+The *opportunity* / *uplift* vocabulary was absorbed into `ai-eval-review`'s Influences block specifically because it's a clean fit for AI-feature eval design (does our model actually beat a baseline? how much room is there to beat?). Not promoted into the skill's elicitation flow — that would push the skill past its stated boundary of design-completeness review into uplift measurement, which is the team's eval-platform job.
+
+This release also establishes the `NOTICE` file convention. Prior absorptions (`prompt-master`, `Claude-BugHunter`, `addyosmani/agent-skills`) were attributed inline only. Apache-2.0 § 4(d) requires a consolidated `NOTICE` for source distribution, and Modern Web Guidance is the first Apache-2.0 source we've absorbed methodology from — so the convention starts here and back-fills the older inline-attributed entries by reference rather than re-stating them in `NOTICE` (the inline attribution stays authoritative, the index is for license-compliance discovery).
+
+Distinct from 4.0.3 (`addyosmani/web-quality-skills`): that release was **routing-away-only** — nothing absorbed, just cross-reference. This release is **methodology-absorbed + cross-reference**, in two surfaces (eval-harness shape into skill-evaluator + ai-eval-review, plus the registry rows). Distinct from 4.0.2 (`Claude-BugHunter`): that absorbed three *discipline patterns* into coding-rules rules; this one absorbs *eval methodology* into eval-shaped skills. Same governing principle across all three: absorb when the pattern earns its tokens at the load surface it lands on; cross-reference when the upstream is better-calibrated than we could keep.
+
+### Notes
+
+- No new skill on the shelf — no root README catalog touches (TL;DR count, shelf table, skill details, audience map, skill graph). Status section update only.
+- No SKILL.md rule-text changes in the assertive-direction sense; this release is additive and does not change any skill's triggers. The pre-shipment audit ritual (`skill-evaluator` + `skill-creator` description-check) is not required per CLAUDE.md — reserved for SKILL.md rule-text changes.
+- The follow-up *assertive-description review* discussed in the workshop (applying the four-part description pattern from Modern Web Guidance to `tech-stack-recommendations`, `define`, `whoami`) is deliberately deferred to a separate release as a gated pilot, so a description-trigger change is never bundled with methodology absorption.
+- Tech-stack-recommendations was initially proposed as a third cross-reference surface in the workshop conclusion; on second pass that was wrong — Modern Web Guidance is web-platform domain content, not stack selection. The cross-reference belongs in coding-rules + team-composer (parallel to the 4.0.3 web-quality-skills precedent), not tech-stack-recommendations.
+
 ## [4.0.3] — 2026-05-27
 
 Adds cross-reference registry entries for `addyosmani/web-quality-skills` in two surfaces — `coding-rules/resources/references/external-resources.md` and `team-composer`'s Cross-Skill Integration table. Routing-away-only pattern: when web-quality work surfaces (Lighthouse, Core Web Vitals, WCAG, SEO), defer to the external plugin rather than synthesizing audits in-context. No content absorbed, no new skill on the shelf, no trigger changes. Shelf count stays at twenty.

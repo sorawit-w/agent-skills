@@ -142,6 +142,8 @@ Produce **6–12 test prompts** that span the skill's declared surface area:
 
 For each test prompt, write **3–7 assertions** using the tag/sentence/evidence pattern (see `references/assertion-dictionary.md`). Every assertion must be independently gradable from the executor's output alone — no need for the grader to re-read the skill to judge it.
 
+**Calibration for load-bearing assertions (web-output skills).** When the target skill produces rendered web output (HTML, SVG, DOM) AND an assertion would change a release decision if it failed, recommend a calibrated grader pair: a gold-standard fixture the grader MUST pass, and a negative fixture deliberately broken on the rule's dimension that the grader MUST fail. This catches vacuous assertions (grader passes on both) and over-strict assertions (grader fails on both). Pattern in `references/calibration-loop.md`; concrete Playwright shape in `references/playwright-grader-shape.md`. Pure workflow skills have no rendered surface to grade — skip this step for them.
+
 Output format:
 
 ```
@@ -248,6 +250,8 @@ This skill produces findings, not grades. A 95% pass rate can hide a single crit
 - `references/fix-taxonomy.md` — four-layer classification with examples
 - `references/findings-report.md` — user-facing output template
 - `references/terminal-ui.md` — lean-markdown output rules so reports read well in terminals and IDEs alike
+- `references/calibration-loop.md` — gold-standard + negative fixture pattern for calibrating load-bearing assertions; opportunity / uplift vocabulary. Applies to web-output skills only. (Adapted from `GoogleChrome/modern-web-guidance-src`, Apache-2.0.)
+- `references/playwright-grader-shape.md` — concrete grader template for web-output skills; assertion targets that travel (computed styles, a11y tree, runtime behavior). Companion to `calibration-loop.md`.
 - `references/self-test-fixture.md` — *maintainer-only.* Known-good + known-broken fixture skills the harness audits to catch its own regressions. Run before every release of `skill-evaluator`. Not part of the user-facing 7-phase workflow.
 
 Read these when the phase calls for them. Do not front-load all references at once.

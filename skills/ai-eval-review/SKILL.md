@@ -121,6 +121,7 @@ When `ai-ux-review.md` already exists in the working folder, this skill reads it
 > - [Holistic Evaluation of Language Models (HELM)](https://github.com/stanford-crfm/helm) — Stanford CRFM, Apache 2.0. Multi-dimensional eval (accuracy, calibration, robustness, fairness, bias, toxicity, efficiency).
 > - [Anthropic's claude-cookbooks](https://github.com/anthropics/anthropic-cookbook) — MIT. Patterns for designing and running LLM evals.
 > - [OpenAI Evals](https://github.com/openai/evals) — MIT. Framework + registry of benchmarks.
+> - [`GoogleChrome/modern-web-guidance-src`](https://github.com/GoogleChrome/modern-web-guidance-src) — Apache-2.0. Closed-loop calibration methodology: paired gold-standard + negative fixtures to prove a test discriminates the rule it claims to test, plus *opportunity* (`100% − unguided-pass`) and *uplift* (`guided − unguided`) vocabulary for measuring whether a feature actually helps. Applied here to Block 3 (offline eval set construction must include hard negatives) and Block 4 (online metrics should be framed against an unguided baseline when feasible).
 > - [EU AI Act](https://artificialintelligenceact.eu/) — regulatory text, reusable with attribution. High-risk system requirements drive Block 5 cohort + Block 6 robustness probes.
 > - FTC AI guidance, FDA SaMD eval expectations — US federal works, public domain.
 >
@@ -129,6 +130,10 @@ When `ai-ux-review.md` already exists in the working folder, this skill reads it
 > probes, and acceptance criteria. No verbatim content lifted from any of
 > the above sources. See `README.md` for the full influences note and the
 > copyright-vs-derivative-work reasoning.
+>
+> For the gold+negative fixture pattern in concrete form, cross-reference
+> [`skill-evaluator/references/calibration-loop.md`](../skill-evaluator/references/calibration-loop.md)
+> rather than duplicating the methodology here.
 
 ---
 

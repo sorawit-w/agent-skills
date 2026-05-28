@@ -506,7 +506,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.0.3`.** Adds routing-away-only registry entries for `addyosmani/web-quality-skills` (six stack-agnostic Lighthouse / Core Web Vitals / WCAG / SEO skills) — one in `coding-rules/resources/references/external-resources.md`, one in `team-composer`'s Cross-Skill Integration table. The team-composer entry additionally closes a previously-unaddressed handoff gap for the `@accessibility_specialist` role. No content absorbed (different layer — meta-discipline vs. domain content); shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.1.0`.** Absorbs eval-harness methodology (paired gold + negative fixture pattern, opportunity / uplift vocabulary) from `GoogleChrome/modern-web-guidance-src` (Apache-2.0) into `skill-evaluator` (two new reference files) and `ai-eval-review` (Influences callout). Adds a cross-reference registry row for `GoogleChrome/modern-web-guidance` in `coding-rules` + `team-composer`, positioned as the *authoring-side* complement to the 4.0.3 `addyosmani/web-quality-skills` *auditing-side* entry. Ships the repo's first `NOTICE` file consolidating third-party attribution. No content forked, no new skill on the shelf; shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
@@ -518,4 +518,4 @@ Issues and suggestions are welcome via [GitHub](https://github.com/sorawit-w/age
 
 ## License
 
-MIT. See [LICENSE](LICENSE).
+MIT. See [LICENSE](LICENSE). Patterns and vocabulary adapted from third-party projects are credited in [NOTICE](NOTICE) (consolidated index) and inline in the file where each adaptation lives (authoritative).
