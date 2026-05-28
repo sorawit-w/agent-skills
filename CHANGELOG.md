@@ -5,6 +5,28 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.3] — 2026-05-27
+
+Adds cross-reference registry entries for `addyosmani/web-quality-skills` in two surfaces — `coding-rules/resources/references/external-resources.md` and `team-composer`'s Cross-Skill Integration table. Routing-away-only pattern: when web-quality work surfaces (Lighthouse, Core Web Vitals, WCAG, SEO), defer to the external plugin rather than synthesizing audits in-context. No content absorbed, no new skill on the shelf, no trigger changes. Shelf count stays at twenty.
+
+### Added
+
+- **`coding-rules` → `external-resources.md` registry row for `addyosmani/web-quality-skills`.** Documents the 6 stack-agnostic skills (`web-quality-audit`, `performance`, `core-web-vitals`, `accessibility`, `seo`, `best-practices`), all four platform install paths (Claude plugin / Codex / Gemini / `npx skills add`), and explicit "not absorbed — different layer" rationale. Placed adjacent to the UI execution cluster (`ui-ux-pro-max`, `impeccable`, `taste-skill`, `frontend-design`).
+- **`team-composer` → Cross-Skill Integration row for `addyosmani/web-quality-skills`.** Trigger conditions tied to specific roles: `@senior_frontend_engineer` flagging perf/CWV/loading, `@accessibility_specialist` on the team, `@senior_product_designer` raising a11y or SEO, or Next Steps containing Lighthouse / WCAG / SEO work. Closes a previously-unaddressed handoff gap: `@accessibility_specialist` was a Tier 3 role with no downstream skill to defer to.
+
+### Why
+
+A team-composer workshop walked through `addyosmani/web-quality-skills` (~2.1k★, MIT, 6 stack-agnostic web-quality skills based on Lighthouse v13 + Core Web Vitals + WCAG 2.2 + modern SEO). The user asked: absorb into `coding-rules`, or install and reference. The team converged on install-and-reference for two reasons that compounded: (a) **layering** — `coding-rules` is meta-discipline (how agents work), web-quality-skills is domain content (what good web code looks like); mixing the layers would bloat BOOTSTRAP on every load and create a voice mismatch between coding-rules' clipped harness vocabulary and Addy's expository style; (b) **maintenance** — Addy already migrated for Lighthouse v13's Performance Insight Audits (Oct 2025) and tracks current advice like HTTP 103 Early Hints, so a fork inside coding-rules would lag every Lighthouse release. Candidate absorptions (the audit-severity framework, performance-budget table, POUR/WCAG structure) were evaluated and rejected — the relevant meta-patterns already exist in `validation.md` and `quality-gates.md`; the rest is domain content that doesn't cross the meta/content boundary cleanly.
+
+Distinct from the 4.0.2 `Claude-BugHunter` absorb: BugHunter contributed three transferable *harness patterns* (evidence shape, sibling sweep, pushback protocol) that earned their token cost; this one did not. The decision shape (orthogonal toolboxes, route-away-only) is the same.
+
+The `team-composer` entry additionally closes a gap that existed before this release — `@accessibility_specialist` could be added to a team but had no downstream specialist skill to hand off to. That gap is now filled.
+
+### Notes
+
+- No BOOTSTRAP edits — routing logic stays in the registry, not in always-on rules. If future sessions reveal agents not picking up the pointer, revisit. Speculative pre-emption rejected.
+- Both entries use the *if installed* / suggest-install pattern; never auto-install.
+
 ## [4.0.2] — 2026-05-27
 
 Absorbs three discipline patterns from a review of the external `elementalsouls/Claude-BugHunter` skill bundle into `coding-rules`, plus a cross-reference registry entry. No new skill, no trigger changes. Shelf count stays at 20.

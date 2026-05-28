@@ -506,7 +506,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.0.2`.** `coding-rules` absorbs three discipline patterns from a review of the external `elementalsouls/Claude-BugHunter` skill bundle — what counts as evidence of behavior change (`validation.md`), post-fix sibling sweep (`debugging.md`), and pushback protocol when the user says "find more / look harder" (`working-patterns.md`) — plus a routing-away-only registry entry for BugHunter itself in `external-resources.md`. Shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.0.3`.** Adds routing-away-only registry entries for `addyosmani/web-quality-skills` (six stack-agnostic Lighthouse / Core Web Vitals / WCAG / SEO skills) — one in `coding-rules/resources/references/external-resources.md`, one in `team-composer`'s Cross-Skill Integration table. The team-composer entry additionally closes a previously-unaddressed handoff gap for the `@accessibility_specialist` role. No content absorbed (different layer — meta-discipline vs. domain content); shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
