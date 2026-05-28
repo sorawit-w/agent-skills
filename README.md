@@ -506,7 +506,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.0.1`.** `skill-evaluator` gains a seventh harness-lens question — "is every word load-bearing?" — and CLAUDE.md gains a matching prose-economy authoring principle, both absorbed from a review of the external `nidhinjs/prompt-master` skill (MIT). Shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.0.2`.** `coding-rules` absorbs three discipline patterns from a review of the external `elementalsouls/Claude-BugHunter` skill bundle — what counts as evidence of behavior change (`validation.md`), post-fix sibling sweep (`debugging.md`), and pushback protocol when the user says "find more / look harder" (`working-patterns.md`) — plus a routing-away-only registry entry for BugHunter itself in `external-resources.md`. Shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

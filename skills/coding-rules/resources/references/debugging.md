@@ -55,6 +55,20 @@ Once you've identified the root cause (not before):
 3. **Check for regressions** — Run the full quality gate suite, not just the failing test
 4. **Explain why the fix works** — If you can't explain it, you haven't found the root cause
 
+### Step 4 (Optional): Sweep for Siblings
+
+After confirming the fix, do a short bounded sweep for sibling instances of the same pattern. Bugs cluster — the same author, module, or copy-paste lineage often has 2–5 similar defects.
+
+- Grep for the *shape* of the bug, not the literal line — same function name, same anti-pattern, same misused API
+- Same author / same module / same recent commit are the highest-yield search axes
+- Fix any siblings found in the same PR if they're trivial; open separate tickets if they aren't
+
+**Bounded means a few greps and a re-read of adjacent code, not a debugging session.** This is distinct from the >15-min stuck-loop anti-pattern below — that clock applies *during* root-cause search; the sibling sweep happens *after* the fix is verified.
+
+**Skip when:** the fix is genuinely one-off (config typo, dependency bump), or the codebase is too small for siblings to plausibly exist.
+
+**Source:** absorbed from `elementalsouls/Claude-BugHunter` (2026-05-27); their A→B Signal Method (after finding one bug, hunt for developer-pattern siblings) is security-framed, but the cluster-hypothesis is general.
+
 ---
 
 ## Anti-Patterns

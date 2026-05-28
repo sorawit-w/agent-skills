@@ -5,6 +5,30 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.2] — 2026-05-27
+
+Absorbs three discipline patterns from a review of the external `elementalsouls/Claude-BugHunter` skill bundle into `coding-rules`, plus a cross-reference registry entry. No new skill, no trigger changes. Shelf count stays at 20.
+
+### Added
+
+- **`coding-rules` → `validation.md` § What Counts as Evidence of Change.** Two rules on evidence shape for behavior claims: status / exit codes don't prove behavior (need differential comparison of bodies/output/state), and single observations are noise for timing claims (n≥10 as a floor, raise it when variance is high or stakes are large). Fills a real gap — `validation.md`'s existing Red Flag Phrases catch *attitudinal* hedging ("should work", "seems correct") but didn't define what counts as evidence in the first place.
+- **`coding-rules` → `debugging.md` § Step 4 (Optional): Sweep for Siblings.** Post-fix bounded sweep for sibling instances of the same pattern — grep for the shape, not the literal line; same-author / same-module / same-recent-commit as highest-yield axes; skip when the fix is one-off. Explicitly distinguished from the existing >15-min stuck-loop anti-pattern (different clock, different phase).
+- **`coding-rules` → `working-patterns.md` § Pushback Protocol.** When the user says "find more / look harder / are you sure?", do not defend the prior answer without re-running the relevant checks. Walk fresh checklists, document the negatives, then respond. Positioned as the inverse companion of the existing Anti-Rationalization rule (same root: refusing to do the work a second time, opposite directions).
+- **`coding-rules` → `external-resources.md` registry row for `Claude-BugHunter`.** Cross-reference only — explicitly NOT auto-loaded by coding-rules. Authorization caveat included.
+
+### Why
+
+A team-composer workshop walked through `elementalsouls/Claude-BugHunter` (1.2k★, 51 offensive-security skills, 15 slash commands, 681 curated disclosed-report patterns). The user asked whether to absorb into `coding-rules` or install BugHunter as a dependency. Both framings turned out to be wrong: BugHunter is offensive security, `coding-rules` is defensive engineering discipline — orthogonal toolboxes, not overlapping ones. But BugHunter's bb-methodology PART 4 contained battle-tested *harness patterns* — security-framed but generalizable. Three of those patterns earned absorption; one (a 20-minute rotation clock) was rejected for duplicating the existing circuit-breaker anti-pattern in `working-patterns.md`; one (shell-loop iteration ban) was dropped from the absorb because it didn't generalize cleanly outside security shell pipelines.
+
+The absorbs ran through the `coding-rules` CLAUDE.md gate: rule-cost precheck per rule, then a fresh-context audit applying `skill-evaluator` methodology before the edits landed. The audit returned `ship-3-of-3-with-edits` with concrete revisions — soften the n≥10 anchor (originally fixed), retune the sibling-sweep time budget to avoid collision with the >15-min anti-pattern (originally "10–15 min" — too close), and relocate the Pushback Protocol from `communication.md` to `working-patterns.md` (originally drafted in the wrong file — `communication.md` is about commit/branch artifacts, not epistemic behavior). All three edits were folded in before commit.
+
+The BugHunter registry entry uses the "routing-away only" pattern from CLAUDE.md Principle #1 (capability-gated, not vendor-gated): `coding-rules` may *recommend* BugHunter when a user is doing authorized security work, but never auto-loads it. The authorization caveat is explicit because offensive tooling against unowned systems is illegal — the asymmetric cost of accidental scope expansion outweighs the convenience of looser routing.
+
+### Notes
+
+- Attribution: discipline patterns adapted from [`elementalsouls/Claude-BugHunter`](https://github.com/elementalsouls/Claude-BugHunter).
+- BugHunter is NOT a dependency. The installation surface (filesystem copy into `~/.claude/skills/`) is incompatible with this repo's plugin-marketplace distribution anyway, so a manifest dependency couldn't resolve.
+
 ## [4.0.1] — 2026-05-25
 
 Absorbs two prose-economy patterns from a review of the external `nidhinjs/prompt-master` skill (MIT): a new `skill-evaluator` audit dimension and a matching repo authoring principle. No new skill, no trigger changes. Shelf count stays at 20.

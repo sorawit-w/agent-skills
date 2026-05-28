@@ -27,6 +27,20 @@ Before declaring ANY task complete, regardless of complexity:
 
 ---
 
+## What Counts as Evidence of Change
+
+Verification produces *claims* about behavior — "the bug is fixed," "the perf regression is gone," "the race is closed." A claim without differential evidence is a guess. Two rules for what counts:
+
+**Status codes / exit codes don't prove behavior.** A 200 response or a 0 exit code only proves the call completed — not that the *result* changed. Compare response bodies, output, file contents, or downstream state side-by-side before claiming a behavior change.
+
+**Single observations are noise, not signal — especially for timing.** Perf claims, race-condition fixes, flaky-test stabilization, and any "this is faster / slower / now reliable" claim need repeated, interleaved trials before they're load-bearing. Use n≥10 as a floor; raise the floor when variance is high or stakes are large. A single fast/slow run is jitter, not evidence.
+
+These apply to both the implementer and the QA sub-agent — a passing test suite the same run as the change is necessary but not sufficient for the two claim shapes above.
+
+**Source:** absorbed from `elementalsouls/Claude-BugHunter` (2026-05-27); their bb-methodology PART 4 discipline gates (Body-Diff Rule, Statistical-Sample Rule) are security-framed, but the underlying engineering discipline applies broadly.
+
+---
+
 ## Verification by Complexity
 
 Match verification depth to the risk of the work. Over-verifying simple tasks wastes time; under-verifying complex tasks causes regressions.

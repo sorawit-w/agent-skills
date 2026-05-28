@@ -313,6 +313,22 @@ Source: distilled from `addyosmani/agent-skills` (2026-04-19, MIT).
 
 ---
 
+## Pushback Protocol
+
+When the user pushes back — *"find more"*, *"look harder"*, *"are you sure?"*, *"is that really it?"* — do not defend the prior answer without re-running the relevant checks. The pushback is data: the user has a reason to suspect more, even if they can't articulate it.
+
+Before disagreeing:
+
+1. **Walk fresh checklists end-to-end.** Re-run the relevant quality gates. Re-grep for the bug class. Re-read the diff. Open files you didn't read the first time.
+2. **Document the negatives.** Note what you checked and what came up empty — *"Grepped for X across `src/`, no other instances. Re-ran test suite, all passing. Re-read auth path, no other unprotected endpoints."*
+3. **Then respond** — with what you tried and what you found (or didn't). The user gets to see your work, not just your conclusion.
+
+The failure mode this prevents: dismissing pushback because the prior answer felt complete. Anti-Rationalization above catches you skipping discipline you should follow; Pushback Protocol catches you defending a prior answer instead of re-verifying. Opposite directions, same root: refusing to do the work a second time.
+
+**Source:** absorbed from `elementalsouls/Claude-BugHunter` (2026-05-27); their Pushback Protocol (user says "find more" → walk additional checklists end-to-end, document negatives before disagreeing) is security-framed, but the trust-and-thoroughness logic is general.
+
+---
+
 ## Checkpoints
 
 Checkpoints are your safety net. They let you (and the developer) recover from mistakes, resume after crashes, and hand off work between sessions. Think of them as **save points** — create them early and often.
