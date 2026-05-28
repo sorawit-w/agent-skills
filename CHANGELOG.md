@@ -5,6 +5,37 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.1] — 2026-05-27
+
+Pilot for the **assertive-description pattern** absorbed indirectly from `GoogleChrome/modern-web-guidance-src` in 4.1.0 — applied to a single skill (`tech-stack-recommendations`) as a gated rollout. No behavior change for users; only trigger semantics tighten. If this pilot stabilizes without over-fire complaints, the same four-part pattern will extend to `define` and `whoami` in separate PATCH releases — each gated on its own observation period.
+
+### Changed
+
+- **`tech-stack-recommendations/SKILL.md`** — YAML `description:` restructured into the four-part assertive pattern:
+  1. **What clause** (kept) — "Opinionated technology stack guidance for new projects and migrations."
+  2. **Bold MUST clause** (new) — enumerated triggers (runtime / framework / DB / auth / hosting / styling / mobile / i18n / AI-agent) promoted from prose to assertive structure, scoped to "that the project doesn't yet have" so the category list doesn't grab existing-stack extension cases.
+  3. **Anti-rationalization line** (new) — "Do not assume a stack decision is too obvious to need this skill — consult it before recommending any specific technology." Addresses the failure mode of the agent saying "just use Next.js, that's obvious" without loading the skill.
+  4. **NOT clause** (kept + expanded) — added "package-manager migrations within the same stack" and clarified "extending the current stack's existing components" (was "extending an established stack"). Closes two gaps the pre-shipment audit surfaced.
+
+### Why
+
+The 4.1.0 release absorbed Modern Web Guidance's eval methodology into `skill-evaluator` and `ai-eval-review`. The same workshop also noted that their megaskill SKILL.md descriptions use a more assertive style than ours — `**You MUST use this skill whenever...**` plus an anti-rationalization clause. Worth piloting on reference-shaped skills (cheap-to-fire skills whose job is to surface curated knowledge), with anti-trigger prose preserved so the pattern doesn't over-fire across sibling skills.
+
+Three candidates fit the reference-shaped criterion: `tech-stack-recommendations`, `define`, `whoami`. `coding-rules` was considered and skipped — its triggers are already assertive ("Invoke ONLY when..."). Rolling all three together would mix audit signals; if a regression appears, you wouldn't know which skill's trigger surface broke.
+
+`tech-stack-recommendations` ships first because: (a) clearest trigger boundary among the three (stack decision is a single discrete event); (b) the existing anti-trigger ("Not for debugging or maintaining existing code") was already specific, so the NOT clause has solid ground to expand from; (c) low blast radius — over-fire risk is bounded to "agent loads stack-guidance when user wanted debug help", which the user notices immediately and corrects.
+
+The pre-shipment audit ritual fired per CLAUDE.md (SKILL.md trigger-text change → `skill-creator` description-check required). The audit ran a 15-query trigger eval (5 should-trigger, 3 should-not, 7 near-misses across both directions) and surfaced two real gaps that the original description also had but the assertive pattern made more visible: (1) library-category triggers were unscoped — picking an i18n library for an existing app read as MUST even though it conflicted with the NOT clause's "extending"; (2) package-manager swaps weren't carved out — "switching from npm to pnpm" looked like a stack migration. Both fixes folded in before commit. Verdict: `ready-to-ship`.
+
+The full `skill-creator` `run_loop.py` optimization (5 iterations × 20 queries × 3 runs each, designed to *rewrite* descriptions for triggering accuracy) was deliberately not run — the point of the pilot is to test the four-part pattern, not have a script replace it with whatever scored best. Analytical audit over automated rewrite was the right tool for the question being asked.
+
+### Notes
+
+- PATCH-level bump (not MINOR): no new feature, no new skill, no contract change. Only triggering semantics tightened.
+- Observation gate before extending to `define` and `whoami`: wait one PATCH cycle, watch for over-fire reports (agent loading `tech-stack-recommendations` when user is mid-debugging). If clean: extend the pattern to `define`, then to `whoami`, as separate PATCH releases so each can be reverted independently if its trigger surface misbehaves.
+- Rollback criterion stated upfront: if over-fire reports surface that can't be resolved by tightening the NOT clause, revert this commit. The assertive style is only worth shipping if anti-triggers still hold.
+- `coding-rules` deliberately excluded from the rollout — its description already uses assertive "Invoke ONLY when..." language; further tightening would risk regressions for no clear gain.
+
 ## [4.1.0] — 2026-05-27
 
 Absorbs eval-harness *methodology* from `GoogleChrome/modern-web-guidance-src` (Apache-2.0) into `skill-evaluator` and `ai-eval-review`, adds a cross-reference registry row in `coding-rules` + `team-composer` (parallel to the 4.0.3 `addyosmani/web-quality-skills` precedent), and ships the repo's first `NOTICE` file consolidating third-party attribution. No content forked, no new skill on the shelf, no trigger changes. Shelf count stays at twenty.

@@ -1,6 +1,6 @@
 ---
 name: tech-stack-recommendations
-description: "Opinionated technology stack guidance for new projects and migrations. Use when starting a new project, picking a runtime (Bun/Deno/Node), choosing frontend frameworks, databases, auth, hosting, styling, mobile, i18n, or AI agents, setting up a monorepo, or migrating between stacks. Not for debugging or maintaining existing code with an established stack."
+description: "Opinionated technology stack guidance for new projects and migrations. **You MUST use this skill whenever the user is starting a new project, picking a runtime (Bun/Deno/Node), choosing a frontend framework, database, auth provider, hosting platform, styling system, mobile stack, i18n library, or AI-agent framework that the project doesn't yet have, setting up a monorepo, or migrating between stacks.** Do not assume a stack decision is too obvious to need this skill — consult it before recommending any specific technology. Does NOT trigger on: debugging existing code, maintaining or extending the current stack's existing components, library-version or package-manager migrations within the same stack, configuring tools already installed, or 'how do I do X in [framework I already use]' questions."
 ---
 
 # Tech Stack Recommendations

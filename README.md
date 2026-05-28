@@ -506,7 +506,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.1.0`.** Absorbs eval-harness methodology (paired gold + negative fixture pattern, opportunity / uplift vocabulary) from `GoogleChrome/modern-web-guidance-src` (Apache-2.0) into `skill-evaluator` (two new reference files) and `ai-eval-review` (Influences callout). Adds a cross-reference registry row for `GoogleChrome/modern-web-guidance` in `coding-rules` + `team-composer`, positioned as the *authoring-side* complement to the 4.0.3 `addyosmani/web-quality-skills` *auditing-side* entry. Ships the repo's first `NOTICE` file consolidating third-party attribution. No content forked, no new skill on the shelf; shelf count stays at twenty. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.1.1`.** Pilots the four-part **assertive-description pattern** (What → bold MUST → anti-rationalization → NOT clause) on a single reference-shaped skill, `tech-stack-recommendations`. Pattern absorbed indirectly from `GoogleChrome/modern-web-guidance-src` during the 4.1.0 workshop. Pre-shipment audit (`skill-creator` description-check, 15-query trigger eval) surfaced two gaps that were folded in before commit. PATCH-level — no behavior change, only trigger semantics tighten. Gated rollout: if this pilot stabilizes, the same pattern extends to `define` and `whoami` as separate PATCH releases. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
