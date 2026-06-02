@@ -94,6 +94,10 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "grill my startup", "grill this idea", "stress-test my pitch", "kill my idea", "pre-mortem my startup", "what would a VC hate about this", "tear apart my deck", "where would this fail", or "is this fundable".
 
+Also installable into any agent via [`npx skills`](https://github.com/vercel-labs/skills): `npx skills add sorawit-w/agent-skills --skill startup-grill`.
+
+> **Standalone install?** `startup-grill` draws its role personas from the `team-composer` skill (`skills/team-composer/references/role-personas.md`). Install `team-composer` alongside it — `npx skills add sorawit-w/agent-skills --skill startup-grill --skill team-composer` — or grab the full set. Without it the grill still runs but falls back to generic personas.
+
 ## Cross-skill integration
 
 | Skill | When it kicks in |

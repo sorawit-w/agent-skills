@@ -86,6 +86,10 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 Once installed, Claude picks up the skill from its `SKILL.md` description. It triggers on phrases like "what does X mean here," "define this word in context," "what does this phrase mean in this sentence," or a request to translate just one term contextually.
 
+Also installable into any agent via [`npx skills`](https://github.com/vercel-labs/skills): `npx skills add sorawit-w/agent-skills --skill define`.
+
+> **Standalone install?** `define` shares its locale/cultural engine with the `i18n` skill (`../i18n/references/locale-knowledge.md`). Install `i18n` alongside it — `npx skills add sorawit-w/agent-skills --skill define --skill i18n` — or grab the full set, so the shared locale data resolves. Without it, `define` still triggers and runs but loses the curated per-locale facts.
+
 ## Cross-skill integration
 
 | Skill | When it kicks in |

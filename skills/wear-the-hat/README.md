@@ -79,6 +79,10 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 /plugin install wear-the-hat@sorawit-w
 ```
 
+Also installable into any agent via [`npx skills`](https://github.com/vercel-labs/skills): `npx skills add sorawit-w/agent-skills --skill wear-the-hat`.
+
+> **Standalone install?** `wear-the-hat` embodies roles defined in the `team-composer` skill (`skills/team-composer/references/role-personas.md`). Install `team-composer` alongside it — `npx skills add sorawit-w/agent-skills --skill wear-the-hat --skill team-composer` — or grab the full set, so the role personas resolve. Without it, role embodiment falls back to generic interpretation.
+
 Once installed, Claude picks the skill up automatically from the `description` in `SKILL.md`'s frontmatter. Invocation triggers on phrases like:
 
 - "act as `@security_specialist` and audit middleware/"

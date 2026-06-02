@@ -5,6 +5,29 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.2] — 2026-06-01
+
+Documents a **second install channel** — [`npx skills`](https://github.com/vercel-labs/skills) — that already worked against this repo with zero changes. Pure documentation: no SKILL.md, manifest schema, or skill-behavior changes.
+
+### Added
+
+- **Root `README.md` `## Install`** — new "Any agent — via `npx skills`" path alongside the Claude Code plugin path. Shows full install, `--list`, and per-skill `--skill <name>` usage. States the fidelity caveat: `npx` copies skill folders (`SKILL.md` + `references/`/`templates/`/`hooks/`) but not Claude Code plugin wiring (slash-command entry points, MCP/hook registration).
+- **`npx skills` badge** in the README header badge row.
+- **Standalone-install notes** in the four cross-skill-coupled skills' READMEs (`define`, `startup-grill`, `sub-agent-coordinator`, `wear-the-hat`) — each names its shared-resource sibling and the `--skill A --skill B` command to install them together.
+
+### Why
+
+`npx skills` (vercel-labs) uses GitHub as its registry and auto-discovers `skills/<name>/SKILL.md` — exactly this repo's flat layout — so `npx skills add sorawit-w/agent-skills` was already functional with no manifest or structural change. The user's assumption ("just a README update") was correct; the work was verification + honest documentation, not enablement.
+
+Verified live before documenting: `--list` reported `Found 20 skills`; a per-skill install of `coding-rules` copied its entire `resources/` tree (references, hooks, scripts, templates, workflows) — so per-skill install is safe for self-contained skills, not just full install.
+
+The one real caveat is **cross-skill resource coupling**, not reference-copying. Four skills reference a sibling's resources by path (`define` → `i18n/references/locale-knowledge.md`; `startup-grill` / `sub-agent-coordinator` / `wear-the-hat` → `team-composer/references/role-personas.md`). A test install of `define` alone confirmed the `../i18n/...` path dangles. These are deliberate shared resources (CLAUDE.md's "don't fork, extend in place" rule), so the fix is documentation, not de-duplication. All four dependencies are *soft*: the skill still triggers and runs, it just loses curated depth. The READMEs now tell standalone-`npx` users to install the sibling alongside.
+
+### Notes
+
+- 16 of 20 skills are fully self-contained and install cleanly on their own via `--skill`.
+- No trigger or behavior change — the existing Claude Code plugin install is unaffected.
+
 ## [4.1.1] — 2026-05-27
 
 Pilot for the **assertive-description pattern** absorbed indirectly from `GoogleChrome/modern-web-guidance-src` in 4.1.0 — applied to a single skill (`tech-stack-recommendations`) as a gated rollout. No behavior change for users; only trigger semantics tighten. If this pilot stabilizes without over-fire complaints, the same four-part pattern will extend to `define` and `whoami` in separate PATCH releases — each gated on its own observation period.

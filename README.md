@@ -11,6 +11,7 @@
 
 <p align="center">
   <a href="#install"><img alt="install" src="https://img.shields.io/badge/install-%2Fplugin%20marketplace%20add%20sorawit--w%2Fagent--skills-1f2937?style=flat-square"></a>
+  <a href="#install"><img alt="npx skills" src="https://img.shields.io/badge/any%20agent-npx%20skills%20add%20sorawit--w%2Fagent--skills-c2410c?style=flat-square"></a>
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-6b7280?style=flat-square"></a>
   <a href="https://docs.claude.com/en/docs/claude-code"><img alt="built for claude code" src="https://img.shields.io/badge/built%20for-Claude%20Code%20%7C%20Cowork-c2410c?style=flat-square"></a>
 </p>
@@ -24,6 +25,8 @@
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
 ## Install
+
+**Claude Code (recommended)** — installs the full plugin: all 20 skills, slash-command entry points, and one-step updates.
 
 ```bash
 /plugin marketplace add sorawit-w/agent-skills
@@ -40,6 +43,18 @@ That's it — every skill below is now on the shelf. Works from both [Claude Cod
 ```
 
 > Claude Code caches the marketplace index locally — new skills and fixes only appear after an explicit refresh.
+
+**Any agent — via [`npx skills`](https://github.com/vercel-labs/skills).** Works with Cursor, opencode, Claude Code, and any tool that reads `SKILL.md` files — no plugin system required.
+
+```bash
+npx skills add sorawit-w/agent-skills                          # all 20 skills
+npx skills add sorawit-w/agent-skills --list                   # browse, don't install
+npx skills add sorawit-w/agent-skills --skill team-composer    # just one
+```
+
+This copies the skill folders — `SKILL.md` plus their `references/`, `templates/`, and `hooks/` — into your agent's skills directory. It does **not** carry the Claude Code plugin wiring: slash-command entry points and MCP/hook *registration* come only via the marketplace path above.
+
+> Most skills are self-contained and install cleanly on their own. A few share resources — `define` uses `i18n`'s locale data; `startup-grill`, `sub-agent-coordinator`, and `wear-the-hat` use `team-composer`'s role personas. Install those alongside their sibling (or just grab the full set) so the shared references resolve.
 
 ---
 
@@ -506,7 +521,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.1.1`.** Pilots the four-part **assertive-description pattern** (What → bold MUST → anti-rationalization → NOT clause) on a single reference-shaped skill, `tech-stack-recommendations`. Pattern absorbed indirectly from `GoogleChrome/modern-web-guidance-src` during the 4.1.0 workshop. Pre-shipment audit (`skill-creator` description-check, 15-query trigger eval) surfaced two gaps that were folded in before commit. PATCH-level — no behavior change, only trigger semantics tighten. Gated rollout: if this pilot stabilizes, the same pattern extends to `define` and `whoami` as separate PATCH releases. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.1.2`.** Documents a second install channel — [`npx skills`](https://github.com/vercel-labs/skills) — that already worked against this repo with zero changes (auto-discovers the `skills/<name>/SKILL.md` layout). The README `## Install` now shows the `npx` path alongside the Claude Code plugin path, with the fidelity caveat (no plugin wiring) and a note on the four shared-resource skills that need their sibling installed alongside. Pure documentation — no SKILL.md, manifest, or behavior change. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

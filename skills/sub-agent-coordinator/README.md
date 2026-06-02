@@ -75,6 +75,10 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "delegate this," "fan out the work," "spawn sub-agents," "coordinate this rollout," or any prompt where the work is clearly parallelizable across more than one file or domain.
 
+Also installable into any agent via [`npx skills`](https://github.com/vercel-labs/skills): `npx skills add sorawit-w/agent-skills --skill sub-agent-coordinator`.
+
+> **Standalone install?** The optional `Role:` tag in briefs draws on the `team-composer` skill's role catalog (`skills/team-composer/references/role-personas.md`). For the full role vocabulary, install `team-composer` alongside it — `npx skills add sorawit-w/agent-skills --skill sub-agent-coordinator --skill team-composer` — or grab the full set. Core coordination works without it.
+
 ## Cross-skill integration
 
 | Skill | Relationship |
