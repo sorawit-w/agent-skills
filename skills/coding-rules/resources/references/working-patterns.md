@@ -45,6 +45,19 @@ You don't need to "check" availability. If the JetBrains MCP tools are connected
 - **Dynamic-heavy code where the indexer can't help.** For heavily-dynamic Python, JS with runtime introspection, or codegen-driven symbols, the IDE's `find_usages` / `go_to_declaration` may miss callers grep would catch. If results look incomplete, follow up with `Grep`.
 - **Sanity check disagreements.** If the MCP tool's output is ambiguous, run grep too and reconcile — but don't *default* to grep just because it's familiar.
 
+**When a standalone code-graph MCP (SocratiCode / CodeGraph) is *also* connected:**
+
+The IDE-vs-grep table above still governs symbol work. Route between the IDE MCP and the code-graph MCP by capability — they don't fully overlap:
+
+| Need | Use |
+|---|---|
+| Symbol resolution, go-to-def, rename, inspections | **IDE-native MCP** — live index, compiler-accurate, no staleness |
+| Call-flow / impact / blast-radius / trace | **code-graph MCP** — the IDE MCP has no equivalent |
+| Cross-project / branch-aware / polyglot graph search | **code-graph MCP** |
+| Plain content/symbol search when no IDE MCP is present | **code-graph MCP** — faster than grep on large repos |
+
+Tie-breaker: both keep an index, but the IDE's is live while the code-graph store is AST-derived and can drift. When they disagree on a symbol, trust the IDE. Full capability-gated rationale: the SocratiCode entry in `references/external-resources.md`.
+
 **Setup and the authoritative tool list:** see the JetBrains MCP entry in `references/external-resources.md`. Tool names above are accurate as of JetBrains 2025.2; the [JetBrains YouTrack MCP-Available-Tools article](https://youtrack.jetbrains.com/articles/SUPPORT-A-2156/MCP-Available-Tools) keeps the authoritative list.
 
 ---

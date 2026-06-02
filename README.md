@@ -521,7 +521,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.1.2`.** Documents a second install channel — [`npx skills`](https://github.com/vercel-labs/skills) — that already worked against this repo with zero changes (auto-discovers the `skills/<name>/SKILL.md` layout). The README `## Install` now shows the `npx` path alongside the Claude Code plugin path, with the fidelity caveat (no plugin wiring) and a note on the four shared-resource skills that need their sibling installed alongside. Pure documentation — no SKILL.md, manifest, or behavior change. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.1.3`.** Registers **SocratiCode** in the `coding-rules` external-resources registry (editor-agnostic code-graph MCP — dependency graphs, impact analysis, cross-project search) and adds a capability-gated routing table to `working-patterns.md` so the skill knows when to prefer an IDE-native MCP vs. a standalone code-graph MCP when both are connected: IDE MCP for symbol resolution / refactor (live index, no staleness), code-graph MCP for impact / call-flow / cross-project. Complementary to the `.ai/knowledge/` concept, not overlapping (indexed **WHAT** vs. authored **WHY**); SocratiCode is index-only so — unlike Graphify / claude-mem — it has no clash with the curated-KB doctrine. Doc-only — no SKILL.md, manifest, or behavior change. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

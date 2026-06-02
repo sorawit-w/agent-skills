@@ -5,6 +5,23 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.3] — 2026-06-01
+
+Registers **SocratiCode** in the `coding-rules` external-resources registry and adds a capability-gated routing table so the skill knows when to use an IDE-native MCP vs. a standalone code-graph MCP when both are connected. Doc-only — no SKILL.md or manifest schema change.
+
+### Added
+
+- **`coding-rules/resources/references/external-resources.md`** — SocratiCode row in the MCP Servers table: editor-agnostic code-graph MCP (polyglot dependency graphs, symbol-level impact analysis, call-flow, cross-project & branch-aware search). Carries the capability-gated JetBrains-MCP relationship, the complementary-to-`.ai/knowledge/` distinction (indexed **WHAT** vs. authored **WHY**), an index-only "no KB-doctrine clash" note, a one-line CodeGraph / Graphify siblings note (Graphify flagged with the claude-mem auto-KB caveat), and AGPL-3.0 + solo-maintainer caveats.
+- **`coding-rules/resources/references/working-patterns.md` § IDE-Aware Tools** — a routing table for when an IDE-native MCP *and* a standalone code-graph MCP are both connected: IDE MCP for symbol resolution / refactor (live index, no staleness); code-graph MCP for impact / call-flow / cross-project / polyglot or when no IDE MCP is present. Tie-breaker: trust the IDE's live index over the AST-derived store on disagreement.
+
+### Why
+
+The registry's "beats grep" semantic-navigation slot previously listed only IDE-bound (JetBrains MCP) and browser-runtime (Chrome DevTools MCP) options — editor-agnostic code-graph MCPs weren't represented. SocratiCode is the cleanest of the three evaluated (SocratiCode, CodeGraph, Graphify): it is index-and-search only, so it has none of the auto-knowledge-authoring clash that Graphify (Leiden auto-clustering) and claude-mem have with the curated, human-confirmed `.ai/knowledge/` doctrine. The routing table converts the IDE-vs-code-graph decision from registry prose (agent judgment) into an observable lookup at the point of use, per the repo's "observable feedback loops over aspirational prose" principle.
+
+### Notes
+
+- CodeGraph and Graphify were evaluated alongside SocratiCode; verdict was **cross-reference, not absorb** — these are runtime infrastructure (tree-sitter / SQLite graph engines), not methodology, and methodology is the only thing `coding-rules` absorbs. They are named as siblings in the SocratiCode entry rather than given full rows.
+
 ## [4.1.2] — 2026-06-01
 
 Documents a **second install channel** — [`npx skills`](https://github.com/vercel-labs/skills) — that already worked against this repo with zero changes. Pure documentation: no SKILL.md, manifest schema, or skill-behavior changes.
