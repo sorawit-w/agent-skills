@@ -20,13 +20,13 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty-one specialized skills in one go.
 - **Who it's for** — anyone on Claude Code or Cowork who wants auto-triggering expertise for a specific job. [**Start here**](#start-here) to find yours.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
 ## Install
 
-**Claude Code (recommended)** — installs the full plugin: all 20 skills, slash-command entry points, and one-step updates.
+**Claude Code (recommended)** — installs the full plugin: all 21 skills, slash-command entry points, and one-step updates.
 
 ```bash
 /plugin marketplace add sorawit-w/agent-skills
@@ -47,14 +47,14 @@ That's it — every skill below is now on the shelf. Works from both [Claude Cod
 **Any agent — via [`npx skills`](https://github.com/vercel-labs/skills).** Works with Cursor, opencode, Claude Code, and any tool that reads `SKILL.md` files — no plugin system required.
 
 ```bash
-npx skills add sorawit-w/agent-skills                          # all 20 skills
+npx skills add sorawit-w/agent-skills                          # all 21 skills
 npx skills add sorawit-w/agent-skills --list                   # browse, don't install
 npx skills add sorawit-w/agent-skills --skill team-composer    # just one
 ```
 
 This copies the skill folders — `SKILL.md` plus their `references/`, `templates/`, and `hooks/` — into your agent's skills directory. It does **not** carry the Claude Code plugin wiring: slash-command entry points and MCP/hook *registration* come only via the marketplace path above.
 
-> Most skills are self-contained and install cleanly on their own. A few share resources — `define` uses `i18n`'s locale data; `startup-grill`, `sub-agent-coordinator`, and `wear-the-hat` use `team-composer`'s role personas. Install those alongside their sibling (or just grab the full set) so the shared references resolve.
+> Most skills are self-contained and install cleanly on their own. A few share resources — `define` uses `i18n`'s locale data; `startup-grill`, `sub-agent-coordinator`, and `wear-the-hat` use `team-composer`'s role personas. `startup-audit` goes further: it has **hard dependencies** on `team-composer`, `validation-canvas`, and `riskiest-assumption-test` and will refuse to run if they're absent — install the full set for it. Install shared skills alongside their sibling (or just grab everything) so the references resolve.
 
 ---
 
@@ -66,8 +66,8 @@ New here? Find your job and jump in. The full catalog is in [The shelf](#the-she
 
 | If you're… | Start with |
 |:---|:---|
-| **Building & validating a startup** — idea to investor-ready | The [startup pipeline](#how-skills-chain): [`brand-workshop`](#brand-workshop) → [`validation-canvas`](#validation-canvas) → [`riskiest-assumption-test`](#riskiest-assumption-test) → [`pitch-deck`](#pitch-deck) → [`startup-grill`](#startup-grill); [`startup-launch-kit`](#startup-launch-kit) orchestrates, [`gtm`](#gtm) gets users |
-| **Reviewing a product or AI product** — design, evals, multi-perspective critique | [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`validation-canvas`](#validation-canvas) |
+| **Building & validating a startup** — idea to investor-ready | The [startup pipeline](#how-skills-chain): [`brand-workshop`](#brand-workshop) → [`validation-canvas`](#validation-canvas) → [`riskiest-assumption-test`](#riskiest-assumption-test) → [`pitch-deck`](#pitch-deck) → [`startup-grill`](#startup-grill); [`startup-launch-kit`](#startup-launch-kit) orchestrates, [`gtm`](#gtm) gets users; [`startup-audit`](#startup-audit) for the *already-built* product |
+| **Auditing a built product** — diligence from a codebase/URL, design, evals, critique | [`startup-audit`](#startup-audit) · [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`validation-canvas`](#validation-canvas) |
 | **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) |
 | **Authoring & auditing skills** — design, build & audit your own skills | [`skill-evaluator`](#skill-evaluator) · [`team-composer`](#team-composer) · [`sub-agent-coordinator`](#sub-agent-coordinator) · see [Building on the shelf](#building-on-the-shelf) |
 | **Calibrating, localizing & visuals** — make the agent yours, ship or read any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n`](#i18n) · [`define`](#define) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
@@ -95,6 +95,7 @@ Each skill links to its own README — the full doc with usage, design notes, an
 | <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="64" align="middle"/> | [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) | Convert canvas Stress Tests into falsifiable hypotheses with success/kill criteria. Ships a 1-page test plan + interactive risk × impact matrix. |
 | <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](skills/pitch-deck/README.md) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. |
 | <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](skills/startup-grill/README.md) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability. |
+| <img src="assets/icons/startup-audit.svg" alt="" width="64" align="middle"/> | [`startup-audit`](skills/startup-audit/README.md) | Read an *already-built* product (codebase + URL), infer the business model into a Lean Canvas, diff it against the claimed story; ship an interactive HTML dossier. |
 | <img src="assets/icons/startup-launch-kit.svg" alt="" width="64" align="middle"/> | [`startup-launch-kit`](skills/startup-launch-kit/README.md) | Opt-in umbrella orchestrator that sequences the five-step startup pipeline (brand → canvas → tests → pitch → grill) with shared state. |
 | <img src="assets/icons/gtm.svg" alt="" width="64" align="middle"/> | [`gtm`](skills/gtm/README.md) **🚧 BETA** | Phased go-to-market for startup products — GTM playbook, multi-channel content, cadenced scheduling, compliance gates, kill switch. |
 | <img src="assets/icons/ai-ux-review.svg" alt="" width="64" align="middle"/> | [`ai-ux-review`](skills/ai-ux-review/README.md) | Design-completeness review for AI products — seven blocks, six cross-block checks, explicit `[Gap — …]` markers. Ships MD + HTML. |
@@ -401,6 +402,24 @@ Each entry below is a quick reference — example prompts and which skills it pa
 
 ---
 
+<a id="startup-audit"></a>
+
+### <img src="assets/icons/startup-audit.svg" alt="" width="48" align="middle"/> &nbsp;[`startup-audit`](skills/startup-audit/README.md)
+
+**Pairs well with.**
+- [`validation-canvas`](skills/validation-canvas/README.md) — infers into its exact Lean Canvas headings; writes a separate `inferred-canvas.md` and offers to seed `validation-canvas.md` (never overwrites a founder's). The founder corrects the machine's read there.
+- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — handoff target for the `unknown` blocks (Problem / UVP / Unfair Advantage) — the beliefs a built artifact can't prove.
+- [`startup-grill`](skills/startup-grill/README.md) — downstream. The dossier + inferred canvas feed grill, which reads the same headings; this skill produces evidence, grill produces the verdict.
+- [`team-composer`](skills/team-composer/README.md) — reads its `role-personas.md` for the audit lenses (read, not invoked).
+- [`ai-ux-review`](skills/ai-ux-review/README.md) / [`ai-eval-review`](skills/ai-eval-review/README.md) — conditional, invoked when AI features are detected; the dossier embeds their output.
+
+**Try it.**
+- "Audit my startup from this repo — what business does the code imply, and does it match my pitch?"
+- "Technical due diligence on this codebase: infer the model, tier it by confidence, show me the build-vs-claim gaps."
+- "Run startup-audit on this repo, then point me at what to test next."
+
+---
+
 <a id="startup-launch-kit"></a>
 
 ### <img src="assets/icons/startup-launch-kit.svg" alt="" width="48" align="middle"/> &nbsp;[`startup-launch-kit`](skills/startup-launch-kit/README.md)
@@ -521,7 +540,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.1.3`.** Registers **SocratiCode** in the `coding-rules` external-resources registry (editor-agnostic code-graph MCP — dependency graphs, impact analysis, cross-project search) and adds a capability-gated routing table to `working-patterns.md` so the skill knows when to prefer an IDE-native MCP vs. a standalone code-graph MCP when both are connected: IDE MCP for symbol resolution / refactor (live index, no staleness), code-graph MCP for impact / call-flow / cross-project. Complementary to the `.ai/knowledge/` concept, not overlapping (indexed **WHAT** vs. authored **WHY**); SocratiCode is index-only so — unlike Graphify / claude-mem — it has no clash with the curated-KB doctrine. Doc-only — no SKILL.md, manifest, or behavior change. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.2.0`.** Adds **`startup-audit`** — a post-build diligence skill that reads an *already-built* product (codebase + optional URL), infers the business model into `validation-canvas`'s nine Lean Canvas blocks (every field tiered observed/inferred/unknown and pinned to a provenance pointer — `provenance == null → cannot claim`), diffs coded reality against the claimed story bidirectionally, runs a single-pass per-lens audit with domain lenses auto-composed from the inferred signals, and ships a single self-contained interactive HTML dossier plus an `inferred-canvas.md` the rest of the chain consumes. It's the mirror image of the pre-build `startup-launch-kit` pipeline — and the repo's first skill to declare hard dependencies and fail loud if they're missing. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

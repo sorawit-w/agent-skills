@@ -5,6 +5,28 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.2.0] — 2026-06-02
+
+Adds **`startup-audit`** — a post-build diligence skill that reads an already-built product (codebase + optional URL), infers the business model into a Lean Canvas, diffs coded reality against the claimed story, and ships a single self-contained interactive HTML dossier. The mirror image of the pre-build `startup-launch-kit` pipeline.
+
+### Added
+
+- **New skill `startup-audit`.** Ingests an existing codebase (JS/TS + Python first-class extractors, generic fallback) and optionally a live URL; infers the business model into `validation-canvas`'s exact nine Lean Canvas blocks; tiers every field **observed / inferred / unknown** with a provenance pointer (`provenance == null → cannot claim`); produces the headline **build-vs-claim diff** (bidirectional); runs a single-pass per-lens audit with domain lenses auto-composed from the inferred signals; and ships `startup-audit.html` (interactive, self-contained), `startup-audit.md`, and `inferred-canvas.md`.
+  - References: `signal-extraction.md`, `inference-mapping.md`, `audit-panel-resolution.md`, `dossier-html-template.md`.
+  - Banners + icon under `assets/startup-audit-{li,x}.svg` and `assets/icons/startup-audit.svg`.
+- **Catalog wiring** — root README shelf row, Skill-details entry, Start-here audience row, TL;DR count; `docs/skill-graph.md` node + edges.
+
+### Why
+
+The repo's startup pipeline (`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill`) is entirely **pre-build belief work** — every step runs from founder ideas. Nothing read an *already-built* product, and `skill-evaluator` audits a `SKILL.md`, not a startup. `startup-audit` closes that gap as a post-build evidence producer.
+
+Design decisions worth recording: (1) **infer into the Lean Canvas rather than invent a framework** — this auto-generates the confidence map (code evidences some blocks, not others) and makes the un-evidenced blocks the `riskiest-assumption-test` handoff, unifying the main flow and the no-data fallback into one mechanism; (2) **provenance is a machine-enforceable gate**, not aspirational prose — overclaiming is structurally prevented; (3) **feed, don't compete** — Stage 2 is a single-pass per-lens findings sweep, not a debate, so the adversarial verdict panel stays `startup-grill`'s job and the dossier feeds it rather than duplicating it; (4) **dependencies are declared explicitly** (a first for the repo) so a per-skill install fails loud rather than mysteriously. The codebase→business-model inference method was dry-run against a real repo before implementation.
+
+### Notes
+
+- New skill = MINOR bump. No breaking changes to existing skills.
+- Install the full plugin — `startup-audit` reads `team-composer` / `validation-canvas` / `riskiest-assumption-test` reference files and refuses (loudly) if they're missing.
+
 ## [4.1.3] — 2026-06-01
 
 Registers **SocratiCode** in the `coding-rules` external-resources registry and adds a capability-gated routing table so the skill knows when to use an IDE-native MCP vs. a standalone code-graph MCP when both are connected. Doc-only — no SKILL.md or manifest schema change.
