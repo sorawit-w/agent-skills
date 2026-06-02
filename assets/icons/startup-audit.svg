@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges" role="img" aria-label="startup-audit icon: magnifying lens over a Lean Canvas grid, inferring the business from the code" style="image-rendering: pixelated;">
+  <title>startup-audit</title>
+
+  <!-- Grid / document being audited (ink frame + dividers) -->
+  <g fill="#1f2937">
+    <!-- outer border -->
+    <rect x="2" y="3" width="22" height="2"/>
+    <rect x="2" y="23" width="22" height="2"/>
+    <rect x="2" y="3" width="2" height="22"/>
+    <rect x="22" y="3" width="2" height="22"/>
+    <!-- vertical divider -->
+    <rect x="12" y="3" width="2" height="22"/>
+    <!-- horizontal divider -->
+    <rect x="2" y="13" width="22" height="2"/>
+  </g>
+  <!-- one cell filled warm accent (the inferred value-prop cell) -->
+  <g fill="#c2410c">
+    <rect x="14" y="5" width="8" height="8"/>
+  </g>
+
+  <!-- Magnifying lens over the grid (warm accent ring) -->
+  <g fill="#c2410c">
+    <rect x="16" y="13" width="8" height="2"/>
+    <rect x="14" y="15" width="2" height="2"/>
+    <rect x="24" y="15" width="2" height="2"/>
+    <rect x="14" y="17" width="2" height="6"/>
+    <rect x="24" y="17" width="2" height="6"/>
+    <rect x="14" y="23" width="2" height="2"/>
+    <rect x="24" y="23" width="2" height="2"/>
+    <rect x="16" y="25" width="8" height="2"/>
+  </g>
+  <!-- lens handle (ink) -->
+  <g fill="#1f2937">
+    <rect x="25" y="26" width="2" height="2"/>
+    <rect x="27" y="28" width="3" height="3"/>
+  </g>
+</svg>

@@ -1,0 +1,241 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="startup-audit — post-build diligence, what the code says the business is" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>startup-audit — post-build diligence, what the code says the business is</title>
+  <desc>Pixel-art banner for the startup-audit Claude Code plugin: title at top-left, a three-panel flow on the right — left card is the INPUT (a codebase folder with code-file glyphs and a URL globe), the center warm-accent card is the signature INFERENCE move (a magnifying lens over the code emitting a Lean Canvas grid), and the right card is the OUTPUT diligence dossier with a tri-color confidence legend (green observed, amber inferred, grey unknown). Pixel arrows connect the panels; a chapter row reads EXTRACT · INFER · DIFF · DOSSIER.</desc>
+
+  <defs>
+    <pattern id="scan-audit-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan-audit-x)"/>
+
+  <!-- =========== TITLE BLOCK (top-left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="64" y="80" font-size="38" font-weight="700" fill="#1f2937" letter-spacing="1">startup-audit</text>
+    <text x="64" y="112" font-size="18" fill="#6b7280">post-build diligence —</text>
+    <text x="64" y="136" font-size="18" fill="#6b7280">what the code says the business is.</text>
+    <text x="64" y="178" font-size="11" fill="#9ca3af" letter-spacing="3">EXTRACT · INFER · DIFF · DOSSIER</text>
+
+    <!-- confidence legend under title -->
+    <g font-size="11" font-weight="700">
+      <rect x="64" y="210" width="14" height="14" fill="#15803d"/>
+      <text x="84" y="222" fill="#15803d">OBSERVED</text>
+      <rect x="64" y="232" width="14" height="14" fill="#fbbf24"/>
+      <text x="84" y="244" fill="#a16207">INFERRED</text>
+      <rect x="64" y="254" width="14" height="14" fill="#9ca3af"/>
+      <text x="84" y="266" fill="#6b7280">UNKNOWN</text>
+    </g>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- LEFT CARD — INPUT: codebase folder + code files + URL globe            -->
+  <!-- card box: x=470 y=96 w=270 h=250                                       -->
+  <!-- ===================================================================== -->
+  <g transform="translate(470, 96)">
+    <rect x="10" y="10" width="270" height="250" fill="#d6c9b3"/>
+    <rect x="0" y="0" width="270" height="250" fill="#fdf7ea"/>
+    <rect x="0" y="0" width="270" height="6" fill="#b79a5c"/>
+    <rect x="0" y="244" width="270" height="6" fill="#b79a5c"/>
+    <rect x="0" y="0" width="6" height="250" fill="#b79a5c"/>
+    <rect x="264" y="0" width="6" height="250" fill="#b79a5c"/>
+
+    <text x="135" y="36" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#6b7280" text-anchor="middle" letter-spacing="3">WHAT'S BUILT</text>
+    <rect x="28" y="46" width="214" height="2" fill="#eadfcf"/>
+
+    <!-- folder -->
+    <g fill="#1f2937">
+      <rect x="48" y="68" width="54" height="9"/>
+      <rect x="48" y="75" width="174" height="92"/>
+    </g>
+    <rect x="54" y="82" width="162" height="80" fill="#fdf7ea"/>
+    <!-- code file 1 -->
+    <rect x="66" y="92" width="52" height="58" fill="#ffffff"/>
+    <rect x="66" y="92" width="52" height="3" fill="#1f2937"/>
+    <rect x="66" y="147" width="52" height="3" fill="#1f2937"/>
+    <rect x="66" y="92" width="3" height="58" fill="#1f2937"/>
+    <rect x="115" y="92" width="3" height="58" fill="#1f2937"/>
+    <g fill="#6b7280">
+      <rect x="74" y="102" width="30" height="3"/>
+      <rect x="74" y="110" width="36" height="3"/>
+      <rect x="74" y="118" width="26" height="3"/>
+      <rect x="74" y="126" width="34" height="3"/>
+      <rect x="74" y="134" width="22" height="3"/>
+    </g>
+    <!-- code file 2 with {} braces -->
+    <rect x="132" y="92" width="52" height="58" fill="#ffffff"/>
+    <rect x="132" y="92" width="52" height="3" fill="#1f2937"/>
+    <rect x="132" y="147" width="52" height="3" fill="#1f2937"/>
+    <rect x="132" y="92" width="3" height="58" fill="#1f2937"/>
+    <rect x="181" y="92" width="3" height="58" fill="#1f2937"/>
+    <g fill="#c2410c">
+      <rect x="144" y="110" width="6" height="3"/>
+      <rect x="141" y="113" width="3" height="3"/>
+      <rect x="141" y="119" width="3" height="3"/>
+      <rect x="144" y="122" width="6" height="3"/>
+      <rect x="168" y="110" width="6" height="3"/>
+      <rect x="174" y="113" width="3" height="3"/>
+      <rect x="174" y="119" width="3" height="3"/>
+      <rect x="168" y="122" width="6" height="3"/>
+    </g>
+
+    <!-- URL globe + bar -->
+    <g transform="translate(48, 186)">
+      <g fill="#1f2937">
+        <rect x="7" y="0" width="14" height="3"/>
+        <rect x="3" y="3" width="22" height="3"/>
+        <rect x="0" y="6" width="28" height="3"/>
+        <rect x="0" y="9" width="28" height="3"/>
+        <rect x="0" y="12" width="28" height="3"/>
+        <rect x="3" y="15" width="22" height="3"/>
+        <rect x="7" y="18" width="14" height="3"/>
+      </g>
+      <g fill="#fdf7ea">
+        <rect x="12" y="3" width="4" height="15"/>
+        <rect x="0" y="9" width="28" height="3"/>
+      </g>
+      <rect x="40" y="1" width="134" height="18" fill="#ffffff"/>
+      <rect x="40" y="1" width="134" height="2" fill="#9ca3af"/>
+      <rect x="40" y="17" width="134" height="2" fill="#9ca3af"/>
+      <rect x="40" y="1" width="2" height="18" fill="#9ca3af"/>
+      <rect x="172" y="1" width="2" height="18" fill="#9ca3af"/>
+      <text x="49" y="14" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280">https://app.live</text>
+    </g>
+  </g>
+
+  <!-- arrow LEFT -> CENTER (entering, grey) -->
+  <g transform="translate(752, 206)" fill="#6b7280">
+    <rect x="0" y="9" width="50" height="6"/>
+    <rect x="44" y="3" width="6" height="6"/>
+    <rect x="50" y="9" width="6" height="6"/>
+    <rect x="44" y="15" width="6" height="6"/>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- CENTER CARD — INFERENCE (signature move, warm accent)                  -->
+  <!-- card: x=820 y=80 w=270 h=290                                           -->
+  <!-- ===================================================================== -->
+  <g transform="translate(820, 80)">
+    <rect x="10" y="10" width="270" height="290" fill="#a8350a"/>
+    <rect x="0" y="0" width="270" height="290" fill="#c2410c"/>
+    <rect x="0" y="0" width="270" height="6" fill="#1f2937"/>
+    <rect x="0" y="284" width="270" height="6" fill="#1f2937"/>
+    <rect x="0" y="0" width="6" height="290" fill="#1f2937"/>
+    <rect x="264" y="0" width="6" height="290" fill="#1f2937"/>
+
+    <text x="135" y="38" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#fdf7ea" text-anchor="middle" letter-spacing="3">INFER</text>
+    <text x="135" y="56" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#fde68a" text-anchor="middle" letter-spacing="1">from what's built</text>
+
+    <!-- Lean Canvas grid -->
+    <g transform="translate(30, 76)">
+      <rect x="0" y="0" width="210" height="138" fill="#fdf7ea"/>
+      <g fill="#1f2937">
+        <rect x="0" y="0" width="210" height="3"/>
+        <rect x="0" y="135" width="210" height="3"/>
+        <rect x="0" y="0" width="3" height="138"/>
+        <rect x="207" y="0" width="3" height="138"/>
+        <rect x="69" y="0" width="3" height="138"/>
+        <rect x="138" y="0" width="3" height="138"/>
+        <rect x="0" y="67" width="210" height="3"/>
+      </g>
+      <!-- tri-confidence cells -->
+      <rect x="6" y="6" width="57" height="55" fill="#dcfce7"/>
+      <rect x="6" y="6" width="57" height="6" fill="#15803d"/>
+      <rect x="75" y="6" width="57" height="55" fill="#fde68a"/>
+      <rect x="75" y="6" width="57" height="6" fill="#fbbf24"/>
+      <rect x="144" y="6" width="57" height="55" fill="#e5e7eb"/>
+      <rect x="144" y="6" width="57" height="6" fill="#9ca3af"/>
+      <g fill="#6b7280">
+        <rect x="10" y="80" width="50" height="3"/>
+        <rect x="10" y="88" width="40" height="3"/>
+        <rect x="79" y="80" width="50" height="3"/>
+        <rect x="79" y="88" width="44" height="3"/>
+        <rect x="148" y="80" width="50" height="3"/>
+        <rect x="148" y="88" width="36" height="3"/>
+      </g>
+    </g>
+
+    <!-- magnifying lens (signature transform) -->
+    <g transform="translate(138, 118)">
+      <g fill="#1f2937">
+        <rect x="14" y="0" width="28" height="4"/>
+        <rect x="7" y="4" width="7" height="4"/>
+        <rect x="42" y="4" width="7" height="4"/>
+        <rect x="3" y="8" width="4" height="7"/>
+        <rect x="49" y="8" width="4" height="7"/>
+        <rect x="0" y="15" width="4" height="20"/>
+        <rect x="52" y="15" width="4" height="20"/>
+        <rect x="3" y="35" width="4" height="7"/>
+        <rect x="49" y="35" width="4" height="7"/>
+        <rect x="7" y="42" width="7" height="4"/>
+        <rect x="42" y="42" width="7" height="4"/>
+        <rect x="14" y="46" width="28" height="4"/>
+      </g>
+      <rect x="11" y="8" width="34" height="34" fill="#fdf7ea" fill-opacity="0.78"/>
+      <rect x="18" y="13" width="9" height="4" fill="#ffffff"/>
+      <rect x="18" y="17" width="4" height="7" fill="#ffffff"/>
+      <g fill="#1f2937">
+        <rect x="46" y="46" width="8" height="8"/>
+        <rect x="52" y="52" width="8" height="8"/>
+        <rect x="58" y="58" width="10" height="10"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- arrow CENTER -> RIGHT (exiting, warm accent) -->
+  <g transform="translate(1102, 206)" fill="#c2410c">
+    <rect x="0" y="9" width="50" height="6"/>
+    <rect x="44" y="3" width="6" height="6"/>
+    <rect x="50" y="9" width="6" height="6"/>
+    <rect x="44" y="15" width="6" height="6"/>
+  </g>
+
+  <!-- ===================================================================== -->
+  <!-- RIGHT CARD — OUTPUT: diligence dossier                                 -->
+  <!-- card: x=1170 y=96 w=270 h=250                                          -->
+  <!-- ===================================================================== -->
+  <g transform="translate(1170, 96)">
+    <rect x="10" y="10" width="270" height="250" fill="#d6c9b3"/>
+    <rect x="0" y="0" width="270" height="250" fill="#ffffff"/>
+    <rect x="0" y="0" width="270" height="6" fill="#1f2937"/>
+    <rect x="0" y="244" width="270" height="6" fill="#1f2937"/>
+    <rect x="0" y="0" width="6" height="250" fill="#1f2937"/>
+    <rect x="264" y="0" width="6" height="250" fill="#1f2937"/>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="26" y="40" font-size="18" font-weight="700" fill="#1f2937" letter-spacing="2">DOSSIER</text>
+      <text x="26" y="58" font-size="10" fill="#9ca3af" letter-spacing="1">confidence-tiered</text>
+    </g>
+    <rect x="26" y="68" width="218" height="2" fill="#eadfcf"/>
+
+    <!-- finding rows, each tier-coded -->
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <!-- observed -->
+      <rect x="26" y="84" width="10" height="10" fill="#15803d"/>
+      <rect x="44" y="86" width="180" height="4" fill="#1f2937"/>
+      <rect x="44" y="94" width="140" height="3" fill="#c9b58a"/>
+      <!-- inferred -->
+      <rect x="26" y="110" width="10" height="10" fill="#fbbf24"/>
+      <rect x="44" y="112" width="196" height="4" fill="#1f2937"/>
+      <rect x="44" y="120" width="160" height="3" fill="#c9b58a"/>
+      <!-- inferred -->
+      <rect x="26" y="136" width="10" height="10" fill="#fbbf24"/>
+      <rect x="44" y="138" width="170" height="4" fill="#1f2937"/>
+      <rect x="44" y="146" width="128" height="3" fill="#c9b58a"/>
+      <!-- unknown -->
+      <rect x="26" y="162" width="10" height="10" fill="#9ca3af"/>
+      <rect x="44" y="164" width="150" height="4" fill="#1f2937"/>
+      <rect x="44" y="172" width="110" height="3" fill="#c9b58a"/>
+      <!-- observed -->
+      <rect x="26" y="188" width="10" height="10" fill="#15803d"/>
+      <rect x="44" y="190" width="186" height="4" fill="#1f2937"/>
+      <rect x="44" y="198" width="146" height="3" fill="#c9b58a"/>
+    </g>
+
+    <!-- verdict strip -->
+    <g transform="translate(26, 214)">
+      <rect x="0" y="0" width="218" height="20" fill="#1f2937"/>
+      <text x="109" y="14" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#fde68a" text-anchor="middle" letter-spacing="2">GROUNDED · TIERED · DIFFED</text>
+    </g>
+  </g>
+</svg>

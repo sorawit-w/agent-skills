@@ -1,19 +1,20 @@
 {
   "name": "agent-skills",
-  "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-launch-kit (umbrella orchestrator), gtm (BETA — go-to-market for startup products), ai-ux-review (design-completeness review for AI products), ai-eval-review (eval-design-completeness review — sibling to ai-ux-review), i18n (translation files + cultural rewriting), define (contextual definition/translation of a word or phrase in context), skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, handshake (collaboration calibration ritual), wear-the-hat (single-role embodiment for solo work), coding-rules (opinionated agentic-coding rule loader — read first), pixel-art (BETA — hi-density pixel-art studio with built-in design system, model-agnostic prompts, and capability-gated image-gen routing), and whoami (a portable collaboration profile that calibrates how the agent works with each user).",
-  "version": "4.1.3",
+  "description": "A shelf of Claude Code skills: brand-workshop, validation-canvas, riskiest-assumption-test, pitch-deck, startup-grill, startup-audit (post-build diligence readout from a codebase/URL), startup-launch-kit (umbrella orchestrator), gtm (BETA — go-to-market for startup products), ai-ux-review (design-completeness review for AI products), ai-eval-review (eval-design-completeness review — sibling to ai-ux-review), i18n (translation files + cultural rewriting), define (contextual definition/translation of a word or phrase in context), skill-evaluator, sub-agent-coordinator, team-composer, tech-stack-recommendations, handshake (collaboration calibration ritual), wear-the-hat (single-role embodiment for solo work), coding-rules (opinionated agentic-coding rule loader — read first), pixel-art (BETA — hi-density pixel-art studio with built-in design system, model-agnostic prompts, and capability-gated image-gen routing), and whoami (a portable collaboration profile that calibrates how the agent works with each user).",
+  "version": "4.2.0",
   "author": {
     "name": "sorawit-w",
     "url": "https://github.com/sorawit-w"
   },
   "license": "MIT",
-  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory", "gtm", "go-to-market", "marketing", "coding-rules", "guardrails", "agentic-coding", "role", "persona", "lens", "ai-ux", "human-ai", "design-review", "hallucination", "responsible-ai", "eval", "evaluation", "mlops", "fairness", "drift", "ground-truth", "pixel-art", "image-generation", "design-system", "VT323", "hi-density", "title-card", "capability-gated", "whoami", "personalization", "user-profile"],
+  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory", "gtm", "go-to-market", "marketing", "coding-rules", "guardrails", "agentic-coding", "role", "persona", "lens", "ai-ux", "human-ai", "design-review", "hallucination", "responsible-ai", "eval", "evaluation", "mlops", "fairness", "drift", "ground-truth", "pixel-art", "image-generation", "design-system", "VT323", "hi-density", "title-card", "capability-gated", "whoami", "personalization", "user-profile", "startup-audit", "diligence", "codebase-analysis", "due-diligence", "build-vs-claim"],
   "skills": [
     "./skills/brand-workshop",
     "./skills/validation-canvas",
     "./skills/riskiest-assumption-test",
     "./skills/pitch-deck",
     "./skills/startup-grill",
+    "./skills/startup-audit",
     "./skills/startup-launch-kit",
     "./skills/gtm",
     "./skills/ai-ux-review",
