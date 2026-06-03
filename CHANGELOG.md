@@ -5,6 +5,62 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.0] — 2026-06-02
+
+Evolves **`startup-audit`** from a diligence-only readout into a **fast,
+code-grounded triage verdict**. Pointed at a codebase and/or live URL, it now
+opens its dossier with an opinionated **Continue / Pivot / Kill** call + a
+Red/Amber/Green band, with every verdict citing specific findings, framed as
+opinion (not advice), and routing consequential Kill/Pivot calls to `startup-grill`
+for the deep adversarial confirmation. The original pure-diligence behavior is
+preserved behind a diligence-only flag.
+
+### Changed
+
+- **`startup-audit` default behavior changed (not additive).** Default mode now
+  emits a verdict; the prior no-verdict diligence dossier is now opt-in via a
+  diligence-only flag ("evidence only / no verdict"). The "diligence, never a
+  verdict" identity is reversed — the boundary with `startup-grill` is redrawn by
+  **input + rigor**: `startup-audit` = built artifact (codebase/URL) + fast triage
+  verdict; `startup-grill` = belief artifacts (canvas/deck) + deep adversarial
+  verdict.
+- **New reference `startup-audit/references/verdict-and-scoring.md`** — maps
+  `startup-grill`'s labels → Continue/Pivot/Kill (aligned, not forked; self-
+  contained), defines the R/A/G heat band (a coarse band *under* the headline, not
+  the recommendation), the confidence-downgrade rule (a Kill on majority-`unknown`
+  evidence self-flags low confidence), the mandatory opinion-not-advice disclaimer,
+  the banned-term list ("valuation"/"guarantee"/"will succeed/fail"), and the
+  verdict-cites-a-finding rule.
+- **Dossier** now leads with a Verdict section (`dossier-html-template.md`);
+  omitted in diligence-only mode.
+- **`startup-grill` frontmatter** gains a carve-out: a verdict on a BUILT product
+  from a codebase/URL → `startup-audit`, even when the user says "grill"/"kill".
+  `startup-grill` reads belief artifacts only. (Body + `kill-report.md` contract
+  unchanged.)
+- Catalog: `startup-audit` shelf line, Skill-details, `docs/skill-graph.md` node +
+  edges updated for the verdict identity.
+
+### Why
+
+`startup-audit` shipped (4.2.0) deliberately refusing a verdict — "feed, don't
+compete" with `startup-grill`. First real use showed the boundary was an
+over-separation: the actual job is "point at my built thing → should I keep
+going?" The fix gives the code/URL explorer a verdict, but keeps it honest — it's
+a **fast triage first-read**, not grill's adversarial pass, so Kill/Pivot route to
+grill to confirm, and the verdict is explicitly opinion with a confidence tier that
+inherits the evidence quality. A `skill-evaluator` pass caught a trigger-collision
+(a codebase+verdict request mis-routing to `startup-grill`); both frontmatters were
+sharpened until the input+rigor boundary routes correctly in both directions.
+
+### Notes
+
+- MINOR bump despite the default-behavior change: the skill is one day old (~zero
+  consumers) and the prior behavior survives via the diligence-only flag.
+- The verdict is a fast triage opinion — not investment/legal/financial advice, not
+  a valuation, and not a substitute for the deeper `startup-grill` confirmation or
+  qualified human advisors. The exact disclaimer wording is engineering's frame,
+  not reviewed legal counsel.
+
 ## [4.2.0] — 2026-06-02
 
 Adds **`startup-audit`** — a post-build diligence skill that reads an already-built product (codebase + optional URL), infers the business model into a Lean Canvas, diffs coded reality against the claimed story, and ships a single self-contained interactive HTML dossier. The mirror image of the pre-build `startup-launch-kit` pipeline.

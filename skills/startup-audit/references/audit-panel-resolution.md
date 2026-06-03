@@ -108,18 +108,22 @@ redirect, re-trim, don't re-debate):
 **Signals (inferred):** audience=b2c, is_data_intensive=true, AI-feature=true, ...
 ```
 
-Then **each lens emits exactly one findings block** — single pass, no debate:
+Then **each lens emits exactly one findings block** — single pass, no debate.
+Each finding carries a `finding-id` and a **severity×fixability** tag
+(`lethal|material|minor` × `fixable|unfixable`) per
+`references/verdict-and-scoring.md` — these tags are what the verdict synthesis
+derives Continue/Pivot/Kill from:
 
 ```markdown
 #### @<lens> — <one-line focus>
-- **Finding [Fn]:** <observation> — grounded in <canvas field / diff row Fk / signal:provenance>.
-- **Finding [Fn+1]:** ...
+- **Finding [Fn]** (material · fixable): <observation> — grounded in <canvas field / diff row Fk / signal:provenance>.
+- **Finding [Fn+1]** (lethal · unfixable): ...
 ```
 
 **Hard rules for the findings pass:**
 
 - Every finding cites the canvas field, diff row, or signal provenance it rests
-  on. A finding with no anchor is rhetoric — drop it.
+  on. A finding with no anchor is rhetoric — drop it (untagged, not Kill-fuel).
 - Each lens emits **one** block. No back-and-forth, no rebuttal round — that's
   grill's distinct job downstream.
 - The AI-safety lens, when present, references the `ai-ux-review` /

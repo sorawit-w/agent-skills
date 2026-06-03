@@ -15,7 +15,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`riskiest-assumption-test`](../skills/riskiest-assumption-test/README.md) | Falsifiable hypotheses, risk×impact matrix, test plan | Founders de-risking before funding | stable | Startup |
 | [`pitch-deck`](../skills/pitch-deck/README.md) | Investor-ready self-contained HTML deck (Reveal.js) | Founders fundraising | stable | Startup |
 | [`startup-grill`](../skills/startup-grill/README.md) | Adversarial panel → kill report (Investable / Pivot / Pass) | Founders (pre-mortem), advisors | stable | Startup |
-| [`startup-audit`](../skills/startup-audit/README.md) | Post-build diligence: codebase/URL → inferred Lean Canvas (observed/inferred/unknown) + build-vs-claim diff → interactive HTML dossier | Founders auditing their build, investors doing technical DD | stable | Startup · Review |
+| [`startup-audit`](../skills/startup-audit/README.md) | Built-artifact triage: codebase/URL → inferred Lean Canvas + build-vs-claim diff → **fast Continue/Pivot/Kill verdict + R/A/G band** (opinion, not advice); diligence-only flag for no-verdict | Founders triaging their build, investors doing technical DD | stable | Startup · Review |
 | [`startup-launch-kit`](../skills/startup-launch-kit/README.md) | Opt-in orchestrator sequencing the 5-step pipeline | Founders wanting end-to-end | stable | Startup |
 | [`gtm`](../skills/gtm/README.md) | Phased go-to-market playbook + content + scheduling | Founders post-pipeline getting users | 🚧 BETA | Startup |
 | [`team-composer`](../skills/team-composer/README.md) | Multi-role 3-round discussion → conclusion + plan | PMs, engineers, anyone planning | stable | Review · Author |
@@ -52,7 +52,7 @@ graph LR
   %% Post-build diligence (mirror of the pre-build pipeline)
   SA[startup-audit] -.->|offers to seed canvas| VC
   SA -.->|recommends tests for unknowns| RAT
-  SA -.->|via seeded canvas → verdict| SG
+  SA -.->|Kill/Pivot → confirm (deep verdict)| SG
   SA -.->|reads personas| TC
   SA -.->|AI features| AUX
 
@@ -76,4 +76,4 @@ graph LR
 
 - **Startup pipeline** — `brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill` → `gtm` 🚧. Sequential by default, gated (some handoffs refuse without upstream output), loop-back is first-class. `startup-launch-kit` is an opt-in orchestrator over the five core steps. See the root README's [How skills chain](../README.md#how-skills-chain) for the gate weights and artifact-compounding detail.
 - **Delegation pipeline** — `team-composer` → `sub-agent-coordinator`. Discussion concludes, then deliverables fan out through the coordinator's briefing patterns.
-- **Post-build diligence** — `startup-audit` is the mirror image of the pre-build pipeline: it reads an *already-built* product (codebase/URL) and infers the model into the same Lean Canvas the pipeline uses. The bridge into the pipeline is its **offer to seed `validation-canvas.md`** (grill/pitch-deck read that file, not the audit's own `inferred-canvas.md`); for `riskiest-assumption-test` the handoff is a recommendation to test the `unknown` blocks. Evidence producer, not idea validator.
+- **Built-artifact triage** — `startup-audit` is the post-build sibling of `startup-grill`, split by **input + rigor**: audit reads a *built product* (codebase/URL) and gives a *fast* Continue/Pivot/Kill triage verdict; grill reads *belief artifacts* (canvas/deck) and gives the *deep* 3-round adversarial verdict. A Kill/Pivot from audit routes to grill to confirm (seed `validation-canvas.md` first — grill/pitch-deck read that file, not audit's `inferred-canvas.md`). For `riskiest-assumption-test` the handoff is a recommendation to test the `unknown` blocks. The verdict is opinion, not advice.

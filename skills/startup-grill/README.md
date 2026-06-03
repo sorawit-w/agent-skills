@@ -102,6 +102,7 @@ Also installable into any agent via [`npx skills`](https://github.com/vercel-lab
 
 | Skill | When it kicks in |
 |---|---|
+| [`startup-audit`](../startup-audit/README.md) | **Sibling verdict skill, split by input + rigor.** `startup-audit` grills a *built product* from a codebase/URL and gives a *fast triage* Continue/Pivot/Kill; this skill grills *belief artifacts* (canvas/deck) and gives the *deep adversarial* verdict. When `startup-audit` returns a Kill/Pivot it points here to confirm — seed `validation-canvas.md` from its inferred canvas, then run this skill. |
 | [`team-composer`](../team-composer/README.md) | Instead of this skill when the user wants brainstorming, planning, or constructive review. After this skill when the kill report's `Suggested attack` lines need a multi-role workshop. |
 | [`validation-canvas`](../validation-canvas/README.md) | Upstream input. If `validation-canvas.md` exists, this skill reads its Stress Tests + un-relieved Pains as direct grilling ammunition. After a `Pivot signal` verdict to rebuild the canvas. |
 | [`riskiest-assumption-test`](../riskiest-assumption-test/README.md) | Upstream input. If `rat/assumption-test-plan.md` exists, this skill reads top-3 hypotheses + results. The iteration-evidence check yellow-flags pristine pipelines. After a verdict that names untested assumptions. |

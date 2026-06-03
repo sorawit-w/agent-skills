@@ -1,0 +1,154 @@
+# Verdict & Scoring
+
+How Stage 2 turns tagged findings into a **fast, code-grounded triage verdict**.
+This is a single-pass derivation, **not** an adversarial round — the verdict is an
+honest *first read*. Consequential calls (Kill / Pivot) route to `startup-grill`
+for the deep confirmation.
+
+This file is **self-contained**: it is *aligned* to `startup-grill`'s verdict
+vocabulary but does not read grill at runtime, so grill's absence never blocks the
+verdict. Canonical source for the aligned labels + severity definitions:
+`../startup-grill/references/kill-report.md` §1–4 (cited, not imported).
+
+---
+
+## 1. The headline carries the recommendation
+
+The **Continue / Pivot / Kill** headline is the answer the user reads. The R/A/G
+band (below) is coarse heat only — **never let the band stand in for the
+recommendation.** "Continue-with-conditions" (keep going, fix things) and "Pivot"
+(change direction) are *opposite founder actions*; they must never collapse into
+one another or into "Amber."
+
+### Label map (aligned to `startup-grill` `kill-report.md` §1)
+
+| `startup-audit` headline | grill label (aligned) | Meaning |
+|---|---|---|
+| **Continue** | Investable as-is | No lethal weakness surfaced from the code; keep building. |
+| **Continue-with-conditions** | Investable with conditions | Lethal-but-fixable issue(s); keep going, fix the named items first. |
+| **Pivot** | Pivot signal | Lethal-and-unfixable in the current framing, but a code-grounded nearby framing exists. Pivot directions = the cited Options. |
+| **Kill** | Pass | Lethal-and-unfixable with no credible nearby framing the code supports. |
+
+The phrasing Continue/Pivot/Kill lives **only** in `startup-audit`. `startup-grill`
+keeps Investable/Pass for its own `kill-report.md` contract — do not rename grill's
+labels.
+
+---
+
+## 2. Severity × fixability (the inputs)
+
+Each finding from the per-lens pass is tagged on two axes (definitions aligned to
+grill's `kill-report.md` §2–4):
+
+- **Severity** — `lethal` (would kill the company if unaddressed) | `material`
+  (hurts but doesn't kill) | `minor`.
+- **Fixability** — `fixable` (addressable inside ~a quarter without changing the
+  idea) | `unfixable` (can't address without abandoning/fundamentally pivoting).
+
+A finding has no severity/fixability unless it cites evidence (`finding-id` →
+canvas field / diff row / signal). No anchor → it is rhetoric and is dropped, not
+tagged.
+
+---
+
+## 3. Deriving the headline
+
+```
+if   no lethal finding                         -> Continue
+elif all lethal findings are fixable           -> Continue-with-conditions
+elif a code-grounded nearby framing exists      -> Pivot   (Options = pivot dirs)
+else (lethal-unfixable, no nearby framing)      -> Kill
+```
+
+"A code-grounded nearby framing exists" means the inferred canvas / diff actually
+supports an alternative (e.g. *built metering but charge flat → usage-based
+pricing*). A pivot suggestion with no code anchor is not a Pivot verdict — it's a
+`Continue-with-conditions` at most.
+
+---
+
+## 4. R/A/G heat band (coarse, layered UNDER the headline)
+
+| Band | When | Reads as |
+|---|---|---|
+| 🟢 **Green** | Continue | healthy |
+| 🟡 **Amber** | Continue-with-conditions OR Pivot | attention needed (the headline says *which*) |
+| 🔴 **Red** | Kill | stop signal |
+
+The band is a glance-level color, not the recommendation. Amber spans two opposite
+headlines on purpose — the headline disambiguates, the band does not. (User chose
+R/A/G over a 0–100 number to avoid false precision; **do not emit a numeric
+score.**)
+
+---
+
+## 5. Confidence-downgrade rule (the band inherits the evidence quality)
+
+A verdict is only as good as the signals under it. Attach an **evidence-confidence**
+label derived from the tier mix of the findings the verdict rests on:
+
+- **high** — the lethal/material findings are mostly `observed`.
+- **medium** — mostly `inferred`.
+- **low** — the verdict rests on majority-`unknown` blocks.
+
+**Hard rule:** a **Kill / Red (or Pivot) whose driving findings are majority
+`unknown` must self-flag low confidence** and soften to a recommendation to gather
+signal — e.g. *"Kill (low confidence — the codebase is too thin to support a
+confident call; run `riskiest-assumption-test` on the unknowns and/or supply the
+live URL before acting)."* A thin repo can produce a band, but never a confident
+death sentence.
+
+---
+
+## 6. Triage framing + grill handoff (mandatory for Kill / Pivot)
+
+Every verdict states it is a **fast code-grounded first read**. For **Kill or
+Pivot**, append verbatim-equivalent:
+
+> *This is a fast, code-grounded triage call — a first read, not an adversarial
+> verdict. Before acting on a Kill or Pivot, run `startup-grill` for the deep
+> 3-round confirmation (seed `validation-canvas.md` from the inferred canvas first
+> so grill can consume it).*
+
+---
+
+## 7. Disclaimer block (render verbatim with every verdict)
+
+> **⚠️ Opinion, not advice.** This verdict is an opinionated, code-grounded
+> assessment generated by an AI tool — **not** investment, legal, financial, or
+> professional advice, and not a valuation. It carries no warranty and creates no
+> fiduciary duty. It is a fast first read based only on what the codebase/URL
+> revealed; signals may be incomplete or misread. **The founder decides.** For a
+> consequential call, seek qualified human advisors and run the deeper
+> `startup-grill` confirmation.
+
+In **diligence-only mode** no verdict renders, so this block is omitted (the
+dossier carries the standard evidence framing instead).
+
+---
+
+## 8. Banned terms (refuse to ship if any appear in a verdict)
+
+Never state or imply certainty about outcomes or worth:
+
+- **"valuation"**, a dollar valuation, or a market-size number
+- **"guarantee"**, "guaranteed", "certain to"
+- **"will succeed" / "will fail" / "will hit $X"** — forward outcome claims
+
+Frame every judgment as opinion: *"in our opinion"*, *"the code suggests"*, *"this
+reads as"*. The verdict is a directional call on what's built, not a prophecy.
+
+---
+
+## 9. Verdict-cites-a-finding rule
+
+The headline reason **must cite at least one `finding-id`** (mirror grill's
+`kill-report.md` §1 cite requirement). A verdict that aggregates generically
+("several gaps remain") without naming a finding is uncheckable — refuse it.
+
+Example (passes):
+
+> **Pivot (Amber · medium confidence).** The code builds a B2C single-user product
+> (F1: no tenancy tables) while the site sells "decision infrastructure for
+> organizations" (F1 diff) — the strongest nearby framing the code supports is
+> B2C-first (see Options O1). *Fast triage — run `startup-grill` to confirm.*
