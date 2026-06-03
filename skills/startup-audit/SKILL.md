@@ -1,57 +1,73 @@
 ---
 name: startup-audit
 description: >
-  Post-build diligence readout of an ALREADY-BUILT product. Ingests an existing
-  codebase (primary) and/or a live URL (secondary), infers the business model
-  from what's actually built, contrasts it against the claimed story, and ships a
-  single self-contained interactive HTML dossier. The mirror image of
-  `startup-launch-kit`: that validates an idea before building; this audits a
-  product after building.
-  Use this skill when the user says: "audit my startup", "audit this codebase as
-  a business", "review my built product", "technical due diligence on this repo",
-  "what does my codebase say about my business", "diligence this product",
-  "investor diligence on a built product", "does the code match the pitch", or
-  points the skill at a repo / URL and asks what it reveals about the business.
-  This skill is DILIGENCE, never "validation" — it reports evidence with
-  confidence tiers (observed / inferred / unknown), and every claim carries a
-  provenance pointer back to the file or signal that produced it.
-  Do NOT use this skill for: pre-build idea validation (use `startup-launch-kit`
-  / `validation-canvas` — there's no product to read yet); an adversarial verdict
-  of Investable / Pivot / Pass (use `startup-grill` — this skill produces
-  evidence, not a verdict); deep UI/UX review of an AI feature (use
-  `ai-ux-review`); auditing a SKILL.md's rule adherence (use `skill-evaluator`).
-  Hard boundary: `startup-launch-kit` is pre-build belief work; `startup-grill`
-  is the adversarial verdict; `skill-evaluator` audits skill text; this skill
-  reads a built product and asks "what business does this code imply, and does it
-  match the claim?"
+  Fast, code-grounded triage of an ALREADY-BUILT product. Ingests an existing
+  codebase (primary) and/or a live URL (secondary), infers the business model from
+  what's actually built, diffs it against the claimed story, and ships a single
+  self-contained interactive HTML dossier that opens with an opinionated
+  Continue / Pivot / Kill verdict and a Red/Amber/Green band.
+  The verdict is a FAST first read — for a consequential call (especially Kill or
+  Pivot) the dossier points you to `startup-grill` for the deep adversarial
+  confirmation.
+  Use this skill when the user says: "audit my startup", "grill my built product",
+  "grill my startup from the code / the repo / the URL", "should I continue, pivot,
+  or kill this", "score my startup from the codebase", "is my product worth
+  continuing", "technical due diligence on this repo", "does the code match the
+  pitch", or points the skill at a repo / URL and asks whether to keep going.
+  Every claim is tiered by confidence (observed / inferred / unknown) and pinned to
+  a provenance pointer; every verdict is explicitly OPINION, not investment, legal,
+  or financial advice. A pure-diligence dossier (no verdict) is available on request.
+  Do NOT use this skill for: pre-build idea validation (use `startup-launch-kit` /
+  `validation-canvas` — there's no product to read yet); a DEEP ADVERSARIAL verdict
+  on belief artifacts (a Lean Canvas or pitch deck), or to CONFIRM a consequential
+  Kill/Pivot (use `startup-grill` — its 3-round probe is the heavier verdict); deep
+  UI/UX review of an AI feature (use `ai-ux-review`); auditing a SKILL.md's rule
+  adherence (use `skill-evaluator`).
+  Boundary by INPUT and RIGOR: this skill reads a BUILT artifact (codebase/URL) and
+  gives a FAST triage verdict; `startup-grill` reads BELIEF artifacts (canvas/deck)
+  and gives a DEEP adversarial verdict. `startup-launch-kit` is pre-build; this is
+  post-build. The INPUT decides, not the verb: if the user points at a codebase or
+  URL and asks for a verdict, a score, or "should I continue / pivot / kill" — that
+  is THIS skill, EVEN IF they say "grill" or "kill". Those words alone do NOT route
+  to `startup-grill`; `startup-grill` only applies when the input is a belief
+  artifact (canvas / deck / one-pager), not a codebase.
 instructions: |
-  Load this skill when the user wants to assess an EXISTING, already-built product
-  from its codebase and/or live URL — a post-build diligence readout, not pre-build
-  idea validation. Triggers: "audit my startup/product", "diligence this repo",
-  "does the code match the pitch", "technical due diligence", pointing at a repo.
+  Load this skill when the user wants a fast, code-grounded read on an EXISTING,
+  already-built product — pointing at a codebase and/or live URL and asking what
+  it's worth or whether to continue, pivot, or kill. Triggers: "grill my startup
+  from the code", "should I continue/pivot/kill", "score my product from the repo/
+  URL", "audit my built product", "does the code match the pitch".
   Do NOT load when: the product doesn't exist yet (pre-build → `startup-launch-kit`);
-  the user wants a verdict (`startup-grill`); UI/UX-only review (`ai-ux-review`);
-  a SKILL.md audit (`skill-evaluator`).
+  the user wants a DEEP adversarial verdict on a canvas/deck or to confirm a
+  Kill/Pivot (`startup-grill`); UI/UX-only review (`ai-ux-review`); a SKILL.md
+  audit (`skill-evaluator`).
 tags:
   - startup
   - diligence
   - codebase-analysis
   - business-model
-  - due-diligence
+  - verdict
+  - triage
 ---
 
 # Startup Audit
 
-Read an already-built product and report the business it implies. Ingest the
-codebase (and optionally a live URL), infer the business model **into a Lean
-Canvas**, contrast coded reality against the claimed story, and ship a
-self-contained interactive HTML dossier.
+Read an already-built product and give a fast, code-grounded **Continue / Pivot /
+Kill** triage call. Ingest the codebase (and optionally a live URL), infer the
+business model **into a Lean Canvas**, diff coded reality against the claimed
+story, and ship a self-contained interactive HTML dossier that opens with the
+verdict.
 
-This skill is **diligence, not validation.** It does not decide whether the idea
-is good (that's pre-build work) and does not pronounce a verdict (that's
-`startup-grill`). It reports **what is built, what is claimed, and the gap** —
-every claim tiered by confidence and pinned to a provenance pointer. Overclaiming
-is the cardinal sin; the provenance contract is the guardrail.
+This skill is a **fast triage, not a deep adversarial verdict.** Its Stage 2 is a
+single-pass per-lens findings sweep — no rebuttal round — so the verdict is an
+honest *first read*, not a grilled one. For a consequential call (especially **Kill
+or Pivot**), the dossier points to `startup-grill` for the adversarial
+confirmation. Every claim is tiered by confidence and pinned to a provenance
+pointer; overclaiming is the cardinal sin. **The verdict is opinion, not advice** —
+the disclaimer ships with every run.
+
+A pure-diligence dossier (evidence only, **no verdict**) is available on request —
+see Phase 0 mode detection.
 
 ---
 
@@ -62,18 +78,21 @@ Hand off — do not run the audit — if any of these apply:
 - **The product doesn't exist yet** (idea / pre-build) → use `startup-launch-kit`
   or `validation-canvas`. There is no codebase to read; this skill would have
   nothing to infer from.
-- **The user wants a verdict** (Investable / Pivot / Pass) or adversarial
-  pressure → use `startup-grill`. This skill produces *evidence*; grill produces
-  the *verdict*. Feed this skill's dossier into grill.
+- **The user wants a DEEP adversarial verdict** on belief artifacts (a Lean Canvas
+  or pitch deck), or wants to **confirm a consequential Kill/Pivot** this skill
+  flagged → use `startup-grill`. This skill gives the *fast code-grounded triage*;
+  grill gives the heavier *3-round adversarial verdict* on text artifacts. They are
+  siblings split by **input** (built code/URL vs belief artifacts) and **rigor**
+  (triage vs adversarial).
 - **The user wants deep UI/UX review** of an AI feature → use `ai-ux-review`
   (and `ai-eval-review` for the eval layer). This skill *delegates* the UI/UX
   layer to those skills rather than rebuilding it.
 - **The user wants to audit a SKILL.md's rule adherence** → use `skill-evaluator`.
   Different "audit" — that one reads skill text, this one reads a product.
 
-**Bright-line rule:** if there is no built artifact to read (no repo, no live
-URL), this is not the skill. If the user wants a judgment call rather than
-evidence, that's `startup-grill`.
+**Bright-line rule:** if there is no built artifact to read (no repo, no live URL),
+this is not the skill — pre-build work routes to `startup-launch-kit`. If the user
+wants the *deep adversarial* verdict on a canvas/deck, that's `startup-grill`.
 
 **Redirect discipline.** When the STOP gate fires and you route to
 `startup-grill` or `team-composer`, describe the *kind of lens* needed — don't
@@ -87,19 +106,21 @@ to those skills.
 
 | Request | Skill |
 |---|---|
-| "Audit my built product / repo as a business" | `startup-audit` (this skill) |
-| "Does my code match my pitch?" | `startup-audit` |
-| "Technical due diligence on this product" | `startup-audit` |
-| "Validate my idea / build my lean canvas" | `validation-canvas` / `startup-launch-kit` |
-| "Is this investable? Give me a verdict" | `startup-grill` |
+| "Grill my startup from the codebase / repo / URL" | `startup-audit` (this skill) |
+| "Should I continue, pivot, or kill — from the code?" | `startup-audit` |
+| "Score my built product / does my code match my pitch?" | `startup-audit` |
+| "Grill my pitch deck / Lean Canvas (deep adversarial)" | `startup-grill` |
+| "Confirm the Kill/Pivot this audit flagged" | `startup-grill` |
+| "Validate my idea / build my lean canvas (pre-build)" | `validation-canvas` / `startup-launch-kit` |
 | "Review my AI feature's UX" | `ai-ux-review` |
 | "Audit my eval setup" | `ai-eval-review` |
 | "Audit whether my SKILL.md rules land" | `skill-evaluator` |
 
-If the request mixes auditing with verdict-seeking ("audit my product *and* tell
-me if it's fundable"), run the audit first to ship the dossier, then route the
-verdict to `startup-grill` with the dossier as input. Don't emit a verdict here —
-that collapses the diligence/verdict boundary.
+The split with `startup-grill` is **input + rigor**, not evidence-vs-verdict:
+this skill reads a **built artifact** and gives a **fast triage** verdict; grill
+reads **belief artifacts** and gives a **deep adversarial** verdict. When this
+skill returns a Kill or Pivot, it recommends grill for the heavier confirmation —
+that's a handoff, not a boundary the user has to manage.
 
 ---
 
@@ -109,34 +130,34 @@ Every run produces files inside the resolved audit root (see Phase 0 for path
 resolution; default `docs/audit/` for solo runs, `docs/startup-kit/audit/` when
 invoked under the kit root):
 
-1. **`startup-audit.html`** — the single self-contained interactive dossier
-   (zero network deps; expandable provenance; confidence-tier filter;
-   print-clean). Format + template: `references/dossier-html-template.md`.
-2. **`startup-audit.md`** — canonical, editable Markdown mirror of the dossier
-   content (the dossier HTML is rendered from this).
-3. **`inferred-canvas.md`** — the inferred Lean Canvas using
-   `validation-canvas`'s exact headings, every field carrying a provenance
-   pointer + confidence tier.
+1. **`startup-audit.html`** — the single self-contained interactive dossier. In
+   **default (verdict) mode** it opens with the **Continue / Pivot / Kill** verdict
+   + Red/Amber/Green band + the disclaimer, then the evidence. In **diligence-only
+   mode** the verdict section is omitted (evidence only). Format + template:
+   `references/dossier-html-template.md`.
+2. **`startup-audit.md`** — canonical, editable Markdown mirror of the dossier.
+3. **`inferred-canvas.md`** — the inferred Lean Canvas using `validation-canvas`'s
+   exact headings, every field carrying a provenance pointer + confidence tier.
 
-**The handoff bridge (read carefully — this is where the chain actually
-connects).** Downstream skills do **not** read `inferred-canvas.md`: `startup-grill`
-and `pitch-deck` grep `<canvas-root>/validation-canvas.md`, and
-`riskiest-assumption-test` reads its own `assumption-test-plan.md` — neither reads
-this skill's audit-root files. So `inferred-canvas.md` is this skill's **evidence
-artifact**, not an auto-consumed pipeline input. The bridge is the **offer-to-seed**
-step (Phase 3): if no founder `validation-canvas.md` exists, this skill offers to
-seed one from the inferred canvas — and *that seeded file* is what grill/pitch-deck
-consume. For `riskiest-assumption-test`, the handoff is a **pointer**, not a file:
-the dossier's handoff section recommends running RAT on the `unknown` blocks. State
-this honestly in the dossier — do not imply an automatic feed that isn't wired.
+**The handoff bridge (read carefully — this is where the chain connects).**
+Downstream skills do **not** read `inferred-canvas.md`: `startup-grill` and
+`pitch-deck` grep `<canvas-root>/validation-canvas.md`, and
+`riskiest-assumption-test` reads its own `assumption-test-plan.md`. So
+`inferred-canvas.md` is this skill's **evidence artifact**, not an auto-consumed
+pipeline input. The bridge is the **offer-to-seed** step (Phase 2): if no founder
+`validation-canvas.md` exists, this skill offers to seed one — and *that seeded
+file* is what grill consumes when the user takes a Kill/Pivot for confirmation. For
+`riskiest-assumption-test`, the handoff is a **pointer**: the dossier recommends
+running RAT on the `unknown` blocks. State this honestly — do not imply an
+automatic feed that isn't wired.
 
 Existing files from prior sessions are appended-to / re-rendered, never silently
 overwritten. **Never overwrite a founder-authored `validation-canvas.md`** — see
-Phase 3.
+Phase 2.
 
 ---
 
-## Phase 0: Path resolution + dependency pre-flight
+## Phase 0: Path resolution + mode + dependency pre-flight
 
 **Resolve the audit root** once, in this precedence order:
 
@@ -149,6 +170,12 @@ Phase 3.
 
 Sibling reads (`<canvas-root>/`, `<rat-root>/`) resolve as siblings of the audit
 root, matching `startup-grill`'s chain.
+
+**Mode detection.** Default mode emits the verdict. Switch to **diligence-only
+mode** (evidence dossier, no verdict / no score / no disclaimer-as-opinion) when
+the user asks for it — phrases like "diligence only", "evidence only", "no
+verdict", "just the dossier / no opinion", or an explicit `mode=diligence` arg.
+Record which mode ran; the dossier states it.
 
 **Dependency pre-flight (fail loud).** Before doing any work, check that the
 **required** sibling skills are present (see Dependencies). If a required
@@ -217,8 +244,8 @@ Apply `references/inference-mapping.md`:
    - **Hard gate: `provenance == null` → the field cannot render as a claim.**
      No provenance pointer, no claim. Unknowns stay unknown; they are not filled
      by reasoning about the market.
-3. **Build-vs-claim diff (the headline).** Contrast the inferred (coded) model
-   against the *claimed* story (README / marketing copy / URL). Run it
+3. **Build-vs-claim diff (the headline evidence).** Contrast the inferred (coded)
+   model against the *claimed* story (README / marketing copy / URL). Run it
    **bidirectionally**: claimed-but-not-built AND built-but-not-claimed. Parse
    README roadmap markers ("Future", "Coming soon", "Roadmap") — a feature the
    tagline sells but the roadmap marks "Future" is a diff finding.
@@ -230,7 +257,8 @@ are exactly the beliefs a built artifact can't prove).
 
 **Thin / greenfield repos are a valid result, not a failure.** A sparse repo
 (prototype, few deps, no schema) legitimately yields a mostly-`unknown` canvas.
-Still run the audit — report the unknowns honestly and route them to
+Still run the audit — report the unknowns honestly, **downgrade the verdict's
+confidence accordingly** (see Phase 3), and route the unknowns to
 `riskiest-assumption-test`. Do NOT pad the canvas with market reasoning to make it
 look complete; that trips the provenance gate. Yield scales with repo maturity.
 
@@ -241,14 +269,16 @@ correct the machine's inference) — but only on explicit confirmation.
 
 ---
 
-## Phase 3: Audit panel (Stage 2 — per-lens findings pass)
+## Phase 3: Audit panel + verdict synthesis (Stage 2)
 
-**Goal:** apply domain-aware lenses to the inferred canvas + diff. This is a
-**single-pass per-lens findings pass, NOT a multi-round debate.** The adversarial
-opening/rebuttal/synthesis panel is `startup-grill`'s job — do not rebuild it
-here. (Feed, don't compete.)
+**Goal:** apply domain-aware lenses to the inferred canvas + diff, then synthesize
+a **fast triage verdict**. This is a **single-pass per-lens findings pass, NOT a
+multi-round debate.** The adversarial opening/rebuttal/synthesis panel is
+`startup-grill`'s job — do not rebuild it here. The verdict here is an honest
+*first read* derived from that single pass; consequential calls route to grill for
+confirmation.
 
-Apply `references/audit-panel-resolution.md`:
+Apply `references/audit-panel-resolution.md`, then `references/verdict-and-scoring.md`:
 
 1. **Pre-fill team-composer Phase 1 signals from the inference** (not from a
    brief): tenancy model → `audience`; compliance configs / regulated entities →
@@ -262,17 +292,31 @@ Apply `references/audit-panel-resolution.md`:
    read its catalog, mirror `startup-grill`'s read-then-select pattern.
 3. **Each composed lens emits exactly one findings block** against the inferred
    canvas + diff — focused, evidence-anchored, no debate. Every finding cites the
-   canvas field / diff row / signal it rests on.
+   canvas field / diff row / signal it rests on, and is tagged with a
+   `finding-id` (F1, F2, …) and a severity×fixability per `verdict-and-scoring.md`.
 4. **AI features detected** → add the AI-safety lens AND route to the conditional
    skills `ai-ux-review` (human-AI design + integrity surface) and
    `ai-eval-review` (eval rigor). If they run, embed/link their
    `docs/ai-ux/*.html` outputs into the dossier rather than re-assessing AI
    quality here.
-5. **Advice tier — "Options the evidence suggests."** Generate grounded options
-   (including pivot directions). **Hard gate: every option must cite the finding
-   that motivates it — no citation, the option is suppressed.** Do **not** emit an
-   Investable / Pivot / Pass verdict; that is delegated to `startup-grill` via the
-   dossier handoff.
+5. **Options the evidence suggests.** Generate grounded options (including pivot
+   directions). **Hard gate: every option must cite the finding that motivates it
+   — no citation, the option is suppressed.** When the verdict is Pivot, these
+   options ARE the code-grounded pivot directions.
+6. **Verdict synthesis (default mode only; skipped in diligence-only mode).**
+   Per `references/verdict-and-scoring.md`, derive from the tagged findings:
+   - a **headline verdict — Continue / Continue-with-conditions / Pivot / Kill**
+     (the headline carries the recommendation; never let the band stand in for it);
+   - a **Red / Amber / Green** heat band (coarse, layered under the headline);
+   - an **evidence-confidence** label — a Kill/Red resting on majority-`unknown`
+     signals **downgrades its own confidence and says so**;
+   - a **headline reason** that **cites specific `finding-id`s** (no verdict
+     without a finding pointer);
+   - for **Kill or Pivot**, the explicit handoff: *"This is a fast code-grounded
+     read — run `startup-grill` for the deep adversarial confirmation."*
+   The verdict is **opinion** — render the disclaimer block from
+   `verdict-and-scoring.md` with it, and never use a banned term
+   ("valuation" / "guarantee" / "will succeed/fail").
 
 ---
 
@@ -283,16 +327,19 @@ Apply `references/dossier-html-template.md`. Write the canonical
 
 Dossier sections, in order:
 
-1. **Executive summary** — what this product is, in evidence terms.
-2. **Build-vs-claim diff** — two columns (coded reality vs claimed story); the
+1. **Verdict** *(default mode only — omitted in diligence-only mode)* —
+   Continue/Pivot/Kill headline + R/A/G band + evidence-confidence + headline
+   reason citing findings + (for Kill/Pivot) the grill-confirm handoff + the
+   **disclaimer block**.
+2. **Executive summary** — what this product is, in evidence terms.
+3. **Build-vs-claim diff** — two columns (coded reality vs claimed story); the
    headline finding sits at the top.
-3. **Inferred Lean Canvas** — nine blocks, each color-coded by confidence tier,
+4. **Inferred Lean Canvas** — nine blocks, each color-coded by confidence tier,
    each field with an expandable provenance pointer.
-4. **Audit findings** — per-lens findings blocks.
-5. **Options the evidence suggests** — each option linked to its source finding.
-6. **Handoff & next steps** — where to take the `inferred-canvas.md` next
-   (`riskiest-assumption-test` for the unknown blocks; `startup-grill` for the
-   verdict), and which optional skills ran (`ai-ux-review` / `ai-eval-review`).
+5. **Audit findings** — per-lens findings blocks (with finding-ids + severity).
+6. **Options the evidence suggests** — each option linked to its source finding.
+7. **Handoff & next steps** — `startup-grill` to confirm a Kill/Pivot;
+   `riskiest-assumption-test` for the `unknown` blocks; which optional skills ran.
 
 The HTML is **self-contained** (inline CSS + vanilla JS, zero network deps,
 base64 any images, `@media print` clean) with interactivity: expandable
@@ -305,10 +352,15 @@ Run the verifier checklist before presenting:
 - [ ] `inferred-canvas.md` headings match `validation-canvas`'s spec byte-for-byte
 - [ ] Build-vs-claim diff ran bidirectionally
 - [ ] Every "Options" entry cites a finding (uncited options suppressed)
-- [ ] No Investable / Pivot / Pass verdict emitted (delegated to `startup-grill`)
+- [ ] **Default mode:** verdict is one of Continue / Continue-with-conditions /
+      Pivot / Kill, cites ≥1 finding-id, carries an R/A/G band + evidence-confidence,
+      and ships the disclaimer; Kill/Pivot includes the grill-confirm handoff
+- [ ] **Default mode:** a Kill/Red on majority-`unknown` evidence self-flags low confidence
+- [ ] No banned term ("valuation" / "guarantee" / "will succeed/fail") appears
+- [ ] **Diligence-only mode:** no verdict / band / score rendered
 - [ ] No secret values written anywhere in the artifacts
 - [ ] HTML opens offline (no network requests) and prints clean
-- [ ] The lane that ran (SocratiCode vs glob/grep; URL fetched vs skipped) is stated
+- [ ] The lane + mode that ran is stated
 
 If any box fails, fix before presenting. Then present the files.
 
@@ -321,10 +373,17 @@ The skill must refuse to ship if any of these are true:
 - **A canvas field claims something with no provenance pointer** — provenance or
   unknown, never a bare assertion.
 - **An "Options" recommendation cites no finding** — that's blind advice; suppress it.
-- **An Investable / Pivot / Pass verdict appears** — that's `startup-grill`'s job.
+- **(Default mode) a verdict appears with no `finding-id` citation** — a verdict
+  without support is rhetoric; cite the findings that drive it.
+- **(Default mode) the R/A/G band is presented AS the recommendation** instead of
+  the Continue/Pivot/Kill headline — the headline carries the call; the band is
+  coarse heat only.
+- **(Default mode) a Kill/Red on majority-`unknown` evidence that does NOT
+  self-flag low confidence** — the verdict must inherit the evidence quality.
+- **(Default mode) the disclaimer block is missing, or a banned term appears**
+  ("valuation" / "guarantee" / "will succeed/fail") — the verdict is opinion, and
+  must say so.
 - **A secret value (not just a key name) appears** in any artifact.
-- **The word "validation"** is used to describe this skill's output as if demand
-  were proven — it reads a build, it does not prove a market.
 - **The build-vs-claim diff ran only one direction** — under-marketed built
   capability is as much a finding as over-claimed unbuilt capability.
 
@@ -344,7 +403,10 @@ a per-skill install fails loud rather than mysteriously.
 
 **Conditional skills (invoked on signal; skip + note if absent):**
 
-- `startup-grill` — downstream verdict; the dossier feeds it.
+- `startup-grill` — recommended for the deep adversarial confirmation of a Kill/
+  Pivot. The verdict vocabulary in `references/verdict-and-scoring.md` is aligned
+  to grill's `kill-report.md` labels but is **self-contained** (no runtime read),
+  so grill's absence never blocks this skill's verdict.
 - `ai-ux-review` + `ai-eval-review` — invoked only when AI features are detected.
 
 **Runtime capabilities (capability-gate WITH fallback; absence is normal):**
@@ -362,21 +424,22 @@ a per-skill install fails loud rather than mysteriously.
 
 | Skill | When to use |
 |---|---|
-| `validation-canvas` | Phase 2 infers into its exact Lean Canvas headings. This skill writes a separate `inferred-canvas.md` and offers to seed `validation-canvas.md` if none exists — never overwrites a founder's. **The seeded `validation-canvas.md` is the bridge** that makes the inferred model consumable downstream; without it, `inferred-canvas.md` stays a standalone evidence artifact. The founder then corrects the inference in `validation-canvas`. |
-| `riskiest-assumption-test` | **Pointer handoff, not a file handoff.** RAT reads its own `assumption-test-plan.md` (which this skill does not write). The dossier *recommends* running RAT on the `unknown` blocks (Problem / UVP / Unfair Advantage) — the beliefs a built artifact can't prove. |
-| `startup-grill` | Downstream verdict. Grill greps `<canvas-root>/validation-canvas.md` — so it consumes this skill's work **only once the inferred canvas is seeded there** (or the user points grill at `inferred-canvas.md` directly). This skill produces evidence; grill produces the Investable / Pivot / Pass verdict. |
-| `pitch-deck` | Consumes the seeded `validation-canvas.md` / build-vs-claim diff when the founder builds or re-cuts a deck grounded in coded reality (same seed-bridge as grill). |
-| `team-composer` | Phase 3 reads its `references/role-personas.md` persona catalog for the audit lenses (read, not invoked). Use team-composer directly for collaborative, constructive multi-role review (this skill is one-pass diligence). |
+| `startup-grill` | **Sibling verdict skill, split by input + rigor.** This skill gives a fast code/URL-grounded triage verdict; grill gives the deep 3-round adversarial verdict on belief artifacts. When this skill returns **Kill or Pivot**, it recommends grill to confirm. The verdict vocabulary is aligned (`verdict-and-scoring.md` maps grill's labels → Continue/Pivot/Kill) but not forked. |
+| `validation-canvas` | Phase 2 infers into its exact Lean Canvas headings. This skill writes a separate `inferred-canvas.md` and offers to seed `validation-canvas.md` if none exists — never overwrites a founder's. **The seeded `validation-canvas.md` is the bridge** that lets grill confirm a Kill/Pivot. The founder then corrects the inference in `validation-canvas`. |
+| `riskiest-assumption-test` | **Pointer handoff.** RAT reads its own `assumption-test-plan.md` (which this skill does not write). The dossier *recommends* running RAT on the `unknown` blocks (Problem / UVP / Unfair Advantage) — the beliefs a built artifact can't prove. |
+| `pitch-deck` | Consumes the seeded `validation-canvas.md` / build-vs-claim diff when the founder re-cuts a deck grounded in coded reality. |
+| `team-composer` | Phase 3 reads its `references/role-personas.md` persona catalog for the audit lenses (read, not invoked). Use team-composer directly for collaborative, constructive multi-role review (this skill is one-pass triage). |
 | `ai-ux-review` / `ai-eval-review` | Conditional — invoked when AI features are detected. This skill delegates AI UX + eval assessment to them and embeds their HTML rather than rebuilding it. |
-| `skill-evaluator` | To audit this skill's own rules end-to-end (the provenance gate, the no-verdict rule, the diff-bidirectionality rule). |
+| `skill-evaluator` | To audit this skill's own rules end-to-end (the provenance gate, the verdict-cites-a-finding rule, the diff-bidirectionality rule, the diligence-only flag). |
 
-**Principle:** this skill owns *post-build diligence* — reading a built product
-and reporting the business it implies, with provenance-tiered confidence. It does
-not validate ideas, does not pronounce verdicts, does not rebuild UI/UX review.
-It is the upstream evidence producer that feeds the rest of the chain.
+**Principle:** this skill owns the **fast, code-grounded triage verdict** — read a
+built product (codebase/URL) and call it Continue / Pivot / Kill, with every claim
+provenance-tiered and the verdict framed as opinion. It is the light front-of-line
+read; `startup-grill` is the heavy adversarial confirmation.
 
 **Graceful degradation:** with SocratiCode absent it falls back to glob/grep;
 with no URL it runs codebase-only; with a thin / greenfield repo it honestly
-reports mostly `unknown` and routes to `validation-canvas` + `riskiest-assumption-test`
-(yield scales with repo maturity — a thin repo can't support inference, and the
-confidence tiers say so rather than hallucinating).
+reports mostly `unknown`, downgrades the verdict's confidence, and routes to
+`validation-canvas` + `riskiest-assumption-test` (yield scales with repo maturity —
+a thin repo can't support a confident verdict, and the band says so rather than
+faking certainty).

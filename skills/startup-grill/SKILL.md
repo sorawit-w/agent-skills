@@ -15,11 +15,20 @@ description: >
   one-pager / validation-canvas.md / RAT plan / pitch deck and asks for adversarial
   review.
   Use this skill — NOT `team-composer` — whenever the user wants an *adversarial*
-  review with a *verdict* (Investable / Pivot / Pass), even if they use the word
-  "review". `team-composer`'s "review" mode is collaborative and constructive;
-  this skill's mode is probing and decisive. If the user says "review my startup
-  adversarially", "review with VC eyes", "stress-test my business model", or
-  similar, use this skill, not team-composer.
+  review with a *verdict* on an IDEA / PITCH / CANVAS (belief artifacts), even if
+  they use the word "review". `team-composer`'s "review" mode is collaborative and
+  constructive; this skill's mode is probing and decisive. If the user says "review
+  my startup adversarially", "review with VC eyes", "stress-test my business
+  model", or similar, use this skill, not team-composer.
+  CRITICAL CARVE-OUT — `startup-audit`, not this skill, when the input is a BUILT
+  product: if the user points at a CODEBASE or a live URL (e.g. "grill my startup
+  from the repo / the codebase / the URL", "should I continue/pivot/kill — from the
+  code") → that is `startup-audit`, EVEN THOUGH they say "grill" or "kill" and want
+  a verdict. This skill reads BELIEF artifacts only (a Lean Canvas, pitch deck, or
+  one-pager) — it does NOT read a codebase. The boundary is input + rigor:
+  built-artifact + fast verdict = `startup-audit`; belief-artifact + deep
+  adversarial verdict = this skill. `startup-audit` routes Kill/Pivot calls here to
+  confirm.
   Default to one-shot mode (panel probes → forced steelman defense → verdict →
   kill report). After the report ships, offer interactive defense mode where the
   founder can defend a specific weakness with new evidence and the relevant
@@ -31,6 +40,11 @@ description: >
   positioning workshops, canvas construction, assumption test design, or
   pitch-deck building — those route to `team-composer`, `validation-canvas`,
   `riskiest-assumption-test`, and `pitch-deck` respectively.
+  Boundary with `startup-audit` (input + rigor): grilling a BUILT product *from a
+  codebase or live URL* → `startup-audit` (fast code-grounded triage verdict). Use
+  THIS skill for the DEEP adversarial verdict on belief artifacts (a Lean Canvas or
+  pitch deck), or to CONFIRM a consequential Kill/Pivot that `startup-audit`
+  flagged. This skill reads belief artifacts, not a codebase.
 ---
 
 # Startup Grill

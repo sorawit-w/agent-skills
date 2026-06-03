@@ -25,14 +25,21 @@ template below.
 |---|---|
 | `{{PRODUCT_NAME}}` | Inferred product name |
 | `{{GENERATED_DATE}}` | ISO date (passed in — do not call Date() at author time) |
+| `{{MODE_NOTE}}` | "Verdict mode" or "Diligence-only mode (no verdict)" |
 | `{{LANE_NOTE}}` | Which lane ran: SocratiCode vs glob/grep; URL fetched vs skipped |
+| `{{VERDICT_BLOCK}}` | **Default mode:** the full verdict `<section>` (see verdict block shape). **Diligence-only mode:** empty string. |
 | `{{EXEC_SUMMARY}}` | Executive summary paragraph |
 | `{{DIFF_ROWS}}` | Build-vs-claim diff `<tr>`s (see row shape) |
 | `{{CANVAS_BLOCKS}}` | Nine canvas-block `<article>`s (see block shape) |
-| `{{FINDINGS}}` | Per-lens findings blocks |
+| `{{FINDINGS}}` | Per-lens findings blocks (with finding-ids + severity) |
 | `{{OPTIONS}}` | "Options the evidence suggests", each citing a finding-id |
-| `{{HANDOFF}}` | Handoff + next steps (RAT for unknowns, grill for verdict) |
+| `{{HANDOFF}}` | Handoff + next steps (grill to confirm Kill/Pivot, RAT for unknowns) |
 | `{{PANEL_TABLE}}` | The resolved audit-panel table + any cap-trim footnote |
+
+In **diligence-only mode**, `{{VERDICT_BLOCK}}` is the empty string and the header
+subtitle reads "Diligence-only — evidence, no verdict." In **default mode** it
+carries the verdict section and the subtitle reads "Fast code-grounded triage —
+opinion, not advice."
 
 **Confidence-tier CSS classes (the distinctive motif):** `.tier-observed` (green),
 `.tier-inferred` (amber), `.tier-unknown` (muted). A canvas field's class is set
@@ -96,6 +103,24 @@ from its derived tier; the filter toggles visibility by class.
     background: var(--bg); padding: .3rem; border-radius: 3px; margin-top: .3rem; }
   .prov-detail.open { display: block; }
 
+  /* verdict banner (default mode only) */
+  .verdict { border-width: 2px; }
+  .verdict h2 { border-left-color: currentColor; }
+  .verdict .headline { font-size: 1.5rem; font-weight: bold; margin: 0 0 .4rem; }
+  .verdict .band { display: inline-block; font-size: .7rem; font-weight: bold;
+    text-transform: uppercase; letter-spacing: .08em; padding: .15rem .5rem;
+    border-radius: 4px; margin-right: .5rem; }
+  .verdict.v-green { color: var(--observed); }
+  .verdict.v-green  .band { background: var(--observed-bg); color: var(--observed); }
+  .verdict.v-amber { color: var(--inferred); }
+  .verdict.v-amber  .band { background: var(--inferred-bg); color: var(--inferred); }
+  .verdict.v-red   { color: #b91c1c; }
+  .verdict.v-red    .band { background: #fecaca; color: #b91c1c; }
+  .verdict .reason { color: var(--ink); font-size: .9rem; margin: .5rem 0; }
+  .verdict .confidence { font-size: .75rem; color: var(--muted); }
+  .disclaimer { font-size: .75rem; color: var(--ink); background: #fef3c7;
+    border: 1px solid #fbbf24; border-radius: 4px; padding: .6rem; margin-top: .75rem; }
+
   /* diff table */
   table { width: 100%; border-collapse: collapse; font-size: .8rem; }
   th, td { border: 1px solid var(--line); padding: .5rem; text-align: left; vertical-align: top; }
@@ -119,10 +144,12 @@ from its derived tier; the filter toggles visibility by class.
 <div class="wrap">
   <header>
     <h1>Startup Audit — {{PRODUCT_NAME}}</h1>
-    <div class="sub">Post-build diligence readout · generated {{GENERATED_DATE}}</div>
-    <div class="sub">Evidence, not validation. Every claim is tiered and pinned to provenance. No verdict — see handoff.</div>
+    <div class="sub">Code-grounded triage · generated {{GENERATED_DATE}} · {{MODE_NOTE}}</div>
+    <div class="sub">Every claim is tiered and pinned to provenance. The verdict is opinion, not advice.</div>
     <div class="lane">{{LANE_NOTE}}</div>
   </header>
+
+  {{VERDICT_BLOCK}}
 
   <section><h2><span class="collapse-toggle"></span>Executive summary</h2>
     <div class="body">{{EXEC_SUMMARY}}</div></section>
@@ -186,6 +213,35 @@ from its derived tier; the filter toggles visibility by class.
 </html>
 ```
 
+### Verdict block shape (`{{VERDICT_BLOCK}}` — default mode only)
+
+The wrapper class sets the color: `v-green` (Continue), `v-amber`
+(Continue-with-conditions OR Pivot), `v-red` (Kill). The **headline** carries the
+recommendation; the **band** is coarse heat. Derivation + rules:
+`references/verdict-and-scoring.md`.
+
+```html
+<section class="verdict v-amber">
+  <h2><span class="collapse-toggle"></span>Verdict</h2>
+  <div class="body">
+    <span class="band">Amber</span>
+    <span class="headline">Pivot</span>
+    <div class="confidence">Fast code-grounded triage · evidence confidence: medium</div>
+    <p class="reason">In our opinion: the code builds a B2C single-user product
+      (F1: no tenancy tables) while the site sells "decision infrastructure for
+      organizations" — the strongest nearby framing the code supports is B2C-first
+      (see Options O1). <strong>Run <code>startup-grill</code> to confirm this Pivot.</strong></p>
+    <div class="disclaimer">⚠️ <strong>Opinion, not advice.</strong> An AI-generated,
+      code-grounded assessment — not investment, legal, financial, or professional
+      advice, and not a valuation. No warranty; the founder decides. For a
+      consequential call, seek qualified human advisors.</div>
+  </div>
+</section>
+```
+
+A **Kill/Red on majority-`unknown`** evidence must add a low-confidence self-flag
+to the `.confidence` line and soften the reason (per `verdict-and-scoring.md` §5).
+
 ### Diff row shape (`{{DIFF_ROWS}}`)
 
 ```html
@@ -211,9 +267,12 @@ An `unknown` block uses `class="block tier-unknown"`, the `unknown` chip, and it
 
 ## Markdown mirror (`startup-audit.md`)
 
-The canonical `.md` carries the same content in plain Markdown (headings:
-`## Executive summary`, `## Build vs. claim`, `## Inferred Lean Canvas`,
-`## Audit findings`, `## Options the evidence suggests`, `## Handoff & next steps`)
-so the dossier is diffable / editable and the HTML is a render of it. The
+The canonical `.md` carries the same content in plain Markdown (headings, in
+order: `## Verdict` *(default mode only)*, `## Executive summary`,
+`## Build vs. claim`, `## Inferred Lean Canvas`, `## Audit findings`,
+`## Options the evidence suggests`, `## Handoff & next steps`) so the dossier is
+diffable / editable and the HTML is a render of it. The `## Verdict` section
+leads with the Continue/Pivot/Kill headline + band + confidence + reason (citing
+finding-ids) + the disclaimer; it is omitted entirely in diligence-only mode. The
 `inferred-canvas.md` (Lean Canvas headings) is a separate artifact per
 `inference-mapping.md`.

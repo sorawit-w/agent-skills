@@ -95,7 +95,7 @@ Each skill links to its own README — the full doc with usage, design notes, an
 | <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="64" align="middle"/> | [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) | Convert canvas Stress Tests into falsifiable hypotheses with success/kill criteria. Ships a 1-page test plan + interactive risk × impact matrix. |
 | <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](skills/pitch-deck/README.md) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. |
 | <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](skills/startup-grill/README.md) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability. |
-| <img src="assets/icons/startup-audit.svg" alt="" width="64" align="middle"/> | [`startup-audit`](skills/startup-audit/README.md) | Read an *already-built* product (codebase + URL), infer the business model into a Lean Canvas, diff it against the claimed story; ship an interactive HTML dossier. |
+| <img src="assets/icons/startup-audit.svg" alt="" width="64" align="middle"/> | [`startup-audit`](skills/startup-audit/README.md) | Point at a codebase/URL → fast **Continue / Pivot / Kill** triage verdict + R/A/G band, grounded in what's built and framed as opinion; interactive HTML dossier (diligence-only flag for no verdict). |
 | <img src="assets/icons/startup-launch-kit.svg" alt="" width="64" align="middle"/> | [`startup-launch-kit`](skills/startup-launch-kit/README.md) | Opt-in umbrella orchestrator that sequences the five-step startup pipeline (brand → canvas → tests → pitch → grill) with shared state. |
 | <img src="assets/icons/gtm.svg" alt="" width="64" align="middle"/> | [`gtm`](skills/gtm/README.md) **🚧 BETA** | Phased go-to-market for startup products — GTM playbook, multi-channel content, cadenced scheduling, compliance gates, kill switch. |
 | <img src="assets/icons/ai-ux-review.svg" alt="" width="64" align="middle"/> | [`ai-ux-review`](skills/ai-ux-review/README.md) | Design-completeness review for AI products — seven blocks, six cross-block checks, explicit `[Gap — …]` markers. Ships MD + HTML. |
@@ -409,14 +409,14 @@ Each entry below is a quick reference — example prompts and which skills it pa
 **Pairs well with.**
 - [`validation-canvas`](skills/validation-canvas/README.md) — infers into its exact Lean Canvas headings; writes a separate `inferred-canvas.md` and offers to seed `validation-canvas.md` (never overwrites a founder's). The founder corrects the machine's read there.
 - [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — handoff target for the `unknown` blocks (Problem / UVP / Unfair Advantage) — the beliefs a built artifact can't prove.
-- [`startup-grill`](skills/startup-grill/README.md) — downstream. The dossier + inferred canvas feed grill, which reads the same headings; this skill produces evidence, grill produces the verdict.
+- [`startup-grill`](skills/startup-grill/README.md) — sibling verdict skill, split by input + rigor. This gives a fast code/URL triage verdict; grill gives the deep adversarial verdict on belief artifacts. A Kill/Pivot here routes to grill (via a seeded `validation-canvas.md`) to confirm.
 - [`team-composer`](skills/team-composer/README.md) — reads its `role-personas.md` for the audit lenses (read, not invoked).
 - [`ai-ux-review`](skills/ai-ux-review/README.md) / [`ai-eval-review`](skills/ai-eval-review/README.md) — conditional, invoked when AI features are detected; the dossier embeds their output.
 
 **Try it.**
-- "Audit my startup from this repo — what business does the code imply, and does it match my pitch?"
-- "Technical due diligence on this codebase: infer the model, tier it by confidence, show me the build-vs-claim gaps."
-- "Run startup-audit on this repo, then point me at what to test next."
+- "Grill my startup from this repo — should I continue, pivot, or kill it?"
+- "Score my built product from the codebase and the live URL; does the code match the pitch?"
+- "Audit this repo, evidence only — no verdict, just the dossier."
 
 ---
 
@@ -540,7 +540,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.2.0`.** Adds **`startup-audit`** — a post-build diligence skill that reads an *already-built* product (codebase + optional URL), infers the business model into `validation-canvas`'s nine Lean Canvas blocks (every field tiered observed/inferred/unknown and pinned to a provenance pointer — `provenance == null → cannot claim`), diffs coded reality against the claimed story bidirectionally, runs a single-pass per-lens audit with domain lenses auto-composed from the inferred signals, and ships a single self-contained interactive HTML dossier plus an `inferred-canvas.md` the rest of the chain consumes. It's the mirror image of the pre-build `startup-launch-kit` pipeline — and the repo's first skill to declare hard dependencies and fail loud if they're missing. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.3.0`.** Evolves **`startup-audit`** from a diligence-only readout into a **fast, code-grounded triage verdict**: pointed at a codebase and/or live URL, its dossier now opens with an opinionated **Continue / Pivot / Kill** call + Red/Amber/Green band (every verdict cites specific findings, is framed as opinion not advice, and a Kill on mostly-`unknown` evidence self-flags low confidence). The boundary with `startup-grill` is redrawn by **input + rigor** — `startup-audit` = built artifact (code/URL) + fast triage; `startup-grill` = belief artifacts (canvas/deck) + deep adversarial verdict, where a Kill/Pivot routes for confirmation. The prior no-verdict behavior is preserved behind a diligence-only flag. (Default behavior changed; MINOR bump since the skill is a day old with the old behavior flag-preserved.) Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
