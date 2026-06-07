@@ -81,6 +81,12 @@ Hand off — do not run the audit — if any of these apply:
 - **The product doesn't exist yet** (idea / pre-build) → use `startup-launch-kit`
   or `validation-canvas`. There is no codebase to read; this skill would have
   nothing to infer from.
+- **The product exists, but the user wants the full 5-artifact kit** (brand →
+  canvas → RAT → deck → grill), not a fast verdict → use `startup-launch-kit`.
+  This skill produces only the Continue/Pivot/Kill triage; the kit is the
+  full-pipeline path (and it reuses this skill's `mode=diligence` as its
+  code-reader — see Cross-Skill Integration). The split is by **output**: want
+  the verdict → here; want the kit → there.
 - **The user wants a DEEP adversarial verdict** on belief artifacts (a Lean Canvas
   or pitch deck), or wants to **confirm a consequential Kill/Pivot** this skill
   flagged → use `startup-grill`. This skill gives the *fast code-grounded triage*;
@@ -114,6 +120,7 @@ to those skills.
 | "Score my built product / does my code match my pitch?" | `startup-audit` |
 | "Grill my pitch deck / Lean Canvas (deep adversarial)" | `startup-grill` |
 | "Confirm the Kill/Pivot this audit flagged" | `startup-grill` |
+| "Build the full kit from my repo (not just a verdict)" | `startup-launch-kit` (reuses this skill as its code-reader) |
 | "Validate my idea / build my lean canvas (pre-build)" | `validation-canvas` / `startup-launch-kit` |
 | "Review my AI feature's UX" | `ai-ux-review` |
 | "Audit my eval setup" | `ai-eval-review` |
@@ -377,6 +384,9 @@ Run the verifier checklist before presenting:
 
 - [ ] Every rendered canvas field has a provenance pointer (or renders as `unknown`)
 - [ ] `inferred-canvas.md` headings match `validation-canvas`'s spec byte-for-byte
+- [ ] If a `validation-canvas.md` seed was written: it retains the
+      `<!-- SEED:machine-inferred -->` marker verbatim on its second line (else
+      downstream reads it as founder-authored and launders the inference)
 - [ ] Build-vs-claim diff ran bidirectionally
 - [ ] Every "Options" entry cites a finding (uncited options suppressed)
 - [ ] **Default mode:** verdict is one of Continue / Continue-with-conditions /

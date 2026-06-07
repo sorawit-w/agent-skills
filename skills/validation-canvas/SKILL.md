@@ -650,7 +650,10 @@ rubber-stamping and violates the thin-input rule):
 - **Any block the founder did not confirm or correct stays `[Unknown — founder
   did not confirm: <what the machine guessed>]`.** Do NOT auto-promote an
   unconfirmed machine inference to a confirmed claim. A canvas with 3 honest
-  unknowns beats one padded with unverified code-guesses.
+  unknowns beats one padded with unverified code-guesses. **Normalize casing:**
+  rewrite any surviving lowercase `[unknown — …]` from the seed to capital
+  `[Unknown — …]` — downstream `riskiest-assumption-test` scans for the capital
+  form.
 - Run the **Phase 2 consistency check** as normal (it is not optional here
   either), then render and ship per Phase 3.
 - Calibration (Phase 0) still runs — the experience questions are about the

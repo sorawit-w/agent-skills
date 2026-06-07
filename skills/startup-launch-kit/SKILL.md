@@ -131,6 +131,15 @@ discovery (mkdir -p semantics).
 The orchestrator runs in one of two source modes. Detect, then **offer** —
 never force.
 
+**Resume precedence — check this FIRST, before evaluating the offer trigger
+below.** If a machine-inferred seed already exists at the canvas root (the seed
+marker `<!-- SEED:machine-inferred -->` per
+[`references/state-detection.md`](references/state-detection.md) Rule 7),
+**do NOT re-offer and do NOT re-invoke `startup-audit`** — a prior run already
+read the code. Skip Phase 0.6 and let Phase 2 route the `validation-canvas` step
+to confirm-inferred-seed mode. The offer trigger below fires **only when no canvas
+of any kind exists yet.**
+
 **Greenfield (default).** No built product to read. Run the pipeline
 step-by-step as today. This is the path when the working directory has no
 codebase, or the founder declines the existing-project offer.
@@ -153,15 +162,8 @@ codebase encodes answers they shouldn't have to re-type. Trigger the
    [`references/state-detection.md`](references/state-detection.md)) does NOT
    count as founder-authored — a prior seed can be resumed.
 
-**Resume precedence (check first).** If a machine-inferred seed *already* exists
-at the canvas root (the seed marker per
-[`references/state-detection.md`](references/state-detection.md) Rule 7),
-**do NOT re-offer and do NOT re-invoke `startup-audit`** — a prior run already
-read the code. Skip Phase 0.6 and let Phase 2 route the `validation-canvas` step
-to confirm-inferred-seed mode. The offer below fires only when **no canvas of any
-kind** exists yet.
-
-When both hold (and no seed exists yet), surface a one-line opt-in offer:
+When both hold (and no seed exists yet, per the resume-precedence check above),
+surface a one-line opt-in offer:
 
 > *"I see a codebase here but no validation canvas. Want me to read the code
 > first and pre-fill what it reveals (you confirm or correct), then run the
@@ -197,7 +199,7 @@ Skipped entirely in greenfield mode. When `source_mode` is
    (`<!-- SEED:machine-inferred -->`) and per-block `_(TIER — provenance)_` tags —
    that marker is what `validation-canvas` keys on in Phase 2 to run its tiered
    confirm (not a blank interview). Verify the seeded file exists before
-   continuing.
+   continuing; **if it is absent, treat that as the no-seed case and apply step 3.**
 3. **No-seed fallback.** If `startup-audit` produces no seed for any reason —
    unavailable in this runtime, refused on its own dependency pre-flight, errored,
    or wrote no `validation-canvas.md` — fall back to greenfield with a one-line
