@@ -25,8 +25,11 @@ description: >
   adherence (use `skill-evaluator`).
   Boundary by INPUT and RIGOR: this skill reads a BUILT artifact (codebase/URL) and
   gives a FAST triage verdict; `startup-grill` reads BELIEF artifacts (canvas/deck)
-  and gives a DEEP adversarial verdict. `startup-launch-kit` is pre-build; this is
-  post-build. The INPUT decides, not the verb: if the user points at a codebase or
+  and gives a DEEP adversarial verdict. Boundary with `startup-launch-kit` by OUTPUT:
+  both can read a codebase, but this skill produces only the fast Continue / Pivot /
+  Kill verdict, while `startup-launch-kit` produces the full 5-artifact kit (and may
+  reuse this skill's `mode=diligence` to seed its canvas). Want the verdict → here;
+  want the kit → there. The INPUT decides, not the verb: if the user points at a codebase or
   URL and asks for a verdict, a score, or "should I continue / pivot / kill" — that
   is THIS skill, EVEN IF they say "grill" or "kill". Those words alone do NOT route
   to `startup-grill`; `startup-grill` only applies when the input is a belief
@@ -267,6 +270,30 @@ separate `inferred-canvas.md`. If no `validation-canvas.md` exists at the
 canvas root, **offer to seed one** from the inferred canvas (the founder can then
 correct the machine's inference) — but only on explicit confirmation.
 
+**Orchestrated carve-out (no double-prompt):** when invoked with `mode=diligence`
+by `startup-launch-kit` (existing-project mode), the founder's Phase 0.3 opt-in
+("read the code and pre-fill the canvas") *is* the seed confirmation — write the
+seed directly, do **not** re-prompt. Standalone invocation still requires the
+explicit confirmation above.
+
+**Seed-header contract (load-bearing — do not drop).** The seeded
+`validation-canvas.md` MUST retain the machine-inferred provenance header from
+`inferred-canvas.md` verbatim (the full blockquote in `references/inference-mapping.md`),
+plus each block's `_(TIER — provenance)_` tag.
+
+The header opens with the **detection marker** — the HTML comment
+`<!-- SEED:machine-inferred -->` — which `validation-canvas` keys on to run its
+tiered confirm (observed glance / inferred verify / unknown interview) instead of
+treating the seed as founder truth. This marker is the single source of truth
+(defined in `references/inference-mapping.md`): single-line, invisible when
+rendered, and absent from any founder-authored canvas. `validation-canvas` and
+`startup-launch-kit/references/state-detection.md` detect the seed by matching this
+exact comment. If you ever change the marker, update both readers in lockstep — a
+seed whose marker no longer matches reads as a founder-authored canvas downstream
+and silently launders machine guesses into belief (the exact failure the
+provenance gate prevents). This matters most when `startup-launch-kit` drives the
+seed in existing-project mode.
+
 ---
 
 ## Phase 3: Audit panel + verdict synthesis (Stage 2)
@@ -428,6 +455,7 @@ a per-skill install fails loud rather than mysteriously.
 | `validation-canvas` | Phase 2 infers into its exact Lean Canvas headings. This skill writes a separate `inferred-canvas.md` and offers to seed `validation-canvas.md` if none exists — never overwrites a founder's. **The seeded `validation-canvas.md` is the bridge** that lets grill confirm a Kill/Pivot. The founder then corrects the inference in `validation-canvas`. |
 | `riskiest-assumption-test` | **Pointer handoff.** RAT reads its own `assumption-test-plan.md` (which this skill does not write). The dossier *recommends* running RAT on the `unknown` blocks (Problem / UVP / Unfair Advantage) — the beliefs a built artifact can't prove. |
 | `pitch-deck` | Consumes the seeded `validation-canvas.md` / build-vs-claim diff when the founder re-cuts a deck grounded in coded reality. |
+| `startup-launch-kit` | **Reuses this skill as its existing-project code-reader.** When the orchestrator runs on a built repo, it invokes this skill with `mode=diligence` (inferred canvas + diff, no verdict) and accepts the offered seed of `validation-canvas.md` — then runs the full kit (brand → canvas confirm → RAT → deck → grill) on top. This skill stays the standalone front-of-line triage; the kit is the full-pipeline path. |
 | `team-composer` | Phase 3 reads its `references/role-personas.md` persona catalog for the audit lenses (read, not invoked). Use team-composer directly for collaborative, constructive multi-role review (this skill is one-pass triage). |
 | `ai-ux-review` / `ai-eval-review` | Conditional — invoked when AI features are detected. This skill delegates AI UX + eval assessment to them and embeds their HTML rather than rebuilding it. |
 | `skill-evaluator` | To audit this skill's own rules end-to-end (the provenance gate, the verdict-cites-a-finding rule, the diff-bidirectionality rule, the diligence-only flag). |

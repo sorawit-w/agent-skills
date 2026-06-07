@@ -16,6 +16,7 @@ The pipeline philosophy from v2.0.0 stays intact: *sequential teaches iteration*
 
 ## What it does
 
+- **Runs greenfield or on an existing project.** *Greenfield* (default) is the step-by-step pipeline. *Existing-project* mode (opt-in, offered when a codebase is detected) reads the repo via `startup-audit` (`mode=diligence`), pre-fills the validation canvas with what the code reveals (tiered `observed/inferred/unknown` + provenance), and asks the founder only to confirm/correct — interviewing from scratch only the blocks code can't evidence (typically Problem, UVP, Unfair Advantage). All five artifact families still get produced.
 - **Sequences the five pipeline skills** in order (`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill`) via the Skill tool. Each skill runs as itself; founder sees the same UX as direct invocation.
 - **Manages `kit-manifest.json`** at the working-directory root — a thin state journal: completed steps, mtimes, gate-override flags with reason+timestamp, founder-intake-answers cache. Atomic writes; versioned schema.
 - **Asks the 3-question intake once** at pipeline start (founding history × domain × customer-segment experience), writes answers to manifest, and lets downstream skills read the cache and offer confirm/update rather than re-asking blind.
@@ -39,6 +40,7 @@ The pipeline philosophy from v2.0.0 stays intact: *sequential teaches iteration*
 ## When to use it
 
 - You're starting a new idea from scratch and want end-to-end coordination through brand → validation → testing → pitch → grill.
+- **You already built the product** and want the full kit without re-typing what the codebase already encodes — point the orchestrator at the repo and it offers existing-project mode (reads the code, you confirm the inferred canvas, the rest of the pipeline runs on top).
 - You're resuming a prior pipeline session (manifest already exists from an earlier orchestrator run).
 - You ran a couple of pipeline skills manually and now want the orchestrator to absorb the existing artifacts and continue from where you left off.
 - Investor or advisor asked you to "show me your full validation work" and you want one coherent artifact set produced through one consistent state-tracked flow.
@@ -54,11 +56,13 @@ The pipeline philosophy from v2.0.0 stays intact: *sequential teaches iteration*
 
 Four phases, one Claude session (which may be paused and resumed across multiple sessions thanks to the manifest).
 
-**Phase 0 — STOP gate + manifest discovery.** Routes single-step requests to the named skill. Then looks for `kit-manifest.json`; if absent, fresh start; if present, reconciles against filesystem per [`references/state-detection.md`](references/state-detection.md).
+**Phase 0 — STOP gate + manifest discovery + source-mode detection.** Routes single-step requests to the named skill. Then looks for `kit-manifest.json`; if absent, fresh start; if present, reconciles against filesystem per [`references/state-detection.md`](references/state-detection.md). Finally detects the **source mode**: if a codebase is present and no founder canvas exists, it *offers* existing-project mode (opt-in); otherwise greenfield.
+
+**Phase 0.6 — Code read (existing-project mode only).** Invokes `startup-audit` with `mode=diligence` (inferred canvas + build-vs-claim diff, **no verdict** — `startup-grill` stays the kit's terminal verdict), which seeds `validation-canvas.md` with a machine-inferred provenance header. Skipped entirely in greenfield mode. If `startup-audit` is unavailable, falls back to greenfield with a notice — extraction is never reimplemented inline.
 
 **Phase 1 — Intake.** Three calibration questions (same as `validation-canvas` Phase 0). Writes answers to manifest's `intake_answers` cache. Skipped on resume if cache is populated and the founder confirms it's still accurate.
 
-**Phase 2 — Sequence execution.** For each of the 5 pipeline skills in order: check manifest entry → invoke skill via Skill tool → wait for completion → read updated manifest → enforce downstream gate → advance. Gates that STOP pause the orchestrator until the founder resolves manually or accepts an explicit override.
+**Phase 2 — Sequence execution.** For each of the 5 pipeline skills in order: check manifest entry → invoke skill via Skill tool → wait for completion → read updated manifest → enforce downstream gate → advance. Gates that STOP pause the orchestrator until the founder resolves manually or accepts an explicit override. In existing-project mode, `validation-canvas` detects the seeded canvas and runs its **confirm-inferred-seed** flow (glance-confirm `observed` blocks, verify `inferred` blocks, interview `unknown` ones) instead of a blank interview; the other four skills run unchanged on the confirmed canvas.
 
 **Phase 3 — Loop-back surfacing.** After RAT or grill, scan for invalidated hypotheses or canvas-block weaknesses. Surface a one-line recommendation to re-invoke `validation-canvas` in update mode. Founder decides.
 
@@ -67,10 +71,11 @@ Four phases, one Claude session (which may be paused and resumed across multiple
 ## What the output looks like
 
 ```
-<your-working-folder>/
-├── kit-manifest.json           ← orchestrator's state journal (NEW in v2.1.0)
-├── brand-kit/                  ← from brand-workshop
-├── validation-canvas.{md,html} ← from validation-canvas
+<your-working-folder>/docs/startup-kit/
+├── kit-manifest.json           ← orchestrator's state journal
+├── audit/                      ← from startup-audit (existing-project mode only): inferred-canvas.md + diligence dossier
+├── brand/                      ← from brand-workshop
+├── canvas/validation-canvas.{md,html} ← from validation-canvas
 ├── rat/                        ← from riskiest-assumption-test
 ├── pitch/                      ← from pitch-deck
 └── grill/                      ← from startup-grill
@@ -133,14 +138,16 @@ The orchestrator depends on the five pipeline skills also being installed (they 
 - **[`riskiest-assumption-test`](../riskiest-assumption-test/README.md)** — Step 3; called by the orchestrator. Independently invocable.
 - **[`pitch-deck`](../pitch-deck/README.md)** — Step 4; called by the orchestrator. Independently invocable.
 - **[`startup-grill`](../startup-grill/README.md)** — Step 5; called by the orchestrator. Independently invocable.
+- **[`startup-audit`](../startup-audit/README.md)** — the code-reader for existing-project mode (invoked with `mode=diligence` to seed the canvas). Independently invocable for a standalone Continue/Pivot/Kill triage of a built product.
 - **[`team-composer`](../team-composer/README.md)** — alternative to the orchestrator for pipeline-strategy discussions, single-block deep dives, or work that doesn't fit the pipeline shape.
 
 ## Status and scope
 
-**v2.1.0 (initial release).**
+**v2.3.0** — adds opt-in **existing-project mode**: run the full kit on an already-built repo, reusing `startup-audit` (`mode=diligence`) to read the codebase and seed the validation canvas; `validation-canvas` confirms the machine-inferred seed (tiered) instead of interviewing blind. (v2.2.0 moved artifacts under `docs/startup-kit/`.)
 
 **Supported:**
 - End-to-end orchestration of the five-step pipeline
+- **Existing-project mode** — codebase-seeded canvas via `startup-audit`, founder confirms the inferred read; greenfield path unchanged
 - Resume from prior orchestrator runs (manifest exists)
 - Resume from manual partial runs (manifest absent; orchestrator absorbs existing artifacts)
 - Gate overrides with reason + timestamp + acknowledgment recording

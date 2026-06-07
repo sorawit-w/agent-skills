@@ -125,6 +125,31 @@ Then either:
 This protects against silent retries that would just hit the same gate
 again.
 
+### Rule 7 — Machine-inferred seed vs founder-authored canvas
+
+In existing-project mode (`source_mode: "existing-project"`), `startup-audit`
+seeds `validation-canvas.md` from the codebase. That seed is **not** a
+founder-authored artifact, even though it occupies the canonical canvas path.
+Distinguish the two by **file content, not the manifest**:
+
+- The file carries the **seed marker** — the HTML comment
+  `<!-- SEED:machine-inferred -->` at its head (the canonical marker defined in
+  `startup-audit/references/inference-mapping.md`) → it is an **unconfirmed
+  seed**. On a resume,
+  `validation-canvas` must run **Confirm-inferred-seed mode** (tiered confirm),
+  NOT Update mode. Set `steps[validation-canvas].seeded = true` and treat the
+  step as `completed` only after the founder confirms (header stripped).
+- No such header → an ordinary founder-authored canvas. Update mode / normal
+  reconciliation applies; clear any stale `seeded` flag.
+
+**Why content wins here too:** a founder can run `startup-audit` standalone,
+get a seed, and later run the orchestrator — or delete and re-seed. The header
+is the ground truth for "has a human confirmed this yet?"; the manifest's
+`seeded` flag is a hint that gets reconciled to match the file.
+
+This rule never blocks — it only routes the resume to the correct
+`validation-canvas` mode.
+
 ---
 
 ## Pseudo-code: reconciliation loop

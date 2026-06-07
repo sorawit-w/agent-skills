@@ -16,7 +16,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`pitch-deck`](../skills/pitch-deck/README.md) | Investor-ready self-contained HTML deck (Reveal.js) | Founders fundraising | stable | Startup |
 | [`startup-grill`](../skills/startup-grill/README.md) | Adversarial panel → kill report (Investable / Pivot / Pass) | Founders (pre-mortem), advisors | stable | Startup |
 | [`startup-audit`](../skills/startup-audit/README.md) | Built-artifact triage: codebase/URL → inferred Lean Canvas + build-vs-claim diff → **fast Continue/Pivot/Kill verdict + R/A/G band** (opinion, not advice); diligence-only flag for no-verdict | Founders triaging their build, investors doing technical DD | stable | Startup · Review |
-| [`startup-launch-kit`](../skills/startup-launch-kit/README.md) | Opt-in orchestrator sequencing the 5-step pipeline | Founders wanting end-to-end | stable | Startup |
+| [`startup-launch-kit`](../skills/startup-launch-kit/README.md) | Opt-in orchestrator sequencing the 5-step pipeline; greenfield or existing-project (reuses `startup-audit` to seed the canvas from a codebase) | Founders wanting end-to-end, pre- or post-build | stable | Startup |
 | [`gtm`](../skills/gtm/README.md) | Phased go-to-market playbook + content + scheduling | Founders post-pipeline getting users | 🚧 BETA | Startup |
 | [`team-composer`](../skills/team-composer/README.md) | Multi-role 3-round discussion → conclusion + plan | PMs, engineers, anyone planning | stable | Review · Author |
 | [`ai-ux-review`](../skills/ai-ux-review/README.md) | 7-block human-AI design-completeness review (MD + HTML) | AI product teams, designers, PMs | stable | Review |
@@ -39,6 +39,7 @@ graph LR
   %% Startup pipeline (solid = gated handoff)
   BW[brand-workshop] --> VC[validation-canvas] --> RAT[riskiest-assumption-test] --> PD[pitch-deck] --> SG[startup-grill] --> GTM["gtm (beta)"]
   SLK[startup-launch-kit] -.->|orchestrates| BW
+  SLK -.->|existing-project: mode=diligence code read| SA
 
   %% Delegation pipeline
   TC[team-composer] -->|Phase 6 delegate| SAC[sub-agent-coordinator]
@@ -74,6 +75,6 @@ graph LR
 
 ## Two pipelines worth knowing
 
-- **Startup pipeline** — `brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill` → `gtm` 🚧. Sequential by default, gated (some handoffs refuse without upstream output), loop-back is first-class. `startup-launch-kit` is an opt-in orchestrator over the five core steps. See the root README's [How skills chain](../README.md#how-skills-chain) for the gate weights and artifact-compounding detail.
+- **Startup pipeline** — `brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill` → `gtm` 🚧. Sequential by default, gated (some handoffs refuse without upstream output), loop-back is first-class. `startup-launch-kit` is an opt-in orchestrator over the five core steps. It runs greenfield (step-by-step) or in **existing-project mode** — when pointed at a built repo it reuses `startup-audit` (`mode=diligence`) to read the code and seed `validation-canvas.md`, then `validation-canvas` confirms the machine-inferred seed (tiered) instead of interviewing blind. See the root README's [How skills chain](../README.md#how-skills-chain) for the gate weights and artifact-compounding detail.
 - **Delegation pipeline** — `team-composer` → `sub-agent-coordinator`. Discussion concludes, then deliverables fan out through the coordinator's briefing patterns.
 - **Built-artifact triage** — `startup-audit` is the post-build sibling of `startup-grill`, split by **input + rigor**: audit reads a *built product* (codebase/URL) and gives a *fast* Continue/Pivot/Kill triage verdict; grill reads *belief artifacts* (canvas/deck) and gives the *deep* 3-round adversarial verdict. A Kill/Pivot from audit routes to grill to confirm (seed `validation-canvas.md` first — grill/pitch-deck read that file, not audit's `inferred-canvas.md`). For `riskiest-assumption-test` the handoff is a recommendation to test the `unknown` blocks. The verdict is opinion, not advice.
