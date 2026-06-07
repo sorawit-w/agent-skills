@@ -32,6 +32,12 @@ skeletons sat unpopulated. `prepare` fills that gap.
 - **`load` readiness nudge** — after `load`, a read-only check suggests `prepare`
   when the repo has real code but unpopulated artifacts. Suggestion only; stays
   silent on already-prepared or greenfield repos; never auto-runs.
+- **Force the knowledge pass** — the `.ai/knowledge/` candidate pass auto-runs only
+  on first onboarding (empty knowledge dir) and is opt-in once entries exist. A
+  knowledge-force signal (`prepare:knowledge`, `prepare --knowledge`, or natural
+  language like "force the knowledge pass") runs it regardless, skipping the opt-in
+  prompt. Forcing controls only whether the pass runs — drafts stay `confidence:
+  low`, per-entry diff-and-confirm, and `confidence: high` entries stay frozen.
 
 ### Why
 The hard part is coding-rules' own doctrine: *never overwrite human-curated
