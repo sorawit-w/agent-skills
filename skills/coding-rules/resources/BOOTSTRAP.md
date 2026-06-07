@@ -101,8 +101,10 @@ Full worktree tactics (creation, lifecycle, cleanup, failure modes): `references
 
 ```bash
 git add <specific-files>
-git commit -m "<type>(<scope>): <description>"
+git commit -m "<type>[optional scope]: <description>"
 ```
+
+**Type is required** — one of `feat` `fix` `chore` `docs` `refactor` `test` `perf` `build` `ci`. **Scope is optional**: `fix: handle null user` is valid; a bare `handle null user` (no type) is not. Never commit without a type.
 
 After committing, append to `.ai/memory.log`:
 
