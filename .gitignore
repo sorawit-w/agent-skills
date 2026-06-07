@@ -212,3 +212,7 @@ docs/pixel-art/
 # not part of the shipped skill. The shipped portraits are the 512×512
 # skills/whoami/assets/characters/<class>.png files.
 skills/whoami/assets/characters/_contact.png
+
+# Obsidian vault config — local note-taking workspace over the repo.
+# Per-user editor state, not part of the shipped plugin.
+.obsidian/

@@ -5,6 +5,38 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.1] — 2026-06-07
+
+Tightens **`coding-rules`** commit-message guidance so the agent stops emitting
+bare commits with no Conventional Commits type. The format previously lived only
+as a template snippet (`<type>(<scope>)`) buried in prose — it implied scope was
+mandatory and was easy to skim past under context pressure.
+
+### Fixed
+- `resources/BOOTSTRAP.md` commit-discipline rule: corrected the template to
+  `<type>[optional scope]: <description>` (Conventional Commits' own notation) and
+  added an explicit legibility line — **type required** (enumerated set), **scope
+  optional** — with a concrete valid/invalid contrast (`fix: handle null user`
+  valid; a bare `handle null user` not).
+
+### Why
+The skill specified the format but never made it legible or enforceable: the
+template was buried, `(<scope>)` over-specified scope as mandatory when the spec
+marks it optional, and `pre-commit-check.sh` validates secrets and lint/test —
+never the message. Under context pressure the rule got skimmed and the agent
+free-wrote bare messages. The fix raises salience (bold, enumerated, counter-
+example) and corrects the over-specification. Validated via `skill-evaluator`:
+14/14 assertions passed across 5 split-role tests (happy-path, brevity-pressure,
+"just save" temptation, scope-genuinely-absent, terse off-loop commit).
+
+### Notes
+- Adherence/clarity fix to an existing rule — no triggering or output-contract
+  change → PATCH.
+- A soft `commit-msg` hook (the stronger, drift-proof option) was scoped and
+  deliberately deferred. The audit confirms the text fix lands when the rule is
+  in context — the layer this release targets; catching drift-when-evicted
+  remains future work.
+
 ## [4.3.0] — 2026-06-02
 
 Evolves **`startup-audit`** from a diligence-only readout into a **fast,
