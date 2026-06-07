@@ -32,6 +32,8 @@ reading or writing the manifest.
   "created": "ISO-8601 timestamp",
   "updated": "ISO-8601 timestamp",
 
+  "source_mode": "greenfield | existing-project",
+
   "intake_answers": {
     "founding_history": "yes-with-revenue | yes-no-revenue | no",
     "domain_experience": "yes | no",
@@ -45,6 +47,7 @@ reading or writing the manifest.
       "status": "pending | in-progress | completed | blocked | failed",
       "mtime": "ISO-8601 timestamp (set when status transitions to completed/in-progress/failed)",
       "iterations": "integer (incremented on update-mode runs; defaults to 1 on first completion)",
+      "seeded": "boolean (optional; true when this step's artifact was machine-seeded from a codebase, e.g. validation-canvas seeded by startup-audit in existing-project mode)",
       "blocked_by": "string (only present when status=blocked; names the gate or upstream artifact missing)"
     }
   ],
@@ -67,9 +70,11 @@ reading or writing the manifest.
 | `manifest_version` | yes | Currently `1`. Increment on breaking schema changes; document the migration. |
 | `created` | yes | Set by the orchestrator on first write. Never changes. |
 | `updated` | yes | Updated on every write (orchestrator OR called skill). |
+| `source_mode` | optional | `greenfield` (default — step-by-step pipeline) or `existing-project` (orchestrator read the codebase via `startup-audit` and seeded the canvas). Set by the orchestrator at Phase 0.3. Absent ≡ `greenfield` (backward-compatible). |
 | `intake_answers` | optional | Populated by the orchestrator at Phase 1. Pipeline skills read it as a default; never silently skip their own intake. |
 | `steps[]` | yes | Always five entries, in pipeline order. Status transitions are `pending → in-progress → completed`, with `blocked` or `failed` as side-paths. |
 | `steps[].iterations` | yes once `completed` | Incremented when a skill is re-run in update mode. Useful signal for the iteration-evidence check in `startup-grill`. |
+| `steps[].seeded` | optional | `true` when the step's artifact was machine-seeded from a codebase (existing-project mode). A `seeded: true` canvas with `iterations: 1` and no corrections is a yellow flag for `startup-grill` — a machine read the founder never confirmed (same logic as the pristine-pipeline check). |
 | `gate_overrides[]` | yes (may be empty) | Append-only. Once recorded, an override is honored on subsequent invocations until the founder explicitly revokes it (set `founder_acknowledged: false` or remove the entry). |
 
 ### Field validation rules
@@ -189,6 +194,49 @@ results), iterated RAT twice, accepted one pre-validation-draft override
 for an early advisor meeting, and shipped the grill report. The recorded
 override surfaces in the kill-report's `## Iteration Evidence` section as
 something for the panel to probe — not a hidden bypass.
+
+---
+
+## Example 4 — Existing-project run (codebase-seeded canvas)
+
+```json
+{
+  "manifest_version": 1,
+  "created": "2026-06-07T09:00:00Z",
+  "updated": "2026-06-07T09:08:00Z",
+  "source_mode": "existing-project",
+  "intake_answers": {
+    "founding_history": "yes-no-revenue",
+    "domain_experience": "yes",
+    "customer_segment_experience": "yes",
+    "inferred_mode": "compressed-with-challenge"
+  },
+  "steps": [
+    { "skill": "brand-workshop",          "status": "pending" },
+    {
+      "skill": "validation-canvas",
+      "status": "completed",
+      "mtime": "2026-06-07T09:08:00Z",
+      "iterations": 1,
+      "seeded": true
+    },
+    { "skill": "riskiest-assumption-test", "status": "pending" },
+    { "skill": "pitch-deck",              "status": "pending" },
+    { "skill": "startup-grill",           "status": "pending" }
+  ],
+  "gate_overrides": []
+}
+```
+
+The founder pointed the orchestrator at an existing repo. Phase 0.3 detected a
+codebase + no founder canvas and the founder accepted existing-project mode.
+Phase 0.6 invoked `startup-audit mode=diligence`, which wrote
+`audit/inferred-canvas.md` and seeded `canvas/validation-canvas.md` (recorded
+`source_mode: existing-project`). `validation-canvas` then ran confirm-inferred-seed
+mode — its step shows `seeded: true`. `brand-workshop` runs next as a normal
+greenfield step (brand isn't code-inferrable). If the founder rubber-stamps the
+seed without correcting any block (`seeded: true`, `iterations: 1`),
+`startup-grill` flags it in `## Iteration Evidence`.
 
 ---
 

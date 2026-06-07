@@ -1,6 +1,6 @@
 ---
 name: startup-launch-kit
-description: Opt-in umbrella orchestrator that sequences the full five-step startup pipeline (`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill`) with shared state via `kit-manifest.json`. **Every individual skill remains independently invocable** — this orchestrator is convenience, not replacement. It calls each pipeline skill in turn, never bypasses any of their gates, and surfaces every step's prompts to the founder (no batching, no silent automation). Records gate overrides with reasons; surfaces loop-back recommendations after RAT or grill but does not auto-route. Use whenever the user asks to "build my whole startup kit", "do the full pipeline", "end-to-end startup workflow", "orchestrate brand → canvas → tests → pitch → grill", "set up my whole launch", "I'm starting from scratch — take me through everything", "launch kit", "full validation pipeline", or asks Claude to coordinate the five startup-pipeline skills together. Triggers explicitly via `/startup-launch-kit` slash command. Does NOT trigger for single-step requests ("just the canvas", "build my deck") — those route to the named skill directly. Does NOT replace the pipeline philosophy that "sequential teaches iteration" — gates are honored, steps surface their own prompts, loop-back stays founder-driven.
+description: Opt-in umbrella orchestrator that sequences the full five-step startup pipeline (`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill`) with shared state via `kit-manifest.json`. **Every individual skill remains independently invocable** — this orchestrator is convenience, not replacement. It calls each pipeline skill in turn, never bypasses any of their gates, and surfaces every step's prompts to the founder (no batching, no silent automation). Records gate overrides with reasons; surfaces loop-back recommendations after RAT or grill but does not auto-route. Use whenever the user asks to "build my whole startup kit", "do the full pipeline", "end-to-end startup workflow", "orchestrate brand → canvas → tests → pitch → grill", "set up my whole launch", "I'm starting from scratch — take me through everything", "launch kit", "full validation pipeline", or asks Claude to coordinate the five startup-pipeline skills together. **Also triggers for existing/already-built projects** — "run the whole pipeline on my existing repo / codebase", "build the full kit from what I've already built", "I already built it — infer the kit from the code", "do the full pipeline on this repo" — where the orchestrator reads the codebase (reusing `startup-audit`'s inference) to pre-fill what code reveals and asks the founder only for what it can't. (For a fast Continue/Pivot/Kill *verdict* on a built product rather than the full kit, that's `startup-audit`; this skill runs the full 5-step kit even when seeded from an existing repo.) Triggers explicitly via `/startup-launch-kit` slash command. Does NOT trigger for single-step requests ("just the canvas", "build my deck") — those route to the named skill directly. Does NOT replace the pipeline philosophy that "sequential teaches iteration" — gates are honored, steps surface their own prompts, loop-back stays founder-driven.
 ---
 
 # Startup Launch Kit
@@ -15,6 +15,13 @@ The orchestrator's job is **sequencing + state**, not content. Each pipeline
 skill runs as itself — same prompts, same outputs, same gates the founder
 would see if they invoked the skill directly. The orchestrator just remembers
 where the founder is, surfaces the next step, and records overrides for audit.
+
+It runs in one of two **source modes** (detected in Phase 0.3): **greenfield**
+(no built product — the step-by-step pipeline, as always) or **existing-project**
+(a codebase is present — the orchestrator reads it via `startup-audit` and
+pre-fills what code reveals, asking the founder only for what it can't infer).
+Existing-project mode is **opt-in**: offered when a codebase is detected, never
+forced.
 
 ---
 
@@ -118,6 +125,90 @@ discovery (mkdir -p semantics).
    - Manifest's intake-answers cache exists → surface them and ask the
      founder to confirm or update before proceeding to Phase 2 (skip
      re-asking from scratch).
+
+### Step 0.3 — Source-mode detection (greenfield vs existing-project)
+
+The orchestrator runs in one of two source modes. Detect, then **offer** —
+never force.
+
+**Resume precedence — check this FIRST, before evaluating the offer trigger
+below.** If a machine-inferred seed already exists at the canvas root (the seed
+marker `<!-- SEED:machine-inferred -->` per
+[`references/state-detection.md`](references/state-detection.md) Rule 7),
+**do NOT re-offer and do NOT re-invoke `startup-audit`** — a prior run already
+read the code. Skip Phase 0.6 and let Phase 2 route the `validation-canvas` step
+to confirm-inferred-seed mode. The offer trigger below fires **only when no canvas
+of any kind exists yet.**
+
+**Greenfield (default).** No built product to read. Run the pipeline
+step-by-step as today. This is the path when the working directory has no
+codebase, or the founder declines the existing-project offer.
+
+**Existing-project (opt-in).** The founder already built the product; the
+codebase encodes answers they shouldn't have to re-type. Trigger the
+**offer** when BOTH hold:
+
+1. **A codebase is present** in the working directory — detect using the same
+   signal categories `startup-audit` keys on (dependency manifest, data-model /
+   schema, routes/pages, `.env(.example)`). Do NOT re-specify the detection
+   taxonomy here — see
+   [`startup-audit/references/signal-extraction.md`](../startup-audit/references/signal-extraction.md).
+   A surface check (manifest file exists) is enough to *offer*; full extraction
+   is `startup-audit`'s job in Phase 0.6.
+2. **No founder-authored `validation-canvas.md`** exists at the canvas root
+   (`<kit_root>/canvas/validation-canvas.md` or a legacy location). A canvas
+   carrying the machine-inferred seed marker (`<!-- SEED:machine-inferred -->`)
+   is already handled by the resume-precedence guard above — it returns early,
+   so a prior seed never reaches this condition.
+
+When both hold (and no seed exists yet, per the resume-precedence check above),
+surface a one-line opt-in offer:
+
+> *"I see a codebase here but no validation canvas. Want me to read the code
+> first and pre-fill what it reveals (you confirm or correct), then run the
+> rest of the kit? Or start the full step-by-step pipeline from scratch?"*
+
+- **Founder accepts** → set `source_mode: "existing-project"` in the manifest;
+  proceed to Phase 0.6.
+- **Founder declines, or no codebase** → set `source_mode: "greenfield"`;
+  skip Phase 0.6 and proceed to Phase 1 as today.
+
+The offer is opt-in by design: greenfield founders' step-by-step learning path
+must never be hijacked by the mere presence of a repo.
+
+---
+
+## Phase 0.6: Code read — reuse `startup-audit` (existing-project mode only)
+
+Skipped entirely in greenfield mode. When `source_mode` is
+`existing-project`, the orchestrator reads the codebase **by invoking
+`startup-audit`, never by reimplementing extraction**.
+
+1. **Invoke** `Skill(startup-audit)` with `mode=diligence` and
+   `output_dir=<kit_root>/audit/`. Diligence mode produces the inferred Lean
+   Canvas (tiered `observed/inferred/unknown`, provenance-pinned) and the
+   build-vs-claim diff, with **no Continue/Pivot/Kill verdict** — `startup-grill`
+   remains the kit's single terminal verdict authority.
+2. **Audit seeds the canvas (no re-prompt).** `startup-audit` writes
+   `inferred-canvas.md` to the audit root and seeds
+   `<kit_root>/canvas/validation-canvas.md` from it — the founder's Step 0.3
+   opt-in is the seed confirmation, so `startup-audit`'s orchestrated carve-out
+   writes it without a second prompt (it still never overwrites a founder-authored
+   canvas). The seeded file carries the **machine-inferred seed marker**
+   (`<!-- SEED:machine-inferred -->`) and per-block `_(TIER — provenance)_` tags —
+   that marker is what `validation-canvas` keys on in Phase 2 to run its tiered
+   confirm (not a blank interview). Verify the seeded file exists before
+   continuing; **if it is absent, treat that as the no-seed case and apply step 3.**
+3. **No-seed fallback.** If `startup-audit` produces no seed for any reason —
+   unavailable in this runtime, refused on its own dependency pre-flight, errored,
+   or wrote no `validation-canvas.md` — fall back to greenfield with a one-line
+   notice (e.g. *"Couldn't read the codebase automatically; running the
+   step-by-step pipeline instead."*) and set `source_mode: "greenfield"`. Do
+   **NOT** reimplement signal extraction inline.
+
+Then proceed to Phase 1. When a seed was written, it is consumed in Phase 2 as
+the orchestrator reaches the `validation-canvas` step (which detects the sentinel
+and runs confirm-inferred-seed mode).
 
 ---
 
@@ -244,6 +335,7 @@ loop-back recommendations remain, surface a final summary:
 | startup-grill           | ✅ completed | 1 | YYYY-MM-DD |
 
 **Artifacts produced (under `docs/startup-kit/`):**
+- audit/ (inferred-canvas.md + diligence dossier — existing-project mode only)
 - brand/ (logo, brief, design system, descriptions, banners)
 - canvas/validation-canvas.md + .html
 - rat/assumption-test-plan.md + test-matrix.html
@@ -298,6 +390,13 @@ authoritative read on where the startup stands.
    composition (multiple startups in one repo) is out of scope; founders
    running multiple startups should use separate working directories.
 
+8. **Inference is reused, never reimplemented.** In existing-project mode the
+   orchestrator reads the codebase by invoking `startup-audit` (`mode=diligence`)
+   — it never greps a `package.json`, parses a schema, or duplicates any signal
+   extraction. One inference engine (`startup-audit`), one provenance contract.
+   If `startup-audit` is unavailable, fall back to greenfield; do not inline a
+   substitute reader. (Mirrors rule 6's no-content-duplication discipline.)
+
 ---
 
 ## Cross-Skill Integration
@@ -309,6 +408,7 @@ authoritative read on where the startup stands.
 | `riskiest-assumption-test` (our own) | Step 3; orchestrator calls it. Independently invocable for test design or results-update. |
 | `pitch-deck` (our own) | Step 4; orchestrator calls it. Independently invocable for deck construction or single-slide rework. |
 | `startup-grill` (our own) | Step 5; orchestrator calls it. Independently invocable for adversarial review at any stage. |
+| `startup-audit` (our own) | **Existing-project mode only (Phase 0.6).** The orchestrator invokes it with `mode=diligence` to read the codebase and seed `validation-canvas.md` (inferred Lean Canvas, tiered + provenance, no verdict). Reused as the code-reader — never reimplemented. Independently invocable for a standalone Continue/Pivot/Kill triage of a built product. |
 | `team-composer` (our own) | Use **instead of** the orchestrator for pipeline-strategy discussions, single-block deep dives, or naming/positioning workshops that don't fit the pipeline shape. |
 | `theme-factory` (Anthropic) | Independent of the orchestrator; can be applied to any artifact for visual styling. |
 | `pdf` (Anthropic) | Independent; for assembling the orchestrator's output artifacts into a board packet. |

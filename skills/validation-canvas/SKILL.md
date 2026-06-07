@@ -194,6 +194,12 @@ migration suggestion. Use it as a hint, never as a bypass:
   mtime, surface that fact: *"Manifest says you ran validation-canvas on
   [date]. Update mode (revise specific blocks per loop-back protocol),
   fresh run, or skip to the next step?"*
+- **Existing-canvas branch.** If a `validation-canvas.md` already exists,
+  inspect its top for the **machine-inferred seed marker** — the HTML comment
+  `<!-- SEED:machine-inferred -->` that `startup-audit` writes at the head of a
+  seed (defined in `startup-audit/references/inference-mapping.md`). Present →
+  route to **Confirm-inferred-seed mode**; absent (founder-authored) → route to
+  **Update mode**. See "Which mode?" below.
 - Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
   the issue inline and proceed as if no manifest exists.
 
@@ -576,11 +582,90 @@ meta-commentary about what changed.
 
 ---
 
+## Which mode? (existing-canvas branch)
+
+When this skill is invoked and a `validation-canvas.md` already exists at the
+resolved canvas root (or its legacy fallback), branch on **who authored it** by
+matching the **seed marker** — the HTML comment `<!-- SEED:machine-inferred -->`
+that `startup-audit` writes at the head of a seed (the canonical marker, defined
+in `startup-audit/references/inference-mapping.md`):
+
+- **Marker present** → `startup-audit` seeded this canvas from a codebase. Run
+  **Confirm-inferred-seed mode** (below). The blocks are a machine's read of the
+  code, not the founder's belief — they must be confirmed, not treated as truth.
+- **Marker absent** (an ordinary founder-authored canvas) → run **Update mode**
+  (below) — the loop-back path.
+
+If no `validation-canvas.md` exists at all → run the normal Phase 0 → Phase 3
+build flow.
+
+---
+
+## Confirm-inferred-seed mode (existing-project: founder confirms the machine's read)
+
+Entered when the existing `validation-canvas.md` carries the machine-inferred
+provenance header (typically because `startup-launch-kit` ran in existing-project
+mode and `startup-audit` seeded the canvas from the codebase). The seed is a
+**hypothesis to confirm, never a fact to accept.** Honor the thin-input rule
+(see "When the user skips the interview"): a machine guess the founder hasn't
+confirmed is not founder belief.
+
+Run a **tiered confirm** keyed on each block's `_(TIER — provenance)_` tag —
+do NOT present the full canvas and ask one blanket "looks good?" (that invites
+rubber-stamping and violates the thin-input rule):
+
+1. **`observed` blocks** (Solution, usually Customer Segments / Revenue Streams)
+   — the code directly evidences these. Present each with its provenance and ask
+   for a **glance-confirm**: *"From the code: [block] — `[value]` (observed via
+   [provenance]). Right, or correct it?"* Default to keeping unless corrected.
+2. **`inferred` blocks** (often Channels, Cost Structure, Key Metrics) — reasoned
+   from a pattern, not proven. **Verify each one** explicitly: *"I inferred
+   [block] = `[value]` from [provenance] — but I'm guessing. Confirm, refine, or
+   replace?"* Do not keep an inferred block on silence; an unconfirmed inference
+   stays marked `[Unknown — …]`.
+3. **`unknown` / `[Unknown — …]` blocks** (almost always Problem, Unique Value
+   Proposition, Unfair Advantage — code can't evidence belief) — run the **full
+   block-by-block interview** from Phase 1, at the calibration mode's rigor.
+   These are the blocks that matter most and the prime `riskiest-assumption-test`
+   fuel; spend the real conversation here.
+4. **VPC + Stress Tests — always elicited (NOT in the seed).** The seed contains
+   **only the nine Lean Canvas blocks.** The Value Proposition Canvas
+   (`### Customer Jobs`, `### Customer Pains`, `### Customer Gains`,
+   `### Products & Services`, `### Pain Relievers`, `### Gain Creators`) and
+   `## Stress Tests` are not code-inferrable and are absent from the seed. After
+   the tiered confirm, run **Phase 1's VPC interview protocol** and **Phase 2
+   Step 3 (Stress Tests)** at the calibration mode's rigor. This is mandatory —
+   downstream skills grep `## Stress Tests` (RAT's primary seed) and the VPC
+   headings; a confirmed canvas missing them silently breaks the pipeline.
+
+**On completion:**
+
+- **Strip the seed header — including the `<!-- SEED:machine-inferred -->`
+  marker — and the provenance blockquote.** Once the marker is gone the file no
+  longer reads as a seed; the confirmed file is now founder-authored, the
+  canonical canvas downstream skills (`pitch-deck`, `riskiest-assumption-test`,
+  `startup-grill`) consume. Also **strip every `_(TIER — provenance)_` tag from
+  confirmed blocks** — the confirmed value replaces the tagged bullet, leaving no
+  provenance cruft.
+- **Any block the founder did not confirm or correct stays `[Unknown — founder
+  did not confirm: <what the machine guessed>]`.** Do NOT auto-promote an
+  unconfirmed machine inference to a confirmed claim. A canvas with 3 honest
+  unknowns beats one padded with unverified code-guesses. **Normalize casing:**
+  rewrite any surviving lowercase `[unknown — …]` from the seed to capital
+  `[Unknown — …]` — downstream `riskiest-assumption-test` scans for the capital
+  form.
+- Run the **Phase 2 consistency check** as normal (it is not optional here
+  either), then render and ship per Phase 3.
+- Calibration (Phase 0) still runs — the experience questions are about the
+  *founder*, not the product; the codebase can't answer them.
+
+---
+
 ## Update mode (loop-back from downstream)
 
-When this skill is invoked and `validation-canvas.md` already exists at
-the resolved canvas root (or its legacy fallback), treat the run as an
-**update**, not a rewrite:
+When this skill is invoked and a founder-authored `validation-canvas.md` already
+exists at the resolved canvas root (or its legacy fallback) — i.e. **without**
+the machine-inferred header — treat the run as an **update**, not a rewrite:
 
 1. **Read the existing file first.** Do not overwrite blocks the founder hasn't
    asked to change.

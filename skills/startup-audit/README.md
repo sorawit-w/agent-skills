@@ -121,6 +121,7 @@ full plugin — not just this skill (see note above).
 | [`validation-canvas`](../validation-canvas/README.md) | Infers into its exact Lean Canvas headings; writes a separate `inferred-canvas.md`, offers to seed `validation-canvas.md` if none exists (never overwrites). The seeded file is the bridge that lets grill confirm a Kill/Pivot. |
 | [`riskiest-assumption-test`](../riskiest-assumption-test/README.md) | **Pointer handoff** — the dossier recommends running RAT on the `unknown` blocks; RAT reads its own input file, not this skill's. |
 | [`pitch-deck`](../pitch-deck/README.md) | Consumes the seeded `validation-canvas.md` / diff for a deck grounded in coded reality. |
+| [`startup-launch-kit`](../startup-launch-kit/README.md) | **Reuses this skill as its existing-project code-reader.** Invokes it with `mode=diligence` (no verdict) to seed the canvas, then runs the full kit on top. This skill stays the standalone triage; the kit is the full-pipeline path. |
 | [`team-composer`](../team-composer/README.md) | Reads its `role-personas.md` for the triage lenses (read, not invoked). |
 | `ai-ux-review` / `ai-eval-review` | Conditional — invoked when AI features are detected; the dossier embeds their output. |
 | [`skill-evaluator`](../skill-evaluator/README.md) | To audit this skill's own rules (the provenance gate, the verdict-cites-a-finding rule, the diligence-only flag). |

@@ -5,6 +5,80 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.0] — 2026-06-07
+
+Adds an opt-in **existing-project mode** to **`startup-launch-kit`**: run the full
+five-artifact kit on an *already-built* product, inferring answers from the
+codebase instead of asking the founder every question blind. Until now the
+orchestrator was greenfield-only — a founder with a shipped product had to
+hand-type answers their code already encodes. Existing-project mode reuses
+`startup-audit`'s `mode=diligence` as the code-reader (no duplicated extraction),
+seeds the validation canvas with a provenance-tiered machine read, and asks the
+founder only to confirm what code reveals and to author what it can't.
+
+### Added
+- `startup-launch-kit` **Phase 0.3 (source-mode detection)** and **Phase 0.6
+  (code read)**. When a codebase is present and no founder canvas exists, the
+  orchestrator *offers* existing-project mode (opt-in, never forced); on accept it
+  invokes `startup-audit mode=diligence` (`output_dir=<kit_root>/audit/`), which
+  seeds `validation-canvas.md`. Greenfield path is byte-for-byte unchanged.
+- `validation-canvas` **confirm-inferred-seed mode** — distinct from update-mode.
+  Detects the machine seed by an HTML-comment marker and runs a **tiered confirm**
+  (`observed` → glance-confirm, `inferred` → verify each, `unknown` → full
+  interview), then elicits the VPC + Stress Tests (not in the seed) and ships a
+  founder-authored canonical canvas. Honors the thin-input rule: an unconfirmed
+  machine inference stays `[Unknown — …]`, never auto-promoted to belief.
+- `startup-audit` **seed-marker contract** — the seeded canvas carries the
+  canonical `<!-- SEED:machine-inferred -->` marker (single source of truth in
+  `references/inference-mapping.md`) plus per-block provenance tags; an
+  orchestrated carve-out lets the launch-kit's opt-in stand as the seed
+  confirmation (no double-prompt).
+- Manifest schema: optional `source_mode` (`greenfield | existing-project`) and
+  per-step `seeded` flag (additive — `manifest_version` stays `1`), plus a worked
+  example. `state-detection.md` Rule 7 distinguishes a machine seed from a
+  founder canvas on resume.
+- `startup-grill` iteration-evidence check (Step 1c) gains two existing-project
+  states: **unconfirmed seed** (red-ish — `validation-canvas.md` still carries the
+  `<!-- SEED:machine-inferred -->` marker, so the founder never confirmed the
+  machine read) and **rubber-stamped seed** (yellow — `source_mode:
+  existing-project` + `seeded: true` + `iterations: 1`). Both push the panel to
+  grill the un-codeable beliefs (Problem / UVP / Unfair Advantage) hardest, since
+  a built product proves the Solution exists but not that those are true. New
+  kill-report Section 7 states E and F.
+
+### Changed
+- `startup-launch-kit` frontmatter description gains existing-project triggers;
+  `startup-audit` boundary language pivots from "pre-build vs post-build" (now
+  false) to **OUTPUT/RIGOR** — audit produces the fast verdict, launch-kit the
+  full kit (which may reuse audit to seed its canvas).
+- READMEs (`startup-launch-kit`, `startup-audit`) and `docs/skill-graph.md`
+  document the existing-project flow and the launch-kit → startup-audit reuse edge.
+
+### Why
+The repo already had a code→canvas inference engine (`startup-audit`) and a
+full-pipeline orchestrator (`startup-launch-kit`); they just weren't wired
+together. Building inference *into* the orchestrator would have forked the
+confidence/provenance logic into two skills that drift. Composing at the canvas
+artifact boundary keeps one inference engine and one provenance contract. The
+confirm-don't-ask-blind shape (tiered by `startup-audit`'s `observed/inferred/
+unknown` tiers) is the precise reading of "imply answers unless they're missing
+or can't be implied": code-evidenced blocks are pre-filled for confirmation;
+`Problem`/`UVP`/`Unfair Advantage` — almost always `unknown` from code — remain
+the founder interview AND the prime `riskiest-assumption-test` fuel.
+
+A split-context pre-shipment audit caught a blocker before release: the seed
+contains only the nine Lean Canvas blocks, so an early draft of confirm-inferred-seed
+mode would have shipped a canvas missing the VPC and `## Stress Tests` (which
+`riskiest-assumption-test` greps as its seed) — now elicited explicitly.
+
+### Notes
+- Greenfield behavior is unchanged; existing-project mode is opt-in.
+- `brand-workshop` product-fact pre-fill is intentionally **out of scope** (brand
+  is the least code-inferrable step); deferred as a future enhancement.
+- `riskiest-assumption-test` and `pitch-deck` need **no changes** — they consume
+  the confirmed canonical canvas exactly as before. `startup-grill` gains only the
+  two seed-aware iteration-evidence states above; its core grilling is unchanged.
+
 ## [4.4.0] — 2026-06-07
 
 Adds a **`prepare`** sub-command to **`coding-rules`** that onboards an *existing*

@@ -180,6 +180,12 @@ bypass:
 - The manifest's `iterations` counter on `validation-canvas` (incremented
   on each loop-back) directly informs the iteration-evidence read: zero
   iterations + populated RAT Results = pristine pipeline yellow flag.
+- The manifest's `source_mode` and the `validation-canvas` step's `seeded`
+  flag feed the seed checks in Step 1c: `source_mode: "existing-project"` +
+  `seeded: true` + `iterations: 1` = rubber-stamped-seed yellow flag (the
+  canvas was machine-inferred from the codebase and never revised). Combined
+  with a still-present `<!-- SEED:machine-inferred -->` marker in the canvas
+  file = unconfirmed-seed red-ish flag.
 - Manifest read failures (corrupt JSON, missing fields) are non-fatal — log
   the issue inline and proceed as if no manifest exists.
 
@@ -258,6 +264,35 @@ panel should probe accordingly:
    the founder may have compiled the pipeline manually. Surface as a flag
    that the kill-report can't cross-check beliefs against documented
    stress tests.
+5. **Unconfirmed machine seed (red-ish flag).** If `validation-canvas.md`
+   still carries the `<!-- SEED:machine-inferred -->` marker (the seed
+   sentinel `startup-audit` writes; confirming the seed in `validation-canvas`
+   strips it), the founder **never completed confirm-inferred-seed mode** — the
+   canvas is an unconfirmed machine read of the codebase, not founder belief.
+   Surface in `## Iteration Evidence`: *"The canvas is an unconfirmed machine
+   inference from the code — the founder never validated it. Treat every block as
+   a code-derived guess, not a conviction; grill whether the founder actually
+   holds the Problem / UVP / Unfair Advantage, or just shipped what the code
+   implied."* Probe the un-codeable blocks hardest.
+6. **Rubber-stamped seed (yellow flag).** If the manifest records
+   `source_mode: "existing-project"` and the `validation-canvas` step has
+   `seeded: true` with `iterations: 1` (machine-seeded from code, never looped
+   back after RAT), the founder may have confirmed the machine read without
+   genuinely engaging. Surface in `## Iteration Evidence`: *"This canvas was
+   machine-seeded from the codebase and never revised after testing. A built
+   product proves the Solution exists — not that the Problem, UVP, or Unfair
+   Advantage are true. Probe those un-codeable beliefs hardest; the code could
+   not evidence them."*
+   **Precedence (marker dominates):** if `validation-canvas.md` *also* still
+   carries the `<!-- SEED:machine-inferred -->` marker, classify as item 5
+   (State E, red), not item 6 — a present marker means confirm-inferred-seed
+   mode never completed, so the seed was never actually rubber-stamped and the
+   manifest's `seeded: true` is stale/desynced (manifest is a hint; the file
+   wins). **Absent a manifest,** item 6 cannot fire (it needs `source_mode` + `seeded`).
+   A marker-absent canvas with no manifest is treated as ordinary
+   founder-authored — acceptable either way: the canvas was either never seeded
+   (greenfield) or seeded-then-confirmed (the strip removed the marker), and both
+   warrant founder-authored treatment.
 
 The Iteration Evidence findings appear in a dedicated section in the
 kill-report — see `references/kill-report.md` Section 7 (added in v2.0.0).
@@ -336,7 +371,7 @@ Run the file's verifier checklist before presenting:
 - [ ] Diligence Asks are evidence requests, not change-the-business actions
 - [ ] No weakness appears in two severity sections
 - [ ] Panel table lists every role that contributed in Round 1
-- [ ] Iteration Evidence section reflects actual working-directory state (full / pristine / no-RAT / no-canvas)
+- [ ] Iteration Evidence section reflects actual pipeline state (working dir + manifest): full / pristine / no-RAT / no-canvas / unconfirmed-seed / rubber-stamped-seed
 
 If any box fails, fix before shipping. Then present the file with
 `present_files`.
