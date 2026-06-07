@@ -157,10 +157,9 @@ codebase encodes answers they shouldn't have to re-type. Trigger the
    is `startup-audit`'s job in Phase 0.6.
 2. **No founder-authored `validation-canvas.md`** exists at the canvas root
    (`<kit_root>/canvas/validation-canvas.md` or a legacy location). A canvas
-   that exists and carries the machine-inferred seed marker
-   (`<!-- SEED:machine-inferred -->`; see
-   [`references/state-detection.md`](references/state-detection.md)) does NOT
-   count as founder-authored — a prior seed can be resumed.
+   carrying the machine-inferred seed marker (`<!-- SEED:machine-inferred -->`)
+   is already handled by the resume-precedence guard above — it returns early,
+   so a prior seed never reaches this condition.
 
 When both hold (and no seed exists yet, per the resume-precedence check above),
 surface a one-line opt-in offer:

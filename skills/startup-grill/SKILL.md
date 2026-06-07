@@ -288,10 +288,11 @@ panel should probe accordingly:
    (State E, red), not item 6 — a present marker means confirm-inferred-seed
    mode never completed, so the seed was never actually rubber-stamped and the
    manifest's `seeded: true` is stale/desynced (manifest is a hint; the file
-   wins). **Absent a manifest,** item 6 cannot fire (the marker is stripped on
-   confirmation, so a marker-absent canvas with no manifest is treated as
-   ordinary founder-authored — acceptable, since a stripped marker implies
-   confirmation occurred).
+   wins). **Absent a manifest,** item 6 cannot fire (it needs `source_mode` + `seeded`).
+   A marker-absent canvas with no manifest is treated as ordinary
+   founder-authored — acceptable either way: the canvas was either never seeded
+   (greenfield) or seeded-then-confirmed (the strip removed the marker), and both
+   warrant founder-authored treatment.
 
 The Iteration Evidence findings appear in a dedicated section in the
 kill-report — see `references/kill-report.md` Section 7 (added in v2.0.0).
