@@ -30,6 +30,13 @@ That's what this does.
 - **Measure long-horizon outcomes** like engagement or retention.
 - **Write files by default.** Everything renders in chat unless you explicitly ask to save — and then it's one file at the workspace root, never inside the skill folder.
 - **Run round 2 on its own.** Each round surfaces calibration opportunities that get buried if the loop runs itself.
+- **Remove bias when run nested.** Its bias removal is Phase 4's executor + grader sub-agents — which it can only spawn from the **main loop**. Dispatch skill-evaluator *itself* as a sub-agent and that split collapses; it now refuses to fake it, emitting a `⚠️ DEGRADED` banner instead (see "How to run it" below).
+
+## How to run it
+
+**Run it in the main loop — not as a sub-agent.** Phase 4 spawns fresh-context executor + grader sub-agents (the grader never sees the skill text); that is the bias removal, and it needs sub-agent dispatch, which only the main loop has. If you nest skill-evaluator (dispatch it as a sub-agent), no-nested-sub-agents collapses Phase 4 into a single-context simulation — so the skill switches to **DEGRADED mode**: a loud banner + non-independent findings, with a recommendation to re-run in the main loop. If you wrote the skill yourself and want extra insulation from your own bias, run skill-evaluator in a **separate session** — not by nesting.
+
+**Auditing a whole branch:** `/audit-changed-skills` (in `commands/`) git-diffs the changed `SKILL.md` files and runs skill-evaluator on each — sequentially in the main loop, never as a parallel fan-out (which would re-nest each run and degrade it).
 
 ## When to use it
 

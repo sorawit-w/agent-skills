@@ -79,7 +79,7 @@ Each test gets its own grader sub-agent invocation with fresh context. Do NOT ba
 
 **Why:** when the same grader runs many tests in a row, drift sets in (getting stricter or looser over time), and prior assertions contaminate later judgments. The split-role design only delivers its bias-avoidance guarantee when each grading event is independent.
 
-This invariant mirrors the executor's "one prompt, one executor" rule. If the orchestrator cannot guarantee fresh context per test (e.g., platform constraint), say so explicitly in the findings report rather than silently sharing context.
+This invariant mirrors the executor's "one prompt, one executor" rule. If the orchestrator cannot spawn fresh-context grader sub-agents at all — because skill-evaluator is itself running nested, or the platform has no sub-agent dispatch — do **not** silently simulate the grading in one context. Switch to **DEGRADED mode** (see `SKILL.md` → "Platform Fallback"): lead the report with the `⚠️ DEGRADED` banner and label findings non-independent. The most common fix is to run skill-evaluator in the main loop, where it can spawn these sub-agents.
 
 ## High-stakes mode — optional second-grader quorum
 

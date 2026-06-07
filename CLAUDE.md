@@ -147,10 +147,11 @@ Recent precedent: adding a new skill = MINOR; fixing executor-brief template gap
 
 For changes to a `SKILL.md` (rule text or trigger description), run the audit *before* bumping:
 
-1. Invoke `skill-evaluator` on the changed skill — split-context audit removes author bias.
-2. Invoke `skill-creator`'s description-check on the SKILL.md frontmatter description.
+1. Run `skill-evaluator` on the changed skill **in the main loop** — then `skill-creator`'s description-check on the frontmatter description.
 
-Self-review by the same agent that wrote the changes reliably misses rule-adherence bugs. The audit catches gaps that self-review can't.
+**Run it in the main loop, not as a sub-agent.** `skill-evaluator`'s bias removal *is* its Phase 4: it spawns fresh-context executor + grader sub-agents (the grader never sees the skill text). That only works where it can spawn sub-agents — the main loop. Dispatch `skill-evaluator` *itself* as a sub-agent and no-nested-sub-agents silently collapses Phase 4 into in-context simulation — you get a confident-looking verdict with the bias removal gone. (This bit us in v4.5.0; `skill-evaluator` now emits a `DEGRADED` banner instead of simulating silently — but don't rely on the banner, invoke it right.)
+
+**Two bias levels.** *Inner* (execute-vs-grade) is removed by Phase 4's split — you get this for free in the main loop. *Outer* (the author orchestrates the audit and reads the verdict) is not removed by running the skill; for outer insulation when you just wrote the skill, run it in a **separate session**, never by nesting. Self-review by the same agent that wrote the changes reliably misses rule-adherence bugs.
 
 The audit is required for SKILL.md *text* changes. Pure doc additions (CHANGELOG, README, banner edits, reference-file additions) don't require it.
 
@@ -249,7 +250,7 @@ Skills that need any of this reference the relevant section in coordinator. `cod
 
 - `coding-rules/resources/BOOTSTRAP.md` — opinionated agentic-coding rules. Opt-in via the coding-rules skill.
 - `team-composer` Phase 6 — references `sub-agent-coordinator` for model routing / role-picking / deliverable fan-out.
-- `skill-evaluator` — the split-context audit harness for SKILL.md rule-adherence reviews.
+- `skill-evaluator` — the split-context audit harness for SKILL.md rule-adherence reviews. Run it in the **main loop** (its executor/grader sub-agents — the actual bias removal — only spawn there; nesting collapses them). See "Pre-shipment audit ritual".
 
 If you're tempted to copy from one skill into another, first check whether the source is meant to be shared. Almost always: reference, don't copy.
 

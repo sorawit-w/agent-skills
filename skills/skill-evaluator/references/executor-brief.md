@@ -176,3 +176,5 @@ If the target skill expects certain tools (e.g., git, specific MCP servers), dec
 ## One prompt, one executor
 
 Do not batch multiple test prompts into a single executor run. Each test gets its own sub-agent invocation with fresh context. Batching contaminates later tests with earlier assertions.
+
+If you cannot spawn executor sub-agents at all (skill-evaluator is running nested, or no sub-agent dispatch), do not fake the executor in-context silently — switch to **DEGRADED mode** (see `SKILL.md` → "Platform Fallback"). The usual fix is to run skill-evaluator in the main loop.

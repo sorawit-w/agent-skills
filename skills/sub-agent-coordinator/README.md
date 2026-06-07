@@ -85,7 +85,7 @@ Also installable into any agent via [`npx skills`](https://github.com/vercel-lab
 |-------|-------------|
 | `team-composer` | Natural upstream: a 3-round discussion finishes, then deliverables fan out via coordinator patterns. |
 | `wear-the-hat` | Sub-agent mode hands off a brief with a `Role:` tag and persona context baked in; this skill's spawning protocol owns the rest. |
-| `skill-evaluator` | Spawn evaluator sub-agents to stress-test other skills in parallel. |
+| `skill-evaluator` | A sibling spawner, not a sub-agent to nest: it runs in the main loop and spawns its *own* executor/grader sub-agents. Don't dispatch it under the coordinator (that collapses its split-role); run audits in the main loop, one skill at a time. |
 
 ## Status and scope
 

@@ -159,6 +159,16 @@ test_N.md
 
 ### Phase 4 — Split-role evaluation
 
+> **Run this skill in the main loop — it must be able to spawn sub-agents.** Phase 4
+> *is* the bias removal: it spawns fresh-context executor + grader sub-agents. If
+> this skill is itself running **nested** (you were dispatched as a sub-agent) or the
+> platform has no sub-agent dispatch, you **cannot** spawn them — and a simulated
+> "split" in one context is not independent grading. **Do NOT silently simulate.**
+> In that case, switch to the **Degraded mode** in the Platform Fallback section
+> below: emit the `DEGRADED` banner, do the best in-context pass you can, and label
+> every finding as non-independent. Never present simulated grading as if the
+> split-role harness ran.
+
 Run each test via two sub-agents with fresh context:
 
 **Executor sub-agent**
@@ -229,6 +239,35 @@ Do not auto-iterate. Do not run round 2 on your own.
 **Why:** the human should gate iteration. Each round surfaces calibration opportunities (re-scoping assertions, revising brief framing) that get buried if the loop runs itself. Hand the report to the user and wait.
 
 **This rule applies even when the user asks for back-to-back rounds up front** ("keep iterating until pass rate hits 95%", "run rounds 2-4 in sequence", "schedule them automatically"). Decline the auto-loop and explain that each round needs human review of the prior round's findings — because round N's failure classification often reveals that the rubric, not the skill, needs to change. Auto-iterating compounds bad classifications into bad fixes.
+
+---
+
+## Platform Fallback — when you can't spawn sub-agents (DEGRADED mode)
+
+Phase 4's executor + grader sub-agents are the load-bearing bias removal. You
+cannot run them when:
+
+- **You are running nested** — this skill was dispatched *as* a sub-agent, so
+  no-nested-sub-agents forbids spawning the executor/grader. (Run this skill in the
+  **main loop** instead — see the Phase 4 callout. This is the common cause.)
+- **The platform has no sub-agent dispatch** at all.
+
+In either case, **do NOT silently simulate the split in one context** — a single
+context playing both executor and grader is the exact author-bias the harness
+exists to remove, and a confident report that hides this is worse than no report.
+
+Instead, run **DEGRADED mode**:
+
+1. **Lead the report with this banner, verbatim:**
+   > `⚠️ DEGRADED — split-role unavailable (running nested or no sub-agent dispatch). Findings below are an in-context simulation, NOT independent grading. Re-run skill-evaluator in the main loop for a real audit.`
+2. Do the best single-context pass you can (generate tests, reason through them,
+   classify) — but label every finding **non-independent**.
+3. End by recommending the real run: invoke `skill-evaluator` directly in the main
+   loop (not via another skill or sub-agent).
+
+The banner makes the missing capability **legible** — the failure this skill kept
+hitting silently before is now loud. Never drop the banner to make a degraded run
+look clean.
 
 ---
 
