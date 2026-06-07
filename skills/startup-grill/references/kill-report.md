@@ -194,7 +194,7 @@ A short read on whether the founder is closing the loop on what they learn.
 Pulled from the iteration-evidence check in SKILL.md Phase 1 Step 1c.
 
 This section is **always present** but its content scales with what the
-working directory shows. Three states:
+working directory shows. The states (existing-project pipelines add E and F):
 
 ### State A — Full pipeline with evidence of iteration
 
@@ -258,6 +258,39 @@ description before grilling, or accept that the panel will probe with
 less ammunition than usual.
 ```
 
+### State E — Unconfirmed machine seed (red-ish flag · existing-project)
+
+```markdown
+## 7. Iteration Evidence
+
+🔴 `validation-canvas.md` still carries the `<!-- SEED:machine-inferred -->`
+marker — it was seeded from the codebase by `startup-audit` and the founder
+**never completed** `validation-canvas` confirm-inferred-seed mode (confirming
+strips the marker). The canvas is an unconfirmed machine read of the code, not
+founder belief.
+
+**Probe focus:** treat every block as a code-derived guess. The codebase proves
+the Solution exists; it cannot prove the Problem, UVP, or Unfair Advantage. Grill
+whether the founder actually holds those beliefs or just shipped what the code
+implied — these un-codeable blocks get the hardest probing.
+```
+
+### State F — Rubber-stamped seed (yellow flag · existing-project)
+
+```markdown
+## 7. Iteration Evidence
+
+🟡 Machine-seeded, never iterated — the manifest shows `source_mode:
+"existing-project"`, the `validation-canvas` step is `seeded: true`, and
+`iterations: 1` (seeded from code, no loop-back after RAT). The founder confirmed
+the machine's read but may not have genuinely engaged with it.
+
+**Probe focus:** a built product proves the Solution is real — not that the
+Problem, UVP, or Unfair Advantage are true. Probe those un-codeable beliefs
+hardest; the code could not evidence them, so confirmation there is the founder's,
+not the machine's.
+```
+
 This section is **light gate output** (informational, not a blocker — the
 kill report is the terminal pipeline step). But it surfaces a pattern that
 predicts startup outcomes well: founders who iterate beat founders who
@@ -295,6 +328,6 @@ Before shipping `<grill-root>/kill-report.md`, verify:
 - [ ] Diligence Asks are evidence requests, not change-the-business actions
 - [ ] No weakness appears in two severity sections
 - [ ] Panel table lists every role that contributed in Round 1
-- [ ] Iteration Evidence section reflects actual state of working directory (full / pristine / no-RAT / no-canvas)
+- [ ] Iteration Evidence section reflects actual state of working directory (full / pristine / no-RAT / no-canvas / unconfirmed-seed / rubber-stamped-seed)
 
 If any box is unchecked, fix before presenting the file.

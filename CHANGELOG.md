@@ -37,6 +37,14 @@ founder only to confirm what code reveals and to author what it can't.
   per-step `seeded` flag (additive — `manifest_version` stays `1`), plus a worked
   example. `state-detection.md` Rule 7 distinguishes a machine seed from a
   founder canvas on resume.
+- `startup-grill` iteration-evidence check (Step 1c) gains two existing-project
+  states: **unconfirmed seed** (red-ish — `validation-canvas.md` still carries the
+  `<!-- SEED:machine-inferred -->` marker, so the founder never confirmed the
+  machine read) and **rubber-stamped seed** (yellow — `source_mode:
+  existing-project` + `seeded: true` + `iterations: 1`). Both push the panel to
+  grill the un-codeable beliefs (Problem / UVP / Unfair Advantage) hardest, since
+  a built product proves the Solution exists but not that those are true. New
+  kill-report Section 7 states E and F.
 
 ### Changed
 - `startup-launch-kit` frontmatter description gains existing-project triggers;
@@ -67,8 +75,9 @@ mode would have shipped a canvas missing the VPC and `## Stress Tests` (which
 - Greenfield behavior is unchanged; existing-project mode is opt-in.
 - `brand-workshop` product-fact pre-fill is intentionally **out of scope** (brand
   is the least code-inferrable step); deferred as a future enhancement.
-- `riskiest-assumption-test`, `pitch-deck`, `startup-grill` need **no changes** —
-  they consume the confirmed canonical canvas exactly as before.
+- `riskiest-assumption-test` and `pitch-deck` need **no changes** — they consume
+  the confirmed canonical canvas exactly as before. `startup-grill` gains only the
+  two seed-aware iteration-evidence states above; its core grilling is unchanged.
 
 ## [4.4.0] — 2026-06-07
 
