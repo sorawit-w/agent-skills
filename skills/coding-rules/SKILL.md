@@ -112,6 +112,8 @@ Onboard an **existing repo** into coding-rules — populate (and refresh) the ar
 
 `prepare` is safe to re-run: per the workflow's refresh rules it re-derives only agent-owned content and is a diffs-only near-no-op on an already-onboarded repo.
 
+**Forcing the knowledge pass.** The `.ai/knowledge/` decision/lesson pass runs automatically only on first onboarding (empty `.ai/knowledge/`); once entries exist it is opt-in. To force it without the opt-in prompt, pass a knowledge-force signal with `prepare` — `args: prepare:knowledge`, `args: prepare --knowledge`, or natural language ("force the knowledge pass", "prepare and draft knowledge candidates"). The workflow runs the pass regardless of existing entries. Forcing only controls whether the pass runs — drafts are still `confidence: low`, still per-entry diff-and-confirm, and `confidence: high` entries stay frozen.
+
 ---
 
 ## `install`

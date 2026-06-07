@@ -69,7 +69,13 @@ These are *proposals* — present them, let the human cut/correct, then write un
 
 ### Low inferability — `.ai/knowledge/` (draft candidates)
 
-**First-run detection:** if `.ai/knowledge/` has no entry files (only `KNOWLEDGE.md`, or the dir is absent) → run this pass **automatically**. If entry files already exist → it is **opt-in**: ask *"Draft candidate decision/lesson entries from your git history for review?"* and skip on no.
+**When the pass runs — three branches:**
+
+1. **Forced (explicit request) → run, skip the prompt.** If the invocation carries a knowledge-force signal — `prepare:knowledge`, `prepare --knowledge`, or natural language like "force knowledge", "force the knowledge pass", "draft knowledge candidates/entries", "include the knowledge pass" — run the pass regardless of whether entries already exist. Do not ask the opt-in question; the request *is* the consent.
+2. **First run (empty) → run automatically.** If not forced and `.ai/knowledge/` has no entry files (only `KNOWLEDGE.md`, or the dir is absent) → run the pass automatically.
+3. **Entries exist, not forced → opt-in.** Ask *"Draft candidate decision/lesson entries from your git history for review?"* and skip on no.
+
+The force signal only controls **whether the pass runs** — it does **not** relax any safety rule below. Every drafted entry is still `confidence: low` with hedged prose, still confirmed individually before writing, and the refresh rule still applies (re-draft only `confidence: low` entries; never clobber `confidence: high`).
 
 When the pass runs, draft entries from the step-2 signal using the `knowledge-management.md` schema, with two hard constraints:
 - **`confidence: low`** on every drafted entry (agent-inferred, unverified).
