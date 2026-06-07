@@ -5,6 +5,55 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.4.0] — 2026-06-07
+
+Adds a **`prepare`** sub-command to **`coding-rules`** that onboards an *existing*
+repo into the system — populating (and refreshing) the artifacts BOOTSTRAP reads
+at session start (`agent-context.yaml`, `CONTEXT.md`, `.ai/knowledge/`,
+`.ai/STATUS.md`, `.ai/memory.log`) from the repo's real code and git history.
+Until now coding-rules could populate context two ways — greenfield
+(`new-project.md`, from requirements) or resume (read what already exists) — but an
+existing codebase with no coding-rules artifacts had no path to "ready." The
+SessionStart hooks only ever scaffold *empty* skeletons and never overwrite, so the
+skeletons sat unpopulated. `prepare` fills that gap.
+
+### Added
+- `resources/workflows/adopt-existing.md` — the onboarding procedure. Populates
+  artifacts **tiered by inferability-from-code**: high (auto-fill
+  `agent-context.yaml` mechanical fields), medium (propose `CONTEXT.md` glossary +
+  module map), low (draft `.ai/knowledge/` decision/lesson candidates as
+  `confidence: low` with hedged prose), stub-only (`STATUS.md` honest onboarding
+  stub, `memory.log` onboarding entry). Knowledge pass runs automatically on first
+  onboarding, opt-in thereafter. Capability-gated on SocratiCode/codegraph for
+  structure indexing (accelerator, never a dependency).
+- `prepare` sub-command routing in `SKILL.md` (frontmatter description, routing
+  section, natural-language aliases) and a new route-table row in
+  `resources/BOOTSTRAP.md` for "existing code, no coding-rules artifacts yet."
+- **`load` readiness nudge** — after `load`, a read-only check suggests `prepare`
+  when the repo has real code but unpopulated artifacts. Suggestion only; stays
+  silent on already-prepared or greenfield repos; never auto-runs.
+
+### Why
+The hard part is coding-rules' own doctrine: *never overwrite human-curated
+content*, *never write knowledge silently*, *tag agent-drafted entries
+`confidence: low`*. A naive "generate context" command would collide with all
+three. The design resolves it by tiering population by how reliably content can be
+inferred from code (stack is near-mechanical; the *why* behind a decision lives in
+people's heads and is dangerous to assert), gating every write behind
+diff-and-confirm, and making refresh re-derive *only* agent-owned content —
+`agent-context.yaml` mechanical fields, appended glossary terms, and `confidence:
+low` knowledge entries — while freezing anything a human wrote or verified. Refresh
+is therefore idempotent: a diffs-only near-no-op on an already-onboarded repo.
+
+### Notes
+- MINOR bump: new backwards-compatible sub-command; no change to existing
+  sub-command contracts. No new hook and no new template — `prepare` reuses the
+  four existing artifact templates and is an on-demand agent workflow, not a
+  lifecycle hook.
+- Out of scope by design: no quality-gate runs, no tooling install, no
+  `ROADMAP.md`, no `DESIGN.md` authoring (design-token authority is a separate
+  concern), no commits/merge, and never writes secret-file contents.
+
 ## [4.3.1] — 2026-06-07
 
 Tightens **`coding-rules`** commit-message guidance so the agent stops emitting

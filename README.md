@@ -540,7 +540,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.3.1`.** Tightens **`coding-rules`** commit-message guidance so the agent stops emitting bare commits with no Conventional Commits type. The format previously lived only as a template snippet that implied scope was mandatory and was easy to skim past under context pressure; it's now an explicit, legible rule — **type required** (enumerated set), **scope optional** — with a valid/invalid contrast, and the over-specified `(<scope>)` template corrected to Conventional Commits' own `<type>[optional scope]` notation. Validated via `skill-evaluator` (14/14 assertions across 5 split-role tests). Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.4.0`.** Adds a **`prepare`** sub-command to **`coding-rules`** that onboards an *existing* repo — populating (and refreshing) the artifacts BOOTSTRAP reads at session start (`agent-context.yaml`, `CONTEXT.md`, `.ai/knowledge/`, `.ai/STATUS.md`, `.ai/memory.log`) from the repo's real code and git history. Until now context could only be populated greenfield (`new-project`) or read on resume; an existing codebase with empty/absent artifacts had no path to "ready." `prepare` fills it — population **tiered by inferability-from-code**, **diff-and-confirm on every write**, refresh that never clobbers human-curated content, and a read-only `load` nudge that suggests `prepare` when a repo has code but unpopulated context. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
