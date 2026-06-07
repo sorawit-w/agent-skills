@@ -285,6 +285,10 @@ implied — these un-codeable blocks get the hardest probing.
 `iterations: 1` (seeded from code, no loop-back after RAT). The founder confirmed
 the machine's read but may not have genuinely engaged with it.
 
+(Precedence: if the `<!-- SEED:machine-inferred -->` marker is *also* still
+present, use State E instead — an un-stripped marker means the seed was never
+confirmed, which dominates the manifest's `seeded` flag.)
+
 **Probe focus:** a built product proves the Solution is real — not that the
 Problem, UVP, or Unfair Advantage are true. Probe those un-codeable beliefs
 hardest; the code could not evidence them, so confirmation there is the founder's,
@@ -328,6 +332,6 @@ Before shipping `<grill-root>/kill-report.md`, verify:
 - [ ] Diligence Asks are evidence requests, not change-the-business actions
 - [ ] No weakness appears in two severity sections
 - [ ] Panel table lists every role that contributed in Round 1
-- [ ] Iteration Evidence section reflects actual state of working directory (full / pristine / no-RAT / no-canvas / unconfirmed-seed / rubber-stamped-seed)
+- [ ] Iteration Evidence section reflects actual pipeline state (working dir + manifest): full / pristine / no-RAT / no-canvas / unconfirmed-seed / rubber-stamped-seed
 
 If any box is unchecked, fix before presenting the file.

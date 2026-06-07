@@ -283,6 +283,15 @@ panel should probe accordingly:
    product proves the Solution exists — not that the Problem, UVP, or Unfair
    Advantage are true. Probe those un-codeable beliefs hardest; the code could
    not evidence them."*
+   **Precedence (marker dominates):** if `validation-canvas.md` *also* still
+   carries the `<!-- SEED:machine-inferred -->` marker, classify as item 5
+   (State E, red), not item 6 — a present marker means confirm-inferred-seed
+   mode never completed, so the seed was never actually rubber-stamped and the
+   manifest's `seeded: true` is stale/desynced (manifest is a hint; the file
+   wins). **Absent a manifest,** item 6 cannot fire (the marker is stripped on
+   confirmation, so a marker-absent canvas with no manifest is treated as
+   ordinary founder-authored — acceptable, since a stripped marker implies
+   confirmation occurred).
 
 The Iteration Evidence findings appear in a dedicated section in the
 kill-report — see `references/kill-report.md` Section 7 (added in v2.0.0).
@@ -361,7 +370,7 @@ Run the file's verifier checklist before presenting:
 - [ ] Diligence Asks are evidence requests, not change-the-business actions
 - [ ] No weakness appears in two severity sections
 - [ ] Panel table lists every role that contributed in Round 1
-- [ ] Iteration Evidence section reflects actual working-directory state (full / pristine / no-RAT / no-canvas / unconfirmed-seed / rubber-stamped-seed)
+- [ ] Iteration Evidence section reflects actual pipeline state (working dir + manifest): full / pristine / no-RAT / no-canvas / unconfirmed-seed / rubber-stamped-seed
 
 If any box fails, fix before shipping. Then present the file with
 `present_files`.
