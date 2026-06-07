@@ -170,7 +170,7 @@ Each entry below is a quick reference — example prompts and which skills it pa
 **Pairs well with.**
 - [`team-composer`](skills/team-composer/README.md) — natural upstream: discussion finishes, deliverables fan out via coordinator patterns.
 - [`wear-the-hat`](skills/wear-the-hat/README.md) — sub-agent mode hands off a brief with `Role:` tag and persona context baked in; this skill's spawning protocol owns the rest.
-- [`skill-evaluator`](skills/skill-evaluator/README.md) — spawn evaluator sub-agents to stress-test other skills in parallel.
+- [`skill-evaluator`](skills/skill-evaluator/README.md) — a sibling spawner: it runs in the **main loop** and spawns its *own* executor/grader sub-agents. Don't nest it under the coordinator (that collapses its split-role); run evaluations in the main loop, one skill at a time.
 
 **Try it.**
 - "Refactor all 14 React components from class to function — coordinate in parallel."
@@ -540,7 +540,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.5.0`.** Adds an opt-in **existing-project mode** to **`startup-launch-kit`** — run the full five-artifact kit on an *already-built* product instead of only greenfield ideas. When pointed at a repo with no founder canvas, the orchestrator offers to read the codebase (reusing **`startup-audit`**'s `mode=diligence` — no duplicated extraction), seeds the validation canvas with a provenance-tiered machine read, and `validation-canvas` runs a **tiered confirm** (glance-confirm `observed`, verify `inferred`, interview `unknown`) instead of asking every question blind. "Imply answers unless they're missing or can't be implied" maps onto `startup-audit`'s `observed/inferred/unknown` tiers; greenfield behavior is unchanged. Full version history, with the reasoning behind each release, is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.6.0`.** Hardens the **`skill-evaluator` pre-shipment practice**. Its bias removal *is* its Phase 4 (fresh-context executor + grader sub-agents) — which only spawn from the **main loop**; dispatching `skill-evaluator` *itself* as a sub-agent silently collapses that split into in-context simulation. Now: a `⚠️ DEGRADED` mode that **refuses to silently simulate** (loud banner + non-independent findings when sub-agents can't spawn), a rewritten CLAUDE.md ritual ("run it in the main loop; separate session for outer-bias insulation, never nesting"), and an `/audit-changed-skills` command that runs evaluations **sequentially in the main loop** (not a parallel fan-out, which would re-nest). The fix was validated by auditing `skill-evaluator` with itself in the main loop (11/11). Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

@@ -5,6 +5,55 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.6.0] — 2026-06-07
+
+Hardens the **`skill-evaluator` pre-shipment practice** after v4.5.0 surfaced that
+the repo's own guidance was misleading — and the way we ran the audit was the
+*degraded* path. `skill-evaluator`'s bias removal **is** its Phase 4: it spawns
+fresh-context executor + grader sub-agents (the grader never sees the skill text).
+That only works where it can spawn sub-agents — **the main loop.** Dispatching
+`skill-evaluator` *itself* as a sub-agent trips no-nested-sub-agents and silently
+collapses Phase 4 into in-context simulation: a confident verdict with the bias
+removal quietly gone. This release makes the correct path explicit and the failure
+loud.
+
+### Added
+- `skill-evaluator` **Platform Fallback — DEGRADED mode**: when it can't spawn its
+  executor/grader sub-agents (running nested, or no dispatch), it now **refuses to
+  silently simulate** — it leads the report with a `⚠️ DEGRADED` banner, labels every
+  finding non-independent, and recommends re-running in the main loop. A Phase 4
+  callout states the main-loop requirement up front; the executor/grader briefs point
+  at the fallback instead of a buried "say so" line.
+- `/audit-changed-skills` command (`skills/skill-evaluator/commands/audit-changed-skills.md`):
+  git-diffs changed `SKILL.md` files and runs `skill-evaluator` on each **sequentially
+  in the main loop**. The load-bearing rule in its body is the anti-fan-out warning —
+  a parallel per-file fan-out would nest each run and re-trigger the degradation.
+
+### Changed
+- CLAUDE.md **Pre-shipment audit ritual** rewritten: run `skill-evaluator` in the
+  main loop (not as a sub-agent); names the two bias levels (inner = execute-vs-grade,
+  removed by Phase 4; outer = author orchestrates) and prescribes a **separate
+  session**, never nesting, for outer insulation.
+- Consistency sweep: aligned the CLAUDE.md shared-resources pointer and fixed the root
+  README pairing line that wrongly advised spawning evaluator sub-agents "in parallel."
+- `skill-evaluator` README: added a "How to run it" section (main loop, not nested) and
+  the degraded-mode limitation.
+
+### Why
+Every line of the corrected guidance traces to a specific v4.5.0 incident: the audit
+sub-agents reported simulating the split-role in-context because they were nested. The
+fix follows the repo's own principle #6 — make the missing capability *legible*: a
+loud `DEGRADED` banner beats a silently-degraded clean-looking verdict. The change was
+itself validated by running `skill-evaluator` on its own edited SKILL.md **in the main
+loop** (11/11 assertions; real executor/grader sub-agents spawned, no `DEGRADED`
+banner for the orchestrator — the meta-loop self-validates).
+
+### Notes
+- No behavior change to `skill-evaluator`'s core 7-phase audit logic beyond the
+  context-awareness + fallback additions.
+- `/audit-changed-skills` is a command on an existing skill, not a new skill — no
+  root-README catalog or skill-graph additions required.
+
 ## [4.5.0] — 2026-06-07
 
 Adds an opt-in **existing-project mode** to **`startup-launch-kit`**: run the full
