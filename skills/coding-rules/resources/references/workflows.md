@@ -170,6 +170,8 @@ git commit -m "chore: setup development environment"
 
 ## Existing Project Flow
 
+> **No coding-rules artifacts yet?** This flow assumes `agent-context.yaml`, `.ai/`, and `CONTEXT.md` already exist. If the repo has code but those are missing or empty, run the `prepare` sub-command first (`workflows/adopt-existing.md`) to populate them, then resume here.
+
 ### 1. Load Project Context
 
 Read in order:

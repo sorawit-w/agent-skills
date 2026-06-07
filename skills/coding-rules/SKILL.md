@@ -1,13 +1,16 @@
 ---
 name: coding-rules
 description: >
-  Load, install, reload, check status of, or uninstall the coding-rules
-  guardrails system. Invoke ONLY when the user explicitly mentions
-  "coding-rules", "/coding-rules", or asks to load/install/uninstall/check
-  coding-rules guardrails. Do NOT invoke on general coding tasks (fixing
+  Load, install, reload, check status of, uninstall, or prepare an existing
+  repo for the coding-rules guardrails system. Invoke ONLY when the user
+  explicitly mentions
+  "coding-rules", "/coding-rules", or asks to load/install/uninstall/check/
+  prepare (onboard an existing repo into) coding-rules guardrails. Do NOT
+  invoke on general coding tasks (fixing
   bugs, implementing features, refactoring) — coding-rules is a meta-system
   that itself governs how those tasks are done. Sub-commands via the args
-  parameter: `load` (default), `reload`, `status`, `install`, `uninstall`.
+  parameter: `load` (default), `reload`, `status`, `install`, `uninstall`,
+  `prepare`.
 ---
 
 # coding-rules — session loader
@@ -46,7 +49,7 @@ This skill's job is the **loading** step — getting BOOTSTRAP into context reli
 
 ## Sub-command routing
 
-Determine the sub-command from the `args` parameter passed when the skill was invoked. If `args` is empty or unset, default to `load`. The user may also express intent in natural language (e.g., "install coding-rules in this project" → `install`).
+Determine the sub-command from the `args` parameter passed when the skill was invoked. If `args` is empty or unset, default to `load`. The user may also express intent in natural language (e.g., "install coding-rules in this project" → `install`; "onboard/adopt this repo into coding-rules", "make this repo coding-rules-ready" → `prepare`).
 
 ---
 
@@ -61,6 +64,16 @@ Load the coding-rules into the current session.
    > **coding-rules loaded.** BOOTSTRAP is in context for this session — I will follow its rules until the session ends or context is compacted. If rules seem to stop applying mid-session, invoke `coding-rules` with `args: reload`.
 
 4. The rules are now active. Apply BOOTSTRAP for all subsequent work in this session.
+
+5. **Readiness nudge (read-only).** After confirming, check whether this repo is already prepared for coding-rules, and suggest `prepare` if not. This adds **no writes** — detection only.
+
+   - **Has real code?** True if any project manifest exists (`package.json`, `deno.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`) or there is a populated source tree.
+   - **Already prepared?** True if `agent-context.yaml` exists with a non-empty `project.name` (the template ships `""`) **AND** (`CONTEXT.md` has ≥1 glossary entry **OR** `.ai/knowledge/` has ≥1 entry file beyond `KNOWLEDGE.md`).
+   - **If has-real-code AND NOT already-prepared**, append this one line after the confirmation:
+
+     > This repo has code but no populated coding-rules context (CONTEXT.md / `.ai/knowledge/` / agent-context.yaml look empty or missing). Run `coding-rules` with `args: prepare` to onboard it — I'll populate those from your code and git history, with a diff-and-confirm on every write.
+
+   - **Otherwise stay silent** — already prepared, or no real code (a greenfield repo belongs to `workflows/new-project.md`, not `prepare`). The nudge is a suggestion only; never auto-run `prepare`.
 
 ---
 
@@ -86,6 +99,18 @@ Check whether the rules are currently loaded.
 3. If not found, report:
 
    > **coding-rules: not loaded.** Invoke `coding-rules` with `args: load` to load them.
+
+---
+
+## `prepare`
+
+Onboard an **existing repo** into coding-rules — populate (and refresh) the artifacts BOOTSTRAP's `detect_project` step reads (`agent-context.yaml`, `CONTEXT.md`, `.ai/knowledge/`, `.ai/STATUS.md`, `.ai/memory.log`) from the repo's real code and git history. This is the existing-code counterpart to `new-project.md` (greenfield) and to the resume flow in `references/workflows.md` (read-and-continue).
+
+1. Resolve the bundled rule-content root the same way `load` resolves `BOOTSTRAP.md` (Glob `**/skills/coding-rules/resources/BOOTSTRAP.md`, else `${CODING_RULES_DIR}/resources/BOOTSTRAP.md`, else ask). The workflow file is its sibling at `<install-root>/resources/workflows/adopt-existing.md`.
+2. **Read `resources/workflows/adopt-existing.md` in full** with the `Read` tool, then follow it. It carries the procedure: tiered population by inferability, diff-and-confirm on every write, and per-tier refresh rules that never clobber human-curated content.
+3. The workflow modifies user files — but **only ever behind a per-artifact diff-and-confirm**, exactly like `install`. Never write any artifact silently. Honor the out-of-scope ring-fence in the workflow (no quality gates, no tooling install, no `ROADMAP.md`, no commits/merge, no secret contents).
+
+`prepare` is safe to re-run: per the workflow's refresh rules it re-derives only agent-owned content and is a diffs-only near-no-op on an already-onboarded repo.
 
 ---
 
@@ -276,4 +301,6 @@ Once `load` runs, BOOTSTRAP enters conversation context. Claude Code's compactio
 - **Do NOT inline BOOTSTRAP content in your response when handling `load`.** Use the `Read` tool. Pasting the content into your response text does not put it in context as a tool result — only `Read` does that, and that is the load mechanism.
 - **Do NOT batch the Phase 1 install or uninstall confirmations.** Ask per file, one at a time. Batched confirmations defeat the per-file review the user is supposed to do. (Phase 2 uses a single diff-then-confirm because settings.json is one file.)
 - **Do NOT proceed with `install` or `uninstall` if the user says no or expresses any uncertainty in either phase.** Bias toward not modifying files. Either phase can be skipped independently.
+- **Do NOT let `prepare` write any artifact silently or clobber human content.** Every `prepare` write goes through a per-artifact diff-and-confirm; refresh re-derives only agent-owned content (`agent-context.yaml` mechanical fields, appended glossary terms, `confidence: low` knowledge entries) and never touches human-curated or human-verified content. Honor the workflow's out-of-scope ring-fence.
+- **Do NOT let the `load` readiness nudge auto-run `prepare`.** It is a read-only suggestion. Stay silent when the repo is already prepared or is greenfield (greenfield → `new-project.md`, not `prepare`).
 - **Do NOT touch hand-written hook entries during `uninstall`.** The script-path signature (`/skills/coding-rules/resources/hooks/<filename>.sh`) must match exactly — otherwise the entry stays.

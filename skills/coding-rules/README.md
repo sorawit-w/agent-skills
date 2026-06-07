@@ -39,7 +39,7 @@ None are required — `coding-rules` works on its own. They sharpen the edges wh
 ## What it does
 
 - **Loads `resources/BOOTSTRAP.md`** into the current session via the `Read` tool, so the rules enter conversation context as a tool result (not a paraphrase).
-- **Five sub-commands** routed via the `args` parameter: `load` (default), `reload`, `status`, `install`, `uninstall`.
+- **Six sub-commands** routed via the `args` parameter: `load` (default), `reload`, `status`, `install`, `uninstall`, `prepare`.
 - **Per-project install** appends a single instruction line to your `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules` so future sessions auto-invoke `coding-rules` at start. **Per-file confirmation required — never silent.**
 - **Compaction-safe.** Long sessions can strip earlier context; `args: status` checks whether BOOTSTRAP markers are still present, `args: reload` re-injects them.
 
@@ -76,8 +76,9 @@ The skill is invoked via `Skill` tool with `args: <sub-command>`. Defaults to `l
 | `status` | Scan recent context for BOOTSTRAP signatures (e.g., `Prime Directive`, `<hard_rules>`, distinctive headers). Report loaded / not loaded. |
 | `install` | **Phase 1** — append the session-start instruction to your vendor agent-instruction files (`CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules`), per-file confirmation. **Phase 2 (optional)** — register `coding-rules`' Claude Code lifecycle hooks (`PreToolUse` + `SessionStart`) in your chosen settings file. Both phases are independently skippable; both show a diff and require explicit confirmation. |
 | `uninstall` | Mirror — Phase 1 removes the install line from vendor files; Phase 2 removes coding-rules-managed hook entries from your chosen settings file. Both phases optional, both confirmed. |
+| `prepare` | Onboard an **existing repo**: populate (and refresh) the artifacts BOOTSTRAP reads at session start — `agent-context.yaml`, `CONTEXT.md`, `.ai/knowledge/`, `.ai/STATUS.md`, `.ai/memory.log` — from your real code and git history. Tiered by inferability; **diff-and-confirm on every write**; refresh never clobbers human-curated content. The existing-code counterpart to greenfield `new-project` setup. |
 
-Both `install` and `uninstall` are idempotent — re-running is safe.
+`install`, `uninstall`, and `prepare` are idempotent — re-running is safe. (`prepare` re-derives only agent-owned content and is a diffs-only near-no-op on an already-onboarded repo.)
 
 ### How to invoke
 
@@ -90,6 +91,7 @@ Slash command (recommended — unambiguous):
 /agent-skills:coding-rules status        # check whether rules are still loaded
 /agent-skills:coding-rules install       # persistent per-project setup
 /agent-skills:coding-rules uninstall     # mirror — both phases
+/agent-skills:coding-rules prepare       # onboard an existing repo (populate context)
 ```
 
 If no other installed plugin defines a `coding-rules` skill, the short form `/coding-rules` also resolves. The namespaced form is always unambiguous and recommended.
@@ -101,6 +103,7 @@ Or in natural language — Claude will route correctly:
 - "are coding-rules still loaded?"
 - "reload coding-rules — they seem to have stopped applying"
 - "uninstall coding-rules"
+- "onboard this repo into coding-rules" / "make this repo coding-rules-ready" / "prepare this repo"
 
 ### `load` vs `install` — they're independent
 
