@@ -4,7 +4,7 @@ The canonical map of every skill on the shelf — what it does, who reaches for 
 
 For per-skill usage, design notes, and cross-skill detail, follow each name to its own README under [`skills/`](../skills/).
 
-## Nodes — the 21 skills
+## Nodes — the 22 skills
 
 Audience buckets map to the README's "Start here" rows: **Startup** (build & validate a startup), **Review** (review a product or AI product), **Code** (writing & shipping code), **Author** (authoring & auditing skills), **Calibrate/visual** (calibrate, localize & visuals).
 
@@ -21,6 +21,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`team-composer`](../skills/team-composer/README.md) | Multi-role 3-round discussion → conclusion + plan | PMs, engineers, anyone planning | stable | Review · Author |
 | [`ai-ux-review`](../skills/ai-ux-review/README.md) | 7-block human-AI design-completeness review (MD + HTML) | AI product teams, designers, PMs | stable | Review |
 | [`ai-eval-review`](../skills/ai-eval-review/README.md) | 7-block AI eval-design review + regulatory lens (MD + HTML) | AI teams, measurement eng, compliance | stable | Review |
+| [`gamification-fit`](../skills/gamification-fit/README.md) | Restraint-first gamification *recommender*: resources + goal → the few mechanics that honestly fit + a prominent "deliberately NOT gamified" refusals section; structural ethics veto (MD + HTML) | Product teams, founders adding engagement | stable | Review |
 | [`skill-evaluator`](../skills/skill-evaluator/README.md) | Audit a SKILL.md for rule adherence; targeted diffs | Skill authors, QA gatekeepers | stable | Author |
 | [`coding-rules`](../skills/coding-rules/README.md) | Load/install opinionated agentic-coding guardrails | Individual devs, teams | ⚠️ OPINIONATED | Code |
 | [`tech-stack-recommendations`](../skills/tech-stack-recommendations/README.md) | Opinionated TS/JS stack + named alternates | Founders, architects, engineers | stable | Code |
@@ -46,6 +47,12 @@ graph LR
 
   %% AI-review siblings
   AUX[ai-ux-review] -.->|sibling| AEV[ai-eval-review]
+
+  %% Gamification fit (two-parent fork: startup-audit ingest + ai-ux-review render + startup-grill veto)
+  VC -.->|goal source| GF[gamification-fit]
+  GTM -.->|North Star goal| GF
+  AUX -.->|where mechanics live| GF
+  GF -.->|scope the build| TC
 
   %% Personalization
   WAI[whoami] --> HS[handshake]

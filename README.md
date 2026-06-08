@@ -20,7 +20,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty-one specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty-two specialized skills in one go.
 - **Who it's for** — anyone on Claude Code or Cowork who wants auto-triggering expertise for a specific job. [**Start here**](#start-here) to find yours.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -67,7 +67,7 @@ New here? Find your job and jump in. The full catalog is in [The shelf](#the-she
 | If you're… | Start with |
 |:---|:---|
 | **Building & validating a startup** — idea to investor-ready | The [startup pipeline](#how-skills-chain): [`brand-workshop`](#brand-workshop) → [`validation-canvas`](#validation-canvas) → [`riskiest-assumption-test`](#riskiest-assumption-test) → [`pitch-deck`](#pitch-deck) → [`startup-grill`](#startup-grill); [`startup-launch-kit`](#startup-launch-kit) orchestrates, [`gtm`](#gtm) gets users; [`startup-audit`](#startup-audit) for the *already-built* product |
-| **Auditing a built product** — diligence from a codebase/URL, design, evals, critique | [`startup-audit`](#startup-audit) · [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`validation-canvas`](#validation-canvas) |
+| **Auditing a built product** — diligence from a codebase/URL, design, evals, critique | [`startup-audit`](#startup-audit) · [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`gamification-fit`](#gamification-fit) · [`validation-canvas`](#validation-canvas) |
 | **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) |
 | **Authoring & auditing skills** — design, build & audit your own skills | [`skill-evaluator`](#skill-evaluator) · [`team-composer`](#team-composer) · [`sub-agent-coordinator`](#sub-agent-coordinator) · see [Building on the shelf](#building-on-the-shelf) |
 | **Calibrating, localizing & visuals** — make the agent yours, ship or read any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n`](#i18n) · [`define`](#define) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
@@ -100,6 +100,7 @@ Each skill links to its own README — the full doc with usage, design notes, an
 | <img src="assets/icons/gtm.svg" alt="" width="64" align="middle"/> | [`gtm`](skills/gtm/README.md) **🚧 BETA** | Phased go-to-market for startup products — GTM playbook, multi-channel content, cadenced scheduling, compliance gates, kill switch. |
 | <img src="assets/icons/ai-ux-review.svg" alt="" width="64" align="middle"/> | [`ai-ux-review`](skills/ai-ux-review/README.md) | Design-completeness review for AI products — seven blocks, six cross-block checks, explicit `[Gap — …]` markers. Ships MD + HTML. |
 | <img src="assets/icons/ai-eval-review.svg" alt="" width="64" align="middle"/> | [`ai-eval-review`](skills/ai-eval-review/README.md) | Eval-design-completeness review for AI products — sibling to `ai-ux-review`. Seven blocks plus a regulatory lens. Ships MD + HTML. |
+| <img src="assets/icons/gamification-fit.svg" alt="" width="64" align="middle"/> | [`gamification-fit`](skills/gamification-fit/README.md) | Restraint-first gamification recommender — reads code/docs/URL/analytics + a goal, finds the few places play honestly fits and refuses the rest via a structural ethics veto. Ships MD + HTML. |
 | <img src="assets/icons/pixel-art.svg" alt="" width="64" align="middle"/> | [`pixel-art`](skills/pixel-art/README.md) **🚧 BETA** | A pocket-sized hi-density pixel-art studio with a built-in design system. Two style modes; model-agnostic prompts; portable SVG title cards. |
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
@@ -495,6 +496,24 @@ Each entry below is a quick reference — example prompts and which skills it pa
 
 ---
 
+<a id="gamification-fit"></a>
+
+### <img src="assets/icons/gamification-fit.svg" alt="" width="48" align="middle"/> &nbsp;[`gamification-fit`](skills/gamification-fit/README.md)
+
+**Pairs well with.**
+- [`validation-canvas`](skills/validation-canvas/README.md) — upstream goal source for early-stage products (Key Metrics + the value-prop "aha" behavior).
+- [`gtm`](skills/gtm/README.md) — upstream goal source for post-launch products (the North Star metric).
+- [`ai-ux-review`](skills/ai-ux-review/README.md) — adjacent. Its trust/feedback/control blocks tell this skill *where* a mechanic could honestly live.
+- [`team-composer`](skills/team-composer/README.md) + [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — downstream to scope and build the recommended cards; `@game_designer` for designing an actual game (out of this skill's scope).
+- [`skill-evaluator`](skills/skill-evaluator/README.md) — audits this skill's rule-adherence (specificity gate, structural veto, refusal section, three-line close).
+
+**Try it.**
+- "Where should I add gamification to my habit-tracker so users log an entry 4+ days a week?"
+- "Should we gamify our expense-report submission flow? Goal is 90% submitted on time."
+- "Here's our repo and a PostHog export — find the few places play honestly fits, and tell me what to deliberately leave alone."
+
+---
+
 <a id="pixel-art"></a>
 
 ### <img src="assets/icons/pixel-art.svg" alt="" width="48" align="middle"/> &nbsp;[`pixel-art`](skills/pixel-art/README.md) &nbsp;🚧&nbsp;**BETA**
@@ -540,7 +559,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.6.0`.** Hardens the **`skill-evaluator` pre-shipment practice**. Its bias removal *is* its Phase 4 (fresh-context executor + grader sub-agents) — which only spawn from the **main loop**; dispatching `skill-evaluator` *itself* as a sub-agent silently collapses that split into in-context simulation. Now: a `⚠️ DEGRADED` mode that **refuses to silently simulate** (loud banner + non-independent findings when sub-agents can't spawn), a rewritten CLAUDE.md ritual ("run it in the main loop; separate session for outer-bias insulation, never nesting"), and an `/audit-changed-skills` command that runs evaluations **sequentially in the main loop** (not a parallel fan-out, which would re-nest). The fix was validated by auditing `skill-evaluator` with itself in the main loop (11/11). Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.7.0`.** Adds **[`gamification-fit`](#gamification-fit)** — a restraint-first gamification *recommender* (not a reviewer of existing gamification). It ingests a product / idea / resource set (code, docs/PDF, URLs, analytics exports) plus a goal and reports the few places play would honestly serve the user — and, more prominently, where it deliberately should **not** be added. Anchored on Self-Determination Theory, it steers away from default Points/Badges/Leaderboards and enforces a non-droppable structural ethics veto (regulated/minors/manipulation refused outright). A two-parent fork: `startup-audit`'s ingest/provenance patterns + `ai-ux-review`'s intake/render + `startup-grill`'s refuse-or-re-run veto. Pre-shipment `skill-evaluator` audit passed 28/28 across six split-role tests. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

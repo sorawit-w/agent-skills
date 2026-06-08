@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gamification Fit — {{PRODUCT_NAME}}</title>
+<!--
+  Self-contained render of gamification-fit.md. Substitute {{placeholders}}.
+  Contract: inline CSS+JS only, zero network requests, no localStorage, no PII,
+  base64 any images, prints clean to PDF. Brand tokens from DESIGN.md if present
+  (inject colors.primary -> --accent), neutral fallback below otherwise.
+-->
+<style>
+  :root {
+    --bg: #f5efe6; --paper: #fdf7ea; --ink: #1f2937; --muted: #6b7280;
+    --accent: #c2410c; --line: #c9b58a;
+    --rec: #15803d; --rec-bg: #dcfce7;
+    --refused: #b91c1c; --refused-bg: #fecaca;
+    --observed: #15803d; --observed-bg: #dcfce7;
+    --inferred: #b45309; --inferred-bg: #fde68a;
+    --unknown: #6b7280; --unknown-bg: #e5e7eb;
+    --font-body: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-body); line-height: 1.5; padding: 2rem; }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header { border-bottom: 3px solid var(--accent); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+  .sub { color: var(--muted); font-size: .85rem; }
+  .lane { font-size: .75rem; color: var(--muted); margin-top: .5rem; font-style: italic; }
+  section { background: var(--paper); border: 1px solid var(--line);
+    border-radius: 6px; padding: 1.25rem; margin-bottom: 1.25rem; }
+  h2 { font-size: 1.1rem; margin: 0 0 .75rem; border-left: 4px solid var(--accent); padding-left: .5rem; }
+  .collapse-toggle { cursor: pointer; user-select: none; }
+  .collapse-toggle::before { content: "▾ "; color: var(--accent); }
+  .collapsed > .body { display: none; }
+  .collapsed > h2 .collapse-toggle::before { content: "▸ "; }
+
+  /* scorecard */
+  .scorecard { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .score { flex: 1 1 0; min-width: 140px; text-align: center; border: 1px solid var(--line);
+    border-radius: 6px; padding: 1rem; background: #fff; }
+  .score .n { font-size: 2rem; font-weight: bold; display: block; }
+  .score .l { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  .score.refused { border-color: var(--refused); }
+  .score.refused .n { color: var(--refused); }
+  .score.rec .n { color: var(--rec); }
+
+  /* filter bar */
+  .filter { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1rem; font-size: .8rem; }
+  .filter button { font-family: inherit; cursor: pointer; border: 1px solid var(--line);
+    background: var(--paper); padding: .3rem .6rem; border-radius: 4px; }
+  .filter button[aria-pressed="false"] { opacity: .4; }
+  .chip { display: inline-block; font-size: .65rem; text-transform: uppercase;
+    letter-spacing: .08em; padding: .1rem .4rem; border-radius: 3px; font-weight: bold; }
+  .chip.tier-observed { background: var(--observed-bg); color: var(--observed); }
+  .chip.tier-inferred { background: var(--inferred-bg); color: var(--inferred); }
+  .chip.tier-unknown  { background: var(--unknown-bg);  color: var(--unknown); }
+  .chip.grp { background: #e0e7ff; color: #3730a3; }
+
+  /* card grid (variable length) */
+  .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: .9rem; }
+  .card { border: 1px solid var(--line); border-radius: 6px; padding: .9rem; background: #fff; }
+  .card.hidden { display: none; }
+  .card.rec { border-left: 4px solid var(--rec); }
+  .card.refused { border-left: 4px solid var(--refused); }
+  .card h3 { font-size: .9rem; margin: 0 0 .4rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; }
+  .card .verdict { font-size: .68rem; font-weight: bold; text-transform: uppercase; letter-spacing: .06em; }
+  .card.rec .verdict { color: var(--rec); }
+  .card.refused .verdict { color: var(--refused); }
+  .card dl { margin: .4rem 0 0; font-size: .8rem; }
+  .card dt { color: var(--muted); text-transform: uppercase; font-size: .62rem; letter-spacing: .06em; margin-top: .45rem; }
+  .card dd { margin: 0; }
+  .card .micro { font-style: italic; color: var(--ink); }
+  .prov { cursor: pointer; color: var(--accent); font-size: .7rem; margin-top: .4rem; display: inline-block; }
+  .prov-detail { display: none; font-size: .7rem; color: var(--muted);
+    background: var(--bg); padding: .3rem; border-radius: 3px; margin-top: .3rem; }
+  .prov-detail.open { display: block; }
+
+  .note { font-size: .8rem; color: var(--ink); background: #f3e7c9;
+    border: 1px solid var(--line); border-radius: 4px; padding: .7rem; }
+  .disclaimer { font-size: .75rem; color: var(--ink); background: #fef3c7;
+    border: 1px solid #fbbf24; border-radius: 4px; padding: .6rem; margin-top: .75rem; }
+  footer { color: var(--muted); font-size: .75rem; text-align: center; margin-top: 2rem; }
+
+  @media (max-width: 720px) { .cards { grid-template-columns: 1fr; } }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .filter, .collapse-toggle { display: none !important; }
+    .collapsed > .body { display: block !important; }
+    .prov-detail { display: block !important; }
+    .card.hidden { display: block !important; }
+    section, .card { break-inside: avoid; border-color: #999; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Gamification Fit — {{PRODUCT_NAME}}</h1>
+    <div class="sub">Restraint-first analysis · generated {{GENERATED_DATE}} · goal: {{GOAL}}</div>
+    <div class="sub">Most features should not be gamified. The refusals are the point — these are suggestions, not advice.</div>
+    <div class="lane">{{LANE_NOTE}}</div>
+  </header>
+
+  <section><h2><span class="collapse-toggle"></span>Scorecard</h2>
+    <div class="body">
+      <div class="scorecard">
+        <div class="score"><span class="n">{{N_ANALYZED}}</span><span class="l">analyzed</span></div>
+        <div class="score rec"><span class="n">{{Y_RECOMMENDED}}</span><span class="l">recommended</span></div>
+        <div class="score refused"><span class="n">{{Z_REFUSED}}</span><span class="l">deliberately not gamified</span></div>
+      </div>
+    </div></section>
+
+  <section><h2><span class="collapse-toggle"></span>Cards</h2>
+    <div class="body">
+      <div class="filter" role="group" aria-label="Filter cards">
+        <span>Show:</span>
+        <button data-kind="rec" aria-pressed="true">recommended</button>
+        <button data-kind="refused" aria-pressed="true">not gamified</button>
+      </div>
+      <div class="cards">
+        {{RECOMMENDED_CARDS}}
+        {{REFUSED_CARDS}}
+      </div>
+    </div></section>
+
+  <section><h2><span class="collapse-toggle"></span>Cross-feature checks</h2>
+    <div class="body">{{CROSS_FEATURE}}</div></section>
+
+  <section><h2><span class="collapse-toggle"></span>Hand-off &amp; the honest caveat</h2>
+    <div class="body">
+      {{HANDOFF}}
+      <p class="note">{{FEEL_NOTE}}</p>
+      <div class="disclaimer">{{DISCLAIMER}}</div>
+    </div></section>
+
+  <footer>Generated by gamification-fit · suggestions, not advice · the feel is built, not written</footer>
+</div>
+
+<script>
+  // collapsible sections
+  document.querySelectorAll('section h2 .collapse-toggle').forEach(function (t) {
+    t.addEventListener('click', function () { t.closest('section').classList.toggle('collapsed'); });
+  });
+  // expandable provenance
+  document.querySelectorAll('.prov').forEach(function (p) {
+    p.addEventListener('click', function () {
+      var d = p.nextElementSibling;
+      if (d && d.classList.contains('prov-detail')) d.classList.toggle('open');
+    });
+  });
+  // recommended / refused filter
+  document.querySelectorAll('.filter button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var pressed = b.getAttribute('aria-pressed') === 'true';
+      b.setAttribute('aria-pressed', String(!pressed));
+      var kind = b.getAttribute('data-kind');
+      document.querySelectorAll('.card.' + kind).forEach(function (el) {
+        el.classList.toggle('hidden', pressed);
+      });
+    });
+  });
+</script>
+</body>
+</html>
+
+<!--
+  CARD SHAPES (substitute into {{RECOMMENDED_CARDS}} / {{REFUSED_CARDS}}):
+
+  Recommended card:
+  <article class="card rec">
+    <h3>Log a daily entry <span class="verdict">recommended</span>
+        <span class="chip grp">Group A</span> <span class="chip tier-inferred">inferred</span></h3>
+    <dl>
+      <dt>Goal it serves</dt><dd>Weekly active logging (4+ days/wk)</dd>
+      <dt>Mechanic</dt><dd>Quiet progress — a contribution-graph of logged days</dd>
+      <dt>Why (SDT)</dt><dd>Feeds competence; a record the user built, not a leash</dd>
+      <dt>Microcopy</dt><dd class="micro">"14 days logged this month" — never "don't break it"</dd>
+      <dt>Effort</dt><dd>CSS-afternoon</dd>
+      <dt>Skip if</dt><dd>fewer than ~20% of users log weekly</dd>
+      <dt>Watch out for</dt><dd>do not convert to a streak-loss prompt</dd>
+    </dl>
+    <span class="prov">⊕ provenance</span>
+    <div class="prov-detail">entries.logged_at · src/routes/entries/+page.server.ts:14</div>
+  </article>
+
+  Refused card:
+  <article class="card refused">
+    <h3>Daily trade prompt <span class="verdict">refused — regulated flow</span></h3>
+    <dl>
+      <dt>Reason</dt><dd>Financial risk-taking; gamifying trade frequency is declined. Not advice.</dd>
+    </dl>
+  </article>
+-->
