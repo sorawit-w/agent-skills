@@ -220,7 +220,9 @@ the first that succeeds:
    - Is this behavior a **chore** (extrinsically motivated) or **intrinsically
      motivated**? (This sets the mechanic branch in Phase 4.)
 
-Do not proceed past this phase without a confirmed goal.
+Do not proceed past this phase without a confirmed goal — **except** when the
+request or goal itself trips a hard veto bar, which is refused immediately (see
+Phase 5 "Early refusal").
 
 ---
 
@@ -271,6 +273,15 @@ not a cooperative flag. It runs *before* render. A mechanic that trips a bar doe
 not get softened — it **moves to the refusals section with its reason**, and if a
 whole recommendation set is built on a tripped bar, the run **re-derives** rather
 than ships soft.
+
+**Early refusal (skips the two-input requirement).** If the *request or goal itself*
+trips a hard veto bar — a regulated / risk-bearing / minors flow (bar 5), or an
+explicit manipulation / time-on-app-maximization objective — refuse it
+**immediately**, before ingestion or the goal cascade. The veto is category- and
+goal-triggered; it does not need a completed inventory. State the refusal, decline
+the regulated flow (point to qualified review where relevant), and go straight to the
+refusals output. Do not demand the resource set first just to refuse something the
+request already made unsafe.
 
 Read `references/anti-patterns.md` for the full blocklist. The veto bars (refuse on
 any hit):
