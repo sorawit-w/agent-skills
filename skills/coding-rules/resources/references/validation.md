@@ -29,15 +29,18 @@ Before declaring ANY task complete, regardless of complexity:
 
 ## What Counts as Evidence of Change
 
-Verification produces *claims* about behavior — "the bug is fixed," "the perf regression is gone," "the race is closed." A claim without differential evidence is a guess. Two rules for what counts:
+Verification produces *claims* about behavior — "the bug is fixed," "the perf regression is gone," "the race is closed." A claim without differential evidence is a guess. Three rules for what counts:
 
 **Status codes / exit codes don't prove behavior.** A 200 response or a 0 exit code only proves the call completed — not that the *result* changed. Compare response bodies, output, file contents, or downstream state side-by-side before claiming a behavior change.
 
 **Single observations are noise, not signal — especially for timing.** Perf claims, race-condition fixes, flaky-test stabilization, and any "this is faster / slower / now reliable" claim need repeated, interleaved trials before they're load-bearing. Use n≥10 as a floor; raise the floor when variance is high or stakes are large. A single fast/slow run is jitter, not evidence.
 
-These apply to both the implementer and the QA sub-agent — a passing test suite the same run as the change is necessary but not sufficient for the two claim shapes above.
+**A passing test is non-evidence if it's hollow or its target is a stub.** The Iron Law already forbids claiming done without evidence; this names the specific fakes that *look* like evidence. Before trusting green: always-true assertions (`expect(true).toBe(true)`), `.skip`/`.only`-narrowed tests, 0-match runs, and gates run over placeholder code (`TODO`, stubbed returns) are not passes.
+
+These apply to both the implementer and the QA sub-agent — a passing test suite the same run as the change is necessary but not sufficient for the three claim shapes above.
 
 **Source:** absorbed from `elementalsouls/Claude-BugHunter` (2026-05-27); their bb-methodology PART 4 discipline gates (Body-Diff Rule, Statistical-Sample Rule) are security-framed, but the underlying engineering discipline applies broadly.
+**Source (third rule):** absorbed from `shinpr/claude-code-workflows` (MIT, 2026-06-07); its `quality-fixer`/`task-executor` substance-check + stub-detection gate, generalized from that framework's CI orchestration into our verification pass.
 
 ---
 

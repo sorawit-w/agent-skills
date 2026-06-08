@@ -193,7 +193,7 @@ This lets the next iteration (or the next session) pick up exactly where you lef
 ## Code Standards
 
 - **Prefer boring, readable solutions** over clever abstractions
-- **Match existing patterns** in the codebase (naming, structure, style)
+- **Match existing patterns** in the codebase (naming, structure, style) — match the repo-wide *majority*, not the nearest file, which may be an outlier. When two patterns or dependency versions coexist with no clear majority, stop and ask rather than picking one silently.
 - **Treat the next reader and downstream caller as your primary user** — code is consumed before it's run; naming, line-of-sight, and consistency are DX, not aesthetics
 - **Make trade-offs explicit** — comment *why*, not *what*
 - **Handle edge cases** — null checks, empty arrays, network failures
