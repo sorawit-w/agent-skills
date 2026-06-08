@@ -207,6 +207,20 @@ When a decision is reversed or a convention changes:
 - Split entries that cover too many topics
 - Aim for entries that are 50-200 lines each — long enough to be useful, short enough to read quickly
 
+### Keeping the Root Context File Lean
+
+The knowledge base relies on the root context file (`CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` — whichever this project uses) staying an **index and pointer**, not a dumping ground. Durable content belongs in `.ai/knowledge/`; current state in `STATUS.md`; session history in `memory.log`. The root file should mostly *point* at those.
+
+It still drifts upward over time — dated "Session Notes" sections, completed-work blurbs, and one-off decisions accrete. Unlike the index (≤100 lines) and entries (50–200 lines), nothing here caps the root file, so it silently inflates the input-token cost of **every** session.
+
+- **Set a soft cap** (~250–300 lines is a sane default) and check it during maintenance passes. Line count is a fair proxy for recurring input tokens.
+- **When over the cap, archive — don't delete.** Move dated/completed sections (e.g., "Session Notes (DATE)" older than ~7 days, "Completed" blocks) to a sibling archive file (`CLAUDE-Archive.md` or `.ai/knowledge/`), leaving a one-line pointer behind.
+- **Never archive load-bearing sections** — project approach/philosophy, structure, key references, and active conventions stay in the root file permanently.
+
+This is agent-checkable: count the lines, flag when over, propose the archive move (never silently). It complements the index/entry size disciplines above rather than duplicating them — different file, different failure mode.
+
+Source: cap-and-archive pattern distilled from `EliaAlberti/cpr-compress-preserve-resume` (2026-06-07, MIT) `/preserve` command — its 280-line CLAUDE.md cap + `CLAUDE-Archive.md` move is the one idea in that repo not already covered by coding-rules' `.ai/` state-preservation machinery.
+
 ### Built-in automation: bootstrap + index regeneration
 
 One hook ships with `coding-rules` to remove the most-forgotten chores:
