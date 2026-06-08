@@ -5,6 +5,45 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.7.0] — 2026-06-08
+
+Adds **`gamification-fit`**, a restraint-first gamification *recommender*. It ingests a
+product / idea / resource set (code, docs/PDF, URLs, analytics exports) plus a goal and
+reports the few places play would honestly serve the user — and, more prominently, where
+it deliberately should **not** be added. The superpower is discrimination, not idea
+volume: the most important section of every report is "deliberately NOT gamified, and
+why." Anchored on Self-Determination Theory, it steers away from default
+Points/Badges/Leaderboards and enforces a non-droppable, structural ethics veto.
+
+### Added
+- **`gamification-fit` skill** (`skills/gamification-fit/`). A pure recommender skill
+  (one session, reads resources, ships an editable Markdown + self-contained HTML report).
+  Seven-phase flow: intake → ingest (provenance-pinned action inventory) → goal cascade
+  (artifact → infer-and-confirm → 3-question intake) → fit-test → SDT-branched mechanic
+  selection → structural ethics veto → cross-feature checks + render.
+- Domain references authored from first principles (IP discipline — no reproduced
+  framework expression): `fit-test.md`, `mechanic-taxonomy.md` (intrinsic-supporting vs.
+  extrinsic + named-sunset gate), `anti-patterns.md` (the refusal-capable veto blocklist),
+  `exemplars.md` (invisible-good vs. bolted-on-cheap + the "feel" honesty caveat),
+  `signal-extraction.md` (broadened code+docs+URL+analytics ingestion), `report-contract.md`,
+  and `golden-set.md` (10-case suggestion-quality eval).
+- README catalog entry, "Start here" audience row, and `docs/skill-graph.md` node + edges.
+- Banners (`assets/gamification-fit-li.svg`, `-x.svg`) and icon (`assets/icons/gamification-fit.svg`).
+
+### Why
+The original concept (a Claude-chat handoff) treated `ai-ux-review` as the sole template.
+Repo-local review found `startup-audit` as a second parent — it already ships the hard
+ingestion half (provenance tiering, secrets/PII redaction, capability-gated extraction,
+opinion framing). So `gamification-fit` is a **two-parent fork**: `startup-audit`'s
+ingest patterns + `ai-ux-review`'s intake/specificity-gate/render/three-line-close +
+`startup-grill`'s refuse-or-re-run structural veto. Patterns referenced, not cloned.
+
+### Notes
+- New skill is a MINOR bump (additive; no breaking changes to existing skills).
+- Pre-shipment `skill-evaluator` audit ran in the main loop (6 split-role tests): 28/28
+  assertions passed. One Layer-1 fix folded in (early refusal when a goal alone trips a
+  hard veto bar). A separate-session re-audit is recommended for outer-bias insulation.
+
 ## [4.6.0] — 2026-06-07
 
 Hardens the **`skill-evaluator` pre-shipment practice** after v4.5.0 surfaced that

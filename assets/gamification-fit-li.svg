@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" width="1200" height="627"
+     role="img" aria-label="gamification-fit — a restraint-first gamification recommender. Resources plus a goal go in; a fit-test and ethics veto select the few mechanics that fit; a report with a prominent refusals section comes out."
+     shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>gamification-fit</title>
+  <desc>Three panels: resources and a goal on the left, a fit-test plus ethics veto in the warm-accent center, and a report with a scorecard and a prominent "deliberately NOT gamified" section on the right.</desc>
+  <defs>
+    <pattern id="scan" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#f5efe6"/>
+      <rect width="6" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="627" fill="url(#scan)"/>
+
+  <!-- Title -->
+  <text x="600" y="78" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="44" font-weight="bold" fill="#1f2937" letter-spacing="2">GAMIFICATION FIT</text>
+  <text x="600" y="112" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="19" fill="#6b7280">find the few places play belongs — and deliberately refuse the rest</text>
+
+  <!-- ===== Left card: RESOURCES + GOAL ===== -->
+  <g>
+    <rect x="70" y="170" width="290" height="290" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <text x="215" y="205" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+          font-size="15" font-weight="bold" fill="#1f2937" letter-spacing="2">RESOURCES + GOAL</text>
+    <!-- resource chips -->
+    <rect x="95" y="225" width="110" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="150" y="243" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">code</text>
+    <rect x="215" y="225" width="100" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="265" y="243" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">docs</text>
+    <rect x="95" y="261" width="100" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="145" y="279" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">URL</text>
+    <rect x="205" y="261" width="110" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="260" y="279" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#0e7490">analytics</text>
+    <!-- goal chip -->
+    <rect x="95" y="305" width="220" height="30" fill="#fde68a" stroke="#b45309" stroke-width="2"/>
+    <text x="205" y="325" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#92400e">GOAL: log 4+ days/wk</text>
+    <!-- action inventory rows (provenance-pinned) -->
+    <text x="95" y="362" font-family="ui-monospace, monospace" font-size="11" fill="#6b7280">actions, provenance-pinned:</text>
+    <rect x="95" y="372" width="220" height="14" fill="#eadfcf"/>
+    <rect x="95" y="392" width="180" height="14" fill="#eadfcf"/>
+    <rect x="95" y="412" width="200" height="14" fill="#eadfcf"/>
+    <rect x="95" y="432" width="150" height="14" fill="#eadfcf"/>
+  </g>
+
+  <!-- arrow left -> center (entering, grey) -->
+  <g fill="#6b7280">
+    <rect x="368" y="312" width="36" height="6"/>
+    <rect x="398" y="306" width="6" height="6"/>
+    <rect x="404" y="312" width="6" height="6"/>
+    <rect x="398" y="318" width="6" height="6"/>
+  </g>
+
+  <!-- ===== Center card: FIT-TEST + VETO (the signature move, warm accent) ===== -->
+  <g>
+    <rect x="420" y="160" width="290" height="310" fill="#f3e7c9" stroke="#c2410c" stroke-width="4"/>
+    <text x="565" y="195" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+          font-size="15" font-weight="bold" fill="#c2410c" letter-spacing="2">FIT-TEST + VETO</text>
+    <text x="565" y="218" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#6b7280">SDT · restraint · ethics gate</text>
+
+    <!-- one accepted (green check) -->
+    <rect x="445" y="238" width="180" height="30" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="455" y="258" font-family="ui-monospace, monospace" font-size="13" fill="#15803d">[FIT] support intrinsic</text>
+    <g fill="#15803d"><rect x="650" y="250" width="6" height="6"/><rect x="656" y="244" width="6" height="6"/><rect x="662" y="238" width="6" height="6"/></g>
+
+    <!-- refused rows (red x) -->
+    <rect x="445" y="278" width="240" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="455" y="296" font-family="ui-monospace, monospace" font-size="12" fill="#b91c1c">[REFUSED] manufactured-loss streak</text>
+    <rect x="445" y="312" width="240" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="455" y="330" font-family="ui-monospace, monospace" font-size="12" fill="#b91c1c">[REFUSED] leaderboard (bottom 80%)</text>
+    <rect x="445" y="346" width="240" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="455" y="364" font-family="ui-monospace, monospace" font-size="12" fill="#b91c1c">[REFUSED] regulated / minors flow</text>
+    <rect x="445" y="380" width="240" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="455" y="398" font-family="ui-monospace, monospace" font-size="12" fill="#b91c1c">[SKIP] no goal-relevant repeat</text>
+
+    <text x="565" y="438" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-style="italic" fill="#1f2937">does it respect the right to put it down?</text>
+  </g>
+
+  <!-- arrow center -> right (exiting, accent) -->
+  <g fill="#c2410c">
+    <rect x="718" y="312" width="36" height="6"/>
+    <rect x="748" y="306" width="6" height="6"/>
+    <rect x="754" y="312" width="6" height="6"/>
+    <rect x="748" y="318" width="6" height="6"/>
+  </g>
+
+  <!-- ===== Right card: REPORT ===== -->
+  <g>
+    <rect x="770" y="170" width="360" height="290" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <text x="950" y="205" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+          font-size="15" font-weight="bold" fill="#1f2937" letter-spacing="2">REPORT · MD + HTML</text>
+    <!-- scorecard -->
+    <rect x="795" y="222" width="100" height="52" fill="#fff" stroke="#c9b58a" stroke-width="2"/>
+    <text x="845" y="248" text-anchor="middle" font-family="ui-monospace, monospace" font-size="22" font-weight="bold" fill="#1f2937">9</text>
+    <text x="845" y="266" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280">analyzed</text>
+    <rect x="905" y="222" width="100" height="52" fill="#fff" stroke="#15803d" stroke-width="2"/>
+    <text x="955" y="248" text-anchor="middle" font-family="ui-monospace, monospace" font-size="22" font-weight="bold" fill="#15803d">1</text>
+    <text x="955" y="266" text-anchor="middle" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280">recommended</text>
+    <rect x="1015" y="222" width="100" height="52" fill="#fff" stroke="#b91c1c" stroke-width="2"/>
+    <text x="1065" y="248" text-anchor="middle" font-family="ui-monospace, monospace" font-size="22" font-weight="bold" fill="#b91c1c">8</text>
+    <text x="1065" y="266" text-anchor="middle" font-family="ui-monospace, monospace" font-size="9" fill="#6b7280">NOT gamified</text>
+    <!-- recommended card -->
+    <rect x="795" y="290" width="320" height="44" fill="#fff" stroke="#15803d" stroke-width="2"/>
+    <rect x="795" y="290" width="6" height="44" fill="#15803d"/>
+    <text x="810" y="310" font-family="ui-monospace, monospace" font-size="12" fill="#1f2937">★ weekly progress ring (4/7)</text>
+    <text x="810" y="326" font-family="ui-monospace, monospace" font-size="10" fill="#6b7280">Group A · competence · CSS-afternoon</text>
+    <!-- refusals header -->
+    <text x="795" y="356" font-family="ui-monospace, monospace" font-size="12" font-weight="bold" fill="#b91c1c">deliberately NOT gamified ↓</text>
+    <rect x="795" y="364" width="320" height="20" fill="#fecaca"/>
+    <rect x="795" y="390" width="320" height="20" fill="#fecaca"/>
+    <rect x="795" y="416" width="260" height="20" fill="#fecaca"/>
+  </g>
+
+  <!-- Chapter markers -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="4" fill="#6b7280">
+    <text x="160" y="540">INGEST</text>
+    <text x="430" y="540" fill="#c2410c">FIT-TEST</text>
+    <text x="640" y="540" fill="#c2410c">VETO</text>
+    <text x="880" y="540">REPORT</text>
+    <text x="1040" y="540">HAND-OFF</text>
+  </g>
+  <rect x="70" y="556" width="1060" height="3" fill="#eadfcf"/>
+  <text x="600" y="588" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#9ca3af">restraint is the deliverable · suggestions, not advice</text>
+</svg>
