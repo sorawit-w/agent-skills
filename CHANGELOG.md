@@ -5,6 +5,41 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.9.0] — 2026-06-09
+
+Removes **`steer`** (added the previous day in 4.8.0). The mechanism worked — a live
+end-to-end test confirmed the `PreToolUse` hook fires, consumes the inbox exactly once,
+and surfaces `additionalContext` to the model mid-run in the desktop local-agent-mode
+runtime. It was removed for an **ergonomic, not technical**, reason: steering requires an
+out-of-band channel (a second terminal running `./.claude/steer`), because anything typed
+into the session queues to the turn boundary. The natural instinct is to type the redirect
+into the chat — which is exactly what does *not* steer. That two-terminal-vs-instinct
+friction is intrinsic (only native support, [#30492](https://github.com/anthropics/claude-code/issues/30492),
+removes it), so the skill fought the user's reflex rather than serving it. Rather than keep
+a tombstone on a curated shelf, it's removed; the full implementation stays recoverable in
+git history and merged PR #12.
+
+### Removed
+- **`steer` skill** (`skills/steer/`), its banners (`assets/steer-{li,x}.svg`), and icon
+  (`assets/icons/steer.svg`).
+- All catalog references: `./skills/steer` from both manifests, README shelf row /
+  skill-details entry / Start-here row / TL;DR count, and the `docs/skill-graph.md`
+  node + edges.
+
+### Why
+The 4.8.0 ship had a process gap worth recording: schema tests (7-case deterministic suite)
+plus a 28/28 rule-adherence audit created **false completeness** — neither exercised the one
+test that mattered, a live mid-run injection. That test was two tool calls and was deferred
+as "user-side"; running it would have surfaced the ergonomic dead-end before shipping and
+opening a PR. Lesson logged: for a mechanism skill, the end-to-end live test is the gate, not
+the schema/adherence tests.
+
+### Notes
+- Removing a same-day, single-user (author-only) skill; no real dependents to migrate.
+  Treated as MINOR (catalog change) rather than MAJOR.
+- The verified `PreToolUse` + `additionalContext` hook pattern (and the doc-verification
+  gotcha behind it) is preserved in the project memory notes for future hook work.
+
 ## [4.8.0] — 2026-06-08
 
 Adds **`steer`**, an interim, non-destructive mid-run steering channel for Claude Code.

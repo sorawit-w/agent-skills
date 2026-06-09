@@ -4,7 +4,7 @@ The canonical map of every skill on the shelf — what it does, who reaches for 
 
 For per-skill usage, design notes, and cross-skill detail, follow each name to its own README under [`skills/`](../skills/).
 
-## Nodes — the 23 skills
+## Nodes — the 22 skills
 
 Audience buckets map to the README's "Start here" rows: **Startup** (build & validate a startup), **Review** (review a product or AI product), **Code** (writing & shipping code), **Author** (authoring & auditing skills), **Calibrate/visual** (calibrate, localize & visuals).
 
@@ -24,7 +24,6 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`gamification-fit`](../skills/gamification-fit/README.md) | Restraint-first gamification *recommender*: resources + goal → the few mechanics that honestly fit + a prominent "deliberately NOT gamified" refusals section; structural ethics veto (MD + HTML) | Product teams, founders adding engagement | stable | Review |
 | [`skill-evaluator`](../skills/skill-evaluator/README.md) | Audit a SKILL.md for rule adherence; targeted diffs | Skill authors, QA gatekeepers | stable | Author |
 | [`coding-rules`](../skills/coding-rules/README.md) | Load/install opinionated agentic-coding guardrails | Individual devs, teams | ⚠️ OPINIONATED | Code |
-| [`steer`](../skills/steer/README.md) | Interim non-destructive mid-run steering: second-terminal `steer` script + `PreToolUse` hook injects `additionalContext` at the next tool boundary | Devs running long agent sessions | stable | Code |
 | [`tech-stack-recommendations`](../skills/tech-stack-recommendations/README.md) | Opinionated TS/JS stack + named alternates | Founders, architects, engineers | stable | Code |
 | [`sub-agent-coordinator`](../skills/sub-agent-coordinator/README.md) | Orchestrate parallel sub-agents (brief, coordinate, verify) | Coordinators, multi-file devs | stable | Code · Author |
 | [`wear-the-hat`](../skills/wear-the-hat/README.md) | Single-role solo embodiment (one lens, no panel) | Anyone wanting one expert lens | stable | Code |
@@ -77,10 +76,6 @@ graph LR
   SE[skill-evaluator] -.->|audits any skill| TC
   CR[coding-rules] -.->|discipline + lens| WTH
   TSR[tech-stack-recommendations] -.->|architect anchor| TC
-
-  %% Mid-run steering (interim; shares coding-rules' hook-install pattern)
-  CR -.->|hook-install pattern| STEER[steer]
-  STEER -.->|steers lead, not sub-agents| SAC
 ```
 
 **Legend.** Solid arrow = gated or structured handoff (the downstream skill reads the upstream output, sometimes refusing to proceed without it). Dashed arrow = pairs-with / consumes / suggests (a softer relationship). `skill-evaluator` audits *every* skill on the shelf; one representative edge is shown to keep the graph readable.
