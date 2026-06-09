@@ -20,7 +20,7 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty-two specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty-three specialized skills in one go.
 - **Who it's for** — anyone on Claude Code or Cowork who wants auto-triggering expertise for a specific job. [**Start here**](#start-here) to find yours.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
@@ -68,7 +68,7 @@ New here? Find your job and jump in. The full catalog is in [The shelf](#the-she
 |:---|:---|
 | **Building & validating a startup** — idea to investor-ready | The [startup pipeline](#how-skills-chain): [`brand-workshop`](#brand-workshop) → [`validation-canvas`](#validation-canvas) → [`riskiest-assumption-test`](#riskiest-assumption-test) → [`pitch-deck`](#pitch-deck) → [`startup-grill`](#startup-grill); [`startup-launch-kit`](#startup-launch-kit) orchestrates, [`gtm`](#gtm) gets users; [`startup-audit`](#startup-audit) for the *already-built* product |
 | **Auditing a built product** — diligence from a codebase/URL, design, evals, critique | [`startup-audit`](#startup-audit) · [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`gamification-fit`](#gamification-fit) · [`validation-canvas`](#validation-canvas) |
-| **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) |
+| **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses, mid-run steering | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) · [`steer`](#steer) |
 | **Authoring & auditing skills** — design, build & audit your own skills | [`skill-evaluator`](#skill-evaluator) · [`team-composer`](#team-composer) · [`sub-agent-coordinator`](#sub-agent-coordinator) · see [Building on the shelf](#building-on-the-shelf) |
 | **Calibrating, localizing & visuals** — make the agent yours, ship or read any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n`](#i18n) · [`define`](#define) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
 
@@ -88,6 +88,7 @@ Each skill links to its own README — the full doc with usage, design notes, an
 | <img src="assets/icons/handshake.svg" alt="" width="64" align="middle"/> | [`handshake`](skills/handshake/README.md) | A brief opt-in calibration ritual that shows you what's on file, then asks a few high-leverage collaboration questions. |
 | <img src="assets/icons/whoami.svg" alt="" width="64" align="middle"/> | [`whoami`](skills/whoami/README.md) | A short conversational interview that profiles how you want to be collaborated with — six dials, an RPG class, a portable profile, and an HTML character sheet. |
 | <img src="assets/icons/coding-rules.svg" alt="" width="64" align="middle"/> | [`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** | Loads one author's operating system for agentic coding into the session — branching, commit cadence, verification gates, sub-agent triggers. |
+| <img src="assets/icons/steer.svg" alt="" width="64" align="middle"/> | [`steer`](skills/steer/README.md) | Interim non-destructive mid-run steering for Claude Code — drop a message from a second terminal and a `PreToolUse` hook injects it at the next tool boundary, no `Esc`, no lost work. |
 | <img src="assets/icons/i18n.svg" alt="" width="64" align="middle"/> | [`i18n`](skills/i18n/README.md) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. |
 | <img src="assets/icons/define.svg" alt="" width="64" align="middle"/> | [`define`](skills/define/README.md) | The true in-context meaning of a word or phrase — sense resolved from the sentence around it, with a learner-grade gloss and optional contextual translation. |
 | <img src="assets/icons/brand-workshop.svg" alt="" width="64" align="middle"/> | [`brand-workshop`](skills/brand-workshop/README.md) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. |
@@ -277,6 +278,21 @@ Each entry below is a quick reference — example prompts and which skills it pa
 - "Use the coding-rules skill to load my rules into this session."
 - "Use the coding-rules skill with `args: install` for this project — I want CLAUDE.md to auto-load it."
 - "Use the coding-rules skill with `args: status` — I want to check whether the rules are still in context after that long compaction."
+
+---
+
+<a id="steer"></a>
+
+### <img src="assets/icons/steer.svg" alt="" width="48" align="middle"/> &nbsp;[`steer`](skills/steer/README.md)
+
+**Pairs well with.**
+- [`coding-rules`](skills/coding-rules/README.md) — shares the hook-shipping + opt-in-install convention (resolve path → pick settings file → diff → confirm → idempotent). `steer` is a lighter, single-hook instance of the same pattern; both can be installed in one project.
+- [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — `steer` redirects the *lead* mid-run; coordinating *sub-agents* is the coordinator's job (and steering individual sub-agents is explicitly out of scope for `steer` v1).
+
+**Try it.**
+- "Set up steer in this project so I can redirect you mid-run from a second terminal."
+- "How does steer work, and what can't it do?"
+- "Is steer installed here? Check the command and the hook."
 
 ---
 
@@ -559,7 +575,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.7.0`.** Adds **[`gamification-fit`](#gamification-fit)** — a restraint-first gamification *recommender* (not a reviewer of existing gamification). It ingests a product / idea / resource set (code, docs/PDF, URLs, analytics exports) plus a goal and reports the few places play would honestly serve the user — and, more prominently, where it deliberately should **not** be added. Anchored on Self-Determination Theory, it steers away from default Points/Badges/Leaderboards and enforces a non-droppable structural ethics veto (regulated/minors/manipulation refused outright). A two-parent fork: `startup-audit`'s ingest/provenance patterns + `ai-ux-review`'s intake/render + `startup-grill`'s refuse-or-re-run veto. Pre-shipment `skill-evaluator` audit passed 28/28 across six split-role tests. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.8.0`.** Adds **[`steer`](#steer)** — an interim, non-destructive mid-run steering channel for Claude Code. While Claude works, the only immediate intervention is `Esc`, which cancels the running tool; `steer` adds a cooperative alternative: from a second terminal you run `./.claude/steer "…"`, and a `PreToolUse` hook injects the message as `additionalContext` at the next tool-call boundary, so Claude course-corrects **without discarding completed work**. The `PreToolUse`+`additionalContext` mechanism was verified against the live hook docs (a doc sub-agent first returned the wrong answer); correctness is locked on JSON-only injection, rename-based exactly-once consume, and append-based queueing (no `flock` — absent on macOS). Mirrors `coding-rules`' opt-in, diff-and-confirm install flow. Interim by design — retired if/when native steering ships ([#30492](https://github.com/anthropics/claude-code/issues/30492)). Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

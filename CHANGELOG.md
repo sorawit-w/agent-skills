@@ -5,6 +5,54 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.8.0] — 2026-06-08
+
+Adds **`steer`**, an interim, non-destructive mid-run steering channel for Claude Code.
+Today the only way to intervene while Claude is working is `Esc`, which cancels the
+running tool. `steer` adds a cooperative alternative: from a second terminal you run
+`./.claude/steer "…"`, and a `PreToolUse` hook injects the message as
+`additionalContext` at Claude's next tool-call boundary — so Claude reads the
+course-correction before its next action, **without discarding completed work**.
+Framed explicitly as an interim primitive for a tracked capability gap
+([#30492](https://github.com/anthropics/claude-code/issues/30492)).
+
+### Added
+- **`steer` skill** (`skills/steer/`). Two boring, readable pieces under `resources/`:
+  `hooks/steer-inject.sh` (the `PreToolUse` hook, matcher `*`) and `.claude/steer`
+  (the queue script, installed project-local as `./.claude/steer`). `install` /
+  `uninstall` / `status` / `explain` sub-commands mirror `coding-rules`' opt-in,
+  diff-and-confirm install flow; no plugin-level hook registration.
+- README catalog entry (shelf row + Skill-details entry), "Start here" audience row,
+  and `docs/skill-graph.md` node + edges.
+- Banners (`assets/steer-li.svg`, `-x.svg`) and icon (`assets/icons/steer.svg`).
+
+### Why
+The mechanism's highest-risk detail (does `PreToolUse` support `additionalContext`?)
+was **verified against the live hook docs**, not written from memory — a doc-reading
+sub-agent first returned the wrong answer (claimed `PreToolUse` couldn't inject and
+recommended `PostToolUse`), so the field was confirmed directly: `PreToolUse` *does*
+support `hookSpecificOutput.additionalContext`, and on that event **plain stdout is
+debug-log-only** (invisible to the model) — the hook must emit JSON. Three correctness
+constraints are locked: JSON-only injection; rename-based atomic consume (the hook
+fires once per tool call, so a parallel tool-call batch runs N instances against one
+inbox — only `mv` guarantees exactly-once); and append-based queueing (no `flock`,
+which is absent on stock macOS). The message is wrapped in a `[STEERING …]` tag that
+frames it as a course-correction to the *current* task — the mitigation for the known
+competing-tool failure where a mid-turn injection gets treated as a brand-new thread.
+
+### Notes
+- New skill is a MINOR bump (additive; no breaking changes to existing skills).
+- A 7-case deterministic harness validated the hook (empty/whitespace/missing-inbox
+  no-ops, exact `additionalContext` JSON, exactly-once under 8 parallel instances,
+  in-order append concatenation). End-to-end live delivery is inherently a two-terminal
+  test the user runs after install (hooks load at session start).
+- Pre-shipment `skill-evaluator` audit run in the main loop; a separate-session
+  re-audit is recommended for outer-bias insulation (authored and audited in one session).
+- Limitations are stated plainly in the README: boundary-only delivery (waits through
+  pure-reasoning stretches), cooperative-not-interrupting (hard stop still needs `Esc`),
+  sub-agent steering out of scope for v1. Interim by design — retired if/when native
+  steering ships.
+
 ## [4.7.0] — 2026-06-08
 
 Adds **`gamification-fit`**, a restraint-first gamification *recommender*. It ingests a
