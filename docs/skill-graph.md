@@ -4,7 +4,7 @@ The canonical map of every skill on the shelf — what it does, who reaches for 
 
 For per-skill usage, design notes, and cross-skill detail, follow each name to its own README under [`skills/`](../skills/).
 
-## Nodes — the 23 skills
+## Nodes — the skills
 
 Audience buckets map to the README's "Start here" rows: **Startup** (build & validate a startup), **Review** (review a product or AI product), **Code** (writing & shipping code), **Author** (authoring & auditing skills), **Calibrate/visual** (calibrate, localize & visuals).
 

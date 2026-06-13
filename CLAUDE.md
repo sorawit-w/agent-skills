@@ -121,13 +121,14 @@ A version bump touches exactly these four files. Miss one and the manifest is in
 3. `CHANGELOG.md` — new entry at the top using `## [<version>] — <YYYY-MM-DD>` heading
 4. `README.md` Status section — update the one-line **Current release** blurb (new version number + a one-sentence summary of what's newest). The Status section carries only the current-release pointer; full per-version history lives in `CHANGELOG.md`.
 
-### When the release ADDS a new skill — root README needs three more touches
+### When the release ADDS a new skill — root README needs two more touches
 
 The Status bump is not enough on its own. A new skill must also appear in the README's routing and the skill graph, or it stays invisible to readers browsing the repo:
 
-5. **TL;DR count** (~line 23) — the "a curated shelf of N specialized skills" line. Increment `N` (it's spelled out — "twenty-three", not "23").
-6. **Start-here grouped section** — add the skill to its **primary group** (the group matching its primary-audience column in `docs/skill-graph.md`). Each entry is: one source-of-truth one-liner (copy from `skill-graph.md` — do **not** re-describe) plus **up to two example prompts** that teach its trigger phrasing. Single-mode skills may use one prompt; two is the ceiling. Place next to thematically-related skills. A cross-listed skill gets a full entry in exactly ONE primary group; elsewhere it's a bare "see also" link with no description and no prompts. Authoring/meta skills (e.g. `skill-evaluator`) go under "Building on the shelf" instead of a Start-here group, reachable via the one-line authoring pointer in the grouped section. The Startup *pipeline* is prose + one shared "Try it" cluster, not per-skill prompts — match the group shape.
-7. **Skill graph** (`docs/skill-graph.md`) — add a node row (name, purpose, audience, status, bucket) and any new edges to the Mermaid graph. This is the canonical map **and** the one-liner source for item 6.
+5. **Start-here grouped section** — add the skill to its **primary group** (the group matching its primary-audience column in `docs/skill-graph.md`). Each entry is: one source-of-truth one-liner (copy from `skill-graph.md` — do **not** re-describe) plus **up to two example prompts** that teach its trigger phrasing, each on its own nested bullet. Single-mode skills may use one prompt; two is the ceiling. Place next to thematically-related skills. A cross-listed skill gets a full entry in exactly ONE primary group; elsewhere it's a bare "see also" link with no description and no prompts. Authoring/meta skills (e.g. `skill-evaluator`) go under "Building on the shelf" instead of a Start-here group, reachable via the one-line authoring pointer in the grouped section. The Startup *pipeline* is prose + one shared "Try it" cluster, not per-skill prompts — match the group shape.
+6. **Skill graph** (`docs/skill-graph.md`) — add a node row (name, purpose, audience, status, bucket) and any new edges to the Mermaid graph. This is the canonical map **and** the one-liner source for item 5.
+
+No skill-count number to bump anywhere — the README and `skill-graph.md` deliberately avoid a hardcoded "N skills" count (it drifts, and `ls skills/` over-counts non-skill dirs like `gtm-workspace`; the authoritative count is `plugin.json`'s skills array). Don't reintroduce one.
 
 **Per-skill detail — usage, `Pairs well with`, the full example-prompt set — lives ONLY in the skill's own `README.md`. Never copy it into the root README.** The grouped section routes; the skill README explains. (This is the rule whose violation bloated the README to ~590 lines before the 4.10.1 presentation reorg, which deleted the old per-skill "Skill details" section and the flat "The shelf" table.)
 
