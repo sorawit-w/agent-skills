@@ -20,13 +20,13 @@
 
 ## TL;DR
 
-- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty-two specialized skills in one go.
+- **What this is** — a single Claude Code plugin that installs a curated shelf of twenty-three specialized skills in one go.
 - **Who it's for** — anyone on Claude Code or Cowork who wants auto-triggering expertise for a specific job. [**Start here**](#start-here) to find yours.
 - **How to start** — run the two-line install below. Each skill triggers on its own description when you describe the job — you don't have to memorize them.
 
 ## Install
 
-**Claude Code (recommended)** — installs the full plugin: all 21 skills, slash-command entry points, and one-step updates.
+**Claude Code (recommended)** — installs the full plugin: all 23 skills, slash-command entry points, and one-step updates.
 
 ```bash
 /plugin marketplace add sorawit-w/agent-skills
@@ -47,7 +47,7 @@ That's it — every skill below is now on the shelf. Works from both [Claude Cod
 **Any agent — via [`npx skills`](https://github.com/vercel-labs/skills).** Works with Cursor, opencode, Claude Code, and any tool that reads `SKILL.md` files — no plugin system required.
 
 ```bash
-npx skills add sorawit-w/agent-skills                          # all 21 skills
+npx skills add sorawit-w/agent-skills                          # all 23 skills
 npx skills add sorawit-w/agent-skills --list                   # browse, don't install
 npx skills add sorawit-w/agent-skills --skill team-composer    # just one
 ```
@@ -70,7 +70,7 @@ New here? Find your job and jump in. The full catalog is in [The shelf](#the-she
 | **Auditing a built product** — diligence from a codebase/URL, design, evals, critique | [`startup-audit`](#startup-audit) · [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`gamification-fit`](#gamification-fit) · [`validation-canvas`](#validation-canvas) |
 | **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) |
 | **Authoring & auditing skills** — design, build & audit your own skills | [`skill-evaluator`](#skill-evaluator) · [`team-composer`](#team-composer) · [`sub-agent-coordinator`](#sub-agent-coordinator) · see [Building on the shelf](#building-on-the-shelf) |
-| **Calibrating, localizing & visuals** — make the agent yours, ship or read any language, generate art | [`whoami`](#whoami) · [`handshake`](#handshake) · [`i18n`](#i18n) · [`define`](#define) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
+| **Calibrating, localizing & visuals** — make the agent yours, write as yourself, ship or read any language, generate art | [`whoami`](#whoami) · [`ghostwriter`](#ghostwriter) · [`handshake`](#handshake) · [`i18n`](#i18n) · [`define`](#define) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
 
 ---
 
@@ -87,6 +87,7 @@ Each skill links to its own README — the full doc with usage, design notes, an
 | <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="64" align="middle"/> | [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. |
 | <img src="assets/icons/handshake.svg" alt="" width="64" align="middle"/> | [`handshake`](skills/handshake/README.md) | A brief opt-in calibration ritual that shows you what's on file, then asks a few high-leverage collaboration questions. |
 | <img src="assets/icons/whoami.svg" alt="" width="64" align="middle"/> | [`whoami`](skills/whoami/README.md) | A short conversational interview that profiles how you want to be collaborated with — six dials, an RPG class, a portable profile, and an HTML character sheet. |
+| <img src="assets/icons/ghostwriter.svg" alt="" width="64" align="middle"/> | [`ghostwriter`](skills/ghostwriter/README.md) | Drafts messages sent as you, in your voice — email, Slack, DMs, LinkedIn — with an AI-tell ban list that your real habits override. |
 | <img src="assets/icons/coding-rules.svg" alt="" width="64" align="middle"/> | [`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** | Loads one author's operating system for agentic coding into the session — branching, commit cadence, verification gates, sub-agent triggers. |
 | <img src="assets/icons/i18n.svg" alt="" width="64" align="middle"/> | [`i18n`](skills/i18n/README.md) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. |
 | <img src="assets/icons/define.svg" alt="" width="64" align="middle"/> | [`define`](skills/define/README.md) | The true in-context meaning of a word or phrase — sense resolved from the sentence around it, with a learner-grade gloss and optional contextual translation. |
@@ -253,11 +254,28 @@ Each entry below is a quick reference — example prompts and which skills it pa
 - [`handshake`](skills/handshake/README.md) — sibling. `whoami` is the broad person-level profile; `handshake` calibrates one project and pre-fills its core questions from the whoami profile. `whoami` is upstream and one-directional.
 - [`pixel-art`](skills/pixel-art/README.md) — `whoami` calls it (if an image generator is available) to generate the class character portrait; falls back to a bundled hi-density pixel-art PNG.
 - `productivity:memory-management` *(if installed)* — `whoami` writes its profile as a standard `user`-type memory; capability-gated, defers to the runtime's memory conventions.
+- [`ghostwriter`](skills/ghostwriter/README.md) — downstream consumer: reads the whoami profile to calibrate personality (not phrasing) when drafting messages in your voice.
 
 **Try it.**
 - "Run `/whoami` — I want you to actually know how I like to work."
 - "I just switched from another AI tool — here's my profile file, set me up."
 - "`/whoami rerun` — my role changed and the profile's out of date."
+
+---
+
+<a id="ghostwriter"></a>
+
+### <img src="assets/icons/ghostwriter.svg" alt="" width="48" align="middle"/> &nbsp;[`ghostwriter`](skills/ghostwriter/README.md)
+
+**Pairs well with.**
+- [`whoami`](skills/whoami/README.md) — personality calibration source for the voice resolution chain (directness, warmth, formality — never phrasing). Read-only; `ghostwriter` offers once to run it if no profile exists.
+- [`team-composer`](skills/team-composer/README.md) — opt-in critique handoff: want a draft *reviewed* instead of written? `@senior_copywriter` + `@humorist` at trivial scope.
+- [`define`](skills/define/README.md) — register sibling. "Which word fits this context" → `define`; "write the message in my voice" → `ghostwriter`.
+
+**Try it.**
+- "Reply to this email from my manager — keep it short."
+- "Tell my teammate on Slack the deploy slipped to Thursday, style=friend."
+- "Decline this vendor politely, style=diplomatic — and explain the delay to the client in style=eli5."
 
 ---
 
@@ -303,6 +321,7 @@ Each entry below is a quick reference — example prompts and which skills it pa
 **Pairs well with.**
 - [`i18n`](skills/i18n/README.md) — the production sibling, sharing the same locale engine. Editing locale files / adding a language → `i18n`; "what does this word mean here" → `define`.
 - [`team-composer`](skills/team-composer/README.md) — when a definition or translation choice is contested and benefits from multi-perspective discussion rather than a single gloss.
+- [`ghostwriter`](skills/ghostwriter/README.md) — the production sibling for personal messages: `define` resolves what a word conveys in context; `ghostwriter` writes the whole message in your voice.
 
 **Try it.**
 - "What does ออเจ้า mean in 'ออเจ้าจักไปไหน'? Give me the register and why that sense."
@@ -559,7 +578,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.9.0`.** Removes **`steer`** (the interim mid-run steering skill added the day before in 4.8.0). The hook mechanism worked — a live test confirmed `PreToolUse` injection fires mid-run — but it was pulled for an **ergonomic, not technical** reason: steering requires a second terminal, because typing a redirect into the chat just queues to the turn boundary. That two-terminal-vs-instinct friction is intrinsic (only native support, [#30492](https://github.com/anthropics/claude-code/issues/30492), removes it), so the skill fought the user's reflex instead of serving it. The implementation stays recoverable in git history and merged PR #12. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.10.0`.** Adds **`ghostwriter`** — drafts messages sent *as you, in your voice* (email, Slack, DMs, LinkedIn) with an AI-tell ban list that your observed habits override, six style presets plus free-form styles interpreted in-place, and all voice data stored user-local (`~/.claude/ghostwriter/`), never in the repo or the installed skill folder. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.

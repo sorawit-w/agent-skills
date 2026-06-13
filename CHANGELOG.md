@@ -5,6 +5,56 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.10.0] — 2026-06-12
+
+Adds **`ghostwriter`** — drafts messages sent *as the user, in the user's natural
+voice*, with zero AI tells. Email, Slack/Teams, DMs, LinkedIn, texts, and the
+conversational corner of GitHub comments. This is *personal* voice, not brand voice:
+it overrides the model's default polished register for message drafting only, and
+the contract is the ghostwriter's contract — the output carries the user's name,
+success is invisibility.
+
+### Added
+- **`ghostwriter` skill** (`skills/ghostwriter/`): classify → resolve voice →
+  resolve style → draft at human length → ban-list lint → output one draft, no
+  preamble. Six shipped style presets (`formal`, `friend`, `direct`, `diplomatic`,
+  `storybook`, `eli5`) plus free-form descriptors interpreted in-place as register
+  overlays; recurring free-form styles can be saved as named presets. Channel ×
+  relationship defaults table for the sample-free cold start. Banners + icon.
+- **User-local voice storage** (`~/.claude/ghostwriter/`): real samples, derived
+  voice profile, saved styles, and one-time-offer flags live outside both the repo
+  and the installed skill folder. The repo ships `samples-*.template.md` only, and
+  a `.gitignore` guard blocks non-template samples as belt-and-suspenders.
+
+### Why
+- **Personal voice ≠ brand voice.** Existing message-drafting skills are
+  role-workflow skills (support replies, outreach sequences, brand content) with
+  their own voice contracts. Nothing on the shelf drafted *as the person*.
+- **User-local storage** because installed skill folders are caches clobbered on
+  update, and a repo gitignore protects only this repo — voice samples are
+  personal data (the *other* person's words included) and must stay on the
+  owner's machine.
+- **Samples override the ban list.** Sanding a real habit ("Hope this helps!",
+  em-dashes) off produces "AI trying to sound human" — a different tell. With no
+  samples the full ban list applies.
+- **Escape hatch resolves before preset lookup** so a custom style named `normal`
+  can never shadow the user's ability to ask for default AI output; reserved
+  names are refused at save-time for the same reason.
+- **Audit-driven hardening:** the pre-ship skill-evaluator round (11 tests,
+  50 assertions, split-context executors/graders) caught three real
+  failures — em-dashes leaking past a lint the executor *claimed* it ran, a
+  style preset overriding channel length norms, and stacked setup offers on
+  cold start. Fixes: lint now requires a literal scan of the final text, the
+  channel table is a hard cap, and one-solicitation-per-turn. Re-run: 15/15.
+
+### Notes
+- Voice samples are optional accelerators — the skill works sample-free via the
+  resolution chain (samples → whoami profile → conversation inference).
+- Non-English sample support is parked for v2.
+- Authored and audited in the same session: a separate-session re-audit is
+  advisable (outer bias), and the owner blind test (skill draft vs default-Claude
+  draft) remains the real ship gate.
+
 ## [4.9.0] — 2026-06-09
 
 Removes **`steer`** (added the previous day in 4.8.0). The mechanism worked — a live

@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" width="1200" height="627"
+     role="img" aria-label="ghostwriter — drafts messages sent as you, in your voice. An incoming message and its context go in; a voice fingerprint with a ban-list lint runs in the center; one ready-to-send draft in your voice comes out."
+     shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>ghostwriter</title>
+  <desc>Three panels: an incoming message with channel and relationship context on the left, a warm-accent voice fingerprint with sample-precedence and AI-tell lint in the center, and a single ready-to-copy draft signed as the user on the right.</desc>
+  <defs>
+    <pattern id="scan" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#f5efe6"/>
+      <rect width="6" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="627" fill="url(#scan)"/>
+
+  <!-- Title -->
+  <text x="600" y="78" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="44" font-weight="bold" fill="#1f2937" letter-spacing="2">GHOSTWRITER</text>
+  <text x="600" y="112" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="19" fill="#6b7280">messages in your voice — the writer leaves no trace</text>
+
+  <!-- ===== Left card: INCOMING + CONTEXT ===== -->
+  <g>
+    <rect x="70" y="170" width="290" height="290" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <text x="215" y="205" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+          font-size="15" font-weight="bold" fill="#1f2937" letter-spacing="2">INCOMING + CONTEXT</text>
+    <!-- channel chips -->
+    <rect x="95" y="225" width="90" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="140" y="243" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">email</text>
+    <rect x="195" y="225" width="90" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="240" y="243" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">slack</text>
+    <rect x="95" y="261" width="70" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="130" y="279" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">DM</text>
+    <rect x="175" y="261" width="110" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="230" y="279" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#0e7490">LinkedIn</text>
+    <!-- relationship chip -->
+    <rect x="95" y="305" width="190" height="30" fill="#fde68a" stroke="#b45309" stroke-width="2"/>
+    <text x="190" y="325" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#92400e">from: manager</text>
+    <!-- incoming message placeholder -->
+    <text x="95" y="362" font-family="ui-monospace, monospace" font-size="11" fill="#6b7280">their message + your context:</text>
+    <rect x="95" y="372" width="220" height="14" fill="#eadfcf"/>
+    <rect x="95" y="392" width="180" height="14" fill="#eadfcf"/>
+    <rect x="95" y="412" width="200" height="14" fill="#eadfcf"/>
+    <rect x="95" y="432" width="130" height="14" fill="#eadfcf"/>
+  </g>
+
+  <!-- arrow left -> center (entering, grey) -->
+  <g fill="#6b7280">
+    <rect x="368" y="312" width="36" height="6"/>
+    <rect x="398" y="306" width="6" height="6"/>
+    <rect x="404" y="312" width="6" height="6"/>
+    <rect x="398" y="318" width="6" height="6"/>
+  </g>
+
+  <!-- ===== Center card: VOICE FINGERPRINT (the signature move, warm accent) ===== -->
+  <g>
+    <rect x="420" y="160" width="290" height="310" fill="#f3e7c9" stroke="#c2410c" stroke-width="4"/>
+    <text x="565" y="195" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+          font-size="15" font-weight="bold" fill="#c2410c" letter-spacing="2">VOICE FINGERPRINT</text>
+    <text x="565" y="218" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#6b7280">samples &gt; ban list &gt; defaults</text>
+
+    <!-- pixel waveform (the user's rhythm) -->
+    <g fill="#c2410c">
+      <rect x="452" y="248" width="8" height="14"/>
+      <rect x="466" y="240" width="8" height="22"/>
+      <rect x="480" y="252" width="8" height="10"/>
+      <rect x="494" y="234" width="8" height="28"/>
+      <rect x="508" y="246" width="8" height="16"/>
+      <rect x="522" y="240" width="8" height="22"/>
+      <rect x="536" y="254" width="8" height="8"/>
+      <rect x="550" y="236" width="8" height="26"/>
+      <rect x="564" y="248" width="8" height="14"/>
+      <rect x="578" y="242" width="8" height="20"/>
+      <rect x="592" y="252" width="8" height="10"/>
+      <rect x="606" y="238" width="8" height="24"/>
+      <rect x="620" y="248" width="8" height="14"/>
+      <rect x="634" y="244" width="8" height="18"/>
+      <rect x="648" y="252" width="8" height="10"/>
+      <rect x="662" y="240" width="8" height="22"/>
+    </g>
+
+    <!-- lint rows -->
+    <rect x="445" y="282" width="240" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="455" y="300" font-family="ui-monospace, monospace" font-size="11" fill="#b91c1c">[REWRITE] hope this finds you well</text>
+    <rect x="445" y="316" width="240" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="455" y="334" font-family="ui-monospace, monospace" font-size="11" fill="#b91c1c">[REWRITE] it's not just X, it's Y</text>
+    <rect x="445" y="350" width="240" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="455" y="368" font-family="ui-monospace, monospace" font-size="11" fill="#b91c1c">[REWRITE] delve · leverage · robust</text>
+    <rect x="445" y="384" width="240" height="26" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="455" y="402" font-family="ui-monospace, monospace" font-size="11" fill="#15803d">[KEEP] "Hope this helps!" (yours)</text>
+
+    <text x="565" y="438" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-style="italic" fill="#1f2937">success is invisibility</text>
+  </g>
+
+  <!-- arrow center -> right (exiting, accent) -->
+  <g fill="#c2410c">
+    <rect x="718" y="312" width="36" height="6"/>
+    <rect x="748" y="306" width="6" height="6"/>
+    <rect x="754" y="312" width="6" height="6"/>
+    <rect x="748" y="318" width="6" height="6"/>
+  </g>
+
+  <!-- ===== Right card: ONE DRAFT ===== -->
+  <g>
+    <rect x="770" y="170" width="360" height="290" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <text x="950" y="205" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+          font-size="15" font-weight="bold" fill="#1f2937" letter-spacing="2">ONE DRAFT · SENT AS YOU</text>
+    <!-- the draft card -->
+    <rect x="795" y="222" width="320" height="150" fill="#fff" stroke="#15803d" stroke-width="2"/>
+    <rect x="795" y="222" width="6" height="150" fill="#15803d"/>
+    <rect x="815" y="242" width="270" height="13" fill="#eadfcf"/>
+    <rect x="815" y="263" width="240" height="13" fill="#eadfcf"/>
+    <rect x="815" y="284" width="280" height="13" fill="#eadfcf"/>
+    <rect x="815" y="305" width="170" height="13" fill="#eadfcf"/>
+    <text x="815" y="350" font-family="ui-monospace, monospace" font-size="14" fill="#1f2937">— you</text>
+    <text x="950" y="394" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#6b7280">no preamble · no options · ready to copy</text>
+    <!-- style chips -->
+    <text x="795" y="424" font-family="ui-monospace, monospace" font-size="11" fill="#6b7280">style:</text>
+    <text x="845" y="424" font-family="ui-monospace, monospace" font-size="11" fill="#92400e">formal · friend · direct · diplomatic</text>
+    <text x="845" y="442" font-family="ui-monospace, monospace" font-size="11" fill="#92400e">storybook · eli5 · or your own words</text>
+  </g>
+
+  <!-- Chapter markers -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" letter-spacing="4" fill="#6b7280">
+    <text x="140" y="540">CLASSIFY</text>
+    <text x="360" y="540" fill="#c2410c">VOICE</text>
+    <text x="540" y="540" fill="#c2410c">STYLE</text>
+    <text x="710" y="540" fill="#c2410c">LINT</text>
+    <text x="880" y="540">ONE DRAFT</text>
+    <text x="1070" y="540">SEND</text>
+  </g>
+</svg>

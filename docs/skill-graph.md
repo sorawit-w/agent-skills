@@ -4,7 +4,7 @@ The canonical map of every skill on the shelf — what it does, who reaches for 
 
 For per-skill usage, design notes, and cross-skill detail, follow each name to its own README under [`skills/`](../skills/).
 
-## Nodes — the 22 skills
+## Nodes — the 23 skills
 
 Audience buckets map to the README's "Start here" rows: **Startup** (build & validate a startup), **Review** (review a product or AI product), **Code** (writing & shipping code), **Author** (authoring & auditing skills), **Calibrate/visual** (calibrate, localize & visuals).
 
@@ -31,6 +31,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`handshake`](../skills/handshake/README.md) | Brief project/collaboration calibration ritual | Anyone wanting tailored calibration | stable | Calibrate/visual |
 | [`i18n`](../skills/i18n/README.md) | Safe edits on large translation files + cultural rewriting | Localization eng, product teams | stable | Calibrate/visual |
 | [`define`](../skills/define/README.md) | Contextual definition/translation of a word or phrase from its surrounding sentence (learner gloss) | Language learners, readers, translators | stable | Calibrate/visual |
+| [`ghostwriter`](../skills/ghostwriter/README.md) | Personal-voice message drafting (email/Slack/DM/LinkedIn) — zero AI tells, ban-list lint, samples > ban list, six style presets + free-form | Anyone sending messages under their own name | stable | Calibrate/visual |
 | [`pixel-art`](../skills/pixel-art/README.md) | Hi-fi / lo-fi pixel art + prompt briefs + SVG title cards | Designers, game devs, creators | 🚧 BETA | Calibrate/visual |
 
 ## Edges — how the skills relate
@@ -56,6 +57,8 @@ graph LR
 
   %% Personalization
   WAI[whoami] --> HS[handshake]
+  GW[ghostwriter] -.->|consumes profile| WAI
+  GW -.->|opt-in draft critique| TC
 
   %% Post-build diligence (mirror of the pre-build pipeline)
   SA[startup-audit] -.->|offers to seed canvas| VC
