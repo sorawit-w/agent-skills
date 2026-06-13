@@ -121,19 +121,19 @@ A version bump touches exactly these four files. Miss one and the manifest is in
 3. `CHANGELOG.md` — new entry at the top using `## [<version>] — <YYYY-MM-DD>` heading
 4. `README.md` Status section — update the one-line **Current release** blurb (new version number + a one-sentence summary of what's newest). The Status section carries only the current-release pointer; full per-version history lives in `CHANGELOG.md`.
 
-### When the release ADDS a new skill — root README needs five more touches
+### When the release ADDS a new skill — root README needs three more touches
 
-The Status section bump is not enough on its own. A new skill must also appear in the root README's catalog and navigation, plus the skill graph, or it stays invisible to readers browsing the repo:
+The Status bump is not enough on its own. A new skill must also appear in the README's routing and the skill graph, or it stays invisible to readers browsing the repo:
 
-5. **TL;DR count** (~line 22) — the "a curated shelf of N specialized skills" line. Increment `N`.
-6. **"The shelf" table** — add a row: icon image, skill name linked to its own README (`skills/<name>/README.md`), and a "What it's for" one-liner. Three columns — match the existing structure exactly. Place the row next to thematically-related skills (e.g., role/delegation skills cluster near `team-composer` and `sub-agent-coordinator`).
-7. **"Skill details" section** — add a trimmed detail entry: anchor `<a id="skill-name"></a>`, H3 with icon image and the skill name **linked to its README** (`skills/<name>/README.md`), then a `**Pairs well with**` block (bulleted, each link pointing to another skill's README) and a `**Try it**` block (3 example prompts). No "What it does" / "Reach for it when" prose — that lives in the skill's own README. Place near related skills in the same order as the shelf table.
-8. **"Start here" audience map** (README) — add the new skill to ≥1 job-to-be-done row of the `## Start here` section. One link entry into the skill's Skill-details anchor; do **not** re-describe the skill (the row is a link index, not a second catalog). Every skill must appear in at least one audience row.
-9. **Skill graph** (`docs/skill-graph.md`) — add a node row to the table (name, purpose, audience, status, bucket) and any new relationship edges to the Mermaid graph. This is the canonical map the README's "Start here" and "Building on the shelf" sections point at.
+5. **TL;DR count** (~line 23) — the "a curated shelf of N specialized skills" line. Increment `N` (it's spelled out — "twenty-three", not "23").
+6. **Start-here grouped section** — add the skill to its **primary group** (the group matching its primary-audience column in `docs/skill-graph.md`). Each entry is: one source-of-truth one-liner (copy from `skill-graph.md` — do **not** re-describe) plus **up to two example prompts** that teach its trigger phrasing. Single-mode skills may use one prompt; two is the ceiling. Place next to thematically-related skills. A cross-listed skill gets a full entry in exactly ONE primary group; elsewhere it's a bare "see also" link with no description and no prompts. Authoring/meta skills (e.g. `skill-evaluator`) go under "Building on the shelf" instead of a Start-here group, reachable via the one-line authoring pointer in the grouped section. The Startup *pipeline* is prose + one shared "Try it" cluster, not per-skill prompts — match the group shape.
+7. **Skill graph** (`docs/skill-graph.md`) — add a node row (name, purpose, audience, status, bucket) and any new edges to the Mermaid graph. This is the canonical map **and** the one-liner source for item 6.
 
-Skipping any of these is the failure mode caught after shipping `wear-the-hat` in 3.6.0 — the skill existed and was registered in the plugin manifest, but was invisible in the root README catalog. Status section mentions only persist until the next release demotes them; the catalog is permanent.
+**Per-skill detail — usage, `Pairs well with`, the full example-prompt set — lives ONLY in the skill's own `README.md`. Never copy it into the root README.** The grouped section routes; the skill README explains. (This is the rule whose violation bloated the README to ~590 lines before the 4.10.1 presentation reorg, which deleted the old per-skill "Skill details" section and the flat "The shelf" table.)
 
-**Optional polish for new skills:** update the `**Pairs well with**` bullets in adjacent skills' detail entries so cross-references are bidirectional (e.g., when adding `wear-the-hat`, mention it under `team-composer` and `sub-agent-coordinator`'s "Pairs well with" lists too). Treat as nice-to-have, not blocker.
+Skipping any of these is the failure mode caught after shipping `wear-the-hat` in 3.6.0 — the skill was registered in the plugin manifest but invisible in the README routing. The grouped-section entry and the skill-graph node are permanent; the Status-section mention is demoted at the next release.
+
+**Optional polish for new skills:** keep cross-references bidirectional in each skill's own `Pairs well with` block (that lives in the skill READMEs now, not the root README). Treat as nice-to-have, not blocker.
 
 ### Semver — what counts as what
 

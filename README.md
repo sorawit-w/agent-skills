@@ -62,47 +62,76 @@ This copies the skill folders — `SKILL.md` plus their `references/`, `template
 
 ## Start here — by what you're doing
 
-New here? Find your job and jump in. The full catalog is in [The shelf](#the-shelf); the whole skill map is in [`docs/skill-graph.md`](docs/skill-graph.md).
+New here? Find your job and jump in. The complete map is in
+[`docs/skill-graph.md`](docs/skill-graph.md); each skill links to its own README
+for the full usage, design notes, and cross-skill pairings.
 
-| If you're… | Start with |
-|:---|:---|
-| **Building & validating a startup** — idea to investor-ready | The [startup pipeline](#how-skills-chain): [`brand-workshop`](#brand-workshop) → [`validation-canvas`](#validation-canvas) → [`riskiest-assumption-test`](#riskiest-assumption-test) → [`pitch-deck`](#pitch-deck) → [`startup-grill`](#startup-grill); [`startup-launch-kit`](#startup-launch-kit) orchestrates, [`gtm`](#gtm) gets users; [`startup-audit`](#startup-audit) for the *already-built* product |
-| **Auditing a built product** — diligence from a codebase/URL, design, evals, critique | [`startup-audit`](#startup-audit) · [`team-composer`](#team-composer) · [`ai-ux-review`](#ai-ux-review) · [`ai-eval-review`](#ai-eval-review) · [`gamification-fit`](#gamification-fit) · [`validation-canvas`](#validation-canvas) |
-| **Writing & shipping code** — discipline, stack choices, parallel work, expert lenses | [`coding-rules`](#coding-rules) · [`tech-stack-recommendations`](#tech-stack-recommendations) · [`sub-agent-coordinator`](#sub-agent-coordinator) · [`wear-the-hat`](#wear-the-hat) |
-| **Authoring & auditing skills** — design, build & audit your own skills | [`skill-evaluator`](#skill-evaluator) · [`team-composer`](#team-composer) · [`sub-agent-coordinator`](#sub-agent-coordinator) · see [Building on the shelf](#building-on-the-shelf) |
-| **Calibrating, localizing & visuals** — make the agent yours, write as yourself, ship or read any language, generate art | [`whoami`](#whoami) · [`ghostwriter`](#ghostwriter) · [`handshake`](#handshake) · [`i18n`](#i18n) · [`define`](#define) · [`pixel-art`](#pixel-art) · [`brand-workshop`](#brand-workshop) |
+### Building & validating a startup
+*Idea to investor-ready.* The pipeline runs in order:
+[`brand-workshop`](skills/brand-workshop/README.md) →
+[`validation-canvas`](skills/validation-canvas/README.md) →
+[`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) →
+[`pitch-deck`](skills/pitch-deck/README.md) →
+[`startup-grill`](skills/startup-grill/README.md).
+[`startup-launch-kit`](skills/startup-launch-kit/README.md) orchestrates the full
+run with shared state; [`gtm`](skills/gtm/README.md) **🚧 BETA** gets you users
+afterward. Already built the product?
+[`startup-audit`](skills/startup-audit/README.md) reads the codebase or URL and
+returns a fast Continue / Pivot / Kill verdict. Full chain mechanics in
+[How skills chain](#how-skills-chain).
 
----
+*Try:* "Run the full brand workshop for my meditation startup." · "Build a
+validation canvas for my AI code-review tool." · "Investor wants my seed deck by
+Friday — start the structured interview." · "Grill my startup from this repo —
+continue, pivot, or kill?"
 
-## The shelf
+### Reviewing a product or AI feature
+Multi-perspective critique and design-completeness checks.
+- [`team-composer`](skills/team-composer/README.md) — assemble a virtual team and run a 3-round discussion that forces real disagreement.
+  *Try:* "Bring a team together to review this mobile auth architecture before we ship." · "Brainstorm a habit-tracker for teens — multi-perspective, no single viewpoint wins."
+- [`ai-ux-review`](skills/ai-ux-review/README.md) — human-AI design-completeness review; seven blocks, explicit gap markers.
+  *Try:* "Review the UX of our LLM email-draft feature before launch — focus on trust." · "We shipped an agentic feature and fluent-but-wrong outputs are surfacing — walk us through the review."
+- [`ai-eval-review`](skills/ai-eval-review/README.md) — the eval-design sibling of `ai-ux-review`, plus a regulatory lens.
+  *Try:* "Review the eval setup for our classification model — push on ground truth and cohort breakdown." · "Eval review for our medical-imaging classifier — we're FDA SaMD class II, apply regulatory rigor."
+- [`gamification-fit`](skills/gamification-fit/README.md) — restraint-first: finds the few places play honestly fits, refuses the rest.
+  *Try:* "Where should I add gamification to my habit-tracker so users log 4+ days a week?" · "Should we gamify our expense-report flow? Goal is 90% on-time."
 
-Each skill links to its own README — the full doc with usage, design notes, and cross-skill integration.
+See also: [`validation-canvas`](skills/validation-canvas/README.md) and [`startup-audit`](skills/startup-audit/README.md) (under Startup) both double as review tools.
 
-|  | Skill | What it's for |
-|:---:|:---|:---|
-| <img src="assets/icons/team-composer.svg" alt="" width="64" align="middle"/> | [`team-composer`](skills/team-composer/README.md) | Assemble the right virtual team and run a 3-round discussion that forces real disagreement. |
-| <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="64" align="middle"/> | [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) | Orchestrate multi-agent work — briefing, coordination, and verification that don't drift. |
-| <img src="assets/icons/wear-the-hat.svg" alt="" width="64" align="middle"/> | [`wear-the-hat`](skills/wear-the-hat/README.md) | Pick one role from `team-composer`'s catalog and do the work in their voice — solo embodiment, no panel discussion. |
-| <img src="assets/icons/skill-evaluator.svg" alt="" width="64" align="middle"/> | [`skill-evaluator`](skills/skill-evaluator/README.md) | Audit a skill to see whether its rules actually land when Claude runs it. |
-| <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="64" align="middle"/> | [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) | Opinionated default TS/JS stack (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk), plus named alternates. |
-| <img src="assets/icons/handshake.svg" alt="" width="64" align="middle"/> | [`handshake`](skills/handshake/README.md) | A brief opt-in calibration ritual that shows you what's on file, then asks a few high-leverage collaboration questions. |
-| <img src="assets/icons/whoami.svg" alt="" width="64" align="middle"/> | [`whoami`](skills/whoami/README.md) | A short conversational interview that profiles how you want to be collaborated with — six dials, an RPG class, a portable profile, and an HTML character sheet. |
-| <img src="assets/icons/ghostwriter.svg" alt="" width="64" align="middle"/> | [`ghostwriter`](skills/ghostwriter/README.md) | Drafts messages sent as you, in your voice — email, Slack, DMs, LinkedIn — with an AI-tell ban list that your real habits override. |
-| <img src="assets/icons/coding-rules.svg" alt="" width="64" align="middle"/> | [`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** | Loads one author's operating system for agentic coding into the session — branching, commit cadence, verification gates, sub-agent triggers. |
-| <img src="assets/icons/i18n.svg" alt="" width="64" align="middle"/> | [`i18n`](skills/i18n/README.md) | Surgical edits on large translation files, plus a role-based review that turns "translate" into cultural rewriting. |
-| <img src="assets/icons/define.svg" alt="" width="64" align="middle"/> | [`define`](skills/define/README.md) | The true in-context meaning of a word or phrase — sense resolved from the sentence around it, with a learner-grade gloss and optional contextual translation. |
-| <img src="assets/icons/brand-workshop.svg" alt="" width="64" align="middle"/> | [`brand-workshop`](skills/brand-workshop/README.md) | Run a Discovery → Concept → Creation workshop and ship a brand strategy brief, tagline, and code-generated logo. |
-| <img src="assets/icons/validation-canvas.svg" alt="" width="64" align="middle"/> | [`validation-canvas`](skills/validation-canvas/README.md) | Interview a founder block-by-block and produce a rigorous Lean Canvas + Value Proposition Canvas with explicit Stress Tests. |
-| <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="64" align="middle"/> | [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) | Convert canvas Stress Tests into falsifiable hypotheses with success/kill criteria. Ships a 1-page test plan + interactive risk × impact matrix. |
-| <img src="assets/icons/pitch-deck.svg" alt="" width="64" align="middle"/> | [`pitch-deck`](skills/pitch-deck/README.md) | Structured narrative interview across the 10-slide investor arc; ships a self-contained HTML deck + speaker notes. |
-| <img src="assets/icons/startup-grill.svg" alt="" width="64" align="middle"/> | [`startup-grill`](skills/startup-grill/README.md) | Adversarially probe a startup with a panel of domain-aware grillers; ship a kill report ranked by severity × fixability. |
-| <img src="assets/icons/startup-audit.svg" alt="" width="64" align="middle"/> | [`startup-audit`](skills/startup-audit/README.md) | Point at a codebase/URL → fast **Continue / Pivot / Kill** triage verdict + R/A/G band, grounded in what's built and framed as opinion; interactive HTML dossier (diligence-only flag for no verdict). |
-| <img src="assets/icons/startup-launch-kit.svg" alt="" width="64" align="middle"/> | [`startup-launch-kit`](skills/startup-launch-kit/README.md) | Opt-in umbrella orchestrator that sequences the five-step startup pipeline (brand → canvas → tests → pitch → grill) with shared state. |
-| <img src="assets/icons/gtm.svg" alt="" width="64" align="middle"/> | [`gtm`](skills/gtm/README.md) **🚧 BETA** | Phased go-to-market for startup products — GTM playbook, multi-channel content, cadenced scheduling, compliance gates, kill switch. |
-| <img src="assets/icons/ai-ux-review.svg" alt="" width="64" align="middle"/> | [`ai-ux-review`](skills/ai-ux-review/README.md) | Design-completeness review for AI products — seven blocks, six cross-block checks, explicit `[Gap — …]` markers. Ships MD + HTML. |
-| <img src="assets/icons/ai-eval-review.svg" alt="" width="64" align="middle"/> | [`ai-eval-review`](skills/ai-eval-review/README.md) | Eval-design-completeness review for AI products — sibling to `ai-ux-review`. Seven blocks plus a regulatory lens. Ships MD + HTML. |
-| <img src="assets/icons/gamification-fit.svg" alt="" width="64" align="middle"/> | [`gamification-fit`](skills/gamification-fit/README.md) | Restraint-first gamification recommender — reads code/docs/URL/analytics + a goal, finds the few places play honestly fits and refuses the rest via a structural ethics veto. Ships MD + HTML. |
-| <img src="assets/icons/pixel-art.svg" alt="" width="64" align="middle"/> | [`pixel-art`](skills/pixel-art/README.md) **🚧 BETA** | A pocket-sized hi-density pixel-art studio with a built-in design system. Two style modes; model-agnostic prompts; portable SVG title cards. |
+### Writing & shipping code
+Discipline, stack choices, and parallel work.
+- [`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** — loads one author's operating system for agentic coding into the session.
+  *Try:* "Load my coding rules into this session." · "Use coding-rules with `args: install` — I want CLAUDE.md to auto-load it."
+- [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — opinionated default TS/JS stack, with named alternates.
+  *Try:* "Starting a SaaS side-project — give me one opinionated stack I don't have to second-guess." · "We're migrating off Next.js on Vercel — recommend the path and name the trade-offs."
+- [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — orchestrate parallel sub-agents without drift.
+  *Try:* "Refactor all 14 React components from class to function — coordinate in parallel." · "Debug our flaky CI: spawn a researcher, a fixer, and a reviewer with clear briefs."
+- [`wear-the-hat`](skills/wear-the-hat/README.md) — do a task in one expert's voice, solo, no panel.
+  *Try:* "Audit `middleware/auth.ts` for missing CSRF guards as `@security_specialist`." · "Wear the accessibility specialist's hat for this UI review."
+
+### Calibration & personal voice
+Make the agent yours, and write as yourself.
+- [`whoami`](skills/whoami/README.md) — profile how you want the agent to collaborate with you (six dials, an RPG class, a portable sheet).
+  *Try:* "Run /whoami — I want you to actually know how I like to work." · "/whoami rerun — my role changed and the profile's out of date."
+- [`handshake`](skills/handshake/README.md) — a brief calibration ritual before real work begins.
+  *Try:* "Calibrate how we work — I'm tired of generic answers." · "Run /handshake --project for this repo before the next sprint."
+- [`ghostwriter`](skills/ghostwriter/README.md) — draft messages in your own voice, zero AI tells.
+  *Try:* "Reply to this email from my manager — keep it short." · "Tell my teammate on Slack the deploy slipped to Thursday, style=friend."
+
+### Language & visuals
+- [`i18n`](skills/i18n/README.md) — surgical edits on large translation files, plus cultural rewriting.
+  *Try:* "Translate this onboarding flow into Thai, Japanese, and Korean — cultural rewriting, not machine translation." · "Edit three keys in a 4,000-line `zh-CN.json` without rewriting the whole file."
+- [`define`](skills/define/README.md) — the true in-context meaning of a word or phrase, with a learner gloss.
+  *Try:* "What does ออเจ้า mean in 'ออเจ้าจักไปไหน'? Give me the register and why."
+- [`pixel-art`](skills/pixel-art/README.md) **🚧 BETA** — a pocket pixel-art studio with a built-in design system.
+  *Try:* "Create a hi-fi pixel-art medieval harbor at dusk with a lighthouse and three ships." · "Make a lo-fi pixel-art banner — three-panel, scanlined paper, VT323 title."
+
+### Authoring & auditing skills
+Building skills for this shelf? [`skill-evaluator`](skills/skill-evaluator/README.md)
+audits whether a SKILL.md's rules actually land when Claude runs it — pair it with
+[`team-composer`](skills/team-composer/README.md) to design and
+[`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) to build. Full
+authoring guide in [Building on the shelf](#building-on-the-shelf).
 
 Each skill lives under [`skills/`](skills/) with its own `README.md`, `SKILL.md`, and reference docs.
 
@@ -142,417 +171,6 @@ team-composer ──▶ sub-agent-coordinator
 
 ---
 
-## Skill details
-
-Each entry below is a quick reference — example prompts and which skills it pairs with. Click any skill heading for its full README.
-
-<a id="team-composer"></a>
-
-### <img src="assets/icons/team-composer.svg" alt="" width="48" align="middle"/> &nbsp;[`team-composer`](skills/team-composer/README.md)
-
-**Pairs well with.**
-- [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — Phase 6 delegates deliverable production through its patterns.
-- [`wear-the-hat`](skills/wear-the-hat/README.md) — when the task wants ONE specific lens applied, not a multi-role panel discussion. Inverse use case from this skill.
-- [`skill-evaluator`](skills/skill-evaluator/README.md) — audit team-composer (or any team-driven skill) for rules that get quietly skipped.
-- [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — when the architect role needs an opinionated stack to anchor the debate.
-- [`i18n`](skills/i18n/README.md) — when the `@i18n_specialist` is on the team and the output needs to ship in multiple locales.
-- [`ai-ux-review`](skills/ai-ux-review/README.md) / [`ai-eval-review`](skills/ai-eval-review/README.md) — discussion-grade alternative inverse. Use `team-composer` with `@ux_researcher` + `@ai_safety_specialist` (or `@data_scientist` + `@ai_safety_specialist` for eval) when you want a *narrow one-block discussion* rather than a full structured review artifact. Use the dedicated review skills when you want the persistent MD + HTML output.
-
-**Try it.**
-- "Bring a team together to review this mobile auth architecture before we ship."
-- "Brainstorm a habit-tracker for teens — multi-perspective, no single viewpoint wins."
-- "After team-composer concludes, hand Phase 6 deliverables to `sub-agent-coordinator` and fan out the architect / backend / frontend work in parallel."
-
----
-
-<a id="sub-agent-coordinator"></a>
-
-### <img src="assets/icons/sub-agent-coordinator.svg" alt="" width="48" align="middle"/> &nbsp;[`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md)
-
-**Pairs well with.**
-- [`team-composer`](skills/team-composer/README.md) — natural upstream: discussion finishes, deliverables fan out via coordinator patterns.
-- [`wear-the-hat`](skills/wear-the-hat/README.md) — sub-agent mode hands off a brief with `Role:` tag and persona context baked in; this skill's spawning protocol owns the rest.
-- [`skill-evaluator`](skills/skill-evaluator/README.md) — a sibling spawner: it runs in the **main loop** and spawns its *own* executor/grader sub-agents. Don't nest it under the coordinator (that collapses its split-role); run evaluations in the main loop, one skill at a time.
-
-**Try it.**
-- "Refactor all 14 React components from class to function — coordinate in parallel."
-- "Debug our flaky CI suite: spawn a researcher, a fixer, and a reviewer with clear briefs."
-- "After `team-composer` concludes, brief sub-agents to produce the per-role deliverables the conclusion assigned."
-
----
-
-<a id="wear-the-hat"></a>
-
-### <img src="assets/icons/wear-the-hat.svg" alt="" width="48" align="middle"/> &nbsp;[`wear-the-hat`](skills/wear-the-hat/README.md)
-
-**Pairs well with.**
-- [`team-composer`](skills/team-composer/README.md) — owns the role catalog (`role-personas.md`). `wear-the-hat` consumes it. Multi-role tasks route here with explicit user confirmation.
-- [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — sub-agent mode produces a brief with `Role:` tag and persona context, then hands off to coordinator's protocol; no duplicate spawning logic.
-- [`coding-rules`](skills/coding-rules/README.md) — coding-task role embodiment composes naturally: `coding-rules` sets the engineering discipline; `wear-the-hat` applies the lens.
-- [`brand-workshop`](skills/brand-workshop/README.md) — pure brand-identity packages route to `brand-workshop`; `wear-the-hat` redirects.
-
-**Try it.**
-- "Audit `middleware/auth.ts` for missing CSRF guards as `@security_specialist`."
-- "Act as a data-viz engineer and review this chart spec."
-- "Wear the hat of the accessibility specialist for this UI review."
-
----
-
-<a id="skill-evaluator"></a>
-
-### <img src="assets/icons/skill-evaluator.svg" alt="" width="48" align="middle"/> &nbsp;[`skill-evaluator`](skills/skill-evaluator/README.md)
-
-**Pairs well with.**
-- **Every other skill on this shelf** — use it to audit any of them. The shelf is only as sharp as its weakest rule.
-- [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — run evaluation variants in parallel (different prompt sets, different grader instances) and converge findings.
-
-**Try it.**
-- "Stress-test `team-composer` — does Round 2 actually produce rebuttals, or is it ceremonial?"
-- "My onboarding skill has been 'mostly working.' Audit it and tell me which rules are getting skipped."
-- "Use `sub-agent-coordinator` to fan out evaluator runs against three of our skills in parallel and converge the findings."
-
----
-
-<a id="tech-stack-recommendations"></a>
-
-### <img src="assets/icons/tech-stack-recommendations.svg" alt="" width="48" align="middle"/> &nbsp;[`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md)
-
-**Pairs well with.**
-- [`team-composer`](skills/team-composer/README.md) — when the architect role needs an anchor position to debate from.
-- [`skill-evaluator`](skills/skill-evaluator/README.md) — audit the stack rules against your real constraints before committing.
-
-**Try it.**
-- "I'm starting a SaaS side-project. Give me one opinionated stack I don't have to second-guess."
-- "We're migrating off Next.js on Vercel — recommend the path and name the trade-offs honestly."
-- "Kick off a `team-composer` architecture review and load `tech-stack-recommendations` as the architect's anchor position."
-
----
-
-<a id="handshake"></a>
-
-### <img src="assets/icons/handshake.svg" alt="" width="48" align="middle"/> &nbsp;[`handshake`](skills/handshake/README.md)
-
-**Pairs well with.**
-- [`team-composer`](skills/team-composer/README.md) — when a team is about to be assembled and `user`-type memory is sparse, `team-composer` MAY suggest `/handshake` first so the team can be tailored to your collaboration style. Suggestion only; never auto-routes.
-- [`brand-workshop`](skills/brand-workshop/README.md) — similar — may suggest `/handshake` for a personal-brand or solo-founder identity package. Suggestion only.
-- [`validation-canvas`](skills/validation-canvas/README.md) / [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) / [`pitch-deck`](skills/pitch-deck/README.md) — these read project state, not user state. May suggest `/handshake --project` at kickoff if `project`-type memory for the current work is empty. Suggestion only.
-- [`whoami`](skills/whoami/README.md) — sibling. `whoami` is the broad person-level profile; `handshake` calibrates one project and pre-fills its core questions from the whoami profile.
-- `productivity:memory-management` *(if installed)* — `handshake` writes into the same two-tier `MEMORY.md` + `memory/` store. Capability-gated: defers to `productivity:memory-management`'s file-layout conventions when present, otherwise writes directly to the runtime's persistent memory.
-
-**Try it.**
-- "Calibrate how we work — I'm tired of generic answers."
-- "Show me what you have on file about me, then ask the questions that would actually help."
-- "Run `/handshake --project` for this repo before we start the next sprint."
-
----
-
-<a id="whoami"></a>
-
-### <img src="assets/icons/whoami.svg" alt="" width="48" align="middle"/> &nbsp;[`whoami`](skills/whoami/README.md)
-
-**Pairs well with.**
-- [`handshake`](skills/handshake/README.md) — sibling. `whoami` is the broad person-level profile; `handshake` calibrates one project and pre-fills its core questions from the whoami profile. `whoami` is upstream and one-directional.
-- [`pixel-art`](skills/pixel-art/README.md) — `whoami` calls it (if an image generator is available) to generate the class character portrait; falls back to a bundled hi-density pixel-art PNG.
-- `productivity:memory-management` *(if installed)* — `whoami` writes its profile as a standard `user`-type memory; capability-gated, defers to the runtime's memory conventions.
-- [`ghostwriter`](skills/ghostwriter/README.md) — downstream consumer: reads the whoami profile to calibrate personality (not phrasing) when drafting messages in your voice.
-
-**Try it.**
-- "Run `/whoami` — I want you to actually know how I like to work."
-- "I just switched from another AI tool — here's my profile file, set me up."
-- "`/whoami rerun` — my role changed and the profile's out of date."
-
----
-
-<a id="ghostwriter"></a>
-
-### <img src="assets/icons/ghostwriter.svg" alt="" width="48" align="middle"/> &nbsp;[`ghostwriter`](skills/ghostwriter/README.md)
-
-**Pairs well with.**
-- [`whoami`](skills/whoami/README.md) — personality calibration source for the voice resolution chain (directness, warmth, formality — never phrasing). Read-only; `ghostwriter` offers once to run it if no profile exists.
-- [`team-composer`](skills/team-composer/README.md) — opt-in critique handoff: want a draft *reviewed* instead of written? `@senior_copywriter` + `@humorist` at trivial scope.
-- [`define`](skills/define/README.md) — register sibling. "Which word fits this context" → `define`; "write the message in my voice" → `ghostwriter`.
-
-**Try it.**
-- "Reply to this email from my manager — keep it short."
-- "Tell my teammate on Slack the deploy slipped to Thursday, style=friend."
-- "Decline this vendor politely, style=diplomatic — and explain the delay to the client in style=eli5."
-
----
-
-<a id="coding-rules"></a>
-
-### <img src="assets/icons/coding-rules.svg" alt="" width="48" align="middle"/> &nbsp;[`coding-rules`](skills/coding-rules/README.md) &nbsp;⚠️&nbsp;**OPINIONATED**
-
-> **Deliberately, aggressively opinionated** — one author's personal taste, loaded on every session that uses it. Not a neutral best-practice guide. Read [`resources/BOOTSTRAP.md`](skills/coding-rules/resources/BOOTSTRAP.md) end-to-end and fork before adopting. Full caveat in the [skill README](skills/coding-rules/README.md).
-
-**Pairs well with.**
-- [`skill-evaluator`](skills/skill-evaluator/README.md) — for evaluating rule changes. The skill's own `CLAUDE.md` enforces "no inline grading" — rule audits route to a fresh-context split-role harness to remove author bias.
-- [`wear-the-hat`](skills/wear-the-hat/README.md) — coding-task role embodiment composes naturally: this skill sets the engineering discipline; `wear-the-hat` applies the specific lens (`@security_specialist`, `@dataviz_engineer`, etc.) for the task at hand.
-- Project-local `CLAUDE.md` / `AGENTS.md` — per BOOTSTRAP's priority order (User > Project config > Agent context > Playbook), the project's own instructions always win over rules in this skill.
-- `superpowers:*` *(if installed)* — overlap exists (TDD, brainstorming, verification-before-completion). Explicit user invocations win; otherwise this skill's BOOTSTRAP rules are the operating frame.
-
-**Try it.**
-- "Use the coding-rules skill to load my rules into this session."
-- "Use the coding-rules skill with `args: install` for this project — I want CLAUDE.md to auto-load it."
-- "Use the coding-rules skill with `args: status` — I want to check whether the rules are still in context after that long compaction."
-
----
-
-<a id="i18n"></a>
-
-### <img src="assets/icons/i18n.svg" alt="" width="48" align="middle"/> &nbsp;[`i18n`](skills/i18n/README.md)
-
-**Pairs well with.**
-- [`define`](skills/define/README.md) — the comprehension sibling, sharing the same locale engine (`references/locale-knowledge.md`). `i18n` ships localized files; `define` explains a word/phrase in context.
-- [`team-composer`](skills/team-composer/README.md) — when `@i18n_specialist` is on the team, this skill executes the translation work the team's output needs.
-- [`brand-workshop`](skills/brand-workshop/README.md) — localize the descriptions pack (taglines, bios, boilerplate) without losing voice.
-
-**Try it.**
-- "Translate this onboarding flow into Thai, Japanese, and Korean — cultural rewriting, not machine translation."
-- "Edit three keys in a 4,000-line `zh-CN.json` without rewriting the whole file or blowing the token budget."
-- "`brand-workshop` just shipped the descriptions pack — localize it into `th` and `ja` and keep the voice."
-
----
-
-<a id="define"></a>
-
-### <img src="assets/icons/define.svg" alt="" width="48" align="middle"/> &nbsp;[`define`](skills/define/README.md)
-
-**Pairs well with.**
-- [`i18n`](skills/i18n/README.md) — the production sibling, sharing the same locale engine. Editing locale files / adding a language → `i18n`; "what does this word mean here" → `define`.
-- [`team-composer`](skills/team-composer/README.md) — when a definition or translation choice is contested and benefits from multi-perspective discussion rather than a single gloss.
-- [`ghostwriter`](skills/ghostwriter/README.md) — the production sibling for personal messages: `define` resolves what a word conveys in context; `ghostwriter` writes the whole message in your voice.
-
-**Try it.**
-- "What does ออเจ้า mean in 'ออเจ้าจักไปไหน'? Give me the register and why that sense."
-- "Define 'leverage' as used in this sentence — and how it differs from 'use'."
-- "Translate just '木漏れ日' in this paragraph into English, in context."
-
----
-
-<a id="brand-workshop"></a>
-
-### <img src="assets/icons/brand-workshop.svg" alt="" width="48" align="middle"/> &nbsp;[`brand-workshop`](skills/brand-workshop/README.md)
-
-**Pairs well with.**
-- [`validation-canvas`](skills/validation-canvas/README.md) — suggested next step. Auto-applies brand tokens from the kit.
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — two steps downstream. Reads design tokens for the matrix HTML.
-- [`pitch-deck`](skills/pitch-deck/README.md) — reads the brand design system (`docs/brand/DESIGN.md`) for consistent branding and owns the deck construction itself.
-- [`i18n`](skills/i18n/README.md) — localize the descriptions pack while preserving tone.
-
-**Try it.**
-- "Run the full workshop for my meditation startup — identity, mark, voice, and design tokens."
-- "I have a one-paragraph startup idea. Take me through Discovery → Concept → Creation and ship a launch-ready kit."
-- "Brand-workshop first, then hand the kit to `validation-canvas` and `pitch-deck` so the whole startup artifact chain shares tokens."
-
----
-
-<a id="validation-canvas"></a>
-
-### <img src="assets/icons/validation-canvas.svg" alt="" width="48" align="middle"/> &nbsp;[`validation-canvas`](skills/validation-canvas/README.md)
-
-**Pairs well with.**
-- [`brand-workshop`](skills/brand-workshop/README.md) — upstream input; the canvas auto-applies brand tokens from the kit.
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — required next step (medium gate). Stress Tests seed the assumption dump; invalidated hypotheses loop back here in update mode.
-- [`pitch-deck`](skills/pitch-deck/README.md) — two steps downstream. Reads canvas headings to seed slides 2, 3, 6 and cross-checks the Ask against Stress Tests.
-- [`team-composer`](skills/team-composer/README.md) — when a block is contested, kick it to a full multi-role team for a focused session.
-- [`startup-grill`](skills/startup-grill/README.md) — last step. Reads Stress Tests and un-relieved Pains as direct grilling ammunition.
-- [`ai-ux-review`](skills/ai-ux-review/README.md) — for AI-flavored startups, the natural next step after the canvas is settled. This skill reads `validation-canvas.md` if present and skips business-model questions, focusing purely on the human-AI design layer.
-- [`ai-eval-review`](skills/ai-eval-review/README.md) — sibling of `ai-ux-review`. When the AI product's eval rigor is the load-bearing question (regulated domain, classification with disparate-impact risk, drift-sensitive deployment), this is the measurement-side review.
-
-**Try it.**
-- "Build a validation canvas for my AI code-review tool."
-- "I'm a 3rd-time founder pivoting into healthtech — run the canvas in compressed mode and challenge me hard."
-- "`brand-workshop` is done — use the brand kit as input and generate the canvas with auto-styled tokens."
-
----
-
-<a id="riskiest-assumption-test"></a>
-
-### <img src="assets/icons/riskiest-assumption-test.svg" alt="" width="48" align="middle"/> &nbsp;[`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md)
-
-**Pairs well with.**
-- [`validation-canvas`](skills/validation-canvas/README.md) — required upstream (medium gate). Loop-back target when hypotheses invalidate.
-- [`pitch-deck`](skills/pitch-deck/README.md) — downstream (heavy gate). Pitch refuses to ship without populated `## Results` for top-3 hypotheses.
-- [`startup-grill`](skills/startup-grill/README.md) — last step. Reads Results to check for iteration evidence.
-- [`team-composer`](skills/team-composer/README.md) — discussion-grade alternative for multi-role validation strategy.
-- [`ai-ux-review`](skills/ai-ux-review/README.md) / [`ai-eval-review`](skills/ai-eval-review/README.md) — composition. When the Gap Summary from either AI-review skill surfaces an *assumption that needs testing* (not just deciding — e.g., "we assume voice-sample-based prompting matches user voice well enough"), hand it here to convert into a falsifiable hypothesis with success / kill criteria.
-
-**Try it.**
-- "I just shipped my validation canvas — what should I test first?"
-- "Design a fake-door test for my new auto-AP feature."
-- "My pre-sale failed — only 1 of 15 paid. Update my test plan and route me back to the canvas."
-
----
-
-<a id="pitch-deck"></a>
-
-### <img src="assets/icons/pitch-deck.svg" alt="" width="48" align="middle"/> &nbsp;[`pitch-deck`](skills/pitch-deck/README.md)
-
-**Pairs well with.**
-- [`validation-canvas`](skills/validation-canvas/README.md) — two steps upstream. Reads the validation canvas (`docs/canvas/validation-canvas.md` or v1 `validation-canvas.md`) to seed slides 2/3/6 and cross-check the Ask.
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — required direct upstream (heavy gate). Reads the assumption-test plan (`docs/rat/assumption-test-plan.md` or v1 `rat/assumption-test-plan.md`) Top 3 + Results to inform the Validation slide and Traction claims; refuses to ship a clean deck without populated Results (override: `[PRE-VALIDATION DRAFT]` watermark).
-- [`brand-workshop`](skills/brand-workshop/README.md) — reads the brand design system (`docs/brand/DESIGN.md`) for visuals.
-- [`team-composer`](skills/team-composer/README.md) — when a slide claim is weak, spin up `@startup_strategist + @vc_partner + @senior_copywriter` to pressure-test it before shipping.
-- [`startup-grill`](skills/startup-grill/README.md) — after this skill ships, run the grill to probe the deck adversarially before it lands in an investor's inbox.
-
-**Try it.**
-- "Investor wants my seed deck by Friday — start the structured interview."
-- "Use the validation canvas and assumption-test plan to build the deck; refuse to ship with any cardinal sin."
-- "I haven't tested anything yet but I want to see what the deck would look like — pre-validation draft mode."
-
----
-
-<a id="startup-grill"></a>
-
-### <img src="assets/icons/startup-grill.svg" alt="" width="48" align="middle"/> &nbsp;[`startup-grill`](skills/startup-grill/README.md)
-
-**Pairs well with.**
-- [`validation-canvas`](skills/validation-canvas/README.md) — upstream input. The Stress Tests section + un-relieved VPC Pains are direct grilling ammunition.
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — upstream input. The iteration-evidence check (`## Iteration Evidence` section in the kill report, added v2.0.0) yellow-flags pristine pipelines where the canvas wasn't updated after RAT testing.
-- [`pitch-deck`](skills/pitch-deck/README.md) — upstream input. The deck's required-slot answers become starting probes.
-- [`brand-workshop`](skills/brand-workshop/README.md) — upstream input when slot 5 = `@brand_strategist`; the panel reads `brand-brief.md`'s Positioning section.
-- [`team-composer`](skills/team-composer/README.md) — instead of this skill when the user wants brainstorming or constructive review. After this skill when the kill report's `Suggested attack` lines need a multi-role workshop.
-- [`skill-evaluator`](skills/skill-evaluator/README.md) — audit the verdict-vs-body consistency rule, the no-lethal-skip rule, the interactive-invitation rule.
-
-**Try it.**
-- "Grill my startup idea: a B2B SaaS for accounting firms — pre-seed, $4k MRR, two co-founders. What would kill us?"
-- "I have the validation canvas, assumption-test plan, and pitch deck ready — run the grill with the deck as primary input."
-- "Defending L1. We have a 6-month cohort retention curve at 87% logo retention. Re-probe."
-
----
-
-<a id="startup-audit"></a>
-
-### <img src="assets/icons/startup-audit.svg" alt="" width="48" align="middle"/> &nbsp;[`startup-audit`](skills/startup-audit/README.md)
-
-**Pairs well with.**
-- [`validation-canvas`](skills/validation-canvas/README.md) — infers into its exact Lean Canvas headings; writes a separate `inferred-canvas.md` and offers to seed `validation-canvas.md` (never overwrites a founder's). The founder corrects the machine's read there.
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — handoff target for the `unknown` blocks (Problem / UVP / Unfair Advantage) — the beliefs a built artifact can't prove.
-- [`startup-grill`](skills/startup-grill/README.md) — sibling verdict skill, split by input + rigor. This gives a fast code/URL triage verdict; grill gives the deep adversarial verdict on belief artifacts. A Kill/Pivot here routes to grill (via a seeded `validation-canvas.md`) to confirm.
-- [`team-composer`](skills/team-composer/README.md) — reads its `role-personas.md` for the audit lenses (read, not invoked).
-- [`ai-ux-review`](skills/ai-ux-review/README.md) / [`ai-eval-review`](skills/ai-eval-review/README.md) — conditional, invoked when AI features are detected; the dossier embeds their output.
-
-**Try it.**
-- "Grill my startup from this repo — should I continue, pivot, or kill it?"
-- "Score my built product from the codebase and the live URL; does the code match the pitch?"
-- "Audit this repo, evidence only — no verdict, just the dossier."
-
----
-
-<a id="startup-launch-kit"></a>
-
-### <img src="assets/icons/startup-launch-kit.svg" alt="" width="48" align="middle"/> &nbsp;[`startup-launch-kit`](skills/startup-launch-kit/README.md)
-
-**Pairs well with.**
-- All five pipeline skills above — the orchestrator calls them in order. Use them directly for any single-step or partial-pipeline work.
-- [`team-composer`](skills/team-composer/README.md) — alternative for pipeline-strategy discussions, single-block deep dives, or work that doesn't fit the pipeline shape.
-
-**Try it.**
-- "Build my whole startup kit for [idea] — take me through everything."
-- "I ran brand-workshop and validation-canvas manually last week. Pick up where I left off."
-- "I want to ship a pre-validation draft of the deck for an advisor meeting Friday — record the override and proceed."
-
----
-
-<a id="gtm"></a>
-
-### <img src="assets/icons/gtm.svg" alt="" width="48" align="middle"/> &nbsp;[`gtm`](skills/gtm/README.md) &nbsp;🚧&nbsp;**BETA**
-
-> **Beta** — evals validate structural reliability, not real founder workflows on a real project. Breaking changes possible before v1; treat outputs as drafts to review. Full caveat in the [skill README](skills/gtm/README.md).
-
-**Pairs well with.**
-- [`brand-workshop`](skills/brand-workshop/README.md) — upstream input. `gtm` reads `DESIGN.md` for brand voice tokens. Wizard offers to invoke `brand-workshop` if no brand artifact exists.
-- [`validation-canvas`](skills/validation-canvas/README.md) — upstream input. `gtm` reads ICP, positioning, channels, and Stress Tests for the playbook.
-- [`pitch-deck`](skills/pitch-deck/README.md) — upstream input. `gtm` reads positioning and messaging from the deck content.
-- [`startup-grill`](skills/startup-grill/README.md) — adjacent. After `gtm` ships its P1 playbook, the founder may grill it for blind spots before promoting to P2.
-- [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — hard dispatch target. Multi-channel content fan-out runs through its patterns.
-- [`i18n`](skills/i18n/README.md) — hard dispatch target. Non-English content drafts route through this skill for cultural adaptation.
-- [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — when `gtm` emits a `content.needs_eng` event for a landing page and the founder has no chosen stack.
-
-**Try it.**
-- "My pitch deck is ready and I want to start getting users — set up GTM for this project."
-- "kick off go-to-market for invoicy.app — B2C, US-only for now, freelance designer audience."
-- "halt all my marketing automations right now — there's a PR fire on TikTok. Then later, walk me through how to resume safely."
-
----
-
-<a id="ai-ux-review"></a>
-
-### <img src="assets/icons/ai-ux-review.svg" alt="" width="48" align="middle"/> &nbsp;[`ai-ux-review`](skills/ai-ux-review/README.md)
-
-**Pairs well with.**
-- [`validation-canvas`](skills/validation-canvas/README.md) — upstream for AI startups. When present, this skill skips business-model questions and audits UX execution only.
-- [`brand-workshop`](skills/brand-workshop/README.md) — upstream when a brand identity exists. This skill reads `DESIGN.md` to style the HTML output.
-- [`team-composer`](skills/team-composer/README.md) — alternative when the request is one narrow block (e.g., "let's debate trust calibration") rather than a full review. Discussion-grade, no artifact.
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — composition. If the Gap Summary surfaces design assumptions that need *testing* (not just deciding), hand the gaps to RAT.
-- [`startup-grill`](skills/startup-grill/README.md) — adjacent. Adversarial pre-mortem with a verdict. Different mode from this skill's cooperative gap detection.
-- [`ai-eval-review`](skills/ai-eval-review/README.md) — sibling skill. This audits the human-AI design surface; `ai-eval-review` audits the measurement layer behind it. Block 7 gaps here seed Block 1 there.
-
-**Try it.**
-- "Review the UX of our LLM email-draft feature before launch — focus on trust and output integrity."
-- "We just shipped an agentic feature and fluent-but-wrong outputs are surfacing. Walk us through the review."
-- "Review the AI feature in our app — `validation-canvas.md` is already in `docs/canvas/`; skip the business-model questions and audit the UX layer."
-
----
-
-<a id="ai-eval-review"></a>
-
-### <img src="assets/icons/ai-eval-review.svg" alt="" width="48" align="middle"/> &nbsp;[`ai-eval-review`](skills/ai-eval-review/README.md)
-
-**Pairs well with.**
-- [`ai-ux-review`](skills/ai-ux-review/README.md) — **sibling skill.** Same shape, same elicitation pattern, different subject. Run both for a complete AI product review.
-- [`validation-canvas`](skills/validation-canvas/README.md) — upstream for AI startups. Block 5 (Cohort breakdown) reads Customer Segments.
-- [`brand-workshop`](skills/brand-workshop/README.md) — upstream when a brand exists. HTML output styled from `DESIGN.md`.
-- [`team-composer`](skills/team-composer/README.md) — alternative for one-block discussions (e.g., "let's debate ground-truth labeling strategy") rather than a full review artifact.
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — composition. Gap Summary entries that are *assumptions about evals* (e.g., "we assume single-annotator labels are accurate enough") become RAT hypotheses.
-- [`startup-grill`](skills/startup-grill/README.md) — adjacent. Adversarial pre-mortem with verdict; different mode from this skill's cooperative gap detection.
-
-**Try it.**
-- "Review the eval setup for our classification model before launch — push hard on ground truth and cohort breakdown."
-- "We have `ai-ux-review.md` with Block 7 gaps for our LLM feature. Walk through the eval review next, seeded from those gaps."
-- "Eval review for our medical-imaging classifier — we're FDA SaMD class II, so apply regulatory rigor across Blocks 2, 5, and 6."
-
----
-
-<a id="gamification-fit"></a>
-
-### <img src="assets/icons/gamification-fit.svg" alt="" width="48" align="middle"/> &nbsp;[`gamification-fit`](skills/gamification-fit/README.md)
-
-**Pairs well with.**
-- [`validation-canvas`](skills/validation-canvas/README.md) — upstream goal source for early-stage products (Key Metrics + the value-prop "aha" behavior).
-- [`gtm`](skills/gtm/README.md) — upstream goal source for post-launch products (the North Star metric).
-- [`ai-ux-review`](skills/ai-ux-review/README.md) — adjacent. Its trust/feedback/control blocks tell this skill *where* a mechanic could honestly live.
-- [`team-composer`](skills/team-composer/README.md) + [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — downstream to scope and build the recommended cards; `@game_designer` for designing an actual game (out of this skill's scope).
-- [`skill-evaluator`](skills/skill-evaluator/README.md) — audits this skill's rule-adherence (specificity gate, structural veto, refusal section, three-line close).
-
-**Try it.**
-- "Where should I add gamification to my habit-tracker so users log an entry 4+ days a week?"
-- "Should we gamify our expense-report submission flow? Goal is 90% submitted on time."
-- "Here's our repo and a PostHog export — find the few places play honestly fits, and tell me what to deliberately leave alone."
-
----
-
-<a id="pixel-art"></a>
-
-### <img src="assets/icons/pixel-art.svg" alt="" width="48" align="middle"/> &nbsp;[`pixel-art`](skills/pixel-art/README.md) &nbsp;🚧&nbsp;**BETA**
-
-> **Beta** — structural smoke-tests pass, but the skill is not yet dogfooded across all subject categories and generators. Full caveat in the [skill README](skills/pixel-art/README.md).
-
-**Pairs well with.**
-- [`brand-workshop`](skills/brand-workshop/README.md) — logo / identity packages route there. `pixel-art` can produce pixel-art **banners** for a brand, but logos are a different deliverable.
-- Anthropic's `algorithmic-art` — sibling skill. Algorithmic art uses p5.js (procedural, seeded); `pixel-art` uses image-gen models + structured prompts. Different toolchain, complementary scope.
-- Anthropic's `canvas-design` — sibling skill. Canvas-design ships static raster / PDF via design-philosophy prose; `pixel-art` ships pixel-style raster via design-system tokens.
-- [`team-composer`](skills/team-composer/README.md) — when the brief is cross-disciplinary (e.g., game splash + marketing copy), `team-composer` assembles roles and may hand the visual deliverable to `pixel-art`.
-- Image-gen MCPs (Z-image Turbo, Imagen, OpenAI Image, etc.) — capability-gated dependency. Skill works without any MCP via the prompt brief; works better with at least one connected.
-
-**Try it.**
-- "Create a hi-fi pixel-art medieval harbor at dusk with a lighthouse and three ships."
-- "Make a lo-fi pixel-art banner for my project — three-panel, scanlined paper, VT323 title."
-- "Title card for 'Whispers of the Flame' in VT323, candlelit palette, bold + inset shadow."
-
----
-
 ## Building on the shelf
 
 Writing your own skill, or forking one of these? Skill authoring here is **harness engineering** — designing the context, scaffolding, and feedback loops around the agent. Start with:
@@ -578,7 +196,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.10.0`.** Adds **`ghostwriter`** — drafts messages sent *as you, in your voice* (email, Slack, DMs, LinkedIn) with an AI-tell ban list that your observed habits override, six style presets plus free-form styles interpreted in-place, and all voice data stored user-local (`~/.claude/ghostwriter/`), never in the repo or the installed skill folder. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.10.1`.** Presentation reorg — the README now routes by five jobs (Startup, Review, Code, Calibration & voice, Language & visuals) with up to two trigger-teaching example prompts per skill, instead of a flat 23-row table plus a 410-line per-skill detail section. Per-skill depth lives in each skill's own README; the root README only routes. No skill behavior changed. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork).
 - **Other agents** — may come later, no promises yet.
