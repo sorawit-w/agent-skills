@@ -62,7 +62,7 @@ Each preset follows the same schema. Free-form styles are interpreted into this 
 
 ## Channel × relationship defaults
 
-Cold-start table for when no sample covers the channel in play. **Samples always override this table.** Cells give: typical length · greeting/sign-off norm · formality floor.
+Cold-start table for when no sample covers the channel in play. **Samples always override this table.** Cells give: maximum length (hard cap) · greeting/sign-off norm · formality floor.
 
 | | Close coworker | Manager | Client | Stranger |
 |---|---|---|---|---|
@@ -71,7 +71,7 @@ Cold-start table for when no sample covers the channel in play. **Samples always
 | **DM / text** | 1–2 lines · nothing ceremonial | 1–2 lines · nothing ceremonial | rare channel; mirror their last message | rare channel; mirror their last message |
 | **LinkedIn** | 2–3 sentences · first-name greeting | 2–3 sentences · first-name greeting | 2–4 sentences · greeting · formality medium-high | 2–4 sentences · greeting, no flattery opener · formality medium-high |
 
-Reading the table: pick the channel row and relationship column, use it as the length/ceremony floor, then apply the resolved style on top. Conflicts resolve in this order: samples > explicit style > this table.
+Reading the table: pick the channel row and relationship column. The cell's length is a **hard cap** (shorter is always fine; never add sentences to reach it), its formality is a **floor** (don't get more casual than the cell, unless samples say otherwise), and the greeting/sign-off norm is the default ceremony. Apply the resolved style on top — register changes, the length cap doesn't. Conflicts resolve in this order: samples > explicit style > this table.
 
 ---
 
