@@ -5,6 +5,47 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.10.1] — 2026-06-13
+
+Presentation-only reorg of the root `README.md` and the plugin manifests. No skill
+behavior, triggers, or contracts changed. The shelf grew to 23 skills and the README
+had grown to ~590 lines because each skill's description was duplicated across four
+surfaces (the flat "shelf" table, a per-skill "Skill details" section, the "Start here"
+audience map, and each skill's own README) — guaranteeing drift. This release collapses
+those surfaces into a single job-routing section and makes each skill's own README the
+sole home for depth.
+
+### Changed
+- **Root `README.md`** — replaced the `## Start here` audience table and the flat
+  `## The shelf` table with one grouped **Start here — by what you're doing** section,
+  organized into five jobs: Startup, Review, Code, Calibration & personal voice, and
+  Language & visuals (plus an authoring pointer into "Building on the shelf"). Each
+  skill carries one source-of-truth one-liner and **up to two** example prompts that
+  teach its trigger phrasing; the Startup pipeline stays prose with one shared "Try it"
+  cluster. Deleted the ~410-line `## Skill details` section entirely — its `Pairs well
+  with` blocks and full example sets already live in each skill's own README and in
+  `docs/skill-graph.md`. README dropped from ~593 to ~212 lines.
+- **Manifest description** (`plugin.json` + `marketplace.json`, byte-identical) —
+  replaced the 1241-char skill enumeration with a plain-text five-track summary.
+- **`CLAUDE.md` release ritual** — rewrote "root README needs five more touches" down
+  to **three** (TL;DR count, grouped-section entry, skill-graph node), matching the new
+  structure. Without this, the next skill added would have followed stale instructions
+  and rebuilt the deleted "Skill details" section, silently reverting the reorg.
+
+### Why
+The repo's own CLAUDE.md preaches "single source of truth per altitude of detail," but
+the README violated it. The fix wasn't to split the plugin or move skills (discovery is
+flat `skills/<name>/SKILL.md` by necessity; names are the public API) — it was to make
+the README *route* and let each skill's README *explain*. Keeping up to two example
+prompts inline (rather than dropping to one) preserves the highest-value discoverability
+content for auto-triggering skills — what a triggering description actually sounds like —
+without rebuilding the per-skill detail section's bulk.
+
+### Notes
+- No migration needed. Skill names, slash commands, and triggers are unchanged.
+- The `## How skills chain` section (the deep pipeline mechanics) is retained as-is; the
+  Start-here Startup group is the routing-altitude pointer into it.
+
 ## [4.10.0] — 2026-06-12
 
 Adds **`ghostwriter`** — drafts messages sent *as the user, in the user's natural
