@@ -68,16 +68,22 @@ for the full usage, design notes, and cross-skill pairings.
 
 ### Building & validating a startup
 *Idea to investor-ready.* The pipeline runs in order:
+
 [`brand-workshop`](skills/brand-workshop/README.md) →
 [`validation-canvas`](skills/validation-canvas/README.md) →
 [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) →
 [`pitch-deck`](skills/pitch-deck/README.md) →
 [`startup-grill`](skills/startup-grill/README.md).
+
 [`startup-launch-kit`](skills/startup-launch-kit/README.md) orchestrates the full
 run with shared state; [`gtm`](skills/gtm/README.md) **🚧 BETA** gets you users
-afterward. Already built the product?
+afterward.
+
+Already built the product?
 [`startup-audit`](skills/startup-audit/README.md) reads the codebase or URL and
-returns a fast Continue / Pivot / Kill verdict. Full chain mechanics in
+returns a fast Continue / Pivot / Kill verdict.
+
+Full chain mechanics in
 [How skills chain](#how-skills-chain).
 
 *Try:*
@@ -88,16 +94,28 @@ returns a fast Continue / Pivot / Kill verdict. Full chain mechanics in
 
 ### Reviewing a product or AI feature
 Multi-perspective critique and design-completeness checks.
-- [`team-composer`](skills/team-composer/README.md) — assemble a virtual team and run a 3-round discussion that forces real disagreement. *Try:*
+
+[`team-composer`](skills/team-composer/README.md) — assemble a virtual team and run a 3-round discussion that forces real disagreement.
+
+*Try:*
   - "Bring a team together to review this mobile auth architecture before we ship."
   - "Brainstorm a habit-tracker for teens — multi-perspective, no single viewpoint wins."
-- [`ai-ux-review`](skills/ai-ux-review/README.md) — human-AI design-completeness review; seven blocks, explicit gap markers. *Try:*
+
+[`ai-ux-review`](skills/ai-ux-review/README.md) — human-AI design-completeness review; seven blocks, explicit gap markers.
+
+*Try:*
   - "Review the UX of our LLM email-draft feature before launch — focus on trust."
   - "We shipped an agentic feature and fluent-but-wrong outputs are surfacing — walk us through the review."
-- [`ai-eval-review`](skills/ai-eval-review/README.md) — the eval-design sibling of `ai-ux-review`, plus a regulatory lens. *Try:*
+
+[`ai-eval-review`](skills/ai-eval-review/README.md) — the eval-design sibling of `ai-ux-review`, plus a regulatory lens.
+
+*Try:*
   - "Review the eval setup for our classification model — push on ground truth and cohort breakdown."
   - "Eval review for our medical-imaging classifier — we're FDA SaMD class II, apply regulatory rigor."
-- [`gamification-fit`](skills/gamification-fit/README.md) — restraint-first: finds the few places play honestly fits, refuses the rest. *Try:*
+
+[`gamification-fit`](skills/gamification-fit/README.md) — restraint-first: finds the few places play honestly fits, refuses the rest.
+
+*Try:*
   - "Where should I add gamification to my habit-tracker so users log 4+ days a week?"
   - "Should we gamify our expense-report flow? Goal is 90% on-time."
 
@@ -105,38 +123,68 @@ See also: [`validation-canvas`](skills/validation-canvas/README.md) and [`startu
 
 ### Writing & shipping code
 Discipline, stack choices, and parallel work.
-- [`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** — loads one author's operating system for agentic coding into the session. *Try:*
+
+[`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** — loads one author's operating system for agentic coding into the session.
+
+*Try:*
   - "Load my coding rules into this session."
   - "Use coding-rules with `args: install` — I want CLAUDE.md to auto-load it."
-- [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — opinionated default TS/JS stack, with named alternates. *Try:*
+
+[`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — opinionated default TS/JS stack, with named alternates.
+
+*Try:*
   - "Starting a SaaS side-project — give me one opinionated stack I don't have to second-guess."
   - "We're migrating off Next.js on Vercel — recommend the path and name the trade-offs."
-- [`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — orchestrate parallel sub-agents without drift. *Try:*
+
+[`sub-agent-coordinator`](skills/sub-agent-coordinator/README.md) — orchestrate parallel sub-agents without drift.
+
+*Try:*
   - "Refactor all 14 React components from class to function — coordinate in parallel."
   - "Debug our flaky CI: spawn a researcher, a fixer, and a reviewer with clear briefs."
-- [`wear-the-hat`](skills/wear-the-hat/README.md) — do a task in one expert's voice, solo, no panel. *Try:*
+
+[`wear-the-hat`](skills/wear-the-hat/README.md) — do a task in one expert's voice, solo, no panel.
+
+*Try:*
   - "Audit `middleware/auth.ts` for missing CSRF guards as `@security_specialist`."
   - "Wear the accessibility specialist's hat for this UI review."
 
 ### Calibration & personal voice
 Make the agent yours, and write as yourself.
-- [`whoami`](skills/whoami/README.md) — profile how you want the agent to collaborate with you (six dials, an RPG class, a portable sheet). *Try:*
+
+[`whoami`](skills/whoami/README.md) — profile how you want the agent to collaborate with you (six dials, an RPG class, a portable sheet)
+
+*Try:*
   - "Run /whoami — I want you to actually know how I like to work."
   - "/whoami rerun — my role changed and the profile's out of date."
-- [`handshake`](skills/handshake/README.md) — a brief calibration ritual before real work begins. *Try:*
+
+[`handshake`](skills/handshake/README.md) — a brief calibration ritual before real work begins.
+
+*Try:*
   - "Calibrate how we work — I'm tired of generic answers."
   - "Run /handshake --project for this repo before the next sprint."
-- [`ghostwriter`](skills/ghostwriter/README.md) — draft messages in your own voice, zero AI tells. *Try:*
+
+[`ghostwriter`](skills/ghostwriter/README.md) — draft messages in your own voice, zero AI tells.
+
+*Try:*
   - "Reply to this email from my manager — keep it short."
   - "Tell my teammate on Slack the deploy slipped to Thursday, style=friend."
 
 ### Language & visuals
-- [`i18n`](skills/i18n/README.md) — surgical edits on large translation files, plus cultural rewriting. *Try:*
+
+[`i18n`](skills/i18n/README.md) — surgical edits on large translation files, plus cultural rewriting.
+
+*Try:*
   - "Translate this onboarding flow into Thai, Japanese, and Korean — cultural rewriting, not machine translation."
   - "Edit three keys in a 4,000-line `zh-CN.json` without rewriting the whole file."
-- [`define`](skills/define/README.md) — the true in-context meaning of a word or phrase, with a learner gloss. *Try:*
+
+[`define`](skills/define/README.md) — the true in-context meaning of a word or phrase, with a learner gloss.
+
+*Try:*
   - "What does ออเจ้า mean in 'ออเจ้าจักไปไหน'? Give me the register and why."
-- [`pixel-art`](skills/pixel-art/README.md) **🚧 BETA** — a pocket pixel-art studio with a built-in design system. *Try:*
+
+[`pixel-art`](skills/pixel-art/README.md) **🚧 BETA** — a pocket pixel-art studio with a built-in design system.
+
+*Try:*
   - "Create a hi-fi pixel-art medieval harbor at dusk with a lighthouse and three ships."
   - "Make a lo-fi pixel-art banner — three-panel, scanlined paper, VT323 title."
 
