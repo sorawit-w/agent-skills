@@ -1,6 +1,18 @@
 ---
 name: startup-launch-kit
-description: Opt-in umbrella orchestrator that sequences the full five-step startup pipeline (`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill`) with shared state via `kit-manifest.json`. **Every individual skill remains independently invocable** — this orchestrator is convenience, not replacement. It calls each pipeline skill in turn, never bypasses any of their gates, and surfaces every step's prompts to the founder (no batching, no silent automation). Records gate overrides with reasons; surfaces loop-back recommendations after RAT or grill but does not auto-route. Use whenever the user asks to "build my whole startup kit", "do the full pipeline", "end-to-end startup workflow", "orchestrate brand → canvas → tests → pitch → grill", "set up my whole launch", "I'm starting from scratch — take me through everything", "launch kit", "full validation pipeline", or asks Claude to coordinate the five startup-pipeline skills together. **Also triggers for existing/already-built projects** — "run the whole pipeline on my existing repo / codebase", "build the full kit from what I've already built", "I already built it — infer the kit from the code", "do the full pipeline on this repo" — where the orchestrator reads the codebase (reusing `startup-audit`'s inference) to pre-fill what code reveals and asks the founder only for what it can't. (For a fast Continue/Pivot/Kill *verdict* on a built product rather than the full kit, that's `startup-audit`; this skill runs the full 5-step kit even when seeded from an existing repo.) Triggers explicitly via `/startup-launch-kit` slash command. Does NOT trigger for single-step requests ("just the canvas", "build my deck") — those route to the named skill directly. Does NOT replace the pipeline philosophy that "sequential teaches iteration" — gates are honored, steps surface their own prompts, loop-back stays founder-driven.
+description: >
+  Opt-in umbrella orchestrator that sequences the full five-step startup pipeline
+  (`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` →
+  `startup-grill`) with shared state via `kit-manifest.json`. Every pipeline skill stays
+  independently invocable; this is convenience, not replacement: it calls each in turn, never
+  bypasses their gates, surfaces every prompt to the founder, and records gate overrides. Use
+  when the user asks to "build my whole startup kit", "do the full pipeline", "launch kit",
+  "full validation pipeline", or asks Claude to coordinate the five startup skills together.
+  Also triggers for already-built projects ("run the whole pipeline on my existing repo",
+  "infer the kit from the code"), reusing `startup-audit`'s inference to pre-fill what code
+  reveals. (For a fast verdict rather than the full kit, that's `startup-audit`.) Also via
+  `/startup-launch-kit`. Does NOT trigger for single-step requests ("just the canvas", "build
+  my deck").
 ---
 
 # Startup Launch Kit

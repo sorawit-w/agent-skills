@@ -1,30 +1,17 @@
 ---
 name: pixel-art
 description: >
-  Generate hi-fidelity pixel art images — scenes, characters, buildings,
-  nature, and title cards — from a short brief, with a built-in design
-  system (palette tokens, density specs, composition rules, font catalog,
-  anti-pattern checklist) so the user does not have to re-specify the
-  style every time. Two style modes — `hi-fi` (default, painterly
-  high-density pixel art like medieval harbor scenes and tavern
-  interiors) and `lo-fi` (scanlined warm-paper banner aesthetic, matching
-  the agent-skills repo banners). Generation is **capability-gated**:
-  when a connected image generator MCP is available (Z-image Turbo,
-  Imagen / Nano Banana, OpenAI Image, etc.), the skill generates inline;
-  otherwise it emits a copy-pasteable, model-agnostic prompt brief the
-  user runs in their preferred tool (Midjourney, DALL-E, SDXL, Imagen,
-  any other). Title cards additionally have a code-based SVG path using
-  VT323 (default) plus a curated pixel-font catalog. Triggers on phrases
-  like "pixel art", "pixel-art [scene/character/building/title card]",
-  "hi-fi pixel art", "lo-fi pixel banner", "VT323 title card", "8-bit
-  banner", "make this a pixel-art image", "generate a pixel-art harbor",
-  or when the user provides a hi-density pixel-art reference and asks
-  for "this style". Does NOT trigger on vector illustration, SVG icon
-  design, logo work (use `brand-workshop`), photo-real image generation,
-  algorithmic / generative art with p5.js (use Anthropic's
-  `algorithmic-art`), or chart and dashboard rendering (use the data
-  visualization skills). Mirrors `algorithmic-art`'s IP guardrail —
-  never reference living artists by name in prompts; produces original
+  Generate hi-fidelity pixel art (scenes, characters, title cards) from a short brief, with a
+  built-in design system (palette, density, composition rules, font catalog) so the style
+  needn't be re-specified each time. Two modes: `hi-fi` (default, painterly high-density) and
+  `lo-fi` (scanlined warm-paper banner aesthetic matching this repo's banners).
+  Capability-gated: if a connected image-generator MCP is available (Z-image, Imagen, OpenAI
+  Image) it generates inline; otherwise it emits a model-agnostic prompt brief to run in any
+  tool (Midjourney, DALL-E, SDXL). Title cards also have a code-based SVG path using VT323.
+  Triggers on "pixel art", "hi-fi pixel art", "lo-fi pixel banner", "VT323 title card", "8-bit
+  banner", or a hi-density reference plus "this style". Does NOT trigger on vector
+  illustration, SVG icon/logo work (`brand-workshop`), photo-real generation, algorithmic
+  p5.js art (`algorithmic-art`), or charts/dashboards. Never names living artists; original
   compositions only.
 ---
 

@@ -1,21 +1,17 @@
 ---
 name: handshake
 description: >
-  A brief, opt-in calibration ritual that runs before the real work. Shows the
-  user what the agent already knows about them, then asks ≤4 high-leverage
-  questions about how they want to collaborate (core mode), and optionally
-  ≤6 scoped questions about the current project (overlay mode). Writes to the
-  existing two-tier memory store using standard `user`-type and `project`-type
-  entries — never a parallel store. Privacy-conscious by construction: hard
-  never-ask list, every question carries a stated behavioral payoff, and the
-  user can skip any item. Slash-command-only at v1 (no aggressive auto-trigger).
-  Use this skill when the user invokes `/handshake`, when they ask to "calibrate
-  how we work," "tune in to me," "set a working agreement," "share my
-  preferences," or when an upstream skill suggests
-  calibration because user memory is sparse. NOT for codebase orientation
-  ("get to know my codebase"), performance-review calibration ("set Q3
-  calibration goals"), or content gathering (resumes, bios, requirements docs,
-  CV bullets) — those are different jobs handled by other skills.
+  A brief, opt-in calibration ritual that runs before the real work. Shows the user what the
+  agent already knows about them, then asks ≤4 high-leverage questions about how they want to
+  collaborate (core mode), and optionally ≤6 scoped questions about the current project
+  (overlay mode). Writes to the existing two-tier memory store using standard `user`-type and
+  `project`-type entries — never a parallel store. Privacy-conscious: a hard never-ask list,
+  every question carries a stated behavioral payoff, and the user can skip any item.
+  Slash-command-only at v1. Use when the user invokes `/handshake`, or asks to "calibrate how
+  we work", "tune in to me", "set a working agreement", "share my preferences", or when an
+  upstream skill suggests calibration because user memory is sparse. NOT for codebase
+  orientation, performance-review calibration ("set Q3 goals"), or content gathering (resumes,
+  bios, requirements, CV bullets) — those are different jobs handled by other skills.
 ---
 
 # Handshake

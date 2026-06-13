@@ -1,6 +1,17 @@
 ---
 name: riskiest-assumption-test
-description: Walks the founder through assumption dump, risk × impact ranking, falsifiable hypothesis rewriting, and test-method selection — produces a 1-page Assumption Test Plan with the top 3 ranked hypotheses, success/kill criteria, and an interactive HTML risk × impact matrix. Use after `validation-canvas` and BEFORE `pitch-deck` — pitching on untested assumptions is sales theater. Triggers on phrases like "test my assumptions", "riskiest assumption", "RAT", "what should I validate first", "assumption mapping", "experiment design", "how do I de-risk this", "Wizard of Oz test", "fake door test", "concierge MVP", "smoke test", "pre-sale validation", "5-interview rule", or when the user has `validation-canvas.md` with populated Stress Tests and asks what to do next. Job — "what have we proven?" (experimental). This is the upstream half of validation closure; the downstream half is updating the canvas based on results (loop-back). NOT a discussion of testing in general (use `team-composer`); NOT a generic experiment platform (use the founder's actual product surface). The skill produces a plan, not the experiments themselves.
+description: >
+  Walks the founder through assumption dump, risk × impact ranking, falsifiable hypothesis
+  rewriting, and test-method selection — produces a 1-page Assumption Test Plan with the top-3
+  ranked hypotheses, success/kill criteria, and an interactive HTML risk × impact matrix. Use
+  after `validation-canvas` and BEFORE `pitch-deck` — pitching on untested assumptions is
+  sales theater. Triggers on "test my assumptions", "riskiest assumption", "RAT", "what should
+  I validate first", "assumption mapping", "experiment design", "how do I de-risk this",
+  "Wizard of Oz test", "fake door test", "concierge MVP", "smoke test", "5-interview rule", or
+  when `validation-canvas.md` has populated Stress Tests and the user asks what's next. Job —
+  "what have we proven?". Upstream half of validation closure; the downstream half loops
+  results back into the canvas. NOT a discussion of testing in general (use `team-composer`);
+  NOT a generic experiment platform. Produces a plan, not the experiments.
 ---
 
 # Riskiest-Assumption Test

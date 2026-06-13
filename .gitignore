@@ -222,3 +222,7 @@ skills/whoami/assets/characters/_contact.png
 # guard in case someone copies real messages next to the shipped templates.
 skills/ghostwriter/references/samples-*.md
 !skills/ghostwriter/references/samples-*.template.md
+
+# Python bytecode
+__pycache__/
+*.pyc

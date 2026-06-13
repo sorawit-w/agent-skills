@@ -1,40 +1,17 @@
 ---
 name: ai-ux-review
 description: >
-  Audit an AI product or feature against a structured set of human-AI design
-  questions covering both classical UX concerns — user need, mental models, trust
-  calibration, feedback + control, errors + graceful failure — and the gen-AI
-  integrity surface that pre-2022 frameworks don't cover: hallucination handling,
-  output verifiability, provenance + citation, prompt-injection exposure, and
-  agent-autonomy levels. Produces an editable Markdown artifact plus a
-  self-contained HTML visualization (default paths `docs/ai-ux/ai-ux-review.md`
-  and `docs/ai-ux/ai-ux-review.html`).
-
-  Use whenever the user asks to "review my AI feature", "audit my AI product",
-  "review the UX of my AI feature", "is my AI experience trustworthy", "review
-  the human-AI design", "responsible AI UX review", "AI product audit",
-  "human-centered AI check", or uploads a feature spec / PRD / prototype
-  description for an AI-powered surface and asks for a structured design review.
-  Also trigger when the user has shipped or is about to ship an LLM feature and
-  wants a pre-launch review for hallucination / trust / failure-handling gaps.
-
-  When `validation-canvas` output already exists for the product, this skill
-  assumes the business model is settled and focuses purely on UX execution —
-  do NOT re-elicit Problem / Customer Segments / UVP. Chain after
-  `validation-canvas`, not as a substitute for it.
-
-  Even if the user only asks about one block ("help me think through trust
-  calibration for my chatbot"), still invoke the skill — the other blocks
-  stress-test that block's claims.
-
-  Does NOT trigger for: business-model or lean-canvas work (use
-  `validation-canvas`); adversarial pre-mortem with a verdict label (use
-  `startup-grill`); SKILL.md rule-adherence audits (use `skill-evaluator`);
-  brand identity or logo work (use `brand-workshop`); general multi-perspective
-  team discussion (use `team-composer` with `@ux_researcher` +
-  `@ai_safety_specialist`); building evaluation pipelines, writing eval code,
-  or labeling datasets (this skill names eval gaps, it does not implement
-  them); pitch deck construction (use `pitch-deck`).
+  Audit an AI product against structured human-AI design questions — classical UX (user need,
+  mental models, trust calibration, feedback + control, graceful failure) plus the gen-AI
+  integrity surface older frameworks miss: hallucination handling, output verifiability,
+  provenance + citation, prompt-injection exposure, and agent autonomy. Produces an editable
+  Markdown artifact plus a self-contained HTML report under `docs/ai-ux/`. Use when the user
+  asks to "review my AI feature", "audit my AI product", "is my AI experience trustworthy",
+  "responsible AI UX review", or ships an LLM feature and wants a pre-launch trust review. If
+  `validation-canvas` output exists, assume the business model is settled and focus on UX
+  execution. Does NOT trigger for: lean-canvas work (`validation-canvas`); adversarial
+  pre-mortem with a verdict (`startup-grill`); SKILL.md audits (`skill-evaluator`); brand/logo
+  work (`brand-workshop`); building eval pipelines or writing eval code (names gaps only).
 ---
 
 # AI UX Review

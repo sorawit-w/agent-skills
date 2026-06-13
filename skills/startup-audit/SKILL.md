@@ -1,39 +1,18 @@
 ---
 name: startup-audit
 description: >
-  Fast, code-grounded triage of an ALREADY-BUILT product. Ingests an existing
-  codebase (primary) and/or a live URL (secondary), infers the business model from
-  what's actually built, diffs it against the claimed story, and ships a single
-  self-contained interactive HTML dossier that opens with an opinionated
-  Continue / Pivot / Kill verdict and a Red/Amber/Green band.
-  The verdict is a FAST first read — for a consequential call (especially Kill or
-  Pivot) the dossier points you to `startup-grill` for the deep adversarial
-  confirmation.
-  Use this skill when the user says: "audit my startup", "grill my built product",
-  "grill my startup from the code / the repo / the URL", "should I continue, pivot,
-  or kill this", "score my startup from the codebase", "is my product worth
-  continuing", "technical due diligence on this repo", "does the code match the
-  pitch", or points the skill at a repo / URL and asks whether to keep going.
-  Every claim is tiered by confidence (observed / inferred / unknown) and pinned to
-  a provenance pointer; every verdict is explicitly OPINION, not investment, legal,
-  or financial advice. A pure-diligence dossier (no verdict) is available on request.
-  Do NOT use this skill for: pre-build idea validation (use `startup-launch-kit` /
-  `validation-canvas` — there's no product to read yet); a DEEP ADVERSARIAL verdict
-  on belief artifacts (a Lean Canvas or pitch deck), or to CONFIRM a consequential
-  Kill/Pivot (use `startup-grill` — its 3-round probe is the heavier verdict); deep
-  UI/UX review of an AI feature (use `ai-ux-review`); auditing a SKILL.md's rule
-  adherence (use `skill-evaluator`).
-  Boundary by INPUT and RIGOR: this skill reads a BUILT artifact (codebase/URL) and
-  gives a FAST triage verdict; `startup-grill` reads BELIEF artifacts (canvas/deck)
-  and gives a DEEP adversarial verdict. Boundary with `startup-launch-kit` by OUTPUT:
-  both can read a codebase, but this skill produces only the fast Continue / Pivot /
-  Kill verdict, while `startup-launch-kit` produces the full 5-artifact kit (and may
-  reuse this skill's `mode=diligence` to seed its canvas). Want the verdict → here;
-  want the kit → there. The INPUT decides, not the verb: if the user points at a codebase or
-  URL and asks for a verdict, a score, or "should I continue / pivot / kill" — that
-  is THIS skill, EVEN IF they say "grill" or "kill". Those words alone do NOT route
-  to `startup-grill`; `startup-grill` only applies when the input is a belief
-  artifact (canvas / deck / one-pager), not a codebase.
+  Fast, code-grounded triage of an ALREADY-BUILT product. Ingests a codebase (primary) and/or
+  live URL (secondary), infers the model from what's built, diffs it against the claimed
+  story, and ships an HTML dossier with a Continue/Pivot/Kill verdict and a Red/Amber/Green
+  band. Claims are confidence-tiered (observed/inferred/unknown) with provenance; the verdict
+  is explicitly OPINION, not financial or legal advice. Use when the user says "audit my
+  startup", "grill my built product from the repo/URL", "should I continue, pivot, or kill
+  this", "does the code match the pitch", or points the skill at a repo/URL asking whether to
+  keep going. The INPUT decides, not the verb: a codebase/URL plus a verdict request is THIS
+  skill even if they say "grill"/"kill". Do NOT use for: pre-build idea validation
+  (`validation-canvas`); a deep adversarial verdict on belief artifacts or to CONFIRM a
+  Kill/Pivot (`startup-grill`, which reads a canvas/deck, not code); the full 5-artifact kit
+  (`startup-launch-kit`).
 instructions: |
   Load this skill when the user wants a fast, code-grounded read on an EXISTING,
   already-built product — pointing at a codebase and/or live URL and asking what

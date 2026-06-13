@@ -1,36 +1,18 @@
 ---
 name: gamification-fit
 description: >
-  Analyze a product, idea, or resource set (source code, docs, URLs, analytics
-  exports) against a stated goal and produce a restraint-first report on where
-  gamification genuinely fits — and, more prominently, where it deliberately does
-  NOT. The superpower is discrimination, not idea volume: most features should not
-  be gamified, and a tool that gamifies everything is harmful (dark patterns,
-  noise). Anchored on Self-Determination Theory; steers away from default
-  Points/Badges/Leaderboards; refuses manipulation outright via a non-droppable
-  ethics veto. Produces an editable Markdown artifact plus a self-contained HTML
-  report (default paths `docs/gamification-fit/gamification-fit.md` and
-  `docs/gamification-fit/gamification-fit.html`). The report is a forward-looking,
-  hand-off-ready brief a developer or agent builds from.
-
-  Use whenever the user asks to "gamify my product", "where should I add
-  gamification", "should I gamify X", "suggest game mechanics for", "make this more
-  engaging with game mechanics", "gamification ideas for my app", or points the
-  skill at a codebase / docs / URL + a goal and asks where play would help.
-
-  Requires TWO inputs: the resources AND a goal/metric. Code reveals what features
-  exist, not what behavior to reinforce — gamification only makes sense relative to
-  a target behavior. If the goal is missing, the skill infers candidates and
-  confirms, or asks a 3-question intake.
-
-  Does NOT trigger for: reviewing the UX of an EXISTING AI feature (use
-  `ai-ux-review`); designing an actual game (this gamifies non-game products, it
-  does not design games — use `team-composer` with `@game_designer`); implementing
-  the mechanics or writing feature code (this skill suggests, then hands off);
-  business-model / lean-canvas work (use `validation-canvas`); building a
-  dark-pattern / engagement-maximization growth hack (the skill refuses these);
-  general retention strategy without a product or resource set to read (use
-  `team-composer`).
+  Analyze a product, idea, or resource set (code, docs, URLs) against a stated goal and
+  produce a restraint-first report on where gamification genuinely fits, and more prominently
+  where it deliberately does NOT. Most features should not be gamified; the value is
+  discrimination, not idea volume. SDT-anchored; avoids default Points/Badges/Leaderboards;
+  refuses manipulation (non-droppable ethics veto). Produces an editable Markdown artifact
+  plus a self-contained HTML report. Requires TWO inputs: the resources AND a goal/metric (it
+  infers and confirms the goal if missing). Use when the user asks to "gamify my product",
+  "where should I add gamification", "should I gamify X", or points the skill at a
+  codebase/docs/URL plus a goal. Does NOT trigger for: UX review of an existing AI feature
+  (`ai-ux-review`); designing an actual game (`team-composer` @game_designer); implementing
+  the mechanics (suggests, then hands off); dark-pattern or engagement-maximization hacks
+  (refused).
 ---
 
 # Gamification Fit

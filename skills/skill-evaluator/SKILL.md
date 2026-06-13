@@ -4,21 +4,14 @@ description: >
   Audit an existing SKILL.md for rule adherence — does the text actually land when Claude runs
   it? Use when the user wants a behavioral review of a shipped skill. Outputs: failure
   classification by fix layer (skill text / rubric / brief / fixture) and targeted rule-text
-  diffs.
-
-  Trigger ON: "audit this skill", "stress-test my skill", "does this skill actually work",
-  "find gaps in this skill", "what's broken in this skill", "validate rule adherence",
-  "review this skill end-to-end", uploading a SKILL.md for a behavior review.
-
-  Do NOT trigger on: "build a skill", "create a skill from scratch", "benchmark this skill",
-  "evaluate skill quality", "compare skill versions", "optimize trigger phrases", or
-  "measure variance" — those are all `skill-creator`. If the request mixes both
-  ("build *and* audit"), start with `skill-creator` and chain to this skill afterward.
-
-  Hard boundary with `skill-creator`: `skill-creator` builds new skills, benchmarks
-  skill-vs-baseline, measures variance across runs, and optimizes descriptions for triggering
-  accuracy. This skill does NONE of those. This skill takes an existing SKILL.md and asks
-  "does the text land?"; `skill-creator` takes a goal and asks "does this skill help?".
+  diffs. Trigger ON: "audit this skill", "stress-test my skill", "does this skill actually
+  work", "find gaps in this skill", "what's broken in this skill", "validate rule adherence",
+  "review this skill end-to-end", or uploading a SKILL.md for behavior review. Do NOT trigger
+  on: "build a skill", "create a skill from scratch", "benchmark this skill", "evaluate skill
+  quality", "compare versions", "optimize trigger phrases", or "measure variance" — those are
+  all `skill-creator`. If the request mixes both, start with `skill-creator` and chain here.
+  Hard boundary: `skill-creator` builds, benchmarks, measures variance, and optimizes
+  triggering; this skill does NONE of those — it asks "does the text land?".
 ---
 
 # Skill Evaluator
@@ -53,7 +46,7 @@ You can chain them: evaluator finds a gap → creator's conventions guide the ru
 
 ## Harness lens — what to audit beyond rule adherence
 
-Rule-adherence audits catch *whether the agent follows what the skill says*. The **harness lens** catches a different class of failure: *whether the skill is shaped right in the first place*. Run these seven questions in addition to (not instead of) the standard adherence checks. They're cheap; one or two will usually surface a real issue.
+Rule-adherence audits catch *whether the agent follows what the skill says*. The **harness lens** catches a different class of failure: *whether the skill is shaped right in the first place*. Run these eight questions in addition to (not instead of) the standard adherence checks. They're cheap; one or two will usually surface a real issue.
 
 1. **Does the skill name its primitives?** A well-shaped skill is explicit about which of the five harness primitives it serves: context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. If the skill mixes all five implicitly, it probably has a scope problem. Flag: "Skill doesn't name what kind of work it's doing for the agent."
 2. **Progressive disclosure or front-loaded?** Is the SKILL.md body trying to be the encyclopedia, or is it a map that points to `references/` for detail? If body length > ~300 lines without clear section-then-reference structure, the skill is front-loading context that should be lazy. Flag: "Body should be a table of contents; details belong in `references/`."
@@ -62,6 +55,7 @@ Rule-adherence audits catch *whether the agent follows what the skill says*. The
 5. **State-preservation gap.** Does the skill produce artifacts a future session can pick up, or does it dump output to chat? For workflow skills that span sessions, output going only to chat is a state-preservation failure. Flag: "Outputs should land at a predictable path so a follow-up session can resume without re-briefing."
 6. **Undefined-state coverage.** A skill's happy path quietly depends on things existing — an upstream artifact, a canonical file, a populated field, a prior step's output. For each such dependency ask: *does the skill define what happens when it's absent?* If not, that is an undefined state — the skill will improvise there, usually badly, and a rule-adherence audit will not catch it because there is no rule to adhere to or violate. Flag: "Rule X assumes [resource] exists but defines no behavior when it's missing — add an explicit absent-state branch." Pairs with the absent-state test category in Phase 3: this question names the gap, Phase 3 tests it.
 7. **Is every word load-bearing?** Beyond *whether* rules land, check *how tightly they're phrased*. Two failure shapes: (a) **prose bloat** — sentences that restate, hedge, or pad without changing what the agent does; (b) **vague phrasing** — soft verbs and adjectives ("handle appropriately", "be thorough", "make it good") where a precise operation would remove the guesswork. Flag: "Rule X pads/hedges — cut to the load-bearing clause" or "Rule X uses a vague verb ('handle') — name the precise operation." Caveat: economy serves clarity, not brevity for its own sake — a *why* line that prevents a misread earns its tokens, so do not flag it. (Pattern adapted from `nidhinjs/prompt-master`, MIT.)
+8. **Cross-platform loadability.** Claude imposes no `description` length limit, but OpenAI Codex *silently skips* any skill whose frontmatter `description` exceeds **1024 UTF-8 bytes** (or trips its `name`/angle-bracket rules) — so a skill can pass every adherence check above and still be invisible on Codex. Don't eyeball it. In this repo, run `python3 scripts/check-skill-compat.py` and report any `FAIL`; for a skill elsewhere, measure the description's UTF-8 **byte** length (not char count — `—`/`→`/CJK cost 2–4 bytes each) against 1024. Flag: "description is N bytes (>1024) — Codex skips this skill; trim to ≤1024 B keeping triggers and disambiguation boundaries (see CLAUDE.md's cross-platform frontmatter contract), and push overflow into `instructions`/body." This is a portability gate, not a behavior finding — fix it before the behavioral audit, since an unloadable skill has no behavior to audit on that platform.
 
 Treat each finding the same way as adherence findings: classify by fix layer (skill text / rubric / brief / fixture) and propose targeted diffs. The harness lens does **not** change the rest of the workflow.
 

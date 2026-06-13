@@ -1,42 +1,17 @@
 ---
 name: ai-eval-review
 description: >
-  Audit the evaluation layer of an AI product or feature against a structured
-  set of design-completeness questions covering offline criteria + ground-truth
-  quality + online signal + cohort/disparate-impact breakdown + adversarial and
-  robustness coverage + drift detection. Eval-side companion to `ai-ux-review`
-  — same shape, different subject. Produces an editable Markdown artifact plus
-  a self-contained HTML visualization (default paths
-  `docs/ai-ux/ai-eval-review.md` and `docs/ai-ux/ai-eval-review.html`).
-
-  Use whenever the user asks to "review my AI eval setup", "audit my eval
-  design", "is my AI eval rigorous enough", "review the eval layer", "audit
-  my evals", "responsible-AI eval review", "fairness eval check", "drift
-  detection design", or uploads an eval plan / metric dashboard description
-  for structured review. Also trigger when the user has shipped an LLM or
-  ML feature and wants a pre-launch or post-launch eval-rigor check, or
-  when an `ai-ux-review.md` exists with Block 7 (Success & Evaluation) gaps
-  that need to be converted into a structured eval review.
-
-  When `ai-ux-review.md` already exists, this skill reads Block 7 as input
-  and seeds Block 1 from any `[Gap — …]` markers found there. The two
-  skills compose cleanly: `ai-ux-review` audits the human-AI design
-  surface; `ai-eval-review` audits the measurement layer behind it.
-
-  Even if the user only asks about one block ("help me think through
-  ground-truth quality for my classifier"), still invoke the skill — the
-  other blocks stress-test that block's claims.
-
-  Does NOT trigger for: human-AI UX design review (use `ai-ux-review`);
-  business-model or lean-canvas work (use `validation-canvas`); adversarial
-  pre-mortem with a verdict label (use `startup-grill`); SKILL.md
-  rule-adherence audits (use `skill-evaluator`); team-discussion on one
-  narrow eval question (use `team-composer` with `@data_scientist` +
-  `@ai_safety_specialist`); implementing eval pipelines, writing eval code,
-  labeling datasets, or running benchmark suites (this skill names eval
-  gaps, it does not implement them — see HELM, Anthropic's eval cookbook,
-  OpenAI Evals, Weights & Biases, or Evidently for implementation tools);
-  pitch deck construction (use `pitch-deck`).
+  Audit the evaluation layer of an AI product against design-completeness questions: offline
+  criteria, ground-truth quality, online signal, cohort/disparate-impact, adversarial +
+  robustness coverage, and drift detection. Eval-side companion to `ai-ux-review`. Produces an
+  editable Markdown artifact plus a self-contained HTML report under `docs/ai-ux/`. Use when
+  the user asks to "review my AI eval setup", "audit my eval design", "is my AI eval rigorous
+  enough", "responsible-AI eval review", "fairness eval check", or "drift detection design",
+  or ships an LLM/ML feature and wants an eval-rigor check. Invoke even if only one block is
+  named — the others stress-test it. Does NOT trigger for: human-AI UX review
+  (`ai-ux-review`); lean-canvas work (`validation-canvas`); adversarial pre-mortem with a
+  verdict (`startup-grill`); SKILL.md audits (`skill-evaluator`); implementing eval pipelines,
+  writing eval code, or labeling datasets (this skill names gaps, it does not build them).
 ---
 
 # AI Eval Review
