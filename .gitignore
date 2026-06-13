@@ -216,3 +216,9 @@ skills/whoami/assets/characters/_contact.png
 # Obsidian vault config — local note-taking workspace over the repo.
 # Per-user editor state, not part of the shipped plugin.
 .obsidian/
+
+# ghostwriter voice samples — real samples are personal data and live
+# user-local (~/.claude/ghostwriter/), never in the repo. Belt-and-suspenders
+# guard in case someone copies real messages next to the shipped templates.
+skills/ghostwriter/references/samples-*.md
+!skills/ghostwriter/references/samples-*.template.md
