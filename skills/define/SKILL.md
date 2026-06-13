@@ -1,23 +1,18 @@
 ---
 name: define
 description: >
-  Contextual definition and translation of a single word or phrase, resolved from the
-  sentence or paragraph around it. Use when the user wants to understand what a specific
-  word or phrase means *as used here* — the true in-context sense, not the dictionary
-  default. Like the "Sider" select-and-define experience, minus the selection: the user
-  names a target word/phrase and gives surrounding text; this skill disambiguates the
-  sense and explains it for a language learner (contextual meaning, why this sense,
-  register, etymology, related senses, difficulty), and can translate it contextually
-  into another language.
-  Triggers on phrases like "what does X mean here", "what does this word/phrase mean in
-  this sentence", "define X in context", "what's the meaning of X as used here", "true
-  meaning of X in this paragraph", "translate just this word/phrase in context",
-  "explain this word given the surrounding text", or any word-sense / vocabulary /
-  reading-comprehension request that supplies a target plus its context.
-  Does NOT trigger on: editing, creating, or syncing translation/locale files; adding a
-  language or locale to a product; translation keys; JSON/YAML/TS i18n files — that is
-  the `i18n` skill. Does NOT trigger on full-document or article-length translation, or
-  on a context-free dictionary lookup with no surrounding text.
+  Contextual definition and translation of a single word or phrase, resolved from the sentence
+  or paragraph around it — the true in-context sense, not the dictionary default. The user
+  names a target word/phrase and supplies surrounding text; this skill disambiguates the sense
+  and explains it for a language learner (meaning, why this sense, register, etymology,
+  related senses, difficulty), and can translate it contextually into another language.
+  Triggers on "what does X mean here", "what does this word mean in this sentence", "define X
+  in context", "meaning of X as used here", "translate just this word in context", or any
+  word-sense / vocabulary / reading-comprehension request that supplies a target plus its
+  context. Does NOT trigger on editing, creating, or syncing translation/locale files, adding
+  a language to a product, or i18n JSON/YAML/TS keys — that is the `i18n` skill. Does NOT
+  trigger on full-document translation, or a context-free dictionary lookup with no
+  surrounding text.
 instructions: |
   Load this skill when the user supplies (or can supply) a TARGET word or phrase AND the
   CONTEXT it appears in (a sentence or paragraph), and wants its meaning or a contextual

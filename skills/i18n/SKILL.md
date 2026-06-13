@@ -1,19 +1,18 @@
 ---
 name: i18n
 description: >
-  A comprehensive skill for handling internationalization (i18n) translation files and producing
-  culturally authentic translations. Use when: (1) Editing, creating, or modifying translation
-  files (JSON, YAML, TypeScript, JS) — especially large ones that risk exceeding token limits,
-  (2) Translating UI strings into any supported language/dialect,
-  (3) Reviewing translations for cultural accuracy and naturalness,
-  (4) Syncing translation keys across multiple locale files,
-  (5) Adding new languages or regional variants to an existing i18n setup.
-  Triggers on phrases like "translate", "i18n", "localization", "translation file",
-  "locale", "add language", "translation keys", or any mention of specific locale codes
-  (e.g., th, ja, ko, zh-CN, de, fr, es, it, zh-TW, zh-HK, th-bupphe).
-  Does NOT trigger on defining or glossing a single word/phrase inside a sentence
-  ("what does X mean here", "define X in context") — that is the `define` skill. This
-  skill is for i18n files and shipping localized strings, not inline word-meaning lookups.
+  Handle internationalization (i18n) translation files and produce culturally authentic
+  translations. Use when: (1) editing, creating, or modifying translation files (JSON, YAML,
+  TypeScript, JS) — especially large ones that risk exceeding token limits; (2) translating UI
+  strings into any supported language/dialect; (3) reviewing translations for cultural
+  accuracy and naturalness; (4) syncing translation keys across multiple locale files; (5)
+  adding new languages or regional variants to an existing i18n setup. Triggers on
+  "translate", "i18n", "localization", "translation file", "locale", "add language",
+  "translation keys", or any specific locale code (e.g., th, ja, ko, zh-CN, de, fr, es, it,
+  zh-TW, zh-HK, th-bupphe). Does NOT trigger on defining or glossing a single word/phrase
+  inside a sentence ("what does X mean here", "define X in context") — that is the `define`
+  skill. This skill is for i18n files and shipping localized strings, not inline word-meaning
+  lookups.
 ---
 
 # i18n — Translation Files & Cultural Rewriting

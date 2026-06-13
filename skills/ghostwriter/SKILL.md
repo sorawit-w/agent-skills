@@ -1,24 +1,18 @@
 ---
 name: ghostwriter
 description: >
-  Drafts messages sent AS the user, in their natural personal voice, with zero
-  AI tells. Triggers whenever the user asks to write, draft, reply to, or
-  respond to anything sent under their own name: "reply to this email",
-  "write back", "message my coworker", "respond to them", "tell my team…",
-  "decline this vendor", "follow up with the recruiter", "draft something to
-  send", "answer this Slack/Teams message", DMs, LinkedIn messages and
-  comments, text messages, and conversational GitHub PR/issue comments.
-  Accepts an optional style argument — formal, friend, direct, diplomatic,
-  storybook, eli5, or any free-form descriptor ("warm but firm") — default is
-  the user's own voice. NOTE: a request for a FORMAL message still triggers
-  this skill (that's style=formal — human-formal, the ban list fully applies).
-  Does NOT trigger for: formal documents, reports, specs, marketing copy, blog
-  posts; code, commit messages, or technical documentation; customer
-  support-ticket replies (even a single reply, with or without macros), sales
-  outreach sequences, or brand-voice content
-  (dedicated role skills own those); or when the user explicitly asks for
-  default AI style ("polished", "structured", "just write it normally") —
-  that's the escape hatch, not a style.
+  Drafts messages sent AS the user, in their natural personal voice, with zero AI tells.
+  Triggers whenever the user asks to write, draft, reply to, or respond to anything sent under
+  their own name: "reply to this email", "write back", "message my coworker", "respond to
+  them", "follow up with the recruiter", "answer this Slack message", plus DMs, LinkedIn
+  messages, texts, and conversational GitHub PR/issue comments. Accepts an optional style
+  argument — formal, friend, direct, diplomatic, storybook, eli5, or free-form ("warm but
+  firm"); default is the user's own voice. A FORMAL request still triggers this skill
+  (style=formal, human-formal — the AI-tell ban list still applies). Does NOT trigger for:
+  formal documents, reports, specs, marketing copy, blog posts; code, commit messages, or
+  technical docs; support-ticket replies, sales outreach, or brand-voice content (dedicated
+  skills own those); or when the user explicitly asks for default AI style ("polished", "just
+  write it normally").
 instructions: |
   Load this skill when: the user wants a message drafted or replied to that
   will be sent as them — email, Slack/Teams, DM, LinkedIn, text, or a

@@ -258,10 +258,10 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.10.1`.** Presentation reorg — the README now routes by five jobs (Startup, Review, Code, Calibration & voice, Language & visuals) with up to two trigger-teaching example prompts per skill, instead of a flat 23-row table plus a 410-line per-skill detail section. Per-skill depth lives in each skill's own README; the root README only routes. No skill behavior changed. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.11.0`.** Cross-platform compatibility pass — every skill now loads on OpenAI Codex, not just Claude. Codex silently skips any `SKILL.md` whose `description` exceeds 1024 UTF-8 bytes, and 17 of the skills were over; this release trims them under the limit while preserving Claude's triggering, and adds `scripts/check-skill-compat.py` to keep new skills compliant. No skill behavior changed. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
-- **Primary target agent** — Claude (Claude Code, Cowork).
-- **Other agents** — may come later, no promises yet.
+- **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
+- **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.
 - **Stability** — the skills I ship here I use myself; if one stops earning its place, it gets removed rather than left to rot.
 
 ## Feedback

@@ -1,24 +1,17 @@
 ---
 name: brand-workshop
 description: >
-  Simulate a collaborative branding team to create a launch-ready brand identity package
-  from a business overview. Use this skill whenever the user asks to create a logo, brand
-  identity, tagline, or brand concept for a business, product, app, or project. Also trigger
-  when the user says things like "help me brand this," "I need a logo," "come up with a tagline,"
-  "brand identity for my app," or provides a business description and asks for visual identity
-  work. This skill runs a structured multi-role brainstorming workshop and produces: a brand
-  strategy brief (.md), tagline, code-generated logo (.svg), favicon pack with HTML install
-  snippet, social banner set (OG / X / LinkedIn / Instagram), descriptions pack (tagline +
-  bios + elevator pitch + boilerplate), and a starter DESIGN.md (tokens only).
-  Even if the user only asks for a logo or only a tagline, use this skill — the full workshop
-  produces better results. Do NOT trigger on requests for pitch decks, presentations, or
-  investor materials — hand off to the `pitch-deck` skill instead, which consumes `DESIGN.md`
-  directly.
-  Do NOT trigger on "refresh our existing brand", "update our current style guide",
-  "evolve our identity", "our current brand", "our existing voice", "audit our logo",
-  or any phrasing that implies a live brand being revised. Those belong to
-  `team-composer:team-composer` (with @brand_strategist / @senior_copywriter) and the
-  `brand-voice:*` family. This skill only generates net-new identity from a business overview.
+  Simulate a collaborative branding team to create a launch-ready brand identity package from
+  a business overview. Use whenever the user asks to create a logo, brand identity, tagline,
+  or brand concept for a business, product, or app — "help me brand this", "I need a logo",
+  "come up with a tagline", "brand identity for my app" — or gives a business description and
+  asks for visual identity work. Runs a multi-role workshop producing: a brand strategy brief,
+  tagline, code-generated SVG logo, favicon pack, social banner set (OG/X/LinkedIn/Instagram),
+  descriptions pack, and a starter DESIGN.md. Use it even for just a logo or just a tagline.
+  Do NOT trigger for pitch decks or investor materials (hand off to `pitch-deck`). Do NOT
+  trigger on revising a LIVE brand — "refresh our brand", "update our style guide", "evolve
+  our identity", "audit our logo" — those go to `team-composer` (@brand_strategist /
+  @senior_copywriter) and the `brand-voice:*` family. Generates net-new identity only.
 ---
 
 # Brand Workshop

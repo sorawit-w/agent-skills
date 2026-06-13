@@ -1,23 +1,18 @@
 ---
 name: wear-the-hat
 description: >
-  Pick ONE role from `team-composer`'s catalog (or a user-specified role) and
-  perform a task in that role's voice — solo, no panel discussion. Use this
-  skill when the user wants a single specific lens applied to a task without
-  convening a multi-role discussion. Triggers on explicit `@role` tags
-  ("audit middleware/ as @security_specialist"), role-embodiment phrases
-  ("act as a security specialist", "wear the hat of the architect", "from the
-  data-viz perspective", "have the copywriter rewrite this", "embody"), or
-  any prompt that names a role-shaped lens to apply. Does NOT trigger on
-  generic tasks that don't ask for a role lens — those route to coding-rules,
-  team-composer, or sub-agent-coordinator as usual. When the task spans
-  multiple roles (e.g., "create an HTML slide deck from source URL" — needs
-  HTML construction + content extraction + narrative), the skill stops,
-  surfaces candidate single roles, and offers an explicit hand-off to
-  `team-composer`. Never silently picks one role for a multi-role task.
-  Reuses `team-composer/references/role-personas.md` as the canonical role
-  catalog (no duplicate taxonomy). For panel discussion of one decision use
-  `team-composer`; for parallel worker fan-out use `sub-agent-coordinator`.
+  Pick ONE role from `team-composer`'s catalog (or a user-specified role) and perform a task
+  in that role's voice — solo, no panel discussion. Use when the user wants a single specific
+  lens applied to a task without convening a multi-role discussion. Triggers on explicit
+  `@role` tags ("audit middleware/ as @security_specialist"), role-embodiment phrases ("act as
+  a security specialist", "wear the hat of the architect", "have the copywriter rewrite this",
+  "embody"), or any prompt naming a role-shaped lens. Does NOT trigger on generic tasks that
+  don't ask for a role lens — those route to coding-rules, team-composer, or
+  sub-agent-coordinator. When a task spans multiple roles it stops, surfaces candidate single
+  roles, and offers a hand-off to `team-composer`, never silently picking one role for a
+  multi-role task. Reuses `team-composer/references/role-personas.md` as the canonical role
+  catalog. For panel discussion use `team-composer`; for parallel fan-out use
+  `sub-agent-coordinator`.
 ---
 
 # wear-the-hat

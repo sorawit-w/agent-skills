@@ -24,6 +24,7 @@ This file is your onboarding when working on **skill authoring in this repo**. I
 | Sub-agent brief conventions | `skills/sub-agent-coordinator/SKILL.md` |
 | Coding-task discipline (opt-in) | `skills/coding-rules/` |
 | Skill audit harness | `skills/skill-evaluator/` |
+| Cross-platform frontmatter checker | `scripts/check-skill-compat.py` (Codex `SKILL.md` rules) |
 
 ---
 
@@ -73,9 +74,10 @@ A complete skill ships with the files below. Existing skills are templates by ex
 ---
 name: skill-name
 description: >
-  What it does, when it triggers, when it does NOT trigger. Long-form prose
-  is fine — this gets read by Claude to decide whether to invoke the skill.
-  Be explicit about anti-triggers ("does NOT trigger on X, Y, Z").
+  What it does, when it triggers, when it does NOT trigger. This gets read by
+  Claude to decide whether to invoke the skill, so be explicit about anti-triggers
+  ("does NOT trigger on X, Y, Z") — but keep it ≤1024 UTF-8 bytes (see the
+  cross-platform contract below); overflow detail belongs in `instructions`/body.
 instructions: |
   Load this skill when: ...
   Do NOT load this skill when: ...
@@ -86,6 +88,18 @@ tags:
 ```
 
 `name` and `description` are required; `instructions` and `tags` are recommended for discoverability.
+
+#### Cross-platform frontmatter contract — keep skills loadable on Codex too
+
+Claude Code imposes no length limit on `description`, but **OpenAI Codex silently skips any skill whose `SKILL.md` violates its frontmatter rules** — no error in the loop, the skill just never appears. Because `description` is a *single shared field* (Codex has no per-platform override; `agents/openai.yaml` is UI metadata, not triggering), every skill here must satisfy the stricter Codex contract. We prioritize Claude's triggering quality *within* that ceiling — keep the trigger phrases and the load-bearing disambiguation boundaries, and push genuinely overflowing detail into `instructions` (still read by Claude) or the body, never drop a real boundary to save bytes.
+
+| Field | Codex rule (violation ⇒ skill skipped) |
+|---|---|
+| `description` | **1–1024 in length, measured as UTF-8 _bytes_** (Codex's Rust loader uses `str::len()`, not char count — so `—`, `→`, `≤`, CJK each cost 2–4 bytes; [openai/codex#7730](https://github.com/openai/codex/issues/7730)). Must **not** contain `<` or `>`. |
+| `name` | matches `^[a-z0-9]+(-[a-z0-9]+)*$`, ≤64 bytes (no leading/trailing/double hyphen). |
+| entry file | named exactly `SKILL.md` (all caps). |
+
+**Enforced by `scripts/check-skill-compat.py`** — run it after any frontmatter edit and before a version bump. It fails (exit 1) on any hard violation and warns at a 1000-byte soft cap so multibyte drift never silently crosses the 1024 wall. This is the observable feedback loop (principle #6) for the constraint; don't hand-count bytes.
 
 ### README structure
 
@@ -148,7 +162,10 @@ Recent precedent: adding a new skill = MINOR; fixing executor-brief template gap
 
 For changes to a `SKILL.md` (rule text or trigger description), run the audit *before* bumping:
 
-1. Run `skill-evaluator` on the changed skill **in the main loop** — then `skill-creator`'s description-check on the frontmatter description.
+1. Run `python3 scripts/check-skill-compat.py` — the mechanical gate. Any frontmatter edit can push `description` over Codex's 1024-byte wall (or trip the name/angle-bracket rules); this catches it before the skill silently stops loading on Codex. Cheap, deterministic, always run it.
+2. Run `skill-evaluator` on the changed skill **in the main loop** — then `skill-creator`'s description-check on the frontmatter description.
+
+A pure description-length trim (no change to trigger phrases or boundaries) clears step 1 mechanically; step 2's value is confirming the *compressed* description still triggers as well as the long one, which is best done in a separate session (outer-bias insulation, below).
 
 **Run it in the main loop, not as a sub-agent.** `skill-evaluator`'s bias removal *is* its Phase 4: it spawns fresh-context executor + grader sub-agents (the grader never sees the skill text). That only works where it can spawn sub-agents — the main loop. Dispatch `skill-evaluator` *itself* as a sub-agent and no-nested-sub-agents silently collapses Phase 4 into in-context simulation — you get a confident-looking verdict with the bias removal gone. (This bit us in v4.5.0; `skill-evaluator` now emits a `DEGRADED` banner instead of simulating silently — but don't rely on the banner, invoke it right.)
 

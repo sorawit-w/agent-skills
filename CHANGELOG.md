@@ -5,6 +5,26 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.11.0] — 2026-06-13
+
+Cross-platform compatibility pass: every skill now loads on OpenAI Codex, not just Claude. Codex silently skips any `SKILL.md` whose frontmatter `description` exceeds **1024 UTF-8 bytes** — and 17 of the 23 skills were over (worst: `startup-grill` at 3217 B), so they were invisible on Codex. This release trims those 17 descriptions under the limit while preserving Claude's triggering, adds a checker to keep them there, and documents the constraint so new skills don't reintroduce it. No skill behavior, output, or Claude-side trigger boundary changed.
+
+### Added
+- **`scripts/check-skill-compat.py`** — validates every `SKILL.md` against the Codex frontmatter contract: `description` ≤1024 bytes (measured as UTF-8 *bytes*, matching Codex's Rust `str::len()`; soft-cap warning at 1000 B for multibyte headroom), no `<`/`>` in `description`, `name` matching `^[a-z0-9]+(-[a-z0-9]+)*$` ≤64 B, entry file named `SKILL.md`. Exit 1 on any hard violation. The observable feedback loop for the constraint.
+- **CLAUDE.md** — a "Cross-platform frontmatter contract" subsection under SKILL.md frontmatter, the checker in the Quick-reference table, and step 1 of the Pre-shipment audit ritual now runs the checker before every version bump.
+- **`skill-evaluator`** — an 8th harness-lens question, "Cross-platform loadability," so a standalone skill audit surfaces a Codex-unloadable description (pointer to the checker / byte-length rule, not a duplicated copy of it).
+
+### Changed
+- **17 skill descriptions trimmed to ≤1024 bytes** (`ai-eval-review`, `ai-ux-review`, `brand-workshop`, `define`, `gamification-fit`, `ghostwriter`, `handshake`, `i18n`, `pitch-deck`, `pixel-art`, `riskiest-assumption-test`, `skill-evaluator`, `startup-audit`, `startup-grill`, `startup-launch-kit`, `validation-canvas`, `wear-the-hat`). Every trigger phrase and disambiguation boundary was kept; only redundant phrasings and operational detail (already present in each skill's `instructions` field and body) were cut.
+
+### Why
+The `description` field is read by Claude for skill selection *and* is the field Codex validates — but it's a single shared field with no per-platform override. The repo had optimized it purely for Claude (long, anti-trigger-rich prose), which Codex rejects outright. Prioritizing Claude *within* the 1024-byte ceiling — rather than gutting descriptions to short one-liners — keeps Claude's selection accuracy: the boundaries that disambiguate sibling skills (`startup-audit` ↔ `startup-grill` ↔ `startup-launch-kit`, `ai-ux-review` ↔ `ai-eval-review`, `skill-evaluator` ↔ `skill-creator`) stay in the description, and the fuller detail remains in each skill's untouched `instructions` field.
+
+### Notes
+- Byte-length, not char-length: Codex measures `description` in UTF-8 bytes, so `—`/`→`/`≤`/CJK cost 2–4 bytes each. The checker measures bytes for parity.
+- Codex routes non-Claude agents through `AGENTS.md` → `CLAUDE.md`, so the documented contract reaches them with no separate file.
+- Remaining gate (not done here): a separate-session `skill-creator` description-check to confirm the *compressed* descriptions trigger as well as the originals. Triggering risk is low (phrases + boundaries preserved verbatim), but the benchmark is the real confirmation.
+
 ## [4.10.1] — 2026-06-13
 
 Presentation-only reorg of the root `README.md` and the plugin manifests. No skill

@@ -1,25 +1,18 @@
 ---
 name: pitch-deck
 description: >
-  Constructs an investor-ready pitch deck as a single self-contained HTML
-  file (Reveal.js, print-to-PDF, zero network dependencies). Interviews
-  the founder for real content — problem, solution, market, product,
-  business model, traction, team, competition, ask, use of funds — and
-  enforces one-claim-per-slide plus required-slot gating. Gated on
-  `riskiest-assumption-test` results: the skill refuses to ship a clean
-  deck unless the assumption-test plan from `riskiest-assumption-test`
-  exists with populated `## Results` for the top-3 hypotheses (heavy
-  gate; override available with a `[PRE-VALIDATION DRAFT]` watermark).
-  Use whenever the user asks to "build a pitch deck", "create a
-  fundraising deck", "make an investor deck", "put my pitch together",
-  "Series A deck", "seed deck", "demo day deck", or uploads a
-  validation-canvas / RAT plan / brand kit and asks for the pitch. Also
-  trigger when the user has `brand-workshop`, `validation-canvas`,
-  and/or `riskiest-assumption-test` output ready and wants the next
-  artifact, or when `@startup_strategist` + `@vc_partner` are the right
-  lenses. Even if the user only asks for one slide (e.g., "help me with
-  my market slide"), use this skill — the surrounding slides stress-test
-  that slide's claims.
+  Constructs an investor-ready pitch deck as a single self-contained HTML file (Reveal.js,
+  print-to-PDF, zero network dependencies). Interviews the founder for real content — problem,
+  solution, market, product, business model, traction, team, competition, ask, use of funds —
+  and enforces one-claim-per-slide plus required-slot gating. Gated on
+  `riskiest-assumption-test`: refuses to ship a clean deck unless a RAT plan exists with
+  populated `## Results` for the top-3 hypotheses (override ships a `[PRE-VALIDATION DRAFT]`
+  watermark). Use when the user asks to "build a pitch deck", "create a fundraising deck",
+  "make an investor deck", "Series A deck", "seed deck", "demo day deck", or uploads a
+  validation-canvas / RAT plan / brand kit and asks for the pitch. Also trigger when
+  `brand-workshop`, `validation-canvas`, and/or `riskiest-assumption-test` output is ready, or
+  when `@startup_strategist` + `@vc_partner` are the right lenses. Use it even for a single
+  slide.
 ---
 
 # Pitch Deck
