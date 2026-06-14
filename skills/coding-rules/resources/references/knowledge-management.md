@@ -153,10 +153,11 @@ Read this index to find relevant context before planning or implementing.
 ### The Proposal Workflow
 
 1. Agent identifies knowledge worth capturing
-2. Agent drafts the entry with `confidence: medium` or `confidence: low`
-3. Agent tells the user: "I've drafted a knowledge entry about [topic]. Want me to add it to the knowledge base?"
-4. If approved, agent writes the entry file and runs `bash "${CODING_RULES_DIR}/resources/hooks/knowledge-reindex.sh" --force` to refresh the AUTO-INDEX block in `KNOWLEDGE.md`. (If the hook isn't available — e.g., on a platform without `coding-rules` wired — the agent updates `KNOWLEDGE.md` by hand, adding one line in the format `- [Title](filename.md) — one-line summary` between the AUTO-INDEX markers.)
-5. Human can later promote `confidence` to `high` after review
+2. **Search before creating** — grep existing entries for `domain:` overlap or title-token match against the proposed topic — either signal is enough to warrant a look (the `KNOWLEDGE.md` index is the fastest place to scan; if it's missing or empty, grep the entry files directly). If ≥1 near-match surfaces, **surface it to the user and ask merge-or-create**: prefer merging into the existing entry — note any contradiction in a new section rather than letting two entries quietly disagree — over creating a duplicate file. Only create a new entry when no near-match exists. This fights knowledge-base sprawl at the cheapest moment to catch it.
+3. Agent drafts the entry with `confidence: medium` or `confidence: low`
+4. Agent tells the user: "I've drafted a knowledge entry about [topic]. Want me to add it to the knowledge base?"
+5. If approved, agent writes the entry file and runs `bash "${CODING_RULES_DIR}/resources/hooks/knowledge-reindex.sh" --force` to refresh the AUTO-INDEX block in `KNOWLEDGE.md`. (If the hook isn't available — e.g., on a platform without `coding-rules` wired — the agent updates `KNOWLEDGE.md` by hand, adding one line in the format `- [Title](filename.md) — one-line summary` between the AUTO-INDEX markers.)
+6. Human can later promote `confidence` to `high` after review
 
 **Never write knowledge entries silently.** Always tell the user what you're proposing and why.
 
@@ -220,6 +221,17 @@ It still drifts upward over time — dated "Session Notes" sections, completed-w
 This is agent-checkable: count the lines, flag when over, propose the archive move (never silently). It complements the index/entry size disciplines above rather than duplicating them — different file, different failure mode.
 
 Source: cap-and-archive pattern distilled from `EliaAlberti/cpr-compress-preserve-resume` (2026-06-07, MIT) `/preserve` command — its 280-line CLAUDE.md cap + `CLAUDE-Archive.md` move is the one idea in that repo not already covered by coding-rules' `.ai/` state-preservation machinery.
+
+### Integrity check: knowledge-lint
+
+`knowledge-lint` (`hooks/knowledge-lint.sh`) is a zero-dependency mechanical integrity check for `.ai/knowledge/`. It runs two correctness checks over the entry files:
+
+1. **Broken `related:` target** — an entry's `related:` frontmatter names a file that doesn't exist in `.ai/knowledge/`. Fires only when an entry *declares* a link, so there are effectively no false positives.
+2. **Supersede-without-pointer** — an entry has a `## Superseded` section whose body names no replacement entry (no `.md` token). The convention above is to *name what replaced it*; this catches the cases that don't.
+
+It is **advisory by default**: prints findings and exits 0 (knowledge drift is not a build break). Run with `--strict` to exit non-zero when findings exist — useful in a git pre-push or CI gate. Same opt-out as the other knowledge hooks (`agent-context.yaml: knowledge.enabled: false`, or `CODING_RULES_HOOK_DISABLED=knowledge-lint`). Run it by hand any time, or wire it as a git post-commit hook (see `references/hooks.md`); it is deliberately **not** a SessionStart hook — integrity drifts slowly and shouldn't tax every session. Self-tested by `hooks/knowledge-lint.test.sh`.
+
+**knowledge-lint vs OpenKB — they don't overlap.** `knowledge-lint` is pure shell, zero deps, mechanical correctness only (broken links, supersede pointers); it runs from entry #1 in every project and is the always-on floor. [OpenKB](external-resources.md) is `pip install` + an LLM API key, recommended past ~20 entries, and does the *semantic/curation* lint (contradiction, orphan, stale) that needs a model to judge well. Deliberately **no orphan check** here — `related:` is optional, so "entry with no inbound link" is a curation opinion, not a correctness error; that belongs to OpenKB.
 
 ### Built-in automation: bootstrap + index regeneration
 

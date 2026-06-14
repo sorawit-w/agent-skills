@@ -5,6 +5,27 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.12.0] — 2026-06-14
+
+`coding-rules` absorbs three surgical ideas from the [obsidian-wiki](https://github.com/Ar9av/obsidian-wiki) framework (MIT) **without porting its engine**. obsidian-wiki is a cross-project personal-brain vault; `coding-rules` is project-scoped guardrails + per-session knowledge. They're complementary siblings, not merge candidates — so this release takes the few ideas that fit `.ai/knowledge/`'s lifecycle and explicitly declines the rest (ingest, history-mining, graph export, semantic search, the inline provenance marker).
+
+### Added
+- **`knowledge-lint` hook** (`resources/hooks/knowledge-lint.sh`) — a zero-dependency mechanical integrity check for `.ai/knowledge/`. Two correctness checks: broken `related:` targets (a declared link naming a non-existent entry) and supersede-without-pointer (a `## Superseded` section naming no replacement). **Advisory by default** (prints findings, exits 0); `--strict` exits non-zero for a git pre-push or CI gate. Wired as manual + optional git post-commit, deliberately **not** SessionStart — integrity drifts slowly and shouldn't tax every session. Same opt-out as the other knowledge hooks (`agent-context.yaml: knowledge.enabled: false`, or `CODING_RULES_HOOK_DISABLED=knowledge-lint`). Not auto-registered at install, following the `knowledge-reindex` precedent.
+- **`knowledge-lint.test.sh`** — a committed, zero-framework self-test (the first test artifact in `coding-rules`). Builds a temp fixture vault and asserts both findings fire, the clean no-`related:` entry is never flagged (false-positive guard), and `--strict` exits 1 only when findings exist.
+- **obsidian-wiki sibling row** in `references/external-resources.md` → Knowledge Base Tools, framed as the cross-project personal-brain layer above per-project `.ai/knowledge/` (which distills *up* into the vault).
+
+### Changed
+- **`merge-before-create` step in the knowledge proposal workflow** (`references/knowledge-management.md`). Before drafting a new entry, the agent now searches existing entries for `domain:` overlap or title-token match and, if a near-match surfaces, asks the user merge-or-create — preferring a merge (noting any contradiction) over a duplicate file. Fights knowledge-base sprawl at the cheapest moment to catch it.
+
+### Why
+The original handoff brief proposed an **orphan check** as the headline absorb. A team-composer review against the real files killed it: `related:` is an *optional* frontmatter field, so "entry with no inbound link" fires false positives on nearly every entry in a small vault — and orphan/contradiction/stale lint is exactly what OpenKB (already cross-referenced here) does semantically. So `knowledge-lint` ships the two *correctness* checks (near-zero false positives, no LLM) and leaves curation lint to OpenKB. The inline `^[inferred]` provenance marker was also declined: `confidence: high|medium|low` already encodes provenance per entry, and a finer inline marker is the thin end of a provenance-engine wedge.
+
+The `merge-before-create` directive passed a split-role `skill-evaluator` audit (29/29 assertions across happy-path, contradiction, skip-temptation, absent-index, and over-trigger tests). The audit's edge-case test surfaced one fix, applied before ship: the match heuristic now reads "`domain:` overlap **or** title-token match" (either signal warrants a look — requiring both would miss a cross-domain near-duplicate), plus an explicit empty-index fallback to grepping entry files.
+
+### Notes
+- Absorption is principle-extraction, not code copying — all shell and prose written fresh; obsidian-wiki named + MIT-credited in the sibling row.
+- `knowledge-lint` is not session-loaded, so it adds zero recurring context-token cost; only the `merge-before-create` directive (loaded every session) carried a behavior change, which is why it — and not the hook — went through the skill-evaluator ritual.
+
 ## [4.11.0] — 2026-06-13
 
 Cross-platform compatibility pass: every skill now loads on OpenAI Codex, not just Claude. Codex silently skips any `SKILL.md` whose frontmatter `description` exceeds **1024 UTF-8 bytes** — and 17 of the 23 skills were over (worst: `startup-grill` at 3217 B), so they were invisible on Codex. This release trims those 17 descriptions under the limit while preserving Claude's triggering, adds a checker to keep them there, and documents the constraint so new skills don't reintroduce it. No skill behavior, output, or Claude-side trigger boundary changed.
