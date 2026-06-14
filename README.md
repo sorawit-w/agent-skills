@@ -68,23 +68,49 @@ for the full usage, design notes, and cross-skill pairings.
 
 ### Building & validating a startup
 *Idea to investor-ready — and each step runs standalone, so jump in anywhere.*
-`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill` · full chain in [How skills chain](#how-skills-chain).
 
-- [`brand-workshop`](skills/brand-workshop/README.md) — Discovery → Concept → Creation: ships a brand identity package (logo, tagline, brief, DESIGN.md tokens). *Try:*
+`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill`
+
+full chain in [How skills chain](#how-skills-chain).
+
+[`brand-workshop`](skills/brand-workshop/README.md) — Discovery → Concept → Creation: ships a brand identity package (logo, tagline, brief, DESIGN.md tokens).
+
+*Try:*
   - "Run the full brand workshop for my meditation startup."
-- [`validation-canvas`](skills/validation-canvas/README.md) — interview block-by-block into a rigorous Lean Canvas + Value Proposition Canvas. *Try:*
+  
+[`validation-canvas`](skills/validation-canvas/README.md) — interview block-by-block into a rigorous Lean Canvas + Value Proposition Canvas.
+
+*Try:*
   - "Build a validation canvas for my AI code-review tool."
-- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — turn the canvas's stress-tests into falsifiable hypotheses with a risk×impact matrix + test plan. *Try:*
+  
+[`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — turn the canvas's stress-tests into falsifiable hypotheses with a risk×impact matrix + test plan.
+
+*Try:*
   - "I just shipped my validation canvas — what should I test first?"
-- [`pitch-deck`](skills/pitch-deck/README.md) — structured interview → investor-ready self-contained HTML deck. *Try:*
+
+[`pitch-deck`](skills/pitch-deck/README.md) — structured interview → investor-ready self-contained HTML deck.
+
+*Try:*
   - "Investor wants my seed deck by Friday — start the structured interview."
-- [`startup-grill`](skills/startup-grill/README.md) — adversarial panel → kill report with an Investable / Pivot / Pass verdict. *Try:*
+  
+[`startup-grill`](skills/startup-grill/README.md) — adversarial panel → kill report with an Investable / Pivot / Pass verdict.
+
+*Try:*
   - "Grill my startup idea: a B2B SaaS for accounting firms — what would kill us?"
-- [`startup-launch-kit`](skills/startup-launch-kit/README.md) — **orchestrator (opt-in):** runs the five steps above end-to-end with shared state. *Try:*
+  
+[`startup-launch-kit`](skills/startup-launch-kit/README.md) — **orchestrator (opt-in):** runs the five steps above end-to-end with shared state.
+
+*Try:*
   - "Build my whole startup kit for [idea] — take me through everything."
-- [`gtm`](skills/gtm/README.md) **🚧 BETA** — **after the pipeline:** phased go-to-market playbook, content, and scheduling. *Try:*
+  
+[`gtm`](skills/gtm/README.md) **🚧 BETA** — **after the pipeline:** phased go-to-market playbook, content, and scheduling.
+
+*Try:*
   - "My pitch deck is ready and I want users — set up GTM for this project."
-- [`startup-audit`](skills/startup-audit/README.md) — **already built?** point at a codebase/URL → fast Continue / Pivot / Kill verdict + R/A/G band, grounded in a build-vs-claim diff. *Try:*
+  
+[`startup-audit`](skills/startup-audit/README.md) — **already built?** point at a codebase/URL → fast Continue / Pivot / Kill verdict + R/A/G band, grounded in a build-vs-claim diff.
+
+*Try:*
   - "Grill my startup from this repo — continue, pivot, or kill?"
 
 ### Reviewing a product or AI feature
