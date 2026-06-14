@@ -67,30 +67,25 @@ New here? Find your job and jump in. The complete map is in
 for the full usage, design notes, and cross-skill pairings.
 
 ### Building & validating a startup
-*Idea to investor-ready.* The pipeline runs in order:
+*Idea to investor-ready — and each step runs standalone, so jump in anywhere.*
+`brand-workshop` → `validation-canvas` → `riskiest-assumption-test` → `pitch-deck` → `startup-grill` · full chain in [How skills chain](#how-skills-chain).
 
-[`brand-workshop`](skills/brand-workshop/README.md) →
-[`validation-canvas`](skills/validation-canvas/README.md) →
-[`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) →
-[`pitch-deck`](skills/pitch-deck/README.md) →
-[`startup-grill`](skills/startup-grill/README.md).
-
-[`startup-launch-kit`](skills/startup-launch-kit/README.md) orchestrates the full
-run with shared state; [`gtm`](skills/gtm/README.md) **🚧 BETA** gets you users
-afterward.
-
-Already built the product?
-[`startup-audit`](skills/startup-audit/README.md) reads the codebase or URL and
-returns a fast Continue / Pivot / Kill verdict.
-
-Full chain mechanics in
-[How skills chain](#how-skills-chain).
-
-*Try:*
-- "Run the full brand workshop for my meditation startup."
-- "Build a validation canvas for my AI code-review tool."
-- "Investor wants my seed deck by Friday — start the structured interview."
-- "Grill my startup from this repo — continue, pivot, or kill?"
+- [`brand-workshop`](skills/brand-workshop/README.md) — Discovery → Concept → Creation: ships a brand identity package (logo, tagline, brief, DESIGN.md tokens). *Try:*
+  - "Run the full brand workshop for my meditation startup."
+- [`validation-canvas`](skills/validation-canvas/README.md) — interview block-by-block into a rigorous Lean Canvas + Value Proposition Canvas. *Try:*
+  - "Build a validation canvas for my AI code-review tool."
+- [`riskiest-assumption-test`](skills/riskiest-assumption-test/README.md) — turn the canvas's stress-tests into falsifiable hypotheses with a risk×impact matrix + test plan. *Try:*
+  - "I just shipped my validation canvas — what should I test first?"
+- [`pitch-deck`](skills/pitch-deck/README.md) — structured interview → investor-ready self-contained HTML deck. *Try:*
+  - "Investor wants my seed deck by Friday — start the structured interview."
+- [`startup-grill`](skills/startup-grill/README.md) — adversarial panel → kill report with an Investable / Pivot / Pass verdict. *Try:*
+  - "Grill my startup idea: a B2B SaaS for accounting firms — what would kill us?"
+- [`startup-launch-kit`](skills/startup-launch-kit/README.md) — **orchestrator (opt-in):** runs the five steps above end-to-end with shared state. *Try:*
+  - "Build my whole startup kit for [idea] — take me through everything."
+- [`gtm`](skills/gtm/README.md) **🚧 BETA** — **after the pipeline:** phased go-to-market playbook, content, and scheduling. *Try:*
+  - "My pitch deck is ready and I want users — set up GTM for this project."
+- [`startup-audit`](skills/startup-audit/README.md) — **already built?** point at a codebase/URL → fast Continue / Pivot / Kill verdict + R/A/G band, grounded in a build-vs-claim diff. *Try:*
+  - "Grill my startup from this repo — continue, pivot, or kill?"
 
 ### Reviewing a product or AI feature
 Multi-perspective critique and design-completeness checks.
