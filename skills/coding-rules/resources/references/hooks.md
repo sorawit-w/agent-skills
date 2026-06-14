@@ -131,6 +131,23 @@ If your project already has a `post-commit` hook, append the script call to it i
 
 ---
 
+### Manual / git post-commit → Knowledge Integrity (Optional)
+
+**Script:** `hooks/knowledge-lint.sh`
+**Strictness:** Advisory (exit 0; `--strict` exits non-zero)
+**Trigger:** Manual invocation, or git's native `post-commit` hook (not Claude Code lifecycle)
+
+Two zero-dependency mechanical checks over `.ai/knowledge/` entries:
+
+1. **Broken `related:` target** — an entry's `related:` frontmatter names a file that isn't in `.ai/knowledge/`. Fires only when a link is declared, so effectively no false positives.
+2. **Supersede-without-pointer** — an entry has a `## Superseded` section whose body names no replacement entry (no `.md` token).
+
+**Advisory by default** — prints findings, always exits 0. Pass `--strict` to exit 1 on any finding (for a git pre-push or CI gate). Deliberately **not** a SessionStart hook: integrity drifts slowly and shouldn't be re-checked every session. There is **no orphan check** — `related:` is optional, so "no inbound link" is a curation opinion, not a correctness error; that's [OpenKB](external-resources.md)'s semantic-lint job, not this floor's.
+
+Same opt-out as the other knowledge hooks — `agent-context.yaml: knowledge.enabled: false`, or `CODING_RULES_HOOK_DISABLED=knowledge-lint`. Run it directly any time (`bash "${CODING_RULES_DIR}/resources/hooks/knowledge-lint.sh"`), or append the call to a project `post-commit` hook the same way as `knowledge-reindex.sh` above. Self-tested by `hooks/knowledge-lint.test.sh`.
+
+---
+
 ### Stop → Quality Gate Verification
 
 **Type:** Prompt hook (LLM evaluation)
@@ -174,6 +191,7 @@ Hook names match the `# Name:` header in each script. Current names:
 | `session-start-context` | Yes |
 | `knowledge-bootstrap` | Yes (or per-project: `agent-context.yaml: knowledge.enabled: false`) |
 | `knowledge-reindex` | Yes (same per-project opt-out as `knowledge-bootstrap`) |
+| `knowledge-lint` | Yes (same per-project opt-out as `knowledge-bootstrap`) |
 | `pre-commit-check` | Yes (disables soft reminder only — secret scan always runs) |
 | `protect-env` | No — security-critical, edit `.claude/settings.json` to remove |
 

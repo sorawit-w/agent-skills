@@ -279,7 +279,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.11.0`.** Cross-platform compatibility pass — every skill now loads on OpenAI Codex, not just Claude. Codex silently skips any `SKILL.md` whose `description` exceeds 1024 UTF-8 bytes, and 17 of the skills were over; this release trims them under the limit while preserving Claude's triggering, and adds `scripts/check-skill-compat.py` to keep new skills compliant. No skill behavior changed. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.12.0`.** `coding-rules` absorbs three surgical ideas from the obsidian-wiki framework without porting its engine: a new `knowledge-lint` hook (zero-dependency, advisory `.ai/knowledge/` integrity check — broken `related:` links + supersede-without-pointer; `--strict` to fail on findings) with a committed self-test, a "search before creating" step in the knowledge proposal workflow to fight entry sprawl (29/29 on a split-role skill-evaluator audit), and a cross-project sibling pointer to obsidian-wiki. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.
