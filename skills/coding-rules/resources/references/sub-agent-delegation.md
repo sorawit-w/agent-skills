@@ -78,6 +78,8 @@ When breaking work into parallel sub-agent tasks, prefer **vertical slices** (ea
 
 4. **Shared worktree by default** — Sub-agents operate in the same worktree as the coordinator. Rely on rule 1 (non-overlapping files) to prevent conflicts.
 
+5. **Blind parallel lenses** — To review *one* artifact from multiple angles, run sub-agents on the SAME input, each with a different lens (correctness / security / performance) and blind to the others. Independent context prevents the anchoring you get from asking one session the same question repeatedly — it converges on its first answer's blind spots. Unlike rule 1, the input overlaps by design: agents only read, and each returns a separate report.
+
 ---
 
 ## Capability Tier + Reasoning Effort

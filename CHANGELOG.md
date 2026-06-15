@@ -5,6 +5,28 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.13.0] — 2026-06-15
+
+`coding-rules` absorbs five surgical ideas from a Claude Code "power phrases" walkthrough (YouTube, *"Type This Into Claude, It'll Make You Build 10x Faster"*), each validated against the live corpus by a team-composer review. The finding: **most of the video was already covered** — the corpus already enforces spec-before-build, verification gates, sub-agent parallelism, knowledge capture, and automation mechanics. Only the deltas that clear the reactive-corollary bar (each names a recurring failure it prevents) were absorbed; the rest were routed to sibling skills or declined. Reference-file additions only — no `SKILL.md` frontmatter change.
+
+### Added
+- **Blind parallel lenses** (`sub-agent-delegation.md`, Coordination Rule 5) — review *one* artifact by running sub-agents on the SAME input, each with a different lens (correctness / security / performance) and blind to the others. Prevents the convergence you get from asking one session the same question repeatedly. Distinct from the existing non-overlapping-files rule: here the input overlaps by design (read-only, separate reports).
+- **Tool to see output** (`validation.md`) — for visual/UI/rendered work, wire a tool that lets the agent observe its own result (browser/dev-server, screenshot, rendered HTML) and tell it to use it, so it self-corrects before claiming done. Tests prove logic; they don't show the artifact.
+- **Taste Test decision filter** (`safety-mindset.md`, Filter 5) — augment-vs-automate judgment: tasks needing taste get augmented, fully-quantifiable tasks are automation candidates; the 80/20-output filter decides borderline cases. Mechanics (hooks/schedule/loops) already live in `hooks.md`; this adds the missing *judgment* layer.
+
+### Changed
+- **Cost-of-error note** on the Reversibility Matrix (`safety-mindset.md`) — high cost-of-error surfaces (payments, auth, schema migrations) are human validation zones requiring sign-off even when fully reversible. Extends the existing matrix rather than forking a parallel taxonomy (principle #4).
+- **Per-step key decisions** added to the Plan Approval template (`implementation-planning.md`) — surface each step's main choice and its alternatives so the human can override before code is written.
+- **Interview-pass pointer** (`working-patterns.md`) — for fuzzy non-trivial features, a one-line pointer routing to `team-composer`/`brainstorming` for agent-drives-the-questions discovery, rather than reimplementing it in coding-rules.
+- **Discoverability routing in `BOOTSTRAP.md`** — two pointers added after a split-role skill-evaluator audit (28/28 adherence, but the audit caught that two rules could never load at their trigger moment): "automate" requests now route to the Taste Test before hooks mechanics, and a deep single-artifact review now routes to the blind-parallel-lenses rule (which the existing 3+-files delegation trigger did not cover).
+
+### Why
+The video is a popularized restatement of discipline `coding-rules` already enforces, which is itself a useful signal: an external "10x" pitch and the corpus converge. The value was in the **diff**, not wholesale adoption. Three of the six "power phrases" were declined or routed: "interview me" routes to the sibling discussion skills (a hop beats duplication); "build me a skill" is `skill-creator`/`skill-evaluator` territory (absorbing it would bloat coding-rules out of its single purpose); the video's "gotchas section" idea is already covered by the knowledge-base `lesson` type. Holding the line on what *not* to absorb is the reactive-corollary discipline working as intended.
+
+### Notes
+- Reference-file and `BOOTSTRAP.md` routing edits only; `SKILL.md` frontmatter untouched, so the Codex byte-cap compat check is unaffected.
+- Per `skills/coding-rules/CLAUDE.md`, new directives warrant a `skill-evaluator` pass (separate session, main loop) to confirm the rule text lands. Recommended for the two most behavioral adds — `validation.md` (tool-to-see-output) and `safety-mindset.md` (Taste Test) — before treating the release as fully shipped.
+
 ## [4.12.0] — 2026-06-14
 
 `coding-rules` absorbs three surgical ideas from the [obsidian-wiki](https://github.com/Ar9av/obsidian-wiki) framework (MIT) **without porting its engine**. obsidian-wiki is a cross-project personal-brain vault; `coding-rules` is project-scoped guardrails + per-session knowledge. They're complementary siblings, not merge candidates — so this release takes the few ideas that fit `.ai/knowledge/`'s lifecycle and explicitly declines the rest (ingest, history-mining, graph export, semantic search, the inline provenance marker).

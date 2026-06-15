@@ -17,6 +17,8 @@ For every task:
 7. **Verify after each change** — use tiered gates: lint-only for config/docs, full build+lint+test for logic changes (see `quality-gates.md`)
 8. **Commit with intent** — One logical change per commit
 
+> For a non-trivial feature where the problem itself is fuzzy, consider a pre-spec **interview pass** — let the agent ask *you* the shaping questions (who it's for and who it's *not* for, the key decisions) before planning. Deeper discovery lives in the `team-composer` / `brainstorming` siblings; route there rather than reimplementing it here.
+
 ---
 
 ## IDE-Aware Tools (when available)

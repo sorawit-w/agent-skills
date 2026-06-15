@@ -143,3 +143,7 @@ After completing an implementation, **always tell the developer how to manually 
 ```
 
 This is especially important for UI changes, API behavior, and integrations where automated tests may not cover the full user experience.
+
+### Give the agent a tool to *see* its output
+
+Tests prove logic; they don't show the artifact. For visual, UI, or rendered output, wire a tool that lets the agent observe its own result — a browser/dev-server (e.g. a Playwright or preview MCP), a screenshot, or opening the rendered HTML — and tell the agent to use it. A loop where the agent sees what it built lets it self-correct before claiming done. Declare such tools in `agent-context.yaml`.

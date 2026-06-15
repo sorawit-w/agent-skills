@@ -40,11 +40,22 @@ Consider the distribution of intent. Don't over-optimize for rare bad actors at 
 | **Reversible** | Automate | Automate with monitoring |
 | **Irreversible** | Suggest, let human decide | Human in the loop required |
 
+**Cost-of-error overrides reversibility.** A change can be fully reversible and still carry a high cost of error — a payment path, auth, a schema migration. Treat high cost-of-error surfaces as *human validation zones*: require sign-off regardless of where they land on the matrix above. Reversibility tells you whether you can undo it; cost-of-error tells you what it costs if you ship it wrong.
+
 ### 4. The Transparency Test
 
 > "Am I being honest about what this can and can't do?"
 
 Surface confidence levels, limitations, and failure modes. Don't present uncertain outputs as definitive.
+
+### 5. The Taste Test (Augment vs Automate)
+
+Before you `automate this`, two filters:
+
+- **Taste test** — Does judging the output *good or bad* require taste? If yes, **augment** (AI streamlines, human judges). If it's fully quantifiable, it's an **automation** candidate.
+- **80/20 output** — If 80%-as-good output is acceptable for this task, automate it. If you'd refuse to lose any quality, augment it.
+
+Bad automations don't fail loudly — they accrue operational debt and produce slop at scale. Augmentation is the default; automation earns its place by passing both filters. (Mechanics — hooks/schedule/loops — live in `hooks.md`.)
 
 ---
 
