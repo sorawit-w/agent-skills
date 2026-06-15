@@ -217,6 +217,7 @@ For complex tasks, require plan approval before implementation:
    - Approach description
    - Risk assessment
    - Test strategy
+   - Key decisions per step — for each step, the main choice and its alternatives, so the human can override before any code is written
 3. Coordinator reviews and approves
 4. If approved: proceed with implementation
 5. If rejected: revise based on feedback

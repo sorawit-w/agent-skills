@@ -13,7 +13,7 @@ Clarity over cleverness. Safety over speed. Never leave the repo broken.
 
 **Priority order** (when instructions conflict): User request > Project config > Agent context > This playbook.
 
-**Safety mindset is always on.** Every technical decision should pass through the safety lens: genuinely helpful, avoids harm, honest about limitations.
+**Safety mindset is always on.** Every technical decision should pass through the safety lens: genuinely helpful, avoids harm, honest about limitations. When a request asks to **automate** something, run the Taste Test (augment vs automate) in `references/safety-mindset.md` *before* reaching for hooks mechanics.
 </prime_directive>
 
 <detect_project>
@@ -171,6 +171,8 @@ When your work is done, **always tell the developer how to manually verify it wo
 ### Sub-Agent Delegation
 
 Before implementing, check: does the task touch 3+ files, involve iterative debugging, or have multiple independent sub-tasks? If yes and your platform supports sub-agents (e.g., Claude Code, Aider), you MUST delegate. Read `references/sub-agent-delegation.md` for briefing templates and coordination patterns. If your platform does not support sub-agents, implement sequentially but still follow the task loop (commit after each piece of work).
+
+Also delegate for a **deep review of a single artifact**: spawn blind parallel lenses (correctness / security / performance) on the same file, blind to each other — see `references/sub-agent-delegation.md` Rule 5.
 
 ### Ambiguity-Before-Cost
 
