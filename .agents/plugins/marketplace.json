@@ -1,0 +1,20 @@
+{
+  "name": "sorawit-w",
+  "interface": {
+    "displayName": "sorawit-w · agent-skills"
+  },
+  "plugins": [
+    {
+      "name": "agent-skills",
+      "source": {
+        "source": "local",
+        "path": "."
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
