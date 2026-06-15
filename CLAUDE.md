@@ -15,8 +15,8 @@ This file is your onboarding when working on **skill authoring in this repo**. I
 | New skill files | `skills/<skill-name>/` |
 | Banner SVGs (LinkedIn + X formats) | `assets/<skill-name>-li.svg`, `assets/<skill-name>-x.svg` |
 | Icon SVG | `assets/icons/<skill-name>.svg` |
-| Skill registration | `.claude-plugin/plugin.json` **AND** `.claude-plugin/marketplace.json` (both required) |
-| Plugin version | `plugin.json` + `marketplace.json` + `CHANGELOG.md` top entry + `README.md` Status section (4 files total) |
+| Skill registration | Claude Code: `.claude-plugin/plugin.json` **AND** `.claude-plugin/marketplace.json`. Codex: `.codex-plugin/plugin.json` (`"skills": "./skills/"`) **AND** `.agents/plugins/marketplace.json`. All four required — Claude and Codex schemas collide on the `skills`/`source` keys, so they cannot share one file. |
+| Plugin version | `.claude-plugin/plugin.json` + `.claude-plugin/marketplace.json` + `.codex-plugin/plugin.json` + `CHANGELOG.md` top entry + `README.md` Status section (**5 version-bearing files**; `.agents/plugins/marketplace.json` carries no version). `scripts/check-skill-compat.py` asserts parity across them. |
 | Release notes | `CHANGELOG.md` — Keep-a-Changelog format |
 | Repo-wide architectural context | Root `README.md` |
 | Skill knowledge graph (nodes + edges + audience buckets) | `docs/skill-graph.md` |
@@ -76,7 +76,7 @@ name: skill-name
 description: >
   What it does, when it triggers, when it does NOT trigger. This gets read by
   Claude to decide whether to invoke the skill, so be explicit about anti-triggers
-  ("does NOT trigger on X, Y, Z") — but keep it ≤1024 UTF-8 bytes (see the
+  ("does NOT trigger on X, Y, Z") — but keep it ≤1024 characters (see the
   cross-platform contract below); overflow detail belongs in `instructions`/body.
 instructions: |
   Load this skill when: ...
@@ -91,15 +91,17 @@ tags:
 
 #### Cross-platform frontmatter contract — keep skills loadable on Codex too
 
-Claude Code imposes no length limit on `description`, but **OpenAI Codex silently skips any skill whose `SKILL.md` violates its frontmatter rules** — no error in the loop, the skill just never appears. Because `description` is a *single shared field* (Codex has no per-platform override; `agents/openai.yaml` is UI metadata, not triggering), every skill here must satisfy the stricter Codex contract. We prioritize Claude's triggering quality *within* that ceiling — keep the trigger phrases and the load-bearing disambiguation boundaries, and push genuinely overflowing detail into `instructions` (still read by Claude) or the body, never drop a real boundary to save bytes.
+Claude Code imposes no length limit on `description`, but **OpenAI Codex silently skips any skill whose `SKILL.md` violates its frontmatter rules** — no error in the loop, the skill just never appears. Because `description` is a *single shared field* (Codex has no per-platform override at the frontmatter level — the `interface` block in `.codex-plugin/plugin.json` is plugin-level UI metadata, not per-skill triggering), every skill here must satisfy the stricter Codex contract. We prioritize Claude's triggering quality *within* that ceiling — keep the trigger phrases and the load-bearing disambiguation boundaries, and push genuinely overflowing detail into `instructions` (still read by Claude) or the body, never drop a real boundary to save characters.
 
 | Field | Codex rule (violation ⇒ skill skipped) |
 |---|---|
-| `description` | **1–1024 in length, measured as UTF-8 _bytes_** (Codex's Rust loader uses `str::len()`, not char count — so `—`, `→`, `≤`, CJK each cost 2–4 bytes; [openai/codex#7730](https://github.com/openai/codex/issues/7730)). Must **not** contain `<` or `>`. |
-| `name` | matches `^[a-z0-9]+(-[a-z0-9]+)*$`, ≤64 bytes (no leading/trailing/double hyphen). |
+| `description` | **1–1024 in length, measured as Unicode _characters_** (Codex's Rust loader uses `value.chars().count()` against `MAX_DESCRIPTION_LEN = 1024`). The earlier byte-counting bug ([openai/codex#7730](https://github.com/openai/codex/issues/7730)) is **fixed** — current Codex counts characters, and there is **no** `<`/`>` restriction. |
+| `name` | matches `^[a-z0-9]+(-[a-z0-9]+)*$`, ≤64 bytes (no leading/trailing/double hyphen). Codex's own rule is laxer (`^[a-zA-Z0-9_-]+$`), so our lowercase-hyphen house style is a safe subset. |
 | entry file | named exactly `SKILL.md` (all caps). |
 
-**Enforced by `scripts/check-skill-compat.py`** — run it after any frontmatter edit and before a version bump. It fails (exit 1) on any hard violation and warns at a 1000-byte soft cap so multibyte drift never silently crosses the 1024 wall. This is the observable feedback loop (principle #6) for the constraint; don't hand-count bytes.
+**Enforced by `scripts/check-skill-compat.py`** — run it after any frontmatter edit and before a version bump. It fails (exit 1) on any hard violation and warns at a 1000-character soft cap to keep headroom before the 1024 wall. It also asserts version parity across the release manifests. This is the observable feedback loop (principle #6) for the constraint; don't hand-count characters.
+
+> **History:** through v4.14.0 this checker enforced 1024 *bytes* + a `<`/`>` ban, mirroring Codex's behavior at the time of the #7730 report. v4.15.0 corrected it to characters and dropped the angle-bracket ban to match current Codex; the byte-strict version drove an unnecessary trim in v4.11.0. If you ever need to support a *pre-#7730* Codex, byte-strictness is the thing to restore.
 
 ### README structure
 
@@ -126,14 +128,17 @@ Length: 80–200 lines is normal. Past 250 lines, ask whether the long bits belo
 
 ## Release ritual
 
-### Version bumping — 4 files, every time
+### Version bumping — 5 files, every time
 
-A version bump touches exactly these four files. Miss one and the manifest is inconsistent:
+A version bump touches exactly these five version-bearing files. Miss one and `scripts/check-skill-compat.py` fails the parity check:
 
 1. `.claude-plugin/plugin.json` — `version` field
 2. `.claude-plugin/marketplace.json` — `version` field (same value)
-3. `CHANGELOG.md` — new entry at the top using `## [<version>] — <YYYY-MM-DD>` heading
-4. `README.md` Status section — update the one-line **Current release** blurb (new version number + a one-sentence summary of what's newest). The Status section carries only the current-release pointer; full per-version history lives in `CHANGELOG.md`.
+3. `.codex-plugin/plugin.json` — `version` field (same value; Codex-native manifest)
+4. `CHANGELOG.md` — new entry at the top using `## [<version>] — <YYYY-MM-DD>` heading
+5. `README.md` Status section — update the one-line **Current release** blurb (new version number + a one-sentence summary of what's newest). The Status section carries only the current-release pointer; full per-version history lives in `CHANGELOG.md`.
+
+(`.agents/plugins/marketplace.json` — the Codex marketplace — carries no version field, so it's not in the parity set, but keep its plugin metadata in sync when other manifest fields change.)
 
 ### When the release ADDS a new skill — root README needs two more touches
 
@@ -162,7 +167,7 @@ Recent precedent: adding a new skill = MINOR; fixing executor-brief template gap
 
 For changes to a `SKILL.md` (rule text or trigger description), run the audit *before* bumping:
 
-1. Run `python3 scripts/check-skill-compat.py` — the mechanical gate. Any frontmatter edit can push `description` over Codex's 1024-byte wall (or trip the name/angle-bracket rules); this catches it before the skill silently stops loading on Codex. Cheap, deterministic, always run it.
+1. Run `python3 scripts/check-skill-compat.py` — the mechanical gate. Any frontmatter edit can push `description` over Codex's 1024-character wall (or trip the `name` rule); this catches it before the skill silently stops loading on Codex, and also asserts version parity across the release manifests. Cheap, deterministic, always run it.
 2. Run `skill-evaluator` on the changed skill **in the main loop** — then `skill-creator`'s description-check on the frontmatter description.
 
 A pure description-length trim (no change to trigger phrases or boundaries) clears step 1 mechanically; step 2's value is confirming the *compressed* description still triggers as well as the long one, which is best done in a separate session (outer-bias insulation, below).
@@ -320,7 +325,7 @@ Prefer constraints the harness can *check* over rules only a careful human revie
 - `team-composer` Phase 6.6 — a `Plan` subagent reviews the draft Structured Plan and returns ranked findings. The check happens; "be rigorous" is reified.
 - `skill-evaluator` — split-context audit that asks "does the text land?" instead of trusting self-review.
 - Pre-shipment audit ritual — `skill-evaluator` + description check run before every version bump that touches SKILL.md.
-- The four-file version bump in this CLAUDE.md — concrete checklist beats "remember to update the manifest."
+- The five-file version bump in this CLAUDE.md — concrete checklist beats "remember to update the manifest," and `check-skill-compat.py`'s parity assertion turns the checklist into an enforced gate.
 
 **Reactive corollary.** Every line of a good rule traces to a specific past failure. If you can't name the failure you're preventing, the rule is speculative — it belongs in `docs/` or a `references/` file until a real incident promotes it.
 

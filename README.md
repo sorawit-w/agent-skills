@@ -33,7 +33,7 @@
 /plugin install agent-skills@sorawit-w
 ```
 
-That's it — every skill below is now on the shelf. Works from both [Claude Code](https://docs.claude.com/en/docs/claude-code) and Cowork.
+That's it — every skill below is now on the shelf. Works from [Claude Code](https://docs.claude.com/en/docs/claude-code), Cowork, and [OpenAI Codex](https://developers.openai.com/codex/plugins) (≥ 0.133.0) — the same `/plugin marketplace add` + `/plugin install` commands run on Codex, then `/reload-plugins`. The repo ships native manifests for both: `.claude-plugin/` for Claude Code and `.codex-plugin/plugin.json` + `.agents/plugins/marketplace.json` for Codex.
 
 **When the plugin updates**, refresh once and reinstall:
 
@@ -279,7 +279,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.14.0`.** `coding-rules` absorbs two ideas from [`ponytail`](https://github.com/DietrichGebert/ponytail) (MIT, ideas only) after a team-composer review found it real but mostly already covered: an ordered pre-write **decision ladder** in `BOOTSTRAP.md` (necessary → stdlib → native → installed dep → one line → minimal, with a "lazy not negligent" correctness ring-fence), and naming an in-code **upgrade trigger** on deliberate shortcuts in `working-patterns.md`, backed by a matching code-smell gate in `validation.md` so the quality pass can flag a missing trigger. Declined: ponytail's hook/mode machinery, the `ponytail:` comment namespace + `/ponytail-debt` harvest (duplicate our TODO/BLOCKERS channels), and the `ponytail-review` skill (subset of `/simplify` + `/code-review`); its benchmarks are treated as directional, not evidence. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.15.0`.** Native **OpenAI Codex** compatibility. Codex was already discovering `.claude-plugin/plugin.json`, but its manifest schema expects `skills` as a directory string (`"./skills/"`) where Claude Code expects an array of paths — a field-type collision that left Codex loading zero skills. The fix ships two Codex-native manifests alongside the untouched Claude ones: `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`, so `/plugin marketplace add` + `/plugin install` now work on Codex too. `scripts/check-skill-compat.py` gains a cross-manifest version-parity guard and is corrected to match current Codex (description limit is 1024 **characters**, not bytes; the angle-bracket ban — never a real Codex rule post-[#7730](https://github.com/openai/codex/issues/7730) — is dropped). Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

@@ -5,6 +5,27 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.15.0] — 2026-06-15
+
+Native **OpenAI Codex** compatibility. The plugin was effectively invisible on Codex despite Codex *discovering* it: Codex's loader reads `.claude-plugin/plugin.json` as a fallback, but its manifest schema declares skills as a directory-path string (`"skills": "./skills/"`) whereas Claude Code uses an array of explicit paths (`"skills": ["./skills/team-composer", …]`). Same key, incompatible types — Codex parsed our manifest and loaded zero skills. A `team-composer` planning session (verified against `openai/codex` source on `main` + the official Codex plugin docs) confirmed the diagnosis and the fix.
+
+### Added
+- **`.codex-plugin/plugin.json`** — Codex-native plugin manifest with `"skills": "./skills/"` (directory scan). Codex discovers `.codex-plugin/` *before* `.claude-plugin/`, so it never trips on the Claude array. `skills/gtm-workspace/` (no `SKILL.md`) is silently skipped by the directory scan.
+- **`.agents/plugins/marketplace.json`** — Codex-native marketplace manifest (Codex `source` is an object, not the string `"./"` Claude uses), enabling `/plugin marketplace add` + `/plugin install` parity on Codex.
+- **Version-parity guard** in `scripts/check-skill-compat.py` — fails if the release version disagrees across `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `.codex-plugin/plugin.json`, `CHANGELOG.md`, and `README.md`. The Codex addition turned the documented 4-file version ritual into a 5-file one; this makes the drift observable instead of a checklist.
+
+### Changed
+- **`scripts/check-skill-compat.py` corrected to match current Codex.** The description limit is measured in **characters** (`MAX_DESCRIPTION_LEN = 1024`, `value.chars().count()`), not UTF-8 bytes, and the `<`/`>` rejection is **dropped** — neither matched current Codex. The byte-count behavior was the now-fixed [openai/codex#7730](https://github.com/openai/codex/issues/7730); the angle-bracket ban was never a real Codex rule. (Relaxing a constraint cannot newly fail a previously-passing skill, so all 23 still pass.)
+- **`CLAUDE.md`** — cross-platform frontmatter contract updated (bytes → characters; angle-bracket claim removed; the `agents/openai.yaml` line corrected — it predated the real `.codex-plugin/` mechanism). Version ritual is now 5 manifests + the two doc files.
+- **`README.md`** — install section notes the marketplace commands now work on Codex; new native manifests documented.
+
+### Why
+A single dual-platform manifest is impossible: the `skills` key must be an array for Claude and a string for Codex, and `marketplace.json` `source` is a string for Claude and an object for Codex. So the design is parallel native manifests with the `.claude-plugin/*` files left untouched — Codex reads its own files first and never reaches the Claude ones. This is additive cross-platform support with no behavior change to any existing skill, hence MINOR.
+
+### Notes
+- The relaxation targets *current* Codex (post-#7730, ≥ 0.133.0 for the plugin/marketplace feature, launched 2026-03-27). Byte-strictness for pre-#7730 Codex releases is intentionally not preserved.
+- The Codex marketplace entry uses `source: {"source": "local", "path": "."}` (mirroring Claude's same-repo `"./"`) with `policy.installation = AVAILABLE` / `policy.authentication = ON_INSTALL`. The exact git `source` keys and policy enum are confirmed against the live install — if `/plugin marketplace add` fails to resolve the plugin, the documented fallback is the `git-subdir` source form (`url` + `path` + `ref`).
+
 ## [4.14.0] — 2026-06-15
 
 `coding-rules` absorbs two ideas from [`ponytail`](https://github.com/DietrichGebert/ponytail) (MIT, ideas only — no text copied): an ordered pre-write **decision ladder** and naming an in-code **upgrade trigger** on deliberate shortcuts. A team-composer review found ponytail real but mostly already covered; only the two deltas that each name a recurring failure (agents over-engineering; shortcuts with no expiry condition) cleared the reactive-corollary bar. Reference-file additions only — no `SKILL.md` frontmatter change.
