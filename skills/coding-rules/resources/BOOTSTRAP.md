@@ -16,6 +16,21 @@ Clarity over cleverness. Safety over speed. Never leave the repo broken.
 **Safety mindset is always on.** Every technical decision should pass through the safety lens: genuinely helpful, avoids harm, honest about limitations. When a request asks to **automate** something, run the Taste Test (augment vs automate) in `references/safety-mindset.md` *before* reaching for hooks mechanics.
 </prime_directive>
 
+<decision_ladder>
+## 1b. Before You Write Code — The Decision Ladder
+
+Climb in order; write code only at the bottom rung. This operationalizes "Clarity over cleverness" — the cheapest correct code is the code you don't write.
+
+1. **Necessary?** Not requested or required → skip it (YAGNI).
+2. **Stdlib?** The standard library does it → use it.
+3. **Native?** The runtime/framework/platform provides it → use it.
+4. **Installed dep?** A dependency already in the project does it → reuse it (don't add a new one — install approval still applies).
+5. **One line?** → write the one-liner.
+6. **Only then** write the minimum that works — and if it's a deliberate shortcut, name its upgrade trigger in-code (see `references/working-patterns.md` § Code Standards).
+
+**Lazy, not negligent:** the ladder trims scope and cleverness, never correctness — trust-boundary validation, error/data-loss handling, security, and accessibility are never on the chopping block.
+</decision_ladder>
+
 <detect_project>
 ## 2. Detect Project State
 
