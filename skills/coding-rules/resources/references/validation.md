@@ -73,6 +73,7 @@ You perform both verification stages yourself. No QA sub-agent — but you must 
 - Re-read the diff for code smells:
   - Dead code (unused imports, orphans, unreachable branches)
   - **Hardcoded values** — externalize if the value (a) plausibly differs by environment (URLs, email destinations, default locales, retry budgets, timeouts) or (b) gates incomplete or risky work that may need to be turned off without redeploying. Untriggered values (enums, business-logic constants, validation thresholds) stay in code — speculative externalization is a smell of its own. Secrets remain governed by `guardrails.md` (`.env` only, never app config).
+  - **Shortcuts without an upgrade trigger** — a deliberate simplification (O(n²), in-memory, inline) whose adjacent comment doesn't name the measurable condition that should flip the decision. Add the trigger or remove the shortcut (see `working-patterns.md` § Code Standards).
   - Missing error handling
 - Verify the change doesn't break adjacent functionality
 

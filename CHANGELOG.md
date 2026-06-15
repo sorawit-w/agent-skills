@@ -5,6 +5,24 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.14.0] — 2026-06-15
+
+`coding-rules` absorbs two ideas from [`ponytail`](https://github.com/DietrichGebert/ponytail) (MIT, ideas only — no text copied): an ordered pre-write **decision ladder** and naming an in-code **upgrade trigger** on deliberate shortcuts. A team-composer review found ponytail real but mostly already covered; only the two deltas that each name a recurring failure (agents over-engineering; shortcuts with no expiry condition) cleared the reactive-corollary bar. Reference-file additions only — no `SKILL.md` frontmatter change.
+
+### Added
+- **Decision ladder** in `BOOTSTRAP.md` § 1b — ordered pre-write gate (necessary → stdlib → native → installed dep → one line → minimal), with a "lazy not negligent" caveat that ring-fences correctness (trust-boundary validation, error/data-loss handling, security, accessibility). Rung 6 links the upgrade-trigger rule, keeping the lazy-loaded rule reachable from the always-loaded file.
+- **"Name the upgrade trigger"** rule in `working-patterns.md` § Code Standards — deliberate shortcuts get an in-code comment naming the measurable condition that flips the decision, so the developer sees the expiry at the code site.
+- Matching **code-smell gate** in `validation.md` § Quality Gates (Check 2) so the quality pass can flag a shortcut lacking a trigger — observable loop, not aspirational prose.
+- **ponytail** attribution row in `external-resources.md` recording what was absorbed and what was declined.
+
+### Why
+The ladder sharpens values already in the corpus (`Clarity over cleverness`, `boring over clever`) into one *ordered* sequence — observable loop over aspirational prose (principle #6), and a defensible framework default, not taste (principle #5). It was kept tight to clear the rule-cost gate and the Karpathy "Simplicity First" compression check (`coding-rules/CLAUDE.md`). The upgrade-trigger rule's only delta over existing comment-discipline rules (`comment why, not what`; `eslint-disable needs a justifying comment`) is naming the *measurable flip condition* — and the `validation.md` gate is what makes that delta enforceable rather than aspirational.
+
+Declined ponytail's hook/mode machinery + lite/full/ultra intensities (context injection; coding-rules discipline is always-on), the `ponytail:` comment namespace + `/ponytail-debt` harvest (duplicate `DEVELOPER_TODO.md`/`.ai/BLOCKERS.md` channels), and the `ponytail-review` skill (subset of `/simplify` + `/code-review`).
+
+### Notes
+- Ideas only; no ponytail text copied (MIT). Its benchmarks (80–94% less code, 3–6× faster, 47–77% cheaper) are real but toy-task-selected and 2/5 not runtime-verified — treated as directional, not evidence, and not cited as justification.
+
 ## [4.13.0] — 2026-06-15
 
 `coding-rules` absorbs five surgical ideas from a Claude Code "power phrases" walkthrough (YouTube, *"Type This Into Claude, It'll Make You Build 10x Faster"*), each validated against the live corpus by a team-composer review. The finding: **most of the video was already covered** — the corpus already enforces spec-before-build, verification gates, sub-agent parallelism, knowledge capture, and automation mechanics. Only the deltas that clear the reactive-corollary bar (each names a recurring failure it prevents) were absorbed; the rest were routed to sibling skills or declined. Reference-file additions only — no `SKILL.md` frontmatter change.
