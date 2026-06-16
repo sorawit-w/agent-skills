@@ -5,6 +5,19 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.16.0] — 2026-06-15
+
+`coding-rules` now extends its commit convention to **pull requests**. The skill already prescribed Conventional Commits for per-commit messages, but the PR section covered only sizing and merge strategy — leaving a gap: under the skill's recommended squash-merge, the PR *title* becomes the squashed commit's subject on the base branch, so a freeform title silently breaks the conventional-commit history the per-commit rule protects. A `team-composer` review surfaced the gap; a split-role `skill-evaluator` audit (16/17 assertions, 4 tests across in-context and discoverability-only conditions) validated the fix before ship.
+
+### Added
+- **`references/communication.md` § PR Title & Body** — PR titles follow the commit convention (`<type>[optional scope]: <description>`), explicitly because squash-merge makes the title the landed commit subject. Adds a minimal canonical PR body (`## What & why` + `## How to verify`, headings verbatim, reusing the §Manual Verification block) and a conditional closing-keyword link (`Closes #142`) for tracked tasks.
+
+### Changed
+- **`references/communication.md` § Conventional Commits** — notation aligned to `BOOTSTRAP.md`'s always-on `<type>[optional scope]: <description>` (was `<type>(<scope>)`, which read as scope-mandatory) and a one-line "type required, scope optional" clarifier added. Consistency fix only — BOOTSTRAP already carried the canonical scope-optional wording.
+
+### Why
+The fix targets a discoverability/coverage gap, not a missing rule. The commit-format rule was already reachable and landing — the audit confirmed conventional-commit *titles* held even when the rule was reachable only via the reference index, because the title half anchors to the always-on BOOTSTRAP commit-discipline rule. What was missing was the PR-title↔squash-commit linkage made explicit, plus a canonical body shape. The audit's one miss — body headings drifting to ad-hoc sections (Summary/Testing) ~1 in 2 runs — drove the "use these two headings verbatim" wording. MINOR: additive directive, no breaking change to existing skills.
+
 ## [4.15.0] — 2026-06-15
 
 Native **OpenAI Codex** compatibility. The plugin was effectively invisible on Codex despite Codex *discovering* it: Codex's loader reads `.claude-plugin/plugin.json` as a fallback, but its manifest schema declares skills as a directory-path string (`"skills": "./skills/"`) whereas Claude Code uses an array of explicit paths (`"skills": ["./skills/team-composer", …]`). Same key, incompatible types — Codex parsed our manifest and loaded zero skills. A `team-composer` planning session (verified against `openai/codex` source on `main` + the official Codex plugin docs) confirmed the diagnosis and the fix.

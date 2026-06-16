@@ -7,11 +7,13 @@ Commit conventions, session logging, status tracking, external board sync, devel
 ## Conventional Commits
 
 ```
-<type>(<scope>): <description>
-<type>(<scope>): [<issue-id>] <description>    ← with issue/ticket reference
+<type>[optional scope]: <description>
+<type>[optional scope]: [<issue-id>] <description>    ← with issue/ticket reference
 
 <body — explain why>
 ```
+
+**Type is required; scope is optional.** `fix: handle null user` is valid; a bare `handle null user` (no type) is not. Add a scope when it adds a useful locator (`fix(auth): …`); omit it for repo-wide changes — never drop the type to avoid an awkward scope.
 
 | Type     | When                                    |
 |----------|-----------------------------------------|
@@ -162,3 +164,19 @@ A small PR:
 - Is reviewable in one sitting by one person
 
 Source: principle distilled from `shanraisshan/claude-code-best-practice` (2026-04-19, MIT). Numeric line-count anchors from the original were intentionally omitted — teams set their own.
+
+### PR Title & Body
+
+**The PR title follows the commit convention** — `<type>[optional scope]: <description>`. Under squash-merge (the strategy above) the title becomes the squashed commit's subject on the base branch, so a freeform title silently breaks the conventional-commit history the per-commit rule protects. When a PR squashes to a single commit, reuse that commit's subject verbatim.
+
+**Body — minimal but present. Use these two headings verbatim** (keeps PR bodies greppable and lets a reviewer reuse the §Manual Verification block; ad-hoc sections like Summary/Changes/Testing defeat that consistency):
+
+```
+## What & why
+<one-paragraph summary: the problem and the chosen approach>
+
+## How to verify
+<steps a reviewer runs to confirm it works — reuse the §Manual Verification block from the workflow>
+```
+
+Link a tracked task with a closing keyword (`Closes #142`, `Fixes PROJ-12`) so the merge auto-closes it. Keep the body proportional to the diff — a one-line fix does not need a four-section essay.
