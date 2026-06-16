@@ -48,6 +48,26 @@ The five primitives, with one concrete repo pointer each:
 
 **How to use this vocabulary.** When you propose a new rule or skill change, ask: *which primitive is this serving?* If you can't answer, the change is probably speculative. When you debug a skill that "just isn't working," ask: *is the environment underspecified (context, scaffolding, feedback) or is the prompt wrong?* Most agent failures are environment failures wearing a prompt-failure mask.
 
+### Control loop (loop engineering)
+
+Prompt engineering optimizes a single forward pass. **Loop engineering** optimizes the trajectory across many passes: the agent acts, observes a result (test output, build error, screenshot), and that observation re-enters context and shapes the next action. It is the runtime-control-flow half of harness engineering — the harness is the static scaffolding, the loop is what drives it over time.
+
+`coding-rules` already implements the loop primitives. This table is the map so the spine is legible in one place; each row points to where the primitive is actually enforced — do not restate the mechanics here.
+
+| Primitive | One-line meaning | Lives in |
+|---|---|---|
+| Inner / outer check split | cheap check while coding, full gate at the boundary | `resources/workflows/feature.md` (iteration-check tiers vs commit check) |
+| Termination condition | what must be true to exit the loop | `resources/references/validation.md` (Iron Law: no claim without fresh evidence) |
+| Retry budget / circuit breaker | bounded retries per failure type, then escalate | `resources/references/error-handling.md` (build 5 / test 3 / lint 5 → BLOCKED) |
+| Bounded search | cap the hypothesis count so the loop can't flail | `resources/references/debugging.md` (max 3 hypotheses) |
+| State across iterations | what carries forward so the loop has no amnesia | `.ai/memory.log`, `.ai/STATUS.md`, checkpoint-before-context-fills |
+| Iteration cost is the speed limit | a faster loop buys more hypotheses | `resources/references/debugging.md` (assess the feedback loop first) |
+| Parallel loops (fan-out) | independent iterations run concurrently | `resources/references/sub-agent-delegation.md` (vertical slices, blind lenses) |
+
+These are the runtime expression of the harness primitives above, not a second taxonomy: *State across iterations* is *State preservation* applied mid-task, and the two check rows are *Observable feedback loops* applied per-iteration. The rest (termination, retry budget, bounded search, fan-out) are loop-specific. When in doubt about which table owns a concern, the harness table is the noun and this one is the verb.
+
+Lives in the authoring context, not `BOOTSTRAP.md` — zero cost for coding-rules *consumers* (it does load for sessions working in this repo, so keep it tight).
+
 ---
 
 ## Skill anatomy
