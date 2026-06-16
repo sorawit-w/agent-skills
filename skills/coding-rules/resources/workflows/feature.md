@@ -145,6 +145,8 @@ After all tasks in the loop are complete, perform final validation:
 | Med (4–6) | Self-check: spec compliance check + run gates fresh |
 | High (7+) | Spawn QA sub-agent for two-stage review: spec compliance then code quality |
 
+- **If work was fanned out to parallel sub-agents**, run the integration gate before declaring done — see `references/sub-agent-delegation.md` rule 6 (cross-slice build + union of touched-module tests). Slice-local passes are not sufficient.
+
 **No completion claims without fresh verification evidence.** Never say "should work" or "probably passes" — run the check, read the output, state the result.
 
 Details: `references/validation.md`
