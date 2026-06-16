@@ -18,6 +18,8 @@ Use sub-agents to parallelize independent work. Delegate if ANY of these signals
 
 If ANY signal matches AND your platform supports sub-agents (Claude Code, Aider, Cursor agent mode), delegate. Otherwise implement sequentially.
 
+**Overhead check.** Delegation has fixed coordination cost (briefing, reporting, integration). For a task just over a threshold but genuinely small and single-threaded, doing it inline can be cheaper than the round-trip. Treat the triggers as signals to *consider* delegation, not mandates — the same way the budget anchors below are signals, not caps.
+
 ---
 
 ## Quick Brief Template
