@@ -131,6 +131,7 @@ If gates fail, fix the issue and re-run before committing.
 - If a ROADMAP item is blocked mid-loop, flip `[~]` → `[!]` with a one-line reason and continue. Resume by flipping back to `[~]` when the blocker clears.
 - Match existing patterns in the codebase — consistency over local optimization.
 - **Debug systematically** — reproduce → hypothesize (max 3) → fix. No trial-and-error. Details: `references/debugging.md`
+- **Cheapen the loop before grinding** — if two fix-test cycles on one task have failed, stop before a third and reduce the cost of a single cycle (minimal reproduction, focused test command, or watch mode) instead of grinding through more attempts. A faster loop changes how many hypotheses you can afford. Why: `references/debugging.md` § feedback loop.
 </implement>
 
 <validate>
