@@ -16,7 +16,9 @@ Use sub-agents to parallelize independent work. Delegate if ANY of these signals
 | 📝 **Documentation** | Updates needed across multiple files |
 | 🔍 **Investigation / Research** | Exploring unfamiliar codebases or third-party APIs |
 
-If ANY signal matches AND your platform supports sub-agents (Claude Code, Aider, Cursor agent mode), delegate. Otherwise implement sequentially.
+If ANY signal matches AND your platform supports sub-agents (Claude Code, Aider, Cursor agent mode), delegate — subject to the overhead check below. Otherwise implement sequentially.
+
+**Overhead check.** Delegation has fixed coordination cost (briefing, reporting, integration). For a task just over a threshold but genuinely small and single-threaded, doing it inline can be cheaper than the round-trip. Treat the triggers as signals to *consider* delegation, not mandates — the same way the budget anchors below are signals, not caps.
 
 ---
 
@@ -79,6 +81,8 @@ When breaking work into parallel sub-agent tasks, prefer **vertical slices** (ea
 4. **Shared worktree by default** — Sub-agents operate in the same worktree as the coordinator. Rely on rule 1 (non-overlapping files) to prevent conflicts.
 
 5. **Blind parallel lenses** — To review *one* artifact from multiple angles, run sub-agents on the SAME input, each with a different lens (correctness / security / performance) and blind to the others. Independent context prevents the anchoring you get from asking one session the same question repeatedly — it converges on its first answer's blind spots. Unlike rule 1, the input overlaps by design: agents only read, and each returns a separate report.
+
+6. **Integration gate after fan-out** — When parallel sub-agents have each reported done, the coordinator runs one cross-slice verification before declaring the feature complete: the full build plus the union of tests covering every touched module, run together. Building on rule 4 (shared worktree), the slices already live in one tree — but slice-local green is necessary, not sufficient: the seam between slices is unverified until they run as one. If the gate fails, the conflict is the coordinator's to resolve or re-delegate as a scoped fix; never declare done on slice-local passes alone.
 
 ---
 

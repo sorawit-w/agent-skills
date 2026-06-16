@@ -63,7 +63,7 @@ For complexity 6+, read `references/implementation-planning.md` for structured p
 <delegate_check>
 ## 4. Check: Should You Delegate?
 
-**Before implementing, check the delegation signals below.** If ANY signal matches, you MUST read `references/sub-agent-delegation.md` and spawn sub-agents instead of implementing everything yourself.
+**Before implementing, check the delegation signals below.** If ANY signal matches, you MUST read `references/sub-agent-delegation.md` before deciding — then delegate, *unless* its overhead check says an inline pass is cheaper (a small, single-threaded task just over a threshold). The signals trigger the decision; they don't pre-make it.
 
 | Signal | Match? |
 |--------|--------|
@@ -131,6 +131,7 @@ If gates fail, fix the issue and re-run before committing.
 - If a ROADMAP item is blocked mid-loop, flip `[~]` → `[!]` with a one-line reason and continue. Resume by flipping back to `[~]` when the blocker clears.
 - Match existing patterns in the codebase — consistency over local optimization.
 - **Debug systematically** — reproduce → hypothesize (max 3) → fix. No trial-and-error. Details: `references/debugging.md`
+- **Cheapen the loop before grinding** — if two fix-test cycles on one task have failed, stop before a third and reduce the cost of a single cycle (minimal reproduction, focused test command, or watch mode) instead of grinding through more attempts. A faster loop changes how many hypotheses you can afford. Why: `references/debugging.md` § feedback loop.
 </implement>
 
 <validate>
@@ -143,6 +144,8 @@ After all tasks in the loop are complete, perform final validation:
 | Low (1–3) | Self-review: run gates, re-read diff, confirm it does what was asked |
 | Med (4–6) | Self-check: spec compliance check + run gates fresh |
 | High (7+) | Spawn QA sub-agent for two-stage review: spec compliance then code quality |
+
+- **If work was fanned out to parallel sub-agents**, run the integration gate before declaring done — see `references/sub-agent-delegation.md` rule 6 (cross-slice build + union of touched-module tests). Slice-local passes are not sufficient.
 
 **No completion claims without fresh verification evidence.** Never say "should work" or "probably passes" — run the check, read the output, state the result.
 
