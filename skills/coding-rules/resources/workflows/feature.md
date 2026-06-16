@@ -63,7 +63,7 @@ For complexity 6+, read `references/implementation-planning.md` for structured p
 <delegate_check>
 ## 4. Check: Should You Delegate?
 
-**Before implementing, check the delegation signals below.** If ANY signal matches, you MUST read `references/sub-agent-delegation.md` and spawn sub-agents instead of implementing everything yourself.
+**Before implementing, check the delegation signals below.** If ANY signal matches, you MUST read `references/sub-agent-delegation.md` before deciding — then delegate, *unless* its overhead check says an inline pass is cheaper (a small, single-threaded task just over a threshold). The signals trigger the decision; they don't pre-make it.
 
 | Signal | Match? |
 |--------|--------|
