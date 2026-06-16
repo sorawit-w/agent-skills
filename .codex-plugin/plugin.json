@@ -1,6 +1,6 @@
 {
   "name": "agent-skills",
-  "version": "4.15.0",
+  "version": "4.16.0",
   "description": "Auto-triggering skills for Claude Code, Cowork, and OpenAI Codex — expertise that activates for the job at hand. Five tracks: Startup (idea to shipped), Review (product, UX, and eval critique), Code (discipline, stack choices, parallel agents), Calibration (tune how the agent works with you and write in your voice), and Language & Visuals (localization, in-context meaning, pixel art). Skills chain into pipelines and share a common harness — and you can author and audit your own.",
   "author": {
     "name": "sorawit-w",
