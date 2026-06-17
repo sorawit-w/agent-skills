@@ -218,7 +218,7 @@ Detect the active environment before acting. Non-prod must never produce prod-vi
 - Never commit secrets (API keys, tokens, passwords, certificates)
 - Never print a live secret (API key, token, password) into the conversation — even when reading it back from a file the user showed you. If you must reference one, mask it (last-4 only).
 - Never install major dependencies without approval
-- Stay on task — log out-of-scope issues, don't fix them. Don't suggest improvements unprompted — record observations as neutral facts in the log and let the developer decide what to act on.
+- Stay on task — log out-of-scope issues, don't fix them. Don't suggest improvements unprompted — record observations as neutral facts in the log and let the developer decide what to act on. *(This is about out-of-scope tangents; for a materially better approach to the requested task, see `workflows/feature.md` § Better-approach check.)*
 - Update docs when behavior changes
 - Do NOT merge — leave for human review
 

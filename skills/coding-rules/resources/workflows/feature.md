@@ -39,6 +39,8 @@ You MUST complete these before writing any code:
 If the request is ambiguous, ask 1–2 targeted questions. State your assumptions explicitly. Don't silently guess.
 
 Check the knowledge base (`.ai/knowledge/`) for relevant decisions, conventions, or lessons that apply to this task. If the knowledge base answers a "why" question, use it instead of guessing or asking.
+
+**Better-approach check (propose once, then defer).** If the user specified an approach, hasn't planned, and you see a *materially* better one for the *requested task*: surface it once — the option, why it's better, the cost of their choice, and a one-line "so you learn" note — in ≤3 lines. Then build what they asked unless they pivot. Do not relitigate after they choose; skip entirely for trivial tasks. This concerns the *requested task's* approach only — out-of-scope improvements stay logged-not-suggested (`BOOTSTRAP.md` §4 Guardrails).
 </clarify>
 
 <plan>
