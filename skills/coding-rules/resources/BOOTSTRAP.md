@@ -270,6 +270,7 @@ All paths in this index are relative to the `resources/` directory where this `B
 | Environment safety — prod vs non-prod behavior matrix, env detection, env-crossing rule | `references/environment-safety.md` |
 | Guardrails, scope, security, documentation | `references/guardrails.md` |
 | QA sub-agent, manual verification | `references/validation.md` |
+| Conformance audit (`audit` sub-command) — auditability classifier, static-auditable seed checks, dimensions, report shape | `references/audit.md` |
 | Session checkpoints, compaction, resuming, shutdown | `references/context-management.md` |
 | Sub-agent delegation, coordinator role, patterns | `references/sub-agent-delegation.md` |
 | Gap detection, MCP registry lookup | `references/recommendations.md` |
