@@ -300,8 +300,8 @@ Invocation via the args parameter: `audit [--full] [<dimension> ...]` (dimension
 1. **Preflight (`audit.md` § 2).** If the repo root is a skill-authoring surface, do NOT run — say *"This looks like a skill-authoring repo — run `skill-evaluator` instead; `audit` is for real coding projects"* and stop (overridable if the user re-runs). A monorepo with a real app proceeds, excluding `skills/**` + `.claude-plugin/**`.
 2. **Resolve scope.** Default incremental (changes since `.ai/audits/.last-audit`); `--full` sweeps the repo. Positional dimensions filter which checks run; an unknown/ambiguous dimension → list the available ones and ask, don't guess.
 3. **Read the live corpus, classify, check.** Walk `BOOTSTRAP.md` + its references; classify each rule auditable/partial/process-only; run the auditable + partial checks in the two bands (mechanical=`observed`, inference=`inferred`).
-4. **Write the report.** `.ai/audits/audit-<dims>-<mode>-<YYYYMMDD-HHMMSS>.md`, render to `.html` (degrade to md-only if no converter), with the three-way coverage banner. Ensure `.ai/audits/` is git-excluded in **this** project — propose the `.gitignore` line with confirm if absent.
-5. Confirm: *"**Audit complete.** Checked `<C>`, partial `<P>`, process-only `<Q>`. Report: `<path>`. No files changed."*
+4. **Write the report.** `.ai/audits/audit-<dims>-<mode>-<YYYYMMDD-HHMMSS>.md`, render to `.html` (degrade to md-only if no converter), with the three-way coverage banner. If `.ai/audits/` isn't git-excluded, **recommend** the `.gitignore` line in the completion message — do NOT edit `.gitignore` yourself (the audit is read-only).
+5. Confirm: *"**Audit complete.** Checked `<C>`, partial `<P>`, process-only `<Q>`. Report: `<path>`. No source files changed."* (plus the `.gitignore` tip if applicable)
 
 Edge cases:
 - **No git repo** → audit the working tree only (file-level checks); skip history-based checks (commit-type, schema-migration) and say so in the banner.

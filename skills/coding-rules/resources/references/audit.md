@@ -99,7 +99,7 @@ Agent judgment. Each finding must **name the heuristic it used** so a human can 
 
 Draft the report as Markdown, then write it under `.ai/audits/` (HTML rendering: § Report rendering).
 
-**Git exclusion (runtime step in the TARGET repo).** Audit reports are point-in-time and local — they do not belong in git. Before writing the first report, ensure `.ai/audits/` is in the **target project's** `.gitignore`; if absent, propose the one-line addition with diff-and-confirm (same pattern as the `.worktrees/` step in `git-worktrees.md`). Never assume it's excluded; never touch any other repo's `.gitignore`.
+**Git exclusion (recommend, never edit).** Audit reports are point-in-time and local — they don't belong in git. But the audit is **read-only**, so it must not edit `.gitignore` itself — doing so would write a file outside the report dir, falsify the "no source files changed" completion claim, and leave a dirty worktree. If `.ai/audits/` isn't already excluded in the target repo, **surface a one-line recommendation** in the completion message (*"Tip: add `.ai/audits/` to `.gitignore` so reports aren't tracked"*) and let the developer act. The only file the audit writes is the report (and its `.last-audit` baseline) under `.ai/audits/` — nothing else, ever.
 
 **File name** — `.ai/audits/audit-<dims>-<mode>-<YYYYMMDD-HHMMSS>.{md,html}`:
 - `<dims>` = `all` (every dimension — the default) or an alphabetically-sorted proper subset joined by `+` (e.g. `security`, `quality+security`). All dimensions collapse to `all` — never enumerate the full set.
@@ -123,7 +123,7 @@ The `.md` is canonical and sufficient; the `.html` is a shareable snapshot. Rend
 
 Two audit-specific obligations on top of the shared machinery:
 
-- **Escape interpolated repo content.** The body converter handles the Markdown, but any audited string you place into the report — file paths, code snippets, commit subjects, the heuristic text of a finding — is **untrusted (§1)** and must be HTML-escaped before interpolation. The bundled template does no escaping; an unescaped commit subject is a stored-XSS vector in a report people email around.
+- **Neutralize untrusted repo content as Markdown-literal, not just HTML.** Any audited string you interpolate — file paths, code snippets, commit subjects, the heuristic text of a finding — is **untrusted (§1)**. HTML-escaping it *before* the converter runs is **insufficient**: active Markdown that survives escaping (`![x](http://beacon)`, links, tables) is turned by the converter into live HTML — a network-beaconing image or injected link — in the shareable report. Instead: wrap every interpolated untrusted string in an inline code span / fenced block (renders literally in both the `.md` and the HTML) **and** escape or sanitize the *final* HTML after conversion. The bundled template does no escaping; a raw commit subject is a stored-injection / XSS vector in a report people email around.
 - **Degrade when no converter is present.** Try `pandoc` → `markdown-it` → Python `markdown`. If none is available, **write the `.md` only** and say so in one line: *"No Markdown converter found; wrote `audit-….md` only — install pandoc or run html-export later."* Never hand-author the HTML tag-by-tag (`html-export.md` forbids it). The audit is **done when the `.md` exists** — HTML never blocks completion.
 
 ---
