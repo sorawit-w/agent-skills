@@ -101,7 +101,7 @@ The behavioral counterpart to `protect-env`. Reading a `.env` is legitimate (the
 **Matcher:** `Bash` running `git commit`
 
 Two checks before every commit:
-1. **Secret scan (hard-block)** — Prefers `gitleaks protect --staged` if `gitleaks` is on `PATH` (broader coverage, respects a repo-local `.gitleaks.toml` allowlist); falls back to a built-in regex (`sk_live_`, `AKIA`, private keys, hardcoded passwords) when gitleaks is absent or errors. A gitleaks *finding* blocks the commit; a gitleaks *tool error* falls through to the regex rather than phantom-blocking. Cannot be disabled via env var. Self-tested by `hooks/pre-commit-check.test.sh`.
+1. **Secret scan (hard-block)** — Capability-gated on the binary: prefers `betterleaks`, then `gitleaks`, if either is on `PATH` (broader coverage, respects the scanner's repo-local allowlist), scanning the staged *added* lines via the version-stable `stdin` mode (`git diff --cached -U0 | <scanner> stdin --exit-code 7`). Falls back to a built-in regex (`sk_live_`, `AKIA`, private keys, hardcoded passwords) when no scanner is present or it errors. A *finding* (distinct exit code 7) blocks the commit; a *tool error* (any other nonzero — their default exit 1 means "leaks OR error") falls through to the regex rather than phantom-blocking. Cannot be disabled via env var. Self-tested by `hooks/pre-commit-check.test.sh`. *(betterleaks is the gitleaks author's feature-frozen-gitleaks successor; the `stdin` invocation is what survives gitleaks' 8.19 reorg that deprecated `protect`.)*
 2. **Quality gate reminder (soft-warn)** — Injects a reminder to run lint/test on changed files. Does NOT hard-block — this avoids trapping the agent on pre-existing lint errors from other developers.
 
 ---

@@ -62,7 +62,7 @@ Stay on task. Agents tend to "fix while you're here" — refactoring adjacent co
 
 ## Security Awareness
 
-- **Never commit secrets** — API keys, tokens, passwords, certificates. If you find them in code, flag immediately. **[enforced-when-installed]** at commit time — `pre-commit-check.sh` hard-blocks staged secrets (gitleaks if present, else a built-in regex floor).
+- **Never commit secrets** — API keys, tokens, passwords, certificates. If you find them in code, flag immediately. **[enforced-when-installed]** at commit time — `pre-commit-check.sh` hard-blocks staged secrets (betterleaks or gitleaks if present, else a built-in regex floor).
 - **Never print a live secret into the conversation** — even when reading it back from a file. Mask to last-4 if you must reference one. **[behavioral]** — a hook can't see chat output. The **[enforced-partial]** `warn-env-read` hook reminds you on `.env` *reads* via the Read tool, but a Bash `cat .env` is not caught.
 - **Check for exposed credentials** — scan changed files for patterns like `sk_live_`, `AKIA`, `-----BEGIN PRIVATE KEY-----`, hardcoded passwords
 - **Use environment variables** for all secrets, and document the required vars in `DEVELOPER_TODO.md`
