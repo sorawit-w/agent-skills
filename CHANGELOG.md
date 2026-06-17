@@ -5,6 +5,25 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.18.0] — 2026-06-17
+
+Adds **`screenwright`** (🚧 BETA) — a skill that paints one self-contained HTML surface (page, mobile screen, or component) to a brand spec, then *sees* it: renders via the Playwright MCP, runs an axe-core accessibility audit, screenshots for a fidelity critique, and fixes in a bounded loop until two stacked gates pass — then hands the verified HTML back for conversion to a real stack. It addresses the specific way agents fail at frontend: the markup looks structurally right but misses the small obvious visual things, because the agent writes blind. The wedge is the eyes — verification against a brand + a11y bar, in a loop. It is the **first skill in the repo to drive the Playwright MCP**.
+
+### Added
+- **`skills/screenwright/`** — `SKILL.md` (6 phases: capability gate → intake → resolve brand → paint → verify-in-sub-agent → handoff) + `README.md` + six `references/` (intake, brand-ladder, design-md-schema, verification, playwright-loop, handoff) + `templates/DESIGN.example.md`.
+- **Banners + icon** — `assets/screenwright-{li,x}.svg`, `assets/icons/screenwright.svg` (pixel-art house style: input → the eyes → verified HTML).
+- **Registration** — added to `.claude-plugin/plugin.json` skills array; node + edges in `docs/skill-graph.md` (Code track, 🚧 BETA); README Start-here entry under **Writing & shipping code**.
+
+### Why
+Generating UI is solved; verifying the render against a contract + accessibility, in a loop, is not — and that loop is what catches the misalignments, missing focus rings, overflow, and absent mobile layouts an agent can't see. Two design choices keep it honest: the two gates are **asymmetric** (axe always blocks; visual fidelity blocks only when a reference image gives ground truth), and verification is **scope-filtered** (a dimension is owned only if the eyes can verify it *and* it survives the handoff — motion fails, so it's advisory; performance/flows/copy are out). screenwright owns its own lightweight DESIGN.md bootstrap (it does not depend on a `brand-workshop` change), extending the Google Labs `design.md` format with two custom, defaulted keys (`a11y`, `breakpoints`). MINOR: new skill, no change to existing skills.
+
+### Notes
+- **Hard dependency on the Playwright MCP.** Missing → screenwright stops with install instructions rather than painting blind.
+- **Render mechanic, spike-verified:** the Playwright MCP **blocks `file://`**, so screenwright renders via `page.setContent()` and injects axe-core from a fetched temp file via `addScriptTag({path})`. The loop runs through `browser_run_code_unsafe` (the only tool exposing `page`); a degraded `data:`-URL fallback is documented for hosts that disable it.
+- **External coupling:** greenfield templating fetches DESIGN.md files on demand from `github.com/VoltAgent/awesome-design-md` (MIT) with an imply-from-description fallback — no bundled catalog.
+- **Capability-gated companions:** `ui-ux-pro-max` (vibe→tokens) and `taste-skill` (paint-time anti-slop dials) feed *generation*; `impeccable` (Apache-2.0) is a *verification* companion — a deterministic design-quality linter that backstops the advisory visual dimensions, complementary to axe (design-quality vs WCAG, disjoint surfaces), findings advisory, with its font-pairing + performance rules suppressed (they fight screenwright's self-contained system-font output and de-scoped perf). All optional; absent → graceful skip.
+- BETA: the verification loop is freshly proven against the MCP but not yet dogfooded across many real screens; gate thresholds and gap-questions will tune.
+
 ## [4.17.0] — 2026-06-15
 
 This release **names the loop**. `coding-rules` already implemented loop-engineering primitives — inner/outer check split, retry budgets, bounded hypotheses, exit gates, fan-out — but nothing gathered them under one name, so the design was invisible even to its author. A `team-composer` review surfaced this plus two genuine gaps; the two behavior-changing rule edits were validated by a split-role `skill-evaluator` audit (18/18 assertions, 6 tests including two over-application guards) before ship.

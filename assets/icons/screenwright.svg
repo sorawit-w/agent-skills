@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32"
+     role="img" aria-label="screenwright icon — a UI surface in a frame, an eye that sees it, and a green verified check"
+     shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>screenwright</title>
+  <!-- screen / paper + ink frame -->
+  <rect x="3" y="3" width="26" height="26" fill="#f5efe6"/>
+  <rect x="3" y="3" width="26" height="2" fill="#1f2937"/>
+  <rect x="3" y="27" width="26" height="2" fill="#1f2937"/>
+  <rect x="3" y="3" width="2" height="26" fill="#1f2937"/>
+  <rect x="27" y="3" width="2" height="26" fill="#1f2937"/>
+
+  <!-- the painted surface (placeholder UI bars) -->
+  <rect x="7" y="7" width="13" height="2" fill="#9ca3af"/>
+  <rect x="7" y="11" width="16" height="2" fill="#9ca3af"/>
+
+  <!-- the eye that sees it -->
+  <rect x="8" y="16" width="12" height="2" fill="#1f2937"/>
+  <rect x="8" y="22" width="12" height="2" fill="#1f2937"/>
+  <rect x="11" y="17" width="5" height="5" fill="#c2410c"/>
+  <rect x="13" y="18" width="2" height="2" fill="#1f2937"/>
+
+  <!-- verified check (green pass) -->
+  <rect x="20" y="21" width="2" height="2" fill="#15803d"/>
+  <rect x="22" y="23" width="2" height="2" fill="#15803d"/>
+  <rect x="24" y="21" width="2" height="2" fill="#15803d"/>
+  <rect x="26" y="19" width="2" height="2" fill="#15803d"/>
+</svg>
