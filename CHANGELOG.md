@@ -5,6 +5,29 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.19.0] — 2026-06-17
+
+Three rule additions to **`coding-rules`**, from a `team-composer` workshop. The skill now makes the agent **environment-aware** (prod vs non-prod behavior), **redacts secrets in its own chat output**, and **proposes a materially better approach once** when the user specifies one without planning — then defers. All three verified via a split-role `skill-evaluator` audit (26/26 assertions across 6 tests).
+
+### Added
+- `coding-rules/resources/references/environment-safety.md` — a prod-vs-non-prod behavior matrix (one real incident per row: staging indexed by Google, test email to real customers, live charge from QA, etc.), env-detection guidance, and the env-crossing core rule. Loaded on demand (progressive disclosure).
+- BOOTSTRAP §4 Hard Rules — new always-on **Environment Safety** rule: detect the active environment; non-prod must never produce prod-visible side effects, and a non-prod task must never run prod-affecting operations without explicit confirmation (env-crossing = human-validation zone).
+- BOOTSTRAP §4 Guardrails — a secret-redaction rule: never print a live secret into the conversation; mask to last-4 if you must reference one.
+- `feature.md` § Clarify — **Better-approach check (propose once, then defer)**: surface a materially better approach for the *requested task* once (option + why + cost + a one-line teaching note), then build what was asked unless the user pivots. Skips trivial tasks.
+
+### Changed
+- BOOTSTRAP §2 Detect Project State — step 2 now also detects the active environment (`NODE_ENV` / `APP_ENV` / equivalent).
+- `validation.md` Security Lens — the secret-exposure surface list now includes the agent's own chat output; added an explicit redaction bullet.
+- BOOTSTRAP §4 Guardrails — the "don't suggest improvements unprompted" line is now scoped to *out-of-scope tangents*, cross-referencing the new Better-approach check, so the two no longer contradict.
+
+### Why
+The workshop surfaced two gaps and a follow-up. (1) Environment awareness was scattered across `guardrails.md`, `validation.md`, and `working-patterns.md` but no rule named the **direction-of-leak** risk; the matrix + always-on reflex close it, split so the reflex is always loaded and the long tail is on-demand. (2) Whether to suggest a better approach is partly taste — so coding-rules carries only the coding-specific slice (propose-once), while the general "be skeptical / name the trap" posture stays canonical in the user's `AGENT_INSTRUCTIONS.md`, not restated here. (3) The agent's own chat output was an unnamed secret-exposure surface — every prior secrets rule covered code, commits, logs, and telemetry, but not the conversation channel.
+
+### Notes
+- The propose-once rule directly tensioned the existing "don't suggest improvements unprompted" guardrail; the fix scopes the latter to out-of-scope tangents. The `skill-evaluator` audit's T6 test confirmed both rules coexist (the agent logged unrelated code *and* gave a scoped better-approach note).
+- No `quick-task.md` edit: the "skip trivial tasks" carve-out in the rule covers it (confirmed by the T5 no-nag test).
+- Outer-bias caveat: the audit was authored and orchestrated in the same session; a separate-session re-audit is the recommended ship gate before merge.
+
 ## [4.18.0] — 2026-06-17
 
 Adds **`screenwright`** — a skill that paints one self-contained HTML surface (page, mobile screen, or component) to a brand spec, then *sees* it: renders via the Playwright MCP, runs an axe-core accessibility audit, screenshots for a fidelity critique, and fixes in a bounded loop until two stacked gates pass — then hands the verified HTML back for conversion to a real stack. It addresses the specific way agents fail at frontend: the markup looks structurally right but misses the small obvious visual things, because the agent writes blind. The wedge is the eyes — verification against a brand + a11y bar, in a loop. It is the **first skill in the repo to drive the Playwright MCP**.
