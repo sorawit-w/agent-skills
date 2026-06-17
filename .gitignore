@@ -223,6 +223,13 @@ skills/whoami/assets/characters/_contact.png
 skills/ghostwriter/references/samples-*.md
 !skills/ghostwriter/references/samples-*.template.md
 
+# impeccable plugin hook caches — per-directory `.impeccable/` dirs holding
+# local session/hook cache + local config (hook.cache.json, config.local.json).
+# The plugin manages its own entries in .git/info/exclude per directory, but
+# that's local-only and misses nested dirs; this shared bare-name rule ignores
+# `.impeccable/` at every depth for all contributors.
+.impeccable/
+
 # Python bytecode
 __pycache__/
 *.pyc
