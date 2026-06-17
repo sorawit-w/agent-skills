@@ -57,7 +57,7 @@ Deterministic. **Reuse existing tooling; never reimplement it.**
 | **Committed secrets** | Run the **existing regex in `hooks/pre-commit-check.sh:27`** (reference it — do not retype, or it drifts) against the audit scope: working tree and, for `--full`, history via `git log -G`. | `guardrails.md` |
 | **Commit-type discipline** | `git log --format=%s <range>`; flag any subject whose type prefix isn't one of `feat fix chore docs refactor test perf build ci` (BOOTSTRAP §4 Commit Discipline). | BOOTSTRAP §4 |
 | **Schema change without migration** | Per commit, `git show --name-only`; if a model/schema file changed but no migration path (BOOTSTRAP §3 migration globs) changed in the same commit, flag it. | `working-patterns.md` § Schema-Migration Coupling |
-| **Dead code** | Shell out to **the project's own** linter/analyzer (resolve from `agent-context.yaml` / project config) — never a bundled one (methodology travels, scripts don't). Unused imports, unreachable branches, orphaned files. Honor the **platform-code caveat**: exported symbols in libs/SDKs may have external callers — treat unused *exports* as live unless verified. | `working-patterns.md` § Code Standards |
+| **Dead code** | Shell out to **the project's own** linter/analyzer (resolve from `agent-context.yaml` / project config) — never a bundled one (methodology travels, scripts don't). Unused imports, unreachable branches, orphaned files. Honor the **platform-code caveat**: exported symbols in libs/SDKs may have external callers — treat unused *exports* as live unless verified. **If no linter is resolvable, mark this check `not-run` and say so in the coverage banner — never silently drop it** (a dropped check counted as "checked" is the silent-cap failure the banner exists to prevent). | `working-patterns.md` § Code Standards |
 
 ### Inference band — `confidence: inferred`
 
@@ -109,9 +109,9 @@ Draft the report as Markdown, then write it under `.ai/audits/` (HTML rendering:
 
 **Coverage banner (top of every report) — three-way, never binary:**
 
-> `Audit scope: <dims> · <mode>. Checked C rules, P partial, Q process-only (of M total). Excluded: <skill dirs / vendor / .ai>. Not statically auditable: <list the process-only rules>.`
+> `Audit scope: <dims> · <mode>. Checked C rules, P partial, Q process-only (of M total). Excluded: <skill dirs / vendor / .ai>. Not statically auditable: <list the process-only rules>.` Append `Not run: <checks>` when an auditable check couldn't run (e.g. no linter resolvable) — those are not "checked."
 
-A binary "C of M" would let a `partial` rule read as fully checked — the three-way split keeps it honest. The banner restates the requested scope so an aspect-scoped pass never reads as a whole-repo pass.
+A binary "C of M" would let a `partial` rule read as fully checked — the three-way split keeps it honest, and a `not-run` check (auditable, but its tool was unavailable) must never be folded into `C`. The banner restates the requested scope so an aspect-scoped pass never reads as a whole-repo pass.
 
 Then: findings grouped by dimension, sorted by severity. No mutation, no commit, no merge — confirm completion with the report path.
 
