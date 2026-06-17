@@ -37,7 +37,7 @@ Climb in order; write code only at the bottom rung. This operationalizes "Clarit
 Read these files now:
 
 1. `agent-context.yaml` at project root — if missing, auto-generate from `templates/agent-context.yaml.template` (the file is versioned and shared across the team)
-2. Project config (`package.json`, `deno.json`, `pyproject.toml`)
+2. Project config (`package.json`, `deno.json`, `pyproject.toml`) — and detect the active environment (`NODE_ENV` / `APP_ENV` / framework equivalent) so later decisions are env-aware. See `references/environment-safety.md`.
 3. `.ai/memory.log` — recent session history (skip if missing)
 4. `.ai/STATUS.md` — current state (skip if missing)
 5. `.ai/knowledge/KNOWLEDGE.md` — knowledge base index (skip if missing, scan for relevant entries)
@@ -209,11 +209,16 @@ No preamble, no closing fluff, no restating the request. Do not open with "Sure!
 
 Never invent file paths, function names, API endpoints, or config values. If you have not read a file, do not reference its contents. If a value is unknown, say so — do not guess. Hallucinated paths waste tool calls and break the task loop.
 
+### Environment Safety
+
+Detect the active environment before acting. Non-prod must never produce prod-visible side effects (crawlers, real email/SMS, live payments, prod analytics, partner prod APIs); never run prod-affecting operations from a non-prod task without explicit confirmation. Env-crossing actions are human-validation zones (`references/safety-mindset.md` § cost-of-error). Full behavior matrix: `references/environment-safety.md`.
+
 ### Guardrails
 
 - Never commit secrets (API keys, tokens, passwords, certificates)
+- Never print a live secret (API key, token, password) into the conversation — even when reading it back from a file the user showed you. If you must reference one, mask it (last-4 only).
 - Never install major dependencies without approval
-- Stay on task — log out-of-scope issues, don't fix them. Don't suggest improvements unprompted — record observations as neutral facts in the log and let the developer decide what to act on.
+- Stay on task — log out-of-scope issues, don't fix them. Don't suggest improvements unprompted — record observations as neutral facts in the log and let the developer decide what to act on. *(This is about out-of-scope tangents; for a materially better approach to the requested task, see `workflows/feature.md` § Better-approach check.)*
 - Update docs when behavior changes
 - Do NOT merge — leave for human review
 
@@ -262,6 +267,7 @@ All paths in this index are relative to the `resources/` directory where this `B
 | Systematic debugging (reproduce → hypothesize → fix) | `references/debugging.md` |
 | Commits, logging, status, boards, branches, dev TODOs | `references/communication.md` |
 | Git worktree tactics (creation, cleanup, package-manager detection/fallback, failure modes) | `references/git-worktrees.md` |
+| Environment safety — prod vs non-prod behavior matrix, env detection, env-crossing rule | `references/environment-safety.md` |
 | Guardrails, scope, security, documentation | `references/guardrails.md` |
 | QA sub-agent, manual verification | `references/validation.md` |
 | Session checkpoints, compaction, resuming, shutdown | `references/context-management.md` |
