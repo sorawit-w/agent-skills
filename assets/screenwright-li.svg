@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" width="1200" height="627"
+     role="img" aria-label="screenwright — paints one self-contained HTML surface, then sees it. A mockup or code goes in; the center renders it, runs an axe accessibility audit and a screenshot critique in a loop; one verified self-contained HTML file comes out."
+     shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>screenwright</title>
+  <desc>Three panels: an input mockup or code with a mode chip, a warm-accent render-and-verify loop with axe pass/fail rows and an eye, and a single verified self-contained HTML file with a verification manifest.</desc>
+  <defs>
+    <pattern id="scanl" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="6" height="6" fill="#f5efe6"/>
+      <rect width="6" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="627" fill="url(#scanl)"/>
+
+  <!-- Title centered top -->
+  <text x="600" y="92" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="44" font-weight="bold" fill="#1f2937" letter-spacing="3">SCREENWRIGHT</text>
+  <text x="600" y="128" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
+        font-size="19" fill="#6b7280">paint a screen — then actually look at it</text>
+
+  <!-- ===== Left card: INPUT ===== -->
+  <g>
+    <rect x="60" y="185" width="320" height="250" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <text x="220" y="218" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" font-weight="bold" fill="#1f2937" letter-spacing="2">INPUT</text>
+    <rect x="85" y="236" width="94" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="132" y="254" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">mockup</text>
+    <rect x="189" y="236" width="102" height="26" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="240" y="254" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#0e7490">UI code</text>
+    <rect x="85" y="272" width="206" height="28" fill="#fde68a" stroke="#b45309" stroke-width="2"/>
+    <text x="188" y="291" text-anchor="middle" font-family="ui-monospace, monospace" font-size="13" fill="#92400e">mode: A1 match mockup</text>
+    <rect x="85" y="314" width="206" height="100" fill="#ffffff" stroke="#9ca3af" stroke-width="2"/>
+    <rect x="95" y="324" width="80" height="10" fill="#eadfcf"/>
+    <rect x="95" y="344" width="186" height="8" fill="#eadfcf"/>
+    <rect x="95" y="360" width="156" height="8" fill="#eadfcf"/>
+    <rect x="95" y="382" width="70" height="18" fill="#c2410c"/>
+  </g>
+
+  <!-- arrow left -> center (entering, grey) -->
+  <g fill="#6b7280">
+    <rect x="392" y="304" width="36" height="6"/>
+    <rect x="422" y="298" width="6" height="6"/>
+    <rect x="428" y="304" width="6" height="6"/>
+    <rect x="422" y="310" width="6" height="6"/>
+  </g>
+
+  <!-- ===== Center card: THE EYES (warm accent) ===== -->
+  <g>
+    <rect x="440" y="170" width="320" height="290" fill="#f3e7c9" stroke="#c2410c" stroke-width="4"/>
+    <text x="600" y="202" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" font-weight="bold" fill="#c2410c" letter-spacing="2">RENDER · AXE · SEE</text>
+    <text x="600" y="222" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#6b7280">setContent → audit → screenshot → fix</text>
+
+    <!-- the eye -->
+    <rect x="556" y="234" width="88" height="3" fill="#1f2937"/>
+    <rect x="556" y="258" width="88" height="3" fill="#1f2937"/>
+    <rect x="556" y="234" width="3" height="27" fill="#1f2937"/>
+    <rect x="641" y="234" width="3" height="27" fill="#1f2937"/>
+    <rect x="586" y="239" width="28" height="17" fill="#c2410c"/>
+    <rect x="594" y="243" width="12" height="9" fill="#1f2937"/>
+
+    <!-- viewport chips -->
+    <rect x="465" y="274" width="130" height="24" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="530" y="291" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#0e7490">desktop 1280</text>
+    <rect x="605" y="274" width="130" height="24" fill="#bae6fd" stroke="#0e7490" stroke-width="2"/>
+    <text x="670" y="291" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#0e7490">mobile 390</text>
+
+    <!-- axe rows -->
+    <rect x="465" y="306" width="270" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="475" y="324" font-family="ui-monospace, monospace" font-size="12" fill="#b91c1c">[FAIL] color-contrast · serious</text>
+    <rect x="465" y="338" width="270" height="26" fill="#fecaca" stroke="#b91c1c" stroke-width="2"/>
+    <text x="475" y="356" font-family="ui-monospace, monospace" font-size="12" fill="#b91c1c">[FAIL] focus not visible · critical</text>
+    <rect x="465" y="370" width="270" height="26" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="475" y="388" font-family="ui-monospace, monospace" font-size="12" fill="#15803d">[PASS] WCAG 2.2-AA after fix</text>
+
+    <text x="600" y="430" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" font-style="italic" fill="#1f2937">it can't fix what it can't see</text>
+  </g>
+
+  <!-- arrow center -> right (exiting, accent) -->
+  <g fill="#c2410c">
+    <rect x="772" y="304" width="36" height="6"/>
+    <rect x="802" y="298" width="6" height="6"/>
+    <rect x="808" y="304" width="6" height="6"/>
+    <rect x="802" y="310" width="6" height="6"/>
+  </g>
+
+  <!-- ===== Right card: VERIFIED HTML ===== -->
+  <g>
+    <rect x="820" y="185" width="320" height="250" fill="#fdf7ea" stroke="#b79a5c" stroke-width="3"/>
+    <text x="980" y="218" text-anchor="middle" font-family="ui-monospace, monospace" font-size="15" font-weight="bold" fill="#1f2937" letter-spacing="2">ONE VERIFIED .HTML</text>
+    <rect x="845" y="234" width="270" height="104" fill="#fff" stroke="#15803d" stroke-width="2"/>
+    <rect x="845" y="234" width="6" height="104" fill="#15803d"/>
+    <rect x="865" y="250" width="110" height="10" fill="#eadfcf"/>
+    <rect x="865" y="270" width="230" height="8" fill="#eadfcf"/>
+    <rect x="865" y="286" width="200" height="8" fill="#eadfcf"/>
+    <rect x="865" y="306" width="70" height="18" fill="#c2410c"/>
+    <text x="980" y="364" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#6b7280">self-contained · inline · host ports it</text>
+    <text x="980" y="390" text-anchor="middle" font-family="ui-monospace, monospace" font-size="11" fill="#92400e">manifest: a11y ✓ · states ✓ · responsive ✓</text>
+    <rect x="930" y="404" width="100" height="22" fill="#dcfce7" stroke="#15803d" stroke-width="2"/>
+    <text x="980" y="420" text-anchor="middle" font-family="ui-monospace, monospace" font-size="12" fill="#15803d">VERIFIED</text>
+  </g>
+
+  <!-- Chapter markers -->
+  <g font-family="ui-monospace, monospace" font-size="14" letter-spacing="4" fill="#6b7280">
+    <text x="95" y="575">INTAKE</text>
+    <text x="290" y="575" fill="#c2410c">PAINT</text>
+    <text x="470" y="575" fill="#c2410c">RENDER</text>
+    <text x="670" y="575" fill="#c2410c">AXE</text>
+    <text x="820" y="575">SCREENSHOT</text>
+    <text x="1050" y="575">HANDOFF</text>
+  </g>
+</svg>
