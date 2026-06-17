@@ -144,3 +144,30 @@ The audit is **incremental by default** — it checks only what changed since th
 - the requested dimensions are **not a subset** of the last run's scope (a `security`-only baseline can't certify a `quality` audit).
 
 `--full` always runs `mode=full` regardless of baseline.
+
+---
+
+## 10. Aspect scoping
+
+`audit [--full] [<dimension> ...]` — positional dimensions filter *which rules* run (orthogonal to `--full`, which sets *how much history*). Omitted = all dimensions.
+
+```
+audit                     all dimensions, incremental
+audit security            security only, incremental
+audit quality security    two dimensions
+audit --full security     security only, whole repo
+```
+
+**Stable dimension map (seed checks).** A rule's dimension is fixed by this table, not re-inferred each run — that's what keeps an aspect-scoped audit's coverage stable:
+
+| Dimension | Checks |
+|---|---|
+| `security` | committed secrets |
+| `quality` | dead code, abstraction-for-one-use, shortcut-without-upgrade-trigger, hollow/stub tests |
+| `data` | schema change without migration |
+| `git-hygiene` | commit-type discipline, protected-branch commits, `.ai/memory.log` cadence |
+| `docs` | docs-not-updated-with-behavior |
+
+A **novel rule** (one not in this table) is assigned a dimension by live classification when the audit walks the corpus; the banner notes that tail is approximate (`inferred` dimensioning). Seed checks are never re-inferred.
+
+**Unknown / ambiguous dimension** (`audit secrity`, or a word that isn't a dimension) → **don't guess.** List the available dimensions and ask which was meant. This is a disambiguation fallback, not a standing interactive mode — a correct dimension name runs straight through.
