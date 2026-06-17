@@ -20,17 +20,43 @@ if ! echo "$COMMAND" | grep -qE '^git commit'; then
   exit 0
 fi
 
-# Check for unstaged secret patterns in staged files
+# Secret scan on staged files.
 # NOTE: This block is intentionally not gated by CODING_RULES_HOOK_DISABLED.
 # Secret scanning is a hard security rule; disabling it requires editing
 # settings.json, not setting an env var.
-SECRETS_FOUND=$(git diff --cached --diff-filter=ACMR -G '(sk_live_|sk_test_|AKIA[A-Z0-9]{16}|-----BEGIN (RSA |EC |DSA )?PRIVATE KEY-----|password\s*=\s*["\x27][^\s]+)' --name-only 2>/dev/null)
+#
+# Prefer gitleaks if present — broader coverage than the built-in regex, and it
+# respects a repo-local .gitleaks.toml allowlist for example/test keys. Fall back
+# to the narrow regex when gitleaks is absent OR errors. Critically, distinguish a
+# gitleaks FINDING (exit 1 -> hard-block) from a TOOL ERROR (exit >=2 / 127 ->
+# fall through to regex). A naive "nonzero -> block" would let a gitleaks config
+# crash phantom-block every commit, and the block is non-disablable.
+# (trufflehog is a viable alternative scanner; not wired here to keep one external
+# integration and one test surface.)
+SECRET_SCAN_DONE=""
+if command -v gitleaks >/dev/null 2>&1; then
+  GL_OUT=$(gitleaks protect --staged --no-banner 2>&1); GL_RC=$?
+  if [[ "$GL_RC" -eq 1 ]]; then
+    echo "WARNING: gitleaks detected possible secrets in staged changes:" >&2
+    echo "$GL_OUT" >&2
+    echo "Remove them, or allowlist a false positive in .gitleaks.toml. See coding-rules security guardrails." >&2
+    exit 2  # Hard-block on findings
+  elif [[ "$GL_RC" -eq 0 ]]; then
+    SECRET_SCAN_DONE=1  # gitleaks ran clean; trust it, skip the narrower regex
+  else
+    # gitleaks errored (bad config, exec failure) — NOT a finding. Fall through.
+    echo "NOTE (coding-rules): gitleaks exited $GL_RC (tool error, not a finding); using built-in secret regex." >&2
+  fi
+fi
 
-if [[ -n "$SECRETS_FOUND" ]]; then
-  echo "WARNING: Possible secrets detected in staged files:" >&2
-  echo "$SECRETS_FOUND" >&2
-  echo "Review these files before committing. See coding-rules security guardrails." >&2
-  exit 2  # Hard-block on potential secrets
+if [[ -z "$SECRET_SCAN_DONE" ]]; then
+  SECRETS_FOUND=$(git diff --cached --diff-filter=ACMR -G '(sk_live_|sk_test_|AKIA[A-Z0-9]{16}|-----BEGIN (RSA |EC |DSA )?PRIVATE KEY-----|password\s*=\s*["\x27][^\s]+)' --name-only 2>/dev/null)
+  if [[ -n "$SECRETS_FOUND" ]]; then
+    echo "WARNING: Possible secrets detected in staged files:" >&2
+    echo "$SECRETS_FOUND" >&2
+    echo "Review these files before committing. See coding-rules security guardrails." >&2
+    exit 2  # Hard-block on potential secrets
+  fi
 fi
 
 # Respect the disable list for the soft reminder only.
