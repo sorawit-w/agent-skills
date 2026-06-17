@@ -114,3 +114,14 @@ Draft the report as Markdown, then write it under `.ai/audits/` (HTML rendering:
 A binary "C of M" would let a `partial` rule read as fully checked — the three-way split keeps it honest. The banner restates the requested scope so an aspect-scoped pass never reads as a whole-repo pass.
 
 Then: findings grouped by dimension, sorted by severity. No mutation, no commit, no merge — confirm completion with the report path.
+
+---
+
+## 8. Report rendering (Markdown → HTML)
+
+The `.md` is canonical and sufficient; the `.html` is a shareable snapshot. Render it by **reusing the `html-export` machinery** — `html-export.md` § How to Produce It (convert body → wrap in `templates/html-export.html.template` filling `{{TITLE}}{{CONTENT}}{{SOURCE}}{{DATE}}` → apply DESIGN.md `:root` tokens if present). This is the **one sanctioned auto-render exception** to that file's opt-in rule — it's named there; do not generalize it.
+
+Two audit-specific obligations on top of the shared machinery:
+
+- **Escape interpolated repo content.** The body converter handles the Markdown, but any audited string you place into the report — file paths, code snippets, commit subjects, the heuristic text of a finding — is **untrusted (§1)** and must be HTML-escaped before interpolation. The bundled template does no escaping; an unescaped commit subject is a stored-XSS vector in a report people email around.
+- **Degrade when no converter is present.** Try `pandoc` → `markdown-it` → Python `markdown`. If none is available, **write the `.md` only** and say so in one line: *"No Markdown converter found; wrote `audit-….md` only — install pandoc or run html-export later."* Never hand-author the HTML tag-by-tag (`html-export.md` forbids it). The audit is **done when the `.md` exists** — HTML never blocks completion.
