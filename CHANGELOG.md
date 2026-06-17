@@ -5,6 +5,27 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.20.0] — 2026-06-17
+
+Adds a seventh sub-command to **`coding-rules`**: **`audit`** — a read-only static *conformance* audit of a real-coding project against the current rule corpus, emitting a self-contained HTML report under `.ai/audits/`. Plus a docs-only **`review` recipe** (review an already-landed commit against the rules). Designed across a `team-composer` workshop and stress-tested by a `Plan` sub-agent before implementation.
+
+### Added
+- **`coding-rules` `audit` sub-command** (`resources/references/audit.md` + `SKILL.md` dispatch). Derived + classifier-anchored: holds no hardcoded rule list — at run time it reads the live corpus and applies one test per rule ("does conformance leave a durable artifact inspectable from repo state or git history?") to classify it `auditable` / `partial` / `process-only`. Only auditable/partial rules are checked; process-only rules are named in a three-way coverage banner so a pass never reads as full conformance (~7 of ~23 rule areas are statically checkable). Two-band execution: mechanical checks (`observed` — secrets via the existing `pre-commit-check.sh` regex, commit-type, schema-without-migration, dead code via the project's own linter) and inference checks (`inferred` — abstraction-for-one-use, shortcut-without-upgrade-trigger, hollow tests).
+- **Incremental by default** (`--full` opt-in) with a local `.ai/audits/.last-audit` baseline; forces a full sweep with a banner notice when the baseline is missing/unreachable/scope-mismatched — a silent empty incremental is the dangerous failure.
+- **Aspect scoping** — `audit [--full] [<dimension> ...]` (`security`/`quality`/`data`/`git-hygiene`/`docs`) with a stable rule→dimension map; unknown dimension lists the options and asks. Report filename encodes both axes: `audit-<dims>-<mode>-<YYYYMMDD-HHMMSS>`.
+- **`review` recipe** in `validation.md` — review an already-landed commit against the rules (`git show <sha>` → existing review lens), reusing the 7+ complexity trigger for QA-sub-agent escalation.
+
+### Changed
+- `html-export.md` notes one sanctioned exception to its opt-in rule: the `audit` report auto-renders, reusing the export machinery but not the firing policy.
+
+### Why
+`coding-rules` already self-reviews the *current change* (Verification-by-Complexity), but nothing checked a project's *accumulated state* against the rules — which drift as the corpus bumps (frequently). `audit` fills that gap, deliberately scoped to what a static pass can *honestly* see, and honest about its blind spots. The derived design means edits to existing auditable rules are picked up automatically; new process rules are correctly ignored.
+
+### Notes
+- **Safety:** audited repo content (commit messages, comments, test text) is treated as untrusted data, not instructions (per `guardrails.md` § Agent-Authored Artifacts), and is HTML-escaped when interpolated into the shareable report.
+- **Scope:** for real-coding projects only — a skill-authoring repo is redirected to `skill-evaluator`; a monorepo with both proceeds and excludes skill dirs.
+- `audit` is a per-invocation sub-command (progressive-disclosure `references/audit.md`), not per-session context — its token cost is paid only when invoked.
+
 ## [4.19.0] — 2026-06-17
 
 Three rule additions to **`coding-rules`**, from a `team-composer` workshop. The skill now makes the agent **environment-aware** (prod vs non-prod behavior), **redacts secrets in its own chat output**, and **proposes a materially better approach once** when the user specifies one without planning — then defers. All three verified via a split-role `skill-evaluator` audit (26/26 assertions across 6 tests).
