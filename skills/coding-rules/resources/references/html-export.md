@@ -12,7 +12,7 @@ Only when the developer **explicitly asks** for an HTML, shareable, or printable
 - It applies to documents already authored as Markdown — postmortems, implementation plans, roadmaps, recommendations, design notes, status write-ups.
 - It is **not** a website builder and **not** a document generator. `coding-rules` stays `coding-rules`. The export renders a document that already exists; it does not invent one.
 
-> **One sanctioned exception:** the `audit` sub-command (`references/audit.md`) renders its report to HTML *automatically* as part of its contract — that auto-render is not this opt-in document-export flow. It **reuses the machinery below** (template, placeholder fill, DESIGN.md token override) but not the opt-in firing policy, and it adds escaping of untrusted repo content. No other flow may auto-render.
+> **One sanctioned exception:** the `audit` sub-command (`references/audit.md`) renders its report to HTML *automatically* as part of its contract — that auto-render is not this opt-in document-export flow. It **reuses the machinery below** (template, placeholder fill, DESIGN.md token override) but not the opt-in firing policy, and it adds a **mandatory escaping + self-check step** for untrusted repo content interpolated into the body and the `{{TITLE}}`/`{{SOURCE}}` placeholders — see `references/audit.md` § 8. That machinery here assumes *trusted* input and does no escaping of its own. No other flow may auto-render.
 
 ---
 

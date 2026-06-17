@@ -82,6 +82,18 @@ Prevents the agent from editing `.env` files directly. This is a security guardr
 
 ---
 
+### PreToolUse → .env Read Warning
+
+**Script:** `hooks/warn-env-read.sh`
+**Strictness:** Soft-warn (exit 0 with stderr note) — disablable
+**Matcher:** `Read` targeting `.env` files
+
+The behavioral counterpart to `protect-env`. Reading a `.env` is legitimate (the agent often needs the variable *names* to wire things up), so this never blocks — it only reminds the agent not to print secret *values* into the conversation. Disablable via `CODING_RULES_HOOK_DISABLED=warn-env-read`.
+
+**Coverage gap (by design, not a bug):** the Claude Code matcher fires on the `Read` tool only. An agent reading a `.env` via Bash (`cat .env`, `grep KEY .env`) is invisible to this hook — that path stays a [behavioral] rule (`guardrails.md`: "never print a live secret"). See `references/threat-model.md` for why the in-context boundary can't be hook-enforced. Self-tested by `hooks/warn-env-read.test.sh`.
+
+---
+
 ### PreToolUse → Pre-Commit Check
 
 **Script:** `hooks/pre-commit-check.sh`
@@ -89,7 +101,7 @@ Prevents the agent from editing `.env` files directly. This is a security guardr
 **Matcher:** `Bash` running `git commit`
 
 Two checks before every commit:
-1. **Secret scan (hard-block)** — Scans staged files for patterns like `sk_live_`, `AKIA`, private keys, hardcoded passwords. If found, blocks the commit.
+1. **Secret scan (hard-block)** — Capability-gated on the binary: prefers `betterleaks`, then `gitleaks`, if either is on `PATH` (broader coverage, respects the scanner's repo-local allowlist), scanning the staged *added* lines via the version-stable `stdin` mode (`git diff --cached -U0 | <scanner> stdin --exit-code 7`). Falls back to a built-in regex (`sk_live_`, `AKIA`, private keys, hardcoded passwords) when no scanner is present or it errors. A *finding* (distinct exit code 7) blocks the commit; a *tool error* (any other nonzero — their default exit 1 means "leaks OR error") falls through to the regex rather than phantom-blocking. Cannot be disabled via env var. Self-tested by `hooks/pre-commit-check.test.sh`. *(betterleaks is the gitleaks author's feature-frozen-gitleaks successor; the `stdin` invocation is what survives gitleaks' 8.19 reorg that deprecated `protect`.)*
 2. **Quality gate reminder (soft-warn)** — Injects a reminder to run lint/test on changed files. Does NOT hard-block — this avoids trapping the agent on pre-existing lint errors from other developers.
 
 ---
@@ -193,7 +205,9 @@ Hook names match the `# Name:` header in each script. Current names:
 | `knowledge-reindex` | Yes (same per-project opt-out as `knowledge-bootstrap`) |
 | `knowledge-lint` | Yes (same per-project opt-out as `knowledge-bootstrap`) |
 | `pre-commit-check` | Yes (disables soft reminder only — secret scan always runs) |
+| `warn-env-read` | Yes (soft `.env`-read reminder) |
 | `protect-env` | No — security-critical, edit `.claude/settings.json` to remove |
+| `protect-git` | No — data-loss-critical, edit `.claude/settings.json` to remove |
 
 **Rule:** security-critical hooks cannot be disabled via env var. This is intentional. An env var is too easy to set accidentally (shell rc, CI config, `.envrc`) for a rule that blocks secret leaks. To bypass, make a deliberate config edit.
 

@@ -39,13 +39,15 @@ Once the BOOTSTRAP.md path is resolved, all other resource paths follow the same
 |---|---|
 | **Context engineering** | `CONTEXT.md` (project domain glossary at root) + `BOOTSTRAP.md` (operating rules) + vendor agent-context files (`CLAUDE.md`, `AGENTS.md`, `AI-CONTEXT.md`, `.cursorrules`) kept in sync — see `references/multi-tool.md` |
 | **Progressive disclosure** | `BOOTSTRAP.md` is the index; `resources/references/*.md` carry the long-tail (debugging, knowledge-management, sub-agent-delegation, validation, etc.) loaded only when cited |
-| **Observable feedback loops** | `hooks/pre-commit-check.sh`, `hooks/protect-env.sh`, `hooks/protect-git.sh`, quality gates from `references/quality-gates.md`, verification gates from `references/validation.md` |
+| **Observable feedback loops** | `hooks/pre-commit-check.sh`, `hooks/protect-env.sh`, `hooks/warn-env-read.sh`, `hooks/protect-git.sh`, quality gates from `references/quality-gates.md`, verification gates from `references/validation.md` |
 | **State preservation** | `.ai/memory.log` (append-only session history) + `.ai/STATUS.md` (current ephemeral state) + `.ai/knowledge/` (curated wiki of decisions/conventions/lessons) + `.ai/BLOCKERS.md` (created only when blocked) — all bootstrapped by `hooks/session-start-context.sh` and `hooks/knowledge-bootstrap.sh` |
 | **Eval discipline** | `references/quality-gates.md` + verification-before-completion pattern; pre-commit hook enforces gates mechanically rather than relying on agent memory |
 
 This skill's job is the **loading** step — getting BOOTSTRAP into context reliably so the rules and artifact conventions govern the session. The rules themselves live in `resources/BOOTSTRAP.md`; the supporting machinery (hooks, references, workflows, templates) sits under `resources/`.
 
 **When the harness-engineering vocabulary in `CLAUDE.md` cites a primitive, this skill is usually the concrete example.** If you want to see what context engineering, progressive disclosure, observable feedback loops, state preservation, or eval discipline look like *implemented* (not just described), read the corresponding row above.
+
+**Security posture — enforced vs. behavioral.** The hooks enforce at the *tool boundary*; in-context risks (printing secrets, prompt injection, prod-op safety) are structurally behavioral. For the honest map of which guardrails are mechanically enforced (and only when the opt-in hooks are installed) versus applied by agent judgment, read `resources/references/threat-model.md`.
 
 ---
 
@@ -169,7 +171,7 @@ Only create the file with explicit user consent.
 
 After Phase 1 completes, ask once:
 
-> Also register `coding-rules`' Claude Code lifecycle hooks (`PreToolUse` / `SessionStart`)? These give deterministic enforcement on top of the rules — `protect-env`, `protect-git`, and `pre-commit-check` block destructive actions; the SessionStart trio (`session-start-context`, `knowledge-bootstrap`, `context-bootstrap`) injects prior project state and scaffolds `.ai/knowledge/` + `CONTEXT.md`. Read `resources/references/hooks.md` first if you haven't. [y/n]
+> Also register `coding-rules`' Claude Code lifecycle hooks (`PreToolUse` / `SessionStart`)? These give deterministic enforcement on top of the rules — `protect-env`, `protect-git`, and `pre-commit-check` block destructive actions, and `warn-env-read` soft-reminds on `.env` reads; the SessionStart trio (`session-start-context`, `knowledge-bootstrap`, `context-bootstrap`) injects prior project state and scaffolds `.ai/knowledge/` + `CONTEXT.md`. Read `resources/references/hooks.md` first if you haven't. [y/n]
 
 If `n`, end the install — Phase 2 is skipped, the skill is still fully usable.
 
@@ -196,6 +198,7 @@ If `y`:
    | Event | Matcher | Script |
    |---|---|---|
    | `PreToolUse` | `"Edit\|Write"` | `<hooks-dir>/protect-env.sh` |
+   | `PreToolUse` | `"Read"` | `<hooks-dir>/warn-env-read.sh` |
    | `PreToolUse` | `"Bash"` | `<hooks-dir>/protect-git.sh` |
    | `PreToolUse` | `"Bash"` | `<hooks-dir>/pre-commit-check.sh` |
    | `SessionStart` | `""` | `<hooks-dir>/session-start-context.sh` |
@@ -213,7 +216,7 @@ If `y`:
    }
    ```
 
-5. **Detect already-managed entries.** A hook entry is *coding-rules-managed* iff its `command` ends in one of the six script filenames above AND its path contains `/skills/coding-rules/resources/hooks/`. Skip already-present entries — Phase 2 is idempotent.
+5. **Detect already-managed entries.** A hook entry is *coding-rules-managed* iff its `command` ends in one of the seven script filenames above AND its path contains `/skills/coding-rules/resources/hooks/`. Skip already-present entries — Phase 2 is idempotent.
 
 6. **Show the full diff** — print a unified diff of what will be added to the chosen settings file. Include the resolved absolute paths so the user can verify them.
 
