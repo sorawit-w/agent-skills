@@ -125,3 +125,22 @@ Two audit-specific obligations on top of the shared machinery:
 
 - **Escape interpolated repo content.** The body converter handles the Markdown, but any audited string you place into the report — file paths, code snippets, commit subjects, the heuristic text of a finding — is **untrusted (§1)** and must be HTML-escaped before interpolation. The bundled template does no escaping; an unescaped commit subject is a stored-XSS vector in a report people email around.
 - **Degrade when no converter is present.** Try `pandoc` → `markdown-it` → Python `markdown`. If none is available, **write the `.md` only** and say so in one line: *"No Markdown converter found; wrote `audit-….md` only — install pandoc or run html-export later."* Never hand-author the HTML tag-by-tag (`html-export.md` forbids it). The audit is **done when the `.md` exists** — HTML never blocks completion.
+
+---
+
+## 9. Incremental scope
+
+The audit is **incremental by default** — it checks only what changed since the last audit. `--full` opts into a whole-repo sweep.
+
+**Baseline.** On successful completion, write `.ai/audits/.last-audit` with two lines: the `HEAD` SHA at completion, and the dimension scope that ran (e.g. `all`, or `quality+security`). It lives under the git-excluded `.ai/audits/` because the baseline is **local working-copy state**, not shared history.
+
+**Incremental run** (`mode=incr`):
+- File-level checks scope to `git diff --name-only <baseline-sha>..HEAD` ∪ `git status --porcelain` (uncommitted changes), minus the § 3 exclusions.
+- History-level checks (commit-type, schema-without-migration) scope to the `<baseline-sha>..HEAD` commit range.
+
+**Force `--full` (the safety fallback).** A silent empty incremental — reporting "clean" because it checked nothing — is the dangerous failure. Fall back to a full audit, and **say so in the banner** (*"no usable baseline — ran full"*), whenever any of:
+- `.last-audit` is missing (first run),
+- the recorded SHA is unreachable (`git cat-file -e <sha>^{commit}` fails — e.g. rebased away),
+- the requested dimensions are **not a subset** of the last run's scope (a `security`-only baseline can't certify a `quality` audit).
+
+`--full` always runs `mode=full` regardless of baseline.
