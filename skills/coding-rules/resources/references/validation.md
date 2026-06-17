@@ -118,7 +118,8 @@ A third lens that fires alongside the code-quality pass (Medium Check 2 or High 
 - **Trust boundaries** — does untrusted input reach a sink without sanitization?
 - **Output encoding** — HTML / SQL / shell contexts use the right escape; no string concatenation into queries or commands
 - **Authn/authz placement** — is every protected endpoint actually protected, or did the new code create an unauthenticated path?
-- **Secret exposure** — no secrets in logs, error messages, response bodies, telemetry, or commit history
+- **Secret exposure** — no secrets in logs, error messages, response bodies, telemetry, commit history, or the agent's own chat output to the user
+- **Redaction** — when output must reference a secret, mask it (last-4 only); never reproduce a live credential verbatim, even when reading it back from a file the user showed you
 - **Timing-safe comparisons** where applicable (token comparison, signature verification)
 - **Crypto primitives** — using vetted libraries, not hand-rolled; modern algorithms (no MD5/SHA1 for security uses)
 - **Injection vectors** — SQL, command, LDAP, XPath, template, header, log injection
