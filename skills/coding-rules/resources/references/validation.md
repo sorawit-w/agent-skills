@@ -97,6 +97,10 @@ Spawn a **separate QA sub-agent** that performs both stages independently. The s
 
 **Both stages must pass** before the task is marked complete. If either stage surfaces issues, the implementing agent fixes them and the QA sub-agent re-verifies.
 
+### Reviewing a past commit against the rules
+
+The tiers above govern the change you are *making*. To review an **already-landed** commit (a teammate's, an agent's, or one made before these rules were adopted): `git show <sha>` (or `git diff <sha>~..<sha>`), then apply the same review lens used above — the Medium Check 2 code-quality pass plus the Security Lens below when it triggers. **The main agent runs this directly** — a past or foreign commit has no author-bias to insulate against, so the fresh-context QA sub-agent earns its cost only when the commit is large or complex enough to cross the **7+ complexity trigger** above. Don't invent a separate size threshold; reuse that one.
+
 ---
 
 ## Security Lens — Conditional Pass

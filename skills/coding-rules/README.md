@@ -39,7 +39,7 @@ None are required — `coding-rules` works on its own. They sharpen the edges wh
 ## What it does
 
 - **Loads `resources/BOOTSTRAP.md`** into the current session via the `Read` tool, so the rules enter conversation context as a tool result (not a paraphrase).
-- **Six sub-commands** routed via the `args` parameter: `load` (default), `reload`, `status`, `install`, `uninstall`, `prepare`.
+- **Seven sub-commands** routed via the `args` parameter: `load` (default), `reload`, `status`, `install`, `uninstall`, `prepare`, `audit`.
 - **Per-project install** appends a single instruction line to your `CLAUDE.md` / `AGENTS.md` / `AI-CONTEXT.md` / `.cursorrules` so future sessions auto-invoke `coding-rules` at start. **Per-file confirmation required — never silent.**
 - **Compaction-safe.** Long sessions can strip earlier context; `args: status` checks whether BOOTSTRAP markers are still present, `args: reload` re-injects them.
 
@@ -78,7 +78,9 @@ The skill is invoked via `Skill` tool with `args: <sub-command>`. Defaults to `l
 | `uninstall` | Mirror — Phase 1 removes the install line from vendor files; Phase 2 removes coding-rules-managed hook entries from your chosen settings file. Both phases optional, both confirmed. |
 | `prepare` | Onboard an **existing repo**: populate (and refresh) the artifacts BOOTSTRAP reads at session start — `agent-context.yaml`, `CONTEXT.md`, `.ai/knowledge/`, `.ai/STATUS.md`, `.ai/memory.log` — from your real code and git history. Tiered by inferability; **diff-and-confirm on every write**; refresh never clobbers human-curated content. The existing-code counterpart to greenfield `new-project` setup. The `.ai/knowledge/` candidate pass auto-runs on first onboarding (empty knowledge dir) and is opt-in once entries exist — force it with `args: prepare:knowledge` / `prepare --knowledge` (or "force the knowledge pass"). Forcing only controls whether the pass runs; drafts stay `confidence: low` with per-entry diff-and-confirm, and `confidence: high` entries stay frozen. |
 
-`install`, `uninstall`, and `prepare` are idempotent — re-running is safe. (`prepare` re-derives only agent-owned content and is a diffs-only near-no-op on an already-onboarded repo.)
+| `audit` | **Read-only** static conformance audit of a real-coding project against the *current* rule corpus → self-contained HTML report under `.ai/audits/` (git-excluded). `audit [--full] [<dimension> ...]` — incremental by default, dimensions `security`/`quality`/`data`/`git-hygiene`/`docs`. Derived + classifier-anchored: only checks rules that leave durable artifacts, names what it can't statically see in a coverage banner. Never edits/commits/merges. NOT a bug review (`/code-review`) or a SKILL.md audit (`skill-evaluator`); redirects to the latter on a skill repo. |
+
+`install`, `uninstall`, and `prepare` are idempotent — re-running is safe. (`prepare` re-derives only agent-owned content and is a diffs-only near-no-op on an already-onboarded repo.) `audit` is read-only and re-runnable — it writes a timestamped report and never mutates the repo.
 
 ### How to invoke
 
@@ -93,6 +95,8 @@ Slash command (recommended — unambiguous):
 /agent-skills:coding-rules uninstall     # mirror — both phases
 /agent-skills:coding-rules prepare       # onboard an existing repo (populate context)
 /agent-skills:coding-rules prepare:knowledge  # prepare + force the .ai/knowledge candidate pass
+/agent-skills:coding-rules audit         # conformance audit → HTML report (incremental)
+/agent-skills:coding-rules audit --full security  # whole-repo, security dimension only
 ```
 
 If no other installed plugin defines a `coding-rules` skill, the short form `/coding-rules` also resolves. The namespaced form is always unambiguous and recommended.
@@ -106,6 +110,7 @@ Or in natural language — Claude will route correctly:
 - "uninstall coding-rules"
 - "onboard this repo into coding-rules" / "make this repo coding-rules-ready" / "prepare this repo"
 - "prepare this repo and force the knowledge pass" (forces the opt-in `.ai/knowledge/` candidate pass)
+- "audit this repo against coding-rules" / "run a coding-rules conformance audit" / "audit the security dimension"
 
 ### `load` vs `install` — they're independent
 
