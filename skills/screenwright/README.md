@@ -4,7 +4,7 @@
 
 # screenwright
 
-**🚧 BETA.** Paints one self-contained HTML surface to a brand spec, then *sees* it —
+Paints one self-contained HTML surface to a brand spec, then *sees* it —
 renders, screenshots, runs an accessibility audit, and fixes in a loop until it passes —
 before handing the verified result back to you to build for real.
 
@@ -109,11 +109,11 @@ check it"). Requires the Playwright MCP for rendering.
 
 ## Status and scope
 
-**🚧 BETA.** New, and the verification loop is freshly proven against the Playwright MCP but
-not yet battle-tested across many real screens. Supported: single self-contained surfaces
-(page / mobile screen / component), the four intake modes, the two-gate verification loop,
-and DESIGN.md bootstrap. Not supported: multi-page flows, framework conversion, motion
-systems. Expect the gate thresholds and gap-questions to tune as it's dogfooded.
+**Stable.** Supported: single self-contained surfaces (page / mobile screen / component),
+the four intake modes, the two-gate verification loop, and DESIGN.md bootstrap. Not
+supported: multi-page flows, framework conversion, motion systems. The verification loop is
+spike-proven against the Playwright MCP and dogfooded end-to-end; gate thresholds and
+gap-questions will keep tuning with broader use.
 
 ## Contributions
 

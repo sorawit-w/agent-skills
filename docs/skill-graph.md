@@ -33,7 +33,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`define`](../skills/define/README.md) | Contextual definition/translation of a word or phrase from its surrounding sentence (learner gloss) | Language learners, readers, translators | stable | Calibrate/visual |
 | [`ghostwriter`](../skills/ghostwriter/README.md) | Personal-voice message drafting (email/Slack/DM/LinkedIn) — zero AI tells, ban-list lint, samples > ban list, six style presets + free-form | Anyone sending messages under their own name | stable | Calibrate/visual |
 | [`pixel-art`](../skills/pixel-art/README.md) | Hi-fi / lo-fi pixel art + prompt briefs + SVG title cards | Designers, game devs, creators | 🚧 BETA | Calibrate/visual |
-| [`screenwright`](../skills/screenwright/README.md) | Paints one self-contained HTML surface (page/screen/component) to a brand spec, then renders + axe-audits + screenshot-critiques in a bounded loop until two stacked gates pass; bootstraps DESIGN.md when absent (drives the Playwright MCP) | Frontend devs, agents mid-build | 🚧 BETA | Code |
+| [`screenwright`](../skills/screenwright/README.md) | Paints one self-contained HTML surface (page/screen/component) to a brand spec, then renders + axe-audits + screenshot-critiques in a bounded loop until two stacked gates pass; bootstraps DESIGN.md when absent (drives the Playwright MCP) | Frontend devs, agents mid-build | stable | Code |
 
 ## Edges — how the skills relate
 

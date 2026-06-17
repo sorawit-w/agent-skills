@@ -169,7 +169,7 @@ Discipline, stack choices, and parallel work.
   - "Audit `middleware/auth.ts` for missing CSRF guards as `@security_specialist`."
   - "Wear the accessibility specialist's hat for this UI review."
 
-[`screenwright`](skills/screenwright/README.md) **🚧 BETA** — paints one self-contained HTML surface, then renders it via the Playwright MCP and fixes it against an axe + fidelity gate until it passes (needs the Playwright MCP).
+[`screenwright`](skills/screenwright/README.md) — paints one self-contained HTML surface, then renders it via the Playwright MCP and fixes it against an axe + fidelity gate until it passes (needs the Playwright MCP).
 
 *Try:*
   - "Build this dashboard card to match the mockup and verify it's accessible."
@@ -285,7 +285,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.18.0`.** Adds **`screenwright`** (🚧 BETA) — paints one self-contained HTML surface (page, mobile screen, or component) to a brand spec, then *sees* it: renders via the Playwright MCP, runs an axe-core accessibility audit, screenshots for a fidelity critique, and fixes in a bounded loop until two stacked gates pass, before handing the verified HTML back for conversion to a real stack. It targets the specific way agents fail at frontend — markup that looks structurally right but misses the small obvious visual things, because the agent writes blind. The two gates are asymmetric (axe always blocks; visual fidelity blocks only with a reference image), and it's the first skill here to drive the Playwright MCP. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `4.18.0`.** Adds **`screenwright`** — paints one self-contained HTML surface (page, mobile screen, or component) to a brand spec, then *sees* it: renders via the Playwright MCP, runs an axe-core accessibility audit, screenshots for a fidelity critique, and fixes in a bounded loop until two stacked gates pass, before handing the verified HTML back for conversion to a real stack. It targets the specific way agents fail at frontend — markup that looks structurally right but misses the small obvious visual things, because the agent writes blind. The two gates are asymmetric (axe always blocks; visual fidelity blocks only with a reference image), and it's the first skill here to drive the Playwright MCP. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.
