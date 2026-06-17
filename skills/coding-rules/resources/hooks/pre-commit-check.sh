@@ -35,16 +35,24 @@ fi
 # integration and one test surface.)
 SECRET_SCAN_DONE=""
 if command -v gitleaks >/dev/null 2>&1; then
-  GL_OUT=$(gitleaks protect --staged --no-banner 2>&1); GL_RC=$?
-  if [[ "$GL_RC" -eq 1 ]]; then
-    echo "WARNING: gitleaks detected possible secrets in staged changes:" >&2
-    echo "$GL_OUT" >&2
-    echo "Remove them, or allowlist a false positive in .gitleaks.toml. See coding-rules security guardrails." >&2
+  # Use a DISTINCT leak exit code (7). gitleaks' DEFAULT exit 1 means "leaks OR
+  # error encountered" — conflating the two, so a malformed .gitleaks.toml or any
+  # scanner error would phantom-block this NON-disablable hook. With --exit-code 7,
+  # a real finding exits 7; any tool error keeps gitleaks' own non-7 nonzero code
+  # and falls through to the regex, as the contract promises.
+  # Output is suppressed (>/dev/null): gitleaks prints the matched secret, which we
+  # must not echo into the agent's context (never-print-secret). The dev inspects
+  # locally with --redact.
+  gitleaks protect --staged --no-banner --exit-code 7 >/dev/null 2>&1; GL_RC=$?
+  if [[ "$GL_RC" -eq 7 ]]; then
+    echo "WARNING: gitleaks detected possible secrets in staged changes." >&2
+    echo "Output suppressed so the secret isn't echoed here — inspect locally with 'gitleaks protect --staged --redact', or allowlist a false positive in .gitleaks.toml." >&2
+    echo "See coding-rules security guardrails." >&2
     exit 2  # Hard-block on findings
   elif [[ "$GL_RC" -eq 0 ]]; then
     SECRET_SCAN_DONE=1  # gitleaks ran clean; trust it, skip the narrower regex
   else
-    # gitleaks errored (bad config, exec failure) — NOT a finding. Fall through.
+    # Any non-7, non-0 code = tool error (bad config, exec failure), NOT a finding.
     echo "NOTE (coding-rules): gitleaks exited $GL_RC (tool error, not a finding); using built-in secret regex." >&2
   fi
 fi

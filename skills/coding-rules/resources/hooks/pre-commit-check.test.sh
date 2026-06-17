@@ -28,9 +28,13 @@ for t in bash git jq grep sed cat head tail env; do
 done
 cat > "$BIN_GL/gitleaks" <<'EOF'
 #!/bin/bash
+# Records its args (so the test can assert the hook requests a distinct leak code)
+# then exits the code the test asked for.
+printf '%s\n' "$*" >> "${GITLEAKS_ARGS_FILE:-/dev/null}"
 exit "${GITLEAKS_STUB_RC:-0}"
 EOF
 chmod +x "$BIN_GL/gitleaks"
+ARGS_FILE="$TMP/gl_args"
 
 # --- Fixture git repo --------------------------------------------------------
 REPO="$TMP/repo"
@@ -51,15 +55,21 @@ stage_secret() {
 reset_index() { git -C "$REPO" rm -r --cached -q -f . >/dev/null 2>&1 || true; rm -f "$REPO"/*.js; }
 
 run_hook() { # $1=PATH $2=stub_rc(optional)
-  ( cd "$REPO" && echo "$COMMIT_INPUT" | PATH="$1" GITLEAKS_STUB_RC="${2:-0}" bash "$HOOK" >/dev/null 2>&1 )
+  ( cd "$REPO" && echo "$COMMIT_INPUT" | PATH="$1" GITLEAKS_STUB_RC="${2:-0}" GITLEAKS_ARGS_FILE="$ARGS_FILE" bash "$HOOK" >/dev/null 2>&1 )
 }
 
 # --- Assertions --------------------------------------------------------------
 
-# A. gitleaks reports a finding (rc 1) -> hard-block (exit 2), regardless of content.
-reset_index; stage_clean
-run_hook "$BIN_GL" 1; rc=$?
-[[ "$rc" -eq 2 ]] && pass "gitleaks finding -> exit 2" || fail "gitleaks finding should exit 2 (got $rc)"
+# A. gitleaks reports a finding (DISTINCT leak code 7) -> hard-block (exit 2).
+reset_index; stage_clean; : > "$ARGS_FILE"
+run_hook "$BIN_GL" 7; rc=$?
+[[ "$rc" -eq 2 ]] && pass "gitleaks finding (exit 7) -> exit 2" || fail "gitleaks finding should exit 2 (got $rc)"
+
+# A2. The hook MUST request a distinct leak exit code, else gitleaks' default
+#     exit 1 ("leaks OR error") conflates findings with scanner errors.
+grep -q -- '--exit-code 7' "$ARGS_FILE" \
+  && pass "hook invokes gitleaks with --exit-code 7" \
+  || fail "hook must pass --exit-code 7 to gitleaks (args: $(cat "$ARGS_FILE"))"
 
 # B. gitleaks clean (rc 0) is TRUSTED -> regex skipped even with a secret staged -> exit 0.
 reset_index; stage_secret
@@ -71,15 +81,22 @@ reset_index; stage_secret
 run_hook "$BIN_NO"; rc=$?
 [[ "$rc" -eq 2 ]] && pass "no gitleaks + secret -> regex fallback exit 2" || fail "regex fallback should exit 2 (got $rc)"
 
-# D. gitleaks ERROR (rc 2) + clean staged -> fall back to regex -> NOT phantom-blocked.
+# D. gitleaks ERROR returning the AMBIGUOUS default code 1 + clean staged ->
+#    must be treated as a TOOL ERROR (not a finding) -> fall back -> NOT blocked.
+#    This is the Codex P2 scenario: a malformed .gitleaks.toml must not phantom-block.
+reset_index; stage_clean
+run_hook "$BIN_GL" 1; rc=$?
+[[ "$rc" -eq 0 ]] && pass "gitleaks exit 1 (error, not leak) + clean -> exit 0 (no phantom block)" || fail "exit-1 error+clean should exit 0 (got $rc)"
+
+# E. gitleaks ERROR (rc 1) + staged secret -> fall back to regex -> exit 2.
+reset_index; stage_secret
+run_hook "$BIN_GL" 1; rc=$?
+[[ "$rc" -eq 2 ]] && pass "gitleaks error (exit 1) + secret -> regex fallback exit 2" || fail "error+secret should exit 2 (got $rc)"
+
+# E2. A different error code (2) + clean -> also falls back, not blocked.
 reset_index; stage_clean
 run_hook "$BIN_GL" 2; rc=$?
-[[ "$rc" -eq 0 ]] && pass "gitleaks tool-error + clean -> exit 0 (no phantom block)" || fail "tool-error+clean should exit 0 (got $rc)"
-
-# E. gitleaks ERROR (rc 2) + staged secret -> fall back to regex -> exit 2.
-reset_index; stage_secret
-run_hook "$BIN_GL" 2; rc=$?
-[[ "$rc" -eq 2 ]] && pass "gitleaks tool-error + secret -> regex fallback exit 2" || fail "tool-error+secret should exit 2 (got $rc)"
+[[ "$rc" -eq 0 ]] && pass "gitleaks exit 2 (error) + clean -> exit 0 (no phantom block)" || fail "exit-2 error+clean should exit 0 (got $rc)"
 
 # F. Non-commit command exits 0 early (no scan).
 reset_index; stage_secret
