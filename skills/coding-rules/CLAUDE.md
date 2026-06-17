@@ -39,6 +39,19 @@ The distinction matters: rule editing happens here, rule grading happens in skil
 | New directive, new prohibition, threshold shift, removal | Yes — via skill-evaluator |
 | Change to safety, commit discipline, protected-branch rules, or secrets-handling | Yes, at a higher bar — see skill-evaluator's rubric |
 
+### Gate tiers — which checks block a merge
+
+The checks below remove **different** biases and aren't equal strength, so they're gated by change-risk, not flat. *Inner* bias = executor ≠ grader (the in-session split). *Outer* bias = a fresh agent that designs its own tests without the author's mental model — the stronger, scarcer check. Bias-level mechanics live in the root `CLAUDE.md` § Pre-shipment audit ritual.
+
+| Check | Bias removed | Gate |
+|---|---|---|
+| `scripts/check-skill-compat.py` | — (mechanical) | **HARD, always** — the only mechanically-enforced gate |
+| In-session `skill-evaluator` (main loop, split executor/grader) | inner | **HARD for any rule-text change** — cheap, always doable in the authoring session |
+| Independent PR review (e.g. Codex) | author framing | **HARD for any rule-text change** — empirically catches internal contradictions both audits miss |
+| Fresh-session `skill-evaluator` | outer | **HARD for the higher-bar class** (safety / secrets / commit-discipline / protected-branch / new behavioral surface such as a sub-command); **recommended** for adherence-only patches |
+
+**A clean in-session result does NOT authorize merge by itself.** A 34/34 in-session pass has shipped with real bugs the independent review then caught (v4.20.0: a read-only-claim-vs-edit contradiction + a Markdown-escape-ordering flaw — neither was an adherence failure, so the split-role harness couldn't see them). For any rule-text change, the independent review must also be in the loop before merge. Trust the second pair of eyes, not the green number.
+
 ---
 
 ## Rule-cost gate (precheck)

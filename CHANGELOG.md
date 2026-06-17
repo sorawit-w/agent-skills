@@ -5,6 +5,16 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.20.1] — 2026-06-17
+
+Doc + authoring-doctrine patch for **`coding-rules`**. No runtime behavior change.
+
+### Fixed
+- The `audit` row in the `coding-rules` README sub-commands table rendered detached — a stray blank line between the `prepare` row and the `audit` row split the Markdown table. Removed the blank line so `audit` shows inside the table.
+
+### Changed
+- `skills/coding-rules/CLAUDE.md` change-class section gains a **Gate tiers** table: which checks block a merge, tiered by change-risk rather than flat. The mechanical compat check + in-session `skill-evaluator` + independent PR review are HARD for any rule-text change; fresh-session (outer-bias) `skill-evaluator` is HARD for the higher-bar class (safety / secrets / commit-discipline / protected-branch / new behavioral surface) and recommended otherwise. Adds the rule that **a clean in-session result does not authorize merge by itself** — recorded against the v4.20.0 experience, where a 34/34 in-session pass shipped two contradictions the independent (Codex) review caught.
+
 ## [4.20.0] — 2026-06-17
 
 Adds a seventh sub-command to **`coding-rules`**: **`audit`** — a read-only static *conformance* audit of a real-coding project against the current rule corpus, emitting a self-contained HTML report under `.ai/audits/`. Plus a docs-only **`review` recipe** (review an already-landed commit against the rules). Designed across a `team-composer` workshop and stress-tested by a `Plan` sub-agent before implementation.
