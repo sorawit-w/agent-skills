@@ -5,6 +5,48 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.1.0] — 2026-06-17
+
+Strengthened **`screenwright`**'s verification gate — within its architecture, not against it.
+From a `team-composer` review of "add Lighthouse / CWV / CLS / SpeedVitals / WAVE / AMP": the
+review found those are all the **wrong layer** (they need a running app at a real URL; screenwright
+renders self-contained HTML via `setContent`, so the numbers would be fiction) and instead added
+the accessibility checks that *do* pass screenwright's verify-and-survive-handoff filter.
+
+### Added
+- **Reflow @ 320px (WCAG 1.4.10)** — a new **BLOCK** dimension: re-render at 320 CSS-px and fail
+  on horizontal scroll / clipped content. Runnable snippet in `references/playwright-loop.md`.
+- **Text spacing (WCAG 1.4.12)** — new **advisory** dimension: inject the standard spacing
+  override and screenshot for clipping/overlap.
+- **Render-variants (dark-mode / reduced-motion / RTL)** — advisory, fires **only when the
+  DESIGN.md or brief declares the variant** (not always-on).
+- **`web-quality-skills` handoff** — cross-skill rows (SKILL.md + README) and a manifest
+  "NOT verified" pointer routing runtime perf / Core Web Vitals / Lighthouse / SEO to
+  [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) on the served build.
+
+### Changed
+- The quality-set table now notes that axe's **`target-size` (WCAG 2.5.8)** already rides the
+  machine gate at `2.2-AA` — tap-target size is covered, no separate check.
+- "What this skill is NOT" now explicitly rejects runtime/CWV/Lighthouse-perf/SEO/**AMP** and
+  names the handoff. Dropped the hardcoded "8 dimensions" label (the set grew; the number drifted).
+
+### Why
+The request listed seven things to "test against." Six were runtime/post-deploy metrics or
+redundant: Lighthouse-perf/SEO need a served URL; CLS is ~0 on a static `setContent` render by
+construction; Core Web Vitals (LCP/INP) have no real load to measure; SpeedVitals tests a public
+deployed URL; Lighthouse's a11y category *is* axe-core (already the gate); WAVE ~80% overlaps axe
+and needs a URL/extension; AMP is deprecated (lost ranking preference in 2021) and its restricted
+HTML conflicts with self-contained output. Bolting them on would ship confident-but-fake numbers
+and dilute the wedge ("the eyes"). The repo already owns that layer in `web-quality-skills`, so
+the fix was a clean division of labor + the genuinely-additive WCAG-visual checks axe alone misses.
+
+### Notes
+- Backward-compatible: no trigger, output-contract, or DESIGN.md-schema change. The new BLOCK
+  (reflow) can fail surfaces that previously passed — that's a real WCAG 1.4.10 gap surfacing, not
+  a regression.
+- Pre-shipment: `check-skill-compat.py` parity asserted; the `skill-evaluator` outer-bias re-audit
+  should run in a **separate session** (frontmatter triggers unchanged, so Codex char-limit risk nil).
+
 ## [5.0.0] — 2026-06-17
 
 **Breaking — major release.** `/coding-rules` no longer resolves in this bundle and there is no

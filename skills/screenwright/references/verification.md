@@ -9,6 +9,16 @@ screenwright owns a quality dimension only if **(1)** the eyes can verify it by 
 **AND (2)** it survives the handoff to a real stack. Motion fails (2). Performance, flows,
 copy, and information architecture fail entirely → out of scope, not advisory.
 
+**Runtime metrics stay out — and have a home.** Performance, **Core Web Vitals** (LCP / INP /
+CLS), **Lighthouse**-perf/SEO/best-practices, and SaaS speed tests (**SpeedVitals**) all need a
+*running app at a real URL* with a real network. screenwright renders self-contained HTML via
+`setContent` — offline, no waterfall, no async loading — so those numbers would be **fiction**
+here (CLS is ~0 by construction; LCP/INP have no real load to measure). Hand them to
+[`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) run against the served
+build. Note Lighthouse's *a11y* category **is axe-core** — already our blocking gate, so adding
+it is pure redundancy. **AMP** is deprecated (lost its ranking/Top-Stories preference in 2021)
+and its restricted-HTML format conflicts with self-contained output — not supported.
+
 ## Two stacked gates (asymmetric)
 
 - **Gate A — axe a11y.** Machine, deterministic, **always blocks**. Runs per in-scope
@@ -18,18 +28,21 @@ copy, and information architecture fail entirely → out of scope, not advisory.
   (derived viewports, A2/B/C, text-only briefs) it's **advisory** — there's no ground truth
   to gate on, and judgment-as-gate rationalizes "good enough" or loops forever.
 
-## The 8-dimension set — tight gate
+## The quality set — tight gate
 
 | Dimension | Tier | How the eyes check it |
 |---|---|---|
-| **axe a11y** | **BLOCK** | inject axe, run with `a11y.wcag` tags, per viewport + state |
+| **axe a11y** | **BLOCK** | inject axe, run with `a11y.wcag` tags, per viewport + state (at `2.2-AA` this includes `target-size`, WCAG 2.5.8 — tap-target size rides the machine gate) |
 | **Required states** | **BLOCK** | render empty/loading/error the surface needs; each present & sane |
 | **Responsive** | **BLOCK** | both in-scope viewports render without overflow/reflow breakage |
+| **Reflow @ 320px** (WCAG 1.4.10) | **BLOCK** | re-render at 320 CSS-px width; no horizontal scroll, no clipped or overlapping content |
 | **Token consistency** | **BLOCK** | rendered colors/radii/type match DESIGN.md; no rogue values |
 | **Focus visibility** | **BLOCK** | tab/focus a control → visible focus indicator in the screenshot |
 | Visual hierarchy | advisory | the single primary action is the most salient element |
 | Alignment & spacing rhythm | advisory | gaps sit on the `spacing` scale; edges align |
 | Real-content robustness | advisory | long names / empty / huge numbers / missing images don't break layout |
+| Text spacing (WCAG 1.4.12) | advisory | inject the spacing override; text doesn't clip or overlap |
+| Render-variants (dark-mode / reduced-motion / RTL) | advisory — **only when declared** | if DESIGN.md/brief declares the variant, emulate it + screenshot; skip otherwise |
 | Interaction end-states | advisory | hover / active / disabled are visibly distinct |
 | Motion / animation | advisory **always** | (not screenshot-verifiable; doesn't survive handoff) |
 
@@ -101,14 +114,15 @@ A short, honest record of confidence — three buckets:
 ## screenwright verification
 - Surface: <page | screen | component> · mode <A1|A2|B|C>
 - Hard-verified (gate passed):
-  - axe a11y: desktop ✓ / mobile ✓ (WCAG 2.2-AA, 0 serious+critical)
-  - required states: empty ✓ loading ✓ error ✓
+  - axe a11y: desktop ✓ / mobile ✓ (WCAG 2.2-AA, 0 serious+critical; incl. target-size 2.5.8)
+  - reflow @ 320px ✓ · required states: empty ✓ loading ✓ error ✓
   - token consistency ✓ · focus visibility ✓
 - Soft-verified (judgment):
   - fidelity vs reference: desktop ✓ (mode A1); mobile = derived, no reference
-  - hierarchy / spacing / real-content: <notes or ✓>
+  - hierarchy / spacing / text-spacing (1.4.12) / real-content: <notes or ✓>
 - NOT verified:
   - <e.g. motion (out of scope); a11y on tablet (not requested); fidelity on derived mobile>
+  - runtime perf / Core Web Vitals (LCP·INP·CLS) / SEO → out of gate; run `web-quality-skills` on the served build
 ```
 
 If axe could not run (offline / no `browser_run_code_unsafe`), say **"a11y UNVERIFIED"**

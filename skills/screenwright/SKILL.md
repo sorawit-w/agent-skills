@@ -139,7 +139,11 @@ Per cycle, for each in-scope viewport and state:
 2. **Audit** — inject axe-core (`addScriptTag({path})`), run with the WCAG tags from
    `a11y.wcag`. Collect violations by impact.
 3. **Screenshot** — capture for the fidelity critique.
-4. **Judge** against the two gates over the 8-dimension set.
+4. **Judge** against the two gates over the quality set.
+
+After the in-scope viewports pass, run one **reflow pass at 320 CSS-px** (WCAG 1.4.10, BLOCK):
+a horizontal scrollbar there = clipped content. Snippet + the optional text-spacing (1.4.12)
+override: [references/playwright-loop.md](references/playwright-loop.md).
 
 ---
 
@@ -173,22 +177,27 @@ about confidence is the point.
 
 ---
 
-## The quality set — 8 dimensions, tight gate
+## The quality set — tight gate
 
 screenwright owns a quality dimension only if **(1) the eyes can verify it by screenshot
 AND (2) it survives the handoff to a real stack.** That filter answers every "should we
-check X?" — motion fails (2), performance/flows/copy fail entirely.
+check X?" — motion fails (2); performance / Core Web Vitals / Lighthouse-perf / flows / copy
+fail entirely (they need a *running app at a URL* screenwright doesn't have — see "What this
+skill is NOT").
 
 | Dimension | Tier |
 |---|---|
-| **axe a11y** | **BLOCK** — always, machine, per viewport + state |
+| **axe a11y** | **BLOCK** — always, machine, per viewport + state (incl. `target-size` 2.5.8 at 2.2-AA) |
 | **Required states** (empty/loading/error the surface needs) | **BLOCK** |
 | **Responsive** (both in-scope viewports present & sane) | **BLOCK** |
+| **Reflow @ 320px** (WCAG 1.4.10 — no horizontal scroll) | **BLOCK** |
 | **Token consistency** (rendered values match DESIGN.md) | **BLOCK** |
 | **Focus visibility** (visible focus indicator) | **BLOCK** |
 | Visual hierarchy (primary action is most salient) | advisory |
 | Alignment & spacing rhythm (on the scale, edges align) | advisory |
 | Real-content robustness (long names, empty, huge numbers, missing images) | advisory |
+| Text spacing (WCAG 1.4.12 — survives the spacing override) | advisory |
+| Render-variants (dark-mode / reduced-motion / RTL) | advisory — **only when declared** |
 | Interaction end-states (hover/active/disabled distinct) | advisory |
 | Motion / animation | advisory — **always** |
 
@@ -205,6 +214,12 @@ reference actually shows.
 - **Not a motion/animation system, performance auditor, or copywriter** — out of scope by
   the verify-and-survive filter. Copy → `ghostwriter`; brand identity → `brand-workshop`;
   illustration → `pixel-art`.
+- **Not a runtime / Core Web Vitals / Lighthouse-perf / SEO auditor** — those need a *running
+  app at a real URL* (TTFB, network waterfall, async loading, INP); screenwright renders
+  self-contained HTML via `setContent`, so those numbers would be fiction. Run
+  [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) against the served
+  build instead. Lighthouse's a11y category *is* axe (already our gate). **AMP** is deprecated
+  and conflicts with self-contained output — not supported.
 - **Not a runtime** — it drives the host's Playwright MCP; it ships no server.
 
 ---
@@ -220,6 +235,7 @@ reference actually shows.
 | [`impeccable`](https://github.com/pbakaus/impeccable) *(if available)* | **Verification** companion, not a style source: a deterministic design-quality linter for the *advisory* visual dimensions (spacing rhythm, hierarchy, AI-slop). Complements axe (design-quality vs WCAG — disjoint), stays advisory, suppress its font-pairing + performance rules (they fight self-containment / de-scoped perf). See [references/verification.md](references/verification.md). |
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent + the no-nested-sub-agents invariant. |
 | `ghostwriter` | Owns copy/microcopy. screenwright paints the surface; it does not write the words. |
+| [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) *(if installed)* | **Runtime layer handoff** — the home for everything screenwright's static gate can't measure: Lighthouse, Core Web Vitals (LCP/INP/CLS), performance, SEO, best-practices, run against the *served* build. screenwright verifies the surface pre-handoff; this verifies the running app. The manifest points users here for perf. Do not synthesize Lighthouse-grade audits inline — it tracks Lighthouse v13+ migrations we wouldn't keep current. |
 | [`cerby`](https://github.com/sorawit-w/cerby) *(if installed)* | When screenwright runs mid-build inside a guard-railed repo, defer to its loop/validation discipline for the surrounding work. |
 
 ---

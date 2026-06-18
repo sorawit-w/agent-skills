@@ -67,6 +67,29 @@ corresponding HTML/markup variant before `setContent`.
 Blocking = any violation with `impact` of `serious` or `critical` (see
 [verification.md](verification.md)).
 
+## Reflow @ 320px (WCAG 1.4.10) — BLOCK
+
+After the in-scope viewports pass, run one extra pass at the reflow width. A horizontal
+scrollbar at 320px = clipped/lost content = blocking:
+
+```js
+await page.setViewportSize({ width: 320, height: 800 });
+await page.setContent(HTML, { waitUntil: 'load' });
+const overflow = await page.evaluate(() =>
+  document.documentElement.scrollWidth > document.documentElement.clientWidth);
+// overflow === true → reflow BLOCK fails; screenshot to see what clips.
+```
+
+## Text spacing (WCAG 1.4.12) — advisory
+
+Inject the standard spacing override, re-screenshot, judge clipping/overlap from the image:
+
+```js
+await page.addStyleTag({ content: `* {
+  line-height: 1.5 !important; letter-spacing: .12em !important;
+  word-spacing: .16em !important; } p { margin-bottom: 2em !important; }` });
+```
+
 ## Forcing interaction states for the screenshot
 
 To verify focus visibility / hover / disabled, drive the state before screenshotting, e.g.
