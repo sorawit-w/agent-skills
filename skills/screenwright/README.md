@@ -23,8 +23,9 @@ loop, is not.** That loop is screenwright's wedge.
 
 - **Paints one surface** — a page, mobile screen, or component — as a single self-contained
   HTML file (inline styles + SVG, no external requests), portable to any stack.
-- **Sees it** via the Playwright MCP: renders, runs an **axe-core** WCAG audit, screenshots
-  for a fidelity critique, then **fixes and re-checks in a bounded loop**.
+- **Sees it** via the Playwright MCP: renders, runs an **axe-core** WCAG 2.2-AA audit
+  (incl. tap-target size + a 320px **reflow** check), screenshots for a fidelity critique,
+  then **fixes and re-checks in a bounded loop**.
 - **Two stacked gates:** axe a11y always blocks; visual fidelity blocks only when you gave
   it a reference image to match.
 - **Generates what's implied:** desktop-only mock → it builds the mobile layout too; adds
@@ -40,6 +41,9 @@ loop, is not.** That loop is screenwright's wedge.
 - **No framework conversion** — it outputs portable HTML; you (or the host agent) port it
   to React/Vue/etc.
 - **No motion systems, performance audits, or copywriting** — out of scope by design.
+- **No runtime performance / Core Web Vitals / Lighthouse / SEO** — those need a *running app
+  at a URL*; screenwright renders self-contained HTML offline, so it can't (and won't fake)
+  them. Hand the served build to [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills).
 - **No runtime** — it drives your Playwright MCP; it ships no server of its own.
 
 ## When to use it
@@ -105,6 +109,7 @@ check it"). Requires the Playwright MCP for rendering.
 | [`impeccable`](https://github.com/pbakaus/impeccable) *(if available)* | Verification companion — a deterministic design-quality linter that backstops the advisory visual checks. Complements axe (design-quality vs accessibility); findings stay advisory. |
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent. |
 | `ghostwriter` | Owns the words; screenwright paints the surface. |
+| [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) *(if installed)* | Runtime-layer handoff — Lighthouse, Core Web Vitals, perf, SEO on the *served* build. screenwright checks the surface pre-handoff; this checks the running app. |
 | [`cerby`](https://github.com/sorawit-w/cerby) *(if installed)* | When running mid-build in a guard-railed repo, defer to its loop discipline. |
 
 ## Status and scope
