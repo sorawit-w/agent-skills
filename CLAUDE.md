@@ -123,6 +123,12 @@ Claude Code imposes no length limit on `description`, but **OpenAI Codex silentl
 
 > **History:** through v4.14.0 this checker enforced 1024 *bytes* + a `<`/`>` ban, mirroring Codex's behavior at the time of the #7730 report. v4.15.0 corrected it to characters and dropped the angle-bracket ban to match current Codex; the byte-strict version drove an unnecessary trim in v4.11.0. If you ever need to support a *pre-#7730* Codex, byte-strictness is the thing to restore.
 
+#### Codex marketplace discovery — known limitation (we are Claude-first)
+
+**Codex's plugin marketplace only discovers plugins in a `./plugins/<name>/` subdirectory** (each self-contained with its own `.codex-plugin/plugin.json` + `skills/`), per [the Codex build docs](https://developers.openai.com/codex/plugins/build). Our **root layout** — `.claude-plugin/plugin.json` + `./skills/` at the repo root, which Claude Code needs — is therefore **not discoverable by Codex's `/plugin marketplace add`**. Verified empirically: neither `"path": "."` nor `"./"` in `.agents/plugins/marketplace.json` resolves; Codex shows nothing.
+
+**Decision (2026-06-18): Claude-first, park Codex.** We do not contort the working root layout for Codex — Claude Code is the priority. The `.agents/plugins/marketplace.json` + `.codex-plugin/plugin.json` stay **dormant/forward-compat** (still version-synced so `check-skill-compat.py` parity holds), and **`npx skills add <owner/repo>`** remains the working cross-platform install path — it reads `SKILL.md` directly, no marketplace needed. The Codex *frontmatter* contract above still matters for that `npx` path. A both-worlds layout (skills moved under `plugins/<name>/skills/`, both manifests pointing there) is achievable but adds path depth and risks the Claude layout — declined unless Codex parity becomes a hard requirement. So "All four required" in the registration row above is true for *file presence + parity*, not for Codex marketplace discovery.
+
 ### README structure
 
 Match the convention from `sub-agent-coordinator/README.md`, `team-composer/README.md`, or `wear-the-hat/README.md`. Order:
