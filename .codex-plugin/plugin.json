@@ -14,8 +14,16 @@
   "interface": {
     "displayName": "Agent Skills",
     "shortDescription": "Auto-triggering skills across startup, review, code, calibration, and language work.",
+    "longDescription": "Agent Skills packages reusable Codex skills for product work, code review, startup planning, calibration, localization, visual generation, and agent workflow design. Install it when you want a curated collection of task-specific skills that Codex can invoke for repeatable workflows.",
     "developerName": "sorawit-w",
     "category": "Productivity",
-    "websiteURL": "https://github.com/sorawit-w/agent-skills"
+    "capabilities": ["Interactive", "Read", "Write"],
+    "websiteURL": "https://github.com/sorawit-w/agent-skills",
+    "defaultPrompt": [
+      "Use Agent Skills to help plan and sharpen my startup idea.",
+      "Review this product or code workflow with the right specialist skill.",
+      "Help me choose the best Agent Skills workflow for this task."
+    ],
+    "brandColor": "#2563EB"
   }
 }
