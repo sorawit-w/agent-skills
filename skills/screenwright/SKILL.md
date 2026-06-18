@@ -187,7 +187,7 @@ skill is NOT").
 
 | Dimension | Tier |
 |---|---|
-| **axe a11y** | **BLOCK** — always, machine, per viewport + state (incl. `target-size` 2.5.8 at 2.2-AA) |
+| **axe a11y** | **BLOCK** — always, machine, per viewport + state (incl. `target-size` 2.5.8 — explicitly enabled; axe ships it off) |
 | **Required states** (empty/loading/error the surface needs) | **BLOCK** |
 | **Responsive** (both in-scope viewports present & sane) | **BLOCK** |
 | **Reflow @ 320px** (WCAG 1.4.10 — no horizontal scroll) | **BLOCK** |

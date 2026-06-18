@@ -32,7 +32,7 @@ and its restricted-HTML format conflicts with self-contained output — not supp
 
 | Dimension | Tier | How the eyes check it |
 |---|---|---|
-| **axe a11y** | **BLOCK** | inject axe, run with `a11y.wcag` tags, per viewport + state (at `2.2-AA` this includes `target-size`, WCAG 2.5.8 — tap-target size rides the machine gate) |
+| **axe a11y** | **BLOCK** | inject axe, run with `a11y.wcag` tags, per viewport + state (incl. `target-size`, WCAG 2.5.8 — but only when **explicitly enabled**; see ruleset note) |
 | **Required states** | **BLOCK** | render empty/loading/error the surface needs; each present & sane |
 | **Responsive** | **BLOCK** | both in-scope viewports render without overflow/reflow breakage |
 | **Reflow @ 320px** (WCAG 1.4.10) | **BLOCK** | re-render at 320 CSS-px width; no horizontal scroll, no clipped or overlapping content |
@@ -53,6 +53,11 @@ let an advisory miss burn a fix cycle unless a blocking item also needs that cyc
 
 **Ruleset** = the WCAG level from `a11y.wcag`. `"2.2-AA"` → `runOnly` tags
 `['wcag2a','wcag2aa','wcag21aa','wcag22aa']`.
+
+**`target-size` (WCAG 2.5.8) must be enabled explicitly.** axe-core ships it `enabled:false`,
+so the `wcag22aa` tag alone does **not** run it — pass `rules: { 'target-size': { enabled: true } }`
+(see [playwright-loop.md](playwright-loop.md)). Without that, do not claim tap-target coverage in
+the manifest.
 
 **Blocking severity:** axe `impact` of **`critical` or `serious` blocks**; `moderate` and
 `minor` are advisory (manifest only).

@@ -25,8 +25,9 @@ the accessibility checks that *do* pass screenwright's verify-and-survive-handof
   [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) on the served build.
 
 ### Changed
-- The quality-set table now notes that axe's **`target-size` (WCAG 2.5.8)** already rides the
-  machine gate at `2.2-AA` — tap-target size is covered, no separate check.
+- Tap-target size (axe **`target-size`**, WCAG 2.5.8) is covered by **explicitly enabling** the
+  rule in the axe pass — axe ships it `enabled:false`, so the `wcag22aa` tag alone would not run
+  it (caught in PR review). No separate check; just the enable.
 - "What this skill is NOT" now explicitly rejects runtime/CWV/Lighthouse-perf/SEO/**AMP** and
   names the handoff. Dropped the hardcoded "8 dimensions" label (the set grew; the number drifted).
 

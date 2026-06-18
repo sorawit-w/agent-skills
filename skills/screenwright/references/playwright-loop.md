@@ -48,10 +48,13 @@ async (page) => {
   const violations = await page.evaluate(async () => {
     const r = await window.axe.run(document, {
       runOnly: { type: 'tag', values: ['wcag2a','wcag2aa','wcag21aa','wcag22aa'] },
-      // for a component/fragment also pass:
-      // rules: { region:{enabled:false}, 'landmark-one-main':{enabled:false},
-      //          'page-has-heading-one':{enabled:false}, 'document-title':{enabled:false},
-      //          'html-has-lang':{enabled:false}, bypass:{enabled:false} }
+      // target-size (WCAG 2.5.8) ships enabled:false in axe-core — the wcag22aa tag alone
+      // will NOT run it. Enable it explicitly, or the tap-target claim is false.
+      rules: { 'target-size': { enabled: true } }
+      // for a component/fragment, MERGE these page-rule disables into `rules` above:
+      //   region:{enabled:false}, 'landmark-one-main':{enabled:false},
+      //   'page-has-heading-one':{enabled:false}, 'document-title':{enabled:false},
+      //   'html-has-lang':{enabled:false}, bypass:{enabled:false}
     });
     return r.violations.map(v => ({ id: v.id, impact: v.impact, nodes: v.nodes.length,
                                     help: v.help }));
@@ -69,15 +72,19 @@ Blocking = any violation with `impact` of `serious` or `critical` (see
 
 ## Reflow @ 320px (WCAG 1.4.10) — BLOCK
 
-After the in-scope viewports pass, run one extra pass at the reflow width. A horizontal
-scrollbar at 320px = clipped/lost content = blocking:
+Run this at the reflow width **for each in-scope state variant** — empty/loading/error use
+different markup, and a state-specific overflow is still a blocking fail. Checking only the
+happy-path HTML can record a false reflow pass. A horizontal scrollbar at 320px =
+clipped/lost content:
 
 ```js
 await page.setViewportSize({ width: 320, height: 800 });
-await page.setContent(HTML, { waitUntil: 'load' });
-const overflow = await page.evaluate(() =>
-  document.documentElement.scrollWidth > document.documentElement.clientWidth);
-// overflow === true → reflow BLOCK fails; screenshot to see what clips.
+for (const variant of stateVariants) {            // same state set the main loop renders
+  await page.setContent(variant, { waitUntil: 'load' });
+  const overflow = await page.evaluate(() =>
+    document.documentElement.scrollWidth > document.documentElement.clientWidth);
+  // overflow === true → reflow BLOCK fails for this state; screenshot to see what clips.
+}
 ```
 
 ## Text spacing (WCAG 1.4.12) — advisory
