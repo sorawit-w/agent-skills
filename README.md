@@ -281,7 +281,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.22.0`.** Extracted **`coding-rules`** out of this bundle into its own repo — [`sorawit-w/cerby`](https://github.com/sorawit-w/cerby) — where it ships and versions independently as **`cerby`** ("the gate guardian for agentic coding"). Existing users: switch from `/coding-rules` to the external `cerby` skill (install: `/plugin marketplace add sorawit-w/cerby`). No other skills changed. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.0.0`.** Extracted **`coding-rules`** out of this bundle into its own repo — [`sorawit-w/cerby`](https://github.com/sorawit-w/cerby) — where it ships and versions independently as **`cerby`** ("the gate guardian for agentic coding"). Existing users: switch from `/coding-rules` to the external `cerby` skill (install: `/plugin marketplace add sorawit-w/cerby && /plugin install cerby@cerby`). No other skills changed. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

@@ -5,7 +5,11 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.22.0] — 2026-06-17
+## [5.0.0] — 2026-06-17
+
+**Breaking — major release.** `/coding-rules` no longer resolves in this bundle and there is no
+back-compat alias; existing users must migrate (see Notes). Per this repo's semver policy, a
+removal that requires migration is a MAJOR bump.
 
 Extracted **`coding-rules`** out of this bundle into its own repo,
 [`sorawit-w/cerby`](https://github.com/sorawit-w/cerby), where it ships and versions
