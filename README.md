@@ -145,11 +145,7 @@ See also: [`validation-canvas`](skills/validation-canvas/README.md) and [`startu
 ### Writing & shipping code
 Discipline, stack choices, and parallel work.
 
-[`coding-rules`](skills/coding-rules/README.md) **⚠️ OPINIONATED** — loads one author's operating system for agentic coding into the session.
-
-*Try:*
-  - "Load my coding rules into this session."
-  - "Use coding-rules with `args: install` — I want CLAUDE.md to auto-load it."
+[`cerby`](https://github.com/sorawit-w/cerby) *(external)* — opinionated agentic-coding guardrails (clarity over cleverness, safety over speed, nothing unproven passes the gate). Formerly `coding-rules` in this repo; now its own repo.
 
 [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — opinionated default TS/JS stack, with named alternates.
 
@@ -265,7 +261,7 @@ team-composer ──▶ sub-agent-coordinator
 Writing your own skill, or forking one of these? Skill authoring here is **harness engineering** — designing the context, scaffolding, and feedback loops around the agent. Start with:
 
 - **Conventions & skill anatomy** — [`CLAUDE.md` → Skill anatomy](CLAUDE.md#skill-anatomy) (file structure, SKILL.md frontmatter, README shape, visual style).
-- **The five harness primitives** — [`CLAUDE.md` → Harness vocabulary](CLAUDE.md#harness-vocabulary): context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. [`coding-rules`](skills/coding-rules/README.md) is the canonical implementation.
+- **The five harness primitives** — [`CLAUDE.md` → Harness vocabulary](CLAUDE.md#harness-vocabulary): context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. The external [`cerby`](https://github.com/sorawit-w/cerby) skill is the canonical implementation.
 - **The skill map** — [`docs/skill-graph.md`](docs/skill-graph.md): every skill, its audience, and how they relate.
 - **Release ritual** — [`CLAUDE.md` → Release ritual](CLAUDE.md#release-ritual): the 4-file version bump + pre-shipment audit.
 - **Audit a skill** — [`skill-evaluator`](skills/skill-evaluator/README.md) checks whether a skill's rules actually land when Claude runs them.
@@ -285,7 +281,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `4.21.0`.** Security hardening for **`coding-rules`** from a `team-composer` infosec review: `betterleaks`/`gitleaks`-backed secret scanning (regex fallback), `DATA>` provenance framing on shared/agent-authored state to blunt prompt injection, a soft `.env`-read reminder (`warn-env-read`), deterministic audit-report escaping, and — as importantly — an honest `[enforced]`/`[behavioral]` labeling pass plus a new `references/threat-model.md` so the skill stops over-claiming what a tool-boundary hook can enforce. The prior **`4.20.1`** was a doc/authoring-doctrine patch (audit-row table fix + rule-editing gate-tiers). Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.0.0`.** Extracted **`coding-rules`** out of this bundle into its own repo — [`sorawit-w/cerby`](https://github.com/sorawit-w/cerby) — where it ships and versions independently as **`cerby`** ("the gate guardian for agentic coding"). Existing users: switch from `/coding-rules` to the external `cerby` skill (install: `/plugin marketplace add sorawit-w/cerby && /plugin install cerby@cerby`). No other skills changed. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

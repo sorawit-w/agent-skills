@@ -30,8 +30,7 @@ Methodology adapted (concept and vocabulary only — no verbatim code or prose):
   `skills/skill-evaluator/references/calibration-loop.md`.
 
 Modern Web Guidance is additionally cross-referenced (not absorbed)
-from the coding-rules external-resources registry and the team-composer
-Cross-Skill Integration table.
+from the team-composer Cross-Skill Integration table.
 
 ---
 
@@ -45,13 +44,10 @@ attribution (authoritative) and this NOTICE.
 - `nidhinjs/prompt-master` (MIT) — prose-economy lens; see
   `skills/skill-evaluator/SKILL.md` harness lens question 7 and
   CLAUDE.md § Design principles #7.
-- `elementalsouls/Claude-BugHunter` — discipline patterns absorbed into
-  `skills/coding-rules/resources/references/validation.md`,
-  `debugging.md`, and `working-patterns.md` (see file-level
-  attribution).
-- `addyosmani/agent-skills` — two specific rules in
-  `skills/coding-rules/resources/references/working-patterns.md` cite
-  this repo as source.
+
+(The `Claude-BugHunter` and `addyosmani/agent-skills` discipline-pattern
+absorptions left this repo with the `coding-rules` skill — they now live in
+the external `cerby` repo (https://github.com/sorawit-w/cerby) and its NOTICE.)
 
 When in doubt, the inline attribution in the file where the pattern
 lives is authoritative. This NOTICE consolidates the third-party

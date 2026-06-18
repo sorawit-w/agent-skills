@@ -23,7 +23,6 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`ai-eval-review`](../skills/ai-eval-review/README.md) | 7-block AI eval-design review + regulatory lens (MD + HTML) | AI teams, measurement eng, compliance | stable | Review |
 | [`gamification-fit`](../skills/gamification-fit/README.md) | Restraint-first gamification *recommender*: resources + goal → the few mechanics that honestly fit + a prominent "deliberately NOT gamified" refusals section; structural ethics veto (MD + HTML) | Product teams, founders adding engagement | stable | Review |
 | [`skill-evaluator`](../skills/skill-evaluator/README.md) | Audit a SKILL.md for rule adherence; targeted diffs | Skill authors, QA gatekeepers | stable | Author |
-| [`coding-rules`](../skills/coding-rules/README.md) | Load/install opinionated agentic-coding guardrails | Individual devs, teams | ⚠️ OPINIONATED | Code |
 | [`tech-stack-recommendations`](../skills/tech-stack-recommendations/README.md) | Opinionated TS/JS stack + named alternates | Founders, architects, engineers | stable | Code |
 | [`sub-agent-coordinator`](../skills/sub-agent-coordinator/README.md) | Orchestrate parallel sub-agents (brief, coordinate, verify) | Coordinators, multi-file devs | stable | Code · Author |
 | [`wear-the-hat`](../skills/wear-the-hat/README.md) | Single-role solo embodiment (one lens, no panel) | Anyone wanting one expert lens | stable | Code |
@@ -78,12 +77,10 @@ graph LR
   DEF[define] -.->|shared locale engine| I18N
   PXL[pixel-art] -.->|portrait| WAI
   SE[skill-evaluator] -.->|audits any skill| TC
-  CR[coding-rules] -.->|discipline + lens| WTH
   TSR[tech-stack-recommendations] -.->|architect anchor| TC
 
   %% screenwright (render-verify loop; first Playwright-MCP skill)
   BW -.->|DESIGN.md tokens| SW[screenwright]
-  CR -.->|mid-build UI surface| SW
   SW -.->|isolated verify loop| SAC
   PXL -.->|hi-fi UI sibling| SW
 ```

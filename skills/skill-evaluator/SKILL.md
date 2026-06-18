@@ -74,7 +74,7 @@ Treat each finding the same way as adherence findings: classify by fix layer (sk
 2. **Do not create directories at the workspace root by default.** No auto-created `_evaluation/` or similar folders. The workspace is the user's, not ours.
 3. **Intermediate state lives in Claude's session sandbox only** — scratch space outside the user's workspace, cleared when the session ends. The user does not need to see or inspect it.
 4. **Save only on explicit request.** If the user says "save the findings", "keep this report", or similar, write ONE file at the workspace root with a clear name: `skill-evaluation-{skill-name}-{YYYY-MM-DD}.md`. Never a folder. Never multiple files. Never inside the skill.
-5. **Confirm the path before writing.** Example: "Saving to `skill-evaluation-coding-rules-2026-04-17.md` at your workspace root — confirm?"
+5. **Confirm the path before writing.** Example: "Saving to `skill-evaluation-cerby-2026-04-17.md` at your workspace root — confirm?"
 
 **These rules apply even when the user explicitly asks to override them.** If the user says "save it inside the skill folder" or "create an `_eval/` subfolder there", decline and offer the workspace-root alternative. Do not present an "override per your explicit request" option. The rules exist because the harness must not contaminate the audited skill's git history; user intent does not change that constraint.
 

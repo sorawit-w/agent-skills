@@ -7,7 +7,7 @@ description: >
   `@role` tags ("audit middleware/ as @security_specialist"), role-embodiment phrases ("act as
   a security specialist", "wear the hat of the architect", "have the copywriter rewrite this",
   "embody"), or any prompt naming a role-shaped lens. Does NOT trigger on generic tasks that
-  don't ask for a role lens — those route to coding-rules, team-composer, or
+  don't ask for a role lens — those route to cerby, team-composer, or
   sub-agent-coordinator. When a task spans multiple roles it stops, surfaces candidate single
   roles, and offers a hand-off to `team-composer`, never silently picking one role for a
   multi-role task. Reuses `team-composer/references/role-personas.md` as the canonical role
@@ -205,7 +205,7 @@ Equivalent to the natural-language form, just unambiguous.
 |---|---|
 | `team-composer` | Owns the role catalog (`references/role-personas.md`). wear-the-hat consumes it. For multi-role panel discussion, route to team-composer directly. |
 | `sub-agent-coordinator` | Owns sub-agent spawning, briefing templates, model-selection axes, picking-the-role guidance. wear-the-hat's sub-agent mode hands off to coordinator's protocol — no duplication. |
-| `coding-rules` | Lists wear-the-hat in its Companion skills callout. For coding-task role embodiment, the two compose: coding-rules sets the engineering discipline; wear-the-hat applies the lens. |
+| [`cerby`](https://github.com/sorawit-w/cerby) *(if installed)* | Lists wear-the-hat in its Companion skills callout. For coding-task role embodiment, the two compose: cerby sets the engineering discipline; wear-the-hat applies the lens. |
 
 ---
 

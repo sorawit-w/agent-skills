@@ -52,7 +52,7 @@ Invoke with `/whoami`.
 - Calibrating for one specific project, or per-task modes (greenfield vs.
   debugging) → `handshake`.
 - A code "definition of done" — what clears the bar, commit vs. propose →
-  `handshake` for project defaults, `coding-rules` for coding discipline.
+  `handshake` for project defaults, `cerby` (external, if installed) for coding discipline.
 - Accruing corrections over time → the runtime's `feedback`-type memory;
   `whoami` only seeds the first few anti-patterns, it isn't re-run for each.
 - Routine memory edits → the memory-management skill.

@@ -220,7 +220,7 @@ reference actually shows.
 | [`impeccable`](https://github.com/pbakaus/impeccable) *(if available)* | **Verification** companion, not a style source: a deterministic design-quality linter for the *advisory* visual dimensions (spacing rhythm, hierarchy, AI-slop). Complements axe (design-quality vs WCAG — disjoint), stays advisory, suppress its font-pairing + performance rules (they fight self-containment / de-scoped perf). See [references/verification.md](references/verification.md). |
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent + the no-nested-sub-agents invariant. |
 | `ghostwriter` | Owns copy/microcopy. screenwright paints the surface; it does not write the words. |
-| `coding-rules` | When screenwright runs mid-build inside a guard-railed repo, defer to its loop/validation discipline for the surrounding work. |
+| [`cerby`](https://github.com/sorawit-w/cerby) *(if installed)* | When screenwright runs mid-build inside a guard-railed repo, defer to its loop/validation discipline for the surrounding work. |
 
 ---
 

@@ -155,7 +155,7 @@ On an explicit yes:
 - **Touch nothing else.** Create `~/.claude/CLAUDE.md` if absent; if present,
   leave every other line untouched.
 - **Confirm before writing.** This edits the user's global config — show the
-  exact block and require an explicit yes, the standard `coding-rules` uses
+  exact block and require an explicit yes, the standard `cerby` uses
   for its `CLAUDE.md` install. A decline ends it; do not re-ask.
 
 Capability-gated. `~/.claude/CLAUDE.md` is Claude Code's user-global memory
