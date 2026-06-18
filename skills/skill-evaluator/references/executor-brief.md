@@ -164,7 +164,7 @@ discipline. Rerun with a clearer brief.
 ## Filling in the brief
 
 - `{{stated-intent | live-execute}}` — pick one based on the decision tree above
-- `{{name of the skill under test}}` — e.g., `coding-rules`, `team-composer`
+- `{{name of the skill under test}}` — e.g., `cerby`, `team-composer`
 - `{{the user-facing prompt, verbatim}}` — copy from `test_N.md`, do not edit
 
 ## Context hygiene

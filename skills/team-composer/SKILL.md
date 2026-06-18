@@ -606,7 +606,7 @@ sequentially — one role at a time — referencing the discussion conclusion th
 
 For deliberate selection across capability tier, reasoning effort, and speed lane, see `sub-agent-coordinator` § Model Selection — Capability, Reasoning, Speed. That section defines the axes (low/standard/high · off/on · flex/standard/priority), defaults, and disclosure contract. When this skill spawns deliverable sub-agents (per the Phase 6 trigger table), the brief's Constraints section carries `Tier:` / `Thinking:` / `Lane:` lines per that contract.
 
-Downstream consumers (e.g., `coding-rules`) may provide opinionated task-to-tier mappings calibrated to their domain — defer to those mappings when present. Do not silently override `sub-agent-coordinator`'s inherit-by-default behavior, and do not encode vendor-specific model strings (e.g., `opus-4-6`) in this skill — they rot across vendor releases.
+Downstream consumers (e.g., the external `cerby` skill, https://github.com/sorawit-w/cerby) may provide opinionated task-to-tier mappings calibrated to their domain — defer to those mappings when present. Do not silently override `sub-agent-coordinator`'s inherit-by-default behavior, and do not encode vendor-specific model strings (e.g., `opus-4-6`) in this skill — they rot across vendor releases.
 
 ### Opinion Weighting
 

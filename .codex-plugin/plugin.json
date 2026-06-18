@@ -1,6 +1,6 @@
 {
   "name": "agent-skills",
-  "version": "4.21.0",
+  "version": "4.22.0",
   "description": "Auto-triggering skills for Claude Code, Cowork, and OpenAI Codex — expertise that activates for the job at hand. Five tracks: Startup (idea to shipped), Review (product, UX, and eval critique), Code (discipline, stack choices, parallel agents), Calibration (tune how the agent works with you and write in your voice), and Language & Visuals (localization, in-context meaning, pixel art). Skills chain into pipelines and share a common harness — and you can author and audit your own.",
   "author": {
     "name": "sorawit-w",
@@ -9,7 +9,7 @@
   "homepage": "https://github.com/sorawit-w/agent-skills",
   "repository": "https://github.com/sorawit-w/agent-skills",
   "license": "MIT",
-  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory", "gtm", "go-to-market", "marketing", "coding-rules", "guardrails", "agentic-coding", "role", "persona", "lens", "ai-ux", "human-ai", "design-review", "hallucination", "responsible-ai", "eval", "evaluation", "mlops", "fairness", "drift", "ground-truth", "pixel-art", "image-generation", "design-system", "VT323", "hi-density", "title-card", "capability-gated", "whoami", "personalization", "user-profile", "startup-audit", "diligence", "codebase-analysis", "due-diligence", "build-vs-claim", "gamification", "gamification-fit", "behavior-design", "self-determination-theory", "engagement", "restraint", "ghostwriter", "personal-voice", "message-drafting", "ghostwriting", "ai-tells", "register", "voice-samples", "eli5", "screenwright", "frontend", "ui-ux", "accessibility", "axe-core", "render-loop", "playwright", "self-contained-html"],
+  "keywords": ["team", "brand", "validation", "lean-canvas", "vpc", "assumption-testing", "orchestrator", "i18n", "pitch", "skill", "startup", "sub-agent", "tech-stack", "calibration", "memory", "gtm", "go-to-market", "marketing", "role", "persona", "lens", "ai-ux", "human-ai", "design-review", "hallucination", "responsible-ai", "eval", "evaluation", "mlops", "fairness", "drift", "ground-truth", "pixel-art", "image-generation", "design-system", "VT323", "hi-density", "title-card", "capability-gated", "whoami", "personalization", "user-profile", "startup-audit", "diligence", "codebase-analysis", "due-diligence", "build-vs-claim", "gamification", "gamification-fit", "behavior-design", "self-determination-theory", "engagement", "restraint", "ghostwriter", "personal-voice", "message-drafting", "ghostwriting", "ai-tells", "register", "voice-samples", "eli5", "screenwright", "frontend", "ui-ux", "accessibility", "axe-core", "render-loop", "playwright", "self-contained-html"],
   "skills": "./skills/",
   "interface": {
     "displayName": "Agent Skills",

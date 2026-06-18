@@ -105,7 +105,7 @@ check it"). Requires the Playwright MCP for rendering.
 | [`impeccable`](https://github.com/pbakaus/impeccable) *(if available)* | Verification companion — a deterministic design-quality linter that backstops the advisory visual checks. Complements axe (design-quality vs accessibility); findings stay advisory. |
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent. |
 | `ghostwriter` | Owns the words; screenwright paints the surface. |
-| `coding-rules` | When running mid-build in a guard-railed repo, defer to its loop discipline. |
+| [`cerby`](https://github.com/sorawit-w/cerby) *(if installed)* | When running mid-build in a guard-railed repo, defer to its loop discipline. |
 
 ## Status and scope
 

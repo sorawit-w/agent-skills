@@ -5,6 +5,32 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.22.0] — 2026-06-17
+
+Extracted **`coding-rules`** out of this bundle into its own repo,
+[`sorawit-w/cerby`](https://github.com/sorawit-w/cerby), where it ships and versions
+independently as **`cerby`** ("the gate guardian for agentic coding"). The skill grew on a
+near-weekly cadence that dragged the whole-repo version; giving it its own home decouples that
+and gives it a standalone identity. Full commit history travelled with it via `git filter-repo`.
+
+### Removed
+- The `coding-rules` skill (`skills/coding-rules/`), its banner/icon assets
+  (`assets/coding-rules-*`), and its plugin-manifest + skill-graph registration. It is no
+  longer part of this marketplace.
+
+### Changed
+- Inbound references in sibling skills (`whoami`, `wear-the-hat`, `screenwright`,
+  `team-composer`) and the root `CLAUDE.md` harness-vocabulary section now point to the
+  external [`cerby`](https://github.com/sorawit-w/cerby) repo as optional `(if installed)`
+  pointers / the canonical harness-primitive implementation.
+
+### Notes
+- **Migration:** invoke the external `cerby` skill instead of `/coding-rules` —
+  `/plugin marketplace add sorawit-w/cerby && /plugin install cerby@cerby`. There is no
+  back-compat alias; `coding-rules` no longer resolves in this bundle.
+- `sub-agent-coordinator`'s historical "originally extracted from coding-rules" attribution
+  is left intact — it is accurate provenance.
+
 ## [4.21.0] — 2026-06-17
 
 Security hardening for **`coding-rules`**, from a `team-composer` infosec review. Tightens the guardrails that an infosec reviewer would flag — broader secret scanning, prompt-injection provenance framing on shared/agent-authored state, deterministic audit-report escaping — and, as importantly, **labels every guardrail honestly** as mechanically enforced vs. behavioral so the skill stops over-claiming. Designed in a workshop and pressure-tested by a `Plan` sub-agent before implementation.

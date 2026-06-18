@@ -104,7 +104,7 @@ Slash invocation also works:
 |---|---|
 | [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | Owns the canonical role catalog (`role-personas.md`). wear-the-hat consumes it. For multi-role panel discussion of one decision, route to team-composer directly. wear-the-hat will hand off (with your confirmation) when the task is intrinsically multi-role. |
 | [`sub-agent-coordinator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/sub-agent-coordinator) | Owns sub-agent spawning, briefing templates, model-selection axes, and a `Role:` tag for briefing workers. wear-the-hat's sub-agent mode produces a brief and hands off — no duplicate logic. |
-| [`coding-rules`](https://github.com/sorawit-w/agent-skills/tree/main/skills/coding-rules) | Lists wear-the-hat in its Companion skills callout. For coding-task role embodiment, the two compose: coding-rules sets the engineering discipline; wear-the-hat applies the lens. |
+| [`cerby`](https://github.com/sorawit-w/cerby) *(if installed)* | Lists wear-the-hat in its Companion skills callout. For coding-task role embodiment, the two compose: cerby sets the engineering discipline; wear-the-hat applies the lens. |
 | [`brand-workshop`](https://github.com/sorawit-w/agent-skills/tree/main/skills/brand-workshop) | For brand identity deliverables (logo + tagline + strategy brief), wear-the-hat redirects. Brand identity is multi-role + multi-deliverable; the dedicated skill is correct. |
 
 ## Status and scope
