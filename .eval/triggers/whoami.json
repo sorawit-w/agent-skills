@@ -1,0 +1,22 @@
+[
+  {
+    "query": "Who am I? Show me what you remember about me.",
+    "should_trigger": true
+  },
+  {
+    "query": "Show my profile and preferences.",
+    "should_trigger": true
+  },
+  {
+    "query": "What do you know about how I like to work?",
+    "should_trigger": true
+  },
+  {
+    "query": "Calibrate how we work together and set my preferences.",
+    "should_trigger": false
+  },
+  {
+    "query": "Who are you — what model are you and what can you do?",
+    "should_trigger": false
+  }
+]

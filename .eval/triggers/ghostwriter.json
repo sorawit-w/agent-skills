@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Ghostwrite a LinkedIn post in my voice about this launch.",
+    "should_trigger": true
+  },
+  {
+    "query": "Draft this announcement so it sounds like me, not generic AI.",
+    "should_trigger": true
+  },
+  {
+    "query": "Write my conference talk abstract in my own style.",
+    "should_trigger": true
+  },
+  {
+    "query": "Build my go-to-market plan for the launch.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build me an investor pitch deck.",
+    "should_trigger": false
+  },
+  {
+    "query": "Refactor this module for readability.",
+    "should_trigger": false
+  }
+]

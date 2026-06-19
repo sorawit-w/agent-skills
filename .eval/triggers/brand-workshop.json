@@ -1,0 +1,30 @@
+[
+  {
+    "query": "Create a brand identity for my fintech startup — logo, tagline, brief.",
+    "should_trigger": true
+  },
+  {
+    "query": "I need a logo for my new app.",
+    "should_trigger": true
+  },
+  {
+    "query": "Design a brand concept and visual identity for this product.",
+    "should_trigger": true
+  },
+  {
+    "query": "Brainstorm my startup — product, positioning, go-to-market, and branding.",
+    "should_trigger": false
+  },
+  {
+    "query": "Make me a lo-fi pixel-art banner for the repo.",
+    "should_trigger": false
+  },
+  {
+    "query": "Review our product positioning with a brand strategist.",
+    "should_trigger": false
+  },
+  {
+    "query": "Fix this failing unit test.",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "query": "Define this term precisely for our domain glossary.",
+    "should_trigger": true
+  },
+  {
+    "query": "Build a glossary of the key concepts in this spec.",
+    "should_trigger": true
+  },
+  {
+    "query": "What does 'idempotent' mean in the context of our API?",
+    "should_trigger": true
+  },
+  {
+    "query": "Translate this glossary into Japanese.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write me a blog post about our product.",
+    "should_trigger": false
+  }
+]

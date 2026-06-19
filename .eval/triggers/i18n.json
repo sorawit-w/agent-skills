@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Translate this UI into French and Japanese.",
+    "should_trigger": true
+  },
+  {
+    "query": "Internationalize my app's strings and set up locale handling.",
+    "should_trigger": true
+  },
+  {
+    "query": "i18n this component — extract and translate the copy.",
+    "should_trigger": true
+  },
+  {
+    "query": "Define what 'locale' means for our glossary.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write a marketing post for the French launch in my voice.",
+    "should_trigger": false
+  },
+  {
+    "query": "Fix this CSS layout bug.",
+    "should_trigger": false
+  }
+]

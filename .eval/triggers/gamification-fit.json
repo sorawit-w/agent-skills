@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Should I add gamification to my habit app? What mechanics fit?",
+    "should_trigger": true
+  },
+  {
+    "query": "Recommend whether points and streaks would help retention here.",
+    "should_trigger": true
+  },
+  {
+    "query": "Does a leaderboard make sense for my B2B dashboard?",
+    "should_trigger": true
+  },
+  {
+    "query": "Grill my startup and give me a verdict.",
+    "should_trigger": false
+  },
+  {
+    "query": "Assemble a team to brainstorm my product roadmap.",
+    "should_trigger": false
+  },
+  {
+    "query": "Generate a pixel-art character sprite.",
+    "should_trigger": false
+  }
+]

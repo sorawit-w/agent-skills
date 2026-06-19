@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Build this screen from the mockup and make sure it renders correctly.",
+    "should_trigger": true
+  },
+  {
+    "query": "Fix this UI — the layout looks off and it fails accessibility.",
+    "should_trigger": true
+  },
+  {
+    "query": "Paint this component to our brand spec and verify it with a screenshot.",
+    "should_trigger": true
+  },
+  {
+    "query": "Review the UX of my AI product.",
+    "should_trigger": false
+  },
+  {
+    "query": "Convert this HTML screen into a Next.js + Tailwind component.",
+    "should_trigger": false
+  },
+  {
+    "query": "Create a brand identity and logo.",
+    "should_trigger": false
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Review the UX of my AI assistant — does the interaction feel trustworthy?",
+    "should_trigger": true
+  },
+  {
+    "query": "Evaluate the user experience of my chatbot's error states.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is my AI product's UX any good? Give me a heuristic review.",
+    "should_trigger": true
+  },
+  {
+    "query": "Review my eval suite's rubric and assertions.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build and fix this settings screen so it passes an accessibility audit.",
+    "should_trigger": false
+  },
+  {
+    "query": "Help me optimize a database query.",
+    "should_trigger": false
+  }
+]

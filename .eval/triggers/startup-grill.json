@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Grill my startup and tell me if it's investable.",
+    "should_trigger": true
+  },
+  {
+    "query": "Kill my idea — stress-test the pitch adversarially.",
+    "should_trigger": true
+  },
+  {
+    "query": "Do a pre-mortem on my business model canvas and give a verdict.",
+    "should_trigger": true
+  },
+  {
+    "query": "Audit my built product from the repo and the live URL.",
+    "should_trigger": false
+  },
+  {
+    "query": "Assemble a team to discuss my startup strategy.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build me the pitch deck.",
+    "should_trigger": false
+  }
+]

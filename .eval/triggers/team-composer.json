@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Assemble a team to brainstorm this product feature.",
+    "should_trigger": true
+  },
+  {
+    "query": "Let's workshop this — who should be involved?",
+    "should_trigger": true
+  },
+  {
+    "query": "Give me multi-perspective feedback on this product decision.",
+    "should_trigger": true
+  },
+  {
+    "query": "Create a brand identity package — logo and tagline.",
+    "should_trigger": false
+  },
+  {
+    "query": "Fan out these three independent build tasks to parallel agents.",
+    "should_trigger": false
+  },
+  {
+    "query": "Run a solo one-question-at-a-time design dialogue.",
+    "should_trigger": false
+  }
+]

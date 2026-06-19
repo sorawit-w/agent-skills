@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Build me a lean canvas to validate this idea.",
+    "should_trigger": true
+  },
+  {
+    "query": "I need a value proposition canvas and lean canvas as editable artifacts.",
+    "should_trigger": true
+  },
+  {
+    "query": "Make me a VPC for my product.",
+    "should_trigger": true
+  },
+  {
+    "query": "What should I validate first — find my riskiest assumption?",
+    "should_trigger": false
+  },
+  {
+    "query": "Grill my canvas and give me a verdict.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write my launch copy.",
+    "should_trigger": false
+  }
+]

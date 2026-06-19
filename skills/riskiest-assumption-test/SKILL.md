@@ -12,6 +12,8 @@ description: >
   "what have we proven?". Upstream half of validation closure; the downstream half loops
   results back into the canvas. NOT a discussion of testing in general (use `team-composer`);
   NOT a generic experiment platform. Produces a plan, not the experiments.
+metadata:
+  tier: draft
 ---
 
 # Riskiest-Assumption Test

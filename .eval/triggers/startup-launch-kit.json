@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Build me the full startup launch kit — all the artifacts.",
+    "should_trigger": true
+  },
+  {
+    "query": "I want the whole kit: brand, canvas, RAT, deck, and grill.",
+    "should_trigger": true
+  },
+  {
+    "query": "Orchestrate the complete set of startup artifacts for me.",
+    "should_trigger": true
+  },
+  {
+    "query": "Just build me a lean canvas.",
+    "should_trigger": false
+  },
+  {
+    "query": "Just build me a pitch deck.",
+    "should_trigger": false
+  },
+  {
+    "query": "Grill my existing idea.",
+    "should_trigger": false
+  }
+]

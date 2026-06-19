@@ -15,6 +15,8 @@ description: >
   `handshake`), routine memory edits or CRUD (use memory-management), or
   brand-voice work. `whoami` is person-level and broad; `handshake` is
   project-level and feeds from it.
+metadata:
+  tier: draft
 ---
 
 # whoami

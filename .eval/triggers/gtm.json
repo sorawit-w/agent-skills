@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Build my go-to-market plan for this launch.",
+    "should_trigger": true
+  },
+  {
+    "query": "I need a GTM strategy — channels, messaging, launch sequence.",
+    "should_trigger": true
+  },
+  {
+    "query": "Help me plan the launch motion for my SaaS.",
+    "should_trigger": true
+  },
+  {
+    "query": "Build me a lean canvas to validate the idea first.",
+    "should_trigger": false
+  },
+  {
+    "query": "Ghostwrite the launch email in my voice.",
+    "should_trigger": false
+  },
+  {
+    "query": "Set up CI for my repo.",
+    "should_trigger": false
+  }
+]

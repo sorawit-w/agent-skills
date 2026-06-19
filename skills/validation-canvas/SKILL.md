@@ -13,6 +13,8 @@ description: >
   `business-model-canvas` (BMC) skill; the Lean Canvas is the right altitude for an idea-stage
   founder. For nine-block BMC (board packets, regulated pitches), use `team-composer` with
   `@startup_strategist`.
+metadata:
+  tier: draft
 ---
 
 # Validation Canvas

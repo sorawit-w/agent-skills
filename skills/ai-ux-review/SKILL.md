@@ -12,6 +12,8 @@ description: >
   execution. Does NOT trigger for: lean-canvas work (`validation-canvas`); adversarial
   pre-mortem with a verdict (`startup-grill`); SKILL.md audits (`skill-evaluator`); brand/logo
   work (`brand-workshop`); building eval pipelines or writing eval code (names gaps only).
+metadata:
+  tier: draft
 ---
 
 # AI UX Review

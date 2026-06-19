@@ -13,6 +13,8 @@ description: >
   illustration, SVG icon/logo work (`brand-workshop`), photo-real generation, algorithmic
   p5.js art (`algorithmic-art`), or charts/dashboards. Never names living artists; original
   compositions only.
+metadata:
+  tier: draft
 ---
 
 # pixel-art

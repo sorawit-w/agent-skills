@@ -13,6 +13,8 @@ description: >
   (`ai-ux-review`); designing an actual game (`team-composer` @game_designer); implementing
   the mechanics (suggests, then hands off); dark-pattern or engagement-maximization hacks
   (refused).
+metadata:
+  tier: draft
 ---
 
 # Gamification Fit

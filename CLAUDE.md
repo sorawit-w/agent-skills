@@ -230,6 +230,46 @@ Not every section is required for every release. `Added` / `Changed` / `Fixed` /
 
 ---
 
+## Library conventions
+
+Authoring a *single* skill — draft → test → iterate → optimize the description — is owned by Anthropic's `skill-creator`. Use it; reference it; do not restate it here. This section covers only what `skill-creator` doesn't: how a skill behaves **inside a growing library**. Two failure modes never show up in single-skill evaluation (which scores against a no-skill baseline, in isolation) — they appear only once skills co-load.
+
+### The library gate — run before merging a new or changed skill
+
+- **Routing regression — does the new skill steal triggering from a neighbor?** Keep a small trigger-eval set per skill under `.eval/triggers/<skill>.json` (the existing `.eval/` shape — an array of `{ "query": ..., "should_trigger": true|false }`, with at least one *neighbor-steal* case for skills that have adjacent siblings). Before merging skill N, read the *existing* sets **together with** N present, not one at a time. If a previously-passing skill now mis-fires, the descriptions overlap — sharpen the "does NOT trigger on…" boundary (the cross-platform `description`, then `instructions`/body) before merge. This is the one net-new mechanism: `skill-creator` and `skill-evaluator` both audit a skill *alone*, so neither sees a cross-skill collision.
+- **Co-load token budget — is the body lean enough to ride alongside 5–15 active skills?** No new rule — this is already enforced by progressive disclosure (push detail to `references/`), prose economy (Design principle #7), and `skill-evaluator`'s harness lens. Quick test before merge: "would this body still be fine loaded next to the busiest skills?"
+
+This gate stays **manual prose** by design — see "Don't start with meta-skills" below.
+
+### Authority tiers — annotate every skill
+
+Every `SKILL.md` carries `metadata.tier` in frontmatter. This is a **review convention**, not runtime-enforced.
+
+```yaml
+metadata:
+  tier: draft   # read-only | draft | act
+```
+
+- `read-only` — fetches, queries, or describes; never produces a mutable artifact or mutates state.
+- `draft` — produces content for human review; cannot send or commit. **Default for this repo** — nearly every skill here is a content-producer.
+- `act` — performs irreversible operations.
+
+**Graduation rule:** anything new — *including anything an agent drafts for you* — enters at `draft`. It earns `act` only after it has run clean across several real uses **and** you've eyeballed its tool *trajectory*, not just its final output (the right answer reached via a wrong sequence of tool calls is the failure that bites at `act`-tier). Where the runtime honors it, pair an `act` skill with a tightly scoped `allowed-tools`.
+
+### Supply-chain hygiene
+
+This repo's standing practice is **cross-reference, don't vendor**: we point at external skills and we absorb *ideas with citation* (precedent: `GoogleChrome/modern-web-guidance` and `nidhinjs/prompt-master`, both cited in `skill-evaluator/references/`), but we do not copy external skill *code* into the tree — all skills here are first-party. When you absorb an idea, cite the source and license inline where it lands.
+
+Dormant rule for if we ever *do* vendor an external skill: a skill is code that runs in your context. Trust tier (first-party vendor > your own/org > community; treat community as audit-before-adopt); read its `scripts/` before installing (no unscanned deps, no hardcoded secrets or absolute paths); **pin** the commit you vendored and record where it came from (a `SOURCE` note or a README line).
+
+### Don't start with meta-skills
+
+Keep the library gate manual until it has caught a real regression at least once. A self-improving `library-regression-checker` *meta-skill* built on weak evals quietly degrades the library while reporting that it's improving. The shift-left instinct (`docs/skills-policy.md`) argues for a script — defer it; the gate's job first is to prove it catches a boundary that prose review missed.
+
+> **See also** `docs/skills-policy.md` — the canonical global skills policy (skill vs. always-on context, write-software-not-rules, the mental model). Its skill-vs-passive-context point overlaps this repo's harness vocabulary ("Context engineering" / "Progressive disclosure") — that doc owns the global-settings framing, this file owns the in-repo authoring framing. Point, don't restate.
+
+---
+
 ## Visual style
 
 All banners and icons follow a consistent pixel-art aesthetic. Match the existing work; don't introduce a new visual language for a new skill.

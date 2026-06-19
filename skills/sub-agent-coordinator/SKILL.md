@@ -5,6 +5,8 @@ description: >
   Use this skill when delegating focused tasks to parallel sub-agents, coordinating
   iterations, or architecting complex workflows. Load this whenever you need
   spawning signals, briefing templates, coordination patterns, or communication protocols.
+metadata:
+  tier: draft
 ---
 
 # Sub-Agent Coordinator
@@ -445,6 +447,18 @@ Delegation doesn't end at spawning. Active coordination prevents stuck sub-agent
 - Maintain a mental model of what each sub-agent is working on and when it should finish
 
 **When a sub-agent reports `BLOCKED_SCOPE_EXPANDED`** — treat it as a planning event, not a failure. The sub-agent's scoped discovery has surfaced something the original brief missed. Three valid responses: (1) approve the proposed split and spawn the children as separate sub-agents, (2) narrow the scope and re-brief the original sub-agent with tighter Done-when criteria, or (3) reject the split and accept the partial work. Don't silently ignore the proposal — chronic over-scoping AND chronic ignored proposals both indicate briefing discipline worth investigating.
+
+---
+
+## State Passing Between Skills / Sub-agents
+
+**Don't use the context window as the message bus.** Piping one node's raw LLM output straight into the next node's prompt obfuscates state, makes runs non-deterministic, and compounds errors stage to stage — by the third hop you can't tell what each node actually received.
+
+**Pass pointers, not payloads.** Write each intermediate artifact to a file and hand the next node a path/URI instead of the inlined content. This keeps active context small and makes every handoff inspectable after the fact — when a pipeline produces a wrong result, you can read exactly what stage 2 handed stage 3. This is the **file message bus** primitive: the thing that lets a multi-step workflow stay reliable instead of accumulating drift.
+
+This is distinct from state *preservation* (the `cerby` `.ai/memory.log` / `.ai/STATUS.md` pattern): that carries one agent's context across session boundaries; this carries artifacts *between* parallel or piped agents within a run. Same primitive family (durable, file-backed, inspectable), different axis — single-agent-over-time vs. multi-agent-across-handoffs.
+
+It pairs directly with the **Pipeline: Producer → Consumer** pattern above: the producer's deliverable is a file path, and the consumer's brief names that path under "Files to Read First" rather than embedding the producer's output.
 
 ---
 

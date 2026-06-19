@@ -13,6 +13,8 @@ description: >
   inside a sentence ("what does X mean here", "define X in context") — that is the `define`
   skill. This skill is for i18n files and shipping localized strings, not inline word-meaning
   lookups.
+metadata:
+  tier: draft
 ---
 
 # i18n — Translation Files & Cultural Rewriting

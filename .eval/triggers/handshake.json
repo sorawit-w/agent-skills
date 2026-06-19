@@ -1,0 +1,86 @@
+[
+  {
+    "query": "/handshake",
+    "should_trigger": true
+  },
+  {
+    "query": "/handshake --project",
+    "should_trigger": true
+  },
+  {
+    "query": "Let's calibrate how we work together — I'm tired of generic answers.",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a working agreement before we dive into this codebase.",
+    "should_trigger": true
+  },
+  {
+    "query": "I want to give you some context about how I prefer to be helped before we start this project.",
+    "should_trigger": true
+  },
+  {
+    "query": "Run that calibration ritual on me.",
+    "should_trigger": true
+  },
+  {
+    "query": "Tune in to me before we start the next sprint.",
+    "should_trigger": true
+  },
+  {
+    "query": "Show me what you remember about me, then ask what would actually help you collaborate with me better.",
+    "should_trigger": true
+  },
+  {
+    "query": "Get to know me before we work on this — I've noticed your defaults don't match my preferences.",
+    "should_trigger": true
+  },
+  {
+    "query": "I'd like to seed my preferences for this project — what kind of collaborator I am, what I find irritating in past AI tools, that kind of stuff.",
+    "should_trigger": true
+  },
+  {
+    "query": "Help me build a one-page resume highlighting my Lead Software Engineer experience at UPS — focus on frontend wins.",
+    "should_trigger": false
+  },
+  {
+    "query": "Get to know my codebase before suggesting changes — start with the auth module.",
+    "should_trigger": false
+  },
+  {
+    "query": "Hi there, nice to meet you! How are you doing today?",
+    "should_trigger": false
+  },
+  {
+    "query": "I'm onboarding a new teammate next week, can you help me put together a Day 1 / Week 1 buddy plan?",
+    "should_trigger": false
+  },
+  {
+    "query": "Tell me about yourself — what model are you, what can you do?",
+    "should_trigger": false
+  },
+  {
+    "query": "Calibrate my color profile in this design file — Pantone numbers look wrong.",
+    "should_trigger": false
+  },
+  {
+    "query": "Update my user profile picture on the admin page — file is in /Users/kiang/Downloads/avatar-v2.png",
+    "should_trigger": false
+  },
+  {
+    "query": "Help me write a 200-word speaker bio for a JS conference talk in Tokyo this fall.",
+    "should_trigger": false
+  },
+  {
+    "query": "I just got a 360 review at work and want to set personal calibration goals for Q3.",
+    "should_trigger": false
+  },
+  {
+    "query": "Help me set my Notion preferences — turn off all the AI features and switch to dark mode.",
+    "should_trigger": false
+  },
+  {
+    "query": "Who am I? Show me my profile.",
+    "should_trigger": false
+  }
+]

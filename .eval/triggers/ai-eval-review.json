@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Review my LLM eval suite — are these assertions actually measuring quality?",
+    "should_trigger": true
+  },
+  {
+    "query": "Audit my eval harness for an AI product, I think the rubric is weak.",
+    "should_trigger": true
+  },
+  {
+    "query": "Critique the eval design for my RAG pipeline.",
+    "should_trigger": true
+  },
+  {
+    "query": "Audit this skill — does the SKILL.md text actually land?",
+    "should_trigger": false
+  },
+  {
+    "query": "Review the UX of my AI chatbot, the onboarding feels off.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write me a new authentication feature.",
+    "should_trigger": false
+  }
+]
