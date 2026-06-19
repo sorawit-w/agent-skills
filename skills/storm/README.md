@@ -67,7 +67,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install storm@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Also installable into any agent via [`npx skills`](https://github.com/vercel-labs/skills): `npx skills add sorawit-w/agent-skills --skill storm`.
@@ -90,7 +90,7 @@ Slash invocation also works:
 | Skill | Relationship |
 |---|---|
 | `deep-research` *(if installed)* | The distinct neighbor. It owns single-topic, source-of-truth research (fan-out → fetch → adversarial verify → one cited report); storm owns multi-perspective research. "Verify this claim" / "the authoritative answer on X" → `deep-research`; "what different lenses reveal about X" → storm. |
-| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The primary caller. When a panel hits a grounding need ("verify the current state of X", "we're guessing here"), it hands off to storm with its active roles as seed perspectives; storm returns a cited briefing the panel folds into its conclusion. |
+| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The intended caller. storm accepts seeded perspectives so that when a panel hits a grounding need ("verify the current state of X", "we're guessing here") it can pass its active roles as the seed set and fold the returned briefing into its conclusion. **The team-composer-side routing lands in a separate follow-up** (see Status); until then the hand-off is manual, not auto-routed. |
 | [`sub-agent-coordinator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/sub-agent-coordinator) | If per-perspective Q&A is heavy enough to parallelize, the coordinator owns the spawning/briefing. storm does not duplicate that logic. |
 
 ## Status and scope

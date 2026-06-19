@@ -135,7 +135,7 @@ Gate on "is a retrieval tool available in this runtime?" — not on which agent 
 | Skill | Relationship |
 |---|---|
 | `deep-research` *(if installed)* | The distinct neighbor. `deep-research` owns single-topic, source-of-truth research (fan-out → fetch → adversarial verify → one cited report). storm owns multi-perspective research. Route "verify this claim" / "give me the authoritative answer on X" there; route "what do different lenses reveal about X" here. |
-| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The primary caller. When a panel hits a grounding need ("verify the current state of X", "survey what's known about Y", "we're guessing here"), it hands off to storm with the active roles as seed perspectives; storm returns a cited briefing. |
+| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The intended caller — storm accepts seeded perspectives so a panel can hand off a grounding need ("verify the current state of X", "survey what's known about Y", "we're guessing here") with its active roles as the seed set, and get a cited briefing back. **Note:** the team-composer-side routing (a storm row in its Cross-Skill table + a grounding-need trigger) lands in a separate follow-up; until it ships, this hand-off is invoked manually or by pointing team-composer's output at `/storm`, not auto-routed. |
 | [`sub-agent-coordinator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/sub-agent-coordinator) | If per-perspective Q&A is heavy enough to parallelize, the coordinator owns the spawning/briefing — storm does not duplicate that logic. |
 
 ---
