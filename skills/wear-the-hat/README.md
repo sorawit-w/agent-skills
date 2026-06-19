@@ -76,7 +76,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install wear-the-hat@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Also installable into any agent via [`npx skills`](https://github.com/vercel-labs/skills): `npx skills add sorawit-w/agent-skills --skill wear-the-hat`.

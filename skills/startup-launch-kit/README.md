@@ -126,7 +126,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install startup-launch-kit@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 The orchestrator depends on the five pipeline skills also being installed (they are part of the same `agent-skills` plugin bundle, so a single install covers all six).

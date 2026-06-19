@@ -287,7 +287,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.3.0`.** Adds **`storm`** — a perspective-driven, retrieval-grounded research skill that returns a **cited briefing** (an agent-native port of Stanford's STORM). It discovers diverse perspectives on a topic, asks grounded questions from each, and synthesizes a source-attributed briefing where every claim is cited or tagged `[unverified]`. Runs standalone (`/storm <topic>`) or as a grounding hand-off target for `team-composer`. Positioned as a **distinct neighbor** to `deep-research` (perspective-breadth, not source-breadth). Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.3.1`.** Documentation fix — corrects the `/plugin install` command across every skill README. Many pointed at `/plugin install <skill-name>@sorawit-w`, but the marketplace ships a single `agent-skills` plugin, so those resolved to nothing; all are now `/plugin install agent-skills@sorawit-w` (which installs the whole shelf). Per-skill install stays available via `npx skills add … --skill <name>`. The prior release added **`storm`** — perspective-driven, retrieval-grounded research returning a cited briefing (an agent-native port of Stanford's STORM), standalone or as a `team-composer` grounding hand-off. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

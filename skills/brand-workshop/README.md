@@ -100,7 +100,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install brand-workshop@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "help me brand this," "I need a logo," "design a brand identity," "come up with a tagline," "brand concept for my app," or providing a business overview and asking for visual identity work.

@@ -87,7 +87,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install pitch-deck@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 ## Related skills

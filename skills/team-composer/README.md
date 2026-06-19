@@ -88,7 +88,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install team-composer@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "brainstorm this with me," "who should be involved," "assemble a team," "let's workshop this," "plan this feature," or "review this project."

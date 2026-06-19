@@ -110,7 +110,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install tech-stack-recommendations@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "what stack should I use," "new project," "pick a runtime," "Bun vs. Node," "SvelteKit vs. Next.js," "database and auth for [X]," "monorepo setup," or "migrate from Node to Bun."

@@ -107,7 +107,7 @@ reads the code/URL and gives that call, grounded in what's actually there.
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install agent-skills
+/plugin install agent-skills@sorawit-w
 ```
 
 Then point it at a built product ("grill my startup from this repo"). Install the

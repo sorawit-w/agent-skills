@@ -109,14 +109,10 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install ai-eval-review@sorawit-w
-```
-
-To install the whole shelf:
-
-```
 /plugin install agent-skills@sorawit-w
 ```
+
+Installing the `agent-skills` plugin brings the whole shelf, including this skill.
 
 ## Related skills
 

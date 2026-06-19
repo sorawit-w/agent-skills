@@ -5,6 +5,19 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.3.1] — 2026-06-18
+
+Documentation fix. Corrects the `/plugin install` command in every skill README so the install instructions actually work.
+
+### Fixed
+- **`/plugin install` command across all skill READMEs.** Many READMEs told users to run `/plugin install <skill-name>@sorawit-w` (e.g. `team-composer@sorawit-w`), but the marketplace declares exactly one plugin — `agent-skills` — so those commands resolve to a non-existent plugin and install nothing. Normalized every skill README to `/plugin install agent-skills@sorawit-w` (which installs the whole shelf, including that skill). Two READMEs (`ai-ux-review`, `ai-eval-review`) presented a bogus "just this skill" command alongside the correct one; collapsed each to the single working command. Per-skill install remains available via the documented `npx skills add … --skill <name>` path.
+
+### Why
+Surfaced by a Codex review on the `storm` PR ([#36](https://github.com/sorawit-w/agent-skills/pull/36)), which flagged the broken command in `storm`'s README (fixed there). The same mistake was repo-wide: roughly half the skill READMEs carried it. `/plugin install <plugin>@<marketplace>` installs a *plugin*, and this repo ships a single `agent-skills` plugin — there is no per-skill plugin to install by name.
+
+### Notes
+- Docs-only, no behavior change (PATCH). No `SKILL.md` frontmatter touched.
+
 ## [5.3.0] — 2026-06-18
 
 Adds **`storm`** — a perspective-driven, retrieval-grounded research skill that returns a **cited briefing**. An agent-native port of Stanford's [STORM](https://arxiv.org/abs/2402.14207) (NAACL 2024): discover diverse perspectives on a topic, ask grounded questions from each, and synthesize into a source-attributed briefing. Runs standalone (`/storm <topic>`) or as a hand-off target for `team-composer`, inheriting the panel's active roles as seed perspectives.

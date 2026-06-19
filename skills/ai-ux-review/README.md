@@ -105,14 +105,10 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install ai-ux-review@sorawit-w
-```
-
-To install the whole shelf instead of just this skill:
-
-```
 /plugin install agent-skills@sorawit-w
 ```
+
+Installing the `agent-skills` plugin brings the whole shelf, including this skill.
 
 ## Related skills
 
