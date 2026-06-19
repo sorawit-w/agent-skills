@@ -90,7 +90,7 @@ Slash invocation also works:
 | Skill | Relationship |
 |---|---|
 | `deep-research` *(if installed)* | The distinct neighbor. It owns single-topic, source-of-truth research (fan-out → fetch → adversarial verify → one cited report); storm owns multi-perspective research. "Verify this claim" / "the authoritative answer on X" → `deep-research`; "what different lenses reveal about X" → storm. |
-| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The intended caller. storm accepts seeded perspectives so that when a panel hits a grounding need ("verify the current state of X", "we're guessing here") it can pass its active roles as the seed set and fold the returned briefing into its conclusion. **The team-composer-side routing lands in a separate follow-up** (see Status); until then the hand-off is manual, not auto-routed. |
+| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The primary caller. When a panel hits a grounding need ("verify the current state of X", "we're guessing here"), team-composer hands off to storm with its active roles as the seed perspectives and folds the returned cited briefing into its conclusion. Wired as of team-composer v5.4.0 (which also adopted storm's contradiction-map and peer-review lenses). |
 | [`sub-agent-coordinator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/sub-agent-coordinator) | If per-perspective Q&A is heavy enough to parallelize, the coordinator owns the spawning/briefing. storm does not duplicate that logic. |
 
 ## Status and scope
@@ -100,7 +100,7 @@ v0.1. New skill in the agent-skills marketplace.
 - **Supported:** standalone grounded research (`/storm <topic>`), `team-composer` hand-off with seeded perspectives, briefing (default) and report output, contradiction-map + peer-review rigor passes, capability-gated retrieval with clean degradation.
 - **Not supported:** single-source-of-truth research (use `deep-research`), opinion/critique/planning (use `team-composer`), Co-STORM human-in-the-loop, conversation-simulation beyond the bounded Q&A.
 
-The `team-composer` back-port (contradiction map into its Discuss phase, peer-review into its Audit phase) ships as a separate follow-up change.
+The `team-composer` back-port (the grounding-need hand-off row + the contradiction-map lens in its Discuss phase + peer-review/confidence in its Audit phase) shipped in team-composer v5.4.0.
 
 ## Contributions
 

@@ -135,7 +135,7 @@ Gate on "is a retrieval tool available in this runtime?" — not on which agent 
 | Skill | Relationship |
 |---|---|
 | `deep-research` *(if installed)* | The distinct neighbor. `deep-research` owns single-topic, source-of-truth research (fan-out → fetch → adversarial verify → one cited report). storm owns multi-perspective research. Route "verify this claim" / "give me the authoritative answer on X" there; route "what do different lenses reveal about X" here. |
-| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The intended caller — storm accepts seeded perspectives so a panel can hand off a grounding need ("verify the current state of X", "survey what's known about Y", "we're guessing here") with its active roles as the seed set, and get a cited briefing back. **Note:** the team-composer-side routing (a storm row in its Cross-Skill table + a grounding-need trigger) lands in a separate follow-up; until it ships, this hand-off is invoked manually or by pointing team-composer's output at `/storm`, not auto-routed. |
+| [`team-composer`](https://github.com/sorawit-w/agent-skills/tree/main/skills/team-composer) | The primary caller. When a panel hits a grounding need ("verify the current state of X", "survey what's known about Y", "we're guessing here"), team-composer hands off to storm with its active roles as the seed perspectives; storm returns a cited briefing the panel folds into its conclusion. The team-composer-side routing — a storm row in its Cross-Skill table + a grounding-need trigger, plus the contradiction-map and peer-review lenses storm seeded — is wired as of team-composer v5.4.0. |
 | [`sub-agent-coordinator`](https://github.com/sorawit-w/agent-skills/tree/main/skills/sub-agent-coordinator) | If per-perspective Q&A is heavy enough to parallelize, the coordinator owns the spawning/briefing — storm does not duplicate that logic. |
 
 ---
@@ -154,7 +154,7 @@ Equivalent to the natural-language trigger, just unambiguous.
 
 ## Status
 
-v0.1 — new skill. Ports the STORM *mechanism* (perspective discovery → grounded per-perspective Q&A → cited synthesis), bounded by two knobs (`max_perspectives`, `max_turns_per_perspective`). The `team-composer` back-port (contradiction map into its Discuss phase, peer-review into its Audit phase) is tracked as a separate follow-up.
+v0.1 — new skill. Ports the STORM *mechanism* (perspective discovery → grounded per-perspective Q&A → cited synthesis), bounded by two knobs (`max_perspectives`, `max_turns_per_perspective`). The `team-composer` back-port (the grounding-need hand-off row + the contradiction-map lens in its Discuss phase + peer-review/confidence in its Audit phase) shipped in team-composer v5.4.0.
 
 ## When to use this skill
 
