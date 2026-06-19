@@ -102,7 +102,7 @@ add play, the most important thing to *not* gamify, and the hand-off next step.
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install agent-skills
+/plugin install agent-skills@sorawit-w
 ```
 
 Then invoke naturally ("where should I gamify this app for [goal]?") or via

@@ -105,7 +105,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install skill-evaluator@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "evaluate this skill," "audit a skill," "stress-test my skill," or "does this skill actually work."

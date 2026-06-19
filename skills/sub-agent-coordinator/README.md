@@ -70,7 +70,7 @@ This skill is distributed as a [Claude Code](https://docs.claude.com/en/docs/cla
 
 ```
 /plugin marketplace add sorawit-w/agent-skills
-/plugin install sub-agent-coordinator@sorawit-w
+/plugin install agent-skills@sorawit-w
 ```
 
 Once installed, Claude picks the skill up automatically from the description in its `SKILL.md` frontmatter. Invocation triggers on phrases like "delegate this," "fan out the work," "spawn sub-agents," "coordinate this rollout," or any prompt where the work is clearly parallelizable across more than one file or domain.
