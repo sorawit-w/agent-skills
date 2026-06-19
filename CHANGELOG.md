@@ -5,6 +5,24 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.4.0] — 2026-06-19
+
+Wires the `team-composer` ↔ `storm` integration — the back-port deferred when `storm` shipped (5.3.0). `team-composer` now knows when to hand a grounding need off to `storm`, and adopts the two rigor lenses `storm` carried over from STORM.
+
+### Added
+- **`storm` row in `team-composer`'s Cross-Skill Integration table** — a **grounding-need** hand-off trigger. When the panel is reasoning about external facts it can't verify ("verify the current state of X", "we're guessing here"), it hands off to `storm` with the active roles as seed perspectives and folds the returned cited briefing into its conclusion. Routes single-claim fact-checks to `deep-research` instead (storm is multi-perspective, not source-of-truth).
+- **Contradiction-map lens in `team-composer`'s Discuss phase (Round 3 synthesis)** — beyond noting dissent, the PM now names where roles **clash**, where they **converge**, and the **blind spot** (what no role raised that the brief needed), surfacing the blind spot as an Open Question. Borrowed from `storm`'s contradiction map.
+- **Peer-review / confidence lens in `team-composer`'s Audit phase (6.5)** — a new audit criterion flags claims asserted confidently without grounding (confidence = evidence-backing, not fluency) and recommends a `storm` grounding hand-off where the panel was guessing about the outside world.
+
+### Changed
+- `storm`'s SKILL.md + README updated: `team-composer` is now described as the **primary caller** (the routing is live), replacing the "intended caller / pending follow-up / manual hand-off" caveats.
+
+### Why
+When `storm` shipped (5.3.0), its docs advertised a `team-composer` hand-off that team-composer's own text didn't yet know about — flagged at the time (and by a Codex review) as an over-claim to resolve in a follow-up. This release closes that loop. The two lenses are deliberately lightweight, attributed augmentations of existing structure (Round 3 synthesis already noted dissent; Phase 6.5 already hunted blind spots) — not new phases — keeping team-composer's body lean. The reciprocal `deep-research` boundary is repeated on the team-composer side so the panel routes source-of-truth questions correctly.
+
+### Notes
+- Backwards-compatible (MINOR — additive behavior on an existing skill). `team-composer`'s frontmatter `description` (its triggering) is unchanged.
+
 ## [5.3.1] — 2026-06-18
 
 Documentation fix. Corrects the `/plugin install` command in every skill README so the install instructions actually work.

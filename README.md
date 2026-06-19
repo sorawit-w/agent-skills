@@ -287,7 +287,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.3.1`.** Documentation fix — corrects the `/plugin install` command across every skill README. Many pointed at `/plugin install <skill-name>@sorawit-w`, but the marketplace ships a single `agent-skills` plugin, so those resolved to nothing; all are now `/plugin install agent-skills@sorawit-w` (which installs the whole shelf). Per-skill install stays available via `npx skills add … --skill <name>`. The prior release added **`storm`** — perspective-driven, retrieval-grounded research returning a cited briefing (an agent-native port of Stanford's STORM), standalone or as a `team-composer` grounding hand-off. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.4.0`.** Wires the `team-composer` ↔ `storm` integration. `team-composer` now hands off to `storm` on a **grounding need** (the panel is reasoning about external facts it can't verify — "we're guessing here"), passing its active roles as seed perspectives and folding the returned cited briefing into its conclusion; it also adopts two rigor lenses `storm` carried from STORM — a **contradiction map** (clash / converge / blind spot) in its Discuss phase and a **confidence-vs-grounding** check in its Audit phase. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.
