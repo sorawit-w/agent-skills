@@ -74,3 +74,35 @@ This is where an agent learns your name, language, and how you like to be addres
 - Language: [e.g., non-native English speaker — keep English natural, don't talk down; gloss uncommon words/idioms in parentheses on first use; keep technical terms unchanged]
 - Role/domain context: [e.g., frontend-leaning fullstack engineer with strong UX interest]
 ```
+
+This is your personal branding. Use an agent to help fill it out.
+```
+## Artifact theming (my brand)
+Visual artifact theming — match my design system <(optional: link to your DESIGN.md / site / brand kit)>. Applies when you build a STANDALONE visual artifact (full HTML page, slide deck, standalone SVG).
+Default to LIGHT; use DARK only when I ask for dark.
+
+Fonts (both themes): display "<DISPLAY FONT>", body "<BODY FONT>", mono "<MONO FONT>".
+
+Discipline (non-negotiable, both themes):
+- The accent (<ACCENT NAME>) is a MARK, never a fill — max 2–3 per view (links, underline, one status dot, hover). Never button/hero/block backgrounds.
+- Structure color = lines, labels, frames, mono tags only — never a filled area.
+- Flat: no gradients, no drop shadows, no glassmorphism. Motion animates only transform/opacity, with prefers-reduced-motion honored.
+- Mono only for labels/tags/status — never body text.
+
+Vibe: <ONE SENTENCE naming the feeling — e.g. "calm, deliberate competence; restraint is the flex">.
+
+Non-negotiable (keep regardless of brand):
+- AA contrast floor everywhere (≥4.5:1 normal text, ≥3:1 large). Background never pure white or pure black.
+
+LIGHT (default):
+- bg <#______> · surface <#______> · text <#______> · secondary <#______> · muted <#______>
+- accent <#______> · structure <#______> · border <#______>
+
+DARK (only when I ask for dark — delete if light-only):
+- bg <#______> · surface <#______> · text <#______> · secondary <#______> · muted <#______>
+- accent <#______> · structure <#______> · border <#______>
+
+For quick INLINE chat widgets (not standalone artifacts): keep them native to the host UI and use only the accent — don't force your bg or fonts onto them.
+
+Applies to visual artifacts only; doesn't change how prose is written.
+```
