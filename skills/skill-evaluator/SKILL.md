@@ -12,6 +12,8 @@ description: >
   all `skill-creator`. If the request mixes both, start with `skill-creator` and chain here.
   Hard boundary: `skill-creator` builds, benchmarks, measures variance, and optimizes
   triggering; this skill does NONE of those — it asks "does the text land?".
+metadata:
+  tier: draft
 ---
 
 # Skill Evaluator

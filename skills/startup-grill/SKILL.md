@@ -13,6 +13,8 @@ description: >
   one-pager), never a codebase. Do NOT use for collaborative brainstorming, canvas
   construction, assumption-test design, or pitch-deck building (those route to the named
   constructive skills).
+metadata:
+  tier: draft
 ---
 
 # Startup Grill

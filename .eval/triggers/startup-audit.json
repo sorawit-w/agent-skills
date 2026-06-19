@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Audit my startup from the repo — should I continue, pivot, or kill it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Does the code match the pitch? Grill my built product from the codebase.",
+    "should_trigger": true
+  },
+  {
+    "query": "Here's my repo and live URL — give me a Continue/Pivot/Kill verdict.",
+    "should_trigger": true
+  },
+  {
+    "query": "Grill my lean canvas and pitch deck for a verdict.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build me a lean canvas to validate the idea before I build.",
+    "should_trigger": false
+  },
+  {
+    "query": "Generate the full 5-artifact startup kit.",
+    "should_trigger": false
+  }
+]

@@ -12,6 +12,8 @@ description: >
   trigger on revising a LIVE brand — "refresh our brand", "update our style guide", "evolve
   our identity", "audit our logo" — those go to `team-composer` (@brand_strategist /
   @senior_copywriter) and the `brand-voice:*` family. Generates net-new identity only.
+metadata:
+  tier: draft
 ---
 
 # Brand Workshop

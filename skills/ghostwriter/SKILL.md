@@ -27,6 +27,8 @@ tags:
   - ghostwriting
   - ai-tells
   - register
+metadata:
+  tier: draft
 ---
 
 # ghostwriter

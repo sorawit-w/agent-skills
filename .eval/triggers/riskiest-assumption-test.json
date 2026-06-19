@@ -1,0 +1,26 @@
+[
+  {
+    "query": "What's the riskiest assumption in my startup and how do I test it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Build me a riskiest-assumption test plan.",
+    "should_trigger": true
+  },
+  {
+    "query": "What should I validate first before building?",
+    "should_trigger": true
+  },
+  {
+    "query": "Build me the full lean canvas and value-prop canvas.",
+    "should_trigger": false
+  },
+  {
+    "query": "Grill my idea and give me a kill/pivot verdict.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write the launch announcement.",
+    "should_trigger": false
+  }
+]

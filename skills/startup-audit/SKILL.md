@@ -30,6 +30,8 @@ tags:
   - business-model
   - verdict
   - triage
+metadata:
+  tier: draft
 ---
 
 # Startup Audit

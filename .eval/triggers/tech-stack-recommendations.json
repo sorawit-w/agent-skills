@@ -1,0 +1,22 @@
+[
+  {
+    "query": "What tech stack should I use for this new project?",
+    "should_trigger": true
+  },
+  {
+    "query": "Recommend a stack — we're choosing between Next.js and SvelteKit.",
+    "should_trigger": true
+  },
+  {
+    "query": "Evaluate our current stack for this migration.",
+    "should_trigger": true
+  },
+  {
+    "query": "Assemble a team to discuss our whole architecture.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build me the actual app once we've picked the stack.",
+    "should_trigger": false
+  }
+]

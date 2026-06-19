@@ -1,0 +1,22 @@
+[
+  {
+    "query": "Wear the hat of a security specialist and review this design.",
+    "should_trigger": true
+  },
+  {
+    "query": "Answer this as a clinical psychologist would.",
+    "should_trigger": true
+  },
+  {
+    "query": "Be my devil's advocate as a skeptical PM for a moment.",
+    "should_trigger": true
+  },
+  {
+    "query": "Assemble a full team of roles to debate this decision.",
+    "should_trigger": false
+  },
+  {
+    "query": "Fix this bug in the parser.",
+    "should_trigger": false
+  }
+]

@@ -1,6 +1,8 @@
 ---
 name: gtm
 description: Phased go-to-market for startup products. Builds a GTM playbook from upstream artifacts (validation-canvas, pitch-deck, brand-workshop), produces multi-channel content, schedules cadenced tasks, enforces compliance (CAN-SPAM/GDPR/FTC), emits handoff events. Trust ramp P1→P2→P3 (read-only → scheduled → autonomous). Project-local `.gtm/`. Kill switch via HALT file. Triggers on "set up GTM", "create a launch plan", "build a marketing playbook", "kick off go-to-market", "schedule social posts", "post-launch marketing", "growth ops", "draft launch content", or having pipeline output and asking "what's next for getting users". Single-channel asks for a startup product also trigger. NOT for brand identity (`brand-workshop`), pitch decks (`pitch-deck`), lean canvas (`validation-canvas`), adversarial review (`startup-grill`), one-shot non-startup content (`marketing:content-creation`), CRM/sales. NOT Google Tag Manager (different "GTM"). NOT the idiom "going to market with findings".
+metadata:
+  tier: draft
 ---
 
 # GTM

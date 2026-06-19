@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Make a hi-fi pixel art title card for this game.",
+    "should_trigger": true
+  },
+  {
+    "query": "Generate a lo-fi pixel banner matching the repo's aesthetic.",
+    "should_trigger": true
+  },
+  {
+    "query": "I want an 8-bit scene of a lighthouse at dusk.",
+    "should_trigger": true
+  },
+  {
+    "query": "Design a vector logo and brand identity for my startup.",
+    "should_trigger": false
+  },
+  {
+    "query": "Make an algorithmic p5.js generative art piece.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build me a dashboard with charts.",
+    "should_trigger": false
+  }
+]

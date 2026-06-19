@@ -13,6 +13,8 @@ description: >
   `brand-workshop`, `validation-canvas`, and/or `riskiest-assumption-test` output is ready, or
   when `@startup_strategist` + `@vc_partner` are the right lenses. Use it even for a single
   slide.
+metadata:
+  tier: draft
 ---
 
 # Pitch Deck

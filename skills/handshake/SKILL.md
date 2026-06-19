@@ -12,6 +12,8 @@ description: >
   upstream skill suggests calibration because user memory is sparse. NOT for codebase
   orientation, performance-review calibration ("set Q3 goals"), or content gathering (resumes,
   bios, requirements, CV bullets) — those are different jobs handled by other skills.
+metadata:
+  tier: draft
 ---
 
 # Handshake

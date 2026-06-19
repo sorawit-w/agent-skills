@@ -13,6 +13,8 @@ description: >
   reveals. (For a fast verdict rather than the full kit, that's `startup-audit`.) Also via
   `/startup-launch-kit`. Does NOT trigger for single-step requests ("just the canvas", "build
   my deck").
+metadata:
+  tier: draft
 ---
 
 # Startup Launch Kit

@@ -10,6 +10,8 @@ description: >
   of role-based personas to contribute meaningfully. Even if the user only mentions one
   or two roles, use this skill to fill in the gaps — a well-composed team produces better
   results than ad-hoc role selection.
+metadata:
+  tier: draft
 ---
 
 # Team Composer

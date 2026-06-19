@@ -12,6 +12,8 @@ description: >
   (`ai-ux-review`); lean-canvas work (`validation-canvas`); adversarial pre-mortem with a
   verdict (`startup-grill`); SKILL.md audits (`skill-evaluator`); implementing eval pipelines,
   writing eval code, or labeling datasets (this skill names gaps, it does not build them).
+metadata:
+  tier: draft
 ---
 
 # AI Eval Review

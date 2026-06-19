@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Build me an investor pitch deck.",
+    "should_trigger": true
+  },
+  {
+    "query": "I need a fundraising deck for our seed round.",
+    "should_trigger": true
+  },
+  {
+    "query": "Turn our story into a Reveal.js investor deck I can print to PDF.",
+    "should_trigger": true
+  },
+  {
+    "query": "Grill my pitch and tell me if it's investable.",
+    "should_trigger": false
+  },
+  {
+    "query": "Create a brand identity and logo for the company.",
+    "should_trigger": false
+  },
+  {
+    "query": "Build me a lean canvas first.",
+    "should_trigger": false
+  }
+]

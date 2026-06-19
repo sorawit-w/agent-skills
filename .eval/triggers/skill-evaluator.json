@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Audit this skill — does the SKILL.md text actually land when Claude runs it?",
+    "should_trigger": true
+  },
+  {
+    "query": "Find gaps in this skill's rule adherence.",
+    "should_trigger": true
+  },
+  {
+    "query": "Stress-test my skill end-to-end and tell me what's broken.",
+    "should_trigger": true
+  },
+  {
+    "query": "Build a new skill from scratch.",
+    "should_trigger": false
+  },
+  {
+    "query": "Benchmark this skill's performance and optimize its trigger description.",
+    "should_trigger": false
+  },
+  {
+    "query": "Review my LLM product's eval suite.",
+    "should_trigger": false
+  }
+]

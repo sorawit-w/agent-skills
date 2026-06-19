@@ -13,6 +13,8 @@ description: >
   multi-role task. Reuses `team-composer/references/role-personas.md` as the canonical role
   catalog. For panel discussion use `team-composer`; for parallel fan-out use
   `sub-agent-coordinator`.
+metadata:
+  tier: draft
 ---
 
 # wear-the-hat

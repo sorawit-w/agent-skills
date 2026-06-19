@@ -185,9 +185,12 @@ playground.xcworkspace
 ### Project — agent-skills
 
 # Local skill-evaluation workspaces (eval sets, optimization-loop reports,
-# trigger-eval JSON, etc.). Useful locally for pre-shipment audits;
-# regenerated per audit run, not worth tracking.
-.eval/
+# grader traces, etc.). Useful locally for pre-shipment audits; regenerated
+# per audit run, not worth tracking — EXCEPT .eval/triggers/, the durable
+# per-skill trigger-eval corpus the library gate runs before each merge
+# (committed; see CLAUDE.md → "Library conventions").
+.eval/*
+!.eval/triggers/
 
 # Skill-creator iteration workspaces (per-skill eval traces, grader scripts,
 # benchmark JSON, viewer HTML, run logs, packaged .skill bundles). Useful

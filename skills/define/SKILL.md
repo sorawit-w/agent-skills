@@ -26,6 +26,8 @@ tags:
   - vocabulary
   - language-learning
   - comprehension
+metadata:
+  tier: draft
 ---
 
 # define — Contextual Definition & Translation

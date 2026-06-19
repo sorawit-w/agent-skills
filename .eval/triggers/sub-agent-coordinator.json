@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Fan this work out to parallel sub-agents and merge the results.",
+    "should_trigger": true
+  },
+  {
+    "query": "How should I brief and coordinate sub-agents for this refactor?",
+    "should_trigger": true
+  },
+  {
+    "query": "Set up a producer-consumer pipeline across these independent tasks.",
+    "should_trigger": true
+  },
+  {
+    "query": "Assemble a team of roles to brainstorm this feature and give me one answer.",
+    "should_trigger": false
+  },
+  {
+    "query": "Execute this TDD plan one task at a time with review gates.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write me a function to parse this file.",
+    "should_trigger": false
+  }
+]

@@ -5,6 +5,26 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.2.0] — 2026-06-18
+
+Adds the **library-level convention layer** — the concerns that only surface once skills *co-load*, which single-skill authoring (`skill-creator`) doesn't cover. Convention text + annotations only; no new machinery.
+
+### Added
+- **CLAUDE.md → "Library conventions"** section: the **library gate** (cross-skill routing-regression run before merge + a co-load token-budget pointer), **authority tiers** (`read-only`/`draft`/`act` with a graduation rule), **supply-chain hygiene** (codifies the existing cross-reference-don't-vendor + cite-on-absorb practice, with a dormant "if we vendor" rule), and **don't-start-with-meta-skills**.
+- **`docs/skills-policy.md`** — canonical global skills policy (skill vs. always-on context, write-software-not-rules, the mental model). A reference artifact pasted per-surface, not auto-loaded.
+- **`metadata.tier` on all 23 `SKILL.md`** — 22 `draft` (content-producers), `whoami` `read-only`.
+- **`.eval/triggers/<skill>.json` for all 23 skills** — per-skill trigger-eval sets (should-fire / should-not-fire / neighbor-steal) reusing the existing `.eval/` shape; these are the regression set the library gate runs.
+- **`sub-agent-coordinator` → "State Passing Between Skills / Sub-agents"** — pass pointers (file paths), not payloads, through the context window; distinguished from cerby's single-agent file-state.
+
+### Changed
+- Migrated the legacy `.eval/handshake-trigger-eval.json` into `.eval/triggers/handshake.json` under the new convention.
+
+### Why
+A Google-derived spec proposed these conventions against a generic repo layout (`CONTRIBUTING.md`, `evals/triggers/`, a local `skill-creator`) that doesn't match this repo. A `team-composer` workshop re-targeted it to repo reality: conventions land in **CLAUDE.md** (the authoring doc; no external-contributor audience for a `CONTRIBUTING.md`), trigger evals reuse the existing **`.eval/`** shape, and the one genuinely net-new mechanism is the **cross-skill regression run** — `skill-creator` and `skill-evaluator` both audit a skill *alone*, so neither catches a routing collision between co-loaded skills. The gate stays **manual prose** this release per the spec's own "don't start with meta-skills" rule.
+
+### Notes
+- Backwards-compatible (MINOR). Tier is a review convention, not runtime-enforced. The regression-gate script is deferred until the manual gate catches a real regression at least once.
+
 ## [5.1.0] — 2026-06-17
 
 Strengthened **`screenwright`**'s verification gate — within its architecture, not against it.
