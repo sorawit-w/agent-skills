@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="storm — perspectives in, grounded Q&amp;A, cited briefing out" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>storm — perspectives in, grounded Q&amp;A, cited briefing out</title>
+  <desc>Pixel-art banner for the storm Claude Code plugin: title at top, a LENSES card on the left showing four labeled perspective chips (practitioner, skeptic, researcher, economist), a GROUND card in the center showing a question being answered by retrieval with a source tag, and a BRIEF card on the right showing findings ranked by reliability with citation marks and an [unverified] tag. Chapter labels LENSES · GROUND · BRIEF below.</desc>
+
+  <defs>
+    <pattern id="scan-storm-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-storm-li)"/>
+
+  <!-- =========== TITLE BLOCK =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="600" y="88" font-size="44" font-weight="700" fill="#1f2937" letter-spacing="2">storm</text>
+    <text x="600" y="124" font-size="20" fill="#6b7280">perspectives in · grounded · cited out</text>
+    <text x="600" y="154" font-size="12" fill="#9ca3af" letter-spacing="4">LENSES · GROUND · BRIEF</text>
+  </g>
+
+  <!-- =========== CHAPTER MARKERS =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+    <text x="210" y="578" font-size="13" fill="#1f2937" letter-spacing="4">LENSES</text>
+    <text x="600" y="578" font-size="13" fill="#c2410c" font-weight="700" letter-spacing="4">GROUND</text>
+    <text x="995" y="578" font-size="13" fill="#1f2937" letter-spacing="4">BRIEF</text>
+  </g>
+
+  <!-- =========== CARD 1: LENSES =========== -->
+  <g>
+    <rect x="70" y="200" width="280" height="330" fill="#f3e7c9"/>
+    <rect x="70" y="200" width="280" height="5"   fill="#b79a5c"/>
+    <rect x="70" y="525" width="280" height="5"   fill="#b79a5c"/>
+    <rect x="70" y="200" width="5"   height="330" fill="#b79a5c"/>
+    <rect x="345" y="200" width="5"  height="330" fill="#b79a5c"/>
+
+    <rect x="76" y="212" width="268" height="34" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+      <text x="94" y="235" font-size="18" font-weight="700">PERSPECTIVES</text>
+    </g>
+    <rect x="76" y="246" width="268" height="2" fill="#b79a5c"/>
+
+    <!-- lens chip 1: PRACTITIONER -->
+    <g transform="translate(96, 268)">
+      <rect x="0" y="0" width="228" height="48" fill="#fdf7ea"/>
+      <rect x="0" y="0" width="4" height="48" fill="#0e7490"/>
+      <!-- eye/lens glyph -->
+      <rect x="18" y="18" width="16" height="12" fill="#bae6fd"/>
+      <rect x="22" y="20" width="8" height="8" fill="#0e7490"/>
+      <rect x="24" y="22" width="4" height="4" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="52" y="22" font-size="12" font-weight="700" fill="#1f2937">PRACTITIONER</text>
+        <text x="52" y="38" font-size="9" fill="#6b7280">does it work in the field?</text>
+      </g>
+    </g>
+
+    <!-- lens chip 2: SKEPTIC -->
+    <g transform="translate(96, 322)">
+      <rect x="0" y="0" width="228" height="48" fill="#fdf7ea"/>
+      <rect x="0" y="0" width="4" height="48" fill="#b91c1c"/>
+      <rect x="18" y="18" width="16" height="12" fill="#fecaca"/>
+      <rect x="22" y="20" width="8" height="8" fill="#b91c1c"/>
+      <rect x="24" y="22" width="4" height="4" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="52" y="22" font-size="12" font-weight="700" fill="#1f2937">SKEPTIC</text>
+        <text x="52" y="38" font-size="9" fill="#6b7280">where's the disconfirming?</text>
+      </g>
+    </g>
+
+    <!-- lens chip 3: RESEARCHER -->
+    <g transform="translate(96, 376)">
+      <rect x="0" y="0" width="228" height="48" fill="#fdf7ea"/>
+      <rect x="0" y="0" width="4" height="48" fill="#15803d"/>
+      <rect x="18" y="18" width="16" height="12" fill="#dcfce7"/>
+      <rect x="22" y="20" width="8" height="8" fill="#15803d"/>
+      <rect x="24" y="22" width="4" height="4" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="52" y="22" font-size="12" font-weight="700" fill="#1f2937">RESEARCHER</text>
+        <text x="52" y="38" font-size="9" fill="#6b7280">method? sample? n?</text>
+      </g>
+    </g>
+
+    <!-- lens chip 4: ECONOMIST -->
+    <g transform="translate(96, 430)">
+      <rect x="0" y="0" width="228" height="48" fill="#fdf7ea"/>
+      <rect x="0" y="0" width="4" height="48" fill="#c2410c"/>
+      <rect x="18" y="18" width="16" height="12" fill="#fde68a"/>
+      <rect x="22" y="20" width="8" height="8" fill="#c2410c"/>
+      <rect x="24" y="22" width="4" height="4" fill="#1f2937"/>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+        <text x="52" y="22" font-size="12" font-weight="700" fill="#1f2937">ECONOMIST</text>
+        <text x="52" y="38" font-size="9" fill="#6b7280">who pays? what's the cost?</text>
+      </g>
+    </g>
+
+    <!-- footer: knob chip -->
+    <rect x="96" y="490" width="228" height="22" fill="#fdf7ea"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="106" y="505" font-size="9" fill="#6b7280">bounded · max_perspectives=4</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 1 (LENSES -> GROUND) =========== -->
+  <g transform="translate(358, 362)" fill="#6b7280">
+    <rect x="0"  y="6" width="40" height="6"/>
+    <rect x="34" y="0" width="6"  height="6"/>
+    <rect x="40" y="6" width="6"  height="6"/>
+    <rect x="34" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 2: GROUND (grounded Q&A) =========== -->
+  <g>
+    <rect x="412" y="200" width="376" height="330" fill="#ffffff"/>
+    <rect x="412" y="200" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="525" width="376" height="5"   fill="#c9b58a"/>
+    <rect x="412" y="200" width="5"   height="330" fill="#c9b58a"/>
+    <rect x="783" y="200" width="5"   height="330" fill="#c9b58a"/>
+    <rect x="422" y="210" width="356" height="310" fill="#fdf7ea"/>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="440" y="240" font-size="18" font-weight="700" fill="#1f2937" letter-spacing="1">GROUNDED Q&amp;A</text>
+      <text x="760" y="240" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">PER LENS</text>
+    </g>
+    <rect x="436" y="252" width="328" height="2" fill="#c9b58a"/>
+
+    <!-- QUESTION bubble -->
+    <rect x="440" y="268" width="320" height="46" fill="#fef3c7"/>
+    <rect x="440" y="268" width="4" height="46" fill="#c2410c"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="456" y="288" font-size="11" font-weight="700" fill="#c2410c">Q</text>
+      <text x="474" y="288" font-size="11" fill="#1f2937">does the 4-day week</text>
+      <text x="474" y="304" font-size="11" fill="#1f2937">hold output? (skeptic)</text>
+    </g>
+
+    <!-- retrieval action -->
+    <g transform="translate(560, 330)" fill="#0e7490">
+      <rect x="0" y="6" width="34" height="5"/>
+      <rect x="28" y="1" width="5" height="5"/>
+      <rect x="33" y="6" width="5" height="5"/>
+      <rect x="28" y="11" width="5" height="5"/>
+    </g>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" text-anchor="middle">
+      <text x="600" y="332" font-size="10" font-weight="700" fill="#0e7490" letter-spacing="2">RETRIEVE</text>
+    </g>
+
+    <!-- ANSWER + source -->
+    <rect x="440" y="356" width="320" height="60" fill="#dcfce7"/>
+    <rect x="440" y="356" width="4" height="60" fill="#15803d"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="456" y="376" font-size="11" font-weight="700" fill="#15803d">A</text>
+      <text x="474" y="376" font-size="11" fill="#1f2937">trials: output flat or up</text>
+      <text x="474" y="392" font-size="11" fill="#1f2937">in 8 of 10 firms</text>
+      <text x="474" y="408" font-size="9" fill="#6b7280">▸ src: Henley 2023 trial report</text>
+    </g>
+
+    <!-- source->claim map chip -->
+    <rect x="440" y="430" width="320" height="58" fill="#bae6fd"/>
+    <rect x="440" y="430" width="320" height="4" fill="#0e7490"/>
+    <rect x="440" y="484" width="320" height="4" fill="#0e7490"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="456" y="454" font-size="11" font-weight="700" fill="#0e7490" letter-spacing="1">SOURCE → CLAIM MAP</text>
+      <text x="456" y="476" font-size="10" fill="#1f2937">every line keeps its source</text>
+    </g>
+  </g>
+
+  <!-- =========== ARROW 2 (GROUND -> BRIEF) =========== -->
+  <g transform="translate(798, 362)" fill="#c2410c">
+    <rect x="0"  y="6" width="50" height="6"/>
+    <rect x="44" y="0" width="6"  height="6"/>
+    <rect x="50" y="6" width="6"  height="6"/>
+    <rect x="44" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 3: BRIEF (cited briefing) =========== -->
+  <g>
+    <rect x="860" y="200" width="270" height="330" fill="#ffffff"/>
+    <rect x="860" y="200" width="270" height="5"   fill="#c9b58a"/>
+    <rect x="860" y="525" width="270" height="5"   fill="#c9b58a"/>
+    <rect x="860" y="200" width="5"   height="330" fill="#c9b58a"/>
+    <rect x="1125" y="200" width="5"  height="330" fill="#c9b58a"/>
+    <rect x="870" y="210" width="250" height="310" fill="#fdf7ea"/>
+
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="886" y="240" font-size="18" font-weight="700" fill="#1f2937" letter-spacing="1">BRIEFING</text>
+      <text x="1102" y="240" font-size="12" fill="#9ca3af" text-anchor="end" letter-spacing="2">CITED</text>
+    </g>
+    <rect x="880" y="252" width="230" height="2" fill="#c9b58a"/>
+
+    <!-- finding 1: HIGH -->
+    <g transform="translate(886, 268)">
+      <rect x="0" y="0" width="50" height="16" fill="#dcfce7"/>
+      <text x="6" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#15803d">HIGH</text>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+        <text x="58" y="12" font-size="10">output holds [1][2]</text>
+      </g>
+    </g>
+    <rect x="886" y="292" width="218" height="1" fill="#c9b58a"/>
+
+    <!-- finding 2: MED -->
+    <g transform="translate(886, 300)">
+      <rect x="0" y="0" width="50" height="16" fill="#fde68a"/>
+      <text x="10" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#92400e">MED</text>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2937">
+        <text x="58" y="12" font-size="10">morale up [3]</text>
+      </g>
+    </g>
+    <rect x="886" y="324" width="218" height="1" fill="#c9b58a"/>
+
+    <!-- finding 3: UNVERIFIED -->
+    <g transform="translate(886, 332)">
+      <rect x="0" y="0" width="92" height="16" fill="#fecaca"/>
+      <text x="6" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#b91c1c">UNVERIFIED</text>
+      <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#6b7280">
+        <text x="100" y="12" font-size="10">scales to all</text>
+      </g>
+    </g>
+    <rect x="886" y="356" width="218" height="1" fill="#c9b58a"/>
+
+    <!-- contradiction map mini -->
+    <rect x="886" y="366" width="218" height="64" fill="#fef3c7"/>
+    <rect x="886" y="366" width="218" height="3" fill="#c2410c"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="896" y="386" font-size="10" font-weight="700" fill="#c2410c" letter-spacing="1">CONTRADICTION MAP</text>
+      <text x="896" y="402" font-size="9" fill="#1f2937">clash: cost vs. output</text>
+      <text x="896" y="416" font-size="9" fill="#1f2937">blind spot: small firms</text>
+    </g>
+
+    <!-- footer: invariant chip -->
+    <rect x="886" y="476" width="218" height="36" fill="#bae6fd"/>
+    <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+      <text x="896" y="494" font-size="10" font-weight="700" fill="#1f2937" letter-spacing="1">INVARIANT</text>
+      <text x="896" y="506" font-size="9" fill="#1f2937">no claim without a source</text>
+    </g>
+  </g>
+
+  <!-- =========== GROUND LINE =========== -->
+  <rect x="50" y="546" width="1100" height="2" fill="#eadfcf"/>
+</svg>

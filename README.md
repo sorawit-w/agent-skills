@@ -122,6 +122,12 @@ Multi-perspective critique and design-completeness checks.
   - "Bring a team together to review this mobile auth architecture before we ship."
   - "Brainstorm a habit-tracker for teens — multi-perspective, no single viewpoint wins."
 
+[`storm`](skills/storm/README.md) — perspective-driven, retrieval-grounded research → a cited briefing; the grounding hand-off target for `team-composer`. (Single-source-of-truth fact-checking → `deep-research`.)
+
+*Try:*
+  - "Research what's actually known about four-day work weeks — grounded briefing, multiple angles."
+  - "Survey the evidence on RAG vs. long-context for production agents, with sources."
+
 [`ai-ux-review`](skills/ai-ux-review/README.md) — human-AI design-completeness review; seven blocks, explicit gap markers.
 
 *Try:*
@@ -281,7 +287,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.2.0`.** Added the **library-level convention layer** — the concerns that only appear once skills *co-load*, which `skill-creator` doesn't cover. New **"Library conventions"** section in `CLAUDE.md` (the **library gate**'s cross-skill routing-regression run, **authority tiers**, **supply-chain hygiene**, don't-start-with-meta-skills); **`metadata.tier`** on all 23 skills; per-skill **`.eval/triggers/`** regression sets; a **state-passing** section in `sub-agent-coordinator`; and `docs/skills-policy.md` as the canonical global skills policy. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.3.0`.** Adds **`storm`** — a perspective-driven, retrieval-grounded research skill that returns a **cited briefing** (an agent-native port of Stanford's STORM). It discovers diverse perspectives on a topic, asks grounded questions from each, and synthesizes a source-attributed briefing where every claim is cited or tagged `[unverified]`. Runs standalone (`/storm <topic>`) or as a grounding hand-off target for `team-composer`. Positioned as a **distinct neighbor** to `deep-research` (perspective-breadth, not source-breadth). Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.
