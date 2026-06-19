@@ -12,7 +12,7 @@ Adds the **library-level convention layer** — the concerns that only surface o
 ### Added
 - **CLAUDE.md → "Library conventions"** section: the **library gate** (cross-skill routing-regression run before merge + a co-load token-budget pointer), **authority tiers** (`read-only`/`draft`/`act` with a graduation rule), **supply-chain hygiene** (codifies the existing cross-reference-don't-vendor + cite-on-absorb practice, with a dormant "if we vendor" rule), and **don't-start-with-meta-skills**.
 - **`docs/skills-policy.md`** — canonical global skills policy (skill vs. always-on context, write-software-not-rules, the mental model). A reference artifact pasted per-surface, not auto-loaded.
-- **`metadata.tier` on all 23 `SKILL.md`** — 22 `draft` (content-producers), `whoami` `read-only`.
+- **`metadata.tier` on all 23 `SKILL.md`** — all `draft` (every current skill produces content/artifacts for review); `read-only` is defined in the contract for future skills but unused here.
 - **`.eval/triggers/<skill>.json` for all 23 skills** — per-skill trigger-eval sets (should-fire / should-not-fire / neighbor-steal) reusing the existing `.eval/` shape; these are the regression set the library gate runs.
 - **`sub-agent-coordinator` → "State Passing Between Skills / Sub-agents"** — pass pointers (file paths), not payloads, through the context window; distinguished from cerby's single-agent file-state.
 

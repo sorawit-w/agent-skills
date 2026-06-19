@@ -16,7 +16,7 @@ description: >
   brand-voice work. `whoami` is person-level and broad; `handshake` is
   project-level and feeds from it.
 metadata:
-  tier: read-only
+  tier: draft
 ---
 
 # whoami
