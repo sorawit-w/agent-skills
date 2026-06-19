@@ -41,6 +41,7 @@ In-conversation instructions always override anything here. The sections above t
 - Visualize only when it adds understanding beyond prose — spatial structure, flows, comparisons, data shape. Don't decorate simple answers.
 - Priority: rendered SVG/HTML widget > mermaid (only where it actually renders — never paste raw mermaid source as the answer) > ASCII.
 - Use animation/interactivity only to show behavior (state changes, flow, cause-effect), not for polish.
+  - Animated SVG follows the same rule: animate only when motion encodes something the static form can't — rate/throughput, sequencing, active-vs-idle, or cyclic flow. If a static arrowhead already conveys it (e.g. plain direction), don't animate.
 - Use LaTeX for math notation.
 - Reports: single self-contained HTML, unless told otherwise.
 - Presentations: self-contained HTML slide deck (reveal.js ok), unless told otherwise.
