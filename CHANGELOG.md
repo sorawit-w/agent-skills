@@ -5,6 +5,25 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.3.0] — 2026-06-18
+
+Adds **`storm`** — a perspective-driven, retrieval-grounded research skill that returns a **cited briefing**. An agent-native port of Stanford's [STORM](https://arxiv.org/abs/2402.14207) (NAACL 2024): discover diverse perspectives on a topic, ask grounded questions from each, and synthesize into a source-attributed briefing. Runs standalone (`/storm <topic>`) or as a hand-off target for `team-composer`, inheriting the panel's active roles as seed perspectives.
+
+### Added
+- **`skills/storm/`** — `SKILL.md` (lean body), `README.md`, and two `references/` files: `loop-mechanics.md` (perspective discovery, bounded per-perspective Q&A, contradiction-map pass, knobs) and `honesty-rubric.md` (source→claim map, source-backed confidence scoring, the two STORM failure modes, the `[unverified]` tagging rule).
+- **Assets** — `storm-li.svg` (1200×627), `storm-x.svg` (1600×467), `icons/storm.svg` (32×32), in the repo's pixel-art house style.
+- **`.eval/triggers/storm.json`** — trigger-eval set including the **neighbor-steal** case (single-topic fact-check → `deep-research`, not storm) and a `team-composer`-bound opinion/planning case.
+- **Registration + skill-graph node + README routing** — storm appears in the Review track and the skill graph (`team-composer --> storm` grounding hand-off; `storm -.-> deep-research` distinct-neighbor edge).
+
+### Why
+`team-composer` is a discuss-and-hand-off skill that deliberately doesn't do retrieval; when a panel needs sourced external knowledge it can't reason its way to, there was no grounded-research hand-off target. `storm` fills that gap. We ported the STORM **mechanism** (perspective discovery → per-perspective grounded Q&A → cited synthesis), not Nav Toor's 4-prompt chat workflow — the "no setup, just paste" framing only matters to a human pasting into a chat box; inside an agent, retrieval is already held, so grounded is the default and there is no un-grounded mode. Two bounded knobs (`max_perspectives`, `max_turns_per_perspective`) port STORM's `max_perspective`/`max_conv_turn`; the conversation-simulation engine, Co-STORM, and Wikipedia-article default were deliberately left out (the over-build trap the brief named).
+
+The load-bearing design decision: a `deep-research` skill already exists (source-of-truth fan-out → cited report) and collides with storm on triggers and output shape. A `team-composer` workshop resolved this as **distinct neighbors** — `deep-research` owns *source-breadth* (the authoritative answer on one question), storm owns *perspective-breadth* (what different lenses reveal). The boundary is enforced by sharp anti-triggers in the description and a neighbor-steal eval case, per the library gate. The honesty discipline is structural, not aspirational: a source→claim map carried through synthesis means a line with no source cannot render as verified, and the dry-run acceptance check (no retrieval ⇒ entirely `[unverified]`) is mechanical.
+
+### Notes
+- Backwards-compatible (MINOR — new skill). `tier: draft` (read-only/content-producing).
+- The `team-composer` back-port (contradiction map into its Discuss phase, peer-review/confidence into its Audit phase, and a storm row in its Cross-Skill Integration table) is tracked as a **separate follow-up change**, not bundled here.
+
 ## [5.2.0] — 2026-06-18
 
 Adds the **library-level convention layer** — the concerns that only surface once skills *co-load*, which single-skill authoring (`skill-creator`) doesn't cover. Convention text + annotations only; no new machinery.

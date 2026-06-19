@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="storm — perspectives in, grounded Q&amp;A, cited briefing out" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>storm — perspectives in, grounded Q&amp;A, cited briefing out</title>
+  <desc>Pixel-art X/Twitter banner for the storm Claude Code plugin: title top-left, then three cards — LENSES (four labeled perspective chips), GROUND (a question answered by retrieval with a source tag), and BRIEF (findings ranked by reliability with citation marks and an [unverified] tag).</desc>
+
+  <defs>
+    <pattern id="scan-storm-x" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1600" height="467" fill="url(#scan-storm-x)"/>
+
+  <!-- =========== TITLE (top-left) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace">
+    <text x="60" y="74" font-size="42" font-weight="700" fill="#1f2937" letter-spacing="2">storm</text>
+    <text x="62" y="106" font-size="18" fill="#6b7280">perspectives in · grounded · cited out</text>
+    <text x="62" y="132" font-size="11" fill="#9ca3af" letter-spacing="4">LENSES · GROUND · BRIEF</text>
+  </g>
+
+  <!-- =========== CARD 1: PERSPECTIVES =========== -->
+  <g>
+    <rect x="60" y="166" width="430" height="250" fill="#f3e7c9"/>
+    <rect x="60" y="166" width="430" height="5"   fill="#b79a5c"/>
+    <rect x="60" y="411" width="430" height="5"   fill="#b79a5c"/>
+    <rect x="60" y="166" width="5"   height="250" fill="#b79a5c"/>
+    <rect x="485" y="166" width="5"  height="250" fill="#b79a5c"/>
+
+    <rect x="66" y="178" width="418" height="32" fill="#fdf7ea"/>
+    <text x="84" y="200" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="700" fill="#1f2937">PERSPECTIVES</text>
+    <rect x="66" y="210" width="418" height="2" fill="#b79a5c"/>
+
+    <g transform="translate(84, 226)">
+      <rect x="0" y="0" width="382" height="38" fill="#fdf7ea"/><rect x="0" y="0" width="4" height="38" fill="#0e7490"/>
+      <rect x="16" y="13" width="14" height="11" fill="#bae6fd"/><rect x="20" y="15" width="6" height="7" fill="#0e7490"/>
+      <text x="44" y="18" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#1f2937">PRACTITIONER</text>
+      <text x="44" y="32" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280">does it work in the field?</text>
+    </g>
+    <g transform="translate(84, 270)">
+      <rect x="0" y="0" width="382" height="38" fill="#fdf7ea"/><rect x="0" y="0" width="4" height="38" fill="#b91c1c"/>
+      <rect x="16" y="13" width="14" height="11" fill="#fecaca"/><rect x="20" y="15" width="6" height="7" fill="#b91c1c"/>
+      <text x="44" y="18" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#1f2937">SKEPTIC</text>
+      <text x="44" y="32" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280">where's the disconfirming?</text>
+    </g>
+    <g transform="translate(84, 314)">
+      <rect x="0" y="0" width="382" height="38" fill="#fdf7ea"/><rect x="0" y="0" width="4" height="38" fill="#15803d"/>
+      <rect x="16" y="13" width="14" height="11" fill="#dcfce7"/><rect x="20" y="15" width="6" height="7" fill="#15803d"/>
+      <text x="44" y="18" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#1f2937">RESEARCHER</text>
+      <text x="44" y="32" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280">method? sample? n?</text>
+    </g>
+    <g transform="translate(84, 358)">
+      <rect x="0" y="0" width="382" height="38" fill="#fdf7ea"/><rect x="0" y="0" width="4" height="38" fill="#c2410c"/>
+      <rect x="16" y="13" width="14" height="11" fill="#fde68a"/><rect x="20" y="15" width="6" height="7" fill="#c2410c"/>
+      <text x="44" y="18" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#1f2937">ECONOMIST</text>
+      <text x="44" y="32" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280">who pays? what's the cost?</text>
+    </g>
+  </g>
+
+  <!-- ARROW 1 -->
+  <g transform="translate(500, 280)" fill="#6b7280">
+    <rect x="0" y="6" width="44" height="6"/><rect x="38" y="0" width="6" height="6"/><rect x="44" y="6" width="6" height="6"/><rect x="38" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 2: GROUNDED Q&A =========== -->
+  <g>
+    <rect x="560" y="166" width="520" height="250" fill="#ffffff"/>
+    <rect x="560" y="166" width="520" height="5"   fill="#c9b58a"/>
+    <rect x="560" y="411" width="520" height="5"   fill="#c9b58a"/>
+    <rect x="560" y="166" width="5"   height="250" fill="#c9b58a"/>
+    <rect x="1075" y="166" width="5"  height="250" fill="#c9b58a"/>
+    <rect x="570" y="176" width="500" height="230" fill="#fdf7ea"/>
+
+    <text x="588" y="204" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="700" fill="#1f2937" letter-spacing="1">GROUNDED Q&amp;A</text>
+    <text x="1052" y="204" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#9ca3af" text-anchor="end" letter-spacing="2">PER LENS</text>
+    <rect x="584" y="214" width="472" height="2" fill="#c9b58a"/>
+
+    <rect x="588" y="228" width="464" height="40" fill="#fef3c7"/><rect x="588" y="228" width="4" height="40" fill="#c2410c"/>
+    <text x="604" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#c2410c">Q</text>
+    <text x="624" y="246" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937">does the 4-day week hold output? (skeptic)</text>
+
+    <g transform="translate(800, 280)" fill="#0e7490">
+      <rect x="0" y="6" width="34" height="5"/><rect x="28" y="1" width="5" height="5"/><rect x="33" y="6" width="5" height="5"/><rect x="28" y="11" width="5" height="5"/>
+    </g>
+    <text x="700" y="290" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#0e7490" letter-spacing="2">RETRIEVE</text>
+
+    <rect x="588" y="306" width="464" height="48" fill="#dcfce7"/><rect x="588" y="306" width="4" height="48" fill="#15803d"/>
+    <text x="604" y="326" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#15803d">A</text>
+    <text x="624" y="326" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#1f2937">output flat or up in 8 of 10 trial firms</text>
+    <text x="624" y="344" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#6b7280">▸ src: Henley 2023 trial report</text>
+
+    <rect x="588" y="364" width="464" height="32" fill="#bae6fd"/>
+    <text x="604" y="385" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#0e7490" letter-spacing="1">SOURCE → CLAIM MAP · every line keeps its source</text>
+  </g>
+
+  <!-- ARROW 2 -->
+  <g transform="translate(1090, 280)" fill="#c2410c">
+    <rect x="0" y="6" width="44" height="6"/><rect x="38" y="0" width="6" height="6"/><rect x="44" y="6" width="6" height="6"/><rect x="38" y="12" width="6" height="6"/>
+  </g>
+
+  <!-- =========== CARD 3: BRIEFING =========== -->
+  <g>
+    <rect x="1150" y="166" width="390" height="250" fill="#ffffff"/>
+    <rect x="1150" y="166" width="390" height="5"   fill="#c9b58a"/>
+    <rect x="1150" y="411" width="390" height="5"   fill="#c9b58a"/>
+    <rect x="1150" y="166" width="5"   height="250" fill="#c9b58a"/>
+    <rect x="1535" y="166" width="5"  height="250" fill="#c9b58a"/>
+    <rect x="1160" y="176" width="370" height="230" fill="#fdf7ea"/>
+
+    <text x="1178" y="204" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="17" font-weight="700" fill="#1f2937" letter-spacing="1">BRIEFING</text>
+    <text x="1512" y="204" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#9ca3af" text-anchor="end" letter-spacing="2">CITED</text>
+    <rect x="1174" y="214" width="348" height="2" fill="#c9b58a"/>
+
+    <g transform="translate(1178, 228)">
+      <rect x="0" y="0" width="48" height="16" fill="#dcfce7"/><text x="6" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#15803d">HIGH</text>
+      <text x="56" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">output holds [1][2]</text>
+    </g>
+    <g transform="translate(1178, 254)">
+      <rect x="0" y="0" width="48" height="16" fill="#fde68a"/><text x="10" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#92400e">MED</text>
+      <text x="56" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#1f2937">morale up [3]</text>
+    </g>
+    <g transform="translate(1178, 280)">
+      <rect x="0" y="0" width="90" height="16" fill="#fecaca"/><text x="6" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#b91c1c">UNVERIFIED</text>
+      <text x="98" y="12" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#6b7280">scales to all</text>
+    </g>
+
+    <rect x="1178" y="306" width="344" height="56" fill="#fef3c7"/><rect x="1178" y="306" width="344" height="3" fill="#c2410c"/>
+    <text x="1190" y="326" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" font-weight="700" fill="#c2410c" letter-spacing="1">CONTRADICTION MAP</text>
+    <text x="1190" y="342" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1f2937">clash: cost vs. output</text>
+    <text x="1190" y="356" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" fill="#1f2937">blind spot: small firms</text>
+
+    <rect x="1178" y="372" width="344" height="24" fill="#bae6fd"/>
+    <text x="1190" y="388" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="9" font-weight="700" fill="#1f2937" letter-spacing="1">INVARIANT · no claim without a source</text>
+  </g>
+</svg>

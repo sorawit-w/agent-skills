@@ -19,6 +19,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`startup-launch-kit`](../skills/startup-launch-kit/README.md) | Opt-in orchestrator sequencing the 5-step pipeline; greenfield or existing-project (reuses `startup-audit` to seed the canvas from a codebase) | Founders wanting end-to-end, pre- or post-build | stable | Startup |
 | [`gtm`](../skills/gtm/README.md) | Phased go-to-market playbook + content + scheduling | Founders post-pipeline getting users | 🚧 BETA | Startup |
 | [`team-composer`](../skills/team-composer/README.md) | Multi-role 3-round discussion → conclusion + plan | PMs, engineers, anyone planning | stable | Review · Author |
+| [`storm`](../skills/storm/README.md) | Perspective-driven, retrieval-grounded research → cited briefing (perspective discovery → per-perspective grounded Q&A → source-attributed synthesis); standalone or `team-composer` grounding hand-off; distinct neighbor to `deep-research` | Anyone needing grounded research across perspectives | stable | Review |
 | [`ai-ux-review`](../skills/ai-ux-review/README.md) | 7-block human-AI design-completeness review (MD + HTML) | AI product teams, designers, PMs | stable | Review |
 | [`ai-eval-review`](../skills/ai-eval-review/README.md) | 7-block AI eval-design review + regulatory lens (MD + HTML) | AI teams, measurement eng, compliance | stable | Review |
 | [`gamification-fit`](../skills/gamification-fit/README.md) | Restraint-first gamification *recommender*: resources + goal → the few mechanics that honestly fit + a prominent "deliberately NOT gamified" refusals section; structural ethics veto (MD + HTML) | Product teams, founders adding engagement | stable | Review |
@@ -45,6 +46,10 @@ graph LR
 
   %% Delegation pipeline
   TC[team-composer] -->|Phase 6 delegate| SAC[sub-agent-coordinator]
+
+  %% Grounded research (storm) — team-composer's grounding hand-off; distinct neighbor to deep-research
+  TC -->|grounding hand-off: roles as seed perspectives| STORM[storm]
+  STORM -.->|source-of-truth fact-check routes out| DR["deep-research (external)"]
 
   %% AI-review siblings
   AUX[ai-ux-review] -.->|sibling| AEV[ai-eval-review]

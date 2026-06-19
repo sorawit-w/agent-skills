@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Research what's actually known about microplastics in drinking water.",
+    "should_trigger": true
+  },
+  {
+    "query": "Survey the evidence on four-day work weeks and give me a grounded briefing.",
+    "should_trigger": true
+  },
+  {
+    "query": "Build me a cited briefing on RAG vs. long-context for production agents, from multiple angles.",
+    "should_trigger": true
+  },
+  {
+    "query": "We're guessing about the current state of EU AI Act enforcement — go find what's actually known across perspectives.",
+    "should_trigger": true
+  },
+  {
+    "query": "Fact-check this claim: that GDP grew 3% last quarter. Just give me the authoritative answer.",
+    "should_trigger": false
+  },
+  {
+    "query": "Do a deep research report on this single question and adversarially verify every source.",
+    "should_trigger": false
+  },
+  {
+    "query": "Assemble a team to brainstorm and review my product roadmap.",
+    "should_trigger": false
+  },
+  {
+    "query": "Help me plan the implementation of this feature.",
+    "should_trigger": false
+  }
+]
