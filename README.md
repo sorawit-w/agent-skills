@@ -151,7 +151,7 @@ See also: [`validation-canvas`](skills/validation-canvas/README.md) and [`startu
 ### Writing & shipping code
 Discipline, stack choices, and parallel work.
 
-[`cerby`](https://github.com/sorawit-w/cerby) *(external)* — opinionated agentic-coding guardrails (clarity over cleverness, safety over speed, nothing unproven passes the gate). Formerly `coding-rules` in this repo; now its own repo.
+[`kerby`](https://github.com/sorawit-w/kerby) *(external)* — opinionated agentic-coding guardrails (clarity over cleverness, safety over speed, nothing unproven passes the gate). Formerly `coding-rules` in this repo; now its own repo.
 
 [`tech-stack-recommendations`](skills/tech-stack-recommendations/README.md) — opinionated default TS/JS stack, with named alternates.
 
@@ -267,7 +267,7 @@ team-composer ──▶ sub-agent-coordinator
 Writing your own skill, or forking one of these? Skill authoring here is **harness engineering** — designing the context, scaffolding, and feedback loops around the agent. Start with:
 
 - **Conventions & skill anatomy** — [`CLAUDE.md` → Skill anatomy](CLAUDE.md#skill-anatomy) (file structure, SKILL.md frontmatter, README shape, visual style).
-- **The five harness primitives** — [`CLAUDE.md` → Harness vocabulary](CLAUDE.md#harness-vocabulary): context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. The external [`cerby`](https://github.com/sorawit-w/cerby) skill is the canonical implementation.
+- **The five harness primitives** — [`CLAUDE.md` → Harness vocabulary](CLAUDE.md#harness-vocabulary): context engineering, progressive disclosure, observable feedback loops, state preservation, eval discipline. The external [`kerby`](https://github.com/sorawit-w/kerby) skill is the canonical implementation.
 - **The skill map** — [`docs/skill-graph.md`](docs/skill-graph.md): every skill, its audience, and how they relate.
 - **Release ritual** — [`CLAUDE.md` → Release ritual](CLAUDE.md#release-ritual): the 4-file version bump + pre-shipment audit.
 - **Audit a skill** — [`skill-evaluator`](skills/skill-evaluator/README.md) checks whether a skill's rules actually land when Claude runs them.
