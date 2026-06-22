@@ -94,11 +94,13 @@ prompt blocks. Common fixes:
 - Marker 5 missing → strengthen `[NEGATIVE]` with "no anti-aliasing,
   crisp edges"
 - Marker 6 missing → name the density anchor explicitly in `[DENSITY]`
-  (see `density.md` anchor table). **If the anchor is HD-pixel-game-density
-  or AI-pixel-art-density and you're on Z-image, switch generators** —
-  prompt-only fixes cap at moderate density. Midjourney `--niji 6` or
-  SDXL + pixel-art LoRA is the right escalation. See
-  `model-routing.md` → "Picking by density target."
+  (see `density.md` anchor table) and let the quantize pass (SKILL.md
+  Phase 4) downscale to the target grid — that normalizes pixel scale
+  regardless of which generator produced the source. If the grain is
+  still off after quantize, lower the `--grid` target, or (if you have
+  another generator available) try regenerating there. Some generators
+  reach finer grain than others from prompting alone, but that's a
+  soft tendency, not a routing gate — see `model-routing.md`.
 
 ## Craft-marker checklist (lo-fi)
 

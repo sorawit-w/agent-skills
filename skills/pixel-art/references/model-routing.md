@@ -1,14 +1,19 @@
-# Model routing — per-generator phrasing tweaks
+# Model routing — optional per-generator phrasing nudges
 
-The composed prompt (from Phase 2 of SKILL.md) is **model-agnostic**
-by design. This file lists the small phrasing nudges each generator
-responds to. Apply them on top of the universal block format —
-don't rewrite the prompt structure.
+The composed prompt (from Phase 3 of SKILL.md) is **model-agnostic**
+by design. This file lists small, **optional** phrasing nudges each
+generator responds to. Apply them on top of the universal block format
+*if* you happen to be on one of these generators — don't rewrite the
+prompt structure, and don't treat this list as the set of "supported"
+tools.
 
-The skill is **capability-gated, not vendor-gated** — when any of
-these MCPs is connected, route to it. When none are, emit the
-prompt brief and the user picks (this is Path B in SKILL.md
-Phase 3).
+The skill is **capability-gated, not vendor-gated**, and it detects
+capability by **attempting** generation, not by checking whether a
+*named* server is connected (host-native generators aren't always
+introspectable). If you can generate by any means, do; the generators
+below are just where known phrasing nudges exist. When you genuinely
+cannot generate at all, emit the prompt brief (Path B in SKILL.md
+Phase 4).
 
 ## Z-image Turbo (HuggingFace MCP)
 
@@ -26,19 +31,16 @@ style cues, good for rapid exploration and prompt iteration.
 - Negative prompt is well-supported; pass the full `[NEGATIVE]`
   block.
 
-**Known weak spots — density ceiling:** Z-image's training set biases
-its "pixel art" prior toward moderate-density indie-game aesthetic
-(Stardew, Octopath at lower density). **It cannot reach hi-density
-AI-pixel-art aesthetic via prompting alone** — verified empirically.
-Prompt phrases like *"ULTRA-FINE PIXEL DETAIL"* and resolution bumps
-do not override the model's prior; the output stays at moderate
-density with chunkier-than-target tiles.
-
-**When to escalate off Z-image:** if the user's reference is
-HD-pixel-game-density (Octopath / Sea of Stars / Eastward) or
-AI-pixel-art-density (the harbor / tavern reference screenshots),
-escalate to **Midjourney `--niji 6`** or **SDXL + pixel-art LoRA**.
-See "Picking by density target" below.
+**Density tendency (nudge, not a gospel ceiling):** Z-image's training
+set biases its "pixel art" prior toward moderate-density indie-game
+aesthetic (Stardew, Octopath at lower density). Prompt phrases like
+*"ULTRA-FINE PIXEL DETAIL"* and resolution bumps don't move the prior
+much; the output tends to stay at moderate density. If you need finer
+grain than it gives, the quantize post-process (SKILL.md Phase 4)
+normalizes the grid regardless, and if you have another generator
+available you can try it — but don't route *off* Z-image as a hard
+rule. (This is a tendency observed for one generator, not a portable
+ceiling — newer generators outside this list behave differently.)
 
 **Other Z-image weak spots:** sub-pixel facial detail is inconsistent
 (avoid tight character close-ups); dithering discipline is hit-or-miss
@@ -121,41 +123,30 @@ SDXL produces "stylized digital art" rather than true pixel art.
 | JRPG / fantasy scenes | Midjourney with `--niji 6` |
 | Title cards (background imagery only — text is SVG) | Any of the above |
 
-## Picking by density target (added v3.10.1)
+## A note on density and generators
 
-The **single most important routing question** is: does the user want
-moderate-density pixel art (Stardew / Octopath) or hi-density
-(HD-pixel-game / AI-pixel-art aesthetic)? Generators have hard
-ceilings here that prompt phrasing cannot overcome.
+Generators differ in how fine a pixel grain they reach from prompting
+alone — but this is a **soft tendency per generator**, not a portable
+ceiling, and it does **not** drive routing. Two reasons it's no longer a
+route-off rule:
 
-| Density target | Reach-for generator | Why |
-|---|---|---|
-| 8-bit / NES-density | SDXL + retro pixel-art LoRA, or Z-image with chunky `[STYLE]` emphasis | Either reaches it cleanly |
-| 16-bit / SNES-density | Midjourney standard, SDXL, Z-image | Multiple generators handle this band |
-| Modern indie-density (Stardew / Celeste) | **Z-image Turbo** (sweet spot) | Z-image's training-data center of mass |
-| **HD-pixel-game-density (Octopath / Sea of Stars)** | **Midjourney `--niji 6`** | Niji is trained heavier on JRPG / hi-density anime-pixel content |
-| **AI-pixel-art-density (HD-rendered pixel scenes)** | **SDXL + pixel-art LoRA**, or Midjourney `--niji 6 --style raw --stylize 50` | LoRA-driven runs reach the highest density; Z-image hard-caps below this band |
-
-**Routing rule:** if the user supplies a hi-density reference image
-(or names HD-pixel-game / AI-pixel-art density in their brief), **do
-not start with Z-image** even if it is the only connected MCP.
-Generate a Midjourney or SDXL prompt brief via Path B in `SKILL.md`
-Phase 3 — that is a real, useful output, not a degraded fallback.
-
-When in doubt about density, **try Z-image first** for fast iteration
-on composition / palette / lighting, then escalate to Midjourney or
-SDXL once those decisions are locked. Composition decisions transfer
-across generators; pixel density does not.
+1. **The quantize post-process normalizes the grid.** Whatever grain the
+   generator produces, `scripts/quantize.py` (SKILL.md Phase 4) downscales
+   to the target grid and median-cut-quantizes the palette — so the final
+   output is grid-aligned regardless of the source generator's prior.
+2. **The vendor list isn't the world.** Hardcoding "generator X caps at
+   density Y" breaks the moment a newer generator appears (host-native
+   image models, etc.). Route by *"can I generate?"*, generate, then
+   quantize. If an output misses the density anchor and you have another
+   generator handy, try it — as advice, not a gate.
 
 ## Surfacing routing to the user
 
-When the skill picks a generator, name it. Example user-facing
-output:
+When you generate, say how. Example:
 
-> Routing this to **Z-image Turbo** (connected, fastest). If you
-> want a different generator, name it and I'll switch — the prompt
-> is model-agnostic so no rework needed.
+> Generated inline, then quantized to a 192px grid / 32-color palette.
+> The prompt is model-agnostic — if you'd rather run it in a specific
+> generator, here it is to paste.
 
-If none of these MCPs is connected, the skill defaults to Path B
-(the prompt brief). Do **not** silently fail; emit the brief and
-explain.
+If you genuinely cannot generate by any means, return Path B (the
+prompt brief). Do **not** silently fail; emit the brief and explain.
