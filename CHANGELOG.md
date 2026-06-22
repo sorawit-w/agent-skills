@@ -5,6 +5,26 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.5.0] — 2026-06-22
+
+Reworks `pixel-art` to be honest, repo-agnostic, and deterministic. The skill is the obvious name-match for "pixel art," so it was getting pulled into composed/branded SVG-asset jobs (banners, icon sets, exact-text layouts) it cannot do — and instead of saying so, it silently generated a raster and presented it as the deliverable. It also wrote outputs to a repo path (`docs/pixel-art/`), gated generation on a fixed list of *named* MCP servers, and shipped pseudo-pixel-art (tens of thousands of colors, no real grid). This release fixes all four.
+
+### Changed
+- **Honest decline (no silent substitution).** New Phase 0 deliverable-type gate: a brief needing exact rendered text, an exact layout/viewBox, brand tokens, an editable vector source, or a multi-asset set is a composition job the skill does not do — it states the mismatch and stops, rather than down-converting to a raster or naming a substitute tool. Title cards and single-sprite-SVG are explicit carve-outs.
+- **Repo-agnostic.** The skill writes nothing to disk and **returns** every artifact (image, quantized PNG/SVG, prompt brief, title-card SVG) to the caller. Purged all `docs/pixel-art/` save instructions across SKILL.md, README, and the prompt-brief template.
+- **Attempt-then-fallback capability detection.** Routing now asks "can I generate at all?" (host-native or MCP) and *attempts* generation, instead of "is named server X connected?". Host-native generators aren't introspectable from inside a skill, so detection is by attempting. The vendor list (Z-image / Imagen / OpenAI / Midjourney / SDXL) and the per-vendor density-ceiling routing table are demoted to optional phrasing nudges.
+- **Deterministic quantize.** New `scripts/quantize.py` (Pillow, median-cut) downscales to a real grid and clamps the palette → true grid-aligned pixel art, emitted as PNG or single-sprite SVG. `scripts/test_quantize.py` asserts three invariants: grid-aligned + ≤ palette-size colors, PNG ≡ SVG grid, and byte-identical output across runs.
+- **Identity / triggers.** Sharpened the `description` so composed/branded asset requests don't trigger `pixel-art`, while "generated pixel art as SVG" (single sprite) still does. Removed the BETA/v0.1 status from SKILL.md, README, root README routing, and the skill-graph node.
+
+### Why
+Median-cut, not k-means: the post-process must be deterministic, and k-means random-inits its centroids — `test_quantize.py`'s determinism assert makes that guarantee executable. The two-PR split in the original brief (SKILL.md surgery, then the quantize script) was collapsed into one PR to dissolve a sequencing honesty-gap: PR1 would have promised single-sprite-SVG that only PR2 could deliver. The title-card carve-out exists because the gate declines "exact rendered text" but the retained `title-card.svg` template renders exact text — it is the one grandfathered authored-SVG path.
+
+Versioned MINOR despite the breaking behavior change (triggering + output contract): the skill was draft/BETA, smoke-tested once, with no real dependents, so migration burden is effectively zero.
+
+### Notes
+- **First external Python dependency in the repo.** `scripts/quantize.py` needs Pillow (declared skill-locally in `scripts/requirements.txt`); the prior Python scripts (`check-skill-compat.py`, `grader.py`) are stdlib-only. The test runs as `python3 test_quantize.py` (no pytest), matching the repo's stdlib-only test precedent.
+- The repo's own house-style banner/icon authoring (deterministic script + `DESIGN.md`) is a separate initiative, not part of this rework.
+
 ## [5.4.0] — 2026-06-19
 
 Wires the `team-composer` ↔ `storm` integration — the back-port deferred when `storm` shipped (5.3.0). `team-composer` now knows when to hand a grounding need off to `storm`, and adopts the two rigor lenses `storm` carried over from STORM.

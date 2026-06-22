@@ -1,39 +1,40 @@
 ---
 name: pixel-art
 description: >
-  Generate hi-fidelity pixel art (scenes, characters, title cards) from a short brief, with a
-  built-in design system (palette, density, composition rules, font catalog) so the style
-  needn't be re-specified each time. Two modes: `hi-fi` (default, painterly high-density) and
-  `lo-fi` (scanlined warm-paper banner aesthetic matching this repo's banners).
-  Capability-gated: if a connected image-generator MCP is available (Z-image, Imagen, OpenAI
-  Image) it generates inline; otherwise it emits a model-agnostic prompt brief to run in any
-  tool (Midjourney, DALL-E, SDXL). Title cards also have a code-based SVG path using VT323.
-  Triggers on "pixel art", "hi-fi pixel art", "lo-fi pixel banner", "VT323 title card", "8-bit
-  banner", or a hi-density reference plus "this style". Does NOT trigger on vector
-  illustration, SVG icon/logo work (`brand-workshop`), photo-real generation, algorithmic
-  p5.js art (`algorithmic-art`), or charts/dashboards. Never names living artists; original
-  compositions only.
+  Generate single-subject pixel art (scenes, characters, buildings, title cards)
+  from a short brief, with a built-in style system (palette, density, lighting,
+  fonts). Modes `hi-fi` (painterly high-density, default) and `lo-fi` (scanlined
+  banner). Generative: produces a raster, runs a deterministic
+  median-cut quantize to true grid-aligned pixel art, and can serialize one sprite
+  to SVG. Repo-agnostic — returns artifacts, writes nothing; with no generator
+  reachable it returns a model-agnostic prompt brief. Triggers on
+  "pixel art", "hi-fi/lo-fi pixel", "VT323 title card", "generated pixel art as
+  SVG" (single sprite), or a hi-density reference plus "this style". Does NOT
+  trigger on — and declines — composed/branded SVG-asset jobs (banner, icon set,
+  multi-asset set, needing exact text, a fixed viewBox, brand tokens, or
+  an editable vector source it doesn't author). Not for vector illustration, logos
+  (`brand-workshop`), photo-real, p5.js (`algorithmic-art`), or charts. Never names
+  living artists.
 metadata:
   tier: draft
 ---
 
 # pixel-art
 
-> **🚧 Status: BETA** — first release (v3.10.x). Smoke-tested on
-> Z-image Turbo for one subject (scenes); pre-shipment
-> `skill-evaluator` audit returned 17/17 with named coverage caveats
-> (author/auditor bias, several untested paths — see CHANGELOG v3.10.2
-> for the gap list). Expect adherence patches as more subject
-> categories, generators, and density targets get dogfooded in real
-> use. Use freely; expect rough edges.
-
 A pocket-sized pixel-art studio. You hand it a short brief — *"medieval
 harbor at dusk"*, *"tavern interior with fireplace"*, *"Whispers of the
-Flame title card in VT323"* — and it returns a finished image (when an
-image-gen MCP is connected) or a model-agnostic prompt brief you can
-paste into the generator of your choice. The style is locked in
+Flame title card in VT323"* — and it returns a finished image (whenever
+any image generator is reachable) or a model-agnostic prompt brief you
+can paste into the generator of your choice. The style is locked in
 `references/` so you do not have to re-describe palette, density,
 composition, lighting, or typography every time.
+
+**Repo-agnostic.** This skill assumes no repository and writes nothing
+to disk. Every artifact — the generated image, the quantized PNG/SVG,
+the prompt brief, the title-card SVG — is **returned to the caller**,
+who decides what to do with it. (Ephemeral temp files used purely to
+hand a raster to the quantize script are fine; persisting to a repo path
+is not.)
 
 ## When to use this skill
 
@@ -43,7 +44,7 @@ composition, lighting, or typography every time.
 - *"Title card for 'Whispers of the Flame' in VT323."*
 - *"I want this image in the same hi-density pixel style as before."*
 - *"Make this image a pixel-art version of itself."*
-- *"Build me a pixel-art splash screen for my game scene."*
+- *"Give me that sprite as SVG."* (single generated sprite → WS4 serialize)
 
 If the user provides a reference screenshot and says *"this style"*,
 treat it as stylistic intent (palette / density / mood). Do **not**
@@ -52,6 +53,12 @@ the same craft markers (see `references/anti-patterns.md`).
 
 ## When NOT to use this skill
 
+- **Composed / branded SVG-asset jobs** — banners, icon sets, branded
+  SVGs, multi-asset sets, anything needing exact rendered text, an exact
+  layout/viewBox, brand tokens, or an editable vector source. This skill
+  generates a single raster; it does **not** author composition. See the
+  Phase 0 gate — it **declines** these honestly rather than substituting
+  a raster.
 - **Vector illustration / icon design** — use `canvas-design` or
   hand-author SVG. Pixel art is raster-first; vectors are a different craft.
 - **Logo or brand identity package** — route to `brand-workshop`.
@@ -60,10 +67,47 @@ the same craft markers (see `references/anti-patterns.md`).
 - **Algorithmic / generative art with p5.js, particle systems, flow fields**
   — use Anthropic's `algorithmic-art` skill.
 - **Charts, dashboards, data visualization** — use the data viz skills.
-- **Rasterizing an existing photograph as pixel art** — out of scope for
-  v1; consider an external "pixelate" filter instead.
+- **Rasterizing an existing photograph as pixel art** — out of scope;
+  consider an external "pixelate" filter instead.
 
-## Phase 0 — Style mode
+## Phase 0 — Deliverable-type gate (run FIRST)
+
+**Before anything else, decide whether this is a job the skill does.**
+`pixel-art` is a single-subject *generative* skill: it produces a
+**raster** and may **serialize one sprite as SVG**. It does **not**
+author composed deliverables.
+
+If the brief needs **any** of the following, it is a
+**composition/authoring job** and you must **decline**:
+
+- exact rendered text (a banner/title with specific words laid out),
+- an exact layout or `viewBox`,
+- exact brand tokens / a brand spec,
+- an editable / vector source as the deliverable,
+- a **multi-asset set** (icon set, banner family, sprite sheet).
+
+**How to decline:** state the mismatch plainly — *"You asked for
+`<deliverable>`, which needs `<exact text / layout / vector source / a
+set>`. `pixel-art` generates a single raster (optionally one sprite as
+SVG); it does not author composed SVG assets, so I can't produce this
+honestly."* Then **stop**. Do **not** down-convert the request to a
+raster, and do **not** name a substitute tool — routing is the caller's
+call.
+
+**Carve-outs (NOT a decline):**
+
+- **Title card** — the `title-card.svg` template is the one
+  grandfathered authored-SVG path. A title-card request (even with exact
+  title text) proceeds to the title-card SVG path in Phase 4. This is the
+  single exception to "no exact rendered text."
+- **Single-sprite SVG** — *"give me that generated sprite as SVG"* is a
+  **serialize** of one generated raster (Phase 4 / WS4 quantize), not a
+  composed asset. Proceed.
+
+If the request passes the gate (a single scene / character / building /
+nature / title-card / sprite), continue.
+
+## Phase 1 — Style mode
 
 Two modes. **Default is `hi-fi`.** Confirm only if the user's brief
 is ambiguous (e.g., "make a pixel-art banner" — banners are usually
@@ -78,7 +122,7 @@ The selected mode controls **which palette block** loads from
 `references/palette.md` and **which density profile** loads from
 `references/density.md`. Composition rules and font catalog are shared.
 
-## Phase 1 — Subject detection
+## Phase 2 — Subject detection
 
 Map the user's brief to one of five subjects. Each subject has its own
 prompt template in `templates/` and (when relevant) its own composition
@@ -97,7 +141,7 @@ If the brief mixes subjects ("character in a forest"), pick the
 foreground element). Note the secondary subject in the prompt's
 composition block.
 
-## Phase 2 — Compose the prompt
+## Phase 3 — Compose the prompt
 
 Read the following references **once** at the start of the task:
 
@@ -118,80 +162,79 @@ blocks. The **universal block structure** is the same across subjects:
 [SUBJECT]    <one-line subject description>
 [COMPOSITION] <foreground / midground / background, eye-line, focal point>
 [LIGHTING]   <time of day, key/fill direction, mood>
-[DENSITY]    <approx pixels-per-character, dithering policy>
+[DENSITY]    <density anchor name, dithering policy>
 [MOOD]       <2–4 adjectives>
 [NEGATIVE]   <anti-patterns to forbid — see anti-patterns.md>
 ```
 
-This block format is **deliberately model-agnostic** — Z-image,
-SDXL, DALL-E, Imagen (Nano Banana), Midjourney, and OpenAI Image
-all accept structured natural-language prompts. Per-model phrasing
-nudges live in `references/model-routing.md`.
+This block format is **deliberately model-agnostic** — it accepts
+structured natural-language prompts across any image generator.
+Optional per-model phrasing nudges live in `references/model-routing.md`.
 
-## Phase 3 — Generation routing (capability-gated)
+## Phase 4 — Generation routing (attempt-then-fallback)
 
 Two paths. Do **not** silently fall through — name which path is
 running.
 
-### Density-target pre-check (run BEFORE routing)
+**The routing question is "can I generate at all?", not "is a specific
+named MCP connected?"** Host-native image generation often isn't
+introspectable from inside a skill, so detect by **attempting**, not by
+checking a vendor list.
 
-Before checking which MCP is connected, ask: **what density anchor
-did the user name (or imply via a reference image)?** Generators have
-hard density ceilings that prompt phrasing cannot overcome — picking
-the wrong generator for the density target is the #1 failure mode of
-this skill (surfaced empirically in v3.10.0 smoke testing).
+### Path A — Inline generation (preferred whenever reachable)
 
-Match the brief's density anchor to a generator using
-`references/model-routing.md` → "Picking by density target". Key
-rule:
+**Attempt inline generation using any available image-generation
+capability — host-native OR an MCP tool.** If you can produce an image
+in this runtime, do it. Pass the composed prompt (Phase 3) to the
+generator; apply optional per-model phrasing tweaks from
+`references/model-routing.md` *if* you happen to be on a generator listed
+there (the list is nudges, not a gate).
 
-- **Modern indie-density and below** (Stardew / Celeste / Octopath
-  lower-density / 16-bit / 8-bit) → Z-image is fine inline.
-- **HD-pixel-game-density and above** (Octopath / Sea of Stars /
-  Eastward / AI-pixel-art aesthetic — including Kiang's harbor +
-  tavern reference screenshots) → **do not start with Z-image even
-  if it is the only connected MCP.** Z-image caps at moderate
-  density. Route to Path B with a Midjourney `--niji 6` or SDXL +
-  pixel-art LoRA brief instead — that is the correct primary
-  deliverable for this density target, not a degraded fallback.
+After generation, run the **deterministic quantize pass** (next section),
+then **return** the quantized artifact + the finalized prompt to the
+caller. Do **not** write either to a repo path — return them as values
+(image bytes/handle + the prompt text). The caller decides where they go.
 
-### Path A — Inline generation (preferred when available, AND when density allows)
+> **Density note (advisory, not a gate):** generators differ in how fine
+> a pixel grain they reach from prompting alone. If an output misses the
+> density anchor you named, regenerate with adjusted blocks, or — if you
+> have another generator available — try it. This is advice, not a
+> hard route-off rule; the quantize pass below also normalizes grain.
 
-After the density pre-check passes for the available MCP, check what
-is connected. If any of the following are connected and match the
-density target, generate inline:
+### Quantize post-process (deterministic)
 
-- **Z-image Turbo** (HuggingFace MCP, `gr1_z_image_turbo_generate`)
-  — caps at modern-indie-density
-- **Imagen / Nano Banana** (Google AI MCP, if present)
-- **OpenAI Image** (if exposed via MCP)
-- **Any other image-gen MCP** the user mentions
+Raw diffusion output is *pseudo* pixel art — tens of thousands of unique
+colors, no true grid. Run `scripts/quantize.py` (in this skill's
+directory; needs Pillow — `pip install -r scripts/requirements.txt`) to
+make it real grid-aligned pixel art:
 
-Pass the composed prompt (Phase 2) to the generator. Apply per-model
-phrasing tweaks from `references/model-routing.md`. Save the output
-to `docs/pixel-art/<slug>-<yyyy-mm-dd>.png` (create the directory if
-absent) and link it to the user.
+```
+python3 scripts/quantize.py <in.png> --format <png|svg> [--grid N] [--palette N] [--ramp <hexlist>] [--scale N]
+```
 
-If you generated an image, also emit the **finalized prompt** as a
-sibling `.md` file (`docs/pixel-art/<slug>-<yyyy-mm-dd>.md`) so the
-user can regenerate, iterate, or hand it to a different model later.
+Pipeline: nearest-neighbor downscale to the target grid → **median-cut**
+palette quantize (deterministic; honors a supplied fixed ramp) →
+optional ordered dither + orphan-pixel cleanup → nearest-neighbor upscale
+×N for display. Defaults: grid 128–256px, palette 24–48 colors, dither
+off, median-cut palette. Output switch emits **PNG or SVG** (SVG = one
+`<rect>` per run-length-merged cell — **single sprite only**, not a
+banner/composition path). Return the requested format to the caller.
 
-### Path B — Prompt-brief fallback (first-class, not degraded)
+If Pillow is unavailable and can't be installed, say so and return the
+un-quantized raster with a noted caveat — don't silently skip the step.
 
-If no image-gen MCP is connected (or the user explicitly wants a
-copy-pasteable prompt), emit a **prompt brief** following
-`templates/prompt-brief-fallback.md`. The brief includes:
+### Path B — Prompt-brief (only when generation is genuinely impossible)
 
-1. The model-agnostic prompt (universal block format from Phase 2).
-2. Per-model variants for the four most common generators:
-   - **OpenAI Image / DALL-E 3** — phrasing tweaks
-   - **Imagen / Nano Banana** — phrasing tweaks
-   - **Midjourney** — `--style` and `--ar` parameters
-   - **SDXL / SD3** — `pixel art` tag + recommended LoRA names
+If you **cannot** generate an image by any means in this runtime (no
+host-native capability and no image-gen MCP), OR the user explicitly
+asks for a copy-pasteable prompt, emit a **prompt brief** following
+`templates/prompt-brief-fallback.md`. **Return** the brief to the caller
+(do not write it to disk). The brief includes:
+
+1. The model-agnostic prompt (universal block format from Phase 3).
+2. Optional per-model variants for common generators (nudges only).
 3. Negative prompt block (anti-patterns).
-4. A note: *"This prompt is model-agnostic. The block structure
-   works across generators; per-model variants above add the small
-   phrasing nudges each model responds to."*
+4. A note that the prompt is model-agnostic.
 
 Do not call Path B "fallback" in user-facing output — call it
 "prompt brief" or "copy-pasteable prompt." It is a first-class
@@ -199,15 +242,17 @@ deliverable.
 
 ### Title-card SVG path (additive)
 
-If subject is `title-card`, **always** also emit a code-based SVG
+If subject is `title-card`, **always** also produce a code-based SVG
 from `templates/title-card.svg`. This SVG uses VT323 by default
 (per Kiang) and accepts the font, palette, and title text as
 template tokens. It is portable (renders in browsers, exports to
 PNG), and gives the user a path that does not depend on any image
-generator at all. Save to `docs/pixel-art/<slug>-title.svg`.
+generator at all. **Return** the filled SVG to the caller (do not write
+it to disk). This is the one authored-SVG path the skill retains (see
+the Phase 0 carve-out).
 
-When both Path A and the SVG path run, surface both: *"Generated
-image at `<png>`; portable SVG title card at `<svg>` — pick
+When both Path A and the SVG path run, surface both: *"Here's the
+generated + quantized image, and a portable SVG title card — pick
 whichever fits your use case."*
 
 ## IP guardrail (non-negotiable)
@@ -222,8 +267,8 @@ Mirror `algorithmic-art`'s standard:
 - **Never** copy a specific copyrighted work. If the user supplies
   a reference screenshot, treat it as stylistic intent only and
   produce an original composition.
-- Pinned reference examples in `docs/pixel-art/` should be original
-  generations, not derivatives of third-party reference imagery.
+- Any reference examples you return should be original generations, not
+  derivatives of third-party reference imagery.
 
 If a user prompt names any specific artist (living or deceased),
 **rewrite it** before generating: replace the artist name with the
@@ -231,13 +276,24 @@ craft markers that artist's style would have evoked (high-density,
 painterly mid-tones, warm palette, etc.). Note the rewrite in the
 user-facing output.
 
-## Verification — craft-marker checklist
+## Verification
 
-Before declaring a generation done, run the checklist in
-`references/anti-patterns.md`. Hi-fi mode requires at least **5 of 6**
-craft markers present (marker 6 added in v3.10.1; this section is
-the SKILL.md summary — `references/anti-patterns.md` is authoritative
-on the full checklist and regenerate-recipes):
+### Deliverable-type check (run FIRST)
+
+Before the craft check, confirm the output's **kind** matches the
+request: a single raster (or one-sprite SVG / title-card SVG) for a
+generative brief; an honest **decline** for a composition/authoring
+brief (Phase 0). If you generated a raster for something that should
+have been declined, that is the failure this skill exists to prevent —
+stop and decline instead.
+
+### Craft-marker checklist
+
+Then run the checklist in `references/anti-patterns.md`. Hi-fi mode
+requires at least **5 of 6** craft markers present (marker 6 added in
+v3.10.1; this section is the SKILL.md summary —
+`references/anti-patterns.md` is authoritative on the full checklist and
+regenerate-recipes):
 
 1. **Deliberate hue shifts** in shadow / light ramps (not pure
    lightness change).
@@ -271,7 +327,11 @@ skills/pixel-art/
 │   ├── lighting.md          (time-of-day, mood, color-temp)
 │   ├── fonts.md             (VT323 default + 4 alternates)
 │   ├── anti-patterns.md     (craft-marker checklist + forbid list)
-│   └── model-routing.md     (per-model phrasing tweaks)
+│   └── model-routing.md     (optional per-model phrasing nudges)
+├── scripts/
+│   ├── quantize.py          (deterministic median-cut quantize → PNG/SVG)
+│   ├── test_quantize.py     (stdlib assert-based invariants)
+│   └── requirements.txt     (Pillow)
 └── templates/
     ├── scene-prompt.md
     ├── character-prompt.md
@@ -286,11 +346,11 @@ skills/pixel-art/
 
 | Skill | Relationship |
 |---|---|
-| `brand-workshop` | Pure logo / identity packages route there instead. `pixel-art` can produce pixel-art **brand banners**, but a logo is a different deliverable. |
+| `brand-workshop` | Logo / identity packages route there. A composed/branded asset set is a decline here (Phase 0), not a `pixel-art` job — but the caller routes; this skill does not name where. |
 | Anthropic's `algorithmic-art` | Sibling: algorithmic art uses p5.js (procedural, seeded). `pixel-art` uses image-gen models + structured prompts. Different toolchain, complementary scope. |
 | Anthropic's `canvas-design` | Sibling: canvas-design ships static raster / PDF via design-philosophy prose. `pixel-art` ships pixel-style raster via design-system tokens. |
-| `team-composer` | If the brief is genuinely cross-disciplinary (e.g., "design a game splash screen and its marketing copy"), team-composer assembles roles and may hand `pixel-art` the visual deliverable. |
-| Image-gen MCPs (Z-image, Imagen, OpenAI Image, etc.) | Capability-gated dependency. Skill works without any of them via Path B; works better with at least one connected. |
+| `team-composer` | If the brief is genuinely cross-disciplinary (e.g., "design a game splash screen and its marketing copy"), team-composer assembles roles and may hand `pixel-art` the single-image deliverable. |
+| Image-gen capability (host-native or MCP) | Attempt-then-fallback dependency. Skill works with no generator at all via Path B (the prompt brief); works better when generation is reachable. |
 
 ## When to use this skill
 
@@ -303,11 +363,12 @@ standard — Codex and other parsers look for this header.)
 - "VT323 title card" / "pixel-font title"
 - "make this a pixel-art version"
 - "generate a pixel-art [subject]"
+- "give me that sprite as SVG" (single generated sprite)
 - "I want this style" + hi-density pixel-art reference
 
 **Tags:** `pixel-art`, `image-generation`, `design-system`,
 `hi-density`, `lo-fi`, `title-card`, `VT323`, `model-agnostic`,
-`capability-gated`.
+`quantize`, `repo-agnostic`.
 
 ## License
 

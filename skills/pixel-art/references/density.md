@@ -17,9 +17,9 @@ in the `[DENSITY]` block.
 |---|---|---|
 | **8-bit / NES-density** | Mario, Mega Man — chunky 16×16 sprites, ~4-color palettes per tile | Retro game homage, lo-fi banners with strong silhouette focus |
 | **16-bit / SNES-density** | Chrono Trigger, Final Fantasy VI — 32–64px characters, painterly clusters | Default hi-fi if you want a classic painterly pixel look |
-| **Modern indie-density** | Stardew Valley, Celeste, Hyper Light Drifter — moderate density, expressive | Z-image's natural sweet spot |
+| **Modern indie-density** | Stardew Valley, Celeste, Hyper Light Drifter — moderate density, expressive | A common, well-supported target |
 | **HD-pixel-game-density** | Octopath Traveler, Sea of Stars, Eastward — high density with HD-2D layering | Mid-tier hi-fi, ambitious craft |
-| **AI-pixel-art-density** | The Kiang harbor / tavern reference screenshots — ultra-fine pixel grain, sub-pixel detail throughout | Top-tier hi-fi; **typically requires Midjourney `--niji 6` or SDXL + pixel-art LoRA. Z-image cannot reach this density via prompting alone.** |
+| **AI-pixel-art-density** | The Kiang harbor / tavern reference screenshots — ultra-fine pixel grain, sub-pixel detail throughout | Top-tier hi-fi. Some generators reach finer grain than others from prompting alone — but the quantize pass (SKILL.md Phase 4) downscales to the target grid regardless, so name the anchor and let quantize do the gridding. |
 
 State the anchor explicitly in the prompt:
 
@@ -95,19 +95,13 @@ eye, a sparkle on water, a single bright pixel on a candle flame.
 Sub-pixel detail is **forbidden** in lo-fi mode — it reads as noise
 against the scanlined background.
 
-## Resolution recommendations per generator
+## Output resolution
 
-The image generators do not render at "64 px tall" natively. Use
-these output sizes and let the model produce a pixel-art-styled
-image at standard resolution:
-
-| Generator | Recommended output |
-|---|---|
-| Z-image Turbo | 1024×1024 or 1280×720 |
-| Imagen / Nano Banana | 1024×1024 |
-| OpenAI Image / DALL-E 3 | 1024×1024 or 1792×1024 |
-| Midjourney | `--ar 16:9` or `--ar 1:1` at default size |
-| SDXL | 1024×1024, then upscale 2× nearest-neighbor for crispness |
-
-The prompt's `[DENSITY]` block names the *aesthetic target*; the
-output resolution is set by the renderer.
+Image generators do not render at "64 px tall" natively. Generate at a
+standard resolution (1024×1024 or a 16:9 equivalent like 1280×720 is a
+safe default for most generators) and let the model produce a
+pixel-art-styled image — then the quantize pass (SKILL.md Phase 4)
+downscales it to the named grid target and median-cut-quantizes the
+palette. The prompt's `[DENSITY]` block names the *aesthetic target*;
+the renderer sets the source resolution; `quantize.py` sets the final
+grid.

@@ -211,11 +211,11 @@ Make the agent yours, and write as yourself.
 *Try:*
   - "What does ออเจ้า mean in 'ออเจ้าจักไปไหน'? Give me the register and why."
 
-[`pixel-art`](skills/pixel-art/README.md) **🚧 BETA** — a pocket pixel-art studio with a built-in design system.
+[`pixel-art`](skills/pixel-art/README.md) — a pocket pixel-art studio with a built-in design system: generates a single subject, quantizes it to a true grid, returns PNG or single-sprite SVG (or a model-agnostic prompt brief). Repo-agnostic; declines composed/branded asset jobs instead of faking them.
 
 *Try:*
   - "Create a hi-fi pixel-art medieval harbor at dusk with a lighthouse and three ships."
-  - "Make a lo-fi pixel-art banner — three-panel, scanlined paper, VT323 title."
+  - "Generate a pixel-art knight sprite and give it to me as SVG."
 
 ### Authoring & auditing skills
 Building skills for this shelf? [`skill-evaluator`](skills/skill-evaluator/README.md)
@@ -287,7 +287,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.4.0`.** Wires the `team-composer` ↔ `storm` integration. `team-composer` now hands off to `storm` on a **grounding need** (the panel is reasoning about external facts it can't verify — "we're guessing here"), passing its active roles as seed perspectives and folding the returned cited briefing into its conclusion; it also adopts two rigor lenses `storm` carried from STORM — a **contradiction map** (clash / converge / blind spot) in its Discuss phase and a **confidence-vs-grounding** check in its Audit phase. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.5.0`.** Reworks `pixel-art` to be honest, repo-agnostic, and deterministic: a Phase 0 gate **declines** composed/branded SVG-asset jobs instead of silently shipping a raster; generation is **attempt-then-fallback** (any reachable generator, host-native or MCP) rather than gated on a named server list; outputs are **returned** to the caller (no repo writes); and a new median-cut `quantize.py` makes the result true grid-aligned pixel art (PNG or single-sprite SVG). Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

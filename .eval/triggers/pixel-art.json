@@ -4,12 +4,24 @@
     "should_trigger": true
   },
   {
-    "query": "Generate a lo-fi pixel banner matching the repo's aesthetic.",
+    "query": "I want an 8-bit pixel-art scene of a lighthouse at dusk.",
     "should_trigger": true
   },
   {
-    "query": "I want an 8-bit scene of a lighthouse at dusk.",
+    "query": "Make a hi-fi pixel-art tavern interior with a fireplace.",
     "should_trigger": true
+  },
+  {
+    "query": "Generate a pixel-art knight sprite and give it to me as SVG.",
+    "should_trigger": true
+  },
+  {
+    "query": "Make me a branded pixel-art banner with our logo and the exact tagline text, as an editable SVG I can tweak.",
+    "should_trigger": false
+  },
+  {
+    "query": "Design a pixel-art icon set for my app's toolbar — eight matching icons.",
+    "should_trigger": false
   },
   {
     "query": "Design a vector logo and brand identity for my startup.",
