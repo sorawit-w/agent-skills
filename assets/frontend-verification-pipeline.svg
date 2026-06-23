@@ -1,0 +1,92 @@
+<svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" font-family="Geist, system-ui, sans-serif">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700&amp;family=Geist:wght@400;500&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap');
+      .disp { font-family:'Schibsted Grotesk', system-ui, sans-serif; }
+      .body { font-family:'Geist', system-ui, sans-serif; }
+      .mono { font-family:'JetBrains Mono', ui-monospace, monospace; }
+    </style>
+    <marker id="ah" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#B0532F"/>
+    </marker>
+  </defs>
+
+  <!-- canvas -->
+  <rect x="0" y="0" width="1000" height="500" fill="#FAF8F4"/>
+
+  <!-- title -->
+  <text x="36" y="50" class="disp" font-size="27" font-weight="700" fill="#1A1A1A">Frontend verification pipeline</text>
+  <text x="36" y="74" class="mono" font-size="12.5" fill="#4A4F5A">author &#8594; judge  ·  static &#8594; runtime  ·  three tools, one chain</text>
+
+  <!-- region + boundary labels -->
+  <text x="168" y="106" class="mono" font-size="9" fill="#71695B" text-anchor="middle" letter-spacing="1">STATIC · PRE-RUNTIME</text>
+  <text x="334" y="106" class="mono" font-size="9.5" fill="#B0532F" text-anchor="middle" letter-spacing="1.5">RUNTIME BOUNDARY</text>
+  <text x="666" y="106" class="mono" font-size="9" fill="#71695B" text-anchor="middle" letter-spacing="1">DYNAMIC · SERVED APP</text>
+
+  <!-- boundary line (HTML crosses here) -->
+  <line x1="334" y1="120" x2="334" y2="396" stroke="#4A4F5A" stroke-width="1.25" stroke-dasharray="4 5"/>
+
+  <!-- ============ CARD A : screenwright ============ -->
+  <g transform="translate(36,120)">
+    <rect x="0" y="0" width="264" height="280" rx="10" fill="#FFFDF9" stroke="#E6DFD4" stroke-width="1.25"/>
+    <text x="246" y="26" class="mono" font-size="11" fill="#4A4F5A" text-anchor="end">01</text>
+    <text x="18" y="36" class="disp" font-size="17" font-weight="700" fill="#1A1A1A">screenwright</text>
+    <text x="18" y="56" class="mono" font-size="11.5" fill="#4A4F5A">author + a11y</text>
+    <line x1="18" y1="70" x2="246" y2="70" stroke="#E6DFD4" stroke-width="1"/>
+    <text x="18" y="92" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">SEES</text>
+    <text x="18" y="110" class="body" font-size="12.5" fill="#3D3A36">the markup it just wrote</text>
+    <text x="18" y="140" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">GATE</text>
+    <text x="18" y="158" class="body" font-size="12" fill="#3D3A36">axe a11y blocks · responsive</text>
+    <text x="18" y="174" class="body" font-size="12" fill="#3D3A36">reflow@320 · focus · tokens</text>
+    <text x="18" y="204" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">OUT &#8594;</text>
+    <text x="18" y="222" class="body" font-size="12.5" fill="#3D3A36">verified portable HTML</text>
+    <line x1="18" y1="254" x2="246" y2="254" stroke="#E6DFD4" stroke-width="1"/>
+    <text x="18" y="272" class="mono" font-size="10" fill="#4A4F5A">offline · 1 surface · static</text>
+  </g>
+
+  <!-- ============ CARD B : qa ============ -->
+  <g transform="translate(368,120)">
+    <rect x="0" y="0" width="264" height="280" rx="10" fill="#FFFDF9" stroke="#E6DFD4" stroke-width="1.25"/>
+    <text x="246" y="26" class="mono" font-size="11" fill="#4A4F5A" text-anchor="end">02</text>
+    <text x="18" y="36" class="disp" font-size="17" font-weight="700" fill="#1A1A1A">qa</text>
+    <text x="18" y="56" class="mono" font-size="11.5" fill="#4A4F5A">functional acceptance</text>
+    <line x1="18" y1="70" x2="246" y2="70" stroke="#E6DFD4" stroke-width="1"/>
+    <text x="18" y="92" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">SEES</text>
+    <text x="18" y="110" class="body" font-size="12.5" fill="#3D3A36">behavior of the running app</text>
+    <text x="18" y="140" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">GATE</text>
+    <text x="18" y="158" class="body" font-size="12" fill="#3D3A36">does the flow work?</text>
+    <text x="18" y="174" class="body" font-size="12" fill="#3D3A36">happy-path + edge cases</text>
+    <text x="18" y="204" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">OUT &#8594;</text>
+    <text x="18" y="222" class="body" font-size="12.5" fill="#3D3A36">score 1&#8211;5 + evidence</text>
+    <line x1="18" y1="254" x2="246" y2="254" stroke="#E6DFD4" stroke-width="1"/>
+    <text x="18" y="272" class="mono" font-size="10" fill="#4A4F5A">runtime · cloud (metered) · flows</text>
+  </g>
+
+  <!-- ============ CARD C : web-quality-skills ============ -->
+  <g transform="translate(700,120)">
+    <rect x="0" y="0" width="264" height="280" rx="10" fill="#FFFDF9" stroke="#E6DFD4" stroke-width="1.25"/>
+    <text x="246" y="26" class="mono" font-size="11" fill="#4A4F5A" text-anchor="end">03</text>
+    <text x="18" y="36" class="disp" font-size="17" font-weight="700" fill="#1A1A1A">web-quality-skills</text>
+    <text x="18" y="56" class="mono" font-size="11.5" fill="#4A4F5A">perf / CWV</text>
+    <line x1="18" y1="70" x2="246" y2="70" stroke="#E6DFD4" stroke-width="1"/>
+    <text x="18" y="92" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">SEES</text>
+    <text x="18" y="110" class="body" font-size="12.5" fill="#3D3A36">the served build under load</text>
+    <text x="18" y="140" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">GATE</text>
+    <text x="18" y="158" class="body" font-size="12" fill="#3D3A36">LCP · INP · CLS</text>
+    <text x="18" y="174" class="body" font-size="12" fill="#3D3A36">perf · SEO · best-practices</text>
+    <text x="18" y="204" class="mono" font-size="9.5" fill="#71695B" letter-spacing="1">OUT &#8594;</text>
+    <text x="18" y="222" class="body" font-size="12.5" fill="#3D3A36">Lighthouse report</text>
+    <line x1="18" y1="254" x2="246" y2="254" stroke="#E6DFD4" stroke-width="1"/>
+    <text x="18" y="272" class="mono" font-size="10" fill="#4A4F5A">runtime · served build</text>
+  </g>
+
+  <!-- flow arrows (accent marks) -->
+  <line x1="300" y1="260" x2="366" y2="260" stroke="#B0532F" stroke-width="2" marker-end="url(#ah)"/>
+  <text x="333" y="282" class="mono" font-size="9" fill="#71695B" text-anchor="middle">ports HTML</text>
+  <line x1="632" y1="260" x2="698" y2="260" stroke="#B0532F" stroke-width="2" marker-end="url(#ah)"/>
+  <text x="665" y="282" class="mono" font-size="9" fill="#71695B" text-anchor="middle">same build</text>
+
+  <!-- caption -->
+  <text x="36" y="446" class="body" font-size="13" fill="#3D3A36">Each stage sees what the last can&#8217;t: screenwright can&#8217;t see behavior · qa can&#8217;t see unwired markup · perf needs a served build.</text>
+  <text x="36" y="470" class="mono" font-size="11" fill="#4A4F5A">screenwright &#8594; qa &#8594; web-quality-skills   ·   complementary, not competing</text>
+</svg>
