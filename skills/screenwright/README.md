@@ -41,9 +41,11 @@ loop, is not.** That loop is screenwright's wedge.
 - **No framework conversion** — it outputs portable HTML; you (or the host agent) port it
   to React/Vue/etc.
 - **No motion systems, performance audits, or copywriting** — out of scope by design.
-- **No runtime performance / Core Web Vitals / Lighthouse / SEO** — those need a *running app
-  at a URL*; screenwright renders self-contained HTML offline, so it can't (and won't fake)
-  them. Hand the served build to [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills).
+- **No runtime checks — behavior or performance.** Whether a flow actually *works* end-to-end,
+  plus Core Web Vitals / Lighthouse / SEO, both need a *running app at a URL*; screenwright
+  renders self-contained HTML offline, so it can't (and won't fake) them. Hand the served
+  build to [`qa`](https://github.com/browser-use/plugins) for functional flows and
+  [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) for perf.
 - **No runtime** — it drives your Playwright MCP; it ships no server of its own.
 
 ## When to use it
@@ -100,6 +102,10 @@ check it"). Requires the Playwright MCP for rendering.
 
 ## Cross-skill integration
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sorawit-w/agent-skills/main/assets/frontend-verification-pipeline.svg" alt="screenwright → qa → web-quality-skills: where each tool sits in the frontend verification pipeline" width="100%"/>
+</p>
+
 | Skill | Relationship |
 |---|---|
 | **Playwright MCP** | Hard dependency — the render/audit/screenshot engine. |
@@ -110,6 +116,7 @@ check it"). Requires the Playwright MCP for rendering.
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent. |
 | `ghostwriter` | Owns the words; screenwright paints the surface. |
 | [`web-quality-skills`](https://github.com/addyosmani/web-quality-skills) *(if installed)* | Runtime-layer handoff — Lighthouse, Core Web Vitals, perf, SEO on the *served* build. screenwright checks the surface pre-handoff; this checks the running app. |
+| [`qa`](https://github.com/browser-use/plugins) *(if installed)* | Runtime handoff, behavior side — drives the *served* app through real user flows on a cloud browser, scores it 1–5 with evidence. screenwright checks the static surface; qa checks whether the flow actually works. Cloud-based, so a pointer, not a hard dep. |
 | [`cerby`](https://github.com/sorawit-w/cerby) *(if installed)* | When running mid-build in a guard-railed repo, defer to its loop discipline. |
 
 ## Status and scope
