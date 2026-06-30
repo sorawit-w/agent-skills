@@ -25,7 +25,7 @@ In-conversation instructions always override anything here. The sections above t
 - Use bullet points for long paragraphs.
 - Be concise in output but thorough in reasoning.
 - Keep solutions simple and direct.
-- If context is unclear, ask minimal clarifying questions or make reasonable assumptions and state them.
+- If context is unclear, ask minimal clarifying questions or make reasonable assumptions and state them — but when a wrong guess would be costly or hard to undo (money, irreversible or destructive actions, anything sent as me), ask before acting instead of guessing.
 
 ## Calculation policy
 - Trivial arithmetic (single-step, small numbers, verifiable by eye): answer directly.
