@@ -2,7 +2,7 @@
 
 This file is your onboarding when working on **skill authoring in this repo**. It captures conventions, design principles, and environment quirks that took investigation to discover and are worth surfacing up-front instead of relearning each session.
 
-**Scope:** how to author, edit, version, and ship skills inside `sorawit-w/agent-skills`. NOT general agentic-coding discipline — for that, see the external [`cerby`](https://github.com/sorawit-w/cerby) skill (formerly `coding-rules` in this repo, now its own repo).
+**Scope:** how to author, edit, version, and ship skills inside `sorawit-w/agent-skills`. NOT general agentic-coding discipline — for that, see the external [`kerby`](https://github.com/sorawit-w/kerby) skill (formerly `coding-rules` in this repo, now its own repo).
 
 **Authority:** when this file conflicts with a specific skill's own `SKILL.md` or `README.md`, the skill wins (its conventions may have evolved). This file is the *default* for new skills and the *checklist* for repo-wide changes.
 
@@ -22,7 +22,7 @@ This file is your onboarding when working on **skill authoring in this repo**. I
 | Skill knowledge graph (nodes + edges + audience buckets) | `docs/skill-graph.md` |
 | Shared role catalog | `skills/team-composer/references/role-personas.md` |
 | Sub-agent brief conventions | `skills/sub-agent-coordinator/SKILL.md` |
-| Coding-task discipline (opt-in) | external [`cerby`](https://github.com/sorawit-w/cerby) repo (formerly `coding-rules` here) |
+| Coding-task discipline (opt-in) | external [`kerby`](https://github.com/sorawit-w/kerby) repo (formerly `coding-rules` here) |
 | Skill audit harness | `skills/skill-evaluator/` |
 | Cross-platform frontmatter checker | `scripts/check-skill-compat.py` (Codex `SKILL.md` rules) |
 
@@ -39,10 +39,10 @@ The five primitives, with one concrete repo pointer each:
 | **Context engineering** | Organize information so the agent can reason over it. Repo-local, versioned, not in chat threads. | `SKILL.md` frontmatter `description` + `instructions` — what the agent sees before it decides to invoke. |
 | **Progressive disclosure** | Load detail on demand instead of front-loading everything. The harness pattern behind `references/`. | `team-composer/references/role-personas.md` — read lazily when the skill body cites it. |
 | **Observable feedback loops** | Prefer machine-checkable signal over aspirational prose. Linters, audits, structured reviewers beat "be careful." | `skill-evaluator` (rule-adherence audit) + `team-composer` Phase 6.6 (Plan-subagent structural review). |
-| **State preservation** | Carry useful context across session boundaries. Skill authoring sessions are short; project work isn't. | The external `cerby` skill's `.ai/memory.log` (append-only session log) + `.ai/STATUS.md` (current state) + `.ai/knowledge/` (curated wiki). Canonical implementation — see the [`cerby`](https://github.com/sorawit-w/cerby) repo. |
+| **State preservation** | Carry useful context across session boundaries. Skill authoring sessions are short; project work isn't. | The external `kerby` skill's `.ai/memory.log` (append-only session log) + `.ai/STATUS.md` (current state) + `.ai/knowledge/` (curated wiki). Canonical implementation — see the [`kerby`](https://github.com/sorawit-w/kerby) repo. |
 | **Eval discipline** | Decide what "working" means before shipping. | Pre-shipment audit ritual: `skill-evaluator` + `skill-creator` description check before version bump. |
 
-**Canonical implementation:** the external [`cerby`](https://github.com/sorawit-w/cerby) skill (formerly `coding-rules` in this repo, now extracted). The five primitives above are vocabulary; `cerby` is the working machinery — `BOOTSTRAP.md` for context, `references/` for progressive disclosure, hooks like `pre-commit-check.sh` for feedback loops, `.ai/memory.log` + `.ai/STATUS.md` + `.ai/knowledge/` for state preservation, `references/quality-gates.md` for eval discipline. When this vocabulary cites a primitive abstractly, the `cerby` repo shows it implemented concretely.
+**Canonical implementation:** the external [`kerby`](https://github.com/sorawit-w/kerby) skill (formerly `coding-rules` in this repo, now extracted). The five primitives above are vocabulary; `kerby` is the working machinery — `BOOTSTRAP.md` for context, `references/` for progressive disclosure, hooks like `pre-commit-check.sh` for feedback loops, `.ai/memory.log` + `.ai/STATUS.md` + `.ai/knowledge/` for state preservation, `references/quality-gates.md` for eval discipline. When this vocabulary cites a primitive abstractly, the `kerby` repo shows it implemented concretely.
 
 **External reading:** Anthropic ([effective harnesses for long-running agents](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents), [harness design for long-running apps](https://www.anthropic.com/engineering/harness-design-long-running-apps)); OpenAI ([harness engineering](https://openai.com/index/harness-engineering/)); the [`AGENTS.md`](https://agents.md/) convention.
 
@@ -52,7 +52,7 @@ The five primitives, with one concrete repo pointer each:
 
 Prompt engineering optimizes a single forward pass. **Loop engineering** optimizes the trajectory across many passes: the agent acts, observes a result (test output, build error, screenshot), and that observation re-enters context and shapes the next action. It is the runtime-control-flow half of harness engineering — the harness is the static scaffolding, the loop is what drives it over time.
 
-The external `cerby` skill (formerly `coding-rules` here) implements the loop primitives. This table is the map so the spine is legible in one place; each row points to where the primitive is enforced — the "Lives in" paths below are in the [`cerby`](https://github.com/sorawit-w/cerby) repo.
+The external `kerby` skill (formerly `coding-rules` here) implements the loop primitives. This table is the map so the spine is legible in one place; each row points to where the primitive is enforced — the "Lives in" paths below are in the [`kerby`](https://github.com/sorawit-w/kerby) repo.
 
 | Primitive | One-line meaning | Lives in |
 |---|---|---|
@@ -66,7 +66,7 @@ The external `cerby` skill (formerly `coding-rules` here) implements the loop pr
 
 These are the runtime expression of the harness primitives above, not a second taxonomy: *State across iterations* is *State preservation* applied mid-task, and the two check rows are *Observable feedback loops* applied per-iteration. The rest (termination, retry budget, bounded search, fan-out) are loop-specific. When in doubt about which table owns a concern, the harness table is the noun and this one is the verb.
 
-Lives in the authoring context, not `cerby`'s `BOOTSTRAP.md` — zero cost for `cerby` *consumers* (this table does load for sessions working in this repo, so keep it tight).
+Lives in the authoring context, not `kerby`'s `BOOTSTRAP.md` — zero cost for `kerby` *consumers* (this table does load for sessions working in this repo, so keep it tight).
 
 ---
 
@@ -81,7 +81,7 @@ A complete skill ships with the files below. Existing skills are templates by ex
 | `skills/<name>/references/*.md` | optional | Long-tail topic guides loaded by the skill body. This is **progressive disclosure** — the harness pattern of loading detail on demand instead of front-loading everything into `SKILL.md`. |
 | `skills/<name>/templates/*` | optional | Starter files the skill emits |
 | `skills/<name>/commands/*.md` | optional | Slash-command entry points |
-| `skills/<name>/CLAUDE.md` | optional | Skill-internal authoring rules (rare; the external `cerby` skill has one) |
+| `skills/<name>/CLAUDE.md` | optional | Skill-internal authoring rules (rare; the external `kerby` skill has one) |
 | `assets/<name>-li.svg` | yes | LinkedIn banner — `viewBox="0 0 1200 627"` |
 | `assets/<name>-x.svg` | yes | X/Twitter banner — `viewBox="0 0 1600 467"` |
 | `assets/<name>-li.png` | optional | PNG rasterization — some skills have it, some don't |
@@ -333,11 +333,11 @@ When you need a new role or want to refine an existing one, edit `role-personas.
 - Picking the role guidance
 - `BLOCKED_SCOPE_EXPANDED` escalation protocol
 
-Skills that need any of this reference the relevant section in coordinator. `team-composer` is the existing thin-pointer example (the external `cerby` skill is another).
+Skills that need any of this reference the relevant section in coordinator. `team-composer` is the existing thin-pointer example (the external `kerby` skill is another).
 
 ### Other shared things to be aware of
 
-- The external [`cerby`](https://github.com/sorawit-w/cerby) skill — opinionated agentic-coding rules (`BOOTSTRAP.md`). Opt-in; formerly `coding-rules` in this repo.
+- The external [`kerby`](https://github.com/sorawit-w/kerby) skill — opinionated agentic-coding rules (`BOOTSTRAP.md`). Opt-in; formerly `coding-rules` in this repo.
 - `team-composer` Phase 6 — references `sub-agent-coordinator` for model routing / role-picking / deliverable fan-out.
 - `skill-evaluator` — the split-context audit harness for SKILL.md rule-adherence reviews. Run it in the **main loop** (its executor/grader sub-agents — the actual bias removal — only spawn there; nesting collapses them). See "Pre-shipment audit ritual".
 
@@ -379,7 +379,7 @@ The sub-agent-coordinator Model Selection precedent: capability tier (low/std/hi
 
 When drafting an "opinionated overlay" on top of a framework, row-by-row ask: "would any thoughtful team converge here?" If yes, it's a defensible default, not taste — promote it to the framework layer. The overlay should contain only what's genuinely opinionated.
 
-**Example:** the sub-agent-coordinator coding-work mapping (10 rows) started in `coding-rules` (now the external `cerby` skill) as an "opinionated overlay." On review, 9 of 10 rows were universal defaults, not personal taste — they got promoted to coordinator's `Default Mapping (Coding Work)`. It became a thin pointer.
+**Example:** the sub-agent-coordinator coding-work mapping (10 rows) started in `coding-rules` (now the external `kerby` skill) as an "opinionated overlay." On review, 9 of 10 rows were universal defaults, not personal taste — they got promoted to coordinator's `Default Mapping (Coding Work)`. It became a thin pointer.
 
 **Why:** the temptation is to draw the framework/opinion line along skill boundaries (coordinator = framework; coding-rules = opinion). The real line is along *actual taste* — and most calibration matrices have more defensible defaults than they look like at first.
 
@@ -415,7 +415,7 @@ For depth on topics this file deliberately skims:
 |---|---|
 | Full release notes per version | `CHANGELOG.md` |
 | Repo architecture and philosophy | Root `README.md` |
-| General agentic-coding discipline | external `cerby` skill (opt-in) |
+| General agentic-coding discipline | external `kerby` skill (opt-in) |
 | SKILL.md rule-adherence auditing | `skill-evaluator` skill |
 | Skill creation walkthrough | Anthropic's `skill-creator` skill |
 | Banner pixel-art examples | Existing `assets/<skill>-li.svg` files |
