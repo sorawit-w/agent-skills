@@ -110,7 +110,7 @@ def cmd_anchors(args):
             for k, (ar, ag, ab) in anchors.items():
                 if (r - ar) ** 2 + (g - ag) ** 2 + (b - ab) ** 2 < t2:
                     counts[k] += 1
-    total = (w // 2) * (h // 2)
+    total = len(range(0, w, 2)) * len(range(0, h, 2))  # actual sampled-pixel count (ceil, not floor)
     fail = False
     for k, v in counts.items():
         pct = 100 * v / total

@@ -794,13 +794,19 @@ Before presenting final output, verify:
 - [ ] Empty DESIGN.md sections are dropped rather than filled with placeholder text. The spec preserves omitted sections without erroring.
 - [ ] No `deck/` subfolder is emitted under `<brand-root>/`. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `DESIGN.md` directly. Verify: `[ ! -d <brand-root>/deck ] && echo OK`.
 
-**Mascot lane (if run)**
+**Mascot lane — generated assets (Path A: a generator ran)**
 - [ ] Template integrity: `python3 scripts/verify.py integrity <sheet.html>` PASS on **both** instantiated sheets — zero leftover `{{`, balanced CSS braces, tags parse, every `var(--x)` defined, alt text on every image
 - [ ] Palette anchors: `python3 scripts/verify.py anchors mascot/master.png NAME=#RRGGBB ...` PASS — every declared anchor ≥ 0.5% pixel share (tol 60)
 - [ ] Print fit: `python3 scripts/verify.py pagegate mascot/character-sheet-print.html --landscape` = exactly 1 page on Letter AND A4, engine Chromium (SKIPPED is not a pass — install playwright + pypdf)
 - [ ] Cutout report sane — read the printed report, not the exit code: ≥1 kept component, pale (shadow) components dropped, coverage 30–60% for a full-body chibi
-- [ ] No lane bleed: logo/favicon lanes untouched; favicon does not derive from the mascot raster
 - [ ] Pagegate PDFs deleted after the gate — they never ship
+
+**Mascot lane — prompt brief (Path B: no generator reachable)**
+- [ ] Shipped a first-class prompt brief + `mascot.md` recipe skeleton — the generated-asset gates above do NOT apply; never fabricate PNGs/sheets or report a gate that did not run
+- [ ] Did not downgrade to a code-drawn mascot
+
+**Mascot lane — either path**
+- [ ] No lane bleed: logo/favicon lanes untouched; favicon does not derive from the mascot raster
 
 **Shipping**
 - [ ] Files are saved under `<brand-root>/` per the folder structure shown in Output Files
