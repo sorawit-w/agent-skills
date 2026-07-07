@@ -1,0 +1,199 @@
+<!--
+character-sheet-print-landscape.html.template — one-page print sheet (landscape) for the mascot lane
+Derived from a tested reference build (v0.4, 2026-07-07): Chromium-verified 1 page on Letter AND A4 landscape.
+Content box 263×193mm fits both papers at 8mm margins. Token syntax: UPPER_SNAKE names wrapped
+in double curly braces; fill via string replace only (no leftover double-open-brace pairs in output).
+Verification gate (D12): scripts/verify.py pagegate <file> --landscape must report 1 page on letter and a4.
+
+FONT TOKENS   {{FONTS_HREF}} {{FONT_DISPLAY}} {{FONT_BODY}} {{FONT_MONO}}
+COLOR TOKENS  same semantic set as the web template:
+              {{C_BG}} {{C_SURFACE}} {{C_GROUND}} {{C_GROUND2}} {{C_INK}} {{C_INK2}} {{C_MUTED}}
+              {{C_BRAND}} {{C_BRAND_DEEP}} {{C_ACCENT}} {{C_ACCENT_INK}} {{C_SPARK}} {{C_SOFT}} {{C_BORDER}}
+              {{C_DOT}} {{C_STAMP_BG}} {{C_CHECKER_A}} {{C_CHECKER_B}}
+              {{C_BAND_MUTED}} {{C_BAND_NUM}} {{C_BAND_TEXT}} {{C_BAND_TRACK}}
+CONTENT       {{PAGE_TITLE}} {{LANG}} {{PRINT_HINT}} {{KICKER}} {{NAME_MAIN}} {{NAME_SUB}} {{TAGLINE}} {{STAMP_LINES}}
+              {{T_ART_ALT}} {{T_PALETTE}} {{CHIPS}} {{T_VOICE}} {{VOICE_YES_ITEMS}} {{VOICE_NO_ITEMS}}
+              {{T_IDENTITY}} {{IDENTITY_ROWS}} {{T_POSES}} {{POSE_TILES}}
+              {{T_STORY}} {{STORY_MAIN}} {{STORY_PULL}} {{T_STATS}} {{STATS_ROWS}} {{TRAIT_ITEMS}}
+              {{RECIPE_LINE}} {{RULES_LINE}} {{VERSION_LINE}}
+IMAGES        {{MASTER_B64}} — use the FULL-RES master (≥768px) here: the art panel prints ~54mm wide,
+              small thumbs are fine for poses ({{POSE_TILES}} carries its own b64).
+ROW SHAPES    IDENTITY_ROWS / CHIPS as in the web template (print sizes differ via CSS only)
+              STATS_ROWS: <div><div class="stat-top"><span>L</span><span class="n">9/10</span></div><div class="track"><div class="fill" style="width:90%"></div></div></div>
+              POSE_TILES (4 tiles → 2×2): <div class="pose"><div class="ck"><img ... alt="L"></div><div class="cap">L<small>TAG</small></div></div>
+-->
+<!doctype html>
+<html lang="{{LANG}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{PAGE_TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="{{FONTS_HREF}}" rel="stylesheet">
+<style>
+:root{
+--ground:{{C_GROUND}};--ground2:{{C_GROUND2}};--surface:{{C_SURFACE}};--bg:{{C_BG}};
+--ink:{{C_INK}};--ink2:{{C_INK2}};--muted:{{C_MUTED}};--brand:{{C_BRAND}};--brand-deep:{{C_BRAND_DEEP}};
+--accent:{{C_ACCENT}};--accent-ink:{{C_ACCENT_INK}};--spark:{{C_SPARK}};--soft:{{C_SOFT}};--border:{{C_BORDER}};
+}
+*{box-sizing:border-box;margin:0;padding:0;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+body{font-family:'{{FONT_BODY}}',sans-serif;font-size:8.5pt;line-height:1.5;color:var(--ink);background:#E9E2D2}
+h1{font-family:'{{FONT_DISPLAY}}',sans-serif;font-weight:600}
+.mono{font-family:'{{FONT_MONO}}',monospace;font-size:5.8pt;letter-spacing:.06em;color:var(--muted)}
+img{display:block;max-width:100%}
+
+.page{width:263mm;height:193mm;margin:8mm auto;background:var(--bg);
+border:1px solid #D8CFBB;padding:5mm 6mm;display:grid;
+grid-template-rows:auto 1fr auto;row-gap:3mm}
+@page{size:landscape;margin:8mm}
+@media print{
+body{background:#FFF}
+.page{margin:0;border:none;width:auto;height:auto;min-height:0}
+.hint{display:none}
+}
+.hint{max-width:263mm;margin:0 auto;padding:5mm 0 2mm;
+font-family:'{{FONT_MONO}}',monospace;font-size:10px;color:#6E5F4B;text-align:center}
+
+header{display:flex;justify-content:space-between;align-items:center;
+background:var(--ground);border-radius:3mm;padding:3.5mm 6mm;
+background-image:radial-gradient({{C_DOT}} .35mm,transparent .35mm);background-size:6mm 6mm}
+header h1{font-size:21pt;line-height:1.1;color:var(--brand-deep);letter-spacing:-.01em;display:inline}
+header .sub{font-family:'{{FONT_DISPLAY}}',sans-serif;font-size:9pt;color:var(--ink2);margin-top:.5mm}
+.kicker{margin-bottom:1.2mm}
+.tagline{display:inline-block;margin-left:4mm;border:.4mm solid var(--accent-ink);color:var(--accent-ink);
+border-radius:99mm;padding:.7mm 3.5mm;font-family:'{{FONT_DISPLAY}}',sans-serif;font-size:7.5pt;vertical-align:6pt}
+.stamp{flex:none;width:21mm;height:21mm;border:.5mm solid var(--accent-ink);border-radius:50%;
+display:grid;place-items:center;transform:rotate(-9deg);color:var(--accent-ink);background:{{C_STAMP_BG}}}
+.stamp .ring{width:17.5mm;height:17.5mm;border:.3mm dashed var(--accent-ink);border-radius:50%;
+display:grid;place-content:center;text-align:center;font-family:'{{FONT_DISPLAY}}',sans-serif;font-size:5.2pt;line-height:1.45}
+
+main{display:grid;grid-template-columns:62mm 90mm 1fr;column-gap:4mm;min-height:0}
+.col{display:flex;flex-direction:column;gap:3mm;min-height:0}
+.blk{background:var(--surface);border:.25mm solid var(--border);border-radius:2.5mm;padding:3mm 3.5mm}
+.grow{flex:1;min-height:0}
+.bt{font-family:'{{FONT_DISPLAY}}',sans-serif;font-weight:500;font-size:8.8pt;margin-bottom:1.8mm}
+.bt .en{font-family:'{{FONT_BODY}}',sans-serif;font-weight:400;font-size:5.4pt;color:var(--muted);
+letter-spacing:.1em;text-transform:uppercase;margin-left:2mm}
+
+.art{background-color:{{C_CHECKER_A}};border-radius:2.5mm;padding:2.5mm;
+background-image:linear-gradient(45deg,{{C_CHECKER_B}} 25%,transparent 25%,transparent 75%,{{C_CHECKER_B}} 75%),
+linear-gradient(45deg,{{C_CHECKER_B}} 25%,transparent 25%,transparent 75%,{{C_CHECKER_B}} 75%);
+background-size:5mm 5mm;background-position:0 0,2.5mm 2.5mm;display:grid;place-items:center;height:60mm}
+.art img{height:54mm;width:auto}
+
+.chips{display:grid;grid-template-columns:repeat(5,1fr);gap:1.5mm}
+.chip .sw{height:7mm;border-radius:1.3mm;border:.25mm solid var(--border)}
+.chip .cx{font-family:'{{FONT_MONO}}',monospace;font-size:4.6pt;color:var(--ink2);margin-top:.7mm;text-align:center}
+.chip .role{font-size:5.2pt;color:var(--muted);text-align:center;line-height:1.3}
+
+.voice{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm;font-size:6.8pt;line-height:1.55}
+.voice ul{list-style:none}
+.voice .yes li::before{content:"✓ ";color:var(--accent-ink);font-weight:600}
+.voice .no li{color:var(--muted)}
+.voice .no li::before{content:"✕ ";font-weight:600}
+
+.idrow{display:flex;align-items:baseline;gap:1.5mm;padding:.9mm 0;font-size:7.6pt}
+.idrow .lbl{flex:none;width:17mm;font-family:'{{FONT_MONO}}',monospace;font-size:5.2pt;
+letter-spacing:.05em;color:var(--muted)}
+.idrow .dots{flex:1;border-bottom:.35mm dotted var(--border);transform:translateY(-1mm);min-width:3mm}
+.idrow .val{flex:none;max-width:58mm;font-weight:500;text-align:right;line-height:1.35}
+
+.poses{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:2.5mm;height:100%}
+.pose{background:var(--bg);border:.25mm solid var(--border);border-radius:2mm;padding:1.8mm;text-align:center;
+display:flex;flex-direction:column;justify-content:center}
+.pose .ck{background-color:{{C_CHECKER_A}};border-radius:1.5mm;padding:1.2mm;
+background-image:linear-gradient(45deg,{{C_CHECKER_B}} 25%,transparent 25%,transparent 75%,{{C_CHECKER_B}} 75%),
+linear-gradient(45deg,{{C_CHECKER_B}} 25%,transparent 25%,transparent 75%,{{C_CHECKER_B}} 75%);
+background-size:4mm 4mm;background-position:0 0,2mm 2mm}
+.pose img{height:16mm;width:auto;margin:0 auto}
+.pose .cap{font-family:'{{FONT_DISPLAY}}',sans-serif;font-size:6.2pt;margin-top:1mm}
+.pose .cap small{font-family:'{{FONT_MONO}}',monospace;font-size:4.4pt;color:var(--muted);letter-spacing:.05em;margin-left:1mm}
+
+.story p{font-size:7.7pt;line-height:1.55;color:var(--ink2)}
+.story .th{margin-top:1.5mm;font-size:7.7pt;font-weight:600;color:var(--ink)}
+
+.stats{background:var(--brand);border-radius:2.5mm;padding:3.2mm 4mm;color:var(--ground);
+display:flex;flex-direction:column}
+.stats .bt{color:var(--ground)}
+.stats .bt .en{color:{{C_BAND_MUTED}}}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;column-gap:4.5mm;row-gap:2mm}
+.stat-top{display:flex;justify-content:space-between;font-size:6.6pt;margin-bottom:.8mm}
+.stat-top .n{font-family:'{{FONT_MONO}}',monospace;font-size:5.4pt;color:{{C_BAND_NUM}};font-variant-numeric:tabular-nums}
+.track{height:2mm;background:{{C_BAND_TRACK}};border-radius:99mm;overflow:hidden}
+.fill{height:100%;background:var(--accent);border-radius:99mm}
+.traits{list-style:none;margin-top:2.6mm;font-size:6.9pt;color:{{C_BAND_TEXT}};line-height:1.55;display:grid;gap:1.1mm}
+.traits li{padding-left:3.4mm;position:relative}
+.traits li::before{content:"◆";position:absolute;left:0;top:.2mm;color:var(--accent);font-size:5pt}
+
+footer{background:var(--ground2);border-radius:2.5mm;padding:2.5mm 4mm;
+display:grid;grid-template-columns:1.6fr 1fr;column-gap:6mm;align-items:start}
+footer .mono{font-size:5.2pt;line-height:1.75;letter-spacing:.03em;color:var(--ink2)}
+footer .rules{font-size:6pt;color:var(--ink2);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="hint">{{PRINT_HINT}}</div>
+<div class="page">
+
+<header>
+  <div>
+    <div class="mono kicker">{{KICKER}}</div>
+    <h1>{{NAME_MAIN}}</h1><span class="tagline">{{TAGLINE}}</span>
+    <div class="sub">{{NAME_SUB}}</div>
+  </div>
+  <div class="stamp" aria-hidden="true"><div class="ring">{{STAMP_LINES}}</div></div>
+</header>
+
+<main>
+  <div class="col">
+    <div class="art"><img src="data:image/png;base64,{{MASTER_B64}}" alt="{{T_ART_ALT}}"></div>
+    <div class="blk">
+      <div class="bt">{{T_PALETTE}}</div>
+      <div class="chips">{{CHIPS}}</div>
+    </div>
+    <div class="blk grow">
+      <div class="bt">{{T_VOICE}}</div>
+      <div class="voice">
+        <ul class="yes">{{VOICE_YES_ITEMS}}</ul>
+        <ul class="no">{{VOICE_NO_ITEMS}}</ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="blk">
+      <div class="bt">{{T_IDENTITY}}</div>
+      {{IDENTITY_ROWS}}
+    </div>
+    <div class="blk grow" style="display:flex;flex-direction:column">
+      <div class="bt">{{T_POSES}}</div>
+      <div class="poses" style="flex:1">{{POSE_TILES}}</div>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="blk story">
+      <div class="bt">{{T_STORY}}</div>
+      <p>{{STORY_MAIN}}</p>
+      <div class="th">{{STORY_PULL}}</div>
+    </div>
+    <div class="stats grow">
+      <div class="bt">{{T_STATS}}</div>
+      <div class="sgrid">{{STATS_ROWS}}</div>
+      <ul class="traits">{{TRAIT_ITEMS}}</ul>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div>
+    <div class="mono" style="font-size:4.9pt;margin-bottom:.8mm;color:var(--muted)">MASCOT RECIPE — mascot.md</div>
+    <div class="mono">{{RECIPE_LINE}}</div>
+  </div>
+  <div class="rules">{{RULES_LINE}}<br>
+  <span class="mono" style="font-size:4.7pt">{{VERSION_LINE}}</span></div>
+</footer>
+
+</div>
+</body>
+</html>

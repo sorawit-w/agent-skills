@@ -6,7 +6,7 @@ description: >
   or brand concept for a business, product, or app — "help me brand this", "I need a logo",
   "come up with a tagline", "brand identity for my app" — or gives a business description and
   asks for visual identity work. Runs a multi-role workshop producing: a brand strategy brief,
-  tagline, code-generated SVG logo, favicon pack, social banner set (OG/X/LinkedIn/Instagram),
+  tagline, code-generated SVG logo, favicon pack, optional mascot + character sheet, social banner set (OG/X/LinkedIn/Instagram),
   descriptions pack, and a starter DESIGN.md. Use it even for just a logo or just a tagline.
   Do NOT trigger for pitch decks or investor materials (hand off to `pitch-deck`). Do NOT
   trigger on revising a LIVE brand — "refresh our brand", "update our style guide", "evolve
@@ -381,6 +381,75 @@ at that size, simplify before generating — do not ship an illegible favicon.
 
 ---
 
+### Mascot Lane (Generative Raster) — optional
+
+The mascot is the one brand asset that is **artwork, not spec**. Route accordingly:
+
+| Asset shape | Lane |
+|---|---|
+| Spec-shaped — logo, favicon, banner layouts, DESIGN.md tokens | Authored code-SVG lanes above |
+| Artwork-shaped — mascot, illustrations | This lane: generative raster |
+
+The favicon / logo head-mark **never** derives from the mascot raster — it stays in the
+authored SVG lane, always.
+
+**Style resolution (from Discovery).** Default style: **flat sticker illustration** — bold
+clean outlines, flat colors, white sticker border, plain ground-tint background. A default,
+not a rule: resolve from Discovery signals (style preference, audience, positioning) — a
+retro-positioned brand may choose pixel-native instead (a separate `pixel-art` generation
+with its own locked recipe).
+
+**Generation flow:**
+
+1. **Anchor-steered prompt.** Brand hexes enter the prompt as *anchors* (steering), never a
+   hard spec — name 3–5 palette roles with hexes ("`<ground>` fur, `<brand-dark>` markings,
+   `<accent>` prop"). Acceptance is the palette-anchor gate in the checklist, not exact
+   color reproduction.
+2. **Master generation.** One character, seed-locked, ≥1024px. The canon pose IS the character.
+3. **Write `mascot.md` immediately** — the recipe is the master; the PNG is just one render.
+   Schema (example: `references/mascot.md.example`):
+   - `generator:` id **and version/space id** (seed reproducibility is generator-version-bound)
+   - `seed:` · `resolution:`
+   - `LOCK:` one paragraph — the character description that never changes
+   - `POSE:` pattern — a new pose appends one `POSE: <one line>` to the locked prompt;
+     change nothing else
+   - `DERIVE:` lanes — cutout → transparent · vtracer → SVG (scale/print utility) ·
+     quantize → pixel (quick retro moments)
+   - Known limits — cross-pose generative drift; the canon master is authoritative
+4. **Poses (optional).** Append `POSE:` lines per the recipe. Expect drift; regenerate
+   rather than accept an off-model pose.
+5. **Cutout** — `python3 scripts/verify.py cutout mascot/master.png mascot/master-transparent.png`:
+   edge flood-fill from corner-median background (default `--tol 28`, tuned against the white
+   sticker border), drops pale low-saturation components (soft shadows), keeps saturated
+   satellites (hearts, sparkles), feathers alpha.
+6. **Character sheets.** Instantiate `templates/character-sheet-web.html.template` and
+   `templates/character-sheet-print-landscape.html.template` (print default = **landscape**;
+   portrait is an optional variant). Token tables live in each template's header comment.
+   **Fill by string replace only — never `str.format`** (format-style brace doubling shipped
+   a half-broken sheet once; the integrity gate exists because of it). The **copywriter role
+   emits the full token map** — names, backstory, stats labels, voice lists, mock copy — as
+   a single map; templates carry structure only: no content logic, no fallback copy.
+
+**Derivatives are utilities, not heroes.** The traced SVG and quantized pixel versions are
+scale/print and retro conveniences. A *hero* pixel mascot is a separate native `pixel-art`
+generation with accepted drift and its own locked recipe.
+
+**Deliverables are the HTML sheets + PNGs (see Output Files).** Pagegate PDFs are
+verification-only artifacts — delete after the gate; they never ship.
+
+**No generator reachable?** Ship a first-class **prompt brief** (model-agnostic prompt +
+the `mascot.md` recipe skeleton) — mirror `pixel-art`'s Path B. Never downgrade to a
+code-drawn mascot, and don't call the brief a "fallback" in user-facing output.
+
+**Quality amplifiers (optional, referenced by literal ID).** Greenfield sheet generation →
+`impeccable` (brand register; tested at 3.9.1). Revising an existing sheet →
+`taste-skill:redesign-skill` (as of 2026-07-07; recorded at handoff time as
+`redesign-existing-projects` — use the ID that resolves in your runtime). When absent,
+degrade gracefully to this skill's checklist. Never "pick something from the taste-skill
+plugin" untargeted.
+
+---
+
 ### Social Banner Set
 
 Generate branded social assets from the logo, palette, and typography. Use generous whitespace —
@@ -612,6 +681,13 @@ organized into subfolders so the deliverable reads like a launch-day kit:
 │   ├── favicon-512.png
 │   ├── site.webmanifest
 │   └── favicon-install.html
+├── mascot/                      (only when the mascot lane runs)
+│   ├── master.png
+│   ├── master-transparent.png
+│   ├── mascot.md
+│   ├── poses/
+│   ├── character-sheet.html
+│   └── character-sheet-print.html
 └── social/
     ├── og-image.png
     ├── x-header.png
@@ -619,6 +695,8 @@ organized into subfolders so the deliverable reads like a launch-day kit:
     ├── instagram-square.png
     └── profile-avatar.png
 ```
+
+No PDFs appear in the map: pagegate PDFs are verification-only and are deleted after the gate.
 
 Where `<brand-root>` resolves per Phase 1 Step 0.0:
 
@@ -628,7 +706,8 @@ Where `<brand-root>` resolves per Phase 1 Step 0.0:
 - `${STARTUP_KIT_DOCS_ROOT}/brand/` — env-var override
 
 **Minimum viable set:** If time or tooling is constrained, ship in this order of priority:
-brand-brief + logo → descriptions → favicons → DESIGN.md → social banners.
+brand-brief + logo → descriptions → favicons → DESIGN.md → social banners. The mascot lane
+is optional and always last.
 
 Present all files to the user using `present_files`.
 
@@ -707,6 +786,14 @@ Before presenting final output, verify:
 - [ ] Design system stays within tokens — no button/form/grid specs (Components and Elevation sections are intentionally omitted at "starter" scope).
 - [ ] Empty DESIGN.md sections are dropped rather than filled with placeholder text. The spec preserves omitted sections without erroring.
 - [ ] No `deck/` subfolder is emitted under `<brand-root>/`. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `DESIGN.md` directly. Verify: `[ ! -d <brand-root>/deck ] && echo OK`.
+
+**Mascot lane (if run)**
+- [ ] Template integrity: `python3 scripts/verify.py integrity <sheet.html>` PASS on **both** instantiated sheets — zero leftover `{{`, balanced CSS braces, tags parse, every `var(--x)` defined, alt text on every image
+- [ ] Palette anchors: `python3 scripts/verify.py anchors mascot/master.png NAME=#RRGGBB ...` PASS — every declared anchor ≥ 0.5% pixel share (tol 60)
+- [ ] Print fit: `python3 scripts/verify.py pagegate mascot/character-sheet-print.html --landscape` = exactly 1 page on Letter AND A4, engine Chromium (SKIPPED is not a pass — install playwright + pypdf)
+- [ ] Cutout report sane — read the printed report, not the exit code: ≥1 kept component, pale (shadow) components dropped, coverage 30–60% for a full-body chibi
+- [ ] No lane bleed: logo/favicon lanes untouched; favicon does not derive from the mascot raster
+- [ ] Pagegate PDFs deleted after the gate — they never ship
 
 **Shipping**
 - [ ] Files are saved under `<brand-root>/` per the folder structure shown in Output Files

@@ -1,0 +1,6 @@
+Pillow
+numpy
+scipy
+# optional, for pagegate:
+playwright
+pypdf
