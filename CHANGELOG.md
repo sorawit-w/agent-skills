@@ -48,9 +48,15 @@ because format-style brace-doubling once did exactly that).
 - Deliverables are the two HTML sheets + PNGs; pagegate PDFs are verification-only and
   never ship. Requires Pillow/numpy/scipy; playwright + pypdf optional for the print
   gate (`pagegate` reports SKIPPED, never a false PASS, when absent).
-- Verified: `skill-evaluator` 38/38 across 7 split-role tests (main loop); template
+- Verified: `skill-evaluator` 48/48 across 9 split-role tests (main loop); template
   integrity + Chromium 1-page landscape print gate + cutout on the fixture; Codex
-  compat + version parity green.
+  compat + version parity green. Codex review also closed four `verify.py` gate holes
+  (single-brace `str.format` leftovers, Chromium-missing → SKIPPED not crash, `--w`
+  inline-var enforcement, comment-stripping before analysis).
+- Known limitation (`verify.py integrity`): a lightweight regex/HTMLParser backstop,
+  not a strict validator — an unescaped double-quote in an attribute-bound scalar can
+  slip it. Primary defense is the SKILL.md escaping rule (evaluator-verified); a
+  strict-parser redesign is deferred to a Rev 3 package.
 
 ## [5.5.0] — 2026-06-22
 

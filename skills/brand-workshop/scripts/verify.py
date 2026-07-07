@@ -15,6 +15,15 @@ Subcommands
                                     saturated satellites (hearts, sparkles), feather alpha.
 
 Exit codes: 0 PASS · 1 FAIL · 2 SKIPPED (missing optional dependency)
+
+Known limitation (integrity): this is a lightweight regex + stdlib-HTMLParser
+backstop, not a strict validator. HTMLParser is lenient, so a scalar token with
+an *unescaped* double-quote that lands in an attribute (e.g. alt="a"b"c") can
+truncate the value without failing the gate. The primary defense against this is
+the SKILL.md mascot-lane rule requiring scalar copy to be HTML-escaped before
+the string-replace; the gate catches the common defects (unreplaced/single-brace
+tokens, brace mismatch, undefined CSS vars, unclosed/mismatched tags, missing
+alt). A strict-parser redesign is deferred to a Rev 3 package.
 """
 import argparse, re, sys
 
