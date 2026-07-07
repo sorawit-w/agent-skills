@@ -1,0 +1,59 @@
+# mascot.md — Bramble (Ferndle) — FIXTURE EXAMPLE
+
+<!-- This is the worked example of the mascot recipe schema (Mascot Lane, D3).
+     "Ferndle" and "Bramble" are a fictional, neutral fixture brand invented for
+     this repo's tests — not a real product. Copy this shape, not this content. -->
+
+## Recipe
+
+| Field | Value |
+|---|---|
+| generator | `z-image-turbo` — HF Space `mcp-tools/Z-Image-Turbo` (as of 2026-07-07) |
+| seed | `77` |
+| resolution | `1024×1024` |
+
+**LOCK** (the character — one paragraph, never edited after acceptance):
+
+> cute chibi hedgehog mascot with large round friendly eyes and a gentle open
+> smile, short rounded quills, warm tan #D9A066 fur, deep brown #5B3A29 rounded
+> quills and markings, bright golden amber #F2C14E eyes, wearing a golden amber
+> #F2C14E neckerchief bandana, tiny moss green #4A7C59 hiking backpack, small
+> brown hiking boots, flat sticker illustration style, bold clean outlines, flat
+> colors, white sticker border, plain pale cream #F5EDDF background, full body,
+> standing front-facing, wholesome children's book character
+
+**POSE pattern:** a new pose appends exactly one line to the locked prompt —
+`POSE: <one line>` — and changes nothing else. Examples used for this fixture:
+
+- `POSE: waving hello with one paw raised`
+- `POSE: mid-hike, holding a tiny wooden walking stick`
+- `POSE: sitting, writing in a tiny open journal with a stub pencil`
+- `POSE: arms raised in a summit celebration`
+
+**DERIVE lanes** (utilities, not heroes):
+
+- cutout → transparent PNG (`python3 <skill-dir>/scripts/verify.py cutout <brand-root>/mascot/master.png <brand-root>/mascot/master-transparent.png`; `<skill-dir>` = this skill's loaded directory, `<brand-root>` = the user-project brand root)
+- vtracer → SVG (scale/print convenience only)
+- quantize → pixel (quick retro moments; a *hero* pixel mascot is a separate
+  native `pixel-art` generation with its own locked recipe)
+
+**Known limits:** cross-pose generative drift — quill count, boot shape, and
+bandana knot wander between poses. The canon master is authoritative; regenerate
+an off-model pose rather than accepting it. Seed reproducibility is bound to the
+generator version recorded above — a Space update may change the render for the
+same seed.
+
+**standing front-facing IS CANON.**
+
+## Palette anchors (steering, not spec)
+
+| Role | Hex | Where it lives |
+|---|---|---|
+| ground | `#D9A066` | fur |
+| brand-dark | `#5B3A29` | quills, markings |
+| accent | `#4A7C59` | backpack |
+| spark | `#F2C14E` | eyes, neckerchief |
+| ground-tint | `#F5EDDF` | sticker background |
+
+Acceptance is the palette-anchor gate (`python3 <skill-dir>/scripts/verify.py anchors <brand-root>/mascot/master.png ...` — every
+declared anchor ≥ 0.5% pixel share at tol 60), never exact hex reproduction.

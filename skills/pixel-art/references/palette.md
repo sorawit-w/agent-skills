@@ -93,9 +93,38 @@ sky-cream #f7f0e0, stone-gray #8b8680, accent rust #b1542a
 Listing 4–6 anchors is enough. Listing every shade dilutes the
 signal.
 
+### Sticker mascot — *brand mascot on a sticker, chibi character, plain-tint background*
+
+Anchors: character-base (the brand's warm mid-tone), marking-dark
+(deep companion of the base), prop-accent (one saturated brand hue),
+spark (one rare bright highlight), ground-tint (near-white warm bg).
+
+Mood: flat colors, bold clean outlines, white sticker border. This
+entry is *generic by design* — bind each role to the brand's actual
+hexes at generation time (see the ramp extension below, and the
+`brand-workshop` mascot lane for the full pipeline).
+
 ## Extending the catalog
 
 When a new mood comes up regularly (e.g., snowy mountain, desert
 caravan, sci-fi cyber-alley), **add it to this file** — do not
 invent ad-hoc palettes inline. Naming the palette in `palette.md`
 makes it reusable across future generations and across templates.
+
+## Anchor → ramp extension (brand hex to shade family)
+
+A brand supplies *one* hex per role; pixel art wants a shade *family*.
+Extend each anchor into a 3–4 step ramp before quantizing: darken
+toward the hue's shadow (drop lightness ~18–22% per step, nudge hue
+slightly cool) and lighten once toward its highlight (raise lightness
+~15%, nudge warm). Then pass the full ramp to the quantizer:
+
+```
+python3 scripts/quantize.py in.png --format png \
+  --ramp "#2e4d38,#4a7c59,#5c8f6b,#8fb89b,..."
+```
+
+`--ramp` makes the palette deterministic — the output contains only
+the listed colors, so the brand anchors survive quantization exactly
+instead of drifting through median-cut. One ramp per brand role,
+4–6 roles per sprite, stays comfortably under lo-fi color budgets.

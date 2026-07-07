@@ -5,6 +5,61 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.6.0] — 2026-07-07
+
+Adds an optional **generative mascot lane** to `brand-workshop`. The skill shipped
+spec-shaped assets only (code-authored SVG logo, favicons, banners, DESIGN.md). A
+chat-side test drive proved a full generative mascot pipeline end to end; this
+release folds it in, leaving the logo/favicon lanes untouched.
+
+### Added
+- **`brand-workshop` Mascot Lane (Generative Raster).** New SKILL.md section after
+  the Favicon Pack: routing (spec-shaped → authored SVG; artwork-shaped → generative
+  raster), style resolution from Discovery (flat-sticker default, pixel-native for
+  retro brands), an anchor-steered generation flow, a reproducible `mascot.md` recipe
+  (generator+version, seed, character LOCK, POSE-delta pattern, DERIVE lanes, known
+  limits), background cutout, and a web + landscape-print character-sheet pair.
+- **`skills/brand-workshop/templates/`** — `character-sheet-web.html.template` and
+  `character-sheet-print-landscape.html.template` (tokenized; token tables in their
+  header comments; filled by string replace only).
+- **`skills/brand-workshop/scripts/`** — `verify.py` (subcommands `integrity`,
+  `anchors`, `pagegate`, `cutout`) + `requirements.txt`. Second skill-local scripts
+  dir in the repo (after `pixel-art`).
+- **`skills/brand-workshop/references/mascot.md.example`** — the recipe schema worked
+  through a fictional neutral fixture brand.
+- **`pixel-art` docs (D8, docs-only)** — anchor→ramp extension recipe and a generic
+  sticker-mascot palette entry in `references/palette.md`. No behavior change.
+
+### Changed
+- `brand-workshop` `description` gains the mascot trigger surface (net +35 chars,
+  still within the Codex 1024-char wall).
+- Output Files map gains an optional `mascot/` folder; quality checklist gains a
+  Mascot-lane block (one line per gate with its `verify.py` command).
+
+### Why
+The mascot is the one brand asset that is *artwork, not spec* — a code-authored SVG
+mascot executes badly. Routing it to an image generator (with a first-class prompt
+brief when none is reachable) while keeping the favicon/logo head-mark in the
+authored SVG lane resolves that without disturbing the working lanes. Every step is
+machine-verified so "quick fill" can't ship a broken sheet (the integrity gate exists
+because format-style brace-doubling once did exactly that).
+
+### Notes
+- Deliverables are the two HTML sheets + PNGs; pagegate PDFs are verification-only and
+  never ship. Requires Pillow/numpy/scipy; playwright + pypdf optional for the print
+  gate (`pagegate` reports SKIPPED, never a false PASS, when absent).
+- Verified: `skill-evaluator` 53/53 across 10 split-role tests (main loop); template
+  integrity + Chromium 1-page landscape print gate + cutout on the fixture; Codex
+  compat + version parity green. Codex review also closed five `verify.py` gate holes
+  (single-brace `str.format` leftovers, Chromium-missing → SKIPPED not crash, `--w`
+  inline-var enforcement, comment-stripping before analysis, odd-dimension anchor
+  denominator) and split the quality checklist into Path A (generated assets) vs
+  Path B (prompt brief) so the no-generator case has coherent gates.
+- Known limitation (`verify.py integrity`): a lightweight regex/HTMLParser backstop,
+  not a strict validator — an unescaped double-quote in an attribute-bound scalar can
+  slip it. Primary defense is the SKILL.md escaping rule (evaluator-verified); a
+  strict-parser redesign is deferred to a Rev 3 package.
+
 ## [5.5.0] — 2026-06-22
 
 Reworks `pixel-art` to be honest, repo-agnostic, and deterministic. The skill is the obvious name-match for "pixel art," so it was getting pulled into composed/branded SVG-asset jobs (banners, icon sets, exact-text layouts) it cannot do — and instead of saying so, it silently generated a raster and presented it as the deliverable. It also wrote outputs to a repo path (`docs/pixel-art/`), gated generation on a fixed list of *named* MCP servers, and shipped pseudo-pixel-art (tens of thousands of colors, no real grid). This release fixes all four.

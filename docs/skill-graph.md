@@ -10,7 +10,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 
 | Skill | Purpose | Primary audience | Status | Audience bucket(s) |
 |---|---|---|---|---|
-| [`brand-workshop`](../skills/brand-workshop/README.md) | Discovery → Concept → Creation → brand identity package (logo, tagline, brief, DESIGN.md tokens) | Founders, product leads | stable | Startup · Calibrate/visual |
+| [`brand-workshop`](../skills/brand-workshop/README.md) | Discovery → Concept → Creation → brand identity package (logo, tagline, brief, DESIGN.md tokens, optional generative mascot + character sheet) | Founders, product leads | stable | Startup · Calibrate/visual |
 | [`validation-canvas`](../skills/validation-canvas/README.md) | Lean Canvas + Value Proposition Canvas (Markdown + HTML) | Early founders, product leads | stable | Startup · Review |
 | [`riskiest-assumption-test`](../skills/riskiest-assumption-test/README.md) | Falsifiable hypotheses, risk×impact matrix, test plan | Founders de-risking before funding | stable | Startup |
 | [`pitch-deck`](../skills/pitch-deck/README.md) | Investor-ready self-contained HTML deck (Reveal.js) | Founders fundraising | stable | Startup |

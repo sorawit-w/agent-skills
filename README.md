@@ -73,10 +73,11 @@ for the full usage, design notes, and cross-skill pairings.
 
 full chain in [How skills chain](#how-skills-chain).
 
-[`brand-workshop`](skills/brand-workshop/README.md) — Discovery → Concept → Creation: ships a brand identity package (logo, tagline, brief, DESIGN.md tokens).
+[`brand-workshop`](skills/brand-workshop/README.md) — Discovery → Concept → Creation: ships a brand identity package (logo, tagline, brief, DESIGN.md tokens, optional generative mascot + character sheet).
 
 *Try:*
   - "Run the full brand workshop for my meditation startup."
+  - "Design a mascot and character sheet for my brand."
   
 [`validation-canvas`](skills/validation-canvas/README.md) — interview block-by-block into a rigorous Lean Canvas + Value Proposition Canvas.
 
@@ -287,7 +288,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.5.0`.** Reworks `pixel-art` to be honest, repo-agnostic, and deterministic: a Phase 0 gate **declines** composed/branded SVG-asset jobs instead of silently shipping a raster; generation is **attempt-then-fallback** (any reachable generator, host-native or MCP) rather than gated on a named server list; outputs are **returned** to the caller (no repo writes); and a new median-cut `quantize.py` makes the result true grid-aligned pixel art (PNG or single-sprite SVG). Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.6.0`.** Adds an optional **generative mascot lane** to `brand-workshop`: artwork-shaped mascot assets route to an image generator (with a first-class prompt brief when none is reachable) while the logo/favicon stay in the authored-SVG lane. Ships a reproducible `mascot.md` recipe, a background-cutout step, and a web + landscape-print character-sheet template pair, each machine-verified by a bundled `verify.py` (template integrity, palette anchors, Chromium 1-page print gate, cutout). Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

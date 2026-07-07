@@ -12,6 +12,14 @@
     "should_trigger": true
   },
   {
+    "query": "Design a mascot and character sheet for my brand.",
+    "should_trigger": true
+  },
+  {
+    "query": "Generate a standalone pixel-art mascot sprite for my game — no branding involved.",
+    "should_trigger": false
+  },
+  {
     "query": "Brainstorm my startup — product, positioning, go-to-market, and branding.",
     "should_trigger": false
   },

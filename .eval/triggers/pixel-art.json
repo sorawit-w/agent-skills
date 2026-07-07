@@ -16,6 +16,14 @@
     "should_trigger": true
   },
   {
+    "query": "Pixel-art mascot sprite for my indie game.",
+    "should_trigger": true
+  },
+  {
+    "query": "Design a mascot for my brand, with a character sheet and brand colors.",
+    "should_trigger": false
+  },
+  {
     "query": "Make me a branded pixel-art banner with our logo and the exact tagline text, as an editable SVG I can tweak.",
     "should_trigger": false
   },
