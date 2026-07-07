@@ -426,9 +426,14 @@ with its own locked recipe).
    `templates/character-sheet-print-landscape.html.template` (print default = **landscape**;
    portrait is an optional variant). Token tables live in each template's header comment.
    **Fill by string replace only — never `str.format`** (format-style brace doubling shipped
-   a half-broken sheet once; the integrity gate exists because of it). The **copywriter role
-   emits the full token map** — names, backstory, stats labels, voice lists, mock copy — as
-   a single map; templates carry structure only: no content logic, no fallback copy.
+   a half-broken sheet once; the integrity gate exists because of it). **HTML-escape every
+   scalar copy token before replacing** — a brand name or tagline with `&`, `<`, `>`, or `"`
+   dropped raw into body text or an attribute breaks the sheet (and trips the integrity gate);
+   escape `& < > "` for text/attribute slots. Row-fragment tokens the copywriter builds as
+   markup (`IDENTITY_ROWS`, `POSE_TILES`, `CHIPS`, `STATS_ROWS`, …) and base64 image tokens
+   are already markup/data — insert those raw. The **copywriter role emits the full token
+   map** — names, backstory, stats labels, voice lists, mock copy — as a single map; templates
+   carry structure only: no content logic, no fallback copy.
 
 **Derivatives are utilities, not heroes.** The traced SVG and quantized pixel versions are
 scale/print and retro conveniences. A *hero* pixel mascot is a separate native `pixel-art`
@@ -707,7 +712,9 @@ Where `<brand-root>` resolves per Phase 1 Step 0.0:
 
 **Minimum viable set:** If time or tooling is constrained, ship in this order of priority:
 brand-brief + logo → descriptions → favicons → DESIGN.md → social banners. The mascot lane
-is optional and always last.
+is optional and always last **when it was not explicitly requested**. When the mascot or
+character sheet *is* the user's ask (e.g. "design a mascot and character sheet for my brand"),
+it moves into the minimum viable set — never drop the only deliverable the user came for.
 
 Present all files to the user using `present_files`.
 
