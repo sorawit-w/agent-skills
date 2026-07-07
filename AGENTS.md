@@ -9,3 +9,5 @@ truth for conventions, skill anatomy, harness vocabulary, design principles, and
 environment quirks.
 
 If you're an agent reading this: open `CLAUDE.md` and follow it.
+
+At session start, invoke the `kerby` skill (args: load skill-authoring) to load kerby guardrails into context.

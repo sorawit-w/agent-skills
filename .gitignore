@@ -236,3 +236,4 @@ skills/ghostwriter/references/samples-*.md
 # Python bytecode
 __pycache__/
 *.pyc
+.kerby/rulebooks.lock
