@@ -34,9 +34,13 @@ def cmd_integrity(args):
     css = css_parts[1].split("</style>")[0] if len(css_parts) > 1 else ""
     if css.count("{") != css.count("}"):
         errs.append(f"CSS brace mismatch: {css.count('{')} open vs {css.count('}')} close")
-    defined = set(re.findall(r"(--[\w-]+)\s*:", css))
+    # --w is defined per-row in inline style attrs (STATS_ROWS: style="--w:90%"), not in <style>,
+    # so treat it as defined only when an inline definition actually exists — otherwise a stat row
+    # copied from the print shape (bare width:90%, no --w) leaves .fill{width:var(--w)} undefined.
+    inline_defined = set(re.findall(r"(--[\w-]+)\s*:", html)) - set(re.findall(r"(--[\w-]+)\s*:", css))
+    defined = set(re.findall(r"(--[\w-]+)\s*:", css)) | inline_defined
     used = set(re.findall(r"var\((--[\w-]+)", css)) | set(re.findall(r"var\((--[\w-]+)", html))
-    missing = sorted(v for v in used if v not in defined and v != "--w")
+    missing = sorted(v for v in used if v not in defined)
     if missing:
         errs.append("var() used but never defined: " + ", ".join(missing))
     from html.parser import HTMLParser
@@ -134,6 +138,7 @@ def cmd_pagegate(args):
                              print_background=True,
                              margin={k: "8mm" for k in ("top", "bottom", "left", "right")})
                 results[fmt] = len(PdfReader(path).pages)
+                pathlib.Path(path).unlink()  # verification-only PDF — never left behind
             await b.close()
 
     try:
