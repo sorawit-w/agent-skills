@@ -24,6 +24,12 @@ def cmd_integrity(args):
     errs = []
     if "{{" in html:
         errs.append("unreplaced '{{' present (token left in output, or v1-style brace bug)")
+    # A str.format mis-fill collapses '{{TOKEN}}' to single-brace '{TOKEN}', which keeps CSS
+    # braces balanced and HTML parseable — so it slips the '{{' check above. Token names are
+    # UPPER_SNAKE, unlike CSS (lowercase properties, --vars), so this pattern can't false-match.
+    singles = sorted(set(re.findall(r"\{[A-Z][A-Z0-9_]*\}", html)))
+    if singles:
+        errs.append("single-brace placeholder(s) present (str.format mis-fill): " + ", ".join(singles))
     css_parts = html.split("<style>")
     css = css_parts[1].split("</style>")[0] if len(css_parts) > 1 else ""
     if css.count("{") != css.count("}"):
@@ -110,9 +116,15 @@ def cmd_pagegate(args):
     src = pathlib.Path(args.file).resolve()
     results = {}
 
+    class _BrowserUnavailable(Exception):
+        pass
+
     async def run():
         async with async_playwright() as p:
-            b = await p.chromium.launch()
+            try:
+                b = await p.chromium.launch()
+            except Exception as e:  # browser binary not installed → SKIPPED, never a fake PASS
+                raise _BrowserUnavailable(e)
             pg = await b.new_page()
             await pg.goto(src.as_uri(), wait_until="networkidle")
             for fmt in ["Letter", "A4"]:
@@ -124,7 +136,11 @@ def cmd_pagegate(args):
                 results[fmt] = len(PdfReader(path).pages)
             await b.close()
 
-    asyncio.run(run())
+    try:
+        asyncio.run(run())
+    except _BrowserUnavailable as e:
+        print(f"PAGEGATE: SKIPPED (Chromium not installed: {e}) — run 'playwright install chromium'")
+        return 2
     fail = any(n != 1 for n in results.values())
     for fmt, n in results.items():
         print(f"  {fmt}: {n} page(s)")
