@@ -288,7 +288,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.6.0`.** Adds an optional **generative mascot lane** to `brand-workshop`: artwork-shaped mascot assets route to an image generator (with a first-class prompt brief when none is reachable) while the logo/favicon stay in the authored-SVG lane. Ships a reproducible `mascot.md` recipe, a background-cutout step, and a web + landscape-print character-sheet template pair, each machine-verified by a bundled `verify.py` (template integrity, palette anchors, Chromium 1-page print gate, cutout). Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.6.1`.** Hardens `brand-workshop`'s `verify.py integrity` gate (the **Rev 3 package** deferred in 5.6.0): HTML structural validation now runs a strict **html5lib** parse — the browser's own algorithm — that fails on malformed attributes, unclosed/mismatched tags, and similar structural defects the previous regex + stdlib-`HTMLParser` backstop leaked, while allowlisting the handful of browser-tolerated character-reference codes so legitimate markup (e.g. Google-Fonts `&`-joined URLs) never false-positives. Script-only change; adds `html5lib` to the skill's `requirements.txt`. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.
