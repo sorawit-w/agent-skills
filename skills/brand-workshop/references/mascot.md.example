@@ -32,7 +32,7 @@
 
 **DERIVE lanes** (utilities, not heroes):
 
-- cutout → transparent PNG (`python3 skills/brand-workshop/scripts/verify.py cutout <brand-root>/mascot/master.png <brand-root>/mascot/master-transparent.png`, run from repo root)
+- cutout → transparent PNG (`python3 <skill-dir>/scripts/verify.py cutout <brand-root>/mascot/master.png <brand-root>/mascot/master-transparent.png`; `<skill-dir>` = this skill's loaded directory, `<brand-root>` = the user-project brand root)
 - vtracer → SVG (scale/print convenience only)
 - quantize → pixel (quick retro moments; a *hero* pixel mascot is a separate
   native `pixel-art` generation with its own locked recipe)
@@ -55,5 +55,5 @@ same seed.
 | spark | `#F2C14E` | eyes, neckerchief |
 | ground-tint | `#F5EDDF` | sticker background |
 
-Acceptance is the palette-anchor gate (`python3 skills/brand-workshop/scripts/verify.py anchors <brand-root>/mascot/master.png ...` from repo root — every
+Acceptance is the palette-anchor gate (`python3 <skill-dir>/scripts/verify.py anchors <brand-root>/mascot/master.png ...` — every
 declared anchor ≥ 0.5% pixel share at tol 60), never exact hex reproduction.

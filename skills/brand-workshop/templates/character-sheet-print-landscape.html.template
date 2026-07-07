@@ -3,7 +3,7 @@ character-sheet-print-landscape.html.template — one-page print sheet (landscap
 Derived from a tested reference build (v0.4, 2026-07-07): Chromium-verified 1 page on Letter AND A4 landscape.
 Content box 263×193mm fits both papers at 8mm margins. Token syntax: UPPER_SNAKE names wrapped
 in double curly braces; fill via string replace only (no leftover double-open-brace pairs in output).
-Verification gate (D12): from the repo root, python3 skills/brand-workshop/scripts/verify.py pagegate <brand-root>/mascot/character-sheet-print.html --landscape must report 1 page on letter and a4.
+Verification gate (D12): python3 <skill-dir>/scripts/verify.py pagegate <brand-root>/mascot/character-sheet-print.html --landscape must report 1 page on letter and a4 (<skill-dir> = this skill's loaded dir; <brand-root> = the user-project brand root).
 
 FONT TOKENS   {{FONTS_HREF}} {{FONT_DISPLAY}} {{FONT_BODY}} {{FONT_MONO}}
 COLOR TOKENS  same semantic set as the web template:
