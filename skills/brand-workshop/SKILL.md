@@ -418,10 +418,17 @@ with its own locked recipe).
    - Known limits — cross-pose generative drift; the canon master is authoritative
 4. **Poses (optional).** Append `POSE:` lines per the recipe. Expect drift; regenerate
    rather than accept an off-model pose.
-5. **Cutout** — `python3 scripts/verify.py cutout mascot/master.png mascot/master-transparent.png`:
+5. **Cutout** — `python3 skills/brand-workshop/scripts/verify.py cutout <brand-root>/mascot/master.png <brand-root>/mascot/master-transparent.png`:
    edge flood-fill from corner-median background (default `--tol 28`, tuned against the white
    sticker border), drops pale low-saturation components (soft shadows), keeps saturated
    satellites (hearts, sparkles), feathers alpha.
+
+   > **`verify.py` command convention:** the script lives in the skill dir and is **not**
+   > copied into the output; the assets live under the resolved `<brand-root>/mascot/`. Run
+   > every `verify.py` command **from the repo root** with the skill-local script path and
+   > `<brand-root>/mascot/...` asset paths (substitute the real brand root, e.g. `docs/brand`).
+   > The two paths never share a working directory, so the bare `scripts/verify.py …` /
+   > `mascot/…` shorthand is not runnable.
 6. **Character sheets.** Instantiate `templates/character-sheet-web.html.template` and
    `templates/character-sheet-print-landscape.html.template` (print default = **landscape**;
    portrait is an optional variant). Token tables live in each template's header comment.
@@ -795,9 +802,9 @@ Before presenting final output, verify:
 - [ ] No `deck/` subfolder is emitted under `<brand-root>/`. Brand-workshop does not pre-build a pitch-deck template — `pitch-deck` reads `DESIGN.md` directly. Verify: `[ ! -d <brand-root>/deck ] && echo OK`.
 
 **Mascot lane — generated assets (Path A: a generator ran)**
-- [ ] Template integrity: `python3 scripts/verify.py integrity <sheet.html>` PASS on **both** instantiated sheets — zero leftover `{{`, balanced CSS braces, tags parse, every `var(--x)` defined, alt text on every image
-- [ ] Palette anchors: `python3 scripts/verify.py anchors mascot/master.png NAME=#RRGGBB ...` PASS — every declared anchor ≥ 0.5% pixel share (tol 60)
-- [ ] Print fit: `python3 scripts/verify.py pagegate mascot/character-sheet-print.html --landscape` = exactly 1 page on Letter AND A4, engine Chromium (SKIPPED is not a pass — install playwright + pypdf)
+- [ ] Template integrity: `python3 skills/brand-workshop/scripts/verify.py integrity <brand-root>/mascot/<sheet>.html` PASS on **both** instantiated sheets — zero leftover `{{`, balanced CSS braces, tags parse, every `var(--x)` defined, alt text on every image (run from repo root — see the command-convention note above)
+- [ ] Palette anchors: `python3 skills/brand-workshop/scripts/verify.py anchors <brand-root>/mascot/master.png NAME=#RRGGBB ...` PASS — every declared anchor ≥ 0.5% pixel share (tol 60)
+- [ ] Print fit: `python3 skills/brand-workshop/scripts/verify.py pagegate <brand-root>/mascot/character-sheet-print.html --landscape` = exactly 1 page on Letter AND A4, engine Chromium (SKIPPED is not a pass — install playwright + pypdf)
 - [ ] Cutout report sane — read the printed report, not the exit code: ≥1 kept component, pale (shadow) components dropped, coverage 30–60% for a full-body chibi
 - [ ] Pagegate PDFs deleted after the gate — they never ship
 
