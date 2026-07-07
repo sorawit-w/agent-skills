@@ -17,13 +17,17 @@ Subcommands
 Exit codes: 0 PASS · 1 FAIL · 2 SKIPPED (missing optional dependency)
 
 Known limitation (integrity): this is a lightweight regex + stdlib-HTMLParser
-backstop, not a strict validator. HTMLParser is lenient, so a scalar token with
-an *unescaped* double-quote that lands in an attribute (e.g. alt="a"b"c") can
-truncate the value without failing the gate. The primary defense against this is
-the SKILL.md mascot-lane rule requiring scalar copy to be HTML-escaped before
-the string-replace; the gate catches the common defects (unreplaced/single-brace
-tokens, brace mismatch, undefined CSS vars, unclosed/mismatched tags, missing
-alt). A strict-parser redesign is deferred to a Rev 3 package.
+backstop, not a strict DOM validator, so two structural defect classes can slip
+it — both fixed only by the Rev 3 strict-parser redesign:
+  1. an *unescaped* double-quote in an attribute-bound scalar (e.g. alt="a"b"c")
+     truncates the value without failing (HTMLParser is lenient); and
+  2. CSS custom properties are per-element, but the inline-var scan is
+     document-wide — one valid stat row defining --w masks another row that
+     omits it, so a *partially* broken STATS_ROWS block can still pass.
+The primary defense is the SKILL.md mascot-lane rules (escape scalar copy before
+the string-replace; use the documented STATS_ROWS shape with inline --w). The
+gate reliably catches the common defects (unreplaced/single-brace tokens, brace
+mismatch, fully-undefined CSS vars, unclosed/mismatched tags, missing alt).
 """
 import argparse, re, sys
 
