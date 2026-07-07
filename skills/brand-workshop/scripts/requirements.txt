@@ -1,6 +1,7 @@
 Pillow
 numpy
 scipy
+html5lib   # integrity: strict HTML structural validation (Rev 3)
 # optional, for pagegate:
 playwright
 pypdf

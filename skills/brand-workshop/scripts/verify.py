@@ -3,7 +3,9 @@
 
 Subcommands
   integrity <sheet.html>            Template-integrity gate (D10): zero '{{', balanced CSS
-                                    braces, HTML tags parse, every var(--x) used is defined.
+                                    braces, HTML structurally valid (strict html5lib parse),
+                                    every var(--x) used is defined (incl. per-row inline
+                                    vars like --w on every .fill), alt on every image.
   anchors <image.png> A=#HEX ...    Palette-anchor gate (D4): % of pixels within --tol of
                                     each named anchor; FAIL if any drops below --min.
   pagegate <sheet.html>             Print gate (D12): render in headless Chromium, assert
@@ -16,84 +18,169 @@ Subcommands
 
 Exit codes: 0 PASS · 1 FAIL · 2 SKIPPED (missing optional dependency)
 
-Known limitation (integrity): this is a lightweight regex + stdlib-HTMLParser
-backstop, not a strict DOM validator, so two structural defect classes can slip
-it — both fixed only by the Rev 3 strict-parser redesign:
-  1. an *unescaped* double-quote in an attribute-bound scalar (e.g. alt="a"b"c")
-     truncates the value without failing (HTMLParser is lenient); and
-  2. CSS custom properties are per-element, but the inline-var scan is
-     document-wide — one valid stat row defining --w masks another row that
-     omits it, so a *partially* broken STATS_ROWS block can still pass.
-The primary defense is the SKILL.md mascot-lane rules (escape scalar copy before
-the string-replace; use the documented STATS_ROWS shape with inline --w). The
-gate reliably catches the common defects (unreplaced/single-brace tokens, brace
-mismatch, fully-undefined CSS vars, unclosed/mismatched tags, missing alt).
+Integrity HTML validation (Rev 3): structural checking runs html5lib — the
+browser's own HTML parsing algorithm — in error-collecting mode, and fails on
+any parse error EXCEPT a small allowlist of browser-tolerated character-reference
+codes (an unescaped '&' in a URL, e.g. Google Fonts '?family=A&display=swap').
+This is fail-closed by design: a *new* structural defect class emits a code that
+is not on the benign allowlist, so it fails by default — no per-defect regex to
+keep extending (the earlier regex+HTMLParser backstop leaked an unescaped '"' in
+an attribute value, e.g. alt="a"b"c", because HTMLParser silently truncates it).
+A false positive from an unforeseen benign code is a loud, safe one-line
+allowlist fix; a missed defect is the silent corruption this gate exists to stop.
+html5lib is a required dependency (scripts/requirements.txt); if it is absent the
+structural check reports SKIPPED (exit 2) rather than faking a PASS — the
+dependency-free checks (tokens, CSS braces, var() defs) still run.
+
+Rev 3 also closes the second documented leak: a custom property consumed in
+<style> via var() but defined only inline (--w, set per stat row as
+style="--w:90%") is now checked per element against the parsed DOM — every
+element the consuming rule's subject selector targets (.fill) must *define* it
+inline (a real `--w:` declaration, not just mention it) — so one good STATS_ROWS
+row can no longer mask a sibling that omits it.
 """
 import argparse, re, sys
+
+# Character-reference codes browsers tolerate (an unescaped '&' in a URL-ish
+# attribute value). Every other html5lib parse error is treated as a structural
+# defect — fail-closed, so an unforeseen defect class fails without a code list.
+_BENIGN_HTML5_CODES = {"expected-named-entity", "named-entity-without-semicolon"}
+
+
+def _style_defines(style, prop):
+    """True iff an inline style attr *declares* custom property `prop` (`--x: v`).
+    A definition, not a mention: `width:var(--w)` (a use) and `--width:70%` (a
+    different property) both contain the substring `--w` but define neither."""
+    return any(d.split(":", 1)[0].strip() == prop for d in style.split(";") if ":" in d)
+
+
+def _selector_subject(sel):
+    """(tag, {classes}, id) of a selector's *subject* — the rightmost compound,
+    after descendant/child/sibling combinators; pseudos and [attr] stripped. So
+    `.track .fill:hover` → (None, {'fill'}, None); `input#q.big` → ('input', {'big'}, 'q').
+    The subject is the element the rule's declarations actually style."""
+    part = re.split(r"[ >+~]+", sel.strip())[-1]
+    part = re.sub(r"::?[\w-]+(\([^)]*\))?|\[[^\]]*\]", "", part)  # drop pseudos / [attr]
+    tag = re.match(r"[\w-]+", part)
+    idm = re.search(r"#([\w-]+)", part)
+    return (tag.group(0) if tag else None,
+            set(re.findall(r"\.([\w-]+)", part)),
+            idm.group(1) if idm else None)
 
 
 def cmd_integrity(args):
     raw = open(args.file, encoding="utf-8").read()
-    # Analyze only the live document. The template header comment carries token examples
-    # ({{TOKEN}}, style="--w:90%", <img> shapes) that would otherwise register as real
-    # placeholders, inline var defs, or images — masking the very defects this gate catches.
-    html = re.sub(r"<!--.*?-->", "", raw, flags=re.S)
+    # Blank comments to same-count newlines (not delete): the template header comment carries
+    # token examples ({{TOKEN}}, style="--w:90%", <img> shapes) that would otherwise register
+    # as real placeholders, inline var defs, or images — masking the very defects this gate
+    # catches. Preserving the newline count keeps html5lib parse-error line numbers pointing
+    # at the real source line.
+    doc = re.sub(r"<!--.*?-->", lambda m: "\n" * m.group(0).count("\n"), raw, flags=re.S)
     errs = []
-    if "{{" in html:
+    if "{{" in doc:
         errs.append("unreplaced '{{' present (token left in output, or v1-style brace bug)")
     # A str.format mis-fill collapses '{{TOKEN}}' to single-brace '{TOKEN}', which keeps CSS
     # braces balanced and HTML parseable — so it slips the '{{' check above. Token names are
     # UPPER_SNAKE, unlike CSS (lowercase properties, --vars), so this pattern can't false-match.
-    singles = sorted(set(re.findall(r"\{[A-Z][A-Z0-9_]*\}", html)))
+    singles = sorted(set(re.findall(r"\{[A-Z][A-Z0-9_]*\}", doc)))
     if singles:
         errs.append("single-brace placeholder(s) present (str.format mis-fill): " + ", ".join(singles))
-    css_parts = html.split("<style>")
+    css_parts = doc.split("<style>")
     css = css_parts[1].split("</style>")[0] if len(css_parts) > 1 else ""
     if css.count("{") != css.count("}"):
         errs.append(f"CSS brace mismatch: {css.count('{')} open vs {css.count('}')} close")
     # --w is defined per-row in inline style attrs (STATS_ROWS: style="--w:90%"), not in <style>,
     # so treat it as defined only when an inline definition actually exists — otherwise a stat row
     # copied from the print shape (bare width:90%, no --w) leaves .fill{width:var(--w)} undefined.
-    inline_defined = set(re.findall(r"(--[\w-]+)\s*:", html)) - set(re.findall(r"(--[\w-]+)\s*:", css))
+    inline_defined = set(re.findall(r"(--[\w-]+)\s*:", doc)) - set(re.findall(r"(--[\w-]+)\s*:", css))
     defined = set(re.findall(r"(--[\w-]+)\s*:", css)) | inline_defined
-    used = set(re.findall(r"var\((--[\w-]+)", css)) | set(re.findall(r"var\((--[\w-]+)", html))
+    used = set(re.findall(r"var\((--[\w-]+)", css)) | set(re.findall(r"var\((--[\w-]+)", doc))
     missing = sorted(v for v in used if v not in defined)
     if missing:
         errs.append("var() used but never defined: " + ", ".join(missing))
-    from html.parser import HTMLParser
 
-    class P(HTMLParser):
-        def __init__(self):
-            super().__init__()
-            self.stack, self.bad = [], []
-            self.void = {"meta", "link", "img", "br", "hr", "input"}
+    # Strict HTML structural validation via html5lib (the browser's own parsing algorithm),
+    # in error-collecting mode. Fail on any parse error except the benign character-reference
+    # codes above — catches malformed attributes (unescaped '"' in a value), unclosed /
+    # mismatched tags, stray '<', bad attribute-name chars, EOF-in-tag, etc., with no
+    # per-defect regex. Absent html5lib → SKIPPED (never a faked PASS); see the module docstring.
+    structural_skipped = False
+    img_count = None
+    try:
+        import html5lib
+    except ImportError:
+        structural_skipped = True
+    else:
+        parser = html5lib.HTMLParser(namespaceHTMLElements=False)
+        tree = parser.parse(doc)
+        bad = [(pos, code) for pos, code, _ in parser.errors if code not in _BENIGN_HTML5_CODES]
+        if bad:
+            shown = "; ".join(f"{code} (line {pos[0]} col {pos[1]})" for pos, code in bad[:8])
+            more = f" … +{len(bad) - 8} more" if len(bad) > 8 else ""
+            errs.append("malformed HTML (strict parse): " + shown + more)
+        imgs = tree.findall(".//img")
+        img_count = len(imgs)
+        noalt = [im for im in imgs if im.get("alt") is None]
+        if noalt:
+            errs.append(f"{len(noalt)} <img> without alt attribute")
+        # Per-element custom properties: a var(--x) consumed in <style> but defined neither
+        # there nor in :root is satisfiable only inline, per element. The document-wide inline
+        # scan above (defined) would let one stat row that sets it mask a sibling row that omits
+        # it — the STATS_ROWS --w masking (web .fill{width:var(--w)}, set per row as
+        # style="--w:90%"). Resolve it against the DOM: every element the consuming rule's
+        # subject selector targets must *define* the property in its own inline style. (Print's
+        # .fill uses a literal width:%, no var(--w), so this simply never triggers there.)
+        # "Global" here means :root ONLY. A custom property set in any other selector is
+        # scoped to that selector's subtree, so it does not guarantee an element elsewhere
+        # (a .fill in a different subtree) inherits it — counting non-:root definitions as
+        # global is the same document-wide masking one layer down. Bounded scope: this models
+        # :root-vs-inline, not the full cascade; a var defined by a CSS rule *on the consuming
+        # element itself* would be flagged as missing-inline (a safe, loud false-positive),
+        # but the mascot templates only ever set per-row vars inline, never in an intermediate
+        # rule — so this stays precise for them. Full cascade resolution needs a real CSS
+        # engine and is deliberately out of scope for this gate.
+        root = re.search(r":root\s*\{([^}]*)\}", css)
+        root_defined = set(re.findall(r"(--[\w-]+)\s*:", root.group(1))) if root else set()
+        for v in sorted(set(re.findall(r"var\((--[\w-]+)", css)) - root_defined):
+            # Collect the subject selector of EVERY rule that consumes var(--v), not just the
+            # first — an element matching any of them must define --v inline. Multiple rules
+            # can legitimately consume one var; checking only the first would leave the rest
+            # unenforced.
+            targets, sels = [], []
+            for rule in re.finditer(r"([^{}]*)\{[^{}]*var\(" + re.escape(v) + r"\)", css):
+                for sel in rule.group(1).split(","):
+                    tag, classes, sid = _selector_subject(sel)
+                    if tag or classes or sid:
+                        targets.append((tag, classes, sid))
+                        sels.append(sel.strip())
+            if not targets:
+                continue  # var used but no rule's subject could be resolved — skip, don't guess
+            offenders = 0
+            for el in tree.iter():
+                ecls = set((el.get("class") or "").split())
+                if any((tag is None or el.tag == tag) and classes <= ecls
+                       and (sid is None or el.get("id") == sid)
+                       for tag, classes, sid in targets) \
+                        and not _style_defines(el.get("style") or "", v):
+                    offenders += 1
+            if offenders:
+                shown = ", ".join(dict.fromkeys(sels))  # de-dup, keep order
+                errs.append(f"{offenders} element(s) matched by '{shown}' use CSS {v} but do not "
+                            f"define it inline (per-row var; e.g. a broken STATS_ROWS row)")
 
-        def handle_starttag(self, tag, attrs):
-            if tag not in self.void:
-                self.stack.append(tag)
-
-        def handle_endtag(self, tag):
-            if self.stack and self.stack[-1] == tag:
-                self.stack.pop()
-            else:
-                self.bad.append(tag)
-
-    p = P()
-    p.feed(html)
-    if p.stack:
-        errs.append("unclosed tags: " + ",".join(p.stack))
-    if p.bad:
-        errs.append("mismatched closing tags: " + ",".join(p.bad))
-    imgs = re.findall(r"<img\b[^>]*>", html)
-    noalt = [i for i in imgs if 'alt="' not in i]
-    if noalt:
-        errs.append(f"{len(noalt)} <img> without alt attribute")
     if errs:
         print("INTEGRITY: FAIL")
         for e in errs:
             print("  -", e)
+        if structural_skipped:
+            print("  ! strict HTML structural check SKIPPED (html5lib not installed); "
+                  "failures above are from non-structural checks")
         return 1
-    print(f"INTEGRITY: PASS ({len(imgs)} images, {len(defined)} css vars)")
+    if structural_skipped:
+        print("INTEGRITY: SKIPPED (html5lib not installed) — cannot run strict HTML structural validation")
+        print("  non-structural checks passed (tokens, CSS braces, var() defs); install: pip install html5lib")
+        return 2
+    print(f"INTEGRITY: PASS ({img_count} images, {len(defined)} css vars)")
     return 0
 
 

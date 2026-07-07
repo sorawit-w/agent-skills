@@ -5,6 +5,78 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.6.1] — 2026-07-07
+
+The **Rev 3 package** deferred in v5.6.0: `brand-workshop`'s `verify.py integrity`
+gate now validates HTML with a strict parser instead of the hand-rolled
+regex + stdlib `HTMLParser` backstop that leaked malformed-attribute defects.
+Script-only change — no skill trigger, output, or rule-text change.
+
+### Changed
+- **`brand-workshop/scripts/verify.py` — strict HTML structural validation.** The
+  `integrity` subcommand now parses the sheet with **html5lib** (the browser's own
+  HTML5 parsing algorithm) in error-collecting mode and fails on any parse error
+  except a small allowlist of browser-tolerated character-reference codes
+  (`expected-named-entity`, `named-entity-without-semicolon` — an unescaped `&` in a
+  URL like Google Fonts `?family=A&display=swap`). This catches the defect classes the
+  old backstop leaked — an unescaped `"` in an attribute value (`alt="a"b"c"`),
+  unclosed/mismatched tags, stray `<`, bad attribute-name characters, EOF-in-tag,
+  duplicate attributes — with no per-defect regex. The image-`alt` check now walks the
+  parsed DOM rather than regex-matching. The stdlib `HTMLParser` tag-stack block is
+  removed.
+- **Per-row inline custom-property check (the second documented Rev 3 leak).** A custom
+  property consumed in `<style>` via `var()` but defined only inline — `--w`, set per stat
+  row as `style="--w:90%"` — is now validated per element against the parsed DOM: every
+  element that any consuming rule's subject selector targets (`.fill`) must *define* it
+  inline (a real `--w:` declaration, matched by parsing declarations — not a substring, so
+  `width:var(--w)` and `--width:70%` don't count). "Global" (exempt from the per-element
+  requirement) means a `:root` declaration only — a custom property set in any other
+  selector is scoped, not global, so it cannot exempt an element in a different subtree.
+  Previously the inline-var scan was document-wide, so one good `STATS_ROWS` row (or any
+  non-`:root` `--w:` declaration) masked a sibling that omitted `--w`. Print sheets are
+  unaffected — their `.fill` uses a literal `width:%`, no `var(--w)`, so the check never
+  triggers there. **Bounded scope (documented in code):** the check models `:root`-vs-inline,
+  not the full CSS cascade — it is a defense-in-depth layer over the SKILL.md `STATS_ROWS`
+  contract, not a CSS engine; full cascade resolution is deliberately out of scope.
+- **`brand-workshop/scripts/requirements.txt`** — adds `html5lib` (required for the
+  `integrity` structural check).
+
+### Why
+Five consecutive Codex review rounds in v5.6.0 each surfaced a deeper edge-case hole in
+the same hand-rolled linter (single-brace leftovers, `--w` inline enforcement,
+comment-stripping, malformed attributes) — the signature of a validator with unbounded
+edge cases. The fix inverts the polarity: instead of enumerating *defects* to reject
+(an open-ended list that leaks whatever wasn't foreseen), the gate parses with the real
+browser algorithm and rejects **every** parse error except a closed, spec-defined
+allowlist of browser-tolerated codes. A new structural defect fails by default
+(fail-closed); an unforeseen benign code would cause only a loud, safe false-positive
+fixed by a one-line allowlist addition — never a silent miss, which is the corruption
+this gate exists to stop. The token/CSS-brace/`var()` semantic checks (which the HTML
+parser can't see) are unchanged.
+
+### Notes
+- The comment-stripping pass now blanks comments to same-count newlines instead of
+  deleting them, so html5lib parse-error line numbers point at the real source line.
+- **Graceful, honest degradation.** `html5lib` is a required dependency, but if it is
+  absent the structural check reports **SKIPPED (exit 2)** — never a faked PASS — while
+  the dependency-free checks (tokens, CSS braces, `var()` defs) still run; a real
+  non-structural failure still exits 1 (FAIL takes precedence). Mirrors `pagegate`'s
+  missing-dependency convention.
+- Verified: both instantiated character-sheet templates (web + landscape-print) PASS;
+  the documented defect battery (malformed attribute, unclosed/mismatched tags, missing
+  alt, duplicate attribute, leftover `{{token}}`, single-brace mis-fill, and a mixed
+  `STATS_ROWS` block where one `.fill` omits `--w`) FAILs; the Google-Fonts multi-`&family`
+  URL and inline SVG / boolean-attr / `min()` / unicode markup do **not** false-positive;
+  `anchors`/`cutout`/`pagegate` unchanged and regression-clean; version parity green.
+- Four advise-only Codex review rounds drove the per-element `--w` check to convergence:
+  the DOM-based fix (r1), a substring-vs-definition correction and selector-subject
+  matching (r2), all-consuming-rules enforcement (r3), and `:root`-vs-scoped globality
+  (r4). Round 4's finding was the *same class* as round 1 (a document-wide definition
+  masking a missing per-element one), so rather than patch further the check was given the
+  correct globality model and an explicit bounded scope — full CSS-cascade resolution is
+  left to a real engine, out of scope for this gate. The core strict-HTML-validation change
+  (html5lib) was clean from round 2 on.
+
 ## [5.6.0] — 2026-07-07
 
 Adds an optional **generative mascot lane** to `brand-workshop`. The skill shipped
