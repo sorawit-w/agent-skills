@@ -426,3 +426,5 @@ When in doubt, **read an existing skill as a template** rather than guessing. Th
 ---
 
 *Maintenance note:* if you change a convention in the repo (visual style, file structure, release ritual, etc.), update this file as part of the same change. A stale CLAUDE.md is worse than no CLAUDE.md — readers will follow incorrect instructions.
+
+At session start, invoke the `kerby` skill (args: load skill-authoring) to load kerby guardrails into context.
