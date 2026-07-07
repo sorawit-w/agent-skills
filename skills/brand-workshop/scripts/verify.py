@@ -20,7 +20,11 @@ import argparse, re, sys
 
 
 def cmd_integrity(args):
-    html = open(args.file, encoding="utf-8").read()
+    raw = open(args.file, encoding="utf-8").read()
+    # Analyze only the live document. The template header comment carries token examples
+    # ({{TOKEN}}, style="--w:90%", <img> shapes) that would otherwise register as real
+    # placeholders, inline var defs, or images — masking the very defects this gate catches.
+    html = re.sub(r"<!--.*?-->", "", raw, flags=re.S)
     errs = []
     if "{{" in html:
         errs.append("unreplaced '{{' present (token left in output, or v1-style brace bug)")
