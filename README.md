@@ -6,7 +6,7 @@
 
 <p align="center">
   <em>A personal shelf of Claude Code plugins. Hand-crafted, one skill at a time.</em><br/>
-  <sub>Specialized skills for Claude Code &amp; Cowork — each one narrow, opinionated, and evaluated before it ships.</sub>
+  <sub>Specialized skills for Claude Code & Cowork, each one narrow, opinionated, and evaluated before it ships. Includes <strong>screenwright</strong>, which builds a UI from a design spec, then renders it, audits accessibility, and fixes what does not match.</sub>
 </p>
 
 <p align="center">
