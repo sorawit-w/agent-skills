@@ -32,6 +32,7 @@ Audience buckets map to the README's "Start here" rows: **Startup** (build & val
 | [`i18n`](../skills/i18n/README.md) | Safe edits on large translation files + cultural rewriting | Localization eng, product teams | stable | Calibrate/visual |
 | [`define`](../skills/define/README.md) | Contextual definition/translation of a word or phrase from its surrounding sentence (learner gloss) | Language learners, readers, translators | stable | Calibrate/visual |
 | [`ghostwriter`](../skills/ghostwriter/README.md) | Personal-voice message drafting (email/Slack/DM/LinkedIn) — zero AI tells, ban-list lint, samples > ban list, six style presets + free-form | Anyone sending messages under their own name | stable | Calibrate/visual |
+| [`plain-english`](../skills/plain-english/README.md) | Installs a versioned plain-English rule block into the user's global `CLAUDE.md` so every later reply stays readable for a second-language reader — three rule groups (words, amount, order), a word-to-word swap list, a keep-test for technical terms, no escape clauses; plus on-demand rewrite of a dense passage | Anyone reading English as a second language | stable | Calibrate/visual |
 | [`pixel-art`](../skills/pixel-art/README.md) | Single-subject generative pixel art (hi-fi / lo-fi) — attempts generation by any reachable means, deterministic median-cut quantize → PNG or single-sprite SVG, model-agnostic prompt-brief fallback; repo-agnostic (returns artifacts, writes nothing); declines composed/branded SVG-asset jobs | Designers, game devs, creators | stable | Calibrate/visual |
 | [`screenwright`](../skills/screenwright/README.md) | Paints one self-contained HTML surface (page/screen/component) to a brand spec, then renders + axe-audits + screenshot-critiques in a bounded loop until two stacked gates pass; bootstraps DESIGN.md when absent (drives the Playwright MCP) | Frontend devs, agents mid-build | stable | Code |
 
@@ -64,6 +65,11 @@ graph LR
   WAI[whoami] --> HS[handshake]
   GW[ghostwriter] -.->|consumes profile| WAI
   GW -.->|opt-in draft critique| TC
+
+  %% Readability of the agent's own replies (install-once, not trigger-driven)
+  PE[plain-english] -.->|shares CLAUDE.md block install pattern| WAI
+  PE -.->|out to the user vs. out as the user| GW
+  PE -.->|stops the hard word vs. explains it| DEF
 
   %% Post-build diligence (mirror of the pre-build pipeline)
   SA[startup-audit] -.->|offers to seed canvas| VC

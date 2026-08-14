@@ -199,6 +199,12 @@ Make the agent yours, and write as yourself.
   - "Reply to this email from my manager — keep it short."
   - "Tell my teammate on Slack the deploy slipped to Thursday, style=friend."
 
+[`plain-english`](skills/plain-english/README.md) — install a plain-English rule set once, and every later reply stays readable for a second-language reader: common words, the answer first, no idioms, technical terms untouched.
+
+*Try:*
+  - "Your replies are too long and too hard to read — install the plain-English rules."
+  - "Rewrite this paragraph so a non-native English reader can follow it."
+
 ### Language & visuals
 
 [`i18n`](skills/i18n/README.md) — surgical edits on large translation files, plus cultural rewriting.
@@ -288,7 +294,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.6.1`.** Hardens `brand-workshop`'s `verify.py integrity` gate (the **Rev 3 package** deferred in 5.6.0): HTML structural validation now runs a strict **html5lib** parse — the browser's own algorithm — that fails on malformed attributes, unclosed/mismatched tags, and similar structural defects the previous regex + stdlib-`HTMLParser` backstop leaked, while allowlisting the handful of browser-tolerated character-reference codes so legitimate markup (e.g. Google-Fonts `&`-joined URLs) never false-positives. Script-only change; adds `html5lib` to the skill's `requirements.txt`. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.7.0`.** Adds **`plain-english`** — a skill that makes the agent's own replies readable for people who read English as a second language. It does not enforce anything itself: it installs a versioned rule block into your global `~/.claude/CLAUDE.md`, which is re-sent as input on every turn, then gets out of the way. Three rule groups (words, amount, order), a word-to-word swap list built from real failures, a keep-test that leaves technical terms alone, and **no escape clauses** — the escape clause is exactly why the hand-written version it replaces stopped working. Also rewrites a dense passage on demand. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

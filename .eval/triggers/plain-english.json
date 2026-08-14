@@ -1,0 +1,46 @@
+[
+  {
+    "query": "Say that in plain English — I couldn't follow it.",
+    "should_trigger": true
+  },
+  {
+    "query": "Your replies are too long and too hard to read. Can we fix that permanently?",
+    "should_trigger": true
+  },
+  {
+    "query": "Install the plain-English rules into my global CLAUDE.md.",
+    "should_trigger": true
+  },
+  {
+    "query": "Rewrite this paragraph so a non-native English reader can follow it.",
+    "should_trigger": true
+  },
+  {
+    "query": "Is the plain-english block installed, and is it up to date?",
+    "should_trigger": true
+  },
+  {
+    "query": "Draft this email to my manager so it sounds like me, not generic AI.",
+    "should_trigger": false
+  },
+  {
+    "query": "What does 'idempotent' mean in this sentence?",
+    "should_trigger": false
+  },
+  {
+    "query": "Translate these locale strings into Thai with cultural rewriting.",
+    "should_trigger": false
+  },
+  {
+    "query": "Write an ESL lesson plan and some grammar drills for beginners.",
+    "should_trigger": false
+  },
+  {
+    "query": "Calibrate how you work with me — run the six dials.",
+    "should_trigger": false
+  },
+  {
+    "query": "Your defaults don't match my preferences — let's set up a working agreement.",
+    "should_trigger": false
+  }
+]
