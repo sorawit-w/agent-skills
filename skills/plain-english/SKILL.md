@@ -71,8 +71,11 @@ text the user gave you.
 1. **Read the rule block first.** Do not rewrite from memory of these rules.
 2. **Swap every listed word.** Scan the passage for each row of the table.
 3. **Fix order.** Move the answer to the first sentence. Caveats go after.
-4. **Cut what was not asked for.** Drop points that answer a question nobody
-   asked.
+4. **Do not cut content.** The user handed you this passage, so all of it is in
+   scope and all of it survives. The **Amount** rule governs replies you author;
+   it does not license deleting the user's own points here. Tighten wording,
+   split long sentences, drop padding words — never drop an idea. If the passage
+   really does say too much, say so in the note at step 8 and let the user cut.
 5. **Keep every technical term.** React, async, migration, cache, and the like
    stay exactly as they are. Apply the keep-test in the rule block: domain
    nouns stay, borrowed pictures go. A real term of art is kept and explained
@@ -92,13 +95,17 @@ text the user gave you.
    python3 skills/plain-english/scripts/check-swaps.py -
    ```
 
-   Fix every hit, then run it again. If the script cannot run, scan the real
-   characters of your output against the swap table by hand. Either way, a note
-   in your reasoning saying you used plain words does not count.
+   **Review** every hit and fix the real ones, then run it again. Do not apply
+   hits blindly: the script matches strings, so it cannot tell the verb
+   "surface" from "surface tension", or a banned word quoted as an example from
+   one used for real. A hit you reject is fine; a hit you did not look at is
+   not. If the script cannot run, scan the real characters of your output
+   against the swap table by hand.
 
-   A clean result is not proof the text is plain. The script only sees the
-   listed words, in the forms it can match. Hard words that are not on the list
-   are still yours to catch.
+   Either way, a note in your reasoning saying you used plain words does not
+   count. And a clean result is not proof the text is plain — the script only
+   sees the listed words, in the forms it can match. Hard words that are not on
+   the list are still yours to catch.
 8. **Output the rewritten text only.** No preamble, no list of what you
    changed.
 

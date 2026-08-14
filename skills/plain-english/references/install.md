@@ -21,20 +21,37 @@ second contract.
 
 ### Step 1 — Detect
 
-Read `~/.claude/CLAUDE.md`. Look for two things:
+Read `~/.claude/CLAUDE.md`, then run the **[Structure check](#structure-check)**
+below. Every mode runs it, and it runs **before** anything else — before reading
+a version, before proposing an edit. It returns one of: `not installed`,
+`healthy`, or a damaged state that stops the run.
+
+If the file does not exist, that is `not installed` — fine, it gets created.
+
+On `healthy`, this is an update, not an install: go to **Update**.
+
+On `not installed`, also look for a hand-written version:
 
 | Look for | Meaning |
 |---|---|
-| One line starting `<!-- plain-english:start` | Already installed. Go to **Update**. |
-| **Two or more** lines starting `<!-- plain-english:start` | Duplicate blocks. Go to **Damaged states** below. Do not install on top. |
-| A start marker with **no** `<!-- plain-english:end -->` after it | Broken block. Go to **Damaged states** below. Do not replace anything. |
-| A `## Communication style` heading, or any hand-written section of plain-language rules | A hand-written version exists. It must be **replaced**, not joined. |
+| A `## Communication style` heading, or any other hand-written section of plain-language rules | A hand-written version exists. It must be **replaced**, not joined. |
 
 The hand-written section is the common case for anyone who already tried to fix
 this by hand. Two overlapping rule sets can disagree, and the agent will follow
 whichever it likes better. One rule set, always.
 
-If the file does not exist, that is fine — it gets created.
+**Where that section ends — decide it, show it, never assume it.** The heading
+tells you where it starts and nothing tells you where it stops, so:
+
+1. Its extent runs from its heading line through the line **before** the next
+   heading at the same level or higher (`## ` or `# `), or through the end of
+   the file if no such heading follows.
+2. That rule is a proposal, not a licence. Print the exact line range and the
+   full text you intend to remove, and let the user correct the boundary.
+3. If the section appears to run to the end of the file, say so explicitly and
+   ask before removing — "to the end of the file" is how unrelated
+   configuration gets deleted.
+4. Never remove anything below a heading you did not name in step 2.
 
 ### Step 2 — Show, then ask
 
@@ -93,56 +110,85 @@ exposes none, say so rather than inventing a path.
 Install-once has one real cost: improving the skill does not improve a copy
 that is already installed. The version marker fixes that.
 
-1. **Find the installed block.** Match on the **prefix** `<!-- plain-english:start`,
-   not the whole line. An older block has a different version in that line and
-   would not be found by an exact match.
-2. **Read its version** from that line. Compare against the current version in
-   [rule-block.md](rule-block.md).
+1. **Run the [Structure check](#structure-check) first.** Before reading a
+   version, before comparing anything. A damaged file stops the run whatever
+   its version says — otherwise a damaged block that happens to carry the
+   current version returns "nothing to do" and the damage stays hidden.
+   - `not installed` → say so and stop. Offer **Install**. Do not write.
+   - a damaged state → stop, per that section. Do not write.
+   - `healthy` → continue.
+2. **Read its version** from the start marker line. Match on the **prefix**
+   `<!-- plain-english:start`, not the whole line: an older block carries a
+   different version there and an exact match would not find it. Compare
+   against the current version in [rule-block.md](rule-block.md).
 3. **Same version** — say so and stop. Nothing to do.
-4. **Older version** — show what changed between the installed block and the
-   current one, then ask for an explicit yes as in Step 2.
-5. **On yes** — first run the delimiter guard in **Damaged states** below. Only
-   if both markers are present, replace everything between
-   `<!-- plain-english:start` and `<!-- plain-english:end -->` with the current
-   block. Never append a second block.
-
-A block with no version marker at all is a hand-written or pre-v1 copy. Treat
-it as older.
+4. **Older version, unreadable version, or no version** — show what changed
+   between the installed block and the current one, then ask for an explicit
+   yes as in Step 2. A block with no version marker is a hand-written or pre-v1
+   copy; treat it as older.
+5. **Newer version than this skill ships** — stop and say so. Do not overwrite.
+   This means the installed block came from a newer copy of the skill than the
+   one running, so writing would be a silent downgrade. Tell the user which two
+   versions you found and let them choose; update only on an explicit yes.
+6. **On yes** — replace the block **from the start marker line through the end
+   marker line, both included**, with the current block. Not "everything
+   between the markers": the replacement text carries its own markers, so an
+   exclusive reading leaves one block nested inside another. Never append a
+   second block.
 
 ---
 
-## Damaged states
+## Structure check
 
-Every replace and remove in this file is written as "everything between the two
-markers". That phrase only has a meaning when **both** markers are there. These
-three states break that assumption. Check for them before any write.
+Every replace and remove in this file names a region by its two markers. That
+only has a meaning when the markers form **exactly one ordered pair**. Run this
+before any other step, in every mode, and act on what it returns.
+
+Count `<!-- plain-english:start` lines as *starts* and `<!-- plain-english:end -->`
+lines as *ends*.
+
+| starts | ends | Result | What you must do |
+|---|---|---|---|
+| 0 | 0 | `not installed` | No block here. Not damage — say so plainly. Install may proceed; Update and Uninstall stop and report it. |
+| 1 | 1, and the end comes **after** the start | `healthy` | The one safe case. Continue. |
+| 1 | 0 | damaged | **Stop. Do not write.** Never read "between the markers" as "from the start marker to the end of the file" — that deletes every section below the block. |
+| 1 | 1, but the end comes **before** the start | damaged | **Stop. Do not write.** An orphan end above the block leaves the region ambiguous in both directions. |
+| 1 | 2 or more | damaged | **Stop. Do not write.** More than one candidate end means more than one candidate region. Do not take the nearest and hope. |
+| 2 or more | any | damaged | **Stop. Do not write.** Duplicate blocks. |
+| 0 | 1 or more | damaged | **Stop. Do not write.** An end with no start is left over from a partial edit. |
+
+**Every damaged row ends the same way.** Show the user the marker lines you
+found with their line numbers, say plainly what is wrong, and offer two choices:
+repair the boundary yourself after they name it, or leave the file alone. Never
+guess the extent, never merge blocks, and never pick for the user.
+
+One state is **not** damage and must not stop anything:
 
 | State | What you must do |
 |---|---|
-| Start marker present, **end marker missing** | **Stop. Do not write.** Do not read "between the markers" as "from the start marker to the end of the file" — that deletes every section below the block. Show the user the region you found, say the end marker is missing, and ask whether to treat the block as ending at the next `## ` heading or to leave the file alone. Never guess the extent. |
-| **Two or more** start markers | **Stop. Do not write.** Show the user each block with its version and its line range, and ask which one to keep. Remove the other. Do not merge them, and do not pick for the user. |
-| Version marker present but unreadable (e.g. `v1.2`, `2`, empty) | Treat it as older than the current version, exactly like a block with no marker. Say which value you found, so the user can see it was not a clean install. |
-
-**The guard applies to Update and to Uninstall.** Both delete a region defined
-by the two markers, so both can destroy the rest of the file when one marker is
-missing.
+| Version marker present but unreadable (`v1.2`, `2`, empty) | The structure is fine. Treat the version as older than current, exactly like a block with no marker. Say which value you found, so the user can see it was not a clean install. |
 
 **Why this is written down.** These are the states the happy path quietly
-assumes cannot happen. The manual-paste path in Step 4 makes the first two
+assumes cannot happen. The manual-paste path in Step 4 makes several of them
 likely rather than rare: the user pastes by hand, into a file the skill could
 not read, with no way to check what was already there.
 
 ### Audit fixtures
 
-Three test cases for anyone auditing this skill. Each one withholds something
-the happy path assumes. Give the fixture, run `install`, `update`, and
-`uninstall`, and check the expected behaviour.
+Test cases for anyone auditing this skill. Each withholds something the happy
+path assumes. Give the fixture, run `install`, `update`, and `uninstall`, and
+check the expected behaviour.
 
 | Fixture | Expected |
 |---|---|
-| File has `<!-- plain-english:start v1 -->` and the rules, but the `<!-- plain-english:end -->` line has been deleted | All three modes stop and ask. None writes. None deletes anything below the start marker. |
-| File has two full blocks, one `v0` and one `v1`, in different places | All three modes stop, show both with line ranges and versions, and ask which to keep. |
-| File has `<!-- plain-english:start 2 -->` | Treated as older than current. The unreadable value `2` is named back to the user. |
+| A start marker and the rules, but the `<!-- plain-english:end -->` line deleted | All three modes stop and ask. None writes. Nothing below the start marker is deleted. |
+| Two full blocks, one `v0` and one `v1`, in different places | All three modes stop, show both with line ranges and versions, and ask which to keep. |
+| One start marker and **two** end markers | All three modes stop. Neither candidate region is chosen. |
+| An end marker **above** the only start marker | All three modes stop. |
+| `<!-- plain-english:start 2 -->`, otherwise well formed | Not damage. Treated as older than current; the value `2` is named back to the user. |
+| A well-formed `v1` block while the skill itself ships `v0` | Update stops rather than downgrading, and names both versions. |
+| No markers at all | `update` and `uninstall` report "not installed" and write nothing. `install` proceeds normally. |
+| A hand-written `## Communication style` section running to the end of the file | Install names the exact line range, says it reaches the end of the file, and asks before removing anything. |
 
 The fixture must actually withhold the resource. Supplying a well-formed block
 "to be realistic" hides the exact bug these cases exist to catch.
@@ -151,31 +197,32 @@ The fixture must actually withhold the resource. Supplying a well-formed block
 
 ## Status
 
-Report three facts and stop. No edits, no offers unless something is out of
-date.
+Report and stop. No edits ever, whatever you find.
 
-1. Is the block installed? (Is `<!-- plain-english:start` in the file?)
-2. Which version?
+1. Run the [Structure check](#structure-check) and report its result. Status is
+   read-only and safe, so it is the mode most likely to be run first — report
+   damage here rather than letting Update or Uninstall meet it later. Unlike
+   the other modes, a damaged result does not stop Status: keep going and
+   report the rest of what you can see.
+2. Which version, if a start marker is there at all?
 3. Is a hand-written `## Communication style` section also present? Say so if
    it is — that is the two-rule-sets problem, and it is worth naming.
-4. Is the file in any of the **Damaged states** below? Status is read-only and
-   safe, so it is the mode most likely to be run first. Report the damage here
-   rather than letting Update or Uninstall meet it later.
 
-If the installed version is older than the current one, offer the update. If
-the file is out of reach, say that instead of guessing.
+Then, only if the structure is `healthy`: if the installed version is older
+than the current one, offer the update. If it is newer, say so and offer
+nothing. If the file is out of reach, say that instead of guessing.
 
 ---
 
 ## Uninstall
 
-Run the delimiter guard in **Damaged states** first. If either marker is
-missing, or there is more than one start marker, stop and ask — do not remove a
-region whose extent you had to guess.
+Run the [Structure check](#structure-check) first.
 
-With both markers present: remove everything from `<!-- plain-english:start`
-through `<!-- plain-english:end -->`, including both delimiters. Change nothing
-else.
+- `not installed` → say so and stop. Nothing to remove, and this is not damage.
+- a damaged state → stop and ask, per that section. Never remove a region whose
+  extent you had to guess.
+- `healthy` → remove the block **from the start marker line through the end
+  marker line, both included**. Change nothing else.
 
 Do not restore a hand-written section that was replaced during install — it is
 gone, and guessing at what it said would be worse than leaving it out. Say

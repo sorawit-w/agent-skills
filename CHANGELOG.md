@@ -21,10 +21,16 @@ re-sent as input on every turn, and then gets out of the way.
     list, a keep-test for technical terms, a warmth rule, and an output scan.
   - `references/install.md` — install, update, status, and uninstall against
     `~/.claude/CLAUDE.md`. Follows the contract already written in
-    `skills/whoami/references/persistence.md`. Includes a **Damaged states**
-    guard: every write in that file deletes a region defined by two markers, so
-    a missing end marker, duplicate blocks, or an unreadable version all stop
-    the write and ask instead. Ships with three audit fixtures for those states.
+    `skills/whoami/references/persistence.md`. Includes a **Structure check**
+    that runs before every other step in every mode: each write names a region
+    by two markers, so it requires exactly one start, exactly one end, and the
+    end after the start. Missing end, orphan end, two candidate ends, duplicate
+    blocks and end-without-start all stop the write and ask. Replacement is
+    marker-line to marker-line **inclusive**, so the incoming block cannot nest
+    inside the old one. `not installed` is a defined, read-only result rather
+    than a damage report. A hand-written section marked for removal has its
+    extent computed, printed and confirmed — never assumed to run to the end of
+    the file. Ships with eight audit fixtures.
 - **Rewrite mode** — hand the skill a dense passage and it returns a plain one.
   Two rules earned during the audit: when the user asks for the technical terms
   to be removed, their instruction wins and the cost is stated; and the rewrite
@@ -33,11 +39,16 @@ re-sent as input on every turn, and then gets out of the way.
   lost meaning). An ordinary swap never earns a note.
 - **`scripts/check-swaps.py`** — reads the swap table straight from
   `rule-block.md` and scans a passage for banned terms, so the two can never
-  drift apart. Catches phrases broken across a line wrap and short inflections
-  (`leveraging`, `surfaced`); its two real limits — a 4-character suffix window
-  and a literal stem, so `brittleness` and `ceremonial` slip past — are pinned
-  by `--selftest` and stated in the file. A clean result means "none of the
-  listed words", not "this text is plain".
+  drift apart. Catches phrases broken across a line wrap and inflections of a
+  single-word entry (`leveraging`, `surfaced`). Endings come from an explicit
+  list and multi-word entries match exactly, because a wildcard version flagged
+  `surfactant`, `fixed pointer`, `back out often` and `close the loopback`.
+  Matching is case-insensitive on the original text, so a character whose
+  lowercase form is longer cannot shift the reported line numbers. Exit 2, never
+  1, when the input cannot be read — 1 means "banned terms found". Its three
+  limits (`brittleness`, `ceremonial`, `backed out of`) are pinned by
+  `--selftest`, as is the rule that every entry must match its own plain form.
+  A clean result means "none of the listed words", not "this text is plain".
 - **Versioned block** — the start delimiter carries `v1`, so a copy installed
   months ago can be found, compared, and updated.
 - `assets/plain-english-li.svg`, `assets/plain-english-x.svg`,
