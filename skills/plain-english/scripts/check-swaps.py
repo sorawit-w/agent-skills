@@ -74,7 +74,8 @@ def load_swaps(path=BLOCK):
 # Leaving it out silently stopped every e-ending entry from matching its own
 # plain form, which the inflection tests did not notice.
 SUFFIXES = ("e", "s", "es", "d", "ed", "ing",
-            "ted", "ting", "ped", "ping", "ged", "ging")
+            "ted", "ting", "ped", "ping", "ged", "ging",
+            "r", "er", "st", "est")   # brittle -> brittler, brittlest
 
 
 def build_pattern(banned):
@@ -154,6 +155,9 @@ def selftest():
     # endings on a single-word stem are caught
     assert names("We are surfacing the leveraged paths.") == ["leverage", "surface (verb)"]
     assert names("It surfaced once and oscillates now.") == ["oscillate", "surface (verb)"]
+    # comparative and superlative forms of an adjective entry
+    assert names("This path is brittler than that one.") == ["brittle"]
+    assert names("It is the brittlest of the three.") == ["brittle"]
 
     # FALSE POSITIVES that an earlier wildcard version produced. Each of these
     # must stay empty; they are the reason SUFFIXES is an explicit list and
@@ -205,7 +209,11 @@ def main(argv):
     src = argv[1]
     try:
         if src == "-":
-            text = sys.stdin.read()
+            # Read bytes and decode strictly. sys.stdin.read() decodes with the
+            # platform's error handler, which on some systems replaces or
+            # surrogate-escapes undecodable bytes — so junk on stdin scanned
+            # "clean" and exited 0 while a junk FILE correctly exited 2.
+            text = sys.stdin.buffer.read().decode("utf-8")
         else:
             text = pathlib.Path(src).read_text(encoding="utf-8")
     except (OSError, UnicodeDecodeError) as exc:

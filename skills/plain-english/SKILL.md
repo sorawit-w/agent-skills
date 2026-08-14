@@ -74,8 +74,9 @@ text the user gave you.
 4. **Do not cut content.** The user handed you this passage, so all of it is in
    scope and all of it survives. The **Amount** rule governs replies you author;
    it does not license deleting the user's own points here. Tighten wording,
-   split long sentences, drop padding words — never drop an idea. If the passage
-   really does say too much, say so in the note at step 8 and let the user cut.
+   split long sentences, drop padding words — never drop an idea. If you think
+   the passage says more than it needs, that is the user's call and they did not
+   ask. Return all of it, plainly worded.
 5. **Keep every technical term.** React, async, migration, cache, and the like
    stay exactly as they are. Apply the keep-test in the rule block: domain
    nouns stay, borrowed pictures go. A real term of art is kept and explained

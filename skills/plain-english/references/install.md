@@ -44,8 +44,15 @@ whichever it likes better. One rule set, always.
 tells you where it starts and nothing tells you where it stops, so:
 
 1. Its extent runs from its heading line through the line **before** the next
-   heading at the same level or higher (`## ` or `# `), or through the end of
-   the file if no such heading follows.
+   heading at the same level as that heading or higher — measured against the
+   level you actually found, not a fixed `## `. A `### Communication style`
+   section ends at the next `###`, `##` or `#`; assuming `##` would swallow a
+   sibling `### Security` section whole. If no such heading follows, the extent
+   reaches the end of the file.
+   **If the hand-written rules have no heading**, there is no computable
+   extent. Do not invent one. Show the user the lines you believe are theirs
+   and ask them to mark the range, or leave the section where it is and say
+   plainly that you did.
 2. That rule is a proposal, not a licence. Print the exact line range and the
    full text you intend to remove, and let the user correct the boundary.
 3. If the section appears to run to the end of the file, say so explicitly and
@@ -144,8 +151,15 @@ Every replace and remove in this file names a region by its two markers. That
 only has a meaning when the markers form **exactly one ordered pair**. Run this
 before any other step, in every mode, and act on what it returns.
 
-Count `<!-- plain-english:start` lines as *starts* and `<!-- plain-english:end -->`
-lines as *ends*.
+**A marker only counts if it stands alone.** A marker line must hold that one
+marker and nothing else but whitespace. If a line holds a marker plus any other
+content — a second marker, a heading, a sentence — that is a **damaged** state:
+stop and ask, exactly like the rows below. Removal and replacement work by whole
+lines, so `<!-- plain-english:start v1 --><!-- plain-english:end --> ## Security`
+would otherwise read as one tidy pair and take the `## Security` heading with it.
+
+Count standalone `<!-- plain-english:start` lines as *starts* and standalone
+`<!-- plain-english:end -->` lines as *ends*.
 
 | starts | ends | Result | What you must do |
 |---|---|---|---|
@@ -187,6 +201,9 @@ check the expected behaviour.
 | An end marker **above** the only start marker | All three modes stop. |
 | `<!-- plain-english:start 2 -->`, otherwise well formed | Not damage. Treated as older than current; the value `2` is named back to the user. |
 | A well-formed `v1` block while the skill itself ships `v0` | Update stops rather than downgrading, and names both versions. |
+| A start and an end marker sharing one line with a `## Security` heading | All three modes stop. The heading is not removed. |
+| A `### Communication style` section followed by a sibling `### Security` section | Install's proposed range ends before `### Security`, never at the next `##`. |
+| Hand-written plain-language rules with no heading above them | Install does not compute a range. It asks the user to mark it, or leaves the rules alone and says so. |
 | No markers at all | `update` and `uninstall` report "not installed" and write nothing. `install` proceeds normally. |
 | A hand-written `## Communication style` section running to the end of the file | Install names the exact line range, says it reaches the end of the file, and asks before removing anything. |
 
