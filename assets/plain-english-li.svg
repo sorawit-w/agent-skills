@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 627" role="img" aria-label="plain-english — dense reply in, plain reply out" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
+  <title>plain-english — write for a second-language reader</title>
+  <desc>Pixel-art banner for the plain-english Claude Code skill. Centered title at the top. Below, three cards left to right: a DENSE card showing a reply full of hard words, with "blast radius" and "it will bite you" struck through; a warm-orange SWAP card showing the word-to-word replacements, with a green KEEP chip protecting the technical terms React and async; and a PLAIN card showing the rewritten reply with the answer on the first line. Pixel arrows connect the cards. A row of chapter markers — words, amount, order, keep terms, stay warm — runs underneath.</desc>
+
+  <!-- background: soft warm paper with scanlines -->
+  <defs>
+    <pattern id="scan-li" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#f5efe6"/>
+      <rect y="6" width="8" height="2" fill="#eadfcf"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="627" fill="url(#scan-li)"/>
+
+  <!-- =========== TITLE BLOCK (top, centered) =========== -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" text-anchor="middle">
+    <text x="600" y="74" font-size="42" font-weight="700" fill="#1f2937" letter-spacing="4">plain-english</text>
+    <text x="600" y="106" font-size="20" fill="#6b7280">write for the reader, not for yourself</text>
+    <text x="600" y="134" font-size="12" fill="#9ca3af" letter-spacing="4">INSTALL ONCE · APPLIES EVERY REPLY</text>
+  </g>
+
+  <!-- ============ CARD A — DENSE (paper) ============ -->
+  <g transform="translate(55, 185)">
+    <rect x="0" y="0" width="330" height="280" fill="#fdf7ea"/>
+    <rect x="0" y="0" width="330" height="4" fill="#c9b58a"/>
+    <rect x="0" y="276" width="330" height="4" fill="#b79a5c"/>
+    <rect x="326" y="0" width="4" height="280" fill="#b79a5c"/>
+    <rect x="0" y="30" width="330" height="2" fill="#c9b58a"/>
+    <text x="16" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#6b7280" letter-spacing="3">DENSE</text>
+
+    <text x="16" y="72" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" fill="#1f2937">Caveat first, then</text>
+    <text x="16" y="96" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" fill="#1f2937">the answer...</text>
+
+    <text x="16" y="146" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="16" fill="#b91c1c">blast radius</text>
+    <rect x="16" y="140" width="122" height="2" fill="#b91c1c"/>
+
+    <text x="16" y="180" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="16" fill="#b91c1c">it will bite you</text>
+    <rect x="16" y="174" width="153" height="2" fill="#b91c1c"/>
+
+    <text x="16" y="214" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="16" fill="#b91c1c">close the loop</text>
+    <rect x="16" y="208" width="133" height="2" fill="#b91c1c"/>
+
+    <text x="16" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="11" fill="#9ca3af" letter-spacing="1">hard words + buried answer</text>
+  </g>
+
+  <!-- arrow A -> B (entering, muted) -->
+  <g fill="#6b7280">
+    <rect x="392" y="322" width="34" height="6"/>
+    <rect x="424" y="316" width="6" height="6"/>
+    <rect x="430" y="322" width="6" height="6"/>
+    <rect x="424" y="328" width="6" height="6"/>
+  </g>
+
+  <!-- ============ CARD B — SWAP (warm accent) ============ -->
+  <g transform="translate(435, 185)">
+    <rect x="0" y="0" width="330" height="280" fill="#c2410c"/>
+    <rect x="0" y="0" width="330" height="4" fill="#ea580c"/>
+    <rect x="0" y="276" width="330" height="4" fill="#7c2d12"/>
+    <rect x="326" y="0" width="4" height="280" fill="#7c2d12"/>
+    <rect x="0" y="30" width="330" height="2" fill="#7c2d12"/>
+    <text x="16" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#fed7aa" letter-spacing="3">SWAP</text>
+
+    <text x="18" y="72" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="14" fill="#fdba74">blast radius</text>
+    <text x="18" y="94" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" font-weight="700" fill="#fdf7ea">→ how much it affects</text>
+
+    <text x="18" y="134" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="14" fill="#fdba74">it will bite you</text>
+    <text x="18" y="156" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" font-weight="700" fill="#fdf7ea">→ it will cause</text>
+    <text x="18" y="176" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" font-weight="700" fill="#fdf7ea">&#160;&#160;&#160;problems later</text>
+
+    <!-- keep chip: technical terms protected -->
+    <rect x="16" y="206" width="230" height="30" fill="#dcfce7"/>
+    <rect x="16" y="206" width="230" height="3" fill="#86efac"/>
+    <text x="26" y="226" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="13" font-weight="700" fill="#15803d">KEEP  React  async  PR</text>
+  </g>
+
+  <!-- arrow B -> C (exiting, warm) -->
+  <g fill="#c2410c">
+    <rect x="772" y="322" width="34" height="6"/>
+    <rect x="804" y="316" width="6" height="6"/>
+    <rect x="810" y="322" width="6" height="6"/>
+    <rect x="804" y="328" width="6" height="6"/>
+  </g>
+
+  <!-- ============ CARD C — PLAIN (paper) ============ -->
+  <g transform="translate(815, 185)">
+    <rect x="0" y="0" width="330" height="280" fill="#fdf7ea"/>
+    <rect x="0" y="0" width="330" height="4" fill="#c9b58a"/>
+    <rect x="0" y="276" width="330" height="4" fill="#b79a5c"/>
+    <rect x="326" y="0" width="4" height="280" fill="#b79a5c"/>
+    <rect x="0" y="30" width="330" height="2" fill="#c9b58a"/>
+    <text x="16" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="12" fill="#6b7280" letter-spacing="3">PLAIN</text>
+
+    <!-- the answer, first line, highlighted -->
+    <rect x="14" y="52" width="298" height="30" fill="#fde68a"/>
+    <rect x="14" y="52" width="298" height="3" fill="#fbbf24"/>
+    <text x="24" y="74" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="16" font-weight="700" fill="#1f2937">Yes. Here is the answer.</text>
+
+    <text x="16" y="118" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" fill="#1f2937">It changes how much</text>
+    <text x="16" y="142" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" fill="#1f2937">it affects the cache.</text>
+
+    <text x="16" y="184" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="15" fill="#6b7280">One caveat, after.</text>
+
+    <rect x="16" y="206" width="150" height="26" fill="#bae6fd"/>
+    <rect x="16" y="206" width="150" height="3" fill="#0e7490"/>
+    <text x="26" y="224" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="13" font-weight="700" fill="#0e7490">STILL WARM</text>
+
+    <text x="16" y="252" font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" font-size="11" fill="#9ca3af" letter-spacing="1">answer first, plain words</text>
+  </g>
+
+  <!-- ============ CHAPTER MARKERS ============ -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, DejaVu Sans Mono, monospace" text-anchor="middle" font-size="13" fill="#6b7280" letter-spacing="3">
+    <text x="600" y="540">WORDS · AMOUNT · ORDER · KEEP TERMS · STAY WARM</text>
+  </g>
+
+  <!-- ground line -->
+  <rect x="55" y="600" width="1090" height="2" fill="#eadfcf"/>
+</svg>

@@ -5,6 +5,107 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.7.0] — 2026-08-13
+
+New skill: **`plain-english`** — makes the agent's own replies readable for
+people who read English as a second language. It does not enforce the rules
+itself. It installs them into the user's global `~/.claude/CLAUDE.md`, which is
+re-sent as input on every turn, and then gets out of the way.
+
+### Added
+
+- **`skills/plain-english/`** — `SKILL.md`, `README.md`, a slash command, and
+  two reference files:
+  - `references/rule-block.md` — the canonical rule block, the single source.
+    Three rule groups (words, amount, order), a fifteen-row word-to-word swap
+    list, a keep-test for technical terms, a warmth rule, and an output scan.
+  - `references/install.md` — install, update, status, and uninstall against
+    `~/.claude/CLAUDE.md`. Follows the contract already written in
+    `skills/whoami/references/persistence.md`. Includes a **Structure check**
+    that runs before every other step in every mode: each write names a region
+    by two markers, so it requires exactly one start, exactly one end, and the
+    end after the start. Missing end, orphan end, two candidate ends, duplicate
+    blocks and end-without-start all stop the write and ask. Replacement is
+    marker-line to marker-line **inclusive**, so the incoming block cannot nest
+    inside the old one. `not installed` is a defined, read-only result rather
+    than a damage report. A hand-written section marked for removal has its
+    extent computed, printed and confirmed — never assumed to run to the end of
+    the file. Ships with eight audit fixtures.
+- **Rewrite mode** — hand the skill a dense passage and it returns a plain one.
+  Two rules earned during the audit: when the user asks for the technical terms
+  to be removed, their instruction wins and the cost is stated; and the rewrite
+  is the whole output, with a one-line note allowed in exactly two cases (a term
+  dropped on request, or a harder word kept because the plain swap would have
+  lost meaning). An ordinary swap never earns a note.
+- **`scripts/check-swaps.py`** — reads the swap table straight from
+  `rule-block.md` and scans a passage for banned terms, so the two can never
+  drift apart. Catches phrases broken across a line wrap and inflections of a
+  single-word entry (`leveraging`, `surfaced`). Endings come from an explicit
+  list and multi-word entries match exactly, because a wildcard version flagged
+  `surfactant`, `fixed pointer`, `back out often` and `close the loopback`.
+  Matching is case-insensitive on the original text, so a character whose
+  lowercase form is longer cannot shift the reported line numbers. Exit 2, never
+  1, when the input cannot be read — 1 means "banned terms found". Its three
+  limits (`brittleness`, `ceremonial`, `backed out of`) are pinned by
+  `--selftest`, as is the rule that every entry must match its own plain form.
+  A clean result means "none of the listed words", not "this text is plain".
+- **Versioned block** — the start delimiter carries `v1`, so a copy installed
+  months ago can be found, compared, and updated.
+- `assets/plain-english-li.svg`, `assets/plain-english-x.svg`,
+  `assets/icons/plain-english.svg`.
+- `.eval/triggers/plain-english.json` — ten cases, including neighbour-steal
+  cases for `ghostwriter`, `define`, `i18n`, and one for the English-teaching
+  misread of the name.
+
+### Changed
+
+- `.claude-plugin/plugin.json` — `plain-english` registered in the skills array;
+  new keywords in both it and `.claude-plugin/marketplace.json`.
+- `README.md` — new entry under **Make it yours**; Status section updated.
+- `docs/skill-graph.md` — new node and edges to `ghostwriter`, `define`, and
+  `whoami`.
+
+### Why
+
+Agent replies are long and full of hard words. For a reader whose first
+language is not English, that costs real time. Two people reported it
+independently, one of them using no custom rules at all, so it is the model's
+default writing style rather than something a harness caused.
+
+A hand-written rule had already been tried and had failed. The reason is the
+most useful thing this release records: **the rule had escape clauses.** It
+said *"where a simpler word works just as well"* and *"if an uncommon word is
+genuinely the best fit"*. Both let the agent decide in its own favour, and it
+always decided the hard word was the best fit. An escape clause in a style rule
+is the same as no rule. The block ships with none.
+
+The second reason it failed: it covered word choice only. It said nothing about
+how much to write or what order to write it in. Short text full of hard words
+is still hard to read; long text in easy words is still too much. Hence three
+rule groups, not one.
+
+Two patterns were reused rather than reinvented. The install contract comes from
+`whoami` — a delimited block, shown before it is written, replaced in place,
+everything else in the file untouched. The self-check comes from `ghostwriter`:
+scan the characters you actually wrote, because an agent will note that it
+complied and then ship text that did not.
+
+`~/.claude/CLAUDE.md` is the delivery target rather than a hook. It is re-sent
+as input every turn, it survives a session being summarized, and it avoids the
+Windows problem where a hook calling a `.sh` script opens an "Open file with"
+dialog. A `SessionStart` hook would sit in the same place and be less durable,
+so it is not offered.
+
+### Notes
+
+- Tier `draft`. The skill edits exactly one file, only inside its own
+  delimiters, and only after an explicit yes.
+- **Not shipped:** a `UserPromptSubmit` hook that repeats the short rules
+  mid-session. That is the fix for attention drift late in a long session, and
+  drift has not been measured yet. Offering it now would be a guess.
+- The skill states plainly that it cannot promise the rules are followed. It
+  puts them in context; it cannot measure attention.
+
 ## [5.6.1] — 2026-07-07
 
 The **Rev 3 package** deferred in v5.6.0: `brand-workshop`'s `verify.py integrity`
