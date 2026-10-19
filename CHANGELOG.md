@@ -58,10 +58,9 @@ ask about Deno, and the skill should catch that and steer them away.
 
 - Verification, run in a separate session from the author:
   - `skill-evaluator: 0 skill-text findings (40/41; 1 rubric-layer fail) at diff sha256:3a90d6f2274f — 2026-10-18` (8 tests, before the decision-tree reorder).
-  - `skill-evaluator: 0 skill-text findings, 1 rubric-layer fail (22/23) at diff sha256:f41327d7d6f6 — 2026-10-18` (decision-tree re-run on the shipped text).
+  - `skill-evaluator: 0 skill-text findings, 1 rubric-layer fail (22/23) at diff sha256:f41327d7d6f6 — 2026-10-18` (decision-tree re-run, before the Node-version and Tailwind-command fix).
+  - `skill-evaluator: clean (30/30) at diff sha256:1fd4e2540d4c — 2026-10-19` (after the Node-version and Tailwind-command fix, commit `f847ae8`; this is the shipped text).
   - Diff hashes are `git diff 609a953 -- skills/tech-stack-recommendations | shasum -a 256`, first 12 characters.
-  - Both verdicts cover the text before the Node-version and Tailwind-command
-    fix. That fix changes `SKILL.md`, so a fresh pass is due before release.
 - Fresh's future after the acquisition is unconfirmed; `deno.md` says so.
 
 ## [5.7.0] — 2026-08-13
