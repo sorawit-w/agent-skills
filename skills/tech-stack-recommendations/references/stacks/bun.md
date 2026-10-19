@@ -66,7 +66,7 @@ bunx sv create my-app
 cd my-app && bun install
 
 # add Tailwind CSS
-bunx svelte-add tailwindcss
+bunx sv add tailwindcss
 
 # development
 bun run dev

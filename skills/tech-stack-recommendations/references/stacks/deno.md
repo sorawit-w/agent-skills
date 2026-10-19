@@ -28,7 +28,7 @@ The dates are estimates from the announcement window, not fixed shutdown days. C
 |--------------------|---------|-----------|
 | Edge-first, on Deno Deploy | **Cloudflare Workers + Hono** | [bun.md](bun.md) for tooling, [hosting.md](../guides/hosting.md) § Cloudflare Workers |
 | A regular web app or API | **Bun** (the skill's default) | [bun.md](bun.md) |
-| Tied to Node-only packages or a Node team | **Node 22 LTS** | [node.md](node.md) |
+| Tied to Node-only packages or a Node team | **Node (Active LTS)** | [node.md](node.md) |
 
 If the project chose Deno for its permission sandbox, no destination here replaces it. Node's `--permission` model guards trusted code against mistakes, but Node's own docs say it is not a sandbox for untrusted code. Say so to the user instead of claiming an equal swap.
 

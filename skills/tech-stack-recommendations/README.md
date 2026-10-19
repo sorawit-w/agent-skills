@@ -15,7 +15,7 @@ This skill picks a lane. It names a default, says what it's optimized for, and p
 ## What it does
 
 - **Names a single default stack:** Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk, with Tailwind + shadcn on top.
-- **Offers two alternates with clear triggers:** Cloudflare Workers + Hono (edge-first) and Node 22 LTS (ecosystem-heavy, legacy-compatible, Angular/NestJS-friendly).
+- **Offers two alternates with clear triggers:** Cloudflare Workers + Hono (edge-first) and Node, current Active LTS (ecosystem-heavy, legacy-compatible, Angular/NestJS-friendly).
 - **Moves existing Deno projects off Deno.** Cloudflare acquired Deno in October 2026, and Deno Deploy and the runtime are winding down. The skill no longer recommends Deno; it gives Deno projects a timeline and a layer-by-layer migration path.
 - **Infers platform target** from application nature — mobile vs. web vs. both vs. internal tool — instead of demanding the user specify.
 - **Covers the full vertical** — runtime, monorepo layout, frontend framework, backend framework, hosting, database, auth, styling, mobile, i18n, icon system, AI coding assistant config.

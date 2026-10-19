@@ -38,6 +38,14 @@ projects already on Deno get a migration page.
   alternative.
 - **Skill `README.md` and both banners** — the middle stack now reads Workers,
   SvelteKit, Hono, D1 / Neon, Clerk. PNGs re-rendered from the SVGs.
+- **Node version** — "Node 22 LTS" becomes "Node (Active LTS)" in `SKILL.md`,
+  `node.md`, `deno.md`, and the skill README. One dated note names the line
+  (Node 26 from 2026-10-28) and links the Node release schedule. Node 22
+  entered maintenance on 2025-10-21, and Node 24 enters it on 2026-10-20, so
+  naming either would already be out of date.
+- **`references/stacks/bun.md`** — the Tailwind setup command is now
+  `bunx sv add tailwindcss`, as the Svelte CLI docs show; `svelte-add` was the
+  old tool.
 
 ### Why
 
@@ -52,9 +60,8 @@ ask about Deno, and the skill should catch that and steer them away.
   - `skill-evaluator: 0 skill-text findings (40/41; 1 rubric-layer fail) at diff sha256:3a90d6f2274f — 2026-10-18` (8 tests, before the decision-tree reorder).
   - `skill-evaluator: 0 skill-text findings, 1 rubric-layer fail (22/23) at diff sha256:f41327d7d6f6 — 2026-10-18` (decision-tree re-run on the shipped text).
   - Diff hashes are `git diff 609a953 -- skills/tech-stack-recommendations | shasum -a 256`, first 12 characters.
-- Out of scope, for a separate change: "Node 22 LTS" is out of date (Node 22
-  entered maintenance on 2025-10-21), and `bun.md` may use an old Tailwind
-  setup command. Both predate this release.
+  - Both verdicts cover the text before the Node-version and Tailwind-command
+    fix. That fix changes `SKILL.md`, so a fresh pass is due before release.
 - Fresh's future after the acquisition is unconfirmed; `deno.md` says so.
 
 ## [5.7.0] — 2026-08-13

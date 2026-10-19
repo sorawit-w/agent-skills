@@ -89,16 +89,18 @@ If business requirements don't specify platforms, infer from the application's n
 |---------|----------|-----------|------------|
 | **Bun** (default) | Fast builds, modern stacks | Lightning-fast, native TS, built-in test runner, smallest footprint | Limited ecosystem maturity; some packages missing |
 | **Cloudflare Workers** | Edge-first, global low latency | Runs in every Cloudflare region, Hono runs natively, D1/KV bindings | Per-request CPU and memory limits; not every Node API; bindings tie you to Cloudflare |
-| **Node 22 LTS** | Legacy compatibility, team expertise | Mature ecosystem, stable, battle-tested tooling | Slower than Bun, heavier |
+| **Node (Active LTS)** | Legacy compatibility, team expertise | Mature ecosystem, stable, battle-tested tooling | Slower than Bun, heavier |
 
 **Decision tree** (ask in this order; the first "yes" wins):
 1. **Do you need edge deployment?** → Use **Cloudflare Workers + Hono**
-2. **Do you have legacy dependencies or Angular/NestJS expertise?** → Use **Node 22 LTS**
+2. **Do you have legacy dependencies or Angular/NestJS expertise?** → Use **Node (Active LTS)**
 3. **Otherwise** → Use **Bun** (default)
 
 > **Do not recommend Deno for new projects.** Cloudflare acquired Deno on 2026-10-09. Deno Deploy closes about six months later; the runtime gets about one year of security fixes, then active development ends. For a project already on Deno, load [stacks/deno.md](references/stacks/deno.md) — it is a migration page, not a stack. If Deno's permission sandbox was the reason for choosing it, say plainly that no stack here replaces it: Node's `--permission` model guards trusted code against mistakes but its own docs say it is not a sandbox for untrusted code.
 
 > **Pin your runtime version** in `.tool-versions` or `package.json` → `engines` field.
+
+> **Which Node version:** the current Active LTS line, never one already in maintenance. That is Node 26 from 2026-10-28 (Node 24 enters maintenance on 2026-10-20). Check the [Node release schedule](https://github.com/nodejs/Release) before pinning.
 
 ---
 
@@ -126,7 +128,7 @@ Load **exactly one** of these based on your signals:
 | File | When to Load | Stack Includes |
 |------|--------------|---|
 | **[references/stacks/bun.md](references/stacks/bun.md)** | **Most new projects (default)** | Bun + SvelteKit + Elysia + Eden RPC + Neon + Drizzle + Clerk + Tailwind |
-| **[references/stacks/node.md](references/stacks/node.md)** | Legacy compat, Angular, team expertise | Node 22 LTS + Next.js/Angular + NestJS + Nx + Neon + Drizzle + Clerk + Tailwind |
+| **[references/stacks/node.md](references/stacks/node.md)** | Legacy compat, Angular, team expertise | Node (Active LTS) + Next.js/Angular + NestJS + Nx + Neon + Drizzle + Clerk + Tailwind |
 
 **Edge-first projects** load `bun.md` (Bun is the local package manager and test runner), then swap the API and hosting layers using [guides/hosting.md](references/guides/hosting.md) § Cloudflare Workers: Hono instead of Elysia, Workers instead of Cloud Run.
 
@@ -222,7 +224,7 @@ my-monorepo/
 (Already on Deno? Load [stacks/deno.md](references/stacks/deno.md) to plan the move, then pick a destination with these steps.)
 
 **Step 2: Do you need large Node ecosystem or Angular/NestJS?**
-- Yes → Use **Node 22 LTS** [→ load stacks/node.md](references/stacks/node.md)
+- Yes → Use **Node (Active LTS)** [→ load stacks/node.md](references/stacks/node.md)
 - No → Go to Step 3
 
 **Step 3: Proceed with default**
