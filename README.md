@@ -199,6 +199,12 @@ Make the agent yours, and write as yourself.
   - "Reply to this email from my manager — keep it short."
   - "Tell my teammate on Slack the deploy slipped to Thursday, style=friend."
 
+[`job-scout`](https://github.com/sorawit-w/job-scout) *(external)* — open roles that fit your resume, read straight from employer job boards, with every fit reason quoted from the posting. Pairs with `ghostwriter`: find the role, then write the message.
+
+*Try:*
+  - "Here's my CV — what should I apply to?"
+  - "Anything new since last week?"
+
 [`plain-english`](skills/plain-english/README.md) — install a plain-English rule set once, and every later reply stays readable for a second-language reader: common words, the answer first, no idioms, technical terms untouched.
 
 *Try:*
