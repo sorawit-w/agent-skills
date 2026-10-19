@@ -15,7 +15,8 @@ This skill picks a lane. It names a default, says what it's optimized for, and p
 ## What it does
 
 - **Names a single default stack:** Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk, with Tailwind + shadcn on top.
-- **Offers two alternates with clear triggers:** Deno (edge-first, sandboxed) and Node 22 LTS (ecosystem-heavy, legacy-compatible, Angular/NestJS-friendly).
+- **Offers two alternates with clear triggers:** Cloudflare Workers + Hono (edge-first) and Node 22 LTS (ecosystem-heavy, legacy-compatible, Angular/NestJS-friendly).
+- **Moves existing Deno projects off Deno.** Cloudflare acquired Deno in October 2026, and Deno Deploy and the runtime are winding down. The skill no longer recommends Deno; it gives Deno projects a timeline and a layer-by-layer migration path.
 - **Infers platform target** from application nature — mobile vs. web vs. both vs. internal tool — instead of demanding the user specify.
 - **Covers the full vertical** — runtime, monorepo layout, frontend framework, backend framework, hosting, database, auth, styling, mobile, i18n, icon system, AI coding assistant config.
 - **Loads reference guides on demand**, so the model doesn't inhale the whole stack guide for a question about hosting.
@@ -47,7 +48,7 @@ The defaults here are one person's taste, not universal truth. The skill surface
 - **Existing infra** — Monorepo already on pnpm + Nx? Extending that usually beats forking the toolchain.
 - **Cost profile at scale** — Clerk per-MAU breaking at your scale? Self-host.
 - **Realtime / collaborative features** — Supabase realtime > Neon.
-- **Latency-sensitive global apps** — Deno Deploy / Hono on edge > Bun + SvelteKit on one region.
+- **Latency-sensitive global apps** — Cloudflare Workers + Hono on the edge > Bun + SvelteKit on one region.
 
 If you want a neutral "here are all the options, you decide" reference, this isn't it. If you want a sparring partner that picks a default, names the trade-off, and gets out of the way, it is.
 
@@ -71,8 +72,8 @@ Full override table and rules of thumb live in [`SKILL.md`](skills/tech-stack-re
 ## How it works
 
 1. **Platform inference.** If the brief doesn't say web vs. mobile vs. both, the skill infers from signals — on-the-go usage → mobile, data-heavy dashboards → web, consumer product → web + mobile, internal tool → web only.
-2. **Runtime decision tree.** Three branches: Deno (edge / sandboxed), Node (legacy / ecosystem / Angular), or Bun (default). The tree is three questions deep and ends at exactly one answer.
-3. **Load the matching stack file.** One of `references/stacks/{bun,deno,node}.md`, each with the full layer-by-layer stack, monorepo setup (Bun workspaces / Deno workspaces / Nx), standard directory structure, and quick-start commands.
+2. **Runtime decision tree.** Three branches: Cloudflare Workers + Hono (edge), Node (legacy / ecosystem / Angular), or Bun (default). The tree is three questions deep and ends at exactly one answer.
+3. **Load the matching stack file.** One of `references/stacks/{bun,node}.md`, each with the full layer-by-layer stack, monorepo setup (Bun workspaces / Nx), standard directory structure, and quick-start commands. Edge-first projects use `bun.md` plus the Cloudflare Workers section of the hosting guide. `references/stacks/deno.md` is a migration page for projects already on Deno, never a starting point.
 4. **Load topic guides on demand.** Frontend frameworks, hosting, DB + auth, styling, mobile, i18n, Font Awesome, AI coding assistant config — each as a separate reference file so the model loads only what the task needs.
 5. **Apply the override rules.** Before recommending, name the factors (team, compliance, vendor, existing infra, cost, realtime) that should break the default. Don't just output Bun and hope.
 6. **Scope honestly.** If the user asked for a CLI, name the runtime and stop. Full-stack defaults only apply when the request is for a full-stack project.

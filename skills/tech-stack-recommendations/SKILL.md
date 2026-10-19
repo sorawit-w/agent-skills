@@ -14,7 +14,7 @@ Complete guide for choosing opinionated technology stacks for new projects and m
 ## When to Use This Skill
 
 - **New projects:** Starting from scratch and need stack guidance
-- **Stack migrations:** Moving from Node → Bun, rewriting in Deno, etc.
+- **Stack migrations:** Moving from Node → Bun, moving off Deno, etc.
 - **Framework selection:** Choosing between SvelteKit, Next.js, Angular, Nuxt, etc.
 - **Architecture decisions:** Building monorepos, multi-platform apps, or complex systems
 - **Infrastructure choices:** Selecting databases, auth, hosting, styling, mobile frameworks
@@ -48,11 +48,11 @@ The defaults here (Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk) are one pe
 | **Compliance / data residency** | SOC 2, HIPAA, GDPR with strict self-hosting or region pinning → prefer self-hostable auth (Ory, Supabase Auth, Lucia) over Clerk; prefer regionally-pinned DB over serverless Neon by default. |
 | **Vendor / third-party policy** | Org forbids third-party auth providers → custom JWT (e.g. `@elysiajs/jwt`) or self-hosted Kratos. |
 | **Ecosystem maturity** | A required SDK is Node-only → use Node; don't contort Bun. |
-| **Runtime constraints** | Target is edge / deno-only platforms, or strictly AWS Lambda Node runtime → choose accordingly, not Bun by default. |
+| **Runtime constraints** | Target is edge (Cloudflare Workers), or strictly AWS Lambda Node runtime → choose accordingly, not Bun by default. |
 | **Existing infra** | Monorepo already on pnpm + Nx, or org-wide CI assumes Node → extending that is usually cheaper than forking the toolchain. |
 | **Cost profile at scale** | Clerk's per-MAU pricing breaks at your scale → self-host. Neon autoscaling costs > a single RDS → switch. |
 | **Realtime / collaborative features** | Supabase (realtime channels) > Neon. Worth breaking the default DB choice. |
-| **Latency-sensitive global apps** | Deno Deploy / edge-first frameworks (Fresh, Hono on edge) > Bun+SvelteKit on a single region. |
+| **Latency-sensitive global apps** | Cloudflare Workers + Hono on the edge > Bun+SvelteKit on a single region. |
 
 **Rules of thumb when applying this skill:**
 
@@ -77,24 +77,26 @@ If business requirements don't specify platforms, infer from the application's n
 | Consumer-facing product with users everywhere | **Web + Mobile** | Social media, messaging, banking |
 | Internal tool for staff only | **Web only** | Admin dashboards, internal workflows |
 
-**Rule:** When in doubt, build web first. Mobile can be added later via Expo (Bun/Node) or Capacitor (Deno).
+**Rule:** When in doubt, build web first. Mobile can be added later via Expo (Bun/Node) or Capacitor (wraps any web build).
 
 ---
 
-## Runtime Selection: Bun vs. Deno vs. Node
+## Runtime Selection: Bun vs. Cloudflare Workers vs. Node
 
 **Default: Bun** for all new TypeScript/JavaScript projects.
 
 | Runtime | Use When | Strengths | Trade-offs |
 |---------|----------|-----------|------------|
 | **Bun** (default) | Fast builds, modern stacks | Lightning-fast, native TS, built-in test runner, smallest footprint | Limited ecosystem maturity; some packages missing |
-| **Deno** | Sandbox security, edge-first, no node_modules | Secure by default, direct TS imports, explicit permissions | Some npm package incompatibility; smaller ecosystem |
+| **Cloudflare Workers** | Edge-first, global low latency | Runs in every Cloudflare region, Hono runs natively, D1/KV bindings | Per-request CPU and memory limits; not every Node API; bindings tie you to Cloudflare |
 | **Node 22 LTS** | Legacy compatibility, team expertise | Mature ecosystem, stable, battle-tested tooling | Slower than Bun, heavier |
 
-**Decision tree:**
-1. **Is this a new greenfield project?** → Use **Bun** (default)
-2. **Do you need sandboxed security or edge deployment?** → Use **Deno**
-3. **Do you have legacy dependencies or Angular/NestJS expertise?** → Use **Node 22 LTS**
+**Decision tree** (ask in this order; the first "yes" wins):
+1. **Do you need edge deployment?** → Use **Cloudflare Workers + Hono**
+2. **Do you have legacy dependencies or Angular/NestJS expertise?** → Use **Node 22 LTS**
+3. **Otherwise** → Use **Bun** (default)
+
+> **Do not recommend Deno for new projects.** Cloudflare acquired Deno on 2026-10-09. Deno Deploy closes about six months later; the runtime gets about one year of security fixes, then active development ends. For a project already on Deno, load [stacks/deno.md](references/stacks/deno.md) — it is a migration page, not a stack. If Deno's permission sandbox was the reason for choosing it, say plainly that no stack here replaces it: Node's `--permission` model guards trusted code against mistakes but its own docs say it is not a sandbox for untrusted code.
 
 > **Pin your runtime version** in `.tool-versions` or `package.json` → `engines` field.
 
@@ -107,7 +109,8 @@ Choose based on your primary use case and platform target:
 | Use Case | Recommended Stack | Load Guide |
 |----------|------------------|-----------|
 | **New web + API** (default) | Bun + SvelteKit + Elysia + Neon + Drizzle | [stacks/bun.md](references/stacks/bun.md) |
-| **Sandbox security or edge-first** | Deno + Fresh + Hono + Deno KV | [stacks/deno.md](references/stacks/deno.md) |
+| **Edge-first, global low latency** | Cloudflare Workers + Hono + SvelteKit + Neon or D1 + Drizzle | [stacks/bun.md](references/stacks/bun.md) for tooling, then [guides/hosting.md](references/guides/hosting.md) § Cloudflare Workers |
+| **Already on Deno** | Migrate off Deno | [stacks/deno.md](references/stacks/deno.md) (migration page) |
 | **Large ecosystem or Angular/NestJS** | Node + Next.js + NestJS + Nx + Neon + Drizzle | [stacks/node.md](references/stacks/node.md) |
 | **Need to choose a frontend framework** | Load guides below | [guides/frontend-frameworks.md](references/guides/frontend-frameworks.md) |
 | **Choosing deployment platform** | Load guides below | [guides/hosting.md](references/guides/hosting.md) |
@@ -123,12 +126,15 @@ Load **exactly one** of these based on your signals:
 | File | When to Load | Stack Includes |
 |------|--------------|---|
 | **[references/stacks/bun.md](references/stacks/bun.md)** | **Most new projects (default)** | Bun + SvelteKit + Elysia + Eden RPC + Neon + Drizzle + Clerk + Tailwind |
-| **[references/stacks/deno.md](references/stacks/deno.md)** | Sandbox security, edge, no node_modules | Deno + Fresh + Hono + Deno KV + Clerk + Tailwind |
 | **[references/stacks/node.md](references/stacks/node.md)** | Legacy compat, Angular, team expertise | Node 22 LTS + Next.js/Angular + NestJS + Nx + Neon + Drizzle + Clerk + Tailwind |
 
-Each file includes:
+**Edge-first projects** load `bun.md` (Bun is the local package manager and test runner), then swap the API and hosting layers using [guides/hosting.md](references/guides/hosting.md) § Cloudflare Workers: Hono instead of Elysia, Workers instead of Cloud Run.
+
+**Projects already on Deno** load [references/stacks/deno.md](references/stacks/deno.md) — a migration page with the shutdown timeline and a layer-by-layer move to Workers or Bun. Never load it to start a new project.
+
+Each stack file includes:
 - Complete layer-by-layer stack overview
-- Monorepo setup (Bun Workspaces, Deno Workspaces, or Nx)
+- Monorepo setup (Bun Workspaces or Nx)
 - Standard project structure (apps/, packages/)
 - Quick-start commands
 
@@ -141,7 +147,7 @@ After selecting a runtime, load **any of these guides** that apply to your proje
 | Guide | Load When | File |
 |-------|-----------|------|
 | **Frontend Frameworks** | Choosing between SvelteKit, Next.js, Astro, Remix, Angular, etc. | [references/guides/frontend-frameworks.md](references/guides/frontend-frameworks.md) |
-| **Backend Hosting** | Selecting deployment platform (Cloud Run, Railway, Vercel, Deno Deploy, etc.) | [references/guides/hosting.md](references/guides/hosting.md) |
+| **Backend Hosting** | Selecting deployment platform (Cloud Run, Railway, Vercel, Cloudflare Workers, etc.) | [references/guides/hosting.md](references/guides/hosting.md) |
 | **Database & Auth** | Setting up Postgres + Clerk (or Supabase, Turso alternatives) | [references/guides/database-auth.md](references/guides/database-auth.md) |
 | **Styling & UI** | Setting up Tailwind + component systems (shadcn/ui, shadcn-svelte, etc.) | [references/guides/styling.md](references/guides/styling.md) |
 | **Mobile Support** | Adding Expo, Capacitor, Flutter, or Dioxus to your monorepo | [references/guides/mobile.md](references/guides/mobile.md) |
@@ -154,7 +160,7 @@ After selecting a runtime, load **any of these guides** that apply to your proje
 
 ## Monorepo Patterns: Pick One
 
-All three runtimes support monorepos with the same logical structure. **Pick based on your runtime:**
+Bun and Node both support monorepos with the same logical structure; edge-first (Workers) projects use Bun workspaces. **Pick based on your runtime:**
 
 ### Bun Monorepos: Native Workspaces
 
@@ -166,20 +172,6 @@ All three runtimes support monorepos with the same logical structure. **Pick bas
 ```
 
 **Command:** `bun install` (installs all workspaces)
-
-### Deno Monorepos: Native Workspaces
-
-```json
-{
-  "workspace": [
-    "./apps/web",
-    "./apps/api",
-    "./packages/shared"
-  ]
-}
-```
-
-**Command:** `deno run --allow-all deno.json` (runs workspace)
 
 ### Node Monorepos: Nx + pnpm Workspaces
 
@@ -202,11 +194,11 @@ my-monorepo/
 │   ├── mobile/           # Mobile app (Expo / Capacitor)
 │   ├── admin/            # Internal admin dashboard
 │   └── api/              # Backend API (Elysia / Hono / NestJS)
-└── packages/             # Bun/Deno workspaces use this name
+└── packages/             # Bun workspaces use this name
     └── shared/           # Shared types, utils, components
 ```
 
-> **Workspace directory naming:** Bun and Deno workspaces use `packages/` (shown above). **Nx (Node) uses `libs/` instead** — this is Nx's own default, and `references/stacks/node.md` follows it. Do not mix the two within one monorepo; pick the convention that matches your runtime's tooling.
+> **Workspace directory naming:** Bun workspaces use `packages/` (shown above). **Nx (Node) uses `libs/` instead** — this is Nx's own default, and `references/stacks/node.md` follows it. Do not mix the two within one monorepo; pick the convention that matches your runtime's tooling.
 
 **When to include each app:**
 
@@ -223,9 +215,11 @@ my-monorepo/
 
 ## Decision Flow: Pick a Stack in 3 Steps
 
-**Step 1: Does your project need security/edge features?**
-- Yes → Use **Deno** [→ load stacks/deno.md](references/stacks/deno.md)
+**Step 1: Does your project need edge deployment?**
+- Yes → Use **Cloudflare Workers + Hono** [→ load stacks/bun.md](references/stacks/bun.md), then [guides/hosting.md](references/guides/hosting.md) § Cloudflare Workers
 - No → Go to Step 2
+
+(Already on Deno? Load [stacks/deno.md](references/stacks/deno.md) to plan the move, then pick a destination with these steps.)
 
 **Step 2: Do you need large Node ecosystem or Angular/NestJS?**
 - Yes → Use **Node 22 LTS** [→ load stacks/node.md](references/stacks/node.md)
@@ -238,7 +232,7 @@ my-monorepo/
 
 ## After You Pick Your Stack
 
-1. **Read your runtime stack file** (Bun, Deno, or Node)
+1. **Read your runtime stack file** (Bun or Node; edge-first projects use Bun)
 2. **Load topic guides on-demand** as you make specific choices
 3. **Initialize your monorepo** using the command from your stack file
 4. **Build your first app** (usually `api` or `web`)
@@ -255,7 +249,7 @@ my-monorepo/
 
 ### For Backend APIs
 - **Default (Bun):** Elysia + Eden RPC (end-to-end types)
-- **Default (Deno):** Hono or Oak
+- **Default (Workers):** Hono
 - **Default (Node):** NestJS with modules and DI
 - All use Neon + Drizzle by default
 
@@ -272,12 +266,12 @@ my-monorepo/
 ### For Deployment
 - **Web frontends:** Vercel (Next.js) or Cloud Run (SvelteKit)
 - **APIs:** Cloud Run (default) or Railway (MVP)
-- **Deno apps:** Deno Deploy or Cloud Run
+- **Edge-first apps:** Cloudflare Workers
 - Load [guides/hosting.md](references/guides/hosting.md) for deployment commands
 
 ### For Mobile
 - **Bun/Node:** Use Expo for native feel
-- **Deno:** Use Capacitor (wraps your web app)
+- **Web-first apps:** Use Capacitor (wraps your web app)
 - Load [guides/mobile.md](references/guides/mobile.md) for integration steps
 
 ---
@@ -290,7 +284,8 @@ Use this table if you're given conflicting requirements:
 |--------|----------------|-----------|
 | "We're a startup building fast" | Bun + SvelteKit + Railway | Fastest iteration, smallest bundles |
 | "We have legacy Angular code" | Node + Angular + Nx + NestJS | Leverage existing team expertise |
-| "We need global edge deployment" | Deno + Fresh + Deno Deploy | Built for edge, instant deploys |
+| "We need global edge deployment" | Cloudflare Workers + Hono + SvelteKit | Built for edge, global deploys |
+| "We're on Deno today" | Migrate — see [stacks/deno.md](references/stacks/deno.md) | Deno Deploy closes ~2027-04; runtime fixes end ~2027-10 |
 | "We're migrating from Node to TypeScript" | Bun + SvelteKit + Elysia | 10x faster builds, native TS |
 | "We need OAuth + complex auth flows" | Clerk + [any stack] | Pre-built, battle-tested components |
 | "We're building an admin dashboard" | [Any stack] + Tailwind + shadcn | Fast, accessible component library |
@@ -301,7 +296,7 @@ Use this table if you're given conflicting requirements:
 ## Summary
 
 1. **New TypeScript/JavaScript projects:** Start with **Bun** (unless you have specific signals)
-2. **Monorepos:** Use native workspaces (Bun/Deno) or Nx (Node)
+2. **Monorepos:** Use native workspaces (Bun) or Nx (Node)
 3. **Defaults rule:** Use Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk unless you have a reason not to
 4. **Scope rule:** Recommend only what the user asked for. If the ask is narrow — a CLI, a script, an AI agent, a library, a microservice — do NOT auto-scaffold the full-stack default. Name only the pieces needed; mention additional layers (persistence, auth, UI) as optional "when you need X."
 5. **Load topic guides as needed:** Backend hosting, frontend frameworks, mobile, etc.
@@ -317,11 +312,11 @@ tech-stack-recommendations/
 ├── references/
 │   ├── stacks/
 │   │   ├── bun.md          # Bun + SvelteKit + Elysia + Neon + Drizzle
-│   │   ├── deno.md         # Deno + Fresh + Hono + Deno KV
+│   │   ├── deno.md         # Migration only — moving existing Deno projects off Deno
 │   │   └── node.md         # Node + Next.js/Angular + NestJS + Nx
 │   └── guides/
 │       ├── frontend-frameworks.md    # SvelteKit vs Next.js vs Remix vs Angular
-│       ├── hosting.md                # Cloud Run vs Railway vs Vercel vs Deno Deploy
+│       ├── hosting.md                # Cloud Run vs Railway vs Vercel vs Cloudflare Workers
 │       ├── database-auth.md          # Neon + Clerk vs Supabase vs Turso
 │       ├── styling.md                # Tailwind + Plain CSS + component systems
 │       ├── mobile.md                 # Expo vs Capacitor vs Flutter
@@ -334,7 +329,7 @@ tech-stack-recommendations/
 
 ## Need Help?
 
-- **New project:** Load your runtime stack file first (Bun / Deno / Node)
+- **New project:** Load your runtime stack file first (Bun / Node)
 - **Migrating:** Decide on new runtime, then load stack file
 - **Specific choice (frontend, DB, auth, mobile):** Load the matching topic guide
 - **Unsure?** Default to Bun + SvelteKit + Elysia + Neon + Drizzle + Clerk

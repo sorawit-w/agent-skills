@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 467" role="img" aria-label="tech-stack-recommendations — opinionated defaults, judgment-aware" shape-rendering="crispEdges" style="image-rendering: pixelated; image-rendering: crisp-edges;">
   <title>tech-stack-recommendations — opinionated defaults, judgment-aware</title>
-  <desc>Pixel-art banner for the tech-stack-recommendations Claude Code plugin: title block on the left, three vertical brick stacks on the right. Each stack shows five layers — Auth, DB, API, Web, Runtime — labeled with the recommended technology. The Bun stack is the default. The Deno stack is edge-first. The Node stack is ecosystem-friendly. Footer reminds readers that defaults are not dogma.</desc>
+  <desc>Pixel-art banner for the tech-stack-recommendations Claude Code plugin: title block on the left, three vertical brick stacks on the right. Each stack shows five layers — Auth, DB, API, Web, Runtime — labeled with the recommended technology. The Bun stack is the default. The Cloudflare Workers stack is edge-first. The Node stack is ecosystem-friendly. Footer reminds readers that defaults are not dogma.</desc>
 
   <!-- background: soft warm paper with scanlines -->
   <defs>
@@ -113,7 +113,7 @@
   </g>
 
   <!-- ============================================== -->
-  <!-- STACK 2: DENO (edge, teal) — x_start=940       -->
+  <!-- STACK 2: CLOUDFLARE WORKERS (edge, teal) — x_start=940       -->
   <!-- ============================================== -->
   <!-- EDGE-FIRST badge -->
   <g transform="translate(940, 70)">
@@ -129,7 +129,7 @@
     <text x="115" y="20" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" fill="#cffafe" text-anchor="middle" letter-spacing="3">EDGE-FIRST</text>
   </g>
 
-  <!-- Deno — Layer 1: AUTH -->
+  <!-- Workers — Layer 1: AUTH -->
   <g transform="translate(940, 108)">
     <rect x="0" y="0" width="200" height="50" fill="#0e7490"/>
     <rect x="0" y="0" width="200" height="6" fill="#0891b2"/>
@@ -139,17 +139,17 @@
     <text x="14" y="40" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#ecfeff">Clerk</text>
   </g>
 
-  <!-- Deno — Layer 2: DB -->
+  <!-- Workers — Layer 2: DB -->
   <g transform="translate(940, 162)">
     <rect x="0" y="0" width="200" height="50" fill="#0e7490"/>
     <rect x="0" y="0" width="200" height="6" fill="#0891b2"/>
     <rect x="0" y="44" width="200" height="6" fill="#134e4a"/>
     <rect x="196" y="0" width="4" height="50" fill="#134e4a"/>
     <text x="14" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#a5f3fc" letter-spacing="2">DB</text>
-    <text x="14" y="40" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#ecfeff">Deno KV</text>
+    <text x="14" y="40" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#ecfeff">D1 / Neon</text>
   </g>
 
-  <!-- Deno — Layer 3: API -->
+  <!-- Workers — Layer 3: API -->
   <g transform="translate(940, 216)">
     <rect x="0" y="0" width="200" height="50" fill="#0e7490"/>
     <rect x="0" y="0" width="200" height="6" fill="#0891b2"/>
@@ -159,24 +159,24 @@
     <text x="14" y="40" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#ecfeff">Hono</text>
   </g>
 
-  <!-- Deno — Layer 4: WEB -->
+  <!-- Workers — Layer 4: WEB -->
   <g transform="translate(940, 270)">
     <rect x="0" y="0" width="200" height="50" fill="#0e7490"/>
     <rect x="0" y="0" width="200" height="6" fill="#0891b2"/>
     <rect x="0" y="44" width="200" height="6" fill="#134e4a"/>
     <rect x="196" y="0" width="4" height="50" fill="#134e4a"/>
     <text x="14" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#a5f3fc" letter-spacing="2">WEB</text>
-    <text x="14" y="40" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#ecfeff">Fresh</text>
+    <text x="14" y="40" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="18" font-weight="700" fill="#ecfeff">SvelteKit</text>
   </g>
 
-  <!-- Deno — Layer 5 (base) -->
+  <!-- Workers — Layer 5 (base) -->
   <g transform="translate(940, 324)">
     <rect x="0" y="0" width="200" height="56" fill="#134e4a"/>
     <rect x="0" y="0" width="200" height="6" fill="#155e75"/>
     <rect x="0" y="50" width="200" height="6" fill="#042f2e"/>
     <rect x="196" y="0" width="4" height="56" fill="#042f2e"/>
     <text x="14" y="22" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="10" fill="#67e8f9" letter-spacing="2">RUNTIME</text>
-    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#ecfeff">Deno</text>
+    <text x="14" y="44" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="20" font-weight="700" fill="#ecfeff">Workers</text>
   </g>
 
   <!-- ============================================== -->
