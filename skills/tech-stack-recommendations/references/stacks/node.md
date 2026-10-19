@@ -10,7 +10,7 @@ Use for legacy compatibility, unsupported dependencies, or when team expertise i
 
 | Layer | Tool | Notes |
 |-------|------|-------|
-| **Runtime** | Node 22 LTS | Stable, mature ecosystem |
+| **Runtime** | Node, current Active LTS (26 from 2026-10-28) | Stable, mature ecosystem; check the [release schedule](https://github.com/nodejs/Release) before pinning |
 | **Frontend** | Next.js / Angular | React ecosystem or enterprise SPAs |
 | **Backend** | NestJS | DI, modules, mature tooling |
 | **Database** | Neon + Drizzle / Prisma | Drizzle preferred; Prisma for migrations |

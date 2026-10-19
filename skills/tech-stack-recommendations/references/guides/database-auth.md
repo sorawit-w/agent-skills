@@ -22,6 +22,7 @@ Load this when setting up database or authentication.
 |-------------|-------------|-----------|
 | **Supabase** | Need realtime, storage, all-in-one | No scale-to-zero ($25/mo per project) |
 | **Turso + Clerk** | Global users, edge-first | SQLite (no advanced Postgres) |
+| **Cloudflare D1** | Edge-first apps on Cloudflare Workers | SQLite; Workers-only binding |
 | **Prisma** | Team familiarity, better migration CLI | Heavier runtime |
 
 ---
@@ -42,10 +43,7 @@ pnpm add drizzle-orm @neondatabase/serverless
 pnpm add -D drizzle-kit
 ```
 
-**Deno:**
-```bash
-deno add npm:drizzle-orm npm:@neondatabase/serverless
-```
+**Cloudflare Workers:** install with Bun as above. Database drivers need Node.js compatibility (see [hosting.md](hosting.md) § Cloudflare Workers); use Hyperdrive to pool Postgres connections.
 
 ### Prisma (Alternative)
 

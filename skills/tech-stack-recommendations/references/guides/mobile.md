@@ -6,12 +6,12 @@ Load this when adding mobile support to your project.
 
 ## Framework Selection
 
-**Default:** Expo for Bun/Node stacks. Capacitor for Deno (wraps web apps).
+**Default:** Expo for Bun/Node stacks. Capacitor for web-first apps (wraps any web build).
 
 | Framework | Best For | Monorepo Fit | Trade-off |
 |-----------|----------|--------------|-----------|
 | **Expo** | Native feel, OTA updates | Bun/Node workspaces | Requires Node tooling |
-| **Capacitor** | Web-first, Deno projects | Any (wraps web build) | WebView, not truly native |
+| **Capacitor** | Web-first apps | Any (wraps web build) | WebView, not truly native |
 | **Flutter** | Max performance, custom UI | Separate (Dart) | Learning Dart |
 | **Dioxus** | Rust full-stack, type safety | Separate (Rust/Cargo) | Learning Rust, maturing ecosystem |
 
@@ -20,7 +20,7 @@ Load this when adding mobile support to your project.
 ## Quick Decision
 
 - **Want native mobile UX?** → Use **Expo** (Bun or Node stack)
-- **Already have a web app?** → Use **Capacitor** (works with Deno/Fresh)
+- **Already have a web app?** → Use **Capacitor** (wraps your existing web build)
 - **Need max performance or custom UI?** → Consider **Flutter** (separate project)
 - **Already using Rust or need memory safety?** → Consider **Dioxus** (emerging)
 
@@ -52,23 +52,23 @@ bunx eas submit --platform all
 
 ---
 
-## Capacitor (Deno/Web)
+## Capacitor (Web-First)
 
 Capacitor wraps your web app as a native mobile app using WebView.
 
 ```bash
 # in your web app directory
-deno task build                             # build to static
+bun run build                               # build to static
 
 # add Capacitor (one-time setup)
-npm init -y && npm install @capacitor/core @capacitor/cli
-npx cap init my-app com.example.myapp
-npx cap add ios && npx cap add android
+bun add @capacitor/core @capacitor/cli
+bunx cap init my-app com.example.myapp
+bunx cap add ios && bunx cap add android
 
 # sync and open
-npx cap sync
-npx cap open ios      # Xcode
-npx cap open android  # Android Studio
+bunx cap sync
+bunx cap open ios      # Xcode
+bunx cap open android  # Android Studio
 ```
 
 ---

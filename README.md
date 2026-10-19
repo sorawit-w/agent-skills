@@ -294,7 +294,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.7.0`.** Adds **`plain-english`** — a skill that makes the agent's own replies readable for people who read English as a second language. It does not enforce anything itself: it installs a versioned rule block into your global `~/.claude/CLAUDE.md`, which is re-sent as input on every turn, then gets out of the way. Three rule groups (words, amount, order), a word-to-word swap list built from real failures, a keep-test that leaves technical terms alone, and **no escape clauses** — the escape clause is exactly why the hand-written version it replaces stopped working. Also rewrites a dense passage on demand. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.8.0`.** **`tech-stack-recommendations`** no longer recommends Deno, after Cloudflare acquired it in October 2026 and began winding down Deno Deploy and the runtime. Edge-first projects now go to **Cloudflare Workers + Hono**, and projects already on Deno get a migration page with the shutdown timeline and a layer-by-layer move. Full version history is in [CHANGELOG.md](CHANGELOG.md).
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

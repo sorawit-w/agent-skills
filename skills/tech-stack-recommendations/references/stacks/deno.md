@@ -1,218 +1,76 @@
-# Deno Stack
+# Deno — Migration Only
 
-Use when sandbox security, direct TS imports, or Deno-native features are required.
+**Do not use this file to start a new project.** Cloudflare acquired Deno on 2026-10-09, and Deno is winding down as a separate runtime and hosting service. This page helps a project that is already on Deno move off it.
 
-> **Related:** [Mobile](../guides/mobile.md) | [Styling](../guides/styling.md) | [Hosting](../guides/hosting.md)
-
----
-
-## Stack Overview
-
-| Layer | Tool | Notes |
-|-------|------|-------|
-| **Runtime** | Deno | Secure by default, explicit permissions |
-| **Frontend** | Fresh | Native Deno SSR, island architecture |
-| **Backend** | Hono / Oak | Lightweight, Deno-native |
-| **Database** | Deno KV (simple) / Neon + Drizzle | Built-in KV or Postgres |
-| **Auth** | Clerk | Same as other stacks |
-| **Testing** | `deno test` + Playwright | Native test runner |
-| **Styling** | Tailwind | Via Twind or Fresh plugin |
-| **Deployment** | Deno Deploy / Cloud Run | Edge-first or containerized |
+> **Related:** [Hosting](../guides/hosting.md) | [Bun stack](bun.md) | [Mobile](../guides/mobile.md)
 
 ---
 
-## Monorepo: Deno Workspaces
+## Timeline (as announced 2026-10-09)
 
-Deno has native workspace support via `deno.json`:
+| Piece | What happens | Approximate date |
+|-------|--------------|------------------|
+| **Deno Deploy** (hosting) | Shuts down; paying customers get migration help to Cloudflare Workers | ~2027-04 (six months after the announcement) |
+| **Deno runtime** | Monthly bug-fix and security releases for about one year, then active development ends; stays open source (MIT) | ~2027-10 |
+| **Deno KV on Deno Deploy** | Goes away with Deno Deploy | ~2027-04 |
+| **JSR** (package registry) | Keeps running; infrastructure moves to Cloudflare | No end date announced |
+| **Fresh** | No clear statement found — check the Fresh repo before relying on it | Unknown |
 
-```json
-{
-  "workspace": [
-    "./apps/web",
-    "./apps/mobile",
-    "./apps/admin",
-    "./apps/api",
-    "./packages/shared"
-  ]
-}
-```
+The dates are estimates from the announcement window, not fixed shutdown days. Check the [Deno announcement](https://deno.com/blog/cloudflare) for anything newer before you commit to a plan.
 
-**Standard project structure:**
-
-```
-my-monorepo/
-├── deno.json             # workspace members
-├── apps/
-│   ├── web/deno.json     # Customer-facing web (Fresh)
-│   ├── mobile/           # Customer-facing mobile (Capacitor wraps Fresh)
-│   ├── admin/deno.json   # Internal admin dashboard (Fresh)
-│   └── api/deno.json     # Backend API (Hono)
-└── packages/
-    └── shared/deno.json  # shared modules
-```
-
-- Shared `deno.json` config (compilerOptions, imports)
-- Each member can override root settings
-- Import maps shared across workspace
-- Single `deno.lock` at root
+**Order of moves:** move hosting first (Deno Deploy closes first), then the runtime.
 
 ---
 
-## When to Use Deno
+## Pick a Destination
 
-- Sandboxed execution required (explicit permissions model)
-- Direct TypeScript execution without transpilation
-- Security-critical applications
-- Edge-first deployment (Deno Deploy)
+| If the project is… | Move to | Then load |
+|--------------------|---------|-----------|
+| Edge-first, on Deno Deploy | **Cloudflare Workers + Hono** | [bun.md](bun.md) for tooling, [hosting.md](../guides/hosting.md) § Cloudflare Workers |
+| A regular web app or API | **Bun** (the skill's default) | [bun.md](bun.md) |
+| Tied to Node-only packages or a Node team | **Node (Active LTS)** | [node.md](node.md) |
 
----
-
-## Frontend: Fresh
-
-```bash
-# scaffold project
-deno run -A -r https://fresh.deno.dev my-app
-cd my-app
-
-# development
-deno task start
-```
+If the project chose Deno for its permission sandbox, no destination here replaces it. Node's `--permission` model guards trusted code against mistakes, but Node's own docs say it is not a sandbox for untrusted code. Say so to the user instead of claiming an equal swap.
 
 ---
 
-## Backend: Hono
+## Layer-by-Layer Map
+
+| Deno layer | Destination | Notes |
+|------------|-------------|-------|
+| **Runtime** (`deno`) | Workers (edge) / Bun / Node | Replace `Deno.*` APIs with web-standard or `node:` equivalents |
+| **Hosting** (Deno Deploy) | Cloudflare Workers / Cloud Run | Workers is the supported migration path for paying Deploy customers |
+| **Frontend** (Fresh) | SvelteKit | `@sveltejs/adapter-cloudflare` on Workers, `svelte-adapter-bun` on Bun |
+| **Backend** (Hono) | Hono | Runs on Workers, Bun, and Node; only the entrypoint changes (below) |
+| **Backend** (Oak) | Hono | Oak is Deno-first; Hono is the closest portable replacement |
+| **Database** (Deno KV) | Workers KV or D1 (on Workers) / Neon + Drizzle (anywhere) | Export the data before Deno Deploy closes |
+| **Database** (Neon + Drizzle) | Neon + Drizzle | No change; install with `bun add` instead of `deno add` |
+| **Testing** (`deno test`) | `bun test` / Vitest | Use Vitest with the Workers pool for Workers-specific code |
+| **Workspaces** (`deno.json`) | Bun workspaces (`package.json`) | Same `apps/` + `packages/` layout |
+| **Mobile** (Capacitor) | Capacitor | Keep it; point it at the new web build |
+
+---
+
+## Hono: Change the Entrypoint
+
+Most Hono code moves as-is. Imports and the server start change:
 
 ```ts
-// main.ts
+// before (Deno)
 import { Hono } from "https://deno.land/x/hono/mod.ts";
-
 const app = new Hono();
-app.get("/", (c) => c.text("Hello Deno!"));
-
 Deno.serve(app.fetch);
-```
 
-```bash
-deno run --allow-net main.ts
-```
-
-- **API docs:** Use `@hono/swagger-ui` for OpenAPI documentation
-
----
-
-## Database
-
-**Deno KV (simple, built-in):**
-
-```ts
-const kv = await Deno.openKv();
-await kv.set(["users", id], user);
-```
-
-**Neon + Drizzle (Postgres):**
-
-```bash
-deno add npm:drizzle-orm npm:@neondatabase/serverless
+// after (Cloudflare Workers or Bun)
+import { Hono } from "hono";
+const app = new Hono();
+export default app;
 ```
 
 ---
 
-## Testing
+## If You Must Stay on Deno for Now
 
-```bash
-# unit tests (native)
-deno test
-
-# with permissions
-deno test --allow-net --allow-read
-
-# e2e
-deno run -A npm:playwright test
-```
-
----
-
-## Deployment
-
-**Deno Deploy (edge-first):**
-
-```bash
-deployctl deploy --project=my-project main.ts
-```
-
-**Cloud Run (containerized):**
-
-```dockerfile
-FROM denoland/deno:latest
-WORKDIR /app
-COPY . .
-RUN deno cache main.ts
-CMD ["run", "--allow-net", "main.ts"]
-```
-
----
-
-## Mobile: Capacitor
-
-Capacitor wraps your Fresh web app as a native mobile app. Unlike Expo, Capacitor works within a Deno monorepo because it bundles your existing web output.
-
-| Layer | Tool | Notes |
-|-------|------|-------|
-| **Framework** | Capacitor | Wraps Fresh web app as native |
-| **Web App** | Fresh | Your Deno SSR app, built to static |
-| **State** | Preact Signals | Fresh-native reactivity |
-| **Storage** | @capacitor/preferences | Key-value storage |
-| **Testing** | `deno test` + Playwright | Web testing applies |
-| **Build** | Capacitor CLI | `npx cap build` |
-| **Deploy** | Manual or Appflow | Xcode/Android Studio for stores |
-
-```bash
-# in your Fresh app directory
-deno task build                             # build Fresh to static
-
-# add Capacitor (one-time setup)
-npm init -y && npm install @capacitor/core @capacitor/cli
-npx cap init my-app com.example.myapp
-npx cap add ios && npx cap add android
-
-# sync web build to native
-npx cap sync
-
-# open in native IDE
-npx cap open ios      # opens Xcode
-npx cap open android  # opens Android Studio
-```
-
-> **More details:** See [guides/mobile.md](../guides/mobile.md)
-
----
-
-## Command Cheatsheet
-
-```bash
-# project setup
-deno init my-project
-deno add npm:<package>
-
-# development
-deno task dev
-deno run --allow-net main.ts
-
-# testing
-deno test
-deno test --watch
-
-# linting & formatting
-deno lint
-deno fmt
-deno check main.ts
-
-# mobile (Capacitor)
-deno task build                  # build Fresh to static
-npx cap sync                     # sync to native
-npx cap open ios                 # open Xcode
-npx cap open android             # open Android Studio
-
-# deployment
-deployctl deploy --project=my-project main.ts
-```
+- Pin the Deno version and apply each security release while they last (~2027-10).
+- Move off Deno Deploy before it closes (~2027-04), even if the runtime stays for a while.
+- Put the runtime move on the roadmap now; do not let the end of security releases arrive unplanned.

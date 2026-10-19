@@ -5,6 +5,64 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.8.0] — 2026-10-18
+
+**`tech-stack-recommendations`** stops recommending Deno. Cloudflare acquired
+Deno on 2026-10-09: Deno Deploy closes about six months later (~2027-04), and
+the runtime gets about one year of security releases (~2027-10) before active
+development ends. Edge-first projects now go to Cloudflare Workers + Hono, and
+projects already on Deno get a migration page.
+
+### Changed
+
+- **`SKILL.md` decision tree** — the edge branch now leads to Cloudflare
+  Workers + Hono instead of Deno. The questions are asked in a fixed order
+  (edge, then Node, then Bun as the fallback), matching the "Decision Flow"
+  section. Before, the list asked "new greenfield project? → Bun" first, so a
+  literal reading never reached the edge question.
+- **`SKILL.md` runtime table, stack matrix, and signals table** — Deno rows are
+  replaced by Cloudflare Workers rows, plus an "Already on Deno → migrate" row.
+  A note says not to recommend Deno for new projects, and that no stack here
+  replaces Deno's permission sandbox: Node's `--permission` model is not a
+  sandbox for untrusted code, per Node's own docs.
+- **`references/stacks/deno.md`** — now a migration-only page: the shutdown
+  timeline, how to pick a destination (Workers, Bun, or Node), a layer-by-layer
+  map (Fresh → SvelteKit, Deno KV → Workers KV / D1 / Neon, and so on), and the
+  Hono entrypoint change.
+- **`references/guides/hosting.md`** — Deno Deploy removed; new Cloudflare
+  Workers section (Hono, SvelteKit with `adapter-cloudflare`, Neon or D1 with
+  Drizzle, Wrangler commands, the Node.js compatibility default for
+  compatibility dates from 2026-08-04).
+- **`references/guides/mobile.md`, `database-auth.md`** — Deno commands
+  replaced; Capacitor setup now uses Bun; Cloudflare D1 added as an
+  alternative.
+- **Skill `README.md` and both banners** — the middle stack now reads Workers,
+  SvelteKit, Hono, D1 / Neon, Clerk. PNGs re-rendered from the SVGs.
+- **Node version** — "Node 22 LTS" becomes "Node (Active LTS)" in `SKILL.md`,
+  `node.md`, `deno.md`, and the skill README. One dated note names the line
+  (Node 26 from 2026-10-28) and links the Node release schedule. Node 22
+  entered maintenance on 2025-10-21, and Node 24 enters it on 2026-10-20, so
+  naming either would already be out of date.
+- **`references/stacks/bun.md`** — the Tailwind setup command is now
+  `bunx sv add tailwindcss`, as the Svelte CLI docs show; `svelte-add` was the
+  old tool.
+
+### Why
+
+Deleting Deno everywhere would have been the wrong fix. Projects already on
+Deno still need a path off it, and the "edge-first" branch needed a new answer,
+not a gap. The trigger `description` is unchanged on purpose: users will still
+ask about Deno, and the skill should catch that and steer them away.
+
+### Notes
+
+- Verification, run in a separate session from the author:
+  - `skill-evaluator: 0 skill-text findings (40/41; 1 rubric-layer fail) at diff sha256:3a90d6f2274f — 2026-10-18` (8 tests, before the decision-tree reorder).
+  - `skill-evaluator: 0 skill-text findings, 1 rubric-layer fail (22/23) at diff sha256:f41327d7d6f6 — 2026-10-18` (decision-tree re-run, before the Node-version and Tailwind-command fix).
+  - `skill-evaluator: clean (30/30) at diff sha256:1fd4e2540d4c — 2026-10-19` (after the Node-version and Tailwind-command fix, commit `f847ae8`; this is the shipped text).
+  - Diff hashes are `git diff 609a953 -- skills/tech-stack-recommendations | shasum -a 256`, first 12 characters.
+- Fresh's future after the acquisition is unconfirmed; `deno.md` says so.
+
 ## [5.7.0] — 2026-08-13
 
 New skill: **`plain-english`** — makes the agent's own replies readable for
