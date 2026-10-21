@@ -122,6 +122,7 @@ A short, honest record of confidence — three buckets:
   - axe a11y: desktop ✓ / mobile ✓ (WCAG 2.2-AA, 0 serious+critical; incl. target-size 2.5.8)
     mode V: desktop light / desktop dark / phone light / phone dark, each ✓ or its violations
   - reflow @ 320px ✓ · required states: empty ✓ loading ✓ error ✓
+    (mode V: only the states the host provided as their own HTML/URL; the rest go under NOT verified)
   - token consistency ✓ · focus visibility ✓
 - Soft-verified (judgment):
   - fidelity vs reference: desktop ✓ (mode A1); mobile = derived, no reference

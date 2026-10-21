@@ -131,6 +131,10 @@ Run each step once; never call `setContent` with changed HTML and never write a 
   4. phone · dark · screen — axe + full-page screenshot.
   5. 320px · light · screen — reflow check (`scrollWidth > clientWidth`), screenshot if it overflows.
   6. desktop (1280, or an A4-like 794×1123) · light · **print** — full-page screenshot.
+- **Required states (empty / loading / error).** Mode V never changes the app to reach a
+  state. If the host provides a state as its own HTML or URL (for example `?state=empty`),
+  run cell 1 and the phone · light cell for it. Every state not provided goes under
+  **NOT verified** in the manifest — never under hard-verified.
 - **Return:** findings and screenshots only. A failing check is a finding for the author;
   do not fix it.
 
