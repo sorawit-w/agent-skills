@@ -127,7 +127,8 @@ A short, honest record of confidence — three buckets:
 - Soft-verified (judgment):
   - fidelity vs reference: desktop ✓ (mode A1); mobile = derived, no reference
   - hierarchy / spacing / text-spacing (1.4.12) / real-content: <notes or ✓>
-  - mode V: dark-mode look and print layout from the screenshots: <notes>
+  - mode V: dark-mode look and print-media styling from the screenshots: <notes>
+    (pagination / real page breaks: NOT verified)
 - NOT verified:
   - <e.g. motion (out of scope); a11y on tablet (not requested); fidelity on derived mobile>
   - runtime perf / Core Web Vitals (LCP·INP·CLS) / SEO → out of gate; run `web-quality-skills` on the served build

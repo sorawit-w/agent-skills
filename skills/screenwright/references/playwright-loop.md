@@ -130,13 +130,15 @@ Run each step once; never call `setContent` with changed HTML and never write a 
   3. phone · light · screen — axe + full-page screenshot.
   4. phone · dark · screen — axe + full-page screenshot.
   5. 320px · light · screen — reflow check (`scrollWidth > clientWidth`), screenshot if it overflows.
-  6. desktop (1280, or an A4-like 794×1123) · light · **print** — full-page screenshot.
+  6. desktop (1280, or an A4-like 794×1123) · light · **print** — full-page screenshot of the
+     print-media styling. This does not show real page breaks; list pagination under NOT verified.
 - **Required states (empty / loading / error).** Mode V never changes the app to reach a
   state. If the host provides a state as its own HTML or URL (for example `?state=empty`),
-  run cell 1, the phone · light cell and the 320px reflow cell (cell 5) for it. Every state not provided goes under
-  **NOT verified** in the manifest — never under hard-verified.
-- **Return:** findings and screenshots only. A failing check is a finding for the author;
-  do not fix it.
+  run **all six cells** for it, exactly as for the default page. Every state not provided
+  goes under **NOT verified** in the manifest — never under hard-verified.
+- **Output contract (mode V returns exactly this):** the manifest (`verification.md` §
+  The verification manifest), each finding with its cell, and the screenshots — never HTML.
+  A failing check is a finding for the author; do not fix it.
 
 ## Sub-agent brief
 
@@ -147,4 +149,4 @@ list of in-scope viewports/states, and the reference image (mode A1). It returns
 (possibly fixed) HTML, the violation/fidelity findings, and the manifest — nothing else.
 **In mode V** the brief says "read-only — do not edit or return changed HTML", carries the
 surface (HTML or URL) and the spec path, and lists the § Mode V matrix; the sub-agent
-returns the findings, screenshots and manifest only.
+returns the § Mode V output contract.

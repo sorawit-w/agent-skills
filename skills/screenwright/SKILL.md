@@ -82,7 +82,7 @@ only checks the render. It never edits the surface and never writes a `DESIGN.md
 reads the spec path it was given (no bootstrap), Phases 3 and 5 are skipped, and Phase 4
 runs once over a fixed matrix — axe in **light and dark** (`page.emulateMedia({ colorScheme })`),
 **desktop and phone** width, the 320px reflow pass, and **print** (`page.emulateMedia({ media: 'print' })`).
-Phase 6 returns the manifest and the screenshots — never HTML; every finding goes back to the author to fix. A URL is
+Phase 6 returns the mode V output contract in [references/playwright-loop.md § Mode V](references/playwright-loop.md) — never HTML; every finding goes back to the author to fix. A URL is
 rendered with `browser_navigate` instead of `setContent`. 0 axe violations is necessary,
 not sufficient — the screenshots are part of the result. Exact steps and the sub-agent brief:
 [references/playwright-loop.md § Mode V](references/playwright-loop.md); manifest shape:
