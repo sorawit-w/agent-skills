@@ -110,7 +110,7 @@ check it"). Requires the Playwright MCP for rendering.
 |---|---|
 | **Playwright MCP** | Hard dependency — the render/audit/screenshot engine. |
 | `brand-workshop` | Authors a full `DESIGN.md` greenfield; screenwright reads it or bootstraps a lighter one. |
-| `taste-skill` *(if installed)* | Paint-time anti-slop visual dials (motion clamped — breaks self-containment). |
+| `taste-skill` *(if installed)* | Paint-time anti-slop visual dials in its v1 / v2-experimental variants (motion clamped — breaks self-containment); the default skill has no dials and measures instead. |
 | [`impeccable`](https://github.com/pbakaus/impeccable) *(if available)* | Verification companion — a deterministic design-quality linter that backstops the advisory visual checks. Complements axe (design-quality vs accessibility); findings stay advisory. |
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent. |
 | `ghostwriter` | Owns the words; screenwright paints the surface. |

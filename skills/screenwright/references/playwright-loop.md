@@ -116,14 +116,16 @@ gate still runs; the machine gate may not.
 
 Run each step once; never call `setContent` with changed HTML and never write a file.
 
-- **Load the surface:** HTML → `page.setContent(html)` as above; a served URL →
-  `browser_navigate(url)`, then `page.reload()` after each `emulateMedia` change (a theme
-  script may read the setting only on load).
+- **Load the surface after every media change:** a theme script may read the setting only
+  on load, so after each `emulateMedia` call reload the surface — HTML →
+  `page.setContent(html)` again with the same original HTML; a served URL →
+  `page.reload()` (first load with `browser_navigate(url)`).
 - **Matrix:** for each of light and dark (`await page.emulateMedia({ colorScheme: 'light' | 'dark' })`)
   × each of desktop and phone width (from `breakpoints`; defaults 1280 and 390) → inject axe,
   run it, take a full-page screenshot. Then the 320px reflow pass (light). Then focus the
-  first control and screenshot. Then `await page.emulateMedia({ media: 'print' })` and a
-  full-page screenshot.
+  first control and screenshot. Then print: set the viewport back to desktop width (1280,
+  or an A4-like 794×1123), `await page.emulateMedia({ media: 'print' })`, reload as above,
+  and take a full-page screenshot — never print from the 320px reflow viewport.
 - **Token consistency:** `getComputedStyle` on the primary action, radii and body font,
   compared to the spec path you were given.
 - **Return:** findings and screenshots only. A failing check is a finding for the author;
