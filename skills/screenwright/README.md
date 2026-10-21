@@ -121,7 +121,7 @@ check it"). Requires the Playwright MCP for rendering.
 ## Status and scope
 
 **Stable.** Supported: single self-contained surfaces (page / mobile screen / component),
-the four intake modes, the two-gate verification loop, and DESIGN.md bootstrap. Not
+the five intake modes (including read-only mode V, verify-only), the two-gate verification loop, and DESIGN.md bootstrap. Not
 supported: multi-page flows, framework conversion, motion systems. The verification loop is
 spike-proven against the Playwright MCP and dogfooded end-to-end; gate thresholds and
 gap-questions will keep tuning with broader use.
