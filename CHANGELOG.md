@@ -5,6 +5,19 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.9.0] — 2026-10-20
+
+**`team-composer`** routes UI design work by job instead of pairing two generators. The Cross-Skill Integration table now names one author, one read-only checker and one render verifier, and drops `ui-ux-pro-max`.
+
+### Changed
+- **`impeccable` is the default author.** It replaces the `ui-ux-pro-max` row: `document` writes a `DESIGN.md` from existing code, `critique` → `polish` change a surface, and only one skill edits a given surface. The design spec's path is passed explicitly, because most design skills look only for a root `DESIGN.md`.
+- **`taste-skill` is the read-only checker.** The default skill deals a direction (`draw.mjs`) and measures a page (`inspect.mjs`, `lint.mjs`). The row no longer describes the `DESIGN_VARIANCE` / `MOTION_INTENSITY` / `VISUAL_DENSITY` dials as current; they exist only in its v1 and v2-experimental variants. A house rule never overrides the user's explicit ask.
+- **`screenwright` is the render verifier**, run after the last edit with its fix loop off, so it never edits the author's surface.
+- The `web-quality-skills` row and the README's Pairs-well-with table match.
+
+### Why
+A job-scout comparison (2026-10-20) ran four design skills on one report from one brief. `ui-ux-pro-max`'s design-system output did not fit app or report surfaces (a landing-page funnel, web fonts and GSAP blocked by the page's CSP), and its variant was the busiest; only its rule lookups helped. Each other skill was strongest at one job: `impeccable` at critique and clear changes, `taste-skill` at measuring, `screenwright` at checking the render. Two skills editing the same surface undo each other's work. The same split shipped in kerby 10.5.0 (swe 2.16.0).
+
 ## [5.8.0] — 2026-10-18
 
 **`tech-stack-recommendations`** stops recommending Deno. Cloudflare acquired
