@@ -84,7 +84,9 @@ runs once over a fixed matrix — axe in **light and dark** (`page.emulateMedia(
 **desktop and phone** width, the 320px reflow pass, and **print** (`page.emulateMedia({ media: 'print' })`).
 Phase 6 returns only the manifest; every finding goes back to the author to fix. A URL is
 rendered with `browser_navigate` instead of `setContent`. 0 axe violations is necessary,
-not sufficient — the screenshots are part of the result.
+not sufficient — the screenshots are part of the result. Exact steps and the sub-agent brief:
+[references/playwright-loop.md § Mode V](references/playwright-loop.md); manifest shape:
+[references/verification.md](references/verification.md).
 
 **Unit of work = one surface**: a page, a mobile screen, or a component. Not a flow, not an
 app. Batch your gap-questions, default aggressively, let the user correct the draft — never

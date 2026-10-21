@@ -112,6 +112,23 @@ to inject axe by `fetch`-ing it (may hit CORS — if so, a11y degrades to UNVERI
 `browser_take_screenshot` for fidelity. State the degradation in the manifest. The visual
 gate still runs; the machine gate may not.
 
+## Mode V (verify-only) — one pass, no edits
+
+Run each step once; never call `setContent` with changed HTML and never write a file.
+
+- **Load the surface:** HTML → `page.setContent(html)` as above; a served URL →
+  `browser_navigate(url)`, then `page.reload()` after each `emulateMedia` change (a theme
+  script may read the setting only on load).
+- **Matrix:** for each of light and dark (`await page.emulateMedia({ colorScheme: 'light' | 'dark' })`)
+  × each of desktop and phone width (from `breakpoints`; defaults 1280 and 390) → inject axe,
+  run it, take a full-page screenshot. Then the 320px reflow pass (light). Then focus the
+  first control and screenshot. Then `await page.emulateMedia({ media: 'print' })` and a
+  full-page screenshot.
+- **Token consistency:** `getComputedStyle` on the primary action, radii and body font,
+  compared to the spec path you were given.
+- **Return:** findings and screenshots only. A failing check is a finding for the author;
+  do not fix it.
+
 ## Sub-agent brief
 
 Briefing conventions (Quick/Full) and the **no-nested-sub-agents** invariant live in
@@ -119,3 +136,6 @@ Briefing conventions (Quick/Full) and the **no-nested-sub-agents** invariant liv
 the final HTML, the DESIGN.md tokens, `a11y.wcag` + `breakpoints`, the surface type, the
 list of in-scope viewports/states, and the reference image (mode A1). It returns: the
 (possibly fixed) HTML, the violation/fidelity findings, and the manifest — nothing else.
+**In mode V** the brief says "read-only — do not edit or return changed HTML", carries the
+surface (HTML or URL) and the spec path, and lists the § Mode V matrix; the sub-agent
+returns the findings, screenshots and manifest only.
