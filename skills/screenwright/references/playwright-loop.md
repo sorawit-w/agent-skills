@@ -112,6 +112,34 @@ to inject axe by `fetch`-ing it (may hit CORS — if so, a11y degrades to UNVERI
 `browser_take_screenshot` for fidelity. State the degradation in the manifest. The visual
 gate still runs; the machine gate may not.
 
+## Mode V (verify-only) — one pass, no edits
+
+Run each step once; never call `setContent` with changed HTML and never write a file.
+
+- **Every cell is a fresh load.** A surface may read its color scheme, media type or width
+  only when it loads, so for each cell: set the viewport, call
+  `page.emulateMedia({ media, colorScheme })` with both values, then load the surface —
+  HTML → `page.setContent(html)` with the same original HTML; a served URL →
+  `browser_navigate(url)` — and only then measure. Never measure a page that was loaded
+  under another cell's settings.
+- **Cells, in order** (widths from `breakpoints`; defaults 1280 and 390):
+  1. desktop · light · screen — axe + full-page screenshot; the **token check**
+     (`getComputedStyle` on the primary action, radii and body font, compared to the spec
+     path you were given); focus the first control + screenshot.
+  2. desktop · dark · screen — axe + full-page screenshot.
+  3. phone · light · screen — axe + full-page screenshot.
+  4. phone · dark · screen — axe + full-page screenshot.
+  5. 320px · light · screen — reflow check (`scrollWidth > clientWidth`), screenshot if it overflows.
+  6. desktop (1280, or an A4-like 794×1123) · light · **print** — full-page screenshot of the
+     print-media styling. This does not show real page breaks; list pagination under NOT verified.
+- **Required states (empty / loading / error).** Mode V never changes the app to reach a
+  state. If the host provides a state as its own HTML or URL (for example `?state=empty`),
+  run **all six cells** for it, exactly as for the default page. Every state not provided
+  goes under **NOT verified** in the manifest — never under hard-verified.
+- **Output contract (mode V returns exactly this):** the manifest (`verification.md` §
+  The verification manifest), each finding with its cell, and the screenshots — never HTML.
+  A failing check is a finding for the author; do not fix it.
+
 ## Sub-agent brief
 
 Briefing conventions (Quick/Full) and the **no-nested-sub-agents** invariant live in
@@ -119,3 +147,6 @@ Briefing conventions (Quick/Full) and the **no-nested-sub-agents** invariant liv
 the final HTML, the DESIGN.md tokens, `a11y.wcag` + `breakpoints`, the surface type, the
 list of in-scope viewports/states, and the reference image (mode A1). It returns: the
 (possibly fixed) HTML, the violation/fidelity findings, and the manifest — nothing else.
+**In mode V** the brief says "read-only — do not edit or return changed HTML", carries the
+surface (HTML or URL) and the spec path, and lists the § Mode V matrix; the sub-agent
+returns the § Mode V output contract.

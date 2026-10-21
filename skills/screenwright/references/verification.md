@@ -42,7 +42,7 @@ and its restricted-HTML format conflicts with self-contained output — not supp
 | Alignment & spacing rhythm | advisory | gaps sit on the `spacing` scale; edges align |
 | Real-content robustness | advisory | long names / empty / huge numbers / missing images don't break layout |
 | Text spacing (WCAG 1.4.12) | advisory | inject the spacing override; text doesn't clip or overlap |
-| Render-variants (dark-mode / reduced-motion / RTL) | advisory — **only when declared** | if DESIGN.md/brief declares the variant, emulate it + screenshot; skip otherwise |
+| Render-variants (dark-mode / reduced-motion / RTL) | advisory — **only when declared**; mode V always runs dark mode (axe + screenshot) and print | if DESIGN.md/brief declares the variant, emulate it + screenshot; skip otherwise. In mode V, dark mode and print are always in the matrix (`playwright-loop.md` § Mode V) |
 | Interaction end-states | advisory | hover / active / disabled are visibly distinct |
 | Motion / animation | advisory **always** | (not screenshot-verifiable; doesn't survive handoff) |
 
@@ -117,14 +117,18 @@ A short, honest record of confidence — three buckets:
 
 ```
 ## screenwright verification
-- Surface: <page | screen | component> · mode <A1|A2|B|C>
+- Surface: <page | screen | component> · mode <A1|A2|B|C|V>  (V = verify-only, no edits)
 - Hard-verified (gate passed):
   - axe a11y: desktop ✓ / mobile ✓ (WCAG 2.2-AA, 0 serious+critical; incl. target-size 2.5.8)
+    mode V: desktop light / desktop dark / phone light / phone dark, each ✓ or its violations
   - reflow @ 320px ✓ · required states: empty ✓ loading ✓ error ✓
+    (mode V: only the states the host provided as their own HTML/URL; the rest go under NOT verified)
   - token consistency ✓ · focus visibility ✓
 - Soft-verified (judgment):
   - fidelity vs reference: desktop ✓ (mode A1); mobile = derived, no reference
   - hierarchy / spacing / text-spacing (1.4.12) / real-content: <notes or ✓>
+  - mode V: dark-mode look and print-media styling from the screenshots: <notes>
+    (pagination / real page breaks: NOT verified)
 - NOT verified:
   - <e.g. motion (out of scope); a11y on tablet (not requested); fidelity on derived mobile>
   - runtime perf / Core Web Vitals (LCP·INP·CLS) / SEO → out of gate; run `web-quality-skills` on the served build

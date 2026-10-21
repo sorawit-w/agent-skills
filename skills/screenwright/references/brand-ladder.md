@@ -49,10 +49,7 @@ is **73 standalone DESIGN.md files, MIT-licensed**, organized by industry under
 ### 3b — Imply from the described vibe
 
 The user describes a feel ("warm, editorial, lots of whitespace") rather than naming a
-template. Assemble tokens from:
-- **`ui-ux-pro-max`** style/palette/font vocabulary **if installed** (suggest it if not and
-  the user wants a richer vibe library; don't synthesize its catalog), **or**
-- model judgment from the description.
+template. Assemble tokens from model judgment on the description.
 
 Then **persist** the DESIGN.md. This is also the **offline / fetch-failed fallback** for 3a.
 

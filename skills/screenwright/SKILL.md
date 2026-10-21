@@ -1,13 +1,13 @@
 ---
 name: screenwright
 description: >
-  Paints one self-contained HTML surface (page, mobile screen, or component) to a brand
+  Paints one self-contained HTML surface (page, screen, or component) to a brand
   spec, then SEES it: renders via the Playwright MCP, screenshots, runs an axe-core
   accessibility audit, critiques fidelity, and fixes in a bounded loop until it passes —
   then hands the verified HTML back for conversion to a real stack. Triggers when the user
   or an agent mid-build wants a UI surface built or fixed with the render actually checked:
   "build this screen", "paint a component", "match this mockup", "fix this UI", "make this
-  accessible", "the layout looks off", "screenwright this". Resolves brand from a DESIGN.md,
+  accessible", "the layout looks off", "verify this screen", "screenwright this". Resolves brand from a DESIGN.md,
   or bootstraps one from the repo / a template / a described vibe. Does NOT trigger for:
   multi-page flows, routing, or full app builds; framework/stack conversion (it outputs
   portable HTML for the host to port); pure copywriting (use ghostwriter); brand-identity
@@ -71,10 +71,22 @@ can't infer. Full classifier + the gap-question set: [references/intake.md](refe
 | **A2 fix-from-image** | screenshot of current (wrong) state + brief | HTML fixed toward the brief/DESIGN.md |
 | **B fix-from-code** | existing UI code + change brief | updated HTML **+ a plain-language change description** + before/after check |
 | **C bootstrap** | no DESIGN.md present | resolve brand (Phase 2), then run as A or B |
+| **V verify-only** | an existing surface (HTML, or a URL the host serves) + the design spec's path | a findings manifest — **no edits** |
 
 **Match-vs-fix is load-bearing** (it flips the verification path). If an image is provided
 but intent is ambiguous, **ask exactly one question**. Default lean: a polished mock →
 match; a rough/broken render described with problems → fix.
+
+**Mode V is read-only.** Use it when another skill authored the surface and screenwright
+only checks the render. It never edits the surface and never writes a `DESIGN.md`: Phase 2
+reads the spec path it was given (no bootstrap), Phases 3 and 5 are skipped, and Phase 4
+runs once over a fixed matrix — axe in **light and dark** (`page.emulateMedia({ colorScheme })`),
+**desktop and phone** width, the 320px reflow pass, and **print** (`page.emulateMedia({ media: 'print' })`).
+Phase 6 returns the mode V output contract in [references/playwright-loop.md § Mode V](references/playwright-loop.md) — never HTML; every finding goes back to the author to fix. A URL is
+rendered with `browser_navigate` instead of `setContent`. 0 axe violations is necessary,
+not sufficient — the screenshots are part of the result. Exact steps and the sub-agent brief:
+[references/playwright-loop.md § Mode V](references/playwright-loop.md); manifest shape:
+[references/verification.md](references/verification.md).
 
 **Unit of work = one surface**: a page, a mobile screen, or a component. Not a flow, not an
 app. Batch your gap-questions, default aggressively, let the user correct the draft — never
@@ -93,8 +105,7 @@ Stop at the first rung that hits. Full heuristics + fetch details:
    `DESIGN.md`** so later surfaces stay consistent.
 3. **Greenfield / outside a project** → either **a named template** (fetch one from
    `github.com/VoltAgent/awesome-design-md`, 73 ready-made DESIGN.md files) **or imply from
-   the user's described vibe** (via `ui-ux-pro-max`'s style vocabulary if installed, else
-   judgment) → **persist a `DESIGN.md`**.
+   the user's described vibe** (by judgment) → **persist a `DESIGN.md`**.
 
 screenwright is both a *consumer* and a *bootstrapper* of DESIGN.md — same Google Labs
 `design.md` format either way, extended with two custom keys (`a11y`, `breakpoints`) that
@@ -118,8 +129,10 @@ Output contract — **one self-contained HTML file**:
   (empty / loading / error) and **interaction end-states** (focus / hover / active /
   disabled). Implied surfaces are verified later but never silently dropped.
 
-**Anti-slop (capability-gated):** if `taste-skill` is installed, apply its **visual** dials
-(`DESIGN_VARIANCE`, `VISUAL_DENSITY`) to push away from generic AI defaults. **Clamp
+**Anti-slop (capability-gated):** if a `taste-skill` variant with dials (v1 or
+v2-experimental) is installed, apply its **visual** dials (`DESIGN_VARIANCE`,
+`VISUAL_DENSITY`) to push away from generic AI defaults; the default `taste-skill` has no
+dials and instead measures a page with `inspect.mjs` / `lint.mjs`. **Clamp
 `MOTION_INTENSITY` low / ignore its GSAP skeletons** — motion is out of screenwright's
 gate and its libraries break self-containment. If not installed, suggest it and proceed on
 judgment; do not synthesize the dials.
@@ -199,7 +212,7 @@ skill is NOT").
 | Alignment & spacing rhythm (on the scale, edges align) | advisory |
 | Real-content robustness (long names, empty, huge numbers, missing images) | advisory |
 | Text spacing (WCAG 1.4.12 — survives the spacing override) | advisory |
-| Render-variants (dark-mode / reduced-motion / RTL) | advisory — **only when declared** |
+| Render-variants (dark-mode / reduced-motion / RTL) | advisory — **only when declared**; mode V always checks dark mode |
 | Interaction end-states (hover/active/disabled distinct) | advisory |
 | Motion / animation | advisory — **always** |
 
@@ -232,8 +245,7 @@ reference actually shows.
 |---|---|
 | **Playwright MCP** | Hard dependency — the render/audit/screenshot engine. Missing → stop (Phase 0). |
 | `brand-workshop` | Authors a thorough `DESIGN.md` greenfield (interview-driven). screenwright reads it, or bootstraps a lighter one when absent — same format. Prefer brand-workshop when the user wants a full brand identity first. |
-| [`ui-ux-pro-max`](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) *(if installed)* | Style/palette/font vocabulary for the imply-from-vibe rung of the brand ladder. Suggest install if absent and the user wants a vibe-bootstrapped brand; do not synthesize its catalog. |
-| [`taste-skill`](https://github.com/Leonxlnx/taste-skill) *(if installed)* | Paint-time anti-slop **visual** dials (variance, density). Motion dial clamped — its GSAP output breaks self-containment. Capability-gated; suggest if absent, don't synthesize. |
+| [`taste-skill`](https://github.com/Leonxlnx/taste-skill) *(if installed)* | Paint-time anti-slop **visual** dials (variance, density) in its v1 / v2-experimental variants; the default skill measures instead. Motion dial clamped — its GSAP output breaks self-containment. Capability-gated; suggest if absent, don't synthesize. |
 | [`impeccable`](https://github.com/pbakaus/impeccable) *(if available)* | **Verification** companion, not a style source: a deterministic design-quality linter for the *advisory* visual dimensions (spacing rhythm, hierarchy, AI-slop). Complements axe (design-quality vs WCAG — disjoint), stays advisory, suppress its font-pairing + performance rules (they fight self-containment / de-scoped perf). See [references/verification.md](references/verification.md). |
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent + the no-nested-sub-agents invariant. |
 | `ghostwriter` | Owns copy/microcopy. screenwright paints the surface; it does not write the words. |

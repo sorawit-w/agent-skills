@@ -110,8 +110,7 @@ check it"). Requires the Playwright MCP for rendering.
 |---|---|
 | **Playwright MCP** | Hard dependency — the render/audit/screenshot engine. |
 | `brand-workshop` | Authors a full `DESIGN.md` greenfield; screenwright reads it or bootstraps a lighter one. |
-| `ui-ux-pro-max` *(if installed)* | Style/palette/font vocabulary for the imply-from-vibe brand rung. |
-| `taste-skill` *(if installed)* | Paint-time anti-slop visual dials (motion clamped — breaks self-containment). |
+| `taste-skill` *(if installed)* | Paint-time anti-slop visual dials in its v1 / v2-experimental variants (motion clamped — breaks self-containment); the default skill has no dials and measures instead. |
 | [`impeccable`](https://github.com/pbakaus/impeccable) *(if available)* | Verification companion — a deterministic design-quality linter that backstops the advisory visual checks. Complements axe (design-quality vs accessibility); findings stay advisory. |
 | `sub-agent-coordinator` | Briefing conventions for the isolated verify-loop sub-agent. |
 | `ghostwriter` | Owns the words; screenwright paints the surface. |
@@ -122,7 +121,7 @@ check it"). Requires the Playwright MCP for rendering.
 ## Status and scope
 
 **Stable.** Supported: single self-contained surfaces (page / mobile screen / component),
-the four intake modes, the two-gate verification loop, and DESIGN.md bootstrap. Not
+the five intake modes (including read-only mode V, verify-only), the two-gate verification loop, and DESIGN.md bootstrap. Not
 supported: multi-page flows, framework conversion, motion systems. The verification loop is
 spike-proven against the Playwright MCP and dogfooded end-to-end; gate thresholds and
 gap-questions will keep tuning with broader use.

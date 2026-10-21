@@ -14,6 +14,7 @@ Read what the user actually handed you:
 | **UI code** (HTML/JSX/Vue/etc.) + a change request | **B fix-from-code** | Produce updated HTML + a plain-language change description; render before & after. |
 | Only a **text brief**, no image, no code | A1-as-text | Treat the brief as the target; fidelity is advisory (no reference). |
 | Any of the above **but no DESIGN.md exists** | **C bootstrap first** | Resolve brand (Phase 2), then run the matching mode above. |
+| A surface **another skill authored** (HTML, or a URL the host serves) + "verify / check the render / don't change anything" | **V verify-only** | Read-only: never edit, never write a DESIGN.md, no bootstrap. Read the spec path you were given; run the V matrix once (`playwright-loop.md` § Mode V); return the manifest. If no spec path was given and none is at the root, say so and verify a11y, reflow and focus only — token consistency becomes NOT verified. |
 
 ## Match-vs-fix tiebreak (the one that matters)
 

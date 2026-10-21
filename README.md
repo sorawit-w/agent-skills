@@ -300,7 +300,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.8.0`.** **`tech-stack-recommendations`** no longer recommends Deno, after Cloudflare acquired it in October 2026 and began winding down Deno Deploy and the runtime. Edge-first projects now go to **Cloudflare Workers + Hono**, and projects already on Deno get a migration page with the shutdown timeline and a layer-by-layer move. Full version history is in [CHANGELOG.md](CHANGELOG.md).
+**Current release: `5.9.0`.** **`team-composer`** routes UI design work by job: `impeccable` makes the change, `taste-skill` checks it read-only, and `screenwright` verifies the render after the last edit. **`screenwright`** gains a read-only mode V for that verify step. Neither skill recommends `ui-ux-pro-max` any more, and neither describes `taste-skill` by dials its default skill does not have. See [CHANGELOG.md](CHANGELOG.md) for the full history.
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.
