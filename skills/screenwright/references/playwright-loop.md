@@ -116,18 +116,21 @@ gate still runs; the machine gate may not.
 
 Run each step once; never call `setContent` with changed HTML and never write a file.
 
-- **Load the surface after every media change:** a theme script may read the setting only
-  on load, so after each `emulateMedia` call reload the surface — HTML →
-  `page.setContent(html)` again with the same original HTML; a served URL →
-  `page.reload()` (first load with `browser_navigate(url)`).
-- **Matrix:** for each of light and dark (`await page.emulateMedia({ colorScheme: 'light' | 'dark' })`)
-  × each of desktop and phone width (from `breakpoints`; defaults 1280 and 390) → inject axe,
-  run it, take a full-page screenshot. Then the 320px reflow pass (light). Then focus the
-  first control and screenshot. Then print: set the viewport back to desktop width (1280,
-  or an A4-like 794×1123), `await page.emulateMedia({ media: 'print' })`, reload as above,
-  and take a full-page screenshot — never print from the 320px reflow viewport.
-- **Token consistency:** `getComputedStyle` on the primary action, radii and body font,
-  compared to the spec path you were given.
+- **Every cell is a fresh load.** A surface may read its color scheme, media type or width
+  only when it loads, so for each cell: set the viewport, call
+  `page.emulateMedia({ media, colorScheme })` with both values, then load the surface —
+  HTML → `page.setContent(html)` with the same original HTML; a served URL →
+  `browser_navigate(url)` — and only then measure. Never measure a page that was loaded
+  under another cell's settings.
+- **Cells, in order** (widths from `breakpoints`; defaults 1280 and 390):
+  1. desktop · light · screen — axe + full-page screenshot; the **token check**
+     (`getComputedStyle` on the primary action, radii and body font, compared to the spec
+     path you were given); focus the first control + screenshot.
+  2. desktop · dark · screen — axe + full-page screenshot.
+  3. phone · light · screen — axe + full-page screenshot.
+  4. phone · dark · screen — axe + full-page screenshot.
+  5. 320px · light · screen — reflow check (`scrollWidth > clientWidth`), screenshot if it overflows.
+  6. desktop (1280, or an A4-like 794×1123) · light · **print** — full-page screenshot.
 - **Return:** findings and screenshots only. A failing check is a finding for the author;
   do not fix it.
 
