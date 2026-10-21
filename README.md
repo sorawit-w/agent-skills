@@ -300,7 +300,7 @@ These aren't rules for contributors — they're the taste I'm trying to keep on 
 
 ## Status
 
-**Current release: `5.9.0`.** **`team-composer`** routes UI design work by job: `impeccable` makes the change, `taste-skill` checks it read-only, and `screenwright` verifies the render after the last edit. **`screenwright`** gains a read-only mode V for that verify step. Neither skill recommends `ui-ux-pro-max` any more, and neither describes `taste-skill` by dials its default skill does not have. See [CHANGELOG.md](CHANGELOG.md) for the full history.
+**Current release: `5.9.1`.** No skill in the repo recommends `ui-ux-pro-max` any more: **`tech-stack-recommendations`**' styling guide and the **`i18n`** pairing now point to the same design-skill split as `team-composer` (impeccable makes the change, taste-skill checks it read-only, screenwright verifies the render in its read-only mode V). See [CHANGELOG.md](CHANGELOG.md) for the full history.
 
 - **Primary target agent** — Claude (Claude Code, Cowork). Triggering and depth are tuned for Claude first.
 - **Other agents** — skills also load on OpenAI Codex (and other `SKILL.md` consumers); `description` fields satisfy Codex's 1024-byte frontmatter limit, enforced by `scripts/check-skill-compat.py`.

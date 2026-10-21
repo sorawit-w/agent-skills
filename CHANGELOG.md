@@ -5,6 +5,14 @@ All notable changes to this plugin are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 versions follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.9.1] — 2026-10-21
+
+No skill in the repo recommends `ui-ux-pro-max` any more. 5.9.0 removed it from `team-composer` and `screenwright`; this patch finishes the job in the two skills that still pointed to it.
+
+### Changed
+- **`tech-stack-recommendations`** — the styling guide's "AI Design Assistance" section now describes the design-skill split (impeccable makes the change, taste-skill's scripts check it read-only, screenwright's mode V verifies the render) instead of `ui-ux-pro-max` and its `uipro-cli` install. The AI-agents guide's example `context.yaml` and "Suggested skills" table name `impeccable`. The README pairing row matches.
+- **`i18n`** — the README pairing for overflow, line-break and RTL layout now points to `screenwright`, whose read-only mode V runs the 320px reflow pass and screenshots.
+
 ## [5.9.0] — 2026-10-20
 
 **`team-composer`** routes UI design work by job instead of pairing two generators. The Cross-Skill Integration table now names one author, one read-only checker and one render verifier, and drops `ui-ux-pro-max`.

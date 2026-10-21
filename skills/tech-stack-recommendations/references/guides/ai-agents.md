@@ -44,7 +44,7 @@ conventions:
   - Drizzle for all database queries
 
 skills:
-  - name: ui-ux-pro-max
+  - name: impeccable
     installed: true
 
 brand:
@@ -69,7 +69,7 @@ npx <skill-cli> init --ai claude        # Node
 
 | Skill | Use Case | Install |
 |-------|----------|---------|
-| **UI UX Pro Max** | Design systems, palettes, typography | `bunx uipro-cli init --ai claude` |
+| **impeccable** | Design changes (`critique` → `polish`), `DESIGN.md` from existing code | See [its repo](https://github.com/pbakaus/impeccable#installation) |
 | **ClaudeKit Skills** | Comprehensive skill collection | See below |
 
 ---

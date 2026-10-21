@@ -83,19 +83,13 @@ Create `.ai/IDENTITY.md` to capture project-specific design decisions:
 
 ## AI Design Assistance (Optional)
 
-**UI UX Pro Max** — Design intelligence skill for AI coding agents
+When an AI coding agent does UI work, split the design skills by job. Only one skill edits a
+surface; the others check it.
 
-When using Claude Code, Cursor, or similar AI assistants for UI work,
-this skill provides a searchable database of styles, palettes, typography,
-and UX guidelines.
+| Job | Skill | Notes |
+|---|---|---|
+| Make the change | [`impeccable`](https://github.com/pbakaus/impeccable) | `document` writes a `DESIGN.md` from existing code; `critique` → `polish` change a surface. Install: see its repo README. |
+| Check direction | [`taste-skill`](https://github.com/Leonxlnx/taste-skill) | Run only its scripts (`inspect.mjs`, `lint.mjs`) as a read-only check — not the full skill, whose gate fixes every FAIL. |
+| Verify the render | `screenwright` (this repo) | Its read-only mode V: axe in light and dark, desktop and phone width, 320px reflow, print styling. |
 
-- 57 UI styles, 95 color palettes, 56 font pairings
-- Supports: Svelte, React, Next.js, Vue, Tailwind, and more
-
-**Install:**
-```bash
-bunx uipro-cli init --ai claude       # Bun
-npx uipro-cli init --ai claude        # Node
-```
-
-**Repo:** https://github.com/nextlevelbuilder/ui-ux-pro-max-skill
+Give each skill the design spec's path explicitly; most look only for a root `DESIGN.md`.
